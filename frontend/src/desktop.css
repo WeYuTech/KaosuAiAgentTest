@@ -1,0 +1,63 @@
+/* 桌面對話與作業單：保留 Emerald 色票，兩欄各自捲動。 */
+#mes-ai-chat-root button,
+#mes-ai-chat-root input:not([type=checkbox]),
+#mes-ai-chat-root select,
+#mes-ai-chat-root summary { min-height: 36px; }
+#mes-ai-chat-root button.icon-button { min-width: 34px; min-height: 34px; }
+#mes-ai-chat-root .send-button { min-width: 36px; min-height: 36px; }
+#mes-ai-chat-root .launcher { width: 44px; height: 44px; }
+#mes-ai-chat-root .assistant-header { min-height: 56px; }
+#mes-ai-chat-root .header-preferences select { font-size: 13px; padding: 6px 8px; }
+#mes-ai-chat-root .header-preferences { flex: 0 1 280px; order: 0; }
+.desktop-workbench { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr); flex: 1; min-height: 0; overflow: hidden; }
+.desktop-workbench .chat-layout { min-width: 0; min-height: 0; display: flex; flex-direction: column; }
+.operation-pane { min-width: 0; min-height: 0; display: flex; flex-direction: column; border-left: 1px solid var(--border); background: var(--card); }
+.pane-heading { padding: 16px 24px; display: flex; align-items: center; justify-content: space-between; gap: 12px; border-bottom: 1px solid var(--border); flex-shrink: 0; }
+.pane-heading h2 { font-size: 16px; margin: 0; font-weight: 600; }
+.pane-heading span { font-size: 12px; color: var(--muted-foreground); }
+.desktop-workbench .conversation-scroll { padding: 24px; }
+.desktop-workbench .composer-area { padding: 16px 24px; }
+.desktop-workbench .composer textarea { font-size: 14px; }
+.operation-sheet { overflow: auto; min-height: 0; flex: 1; padding: 20px 24px; scrollbar-width: thin; }
+.operation-sheet[hidden] { display: none; }
+.desktop-workbench .workspace-scroll { padding: 20px 24px; }
+.desktop-workbench .record-grid { grid-template-columns: 1fr; }
+.desktop-workbench .tabs { justify-content: flex-start; gap: 16px; padding: 0 24px; }
+.desktop-workbench .tabs button { padding: 8px 0; font-size: 13px; }
+.desktop-workbench .guided-flow { margin: 0; padding: 0; border: 0; font-size: 14px; }
+.desktop-workbench .guided-flow h2 { font-size: 18px; margin: 20px 0 12px; }
+.desktop-workbench .guide-field { margin: 8px 0; gap: 6px; }
+.desktop-workbench .guide-field input,.desktop-workbench .guide-field select { min-height: 36px; font-size: 14px; padding: 7px 10px; }
+.desktop-workbench .guide-fields { gap: 12px; margin: 16px 0; }
+.desktop-workbench .guided-flow .primary,.desktop-workbench .guided-flow .secondary { min-height: 36px; font-size: 14px; }
+.desktop-workbench .guide-action-grid { gap: 10px; }
+.desktop-workbench .guide-action-grid .secondary { min-height: 46px; padding: 10px 12px; }
+.desktop-workbench .guide-context { padding: 12px; }
+.desktop-workbench .guide-context span { font-size: 13px; }
+.desktop-workbench .guided-flow fieldset { margin: 14px 0; padding: 12px; }
+.desktop-workbench .guided-flow .guide-body { border: 0; padding: 0; margin: 0; }
+.desktop-workbench .guide-record { padding: 12px !important; }
+.desktop-workbench .proposal { margin-top: 20px; }
+.desktop-workbench .independent-confirm { min-height: 44px; font-size: 14px; }
+.desktop-workbench .guide-navigation { margin-top: 16px; }
+.module-switcher { display: flex; gap: 4px; margin-left: 24px; padding: 3px; border-radius: var(--radius); background: var(--muted); }
+.module-switcher .text-button { font-size: 13px; padding: 6px 12px; color: var(--muted-foreground); }
+.module-switcher [aria-current=page] { background: var(--background); color: var(--foreground); box-shadow: 0 1px 3px #00000012; }
+.workspace-bar { padding: 10px 24px; }
+.chat-welcome { padding: 30px 0; max-width: 480px; margin: 0 auto; }
+.chat-welcome>svg { margin-bottom: 16px; }
+.chat-welcome h2 { font-size: 22px; }
+.chat-welcome p { color: var(--muted-foreground); font-size: 14px; }
+.prompt-options { display: grid; gap: 10px; margin-top: 24px; }
+.prompt-options .secondary { text-align: left; white-space: normal; justify-content: space-between; font-size: 13px; }
+.operation-sheet-status { font-size: 12px; color: var(--muted-foreground); margin-bottom: 12px; }
+.sheet-context { padding: 10px 24px; font-size: 13px; border-bottom: 1px solid var(--border); background: var(--muted); overflow-wrap: anywhere; flex-shrink: 0; }
+.guide-search-options { grid-column: 1 / -1; }
+.guide-search-options summary { color: var(--muted-foreground); }
+@container mes-chat-shell (max-width: 850px) {
+  .desktop-workbench { grid-template-columns: minmax(320px,1fr) minmax(360px,1.15fr); overflow-x: auto; }
+  .pane-heading,.desktop-workbench .conversation-scroll,.desktop-workbench .composer-area,.operation-sheet { padding: 16px; }
+  .pane-heading span { display: none; }
+  .module-switcher { margin-left: 8px; }
+  #mes-ai-chat-root .header-preferences { order: 3; flex-basis: 100%; }
+}
