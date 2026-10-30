@@ -1,4 +1,4 @@
-"""以合成八頁驗證入口安裝、原始編碼保留與有條件還原。"""
+"""以合成首頁與八個作業頁驗證入口安裝、編碼與備份相容性。"""
 
 import hashlib
 import json
@@ -16,7 +16,8 @@ def site(tmp_path):
     originals = {}
     for number, relative in enumerate(PAGES):
         text = f"<!doctype html>\r\n<body>合成頁面{number}，成型報工\r\n</BODY>\r\n"
-        encoding = ("utf-8", "utf-8-sig", "big5", "utf-16", "utf-32", "utf-8", "big5", "utf-8")[number]
+        encodings = ("utf-8", "utf-8-sig", "big5", "utf-16", "utf-32", "utf-8", "big5", "utf-8")
+        encoding = encodings[number % len(encodings)]
         original = text.encode(encoding)
         path = root / relative
         path.parent.mkdir(parents=True, exist_ok=True)
@@ -29,12 +30,13 @@ def current(root):
     return {relative: (root / relative).read_bytes() for relative in PAGES}
 
 
-def test_八頁安裝保留編碼備份校驗及完整還原(site):
+def test_首頁與八頁安裝保留編碼備份校驗及完整還原(site):
     root, originals, backup = site
     result = install(root, backup)
-    assert result["changed"] == 8
+    assert result["changed"] == 9
     manifest = json.loads(Path(result["manifest"]).read_text(encoding="utf-8"))
     assert {entry["path"] for entry in manifest["pages"]} == set(PAGES)
+    assert "index.html" in {entry["path"] for entry in manifest["pages"]}
     for entry in manifest["pages"]:
         relative = entry["path"]
         old = originals[relative]
@@ -49,7 +51,7 @@ def test_八頁安裝保留編碼備份校驗及完整還原(site):
     assert install(root, backup.parent / "backup-two") == {"status": "already_installed", "changed": 0, "manifest": None}
     assert current(root) == before_second
     assert not (backup.parent / "backup-two").exists()
-    assert restore(Path(result["manifest"]))["changed"] == 8
+    assert restore(Path(result["manifest"]))["changed"] == 9
     assert current(root) == originals
 
 
@@ -113,9 +115,29 @@ def test_混合已安裝頁面不重複且還原保留原有標記(site):
     originals[PAGES[0]] = page.read_bytes().replace(b"</BODY>", (TAG + "\r\n</BODY>").encode("ascii"))
     page.write_bytes(originals[PAGES[0]])
     result = install(root, backup)
-    assert result["changed"] == 7
+    assert result["changed"] == 8
     assert page.read_bytes() == originals[PAGES[0]]
-    assert restore(Path(result["manifest"]))["changed"] == 7
+    assert restore(Path(result["manifest"]))["changed"] == 8
+    assert current(root) == originals
+
+
+def test_舊八頁備份可還原且九頁升級只加入首頁(site):
+    root, originals, backup = site
+    installed = install(root, backup)
+    manifest_path = Path(installed["manifest"])
+    legacy = json.loads(manifest_path.read_text(encoding="utf-8"))
+    legacy["pages"] = [entry for entry in legacy["pages"] if entry["path"] != "index.html"]
+    assert len(legacy["pages"]) == 8 and legacy["schema"] == 1
+    manifest_path.write_text(json.dumps(legacy, ensure_ascii=False), encoding="utf-8")
+    # 還原舊版現場：八個作業頁已安裝，首頁尚未安裝。
+    (root / "index.html").write_bytes(originals["index.html"])
+    old_site = current(root)
+    upgrade = install(root, backup.parent / "upgrade-nine")
+    assert upgrade["changed"] == 1
+    assert all((root / page).read_bytes() == content for page, content in old_site.items() if page != "index.html")
+    assert restore(Path(upgrade["manifest"]))["changed"] == 1
+    assert current(root) == old_site
+    assert restore(manifest_path)["changed"] == 8
     assert current(root) == originals
 
 

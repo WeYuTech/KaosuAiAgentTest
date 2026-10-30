@@ -1,4 +1,4 @@
-"""以原始位元組備份、安裝及還原八個 MES 頁面的同源助理入口。"""
+"""備份、安裝與還原首頁及八個 MES 作業頁的同源入口，兼容原八頁備份。"""
 
 from __future__ import annotations
 
@@ -12,7 +12,7 @@ import re
 import tempfile
 
 
-PAGES = (
+LEGACY_PAGES = (
     "MES-WIP/WIP-menu.html",
     "MES-WIP/setup/wip-query_schedule_plan_new.html",
     "MES-WIP/setup/wip-query_schedule_detail_new.html",
@@ -22,6 +22,7 @@ PAGES = (
     "MES-WIP/OPI/mold/wip-opi_schedule_mold_eqp.html",
     "MES-WIP/OPI/mold/wip-query_schedule_clear.html",
 )
+PAGES = (*LEGACY_PAGES, "index.html")
 TAG = '<script defer src="/KSS_MES/ai-agent/widget-loader.js" data-assistant-url="/KSS_MES/ai-agent/"></script>'
 
 
@@ -149,8 +150,9 @@ def restore(manifest_path: Path) -> dict:
     mes_root = Path(manifest["mes_root"]).resolve(strict=True)
     backup_root = _backup_location(mes_root, manifest_path.parent, fresh=False)
     entries = manifest.get("pages", [])
-    if len(entries) != len(PAGES) or {entry.get("path") for entry in entries} != set(PAGES):
-        raise WidgetError("備份清單必須完整列出固定八頁，不能增加、缺漏或重複。")
+    paths = {entry.get("path") for entry in entries}
+    if not any(len(entries) == len(expected) and paths == set(expected) for expected in (PAGES, LEGACY_PAGES)):
+        raise WidgetError("備份清單須為原八頁或含首頁的完整九頁，不能增加、缺漏或重複。")
     changes = []
     for entry in entries:
         relative = entry["path"]
@@ -167,7 +169,7 @@ def restore(manifest_path: Path) -> dict:
 
 
 def main() -> None:
-    parser = argparse.ArgumentParser(description="安裝或還原 MES 八頁助理入口；須另由操作人員指定網站外全新備份目錄。")
+    parser = argparse.ArgumentParser(description="安裝 MES 首頁及八頁助理入口，或還原原八頁／九頁備份；須指定網站外全新備份目錄。")
     parser.add_argument("--mes-root", type=Path, help="既有 MES 的 wwwroot")
     parser.add_argument("--backup-root", type=Path, help="網站外全新獨立備份目錄（上層須存在）")
     parser.add_argument("--restore", type=Path, metavar="MANIFEST", help="依原始 manifest.json 還原；拒絕覆蓋安裝後的他人修改")

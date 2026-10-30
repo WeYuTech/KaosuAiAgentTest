@@ -25,6 +25,23 @@
   const frame = document.createElement('iframe');
   frame.title = 'Emerald.AI 生產情報助理 · 作業'; frame.referrerPolicy = 'strict-origin-when-cross-origin';
   let loaded = false, opened = false;
+  let locale = 'zh-TW';
+  const captions = () => locale === 'en' ? ['Open production assistant', 'Close production assistant', 'Production assistant'] : locale === 'th' ? ['เปิดผู้ช่วยการผลิต', 'ปิดผู้ช่วยการผลิต', 'ผู้ช่วยการผลิต'] : ['開啟生產情報助理', '收合生產情報助理', '生產情報助理'];
+  const paint = resolved => {
+    const dark = resolved === 'dark';
+    launcher.style.background = dark ? 'oklch(0.21 0.006 285.885)' : 'white';
+    launcher.style.color = dark ? 'oklch(0.985 0 0)' : 'oklch(0.141 0.005 285.823)';
+    launcher.style.borderColor = dark ? 'oklch(0.37 0.013 285.806)' : 'oklch(0.92 0.004 286.32)';
+    frame.style.background = dark ? 'oklch(0.141 0.005 285.823)' : 'white';
+    launcher.setAttribute('aria-label', captions()[opened ? 1 : 0]);
+    launcher.title = captions()[2]; frame.title = `Emerald.AI · ${captions()[2]}`;
+  };
+  try {
+    const savedLocale = localStorage.getItem('kaosu-assistant:locale');
+    if (['zh-TW', 'en', 'th'].includes(savedLocale)) locale = savedLocale;
+    const savedTheme = localStorage.getItem('kaosu-assistant:theme');
+    paint(savedTheme === 'dark' || ((!savedTheme || savedTheme === 'system') && window.matchMedia?.('(prefers-color-scheme: dark)').matches) ? 'dark' : 'light');
+  } catch { /* 瀏覽器禁止偏好儲存時，仍可正常操作。 */ }
   const setOpen = next => {
     opened = next;
     if (next && !loaded) { frame.src = target.href; loaded = true; }
@@ -32,13 +49,18 @@
     launcher.style.display = '';
     launcher.innerHTML = next ? down : bot;
     launcher.setAttribute('aria-expanded', String(next));
-    launcher.setAttribute('aria-label', next ? '收合生產情報助理' : '開啟生產情報助理');
+    launcher.setAttribute('aria-label', captions()[next ? 1 : 0]);
     if (next) { frame.contentWindow?.postMessage({ type: 'kaosu-assistant:open' }, target.origin); frame.focus(); }
     else { frame.dataset.expanded = 'false'; launcher.focus(); }
   };
   launcher.addEventListener('click', () => setOpen(!opened));
   window.addEventListener('message', event => {
     if (event.source !== frame.contentWindow || event.origin !== target.origin) return;
+    if (event.data?.type === 'kaosu-assistant:preferences') {
+      if (!['zh-TW', 'en', 'th'].includes(event.data.locale) || !['light', 'dark', 'system'].includes(event.data.theme) || !['light', 'dark'].includes(event.data.resolvedTheme)) return;
+      locale = event.data.locale;
+      paint(event.data.resolvedTheme);
+    }
     if (event.data?.type === 'kaosu-assistant:close') setOpen(false);
     if (event.data?.type === 'kaosu-assistant:resize') {
       const expanded = event.data.expanded === true;
