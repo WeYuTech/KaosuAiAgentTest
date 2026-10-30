@@ -1,0 +1,779 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="color-scheme" content="light dark">
+  <meta name="description" content="Emerald.AI 生產作業助理的五種互動流程 Demo。以同一筆合成報工任務，比較對話、摘要、任務入口、工單工作台與逐步引導。">
+  <title>五種操作流程 Demo · Emerald.AI</title>
+  <meta http-equiv="Content-Security-Policy" content="connect-src 'none'; object-src 'none'; base-uri 'none'">
+  <style>
+:root{color-scheme:light;--bg:#f7f8f6;--surface:#fff;--surface2:#f2f3f0;--line:#e2e5df;--ink:#20271f;--muted:#747b72;--accent:#24332a;--accent-soft:#e8eee7;--sidebar-width:228px;--shadow:0 5px 22px #28372205;--font-ui:Inter,"Noto Sans TC","PingFang TC","Microsoft JhengHei",system-ui,sans-serif}
+body[data-theme=dark]{color-scheme:dark;--bg:#151815;--surface:#1d221d;--surface2:#272d27;--line:#363e35;--ink:#edf1e8;--muted:#a2aca0;--accent:#e2eadb;--accent-soft:#313c30;--shadow:0 5px 22px #0002}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;font-family:var(--font-ui);font-size:14px;line-height:1.6;background:var(--bg);color:var(--ink);-webkit-font-smoothing:antialiased}button,input,select,textarea{font:inherit}button,a,input,select,textarea{-webkit-tap-highlight-color:transparent}button{cursor:pointer}button:disabled{cursor:not-allowed}a{color:inherit}button:focus-visible,a:focus-visible,select:focus-visible,input:focus-visible,textarea:focus-visible{outline:3px solid #6e9477;outline-offset:4px}[hidden]{display:none!important}.icon-definitions{position:absolute;width:0;height:0;overflow:hidden}.lab-icon{width:19px;height:19px;fill:none;stroke:currentColor;stroke-width:1.65;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0}.skip-link{position:fixed;top:-60px;left:16px;z-index:100;background:var(--ink);color:var(--surface);padding:10px 16px;border-radius:6px;text-decoration:none}.skip-link:focus{top:12px}.lab-shell{display:grid;grid-template-columns:var(--sidebar-width) minmax(0,1fr);min-height:100dvh}.lab-sidebar{height:100dvh;position:sticky;top:0;display:flex;flex-direction:column;padding:32px 18px 24px;background:var(--surface);border-right:1px solid var(--line)}.lab-brand{display:flex;gap:11px;align-items:center;text-align:left;padding:0 10px;background:none;border:0;color:var(--ink)}.brand-mark{width:35px;height:39px;display:block;flex-shrink:0}.brand-mark svg{width:100%;height:100%;stroke:var(--ink);fill:none;stroke-width:1.35;stroke-linejoin:round}.lab-brand strong{display:block;font-size:17px;font-weight:700;letter-spacing:-.45px;line-height:1.3}.brand-dot{padding:0 1px}.lab-brand small{display:block;font-size:10px;font-weight:500;letter-spacing:1.3px;color:var(--muted);margin-top:5px}.nav-caption{font-size:9px;font-weight:600;letter-spacing:1.5px;color:var(--muted);padding:0 12px;margin:45px 0 12px}.lab-nav{display:grid;gap:5px}.nav-item{border:0;border-radius:7px;display:flex;align-items:center;gap:12px;padding:12px;color:var(--muted);background:none;text-align:left;font-size:13px;font-weight:500;min-height:44px;transition:background .15s,color .15s}.nav-item:hover{background:var(--surface2);color:var(--ink)}.nav-item.is-active,.nav-item[aria-current=page]{color:var(--ink);background:var(--surface2)}.nav-item.is-active:before,.nav-item[aria-current=page]:before{content:"";position:absolute;left:0;width:3px;height:23px;background:var(--ink);border-radius:0 3px 3px 0}.nav-count{margin-left:auto;font:10px/1 ui-monospace,monospace;color:var(--muted);border:1px solid var(--line);padding:4px;border-radius:4px;background:var(--surface)}.sidebar-note{margin:auto 12px 40px;padding-top:44px;color:var(--muted)}.note-rule{display:block;width:25px;height:1px;background:var(--line);margin-bottom:17px}.sidebar-note strong{color:var(--ink);font-size:12px;font-weight:550}.sidebar-note p{font-size:11px;line-height:1.9;margin:8px 0 0}.sidebar-baseline{border-top:1px solid var(--line);padding:22px 12px 0;display:flex;align-items:center;gap:10px}.baseline-dot{height:7px;width:7px;background:#8c9d87;border-radius:50%;flex-shrink:0}.sidebar-baseline>div>span{font-size:10px;color:var(--muted);display:block}.sidebar-baseline a{font-size:11px;text-decoration:none;display:flex;gap:7px;align-items:center;margin-top:4px}.sidebar-baseline a:hover{text-decoration:underline}.sidebar-baseline code{font:10px ui-monospace,monospace;color:var(--muted)}.sidebar-baseline .lab-icon{width:12px;height:12px;transform:rotate(-45deg);margin-left:4px}.lab-main{min-width:0}.lab-header{height:73px;padding:0 42px;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;gap:16px;background:var(--bg)}.header-breadcrumb{display:flex;gap:14px;align-items:center;font-size:11px;color:var(--muted)}.header-breadcrumb strong{font-weight:550;color:var(--ink)}.breadcrumb-slash{opacity:.45}.header-actions{display:flex;gap:20px;align-items:center}.prototype-label{display:flex;align-items:center;gap:8px;font-size:10px;white-space:nowrap;color:var(--muted)}.prototype-label>span:first-child{width:5px;height:5px;background:#789775;border-radius:50%}.label-divider{height:10px;width:1px;background:var(--line);margin:0 1px}.lab-icon-button{border:1px solid var(--line);background:var(--surface);color:var(--ink);width:32px;height:32px;display:grid;place-items:center;border-radius:6px;transition:background .15s}.lab-icon-button:hover{background:var(--surface2)}.lab-icon-button .lab-icon{width:16px;height:16px}.lab-page{padding:36px 42px 20px;max-width:1572px;margin:0 auto}.gallery-hero{display:flex;align-items:center;justify-content:space-between;gap:36px;padding:10px 0 43px}.hero-copy{min-width:0}.eyebrow{display:flex;gap:10px;align-items:center;font-size:9px;line-height:1.5;letter-spacing:1.7px;font-weight:600}.eyebrow-rule{width:23px;height:1px;background:var(--ink)}.hero-copy h1{font-size:clamp(31px,3.05vw,45px);line-height:1.42;letter-spacing:-1.7px;font-weight:600;margin:19px 0 16px}.title-dot{color:#8b9b86}.hero-description{font-size:12px;color:var(--muted);line-height:1.95;margin:0;max-width:510px}.hero-brief{padding:20px 23px;border-left:1px solid var(--line);flex:0 0 262px}.brief-label{font-size:10px;color:var(--muted);letter-spacing:.3px}.brief-equipment{display:flex;gap:11px;align-items:center;margin:16px 0 12px}.brief-equipment strong{font-size:24px;letter-spacing:-.5px;font-weight:550;line-height:1.15}.brief-equipment small{display:block;font-size:9px;letter-spacing:0;font-weight:400;color:var(--muted);margin-top:7px}.machine-glyph{display:block;position:relative;height:39px;width:39px;border:1px solid var(--line);border-radius:5px;background:var(--surface)}.machine-glyph>span{position:absolute;top:8px;left:8px;width:14px;height:11px;border:1.2px solid var(--ink);border-radius:1px}.machine-glyph>i{position:absolute;top:8px;right:8px;width:3px;height:3px;background:var(--ink);border-radius:50%;box-shadow:0 6px 0 var(--line)}.machine-glyph:after{content:"";position:absolute;left:8px;right:8px;bottom:8px;height:6px;background:var(--surface2);border:1px solid var(--line);border-radius:1px}.hero-brief p{font-size:11px;line-height:1.9;margin:14px 0 17px;color:var(--muted)}.lab-primary,.lab-secondary{display:inline-flex;justify-content:center;align-items:center;gap:10px;min-height:37px;padding:9px 14px;border-radius:6px;text-decoration:none;font-size:11px;font-weight:500;white-space:nowrap}.lab-primary{background:var(--accent);color:var(--surface);border:1px solid var(--accent)}.lab-primary:hover{filter:brightness(1.2)}.lab-primary .lab-icon,.lab-secondary .lab-icon{height:15px;width:15px}.hero-brief .lab-primary{width:100%;justify-content:space-between}.lab-secondary{border:1px solid var(--line);background:var(--surface);color:var(--ink)}.lab-secondary:hover{background:var(--surface2)}.gallery-section-heading{display:flex;align-items:flex-end;justify-content:space-between;gap:20px;margin:0 0 18px}.muted-eyebrow{color:var(--muted);font-size:8px;letter-spacing:1.5px}.gallery-section-heading h2{font-size:17px;font-weight:550;letter-spacing:-.2px;margin:5px 0 0}.collection-note{font-size:10px;color:var(--muted);padding-bottom:2px}.concept-grid{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:18px}.concept-card{grid-column:span 2;border:1px solid var(--line);border-radius:10px;overflow:hidden;background:var(--surface);box-shadow:var(--shadow);transition:border-color .18s,box-shadow .18s;min-width:0}.concept-card:hover{border-color:#a6b19f;box-shadow:0 8px 30px #2837220b}.concept-featured{grid-column:span 3}.concept-preview{display:flex;width:100%;height:174px;align-items:center;justify-content:center;border:0;border-bottom:1px solid var(--line);border-radius:0;padding:22px 22px 0;background:var(--surface2);position:relative;overflow:hidden;color:var(--ink);text-align:left}.concept-featured .concept-preview{height:200px;padding:24px 35px 0}.concept-preview:before{content:"";position:absolute;inset:0;background-image:radial-gradient(var(--line) .7px,transparent .7px);background-size:12px 12px;opacity:.8;pointer-events:none}.preview-chat{background:#eef1eb}.preview-summary{background:#eeefed}.preview-tasks{background:#f0f2ed}.preview-workbench{background:#ecefeb}.preview-coach{background:#f1f0ec}body[data-theme=dark] .concept-preview{background:#242c23}.mini-app{width:100%;height:100%;max-width:390px;background:var(--surface);border:1px solid var(--line);border-bottom:0;border-radius:7px 7px 0 0;box-shadow:0 7px 20px #22341c0a;position:relative;overflow:hidden;pointer-events:none;transform:translateY(3px);transition:transform .2s;user-select:none}.concept-preview:hover .mini-app{transform:translateY(0)}.mini-top{height:31px;border-bottom:1px solid var(--line);display:flex;align-items:center;gap:7px;padding:0 11px}.mini-top strong{font-size:8px;font-weight:550}.mini-brand-square{height:9px;width:9px;border:1px solid var(--ink);border-radius:2px;transform:rotate(-15deg)}.mini-top-dot{height:4px;width:4px;border-radius:50%;background:#97aa91;margin-left:auto}.mini-chat-body{padding:12px 28px;display:flex;flex-direction:column;gap:9px}.mini-bubble{font-size:7px;border-radius:5px;padding:5px 9px;display:inline-block}.mini-user{align-self:flex-end;background:var(--surface2)}.mini-agent-line{font-size:7px;display:flex;align-items:center;gap:5px;line-height:1.5}.mini-agent-line i{display:block;flex-shrink:0;width:7px;height:7px;background:var(--ink);border-radius:2px}.mini-order{display:grid;gap:2px;padding:7px 10px;border:1px solid var(--line);border-radius:5px;position:relative;width:87%;margin-left:12px}.mini-order>span:first-child{font-size:6px;color:var(--muted)}.mini-order b{font-size:8px;font-weight:550}.mini-order-arrow{position:absolute;right:10px;top:14px;font-size:11px}.mini-compose{display:flex;align-items:center;justify-content:space-between;font-size:6px;color:var(--muted);border:1px solid var(--line);padding:6px 7px;border-radius:5px;background:var(--surface);gap:6px}.mini-compose>b{height:12px;width:12px;display:grid;place-items:center;background:var(--ink);color:var(--surface);border-radius:50%;font-size:7px;font-weight:400;flex-shrink:0}.mini-chat-body .mini-compose{margin-top:2px}.preview-badge{position:absolute;top:13px;right:13px;background:var(--surface);border:1px solid var(--line);border-radius:4px;padding:3px 7px;font-size:8px;color:var(--muted);z-index:1}.mini-split-body{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);height:calc(100% - 31px)}.mini-split-chat{display:flex;flex-direction:column;gap:12px;padding:15px 12px}.mini-split-chat .mini-compose{margin-top:auto}.mini-summary{border-left:1px solid var(--line);background:var(--bg);padding:13px 12px}.mini-uppercase{display:block;font-size:7px;font-weight:500;letter-spacing:.5px;color:var(--muted)}.mini-summary>div{margin-top:12px}.mini-summary small{font-size:6px;color:var(--muted);display:block}.mini-summary>div>strong{font-size:8px;font-weight:550;display:block;margin-top:3px}.mini-summary-numbers{display:flex;gap:20px;border-top:1px solid var(--line);padding-top:8px}.mini-summary-numbers strong{font-size:17px;font-weight:500;display:block;line-height:1.3;margin-top:2px}.mini-save{font-size:6px;color:var(--muted);display:block;margin-top:10px}.mini-save>span{margin-right:3px;color:#7c9875}.mini-tasks{max-width:310px}.mini-task-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px;padding:14px 11px 11px}.mini-task{display:flex;flex-direction:column;gap:6px;padding:10px 5px;border:1px solid var(--line);border-radius:4px;text-align:center;align-items:center}.mini-task.is-selected{border-color:var(--ink);background:var(--surface2)}.mini-task .lab-icon{width:13px;height:13px}.mini-task b{font-size:7px;white-space:nowrap;font-weight:500}.mini-task span{font-size:5px;color:var(--muted);white-space:nowrap}.mini-task-footer{display:flex;justify-content:space-between;border-top:1px solid var(--line);font-size:6px;color:var(--muted);margin:0 11px;padding-top:9px}.mini-task-footer span{font-size:10px}.mini-workbench{max-width:310px}.mini-search{margin-left:auto;border:1px solid var(--line);padding:3px 9px;border-radius:3px;font-size:5px;color:var(--muted)}.mini-table{padding:8px 9px 0}.mini-table-row{display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:8px;font-size:6px;padding:7px 5px;align-items:center;border-bottom:1px solid var(--line)}.mini-table-head{color:var(--muted);font-size:5px;padding-top:0;padding-bottom:4px}.mini-table-row b{font-weight:500}.mini-table-selected{background:var(--surface2);border-radius:3px;box-shadow:inset 2px 0 0 var(--ink)}.mini-status{font-size:5px}.mini-table-action{display:flex;align-items:center;justify-content:space-between;padding:8px 14px;font-size:5px;color:var(--muted)}.mini-table-action b{font-size:6px;background:var(--ink);color:var(--surface);padding:4px 7px;border-radius:3px;font-weight:400}.mini-coach{max-width:240px;padding:14px 22px 0;text-align:center}.mini-coach-progress{display:flex;justify-content:center;gap:4px;margin-bottom:12px}.mini-coach-progress>span{height:3px;width:28px;border-radius:5px;background:var(--line)}.mini-coach-progress .is-done{background:var(--ink)}.mini-coach-progress .is-current{background:#98aa91}.mini-coach .mini-uppercase{font-size:6px}.mini-question{font-size:10px;font-weight:550;display:block;margin:7px 0 9px}.mini-answer{font-size:19px;display:flex;justify-content:space-between;align-items:center;border:1px solid var(--line);border-radius:4px;padding:4px 12px;font-weight:500}.mini-answer small{font-size:6px;color:var(--muted)}.mini-coach-bottom{font-size:6px;display:flex;align-items:center;justify-content:space-between;margin-top:10px;color:var(--muted)}.mini-coach-bottom b{background:var(--ink);color:var(--surface);border-radius:3px;padding:5px 11px;font-weight:400}.concept-content{padding:19px 19px 17px}.concept-featured .concept-content{padding:20px 23px 18px}.concept-heading{display:flex;align-items:center;gap:10px;min-height:24px;flex-wrap:wrap}.concept-number{font:10px/1 ui-monospace,monospace;color:var(--muted);padding-right:8px;border-right:1px solid var(--line)}.concept-heading h3{font-size:16px;letter-spacing:-.4px;margin:0;font-weight:600}.concept-featured .concept-heading h3{font-size:18px}.recommended-pill{font-size:8px;border:1px solid var(--line);background:var(--accent-soft);color:var(--ink);padding:2px 6px;border-radius:4px;margin-left:auto;line-height:1.4}.concept-description{font-size:11px;line-height:1.8;color:var(--muted);margin:9px 0 14px;min-height:38px}.concept-featured .concept-description{min-height:0}.concept-flow{display:flex;align-items:center;gap:7px;flex-wrap:wrap;font-size:9px;line-height:1.5;color:var(--muted);margin-bottom:18px}.concept-flow span{padding:4px 6px;border-radius:4px;background:var(--surface2);color:var(--ink)}.concept-flow i{font-style:normal;font-size:9px}.concept-bottom{display:flex;align-items:center;justify-content:space-between;gap:8px;padding-top:13px;border-top:1px solid var(--line)}.concept-bottom>span{font-size:8px;color:var(--muted);display:flex;flex-wrap:wrap;gap:4px}.concept-bottom strong{font-weight:400;color:var(--ink)}.concept-open{display:flex;align-items:center;justify-content:center;gap:8px;color:var(--ink);border:0;background:none;padding:5px 0 5px 5px;font-size:10px;min-height:30px;white-space:nowrap}.concept-open .lab-icon{width:14px;height:14px;transition:transform .15s}.concept-open:hover .lab-icon{transform:translateX(3px)}.gallery-followup{margin-top:30px;border-top:1px solid var(--line);padding:27px 0;display:flex;align-items:center;justify-content:space-between;gap:20px}.gallery-followup h2{font-size:17px;letter-spacing:-.2px;font-weight:550;margin:5px 0 5px}.gallery-followup p{font-size:11px;color:var(--muted);margin:0}.lab-page-footer{display:flex;justify-content:space-between;gap:12px;border-top:1px solid var(--line);padding:17px 0 0;font-size:8px;color:var(--muted);letter-spacing:.7px}.lab-page-footer>span:last-child{letter-spacing:0}.demo-page{padding-top:21px}.demo-heading-row{display:flex;align-items:center;justify-content:space-between;gap:15px;margin-bottom:16px}.lab-back{display:inline-flex;align-items:center;gap:8px;border:0;padding:3px 0;background:none;color:var(--muted);font-size:11px;min-height:28px}.lab-back:hover{color:var(--ink)}.lab-back .lab-icon{width:15px;height:15px}.demo-context-note{font-size:9px;color:var(--muted)}.demo-title-row{display:flex;justify-content:space-between;align-items:center;gap:18px;margin-bottom:19px}.demo-title-group{display:flex;align-items:center;gap:14px;min-width:0}.demo-number{font:15px/1 ui-monospace,monospace;color:var(--muted);height:39px;width:39px;display:grid;place-items:center;border:1px solid var(--line);border-radius:7px;background:var(--surface);flex-shrink:0}.demo-title-group h1{font-size:22px;line-height:1.3;letter-spacing:-.5px;font-weight:550;margin:0 0 5px}.demo-title-group p{font-size:10px;color:var(--muted);margin:0}.demo-tools{display:flex;align-items:center;gap:10px;flex-shrink:0}.scenario-control{display:flex;align-items:center;gap:8px;font-size:10px;color:var(--muted)}.scenario-control select{border:1px solid var(--line);background:var(--surface);color:var(--ink);font-size:11px;min-height:37px;padding:7px 26px 7px 10px;border-radius:6px}.demo-mode-tabs{display:flex;gap:2px;margin-bottom:16px;border-bottom:1px solid var(--line)}.demo-mode-tabs>button{padding:12px 15px;background:none;border:0;border-bottom:2px solid transparent;font-size:11px;color:var(--muted);display:flex;gap:7px;align-items:center;white-space:nowrap;min-height:40px}.demo-mode-tabs>button>span{font:9px ui-monospace,monospace;opacity:.65}.demo-mode-tabs>button.is-active,.demo-mode-tabs>button[aria-current=page]{color:var(--ink);border-bottom-color:var(--ink);font-weight:550}.demo-mode-tabs>button:hover{color:var(--ink);background:var(--surface2)}.demo-stage{background:var(--surface);border:1px solid var(--line);border-radius:10px;overflow:hidden;box-shadow:var(--shadow)}#demo-root{min-height:600px;min-width:0}.demo-underbar{display:flex;justify-content:space-between;align-items:center;gap:15px;padding:13px 2px;font-size:9px;color:var(--muted)}#demo-step{color:var(--ink)}.analysis-page{padding-top:39px;max-width:1350px}.analysis-page h1{font-size:32px;letter-spacing:-.9px;line-height:1.4;margin:0 0 15px;font-weight:550}.analysis-page h2{font-size:21px;font-weight:550;line-height:1.5;margin:28px 0 13px;letter-spacing:-.4px}.analysis-page h3{font-size:16px;font-weight:550;margin:18px 0 10px}.analysis-page p{color:var(--muted);line-height:1.9;font-size:13px}.analysis-page strong{color:var(--ink);font-weight:550}.analysis-page a{text-underline-offset:3px}.analysis-page table{width:100%;border-collapse:collapse;border:1px solid var(--line);background:var(--surface);font-size:12px;margin:20px 0;line-height:1.8}.analysis-page th,.analysis-page td{text-align:left;vertical-align:top;border-bottom:1px solid var(--line);padding:14px 15px;overflow-wrap:anywhere}.analysis-page th{background:var(--surface2);font-size:11px;font-weight:550}.analysis-page td{color:var(--muted)}.analysis-page ul,.analysis-page ol{padding-left:21px;font-size:13px;line-height:1.9;color:var(--muted)}.analysis-page li+li{margin-top:8px}.analysis-page code{font:11px ui-monospace,monospace;background:var(--surface2);padding:3px 5px;border-radius:4px}.analysis-page blockquote{margin:22px 0;border-left:3px solid var(--ink);padding:14px 20px;background:var(--surface);border-radius:0 6px 6px 0}.analysis-page blockquote p{margin:0}.analysis-card,.finding-card,.recommendation-card{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:21px;margin:17px 0}.analysis-card h3,.finding-card h3,.recommendation-card h3{margin-top:0}.analysis-card p:last-child,.finding-card p:last-child,.recommendation-card p:last-child{margin-bottom:0}.table-scroll{overflow-x:auto}.analysis-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}.analysis-grid>.analysis-card{margin:0}
+@media(min-width:1600px){.lab-page{padding-left:60px;padding-right:60px}.lab-header{padding-left:60px;padding-right:60px}.concept-featured .concept-preview{height:224px}.concept-preview{height:190px}.mini-app{max-width:410px}.mini-tasks,.mini-workbench{max-width:325px}.mini-coach{max-width:255px}.hero-brief{flex-basis:285px}}
+@media(max-width:1199px){:root{--sidebar-width:194px}.lab-sidebar{padding-left:12px;padding-right:12px}.lab-brand{gap:8px;padding-left:7px;padding-right:5px}.lab-brand strong{font-size:15px}.lab-brand small{font-size:9px;letter-spacing:.7px}.brand-mark{width:29px;height:34px}.lab-header{padding:0 28px}.lab-page{padding-left:28px;padding-right:28px}.gallery-hero{gap:20px}.hero-brief{flex-basis:232px;padding-left:20px;padding-right:0}.hero-copy h1{font-size:34px;letter-spacing:-1.4px}.hero-description{font-size:11px}.concept-grid{gap:14px}.concept-featured .concept-preview{padding-left:22px;padding-right:22px}.concept-preview{padding-left:13px;padding-right:13px;height:156px}.concept-content{padding:15px 13px 13px}.concept-featured .concept-content{padding:18px}.concept-heading{gap:7px}.concept-heading h3{font-size:14px}.concept-number{padding-right:6px}.concept-flow{gap:4px}.concept-flow span{padding:4px 5px;font-size:8px}.concept-bottom{align-items:flex-start}.concept-bottom>span{font-size:8px;max-width:105px}.concept-featured .concept-bottom>span{max-width:none}.mini-task-grid{gap:4px;padding:12px 8px 8px}.mini-task{gap:5px;padding:8px 3px}.mini-task span{font-size:4.5px}.mini-coach{padding:12px 16px 0}.mini-coach-progress{margin-bottom:8px}.mini-question{font-size:9px;margin-bottom:7px}.mini-answer{font-size:17px;padding:3px 10px}.demo-tools{gap:6px}.demo-tools .lab-secondary{font-size:10px;padding:8px 10px}.demo-mode-tabs>button{padding-left:12px;padding-right:12px}.demo-title-group p{max-width:295px}.scenario-control{font-size:9px;gap:5px}}
+@media(max-width:999px){:root{--sidebar-width:174px}.lab-sidebar{padding-top:26px}.lab-brand strong{font-size:13px}.brand-mark{width:26px;height:30px}.lab-brand small{font-size:8px}.nav-caption{font-size:8px;letter-spacing:.8px;padding-left:9px}.nav-item{font-size:11px;gap:9px;padding:11px 9px}.nav-item .lab-icon{height:16px;width:16px}.sidebar-note{margin-left:9px;margin-right:9px}.sidebar-note p{font-size:10px}.lab-header{height:64px;padding-left:22px;padding-right:22px}.lab-page{padding-left:22px;padding-right:22px}.hero-brief{display:none}.gallery-hero{padding-bottom:30px}.hero-copy h1{font-size:37px}.concept-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.concept-card,.concept-featured{grid-column:span 1}.concept-card:last-child{grid-column:1/-1;display:grid;grid-template-columns:1fr 1fr}.concept-card:last-child .concept-preview{height:100%;min-height:190px;border-bottom:0;border-right:1px solid var(--line);padding-top:22px}.concept-preview,.concept-featured .concept-preview{height:185px;padding:22px 20px 0}.concept-content,.concept-featured .concept-content{padding:18px}.concept-heading h3,.concept-featured .concept-heading h3{font-size:15px}.concept-description,.concept-featured .concept-description{min-height:39px}.concept-flow{gap:5px}.concept-flow span{font-size:8px}.concept-bottom>span{max-width:100px}.mini-chat-body{padding:12px 16px}.mini-split-chat{padding:12px 8px;gap:12px}.mini-summary{padding:12px 8px}.mini-summary-numbers{gap:12px}.demo-title-row{flex-wrap:wrap}.demo-tools{width:100%;justify-content:flex-end}.demo-mode-tabs{overflow-x:auto;scrollbar-width:thin;max-width:100%}.demo-mode-tabs>button{flex:1;padding-left:9px;padding-right:9px;font-size:10px;gap:5px}.demo-context-note{font-size:8px}.analysis-page h1{font-size:28px}.analysis-page table{font-size:11px}.analysis-page th,.analysis-page td{padding:11px}.analysis-grid{grid-template-columns:1fr}}
+@media(max-width:719px){.lab-shell{display:block}.lab-sidebar{height:auto;position:relative;display:flex;padding:18px 19px 0;border-right:0;border-bottom:1px solid var(--line)}.lab-brand{align-self:flex-start;padding:0}.lab-brand strong{font-size:16px}.lab-brand small{font-size:9px;letter-spacing:1px}.brand-mark{width:29px;height:33px}.nav-caption,.sidebar-note,.sidebar-baseline{display:none}.lab-nav{display:flex;gap:5px;justify-content:space-between;margin-top:17px}.nav-item{justify-content:center;font-size:11px;flex:1;border-radius:0;border-bottom:2px solid transparent;min-height:42px;gap:7px;padding:9px 4px;background:none}.nav-item.is-active,.nav-item[aria-current=page]{background:none;border-bottom-color:var(--ink)}.nav-item.is-active:before,.nav-item[aria-current=page]:before{display:none}.nav-count{display:none}.nav-item .lab-icon{width:15px;height:15px}.lab-header{height:51px;padding:0 19px;background:var(--bg)}.header-breadcrumb{font-size:9px;gap:9px}.header-actions{gap:11px}.prototype-label{font-size:8px;gap:5px}.lab-icon-button{width:29px;height:29px}.lab-page{padding:25px 19px 18px}.gallery-hero{padding:0 0 28px}.eyebrow{font-size:8px;letter-spacing:1.3px}.hero-copy h1{font-size:34px;line-height:1.45;margin-top:16px;margin-bottom:13px;letter-spacing:-1.3px}.hero-description{font-size:11px;line-height:1.9}.gallery-section-heading{margin-bottom:14px;gap:10px}.gallery-section-heading h2{font-size:16px}.collection-note{font-size:8px}.concept-grid{gap:15px;grid-template-columns:1fr}.concept-card,.concept-featured,.concept-card:last-child{grid-column:1;display:block}.concept-preview,.concept-featured .concept-preview,.concept-card:last-child .concept-preview{height:203px;border-right:0;border-bottom:1px solid var(--line);padding:23px 30px 0;min-height:0}.concept-content,.concept-featured .concept-content{padding:19px}.concept-heading h3,.concept-featured .concept-heading h3{font-size:17px}.concept-description,.concept-featured .concept-description{min-height:0;font-size:11px;margin-bottom:14px}.concept-flow{gap:7px;margin-bottom:15px}.concept-flow span{font-size:9px;padding:4px 7px}.concept-bottom{align-items:center}.concept-bottom>span,.concept-featured .concept-bottom>span{max-width:none;font-size:9px}.concept-open{font-size:11px;min-height:34px}.mini-chat-body{padding:12px 26px}.mini-split-chat{padding:16px 13px}.mini-summary{padding:15px 13px}.mini-tasks,.mini-workbench{max-width:325px}.mini-task-grid{gap:7px;padding:18px 13px 13px}.mini-task{padding:13px 5px;gap:7px}.mini-task b{font-size:8px}.mini-task span{font-size:6px}.mini-task .lab-icon{width:15px;height:15px}.mini-task-footer{font-size:7px;padding-top:11px}.mini-top{height:33px}.mini-top strong{font-size:9px}.mini-table{padding:10px 10px 0}.mini-table-row{padding:8px 5px;font-size:7px}.mini-table-head{font-size:6px;padding-top:0;padding-bottom:6px}.mini-table-action{padding-top:11px;font-size:6px}.mini-table-action b{font-size:7px;padding:5px 8px}.mini-coach{padding:17px 24px 0;max-width:270px}.mini-coach-progress{margin-bottom:13px}.mini-coach .mini-uppercase{font-size:7px}.mini-question{font-size:11px;margin:10px 0}.mini-answer{font-size:22px;padding:5px 13px}.mini-coach-bottom{font-size:7px;margin-top:13px}.mini-coach-bottom b{padding:6px 13px}.gallery-followup{align-items:flex-start;flex-direction:column;gap:17px;margin-top:23px;padding-top:25px}.gallery-followup h2{font-size:16px}.gallery-followup p{font-size:10px}.gallery-followup .lab-secondary{font-size:11px}.lab-page-footer{font-size:7px;letter-spacing:.3px}.lab-page-footer>span:last-child{display:none}.demo-page{padding-top:15px;padding-left:12px;padding-right:12px}.demo-heading-row{margin:0 6px 12px}.demo-context-note{font-size:8px}.demo-title-row{margin-left:6px;margin-right:6px;gap:13px;margin-bottom:11px}.demo-title-group{gap:10px}.demo-number{width:32px;height:34px;font-size:13px}.demo-title-group h1{font-size:20px}.demo-title-group p{font-size:9px;max-width:none}.demo-tools{justify-content:space-between}.scenario-control{font-size:10px;gap:8px}.scenario-control select{font-size:10px;min-height:34px}.demo-tools .lab-secondary{min-height:34px;padding:7px 10px;font-size:10px}.demo-mode-tabs{margin-bottom:12px}.demo-mode-tabs>button{font-size:9px;padding:10px 7px;flex:0 0 auto;min-height:39px}.demo-mode-tabs>button>span{font-size:8px}.demo-stage{border-radius:8px}#demo-root{min-height:600px}.demo-underbar{font-size:8px;padding-left:6px;padding-right:6px;align-items:flex-start;gap:10px}.demo-underbar>span:last-child{max-width:100px;text-align:right}.analysis-page h1{font-size:26px}.analysis-page h2{font-size:19px}.analysis-page p{font-size:12px}.analysis-page th,.analysis-page td{padding:10px 8px;font-size:10px}.analysis-card,.finding-card,.recommendation-card{padding:17px}.analysis-page table{display:block;overflow-x:auto}.analysis-page ul,.analysis-page ol{font-size:12px}}
+.analysis-heading{max-width:860px;margin-bottom:27px}.analysis-heading .eyebrow{margin-bottom:16px}.analysis-lede{max-width:860px;font-size:14px!important;line-height:1.95!important;margin:12px 0 23px}.evidence-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:17px;margin:24px 0}.evidence-card{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:21px;min-width:0}.evidence-card h2,.evidence-card h3{font-size:16px;margin:12px 0 9px;line-height:1.6}.evidence-card p{font-size:12px;margin:9px 0;line-height:1.85}.evidence-tag{display:inline-flex;align-items:center;padding:3px 7px;border:1px solid var(--line);border-radius:4px;font-size:9px;color:var(--muted);background:var(--surface2);font-weight:500;letter-spacing:.2px}.evidence-link{display:inline-flex;gap:5px;align-items:center;font-size:10px;color:var(--muted);margin-top:9px;text-underline-offset:3px}.evidence-link:hover{color:var(--ink)}.recommendation-card{border-left:3px solid var(--ink);padding:24px 25px}.recommendation-card h2,.recommendation-card h3{margin-top:0}.table-wrap{width:100%;overflow-x:auto;border-radius:8px;margin:20px 0}.table-wrap .comparison-table{margin:0;min-width:660px}.comparison-table th:first-child{width:145px}.comparison-table td:first-child{font-weight:550;color:var(--ink)}.test-list{padding:0!important;list-style:none;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:13px;margin:20px 0}.test-list>li{margin:0!important;background:var(--surface);border:1px solid var(--line);border-radius:7px;padding:14px 17px;font-size:12px}.test-list>li:before{content:"✓";margin-right:9px;color:#7b9775}.scope-note{border-top:1px solid var(--line);padding-top:17px;margin-top:25px;font-size:11px!important;color:var(--muted);line-height:1.9}.scope-note a{font-size:11px}.scope-note strong{font-weight:550}
+@media(max-width:999px){.evidence-grid{grid-template-columns:1fr}.test-list{grid-template-columns:1fr}}
+@media(max-width:719px){.evidence-card{padding:18px}.analysis-lede{font-size:12px!important}.recommendation-card{padding:19px}.evidence-grid{gap:13px}.test-list>li{font-size:11px}.table-wrap .comparison-table{display:table}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*:before,*:after{transition:none!important;animation:none!important}}
+
+.evidence-meta{display:flex;align-items:center;gap:12px}.evidence-number{font-family:ui-monospace,monospace;color:var(--muted);font-size:12px}.evidence-change{border-left:2px solid var(--line);padding-left:12px;margin-top:17px}.evidence-change>span{font-size:10px;color:var(--muted)}.evidence-change>p{margin-top:4px}.primary-recommendation{display:flex;align-items:center;gap:24px;justify-content:space-between}.primary-recommendation>div{max-width:680px}.comparison-table caption{text-align:left;color:var(--muted);font-size:11px;padding:12px 0}.text-link{background:none;border:0;color:var(--ink);text-decoration:underline;text-underline-offset:4px;white-space:nowrap;min-height:40px}.mode-surface{min-width:0}.analysis-page .test-list{grid-template-columns:1fr;gap:8px}.analysis-page .test-list>li{border:0;background:var(--surface2);padding:10px 12px}.lab-page[data-theme]{color:var(--ink)}@media(max-width:719px){.primary-recommendation{display:block}.primary-recommendation .lab-primary{margin-top:10px}}
+
+.ed-root{--ed-bg:var(--bg,#f7f8f8);--ed-surface:var(--surface,#fff);--ed-soft:var(--surface2,#f5f6f6);--ed-line:var(--line,#e5e7e7);--ed-ink:var(--ink,#202425);--ed-muted:var(--muted,#757d7e);--ed-accent:var(--accent,#276b58);--ed-accent-soft:var(--accent-soft,#eef7f2);font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI","Noto Sans TC",sans-serif;color:var(--ed-ink);background:var(--ed-surface);min-height:660px;position:relative;border-radius:15px;overflow:hidden;isolation:isolate;font-size:14px;line-height:1.6}
+.ed-root *{box-sizing:border-box}.ed-root button,.ed-root input,.ed-root select,.ed-root textarea{font:inherit}.ed-root button{cursor:pointer}.ed-root button:disabled{cursor:not-allowed;opacity:.48}.ed-root button:focus-visible,.ed-root input:focus-visible,.ed-root select:focus-visible,.ed-root textarea:focus-visible,.ed-root summary:focus-visible{outline:3px solid #80bba8;outline-offset:3px}.ed-root h2,.ed-root h3,.ed-root h4,.ed-root p{margin:0}.ed-root svg{flex-shrink:0;vertical-align:middle}.ed-root .ed-btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:39px;padding:9px 15px;border:1px solid transparent;border-radius:9px;line-height:1.35;color:var(--ed-ink);background:transparent;font-weight:550;font-size:13px;text-decoration:none;transition:background .16s,border-color .16s,transform .16s}.ed-root .ed-btn:active:not(:disabled){transform:translateY(1px)}.ed-root .ed-primary{background:var(--ed-ink);color:var(--ed-surface);border-color:var(--ed-ink);font-weight:650}.ed-root .ed-primary:hover:not(:disabled){opacity:.88}.ed-root .ed-secondary{background:var(--ed-surface);border-color:var(--ed-line)}.ed-root .ed-secondary:hover:not(:disabled){background:var(--ed-soft);border-color:#b8c3bf}.ed-root .ed-subtle{color:var(--ed-muted);padding:7px 9px;min-height:32px;font-size:12px}.ed-root .ed-subtle:hover:not(:disabled){background:var(--ed-soft);color:var(--ed-ink)}.ed-root .ed-icon-btn{padding:6px;min-height:30px;min-width:30px;border-radius:7px}.ed-root .ed-icon-btn:hover{background:var(--ed-soft)}
+.ed-app-header{height:72px;padding:0 27px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--ed-line);gap:18px}.ed-header-brand{display:flex;align-items:center;gap:11px;font-size:17px;font-weight:700;letter-spacing:-.5px}.ed-brand-mark{width:35px;height:35px;display:grid;place-items:center;background:var(--ed-soft);border:1px solid var(--ed-line);border-radius:11px}.ed-brand-ai{color:var(--ed-muted);font-weight:450}.ed-header-brand small{display:block;font-size:10px;font-weight:450;color:var(--ed-muted);letter-spacing:.12em;line-height:1.1;margin-top:2px}.ed-header-right{display:flex;align-items:center;gap:15px}.ed-demo-badge,.ed-context-chip{display:inline-flex;gap:7px;align-items:center;border:1px solid var(--ed-line);border-radius:20px;padding:4px 10px;font-size:11px;color:var(--ed-muted);white-space:nowrap}.ed-context-chip{color:var(--ed-ink)}.ed-dot,.ed-running-dot{width:6px;height:6px;display:inline-block;flex-shrink:0;border-radius:50%;background:var(--ed-accent)}.ed-chip-divider{color:#c0c8c5}.ed-body{min-height:565px}.ed-prototype-note{display:flex;align-items:center;justify-content:center;gap:6px;font-size:10px;color:var(--ed-muted);min-height:25px;background:var(--ed-soft);border-top:1px solid var(--ed-line);letter-spacing:.02em}.ed-notice{position:relative;display:flex;align-items:flex-start;gap:9px;background:var(--ed-accent-soft);padding:11px 25px;font-size:12px;color:var(--ed-accent);border-bottom:1px solid var(--ed-line)}.ed-notice>svg{margin-top:2px}.ed-notice>span{flex:1}.ed-notice .ed-btn{margin-top:-4px;margin-bottom:-4px}.ed-section-kicker,.ed-eyebrow{font-size:11px;font-weight:650;letter-spacing:.11em;color:var(--ed-muted)}.ed-root .ed-eyebrow{color:var(--ed-accent)}.ed-micro{font-size:11px;color:var(--ed-muted)}
+.ed-single-chat{max-width:900px;margin:auto}.ed-chat-panel{display:flex;flex-direction:column;min-width:0;height:600px}.ed-chat-scroll{flex:1;overflow:auto;scrollbar-width:thin;scrollbar-color:#c6cecb transparent;overscroll-behavior:contain;padding:0 28px}.ed-chat-welcome{max-width:540px;padding:45px 0 20px;margin:0 auto;text-align:center}.ed-welcome-glyph{height:50px;width:50px;border:1px solid var(--ed-line);border-radius:17px;margin:0 auto 17px;background:var(--ed-soft);display:grid;place-items:center;color:var(--ed-ink)}.ed-chat-welcome h2{font-size:29px;line-height:1.35;margin:9px 0 12px;font-weight:650;letter-spacing:-.04em}.ed-root .ed-welcome-copy{font-size:13px;color:var(--ed-muted);line-height:1.8}.ed-starter-list{display:flex;flex-direction:column;gap:7px;max-width:380px;margin:22px auto 12px}.ed-root .ed-starter{justify-content:space-between;border:1px solid var(--ed-line);background:var(--ed-surface);min-height:46px;padding:11px 15px;font-size:12px;font-weight:500;text-align:left}.ed-starter>span{display:flex;gap:10px;align-items:center}.ed-root .ed-starter:hover{border-color:#b3c6be;background:var(--ed-accent-soft)}.ed-starter>svg{color:var(--ed-muted)}.ed-composer{padding:16px 29px 13px;background:var(--ed-surface);flex-shrink:0}.ed-composer-box{display:flex;align-items:flex-end;gap:12px;padding:11px 11px 11px 17px;border:1px solid #cfd7d3;border-radius:16px;background:var(--ed-surface);box-shadow:0 2px 7px #14291e04}.ed-composer-box:focus-within{border-color:var(--ed-accent);box-shadow:0 0 0 2px var(--ed-accent-soft)}.ed-composer textarea{display:block;width:100%;background:transparent;resize:none;border:0;color:var(--ed-ink);outline:0;min-height:32px;max-height:90px;line-height:1.65;padding:5px 0;font-size:13px}.ed-root .ed-composer textarea:focus-visible{outline:0}.ed-send{border:0;background:var(--ed-ink);color:var(--ed-surface);border-radius:50%;display:grid;place-items:center;width:34px;height:34px;flex-shrink:0}.ed-composer-note{display:flex;justify-content:space-between;font-size:9px;color:var(--ed-muted);padding:7px 3px 0}.ed-transcript{max-width:650px;margin:0 auto;padding:25px 0 15px;display:flex;flex-direction:column;gap:17px}.ed-user-message{align-self:flex-end;max-width:85%;border-radius:15px 15px 3px 15px;background:var(--ed-soft);padding:9px 14px;font-size:12px;white-space:pre-wrap;overflow-wrap:anywhere}.ed-assistant-plain{font-size:13px;padding-left:35px;color:var(--ed-muted);white-space:pre-wrap}.ed-assistant-block{display:flex;gap:12px;align-items:flex-start}.ed-message-avatar{display:grid;place-items:center;flex:0 0 28px;width:28px;height:28px;border-radius:9px;background:var(--ed-soft);border:1px solid var(--ed-line);color:var(--ed-ink)}.ed-message-content{flex:1;min-width:0}.ed-message-content>p{font-size:13px;line-height:1.8;margin:2px 0 12px}.ed-inline-card{border:1px solid var(--ed-line);border-radius:13px;padding:19px;background:var(--ed-surface)}.ed-order-options{display:grid;gap:9px;margin:16px 0 11px}.ed-root .ed-order-option{display:flex;justify-content:space-between;gap:13px;padding:15px 16px;min-height:88px;background:var(--ed-surface);border:1px solid var(--ed-line);border-radius:11px;text-align:left;font-weight:400}.ed-root .ed-order-option:hover{border-color:var(--ed-accent);background:var(--ed-accent-soft)}.ed-order-icon{width:37px;height:42px;display:grid;place-items:center;background:var(--ed-soft);border-radius:9px;color:var(--ed-muted)}.ed-order-main{display:flex;flex:1;flex-direction:column;gap:2px;min-width:0}.ed-order-main strong{font-size:14px;font-weight:650;letter-spacing:.02em}.ed-order-main>span{font-size:12px}.ed-order-main small{font-size:10px;color:var(--ed-muted)}.ed-card-note{font-size:11px;color:var(--ed-muted);line-height:1.7;margin-top:10px!important}.ed-form-heading{margin:12px 0 18px}.ed-form-heading h3{font-size:17px;font-weight:650}.ed-form-heading p{font-size:11px;color:var(--ed-muted);margin-top:4px}.ed-card-context{display:flex;align-items:center;gap:10px;font-size:10px;color:var(--ed-muted);flex-wrap:wrap}.ed-card-context span{display:flex;align-items:center;gap:4px}.ed-card-context span+span:before{content:"";width:3px;height:3px;border-radius:50%;background:#b4c0ba;margin-right:4px}.ed-number-grid{display:grid;grid-template-columns:1fr 1fr;gap:13px}.ed-field{display:flex;flex-direction:column;gap:7px;text-align:left}.ed-field>span{font-size:11px;font-weight:600}.ed-field em{font-size:10px;color:var(--ed-muted);font-style:normal;font-weight:400;margin-left:5px}.ed-field input,.ed-field select{width:100%;min-width:0;min-height:42px;padding:8px 12px;background:var(--ed-surface);border:1px solid #d2dad6;border-radius:8px;color:var(--ed-ink);outline:0;font-size:16px}.ed-field select{font-size:12px}.ed-field input:focus,.ed-field select:focus{border-color:var(--ed-accent)}.ed-reason-field{margin-top:16px}.ed-form-actions{display:flex;justify-content:space-between;align-items:center;gap:9px;margin-top:21px;padding-top:15px;border-top:1px solid var(--ed-line)}.ed-field-error{display:flex;align-items:flex-start;gap:7px;padding:9px 10px;color:#a04231;background:#fff2ee;border:1px solid #f1d7cd;border-radius:7px;margin-top:12px;font-size:11px}.ed-field-error svg{margin-top:2px}
+.ed-review-card{padding:21px;border:1px solid var(--ed-line);border-radius:13px;background:var(--ed-surface);text-align:left}.ed-review-top{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:12px}.ed-status-pill{display:inline-flex;align-items:center;justify-content:center;gap:5px;padding:3px 8px;border-radius:6px;font-size:9px;font-weight:550;white-space:nowrap;letter-spacing:.03em}.ed-status-draft{background:var(--ed-soft);color:var(--ed-muted);border:1px solid var(--ed-line)}.ed-status-done{background:var(--ed-accent-soft);color:var(--ed-accent)}.ed-status-wait{color:#91681e;background:#fff3d7;margin-bottom:9px}.ed-review-card h3{font-size:19px;font-weight:650;letter-spacing:-.02em;margin-bottom:9px}.ed-summary-lines{margin:17px 0;padding:13px 0;border-top:1px solid var(--ed-line);border-bottom:1px solid var(--ed-line)}.ed-summary-lines>div{display:flex;align-items:center;justify-content:space-between;gap:8px;min-height:35px}.ed-summary-lines dt{font-size:11px;color:var(--ed-muted)}.ed-summary-lines dd{display:flex;align-items:center;gap:6px;margin:0;font-size:12px}.ed-summary-lines dd strong{font-size:20px;font-weight:650;letter-spacing:-.02em;font-variant-numeric:tabular-nums}.ed-summary-lines .ed-subtle{padding:4px;min-height:25px}.ed-impact-note{display:flex;align-items:flex-start;gap:7px;background:var(--ed-soft);color:var(--ed-muted);padding:10px 11px;border-radius:8px;font-size:10px;line-height:1.6}.ed-impact-note svg{margin-top:1px}.ed-details{margin-top:13px;color:var(--ed-muted);font-size:10px}.ed-details summary{cursor:pointer;list-style-position:inside;padding:4px 0}.ed-details dl{margin:8px 0;background:var(--ed-soft);border-radius:7px;padding:8px 11px}.ed-details dl>div{display:flex;justify-content:space-between;gap:10px;padding:3px 0}.ed-details dd{margin:0}.ed-review-actions{display:flex;flex-wrap:wrap;gap:7px;margin-top:17px}.ed-review-actions .ed-primary{flex:1;min-width:120px}.ed-review-actions>.ed-subtle{width:100%;min-height:26px;font-size:10px}.ed-root .ed-suggestion{font-size:10px;min-height:29px;padding:6px 11px;border:1px dashed #bfcec6;border-radius:16px;margin-top:11px;color:var(--ed-accent)}.ed-root .ed-suggestion:hover{background:var(--ed-accent-soft)}
+.ed-terminal{border:1px solid var(--ed-line);border-radius:14px;padding:30px 22px;background:var(--ed-surface);text-align:center}.ed-terminal-icon{width:54px;height:54px;display:grid;place-items:center;margin:0 auto 15px;background:var(--ed-accent-soft);color:var(--ed-accent);border-radius:50%}.ed-terminal .ed-section-kicker{display:block;font-size:9px;color:var(--ed-accent);margin-bottom:4px}.ed-terminal h3{font-size:21px;font-weight:650;letter-spacing:-.025em;line-height:1.45;margin-bottom:10px}.ed-terminal>p{font-size:12px;color:var(--ed-muted);line-height:1.9}.ed-terminal>small{display:block;font-size:10px;color:var(--ed-muted);margin-top:16px}.ed-terminal>.ed-primary{margin-top:20px}.ed-receipt-numbers{display:grid;grid-template-columns:1fr 1fr;gap:0;margin:24px 0 19px;padding:20px 0;border-top:1px solid var(--ed-line);border-bottom:1px solid var(--ed-line)}.ed-receipt-numbers>div+div{border-left:1px solid var(--ed-line)}.ed-receipt-numbers span{display:block;font-size:10px;color:var(--ed-muted)}.ed-receipt-numbers strong{display:block;font-size:32px;line-height:1.3;letter-spacing:-.045em;font-weight:600;margin-top:6px}.ed-receipt-numbers strong small{font-size:10px;font-weight:400;letter-spacing:0;color:var(--ed-muted);margin-left:6px}.ed-receipt-id{display:flex;justify-content:center;gap:13px;align-items:center;font-size:10px;color:var(--ed-muted)}.ed-receipt-id code{font-size:10px}.ed-terminal-actions{display:flex;justify-content:center;flex-wrap:wrap;gap:8px;margin-top:21px}.ed-unknown{--ed-ink:#3b3426;--ed-muted:#786c54;--ed-surface:#fffdf8;--ed-soft:#f7f2e7;--ed-line:#e5d8bb;--ed-accent:#91681e;border-color:#e5d8bb;background:#fffdf8}.ed-unknown .ed-terminal-icon{background:#fff1d1;color:#91681e}.ed-unknown>code{display:block;font-size:11px;color:#8f7546;margin:14px 0 0}.ed-result-compact{background:#f7f2e7;border-radius:8px;padding:13px;margin:18px 0 0}.ed-result-compact strong,.ed-result-compact span{display:block;font-size:11px}.ed-result-compact span{font-weight:400;color:#8b7b5f;margin-top:4px}.ed-icon-neutral{color:var(--ed-muted);background:var(--ed-soft)}.ed-spinner{display:inline-block;width:25px;height:25px;border:2px solid #d4ded9;border-top-color:var(--ed-accent);border-radius:50%;animation:ed-spin 1s linear infinite;margin:6px 0 18px}.ed-spinner-small{width:14px;height:14px;margin:0;border-top-color:currentColor}.ed-sending{padding:47px 20px}@keyframes ed-spin{to{transform:rotate(360deg)}}
+.ed-split-workspace{display:grid;grid-template-columns:minmax(0,1fr) 335px;min-height:600px}.ed-split-workspace .ed-chat-welcome{padding-top:48px}.ed-split-workspace .ed-chat-welcome h2{font-size:26px}.ed-split-workspace .ed-chat-scroll{padding:0 22px}.ed-split-workspace .ed-composer{padding-left:22px;padding-right:22px}.ed-summary-sidebar{border-left:1px solid var(--ed-line);background:var(--ed-soft);padding:22px 19px;display:flex;flex-direction:column;min-width:0;gap:17px}.ed-sidebar-title{display:flex;align-items:center;gap:8px}.ed-sidebar-title h3{font-size:13px;font-weight:600;flex:1}.ed-sidebar-title>span{font-size:9px;color:var(--ed-muted)}.ed-sidebar-empty{text-align:center;padding:58px 16px 0}.ed-sidebar-empty>span{color:#a9b8b0}.ed-sidebar-empty h4{font-size:13px;font-weight:550;margin:17px 0 8px}.ed-sidebar-empty p{font-size:11px;line-height:1.8;color:var(--ed-muted)}.ed-empty-lines{margin:26px auto;display:grid;gap:10px;max-width:160px}.ed-empty-lines i{height:7px;background:var(--ed-line);border-radius:4px}.ed-empty-lines i:nth-child(2){width:80%}.ed-empty-lines i:nth-child(3){width:60%}.ed-sidebar-foot{display:flex;gap:7px;align-items:flex-start;margin-top:auto;padding-top:20px;font-size:10px;color:var(--ed-muted)}.ed-review-compact{padding:17px}.ed-review-compact h3{font-size:17px}.ed-review-compact .ed-review-top{gap:5px}.ed-review-compact .ed-section-kicker{font-size:10px;letter-spacing:.06em}.ed-side-context{padding:19px;background:var(--ed-surface);border:1px solid var(--ed-line);border-radius:12px}.ed-side-context>.ed-card-context{margin:15px 0 6px}.ed-side-context h4{font-size:16px;margin:9px 0}.ed-side-context>p{font-size:11px;color:var(--ed-muted)}.ed-side-check{font-size:11px;color:var(--ed-accent);margin-top:27px}.ed-side-pending{font-size:11px;color:var(--ed-muted);margin-top:14px}.ed-side-pending span{font-size:9px;display:inline-grid;place-items:center;width:16px;height:16px;border:1px solid var(--ed-line);border-radius:50%;margin-right:4px}
+.ed-task-home{padding:53px 39px 39px;max-width:1100px;margin:auto}.ed-task-home h2{font-size:30px;font-weight:650;letter-spacing:-.04em;line-height:1.4;margin:7px 0 9px}.ed-lead{font-size:13px;color:var(--ed-muted)}.ed-task-cards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:15px;margin-top:29px}.ed-root .ed-task-card{display:flex;align-items:flex-start;justify-content:flex-start;flex-direction:column;gap:11px;text-align:left;padding:24px 23px;border:1px solid var(--ed-line);background:var(--ed-surface);border-radius:13px;min-height:225px;font-weight:400}.ed-task-icon{width:48px;height:48px;display:grid;place-items:center;background:var(--ed-soft);border-radius:12px;margin-bottom:4px}.ed-task-meta{font-size:9px;letter-spacing:.12em;color:var(--ed-muted)}.ed-task-card strong{font-size:18px;font-weight:650;letter-spacing:-.03em}.ed-task-card>span:not(.ed-task-icon):not(.ed-task-meta){font-size:11px;color:var(--ed-muted);line-height:1.7}.ed-task-card b{display:flex;align-items:center;gap:7px;font-size:11px;font-weight:600;margin-top:auto;padding-top:13px}.ed-root .ed-task-featured{background:var(--ed-ink);color:var(--ed-surface);border-color:var(--ed-ink)}.ed-task-featured .ed-task-icon{background:#ffffff12;color:var(--ed-surface)}.ed-task-featured .ed-task-meta,.ed-task-featured>span:not(.ed-task-icon):not(.ed-task-meta){color:var(--ed-surface);opacity:.72}.ed-root .ed-task-card:hover{transform:translateY(-3px);border-color:#a6bfb2;box-shadow:0 8px 22px #15342609}.ed-task-help{display:flex;align-items:center;gap:15px;margin-top:24px;border:1px solid var(--ed-line);background:var(--ed-soft);border-radius:12px;padding:17px 20px}.ed-task-help>span{flex:1}.ed-task-help strong{display:block;font-size:12px;font-weight:600}.ed-task-help small{display:block;font-size:10px;color:var(--ed-muted);margin-top:3px}.ed-task-help>.ed-btn{font-size:11px}.ed-task-work{padding:24px 35px 36px}.ed-task-breadcrumb{display:flex;align-items:center;gap:13px;font-size:11px;color:var(--ed-muted);margin-bottom:25px}.ed-task-work-grid{display:grid;grid-template-columns:210px minmax(0,1fr);gap:33px;max-width:900px;margin:0 auto}.ed-task-context{padding:14px 0}.ed-task-context h2{font-size:30px;line-height:1.45;letter-spacing:-.035em;margin:8px 0 17px;font-weight:600}.ed-task-context>p{font-size:11px;color:var(--ed-muted);line-height:1.9;max-width:180px}.ed-task-current{display:flex;align-items:center;gap:7px;font-size:11px;font-weight:600;margin:24px 0 15px;color:var(--ed-accent)}.ed-root .ed-help-link{padding:6px 0;color:var(--ed-muted);font-size:10px;text-decoration:underline;text-underline-offset:4px;font-weight:400;min-height:29px}.ed-task-main-card{padding:24px;border:1px solid var(--ed-line);border-radius:14px;background:var(--ed-surface);align-self:start}.ed-task-main-card>h3{font-size:21px;line-height:1.4;letter-spacing:-.02em;margin-top:9px}.ed-task-main-card>.ed-review-card,.ed-task-main-card>.ed-terminal{border:0;padding:0}.ed-task-main-card>.ed-terminal{padding:15px 0}
+.ed-workbench{display:grid;grid-template-columns:235px minmax(0,1fr);min-height:600px}.ed-order-sidebar{border-right:1px solid var(--ed-line);background:var(--ed-soft);padding:24px 14px 17px;display:flex;flex-direction:column}.ed-order-sidebar-heading{display:flex;justify-content:space-between;align-items:center;padding:0 10px;margin-bottom:21px}.ed-order-sidebar-heading h3{font-size:13px;font-weight:650}.ed-order-sidebar-heading>span{font-size:10px;width:19px;height:19px;display:grid;place-items:center;background:var(--ed-surface);border:1px solid var(--ed-line);border-radius:6px;color:var(--ed-muted)}.ed-equipment-label{display:flex;align-items:center;gap:7px;padding:0 10px 11px;font-size:11px;font-weight:600}.ed-equipment-label .ed-running-dot{margin-left:auto;width:5px;height:5px}.ed-work-order-list{display:flex;flex-direction:column;gap:8px}.ed-root .ed-work-order{display:flex;flex-direction:column;align-items:stretch;text-align:left;gap:6px;padding:13px;border:1px solid transparent;border-radius:10px;background:transparent;font-weight:400}.ed-root .ed-work-order:hover{background:var(--ed-surface)}.ed-root .ed-work-order.is-selected{border-color:#bdcfc5;background:var(--ed-surface);box-shadow:0 2px 5px #18352605}.ed-work-order-top{display:flex;align-items:center;justify-content:space-between;gap:4px}.ed-work-order-top strong{font-size:13px;font-weight:650}.ed-work-order-top small{color:var(--ed-accent);font-size:9px}.ed-work-order>span:not(.ed-work-order-top){font-size:11px}.ed-work-order>small{font-size:9px;color:var(--ed-muted)}.ed-work-sidebar-bottom{display:flex;flex-direction:column;gap:7px;margin-top:auto;padding-top:30px}.ed-work-sidebar-bottom>.ed-btn{justify-content:flex-start;font-size:10px}.ed-work-main{padding:28px 28px 22px;min-width:0}.ed-work-empty{text-align:center;max-width:420px;margin:104px auto 35px}.ed-work-empty>span{display:inline-grid;place-items:center;width:70px;height:70px;background:var(--ed-soft);border-radius:20px;color:#85978b;margin-bottom:22px}.ed-work-empty h2{font-size:27px;font-weight:600;letter-spacing:-.04em}.ed-work-empty p{font-size:12px;color:var(--ed-muted);line-height:1.9;margin:13px 0 21px}.ed-work-heading{display:flex;justify-content:space-between;align-items:center;gap:15px}.ed-work-heading h2{font-size:24px;letter-spacing:-.03em;font-weight:650;margin-top:5px}.ed-work-heading h2>span{font-size:12px;letter-spacing:0;font-weight:400;color:var(--ed-muted);margin-left:12px}.ed-work-stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));border:1px solid var(--ed-line);border-radius:10px;margin:20px 0;padding:15px 0;background:var(--ed-surface)}.ed-work-stats>div{padding:0 14px;min-width:0}.ed-work-stats>div+div{border-left:1px solid var(--ed-line)}.ed-work-stats>div>span{font-size:9px;color:var(--ed-muted);display:block;line-height:1.5;min-height:14px}.ed-work-stats strong{font-size:23px;font-weight:600;letter-spacing:-.025em;line-height:1.35;display:block;margin-top:7px}.ed-work-stats small{font-size:9px;font-weight:400;color:var(--ed-muted);margin-left:5px}.ed-work-stats .ed-unknown-value{font-size:16px;color:var(--ed-muted);font-weight:450}.ed-work-content{max-width:650px}.ed-work-card{padding:20px;border:1px solid var(--ed-line);border-radius:12px}.ed-work-card .ed-form-heading{margin-top:8px}.ed-work-card .ed-form-heading h3{font-size:16px}.ed-work-card .ed-form-actions{margin-top:16px}.ed-context-assistant{display:flex;align-items:center;gap:10px;padding:14px 0 0}.ed-context-assistant>span:nth-child(2){flex:1}.ed-context-assistant strong{font-size:11px;display:block;font-weight:600}.ed-context-assistant small{font-size:10px;color:var(--ed-muted);display:block}.ed-context-assistant .ed-btn{font-size:10px;min-height:33px;padding:7px 11px}
+.ed-coach-welcome{text-align:center;padding:62px 25px 47px}.ed-coach-orbit{position:relative;width:80px;height:80px;margin:0 auto 25px}.ed-coach-orbit>span{width:80px;height:80px;display:grid;place-items:center;background:var(--ed-soft);border:1px solid var(--ed-line);border-radius:25px}.ed-coach-orbit>i{display:grid;place-items:center;position:absolute;right:-7px;bottom:-2px;width:28px;height:28px;border-radius:50%;background:var(--ed-accent-soft);border:3px solid var(--ed-surface);color:var(--ed-accent)}.ed-coach-welcome h2{font-size:35px;letter-spacing:-.05em;line-height:1.45;font-weight:600;margin:11px 0 15px}.ed-coach-welcome>p:not(.ed-eyebrow){font-size:13px;color:var(--ed-muted);line-height:1.9}.ed-coach-welcome>.ed-primary{margin:28px 0 15px;min-width:165px;min-height:44px}.ed-coach-welcome>.ed-micro{display:block}.ed-coach{padding:28px 30px 24px;background:linear-gradient(180deg,var(--ed-soft) 0%,var(--ed-surface) 100%);min-height:600px}.ed-coach-progress{display:flex;justify-content:center;align-items:center;gap:8px;font-size:11px;color:var(--ed-muted);margin-bottom:23px}.ed-coach-card{max-width:550px;margin:auto;background:var(--ed-surface);border:1px solid var(--ed-line);border-radius:17px;padding:35px 35px 29px;text-align:center;box-shadow:0 8px 35px #15362504}.ed-coach-card h2{font-size:27px;line-height:1.5;font-weight:600;letter-spacing:-.035em}.ed-coach-card>p,.ed-coach-card>form>p{font-size:12px;color:var(--ed-muted);line-height:1.8;margin:10px 0 23px}.ed-coach-question-icon{display:inline-grid;place-items:center;background:var(--ed-soft);color:var(--ed-accent);width:54px;height:54px;border-radius:16px;margin-bottom:20px}.ed-coach-machine{margin:23px 0 9px}.ed-root .ed-coach-choice{width:100%;justify-content:space-between;border:1px solid #c5d5cd;background:var(--ed-accent-soft);padding:18px 20px}.ed-coach-choice>span{display:flex;align-items:center;gap:13px}.ed-coach-choice strong{font-size:20px;font-weight:600;letter-spacing:-.025em}.ed-coach-choice small{font-size:10px;color:var(--ed-muted);font-weight:400}.ed-coach-number{display:flex;align-items:center;justify-content:center;gap:10px;border:1px solid #c4d5cb;border-radius:13px;background:var(--ed-surface);max-width:265px;margin:23px auto 28px;padding:15px 20px}.ed-coach-number input{width:175px;min-width:0;background:transparent;border:0;outline:0;text-align:center;font-size:47px;font-weight:550;letter-spacing:-.055em;line-height:1.3;color:var(--ed-ink);appearance:textfield}.ed-coach-number input::-webkit-inner-spin-button{appearance:none}.ed-coach-number>span{font-size:13px;color:var(--ed-muted)}.ed-coach-actions{display:flex;justify-content:space-between;gap:10px;margin-top:25px;padding-top:20px;border-top:1px solid var(--ed-line)}.ed-coach-binary{display:grid;grid-template-columns:1fr 1fr;gap:13px;margin:27px 0 15px}.ed-root .ed-coach-answer{display:flex;flex-direction:column;gap:13px;border:1px solid var(--ed-line);padding:24px 14px;border-radius:12px;font-weight:400}.ed-root .ed-coach-answer:hover{border-color:var(--ed-accent);background:var(--ed-accent-soft)}.ed-coach-answer>span{color:var(--ed-accent)}.ed-coach-answer>strong{font-size:14px;font-weight:600}.ed-coach-answer>small{font-size:10px;color:var(--ed-muted)}.ed-coach-defect-fields{display:grid;grid-template-columns:1fr 1fr;gap:15px;margin:28px 0}.ed-coach-footnote{text-align:center;font-size:10px;color:var(--ed-muted);margin-top:18px!important}.ed-coach-card>.ed-review-card,.ed-coach-card>.ed-terminal{border:0;padding:0}.ed-coach-card .ed-review-card h3{font-size:23px}
+.ed-overlay-backdrop{position:absolute;inset:0;background:#17291f3b;backdrop-filter:blur(2px);display:flex;align-items:center;justify-content:center;padding:25px;z-index:10}.ed-overlay{width:100%;max-width:570px;max-height:90%;display:flex;flex-direction:column;border:1px solid var(--ed-line);border-radius:16px;background:var(--ed-surface);box-shadow:0 22px 80px #12251a24;outline:0}.ed-overlay>header{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:19px 22px;border-bottom:1px solid var(--ed-line);flex-shrink:0}.ed-overlay>header h2{font-size:17px;font-weight:600;letter-spacing:-.02em}.ed-overlay-body{padding:23px;overflow:auto;overscroll-behavior:contain}.ed-overlay>footer{border-top:1px solid var(--ed-line);padding:15px 22px;display:flex;justify-content:flex-end;flex-shrink:0}.ed-overlay-empty{text-align:center;padding:27px 10px;color:var(--ed-muted)}.ed-overlay-empty h3{font-size:18px;font-weight:550;color:var(--ed-ink);margin:15px 0 10px}.ed-overlay-empty p{font-size:12px;line-height:1.8}.ed-record-list{display:grid;gap:10px}.ed-record{border:1px solid var(--ed-line);border-radius:11px;padding:15px}.ed-record>div{display:flex;justify-content:space-between;align-items:center;gap:10px}.ed-record strong{font-size:13px;font-weight:600}.ed-record p{font-size:12px;margin:12px 0 7px}.ed-record p b{font-weight:600}.ed-record small{font-size:10px;color:var(--ed-muted)}.ed-overlay-lead{font-size:12px;color:var(--ed-muted);margin-bottom:21px!important}.ed-status-order{display:flex;align-items:center;justify-content:space-between;gap:10px}.ed-status-order strong{font-size:14px;display:block;font-weight:600}.ed-status-order>div>span{font-size:11px;color:var(--ed-muted)}.ed-overlay-body .ed-work-stats{margin:11px 0 23px}.ed-help-answer{display:flex;align-items:flex-start;gap:12px}.ed-help-answer>div{flex:1;min-width:0}.ed-help-answer p{font-size:12px;line-height:1.9;margin-bottom:13px}.ed-help-answer strong{font-weight:600}.ed-overlay-body>.ed-primary{margin-left:40px;margin-top:7px}
+@media(min-width:1500px){.ed-root{min-height:710px}.ed-chat-panel{height:650px}.ed-split-workspace{min-height:650px;grid-template-columns:minmax(0,1fr) 375px}.ed-chat-welcome{padding-top:62px}.ed-task-home{padding-top:70px}.ed-workbench{min-height:650px}.ed-coach{min-height:650px;padding-top:40px}.ed-coach-welcome{padding-top:85px}.ed-task-work-grid{margin-top:18px}}
+@media(max-width:1050px){.ed-split-workspace{grid-template-columns:minmax(0,1fr) 300px}.ed-summary-sidebar{padding:19px 13px}.ed-split-workspace .ed-chat-scroll{padding:0 17px}.ed-split-workspace .ed-composer{padding-left:17px;padding-right:17px}.ed-split-workspace .ed-chat-welcome h2{font-size:24px}.ed-split-workspace .ed-message-avatar{display:none}.ed-split-workspace .ed-inline-card{padding:15px}.ed-split-workspace .ed-form-actions{flex-direction:column-reverse;align-items:stretch}.ed-task-home{padding:40px 28px 30px}.ed-task-cards{gap:11px}.ed-root .ed-task-card{padding:21px 17px}.ed-task-card strong{font-size:16px}.ed-task-work-grid{grid-template-columns:175px minmax(0,1fr);gap:20px}.ed-task-context h2{font-size:27px}.ed-workbench{grid-template-columns:205px minmax(0,1fr)}.ed-work-main{padding:24px 21px}.ed-work-heading h2>span{display:block;margin:3px 0 0}.ed-work-stats>div{padding:0 10px}.ed-work-stats>div>span{font-size:8px}.ed-work-stats strong{font-size:21px}}
+@media(max-width:760px){.ed-root{border-radius:10px}.ed-app-header{padding:0 17px;height:65px}.ed-header-brand{font-size:15px}.ed-header-right{gap:5px}.ed-header-right>.ed-subtle>span{display:none}.ed-header-brand small{font-size:9px}.ed-demo-badge{font-size:9px}.ed-context-chip{font-size:9px;padding:4px 7px}.ed-chat-panel{height:630px}.ed-chat-scroll{padding:0 16px}.ed-composer{padding:12px 16px}.ed-chat-welcome{padding-top:45px}.ed-chat-welcome h2{font-size:26px}.ed-split-workspace{display:flex;flex-direction:column}.ed-split-workspace .ed-chat-panel{height:470px}.ed-split-workspace .ed-chat-welcome{padding-top:23px}.ed-split-workspace .ed-chat-welcome h2{font-size:23px}.ed-split-workspace .ed-welcome-glyph{height:40px;width:40px;margin-bottom:11px}.ed-split-workspace .ed-starter-list{margin-top:13px;gap:6px}.ed-split-workspace .ed-starter{min-height:37px;padding:8px 12px}.ed-summary-sidebar{border-left:0;border-top:1px solid var(--ed-line);padding:17px}.ed-sidebar-empty{padding:15px;display:none}.ed-sidebar-foot{padding-top:0;margin-top:0}.ed-summary-sidebar .ed-side-context{padding:14px}.ed-summary-sidebar .ed-side-context .ed-side-check{margin-top:14px}.ed-review-compact{padding:16px}.ed-task-cards{grid-template-columns:1fr}.ed-root .ed-task-card{min-height:0;display:grid;grid-template-columns:42px 1fr;column-gap:15px;row-gap:6px;padding:18px}.ed-task-icon{grid-column:1;grid-row:1/5;width:42px;height:42px}.ed-task-card .ed-task-meta,.ed-task-card strong,.ed-task-card>span:not(.ed-task-icon),.ed-task-card>b{grid-column:2}.ed-task-card b{padding-top:4px}.ed-task-home{padding:30px 23px}.ed-task-home h2{font-size:25px}.ed-task-home .ed-lead{font-size:11px}.ed-task-help{padding:13px;gap:10px}.ed-task-help .ed-btn{font-size:10px;padding:7px 9px}.ed-task-help small{font-size:9px}.ed-task-work{padding:18px}.ed-task-work-grid{grid-template-columns:1fr;gap:15px}.ed-task-context{padding:0}.ed-task-context h2{font-size:23px;margin:3px 0}.ed-task-context h2 br{display:none}.ed-task-context>p,.ed-task-context .ed-help-link{display:none}.ed-task-current{margin:9px 0 0}.ed-task-main-card{padding:19px}.ed-task-breadcrumb{margin-bottom:18px}.ed-workbench{grid-template-columns:1fr}.ed-order-sidebar{border-right:0;border-bottom:1px solid var(--ed-line);padding:16px}.ed-order-sidebar-heading{margin-bottom:10px;padding:0}.ed-equipment-label{display:none}.ed-work-order-list{display:grid;grid-template-columns:1fr 1fr}.ed-root .ed-work-order{border-color:var(--ed-line);padding:10px}.ed-work-sidebar-bottom{display:none}.ed-work-main{padding:21px 17px}.ed-work-empty{margin:48px auto}.ed-work-heading h2{font-size:23px}.ed-work-stats{padding:11px 0}.ed-work-stats>div>span{min-height:25px}.ed-work-stats>div{padding:0 9px}.ed-coach{padding:23px 17px}.ed-coach-card{padding:25px 19px}.ed-coach-card h2{font-size:24px}.ed-coach-welcome h2{font-size:30px}.ed-coach-number input{font-size:42px;width:150px}.ed-coach-choice small{font-size:9px}.ed-coach-choice>span{gap:8px}.ed-coach-binary{gap:9px}.ed-root .ed-coach-answer{padding:20px 10px}.ed-coach-answer>strong{font-size:12px}.ed-coach-answer>small{font-size:9px}.ed-overlay-backdrop{padding:14px}.ed-overlay>header{padding:16px}.ed-overlay>header h2{font-size:15px}.ed-overlay-body{padding:18px}.ed-notice{padding:11px 16px;font-size:11px}.ed-prototype-note{font-size:8px}.ed-message-content .ed-review-card{padding:16px}.ed-assistant-block{gap:8px}.ed-message-avatar{flex-basis:24px;width:24px;height:24px}.ed-order-option .ed-order-icon{display:none}}
+@media(prefers-reduced-motion:reduce){.ed-root *{animation-duration:.01ms!important;transition-duration:.01ms!important;scroll-behavior:auto!important}}
+
+</style>
+  
+</head>
+<body data-theme="light">
+  <svg class="icon-definitions" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <symbol id="i-grid" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></symbol>
+    <symbol id="i-scan" viewBox="0 0 24 24"><path d="M8 3H4a1 1 0 0 0-1 1v4m13-5h4a1 1 0 0 1 1 1v4M3 16v4a1 1 0 0 0 1 1h4m13-5v4a1 1 0 0 1-1 1h-4M7 8h10M7 12h10M7 16h6"/></symbol>
+    <symbol id="i-compare" viewBox="0 0 24 24"><path d="M5 3v18M19 3v18M9 7h10l-3-3m3 3-3 3M15 17H5l3-3m-3 3 3 3"/></symbol>
+    <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14m-6-6 6 6-6 6"/></symbol>
+    <symbol id="i-back" viewBox="0 0 24 24"><path d="M19 12H5m6-6-6 6 6 6"/></symbol>
+    <symbol id="i-reset" viewBox="0 0 24 24"><path d="M3 10a9 9 0 1 1 1 7M3 4v6h6"/></symbol>
+    <symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M2 12h2m16 0h2M5 5l1.4 1.4m11.2 11.2L19 19M5 19l1.4-1.4M17.6 6.4 19 5"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24"><path d="m5 12 4 4L19 6"/></symbol>
+    <symbol id="i-chat" viewBox="0 0 24 24"><path d="M20 11.5a8.5 8.5 0 0 1-8.5 8.5c-1.5 0-2.9-.4-4.1-1L3 21l1.8-4.6A8.5 8.5 0 1 1 20 11.5Z"/><path d="M8 9h7m-7 4h5"/></symbol>
+    <symbol id="i-list" viewBox="0 0 24 24"><path d="M9 6h11M9 12h11M9 18h11M4 6h.01M4 12h.01M4 18h.01"/></symbol>
+    <symbol id="i-task" viewBox="0 0 24 24"><rect x="5" y="4" width="14" height="17" rx="2"/><path d="M9 4V2h6v2m-6 7 2 2 4-4m-6 8h6"/></symbol>
+    <symbol id="i-help" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M9.5 9a2.5 2.5 0 0 1 5 0c0 2-2.5 2-2.5 4m0 3h.01"/></symbol>
+  </svg>
+  <a class="skip-link" href="#main-content">跳至主要內容</a>
+  <div class="lab-shell">
+    <aside class="lab-sidebar" aria-label="實驗室導覽">
+      <button class="lab-brand" type="button" data-page="gallery" aria-label="Emerald.AI，回五種方案">
+        <span class="brand-mark" aria-hidden="true"><svg viewBox="0 0 32 32"><path d="M16 2 28 9v14L16 30 4 23V9Z"/><path d="m4 9 12 7L28 9M16 16v14M16 2v14"/></svg></span>
+        <span><strong>EMERALD<span class="brand-dot">.</span>AI</strong><small>操作體驗實驗室</small></span>
+      </button>
+      <p class="nav-caption">DESIGN EXPLORATION</p>
+      <nav class="lab-nav" aria-label="主要導覽">
+        <button class="nav-item is-active" type="button" data-page="gallery" aria-current="page"><svg class="lab-icon"><use href="#i-grid"/></svg><span>五種方案</span><span class="nav-count">05</span></button>
+        <button class="nav-item" type="button" data-page="audit"><svg class="lab-icon"><use href="#i-scan"/></svg><span>現況診斷</span></button>
+        <button class="nav-item" type="button" data-page="compare"><svg class="lab-icon"><use href="#i-compare"/></svg><span>比較與建議</span></button>
+      </nav>
+      <div class="sidebar-note">
+        <span class="note-rule" aria-hidden="true"></span>
+        <strong>先試一次，再決定。</strong>
+        <p>用同一筆報工任務，感受五種操作方式的差異。</p>
+      </div>
+      <div class="sidebar-baseline"><span class="baseline-dot" aria-hidden="true"></span><div><span>審查基準</span><a href="https://github.com/WeYuTech/KaosuAiAgentTest/commit/71506e727a0844b878637c03d3b4988a163f785c" target="_blank" rel="noopener noreferrer">main <code>71506e7</code><svg class="lab-icon"><use href="#i-arrow"/></svg></a></div></div>
+    </aside>
+
+    <main class="lab-main" id="main-content">
+      <header class="lab-header">
+        <div class="header-breadcrumb"><span>生產作業助理</span><span class="breadcrumb-slash">/</span><strong>UX Lab</strong></div>
+        <div class="header-actions"><span class="prototype-label"><span aria-hidden="true"></span>互動原型 <span class="label-divider" aria-hidden="true"></span> 合成資料</span><button id="theme-toggle" class="lab-icon-button" type="button" aria-label="切換深淺色" title="切換深淺色"><svg class="lab-icon"><use href="#i-sun"/></svg></button></div>
+      </header>
+
+      <section id="gallery-view" class="lab-page gallery-page" aria-labelledby="gallery-title">
+        <div class="gallery-hero">
+          <div class="hero-copy"><div class="eyebrow"><span class="eyebrow-rule" aria-hidden="true"></span>EMERALD.AI · FLOW STUDIES</div><h1 id="gallery-title">五種流程，<br>找出最好上手的一種<span class="title-dot">。</span></h1><p class="hero-description">每個新人，都應該知道下一步。<br>從同一筆報工開始，實際點選、修改、核對，再選出適合現場的方式。</p></div>
+          <aside class="hero-brief" aria-label="共用體驗任務"><span class="brief-label">這次，試著完成一筆報工</span><div class="brief-equipment"><span class="machine-glyph" aria-hidden="true"><span></span><i></i></span><strong>MC37<small>合成示範設備</small></strong></div><p>選工單 → 良品 100・缺料 2<br>將良品改成 120 → 核對確認</p><button type="button" class="lab-primary" data-mode="1">從推薦方案開始<svg class="lab-icon"><use href="#i-arrow"/></svg></button></aside>
+        </div>
+
+        <div class="gallery-section-heading"><div><span class="eyebrow muted-eyebrow">THE COLLECTION</span><h2>五種可操作的流程</h2></div><span class="collection-note">共用情境，方便直接比較</span></div>
+
+        <div class="concept-grid">
+          <article class="concept-card concept-featured" aria-labelledby="concept-1-title">
+            <button class="concept-preview preview-chat" type="button" data-mode="1" aria-label="體驗 01 對話式助理">
+              <div class="mini-app mini-conversation"><div class="mini-top"><span class="mini-brand-square"></span><strong>Emerald.AI</strong><span class="mini-top-dot"></span></div><div class="mini-chat-body"><span class="mini-bubble mini-user">我要幫 MC37 報工</span><span class="mini-agent-line"><i></i>這次是哪一張工單？</span><div class="mini-order"><span>工單 · 生產中</span><b>WO-A · EPS-A</b><span class="mini-order-arrow">↗</span></div><div class="mini-compose"><span>輸入需求，或點選上方卡片</span><b>↑</b></div></div></div>
+              <span class="preview-badge">建議先試</span>
+            </button>
+            <div class="concept-content"><div class="concept-heading"><span class="concept-number">01</span><h3 id="concept-1-title">對話式助理</h3><span class="recommended-pill">推薦</span></div><p class="concept-description">需求、補充資料與確認，都在同一段對話裡。</p><div class="concept-flow"><span>說需求</span><i>→</i><span>點選卡片</span><i>→</i><span>確認</span></div><div class="concept-bottom"><span>適合 <strong>第一次使用的新同事</strong></span><button class="concept-open" type="button" data-mode="1">開始體驗<svg class="lab-icon"><use href="#i-arrow"/></svg></button></div></div>
+          </article>
+
+          <article class="concept-card concept-featured" aria-labelledby="concept-2-title">
+            <button class="concept-preview preview-summary" type="button" data-mode="2" aria-label="體驗 02 對話加作業摘要">
+              <div class="mini-app mini-split"><div class="mini-top"><span class="mini-brand-square"></span><strong>Emerald.AI</strong><span class="mini-top-dot"></span></div><div class="mini-split-body"><div class="mini-split-chat"><span class="mini-bubble mini-user">良品改成 120</span><span class="mini-agent-line"><i></i>已更新，請核對右側摘要。</span><div class="mini-compose"><span>接著說說你的需求</span><b>↑</b></div></div><div class="mini-summary"><span class="mini-uppercase">本次作業摘要</span><div><small>設備 / 工單</small><strong>MC37 · WO-A</strong></div><div class="mini-summary-numbers"><span><small>良品</small><strong>120</strong></span><span><small>缺料</small><strong>2</strong></span></div><span class="mini-save"><span>✓</span> 已同步</span></div></div></div>
+            </button>
+            <div class="concept-content"><div class="concept-heading"><span class="concept-number">02</span><h3 id="concept-2-title">對話＋作業摘要</h3></div><p class="concept-description">用對話操作，讓右側摘要隨資料逐步出現。</p><div class="concept-flow"><span>對話補齊</span><i>→</i><span>同步摘要</span><i>→</i><span>確認</span></div><div class="concept-bottom"><span>適合 <strong>常需核對多個欄位</strong></span><button class="concept-open" type="button" data-mode="2">開始體驗<svg class="lab-icon"><use href="#i-arrow"/></svg></button></div></div>
+          </article>
+
+          <article class="concept-card" aria-labelledby="concept-3-title">
+            <button class="concept-preview preview-tasks" type="button" data-mode="3" aria-label="體驗 03 任務入口">
+              <div class="mini-app mini-tasks"><div class="mini-top"><span class="mini-brand-square"></span><strong>今天，要完成什麼？</strong></div><div class="mini-task-grid"><div class="mini-task is-selected"><svg class="lab-icon"><use href="#i-task"/></svg><b>新增報工</b><span>記錄這次的產量</span></div><div class="mini-task"><svg class="lab-icon"><use href="#i-list"/></svg><b>查人工紀錄</b><span>查看本次報工</span></div><div class="mini-task"><svg class="lab-icon"><use href="#i-help"/></svg><b>設備現況</b><span>核對機台資料</span></div></div><div class="mini-task-footer">先選想做的事，接著由助理帶路 <span>→</span></div></div>
+            </button>
+            <div class="concept-content"><div class="concept-heading"><span class="concept-number">03</span><h3 id="concept-3-title">任務入口</h3></div><p class="concept-description">不用想開場白，先選你今天要做的事。</p><div class="concept-flow"><span>選任務</span><i>→</i><span>補資料</span><i>→</i><span>確認</span></div><div class="concept-bottom"><span>適合 <strong>不習慣打字下指令</strong></span><button class="concept-open" type="button" data-mode="3">體驗<svg class="lab-icon"><use href="#i-arrow"/></svg></button></div></div>
+          </article>
+
+          <article class="concept-card" aria-labelledby="concept-4-title">
+            <button class="concept-preview preview-workbench" type="button" data-mode="4" aria-label="體驗 04 工單工作台">
+              <div class="mini-app mini-workbench"><div class="mini-top"><span class="mini-brand-square"></span><strong>工單工作台</strong><span class="mini-search">搜尋工單</span></div><div class="mini-table"><div class="mini-table-row mini-table-head"><span>工單</span><span>設備</span><span>狀態</span></div><div class="mini-table-row mini-table-selected"><b>WO-A</b><span>MC37</span><span class="mini-status">生產中</span></div><div class="mini-table-row"><span>WO-B</span><span>MC37</span><span>生產中</span></div><div class="mini-table-row"><span>WO-A</span><span>MC36</span><span>待開始</span></div></div><div class="mini-table-action"><span>已選擇 1 張工單</span><b>新增報工 →</b></div></div>
+            </button>
+            <div class="concept-content"><div class="concept-heading"><span class="concept-number">04</span><h3 id="concept-4-title">工單工作台</h3></div><p class="concept-description">先找到現場工單，再開始這一筆作業。</p><div class="concept-flow"><span>找工單</span><i>→</i><span>選操作</span><i>→</i><span>確認</span></div><div class="concept-bottom"><span>適合 <strong>熟悉現場工單的同事</strong></span><button class="concept-open" type="button" data-mode="4">體驗<svg class="lab-icon"><use href="#i-arrow"/></svg></button></div></div>
+          </article>
+
+          <article class="concept-card" aria-labelledby="concept-5-title">
+            <button class="concept-preview preview-coach" type="button" data-mode="5" aria-label="體驗 05 一步一問教練">
+              <div class="mini-app mini-coach"><div class="mini-coach-progress"><span class="is-done"></span><span class="is-current"></span><span></span><span></span></div><span class="mini-uppercase">第 2 步 · 填寫良品</span><strong class="mini-question">這次有多少良品？</strong><span class="mini-answer">100<small>件</small></span><div class="mini-coach-bottom"><span>上一步</span><b>下一步 →</b></div></div>
+            </button>
+            <div class="concept-content"><div class="concept-heading"><span class="concept-number">05</span><h3 id="concept-5-title">一步一問教練</h3></div><p class="concept-description">一次只回答一個問題，清楚知道還差哪一步。</p><div class="concept-flow"><span>逐題回答</span><i>→</i><span>整理內容</span><i>→</i><span>確認</span></div><div class="concept-bottom"><span>適合 <strong>需要明確帶領的新手</strong></span><button class="concept-open" type="button" data-mode="5">體驗<svg class="lab-icon"><use href="#i-arrow"/></svg></button></div></div>
+          </article>
+        </div>
+
+        <div class="gallery-followup"><div><span class="eyebrow muted-eyebrow">AFTER YOU TRY</span><h2>哪一版，讓你最少停下來想？</h2><p>試試「改數量」與「結果待查核」，再比較每種流程的取捨。</p></div><button class="lab-secondary" type="button" data-page="compare">看比較與建議<svg class="lab-icon"><use href="#i-arrow"/></svg></button></div>
+        <footer class="lab-page-footer"><span>EMERALD.AI / INTERACTION STUDIES</span><span>以實際任務，驗證操作體驗。</span></footer>
+      </section>
+
+      <section id="demo-view" class="lab-page demo-page" hidden aria-labelledby="demo-title">
+        <div class="demo-heading-row"><button id="back-gallery" type="button" class="lab-back"><svg class="lab-icon"><use href="#i-back"/></svg>全部方案</button><span class="demo-context-note">同一筆報工任務 · 合成資料</span></div>
+        <div class="demo-title-row"><div class="demo-title-group"><span id="demo-number" class="demo-number">01</span><div><h1 id="demo-title">對話式助理</h1><p id="demo-description">需求、補充資料與確認，都在同一段對話裡。</p></div></div><div class="demo-tools"><label class="scenario-control">情境<select id="scenario-switch"><option value="normal">正常完成</option><option value="unknown">結果待查核</option></select></label><button id="reset-demo" type="button" class="lab-secondary"><svg class="lab-icon"><use href="#i-reset"/></svg>重新體驗</button></div></div>
+        <nav class="demo-mode-tabs" aria-label="切換 Demo 方案"><button type="button" class="is-active" data-mode="1" aria-current="page"><span>01</span>對話式助理</button><button type="button" data-mode="2"><span>02</span>對話＋摘要</button><button type="button" data-mode="3"><span>03</span>任務入口</button><button type="button" data-mode="4"><span>04</span>工單工作台</button><button type="button" data-mode="5"><span>05</span>一步一問</button></nav>
+        <div class="demo-stage"><div id="demo-root" aria-label="可操作的流程 Demo"></div></div>
+        <div class="demo-underbar"><span id="demo-step" role="status">選擇工單 → 填寫數量 → 核對確認</span><span>所有操作均為原型模擬</span></div>
+      </section>
+
+      <section id="audit-view" class="lab-page analysis-page" hidden aria-label="現況診斷"><div id="audit-content"></div></section>
+      <section id="compare-view" class="lab-page analysis-page" hidden aria-label="比較與建議"><div id="compare-content"></div></section>
+    </main>
+  </div>
+  <script type="module">
+const ORDERS = [
+  { id: 'WO-A', part: 'EPS-A', name: '左側緩衝件', execution: '2001', iot: 250 },
+  { id: 'WO-B', part: 'EPS-B', name: '右側緩衝件', execution: '2002', iot: null }
+];
+const REASONS = { NG01: '缺料', NG02: '破損' };
+const MODE_NAMES = { 1: '對話式助理', 2: '對話與作業摘要', 3: '任務入口', 4: '工單工作台', 5: '一步一問教練' };
+let operationSequence = 0;
+
+function escapeText(value) {
+  return String(value ?? '').replace(/[&<>"']/g, (char) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[char]));
+}
+
+function icon(name, size = 18) {
+  const paths = {
+    arrow: '<path d="M5 12h14m-6-6 6 6-6 6"/>',
+    back: '<path d="m12 5-7 7 7 7M5 12h14"/>',
+    up: '<path d="M12 19V5m-6 6 6-6 6 6"/>',
+    check: '<path d="m5 12 4 4L19 6"/>',
+    edit: '<path d="m15 5 4 4M4 20l4-1L20 7a2.8 2.8 0 0 0-4-4L4 15z"/>',
+    bot: '<rect x="4" y="7" width="16" height="13" rx="5"/><path d="M12 3v4M8 12h.01M16 12h.01M9 16h6"/>',
+    report: '<rect x="5" y="4" width="14" height="17" rx="2"/><path d="M9 3h6v4H9zM9 11h6M9 15h4"/>',
+    machine: '<rect x="3" y="8" width="18" height="12" rx="2"/><path d="M7 8V4h10v4M7 12h6M7 16h3M17 13v3"/>',
+    history: '<path d="M4 8a9 9 0 1 1-1 7M4 3v5h5M12 7v5l3 2"/>',
+    close: '<path d="m6 6 12 12M6 18 18 6"/>',
+    info: '<circle cx="12" cy="12" r="9"/><path d="M12 11v6M12 7h.01"/>',
+    file: '<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8zM14 2v6h6M8 13h8M8 17h5"/>',
+    clock: '<circle cx="12" cy="12" r="9"/><path d="M12 6v6l4 2"/>',
+    search: '<circle cx="10" cy="10" r="6"/><path d="m15 15 5 5"/>',
+    sparkle: '<path d="m12 3 2.4 6.6L21 12l-6.6 2.4L12 21l-2.4-6.6L3 12l6.6-2.4z"/>'
+  };
+  return `<svg width="${size}" height="${size}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${paths[name] || paths.info}</svg>`;
+}
+
+function mountDemo(container, { mode = 1, scenario = 'normal', onProgress = () => {} } = {}) {
+  mode = Number(mode);
+  if (!MODE_NAMES[mode]) mode = 1;
+  let disposed = false;
+  let timer = null;
+  let currentScenario = scenario;
+  let state;
+
+  function freshState() {
+    return {
+      phase: 'intro', orderId: null, goodInput: '100', ngInput: '2', reason: 'NG01',
+      good: 100, ng: 2, messages: [], error: '', notice: '', revision: 1,
+      readPanel: null, operationId: '', saved: false, checking: false, records: [],
+      coachReturn: false, search: '', composer: ''
+    };
+  }
+  state = freshState();
+
+  const selected = () => ORDERS.find((order) => order.id === state.orderId) || null;
+  const locked = () => ['sending', 'unknown'].includes(state.phase);
+  const button = (action, label, className = '', attributes = '') => `<button type="button" class="ed-btn ${className}" data-action="${action}" ${attributes}>${label}</button>`;
+  const primary = (action, label, attrs = '') => button(action, label, 'ed-primary', attrs);
+  const subtle = (action, label, attrs = '') => button(action, label, 'ed-subtle', attrs);
+
+  function note(message) {
+    state.notice = message;
+    render();
+  }
+  function addMessage(role, text) {
+    state.messages.push({ role, text });
+  }
+  function progress() {
+    const titles = {
+      intro: '從需求開始', machine: '選擇機台', choose: '確認作業對象', amount: '填寫本次數量',
+      good: '填寫良品數量', defect: '確認不良品', 'defect-entry': '登記不良原因',
+      review: '核對後再送出', sending: '正在送出', unknown: '查核執行結果', done: '取得完成回執', cancelled: '草稿已取消'
+    };
+    onProgress({ step: state.phase, title: titles[state.phase] || '完成本次作業' });
+  }
+
+  function header() {
+    const order = selected();
+    return `<header class="ed-app-header"><div class="ed-header-brand"><span class="ed-brand-mark">${icon('bot', 19)}</span><span>Emerald<span class="ed-brand-ai">.AI</span><small>${MODE_NAMES[mode]}</small></span></div><div class="ed-header-right">${order ? `<span class="ed-context-chip"><span class="ed-dot"></span>MC37 <span class="ed-chip-divider">/</span> ${order.id}</span>` : '<span class="ed-demo-badge"><span class="ed-dot"></span>合成資料</span>'}${subtle('reset', icon('history', 15) + '<span>重新開始</span>', locked() ? 'disabled aria-label="重新開始這個方案" title="請先查核這筆結果；外層可重置整個演練"' : 'aria-label="重新開始這個方案"')}</div></header>`;
+  }
+
+  function noticeBar() {
+    return `${state.notice ? `<div class="ed-notice" role="status">${icon('info', 16)}<span>${escapeText(state.notice)}</span>${button('dismiss-notice', icon('close', 14), 'ed-icon-btn', 'aria-label="關閉提示"')}</div>` : ''}`;
+  }
+
+  function emptyChat() {
+    return `<div class="ed-chat-welcome"><div class="ed-welcome-glyph">${icon('sparkle', 30)}</div><p class="ed-eyebrow">生產作業，有人陪你完成</p><h2>今天要完成什麼？</h2><p class="ed-welcome-copy">直接說需求。需要補充的資料，<br>我會一次問清楚一件事。</p><div class="ed-starter-list">${button('begin', '<span>' + icon('report') + '幫 MC37 報工</span>' + icon('arrow'), 'ed-starter')}${button('show-records', '<span>' + icon('history') + '查詢人工報工紀錄</span>' + icon('arrow'), 'ed-starter')}${button('show-status', '<span>' + icon('machine') + '查看 MC37 設備現況</span>' + icon('arrow'), 'ed-starter')}</div><p class="ed-micro">可以先點一個範例，試著完成整個流程。</p></div>`;
+  }
+
+  function orderCards() {
+    return `<div class="ed-order-options">${ORDERS.map((order) => button('choose-order', `<span class="ed-order-icon">${icon('report', 21)}</span><span class="ed-order-main"><strong>${order.id}</strong><span>${order.part} · ${order.name}</span><small>MC37 · 10/30 08:00 · 生產中</small></span>${icon('arrow', 17)}`, 'ed-order-option', `data-order="${order.id}" aria-label="選擇工單 ${order.id} ${order.name}"`)).join('')}</div><p class="ed-card-note">同一台機器有兩張工單，請確認這次要登記的對象。</p>`;
+  }
+
+  function fieldError() {
+    return state.error ? `<div class="ed-field-error" role="alert">${icon('info', 16)}${escapeText(state.error)}</div>` : '';
+  }
+  function contextLine() {
+    const order = selected();
+    return order ? `<div class="ed-card-context"><span>${icon('machine', 15)} MC37</span><span>${order.id}</span><span>${order.part}</span></div>` : '';
+  }
+  function amountForm() {
+    return `<form data-form="amount" class="ed-amount-form" novalidate>${contextLine()}<div class="ed-form-heading"><h3>登記這次的產量</h3><p>填本次數量即可，送出前還會再核對。</p></div><div class="ed-number-grid"><label class="ed-field"><span>人工良品 <em>件</em></span><input name="good" data-bind="goodInput" type="number" inputmode="numeric" min="0" step="1" value="${escapeText(state.goodInput)}" aria-label="本次人工良品數量" ${state.error ? 'aria-invalid="true"' : ''}></label><label class="ed-field"><span>不良數量 <em>件</em></span><input name="ng" data-bind="ngInput" type="number" inputmode="numeric" min="0" step="1" value="${escapeText(state.ngInput)}" aria-label="本次不良品數量"></label></div><label class="ed-field ed-reason-field"><span>不良原因 <em>沒有不良品時，數量填 0</em></span><select name="reason" data-bind="reason" aria-label="不良原因">${Object.entries(REASONS).map(([code, name]) => `<option value="${code}" ${state.reason === code ? 'selected' : ''}>${name}</option>`).join('')}</select></label>${fieldError()}<div class="ed-form-actions">${subtle('back-orders', icon('back', 15) + '換一張工單')}<button class="ed-btn ed-primary" type="submit">檢查報工內容 ${icon('arrow', 16)}</button></div></form>`;
+  }
+
+  function reviewCard({ actions = true, compact = false } = {}) {
+    const order = selected();
+    if (!order) return '';
+    return `<section class="ed-review-card ${compact ? 'ed-review-compact' : ''}" aria-label="報工確認卡"><div class="ed-review-top"><span class="ed-section-kicker">本次新增報工</span><span class="ed-status-pill ed-status-draft">尚未送出</span></div><h3>核對一下，就能完成。</h3>${contextLine()}<dl class="ed-summary-lines"><div><dt>產品</dt><dd>${order.name}</dd></div><div><dt>人工良品</dt><dd><strong>${state.good.toLocaleString()}</strong> 件 ${actions ? subtle('edit-good', icon('edit', 14), 'aria-label="修改良品數量"') : ''}</dd></div><div><dt>${state.ng ? REASONS[state.reason] : '不良品'}</dt><dd><strong>${state.ng.toLocaleString()}</strong> 件 ${actions ? subtle('edit-defects', icon('edit', 14), 'aria-label="修改不良數量"') : ''}</dd></div></dl><div class="ed-impact-note">${icon('info', 15)}<span>新增一次人工報工，不會結束這張工單。</span></div><details class="ed-details"><summary>查看作業辨識資訊</summary><dl><div><dt>排程</dt><dd>1001</dd></div><div><dt>執行紀錄</dt><dd>${order.execution}</dd></div><div><dt>草稿版本</dt><dd>第 ${state.revision} 版</dd></div><div><dt>生產日期</dt><dd>2026/10/30 · MES UTC+07</dd></div></dl></details>${actions ? `<div class="ed-review-actions">${primary('confirm', '確認送出' + icon('arrow', 16))}${button('edit', '修改內容', 'ed-secondary')}${subtle('cancel', '取消這筆')}</div>` : ''}</section>`;
+  }
+
+  function terminalCard() {
+    const order = selected();
+    if (state.phase === 'sending') return `<section class="ed-terminal ed-sending" role="status"><span class="ed-spinner"></span><h3>正在送出這筆報工</h3><p>請稍候，我們會把結果留在這裡。</p></section>`;
+    if (state.phase === 'unknown') return `<section class="ed-terminal ed-unknown" role="status"><span class="ed-terminal-icon">${icon('clock', 27)}</span><span class="ed-status-pill ed-status-wait">結果待核對</span><h3>回應中斷，先確認結果。</h3><p>這筆可能已完成。保留目前內容，<br>先查核結果，避免重複登記。</p><div class="ed-result-compact"><strong>MC37 · ${order?.id || ''}</strong><span>良品 ${state.good} 件 · ${REASONS[state.reason]} ${state.ng} 件</span></div><code>${escapeText(state.operationId)}</code>${primary('reconcile', (state.checking ? '<span class="ed-spinner ed-spinner-small"></span>正在查核' : icon('search', 17) + '查核執行結果'), state.checking ? 'disabled' : '')}<small>查核只讀取這筆結果，不會再次送出報工。</small></section>`;
+    if (state.phase === 'done') return `<section class="ed-terminal ed-success"><span class="ed-terminal-icon">${icon('check', 30)}</span><span class="ed-section-kicker">演練完成</span><h3>這筆報工已登記。</h3><p>MC37 · ${order?.id || ''} · ${order?.name || ''}</p><div class="ed-receipt-numbers"><div><span>本次人工良品</span><strong>+${state.good.toLocaleString()}<small>件</small></strong></div><div><span>本次${state.ng ? REASONS[state.reason] : '不良品'}</span><strong>+${state.ng.toLocaleString()}<small>件</small></strong></div></div><div class="ed-receipt-id"><span>演練回執</span><code>${escapeText(state.operationId)}</code></div><div class="ed-terminal-actions">${primary('show-records', icon('history', 16) + '查看這筆報工')}${button('new-report', '再報一筆', 'ed-secondary')}</div><small>本回執為合成資料示範，未寫入正式 MES。</small></section>`;
+    if (state.phase === 'cancelled') return `<section class="ed-terminal"><span class="ed-terminal-icon ed-icon-neutral">${icon('close', 27)}</span><h3>這筆草稿已取消</h3><p>沒有新增報工。需要時可以重新開始。</p>${primary('begin', '重新準備報工' + icon('arrow', 16))}</section>`;
+    return '';
+  }
+
+  function activeChatCard() {
+    if (state.phase === 'choose') return `<div class="ed-assistant-block"><span class="ed-message-avatar">${icon('bot', 17)}</span><div class="ed-message-content"><p>MC37 有兩張工單，這次要報哪一張？</p>${orderCards()}</div></div>`;
+    if (state.phase === 'amount') return `<div class="ed-assistant-block"><span class="ed-message-avatar">${icon('bot', 17)}</span><div class="ed-message-content"><p>已選好 ${selected()?.id}。這次的良品與不良各有幾件？</p><div class="ed-inline-card">${amountForm()}</div></div></div>`;
+    if (state.phase === 'review') return mode === 2 ? `<div class="ed-assistant-block"><span class="ed-message-avatar">${icon('bot', 17)}</span><div class="ed-message-content"><p>作業單已經整理好了。</p><p>請核對右側的對象與數量，確認後再送出。你也可以直接說「良品改成 120」。</p>${button('change-to-120', '試試看：良品改成 120', 'ed-suggestion')}</div></div>` : `<div class="ed-assistant-block"><span class="ed-message-avatar">${icon('bot', 17)}</span><div class="ed-message-content">${reviewCard()}${state.good !== 120 ? button('change-to-120', '試試看：良品改成 120', 'ed-suggestion') : ''}</div></div>`;
+    return `<div class="ed-assistant-block"><span class="ed-message-avatar">${icon('bot', 17)}</span><div class="ed-message-content">${terminalCard()}</div></div>`;
+  }
+
+  function composer() {
+    return `<form class="ed-composer" data-form="chat"><div class="ed-composer-box"><textarea aria-label="輸入報工需求" data-bind="composer" rows="1" placeholder="${state.phase === 'review' ? '例如：良品改成 120' : '例如：幫 MC37 報工'}" ${locked() ? 'disabled' : ''}>${escapeText(state.composer)}</textarea><button type="submit" class="ed-send" aria-label="送出訊息" ${locked() ? 'disabled' : ''}>${icon('up', 19)}</button></div><div class="ed-composer-note"><span>固定腳本示範 · 可用上方範例或選項</span><span>Enter 送出</span></div></form>`;
+  }
+
+  function chatBody() {
+    return `<section class="ed-chat-panel"><div class="ed-chat-scroll" aria-label="對話內容">${state.phase === 'intro' ? emptyChat() : `<div class="ed-transcript">${state.messages.map((message) => message.role === 'user' ? `<div class="ed-user-message">${escapeText(message.text)}</div>` : `<div class="ed-assistant-plain">${escapeText(message.text)}</div>`).join('')}${activeChatCard()}</div>`}</div>${composer()}</section>`;
+  }
+
+  function sideSummary() {
+    const order = selected();
+    return `<aside class="ed-summary-sidebar"><div class="ed-sidebar-title">${icon('file', 19)}<h3>本次作業</h3><span>${state.phase === 'done' ? '已完成' : '即時整理'}</span></div>${!order ? `<div class="ed-sidebar-empty"><span>${icon('file', 39)}</span><h4>先聊需求，再整理內容。</h4><p>選好工單後，作業摘要會在這裡出現。現在不用填一整張表。</p><div class="ed-empty-lines"><i></i><i></i><i></i></div></div>` : state.phase === 'review' ? reviewCard({ compact: true }) : ['done', 'unknown', 'sending', 'cancelled'].includes(state.phase) ? `<div class="ed-side-context">${contextLine()}<h4>${state.phase === 'done' ? '已完成這筆作業' : state.phase === 'unknown' ? '等待結果核對' : state.phase === 'cancelled' ? '這筆已取消' : '等待處理結果'}</h4><p>完整回執與下一步顯示在對話中。</p><dl class="ed-summary-lines"><div><dt>人工良品</dt><dd>${state.good} 件</dd></div><div><dt>${REASONS[state.reason]}</dt><dd>${state.ng} 件</dd></div></dl></div>` : `<div class="ed-side-context"><span class="ed-status-pill ed-status-draft">內容填寫中</span>${contextLine()}<h4>${order.name}</h4><div class="ed-side-check">${icon('check', 16)} 已確認工單與產品</div><div class="ed-side-pending"><span>2</span> 接著填寫本次數量</div><p class="ed-card-note">完成左側填寫後，這裡會顯示送出前的完整摘要。</p></div>`}<div class="ed-sidebar-foot">${icon('info', 15)} 所有修改都會回到同一份草稿。</div></aside>`;
+  }
+
+  function taskHome() {
+    return `<section class="ed-task-home"><p class="ed-eyebrow">從一件事開始</p><h2>你現在想完成什麼？</h2><p class="ed-lead">不需要記住系統名稱，選一件要做的事就好。</p><div class="ed-task-cards">${button('begin', `<span class="ed-task-icon">${icon('report', 28)}</span><span class="ed-task-meta">常用任務</span><strong>登記這次產量</strong><span>選工單、填數量，核對後送出。</span><b>開始報工 ${icon('arrow', 17)}</b>`, 'ed-task-card ed-task-featured')}${button('show-records', `<span class="ed-task-icon">${icon('history', 28)}</span><span class="ed-task-meta">作業查詢</span><strong>查詢人工紀錄</strong><span>查看這次演練已登記的報工。</span><b>查看紀錄 ${icon('arrow', 17)}</b>`, 'ed-task-card')}${button('show-status', `<span class="ed-task-icon">${icon('machine', 28)}</span><span class="ed-task-meta">設備資訊</span><strong>查看設備現況</strong><span>確認 MC37 的工單和產量來源。</span><b>查看現況 ${icon('arrow', 17)}</b>`, 'ed-task-card')}</div><div class="ed-task-help">${icon('bot', 22)}<span><strong>不確定從哪裡開始？</strong><small>選「登記這次產量」，試走一筆完整報工。</small></span>${button('begin', '帶我做一次' + icon('arrow', 16), 'ed-secondary')}</div></section>`;
+  }
+
+  function taskView() {
+    if (state.phase === 'intro') return taskHome();
+    const step = ['choose', 'amount'].includes(state.phase) ? state.phase === 'choose' ? '確認對象' : '填本次數量' : state.phase === 'review' ? '送出前核對' : '作業結果';
+    return `<section class="ed-task-work"><div class="ed-task-breadcrumb">${subtle('task-home', icon('back', 16) + '任務首頁', locked() ? 'disabled' : '')}<span>/</span><span>登記這次產量</span></div><div class="ed-task-work-grid"><aside class="ed-task-context"><span class="ed-section-kicker">正在完成</span><h2>登記這次<br>產量</h2><p>一次完成一筆報工。內容確認前，都可以修改。</p><div class="ed-task-current">${icon('report', 17)} ${step}</div>${button('show-help', '這個欄位怎麼填？', 'ed-help-link')}</aside><div class="ed-task-main-card">${state.phase === 'choose' ? '<p class="ed-section-kicker">先確認對象</p><h3>要登記哪張工單？</h3>' + orderCards() : state.phase === 'amount' ? amountForm() : state.phase === 'review' ? reviewCard() : terminalCard()}</div></div></section>`;
+  }
+
+  function stats(order) {
+    const ownRecords = state.records.filter((record) => record.orderId === order.id);
+    const ok = ownRecords.reduce((sum, record) => sum + record.good, 0);
+    const ng = ownRecords.reduce((sum, record) => sum + record.ng, 0);
+    return `<div class="ed-work-stats"><div><span>演練新增人工良品</span><strong>${ok}<small>件</small></strong></div><div><span>演練新增不良品</span><strong>${ng}<small>件</small></strong></div><div><span>IoT 產量 · 獨立來源</span><strong>${order.iot === null ? '<span class="ed-unknown-value">未知</span>' : order.iot + '<small>件</small>'}</strong></div></div>`;
+  }
+  function workbench() {
+    const order = selected();
+    return `<section class="ed-workbench"><aside class="ed-order-sidebar"><div class="ed-order-sidebar-heading"><h3>目前工單</h3><span>2</span></div><div class="ed-equipment-label">${icon('machine', 17)} MC37 <span class="ed-running-dot"></span></div><div class="ed-work-order-list">${ORDERS.map((item) => button('choose-order', `<span class="ed-work-order-top"><strong>${item.id}</strong><small>生產中</small></span><span>${item.name}</span><small>${item.part} · 10/30 08:00</small>`, 'ed-work-order' + (state.orderId === item.id ? ' is-selected' : ''), `data-order="${item.id}" ${locked() ? 'disabled' : ''} aria-label="選擇工單 ${item.id} ${item.name}"`)).join('')}</div><div class="ed-work-sidebar-bottom">${button('show-records', icon('history', 16) + '本次演練紀錄', 'ed-subtle')}${button('show-status', icon('info', 16) + '設備與資料說明', 'ed-subtle')}</div></aside><main class="ed-work-main">${!order ? `<div class="ed-work-empty"><span>${icon('report', 38)}</span><h2>從一張工單開始。</h2><p>選左側的工單，直接登記這次產量。<br>機台和產品會一起帶入，不必重新輸入。</p>${primary('choose-order', '選 WO-A 開始演練' + icon('arrow', 16), 'data-order="WO-A"')}</div>` : `<div class="ed-work-heading"><div><p class="ed-section-kicker">MC37 / 生產中</p><h2>${order.id}<span>${order.name}</span></h2></div><span class="ed-status-pill ed-status-draft">${order.part}</span></div>${stats(order)}<div class="ed-work-content">${state.phase === 'amount' || state.phase === 'choose' || state.phase === 'intro' ? `<div class="ed-work-card">${amountForm()}</div>` : state.phase === 'review' ? reviewCard() : terminalCard()}</div>${!['done', 'unknown', 'sending'].includes(state.phase) ? `<div class="ed-context-assistant"><span class="ed-message-avatar">${icon('bot', 17)}</span><span><strong>需要幫忙嗎？</strong><small>我只針對目前的 ${order.id} 提供說明。</small></span>${button('show-help', '問助理', 'ed-secondary')}</div>` : ''}`}</main></section>`;
+  }
+
+  function coachView() {
+    if (state.phase === 'intro') return `<section class="ed-coach-welcome"><div class="ed-coach-orbit"><span>${icon('bot', 35)}</span><i>${icon('check', 15)}</i></div><p class="ed-eyebrow">第一次操作也沒關係</p><h2>我們一起完成<br>第一筆報工。</h2><p>一次回答一個問題。<br>完成前，我會幫你把內容整理好。</p>${primary('begin', '開始練習' + icon('arrow', 18))}<span class="ed-micro">可以返回修改 · 不影響正式資料</span></section>`;
+    let body = '';
+    let stepLabel = '確認這次的作業';
+    if (state.phase === 'machine') {
+      body = `<span class="ed-coach-question-icon">${icon('machine', 29)}</span><h2>你在哪台機器工作？</h2><p>這次用 MC37 來練習。</p><div class="ed-coach-machine">${button('coach-machine', `<span>${icon('machine', 25)}<strong>MC37</strong><small>2 張工單生產中</small></span>${icon('arrow', 20)}`, 'ed-coach-choice')}</div>${button('show-status', '先看看機台資料', 'ed-help-link')}`;
+    } else if (state.phase === 'choose') {
+      stepLabel = '已選 MC37';
+      body = `<h2>這次是哪張工單？</h2><p>核對工單和產品名稱，避免登記到另一筆。</p>${orderCards()}${subtle('coach-back-machine', icon('back', 16) + '返回選機台')}`;
+    } else if (state.phase === 'good') {
+      stepLabel = `MC37 · ${selected()?.id}`;
+      body = `<form data-form="coach-good" novalidate><span class="ed-coach-question-icon">${icon('report', 29)}</span><h2>這次完成幾件良品？</h2><p>填這次的數量，不用自己加上之前的紀錄。</p><label class="ed-coach-number"><input name="good" data-bind="goodInput" type="number" inputmode="numeric" min="0" step="1" value="${escapeText(state.goodInput)}" aria-label="本次人工良品數量"><span>件</span></label>${fieldError()}<div class="ed-coach-actions">${subtle('back-orders', icon('back', 16) + '上一題')}<button type="submit" class="ed-btn ed-primary">${state.coachReturn ? '更新確認內容' : '下一題'} ${icon('arrow', 16)}</button></div></form>`;
+    } else if (state.phase === 'defect') {
+      stepLabel = `已填良品 ${state.goodInput} 件`;
+      body = `<h2>這次有不良品嗎？</h2><p>沒有就選「沒有」，不必多填一張表。</p><div class="ed-coach-binary">${button('coach-no-defect', '<span>' + icon('check', 25) + '</span><strong>沒有不良品</strong><small>不良數量記為 0</small>', 'ed-coach-answer')}${button('coach-has-defect', '<span>' + icon('report', 25) + '</span><strong>有，登記一下</strong><small>接著選原因和數量</small>', 'ed-coach-answer')}</div>${subtle('coach-back-good', icon('back', 16) + '上一題')}`;
+    } else if (state.phase === 'defect-entry') {
+      stepLabel = `MC37 · ${selected()?.id} · 良品 ${state.goodInput} 件`;
+      body = `<form data-form="coach-defect" novalidate><h2>不良原因和數量是？</h2><p>這次演練可以選缺料或破損。</p><div class="ed-coach-defect-fields"><label class="ed-field"><span>不良原因</span><select name="reason" data-bind="reason" aria-label="不良原因">${Object.entries(REASONS).map(([code, name]) => `<option value="${code}" ${state.reason === code ? 'selected' : ''}>${name}</option>`).join('')}</select></label><label class="ed-field"><span>不良數量 · 件</span><input name="ng" data-bind="ngInput" type="number" inputmode="numeric" min="0" step="1" value="${escapeText(state.ngInput)}" aria-label="本次不良品數量"></label></div>${fieldError()}<div class="ed-coach-actions">${subtle('coach-back-defect', icon('back', 16) + '上一題')}<button type="submit" class="ed-btn ed-primary">整理確認內容 ${icon('arrow', 16)}</button></div></form>`;
+    } else if (state.phase === 'review') {
+      stepLabel = '最後核對 · 還沒有送出';
+      body = reviewCard();
+    } else {
+      stepLabel = state.phase === 'done' ? '第一筆報工，完成了' : '保留這次作業';
+      body = terminalCard();
+    }
+    const footnote = state.phase === 'done' ? '這次演練已完成，可以查看回執或再報一筆。' : state.phase === 'unknown' ? '請先查核這筆操作的結果，再開始下一筆。' : state.phase === 'sending' ? '正在處理，請稍候。' : state.phase === 'cancelled' ? '草稿已取消，沒有新增報工。' : '需要修改時可以返回，已填的內容會保留。';
+    return `<section class="ed-coach"><div class="ed-coach-progress"><span class="ed-dot"></span>${escapeText(stepLabel)}</div><div class="ed-coach-card">${body}</div><p class="ed-coach-footnote">${footnote}</p></section>`;
+  }
+
+  function overlay() {
+    if (!state.readPanel) return '';
+    let content = '';
+    let title = '';
+    if (state.readPanel === 'records') {
+      title = '本次演練的人工報工';
+      content = state.records.length ? `<div class="ed-record-list">${state.records.slice().reverse().map((record) => `<article class="ed-record"><div><strong>MC37 · ${record.orderId}</strong><span class="ed-status-pill ed-status-done">已完成</span></div><p>人工良品 <b>+${record.good}</b> 件 · ${REASONS[record.reason]} <b>+${record.ng}</b> 件</p><small>演練回執 ${escapeText(record.id)}</small></article>`).join('')}</div><p class="ed-card-note">只顯示這次演練新增的紀錄，不是正式 MES 歷史資料。</p>` : `<div class="ed-overlay-empty">${icon('history', 34)}<h3>還沒有新增報工</h3><p>完成一筆報工後，回執會出現在這裡。<br>尚未確認的草稿不會列入紀錄。</p></div>`;
+    } else if (state.readPanel === 'status') {
+      title = 'MC37 的示範設備現況';
+      content = `<p class="ed-overlay-lead">同一台機台，分別處理兩張工單。</p>${ORDERS.map((order) => `<div class="ed-status-order"><div><strong>${order.id}</strong><span>${order.part} · ${order.name}</span></div><span class="ed-status-pill ed-status-done">生產中</span></div>${stats(order)}`).join('')}<div class="ed-impact-note">${icon('info', 16)}<span>人工報工和 IoT 是不同來源；未取得的 IoT 數量顯示「未知」。</span></div><p class="ed-card-note">固定情境：2026/10/30 08:00，MES 時間 UTC+07。</p>`;
+    } else {
+      title = selected() ? `關於 ${selected().id} 的這筆報工` : '怎麼完成一筆報工？';
+      content = `<div class="ed-help-answer"><span class="ed-message-avatar">${icon('bot', 21)}</span><div><p><strong>只填這次完成的數量。</strong></p><p>「人工良品」是你這次要登記的良品；不良品請選原因並填數量，沒有不良就填 0。</p><p>數量要是 0 以上的整數。檢查內容後才會出現確認按鈕，這時還可以修改。</p><p>這次練習可填：<strong>良品 100 件、缺料 2 件</strong>，再試著把良品改成 120。</p></div></div>${!locked() && state.orderId && !['done', 'cancelled'].includes(state.phase) ? primary('apply-example', '帶入範例數量' + icon('arrow', 16)) : ''}<p class="ed-card-note">這是固定腳本操作示範，不是即時 AI 回覆。</p>`;
+    }
+    return `<div class="ed-overlay-backdrop" data-action="close-overlay"><section class="ed-overlay" role="dialog" aria-modal="true" aria-labelledby="ed-dialog-title-${mode}" tabindex="-1"><header><h2 id="ed-dialog-title-${mode}">${title}</h2>${button('close-overlay', icon('close', 20), 'ed-icon-btn', 'aria-label="關閉詳細資料"')}</header><div class="ed-overlay-body">${content}</div><footer>${button('close-overlay', '返回目前作業', 'ed-secondary')}</footer></section></div>`;
+  }
+
+  function render({ focus = null } = {}) {
+    if (disposed) return;
+    let body;
+    if (mode === 1) body = `<div class="ed-single-chat">${chatBody()}</div>`;
+    else if (mode === 2) body = `<div class="ed-split-workspace">${chatBody()}${sideSummary()}</div>`;
+    else if (mode === 3) body = taskView();
+    else if (mode === 4) body = workbench();
+    else body = coachView();
+    container.innerHTML = `<div class="ed-root ed-mode-${mode}">${header()}${noticeBar()}<div class="ed-body">${body}</div><div class="ed-prototype-note">${icon('info', 12)} 固定腳本互動原型 · 合成資料 · 未連接正式 MES</div>${overlay()}</div>`;
+    progress();
+    const scrollArea = container.querySelector('.ed-chat-scroll');
+    if (scrollArea && state.phase !== 'intro') scrollArea.scrollTop = scrollArea.scrollHeight;
+    if (state.readPanel) container.querySelector('.ed-overlay')?.focus({ preventScroll: true });
+    else if (focus) container.querySelector(focus)?.focus({ preventScroll: true });
+  }
+
+  function begin() {
+    if (locked()) return;
+    state.error = '';
+    state.notice = '';
+    state.readPanel = null;
+    if (state.phase === 'done' || state.phase === 'cancelled') {
+      state.orderId = null;
+      state.operationId = '';
+      state.saved = false;
+      state.revision = 1;
+      state.messages = [];
+    }
+    state.phase = mode === 5 ? 'machine' : 'choose';
+    if (!state.messages.length) addMessage('user', '幫 MC37 報工');
+    render();
+  }
+
+  function chooseOrder(id) {
+    if (locked() || !ORDERS.some((order) => order.id === id)) return;
+    if (state.orderId && state.orderId !== id) state.revision++;
+    state.orderId = id;
+    state.error = '';
+    state.notice = '';
+    state.coachReturn = false;
+    if (state.phase === 'done') {
+      state.saved = false;
+      state.operationId = '';
+    }
+    state.phase = mode === 5 ? 'good' : 'amount';
+    addMessage('user', `選 ${id} · ${selected().name}`);
+    render({ focus: mode === 1 || mode === 2 ? null : '[name="good"]' });
+  }
+
+  function integer(raw) {
+    const text = String(raw).trim();
+    if (!/^\d+$/.test(text)) return null;
+    const number = Number(text);
+    return Number.isSafeInteger(number) && number >= 0 ? number : null;
+  }
+
+  function prepareReview() {
+    const good = integer(state.goodInput);
+    const ng = integer(state.ngInput);
+    if (good === null || ng === null) {
+      // Any attempted change invalidates the previously confirmable preview.
+      // Keep the raw input so the user can fix it without resubmitting old data.
+      state.phase = mode === 5 ? (good === null ? 'good' : 'defect-entry') : 'amount';
+      state.coachReturn = mode === 5;
+      state.error = '良品與不良數量都必須是 0 以上的整數。請保留原意後重新填寫。';
+      render({ focus: good === null ? '[name="good"]' : '[name="ng"]' });
+      return false;
+    }
+    if (!selected()) {
+      state.phase = 'choose';
+      state.notice = '請先明確選擇這次報工的工單。';
+      render();
+      return false;
+    }
+    state.good = good;
+    state.ng = ng;
+    state.error = '';
+    state.notice = '';
+    state.phase = 'review';
+    state.coachReturn = false;
+    addMessage('user', `這次人工良品 ${good} 件，${REASONS[state.reason]} ${ng} 件。`);
+    render();
+    return true;
+  }
+
+  function markDone() {
+    if (disposed) return;
+    state.phase = 'done';
+    state.checking = false;
+    if (!state.saved) {
+      state.records.push({ id: state.operationId, orderId: state.orderId, good: state.good, ng: state.ng, reason: state.reason });
+      state.saved = true;
+    }
+    render();
+  }
+
+  function confirm() {
+    if (state.phase !== 'review' || !selected()) return;
+    const submissionScenario = currentScenario;
+    state.phase = 'sending';
+    state.notice = '';
+    state.error = '';
+    state.operationId = `DEMO-${String(++operationSequence).padStart(4, '0')}`;
+    state.saved = false;
+    render();
+    timer = setTimeout(() => {
+      timer = null;
+      if (disposed) return;
+      if (['unknown', 'disconnect', 'interrupted', 'timeout'].includes(submissionScenario)) {
+        state.phase = 'unknown';
+        render();
+      } else markDone();
+    }, 650);
+  }
+
+  function handleAction(action, element) {
+    if (action === 'close-overlay') {
+      state.readPanel = null;
+      render();
+      return;
+    }
+    if (action === 'show-records' || action === 'show-status' || action === 'show-help') {
+      state.readPanel = action === 'show-records' ? 'records' : action === 'show-status' ? 'status' : 'help';
+      render();
+      return;
+    }
+    if (action === 'dismiss-notice') { state.notice = ''; render(); return; }
+    if (action === 'reconcile' && state.phase === 'unknown' && !state.checking) {
+      state.checking = true;
+      render();
+      timer = setTimeout(() => { timer = null; markDone(); }, 550);
+      return;
+    }
+    if (locked()) return;
+    if (action === 'begin' || action === 'new-report') { begin(); return; }
+    if (action === 'choose-order') { chooseOrder(element.dataset.order); return; }
+    if (action === 'reset') { reset(); return; }
+    if (action === 'confirm') { confirm(); return; }
+    if (action === 'back-orders') { state.error = ''; state.phase = 'choose'; state.revision++; render(); return; }
+    if (action === 'task-home') {
+      if (state.phase === 'review' || state.phase === 'amount') {
+        note('這筆內容尚未送出。請先完成或取消目前草稿，再回任務首頁。');
+        return;
+      }
+      state.phase = 'intro'; state.orderId = null; render(); return;
+    }
+    if (action === 'cancel') { state.phase = 'cancelled'; state.revision++; state.notice = ''; render(); return; }
+    if (['edit', 'edit-good', 'edit-defects'].includes(action)) {
+      state.revision++;
+      state.error = '';
+      state.notice = '正在修改內容，上一版確認卡已失效。更新後會重新核對。';
+      state.phase = mode === 5 ? action === 'edit-defects' ? 'defect-entry' : 'good' : 'amount';
+      state.coachReturn = mode === 5;
+      render({ focus: action === 'edit-defects' ? '[name="ng"]' : '[name="good"]' });
+      return;
+    }
+    if (action === 'change-to-120') {
+      if (state.phase !== 'review') return;
+      state.goodInput = '120'; state.revision++;
+      prepareReview();
+      state.notice = '已把良品更新為 120 件。請核對這一版內容，再確認送出。';
+      render(); return;
+    }
+    if (action === 'apply-example') {
+      state.goodInput = '100'; state.ngInput = '2'; state.reason = 'NG01'; state.readPanel = null; state.revision++;
+      state.phase = mode === 5 ? 'good' : 'amount';
+      state.notice = '已帶入範例數量，請確認內容後繼續。';
+      render(); return;
+    }
+    if (action === 'coach-machine') { state.phase = 'choose'; render(); return; }
+    if (action === 'coach-back-machine') { state.phase = 'machine'; render(); return; }
+    if (action === 'coach-back-good') { state.phase = 'good'; state.coachReturn = false; render(); return; }
+    if (action === 'coach-back-defect') { state.phase = 'defect'; state.coachReturn = false; render(); return; }
+    if (action === 'coach-has-defect') { state.phase = 'defect-entry'; state.error = ''; render(); return; }
+    if (action === 'coach-no-defect') { state.ngInput = '0'; prepareReview(); }
+  }
+
+  function chatSubmit() {
+    if (locked()) return;
+    const text = state.composer.trim();
+    if (!text) return;
+    state.composer = '';
+    const command = text.replace(/[。！!]+$/, '').trim();
+    if (/^(幫\s*)?(MC37\s*)?(新增|登記)?報工$/i.test(command) || command === '開始') { begin(); return; }
+    if (/^(?:查詢|查看)?(?:人工)?(?:報工)?(?:紀錄|記錄)$/.test(command)) { state.readPanel = 'records'; render(); return; }
+    if (/^(?:查看|查詢)?(?:MC37\s*)?(?:設備現況|設備狀態|現況)$/i.test(command)) { state.readPanel = 'status'; render(); return; }
+    const orderCommand = command.match(/^(?:選擇|選)?\s*(WO-[AB])$/i);
+    if (orderCommand) { chooseOrder(orderCommand[1].toUpperCase()); return; }
+    // 只接受完整的示範句型；否定句、科學記號、混合指令不做部分解析。
+    const pair = command.match(/^(?:(WO-[AB])\s+)?(?:人工)?良品\s*(?:改成|改為|為|是|=|：|:)?\s*(-?\d+(?:\.\d+)?)\s*(?:件)?\s*[,，、]?\s*(缺料|破損|不良)\s*(?:改成|改為|為|是|=|：|:)?\s*(-?\d+(?:\.\d+)?)\s*(?:件)?$/i);
+    const goodOnly = command.match(/^(?:人工)?良品\s*(?:改成|改為|為|是|=|：|:)?\s*(-?\d+(?:\.\d+)?)\s*(?:件)?$/);
+    const defectOnly = command.match(/^(缺料|破損|不良)\s*(?:改成|改為|為|是|=|：|:)?\s*(-?\d+(?:\.\d+)?)\s*(?:件)?$/);
+    if (pair || goodOnly || defectOnly) {
+      if (state.phase === 'done' || state.phase === 'cancelled') {
+        note('這筆已經結束。請點「再報一筆」開始新的報工。');
+        return;
+      }
+      const wasReview = state.phase === 'review';
+      const goodValue = pair ? pair[2] : goodOnly ? goodOnly[1] : null;
+      const defectLabel = pair ? pair[3] : defectOnly ? defectOnly[1] : null;
+      const defectValue = pair ? pair[4] : defectOnly ? defectOnly[2] : null;
+      if (goodValue !== null) state.goodInput = goodValue;
+      if (defectValue !== null) {
+        state.ngInput = defectValue;
+        if (defectLabel !== '不良') state.reason = defectLabel === '缺料' ? 'NG01' : 'NG02';
+      }
+      if (pair?.[1]) state.orderId = pair[1].toUpperCase();
+      state.revision++;
+      if (!state.orderId) { state.phase = 'choose'; state.notice = '已保留數量，請先選擇要登記的工單。'; render(); return; }
+      if ((pair && defectLabel !== '不良') || wasReview) { prepareReview(); return; }
+      state.phase = 'amount';
+      state.notice = '已帶入你提供的數量，請確認其餘內容後再檢查報工。';
+      render(); return;
+    }
+    state.notice = '這段文字未套用，作業內容不變。這是固定腳本示範，可輸入「幫 MC37 報工」、「WO-A」、「良品 100，缺料 2」或「良品改成 120」，也可以直接點畫面上的選項。';
+    state.composer = text;
+    render({ focus: '.ed-composer textarea' });
+  }
+
+  function onClick(event) {
+    const element = event.target.closest('[data-action]');
+    if (!element || !container.contains(element) || element.disabled) return;
+    if (element.classList.contains('ed-overlay-backdrop') && event.target !== element) return;
+    handleAction(element.dataset.action, element);
+  }
+  function onInput(event) {
+    const name = event.target.dataset.bind;
+    if (['goodInput', 'ngInput', 'reason', 'composer'].includes(name)) state[name] = event.target.value;
+  }
+  function onSubmit(event) {
+    const form = event.target.closest('[data-form]');
+    if (!form) return;
+    event.preventDefault();
+    if (locked()) return;
+    if (form.dataset.form === 'chat') { chatSubmit(); return; }
+    if (form.dataset.form === 'coach-good') {
+      if (integer(state.goodInput) === null) { state.error = '請輸入 0 以上的整數，例如 100。'; render({ focus: '[name="good"]' }); return; }
+      state.good = integer(state.goodInput);
+      state.error = '';
+      if (state.coachReturn) prepareReview();
+      else { state.phase = 'defect'; render(); }
+      return;
+    }
+    prepareReview();
+  }
+  function onKeydown(event) {
+    if (event.key === 'Escape' && state.readPanel) { state.readPanel = null; render(); return; }
+    if (event.key === 'Tab' && state.readPanel) {
+      const dialog = container.querySelector('.ed-overlay');
+      const focusable = Array.from(dialog?.querySelectorAll('button:not([disabled]), input, select, textarea, a[href]') || []);
+      if (!focusable.length) return;
+      const first = focusable[0], last = focusable[focusable.length - 1];
+      if (event.shiftKey && (document.activeElement === first || document.activeElement === dialog)) { event.preventDefault(); last.focus(); }
+      else if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first.focus(); }
+    }
+    if (event.key === 'Enter' && !event.shiftKey && !event.isComposing && event.target.matches('.ed-composer textarea')) {
+      event.preventDefault(); chatSubmit();
+    }
+  }
+  function reset() {
+    if (timer) { clearTimeout(timer); timer = null; }
+    state = freshState();
+    render();
+  }
+
+  container.addEventListener('click', onClick);
+  container.addEventListener('input', onInput);
+  container.addEventListener('change', onInput);
+  container.addEventListener('submit', onSubmit);
+  container.addEventListener('keydown', onKeydown);
+  render();
+  return {
+    destroy() {
+      disposed = true;
+      if (timer) clearTimeout(timer);
+      container.removeEventListener('click', onClick);
+      container.removeEventListener('input', onInput);
+      container.removeEventListener('change', onInput);
+      container.removeEventListener('submit', onSubmit);
+      container.removeEventListener('keydown', onKeydown);
+      container.innerHTML = '';
+    },
+    reset,
+    setScenario(value) { currentScenario = value; }
+  };
+}
+
+
+
+const MODES = [
+  { id: 1, name: '對話式助理', description: '直接說需求，助理只追問缺少的資料；選工單、修改與確認都留在對話中。' },
+  { id: 2, name: '對話＋作業摘要', description: '對話帶著你前進，已確認的內容逐步整理在右側；整頁只有一處送出。' },
+  { id: 3, name: '任務入口', description: '先選「我要完成什麼」，再進入精簡任務流程；不必先學會怎麼問 AI。' },
+  { id: 4, name: '工單工作台', description: '先找到正在處理的工單，在同一個位置新增報工；適合熟手與 MES 原頁面入口。' },
+  { id: 5, name: '一步一問教練', description: '一次只回答一個問題，最後一起核對；適合第一次使用或現場培訓。' },
+];
+const sourceRoot = 'https://github.com/WeYuTech/KaosuAiAgentTest/blob/71506e727a0844b878637c03d3b4988a163f785c/';
+const source = (path, title) => `<a class="evidence-link" href="${sourceRoot}${path}" target="_blank" rel="noopener noreferrer">${title} <span aria-hidden="true">↗</span></a>`;
+const cards = [
+  { n: '01', tag: '畫面已觀察', title: '兩邊都在問「你要做什麼」', body: '左邊是三個聊天範例，右邊是六個報工動作。新人需要自己決定走哪邊，還得猜聊天與作業單如何配合。', change: '給一個主入口；其他能力在目前任務需要時再出現。', link: source('frontend/src/main.tsx#L300-L309', '查看對話與作業單配置') },
+  { n: '02', tag: '畫面已觀察', title: '填表時，助理仍停在歡迎頁', body: '我已選工單並填入數量，左側仍顯示「說說你想完成的作業」和起始範例，佔去近半個畫面，沒有反映目前進度。', change: '已選工單、還缺數量、等待核對，都直接反映在目前對話或任務卡。', link: source('frontend/src/main.tsx#L300-L309', '查看歡迎內容的呈現條件') },
+  { n: '03', tag: '畫面已觀察', title: '最重要的確認按鈕需要往下找', body: '報工核對畫面先出現說明，再接一張很長的確認卡。在本次桌面視窗中，「同意並寫入」落在右欄可視區下方。', change: '核對卡保留對象、數量與影響；詳細資料收合，主要按鈕靠近內容。', link: source('frontend/src/GuidedFlow.tsx#L305-L306', '查看核對步驟與確認卡銜接') },
+  { n: '04', tag: '程式已核對', title: '查詢結果會把目前的作業單切走', body: '作業單內與「查詢資料」分頁各自管理查詢狀態。收到查詢回覆時又會自動切分頁，增加找回目前任務的成本。', change: '候選資料就地顯示；選到資料後，繼續原本任務。', link: source('frontend/src/main.tsx#L234-L237', '查看自動切換分頁的條件') },
+  { n: '05', tag: '程式已核對', title: '「帶入資料」實際會建立新對話', body: '點「以此筆資料開始」會建立新的 conversation、替換訊息並清掉確認卡，但畫面沒有會話列表可找回剛才的內容。', change: '區分「帶入目前任務」和「另開任務」，避免沒有預期的上下文中斷。', link: source('frontend/src/main.tsx#L265-L270', '查看選取資料的處理') },
+  { n: '06', tag: '程式已核對', title: '未送出的文字可能在切模組時消失', body: '切換模組會清空聊天輸入，而切換鎖定條件未包含未送出的文字。這是從程式確認的風險，本次未啟用真實模型重現。', change: '草稿依任務保留；切換時明確交代哪些內容會帶入。', link: source('frontend/src/main.tsx#L228-L230', '查看重新進入模組時的狀態重設') },
+  { n: '07', tag: '畫面已觀察', title: '日常報工與例外操作同樣醒目', body: '新增、修改、刪除、調整模穴、整張排程完工被放在同一層級。確認機制有保留，但入口未凸顯新人最常做的事。', change: '優先顯示當前對象能做的常用操作；例外動作放到相關紀錄的更多操作。', link: source('frontend/src/GuidedFlow.tsx#L277', '查看報工動作入口') },
+  { n: '08', tag: '程式已核對', title: '缺資料時，提示沒有說清楚缺什麼', body: '表單未 ready 時顯示「資料還沒填齊」，沒有使用後端回傳的 missing 清單指出具體欄位。新人只能自己回頭檢查。', change: '直接指出「還缺工單」或「請填缺料數量」，保留已填內容並帶到該欄位。', link: source('frontend/src/GuidedFlow.tsx#L297-L304', '查看必要欄位檢查') },
+];
+
+document.querySelector('#audit-content').innerHTML = `
+  <header class="analysis-heading"><span class="eyebrow">MAIN 分支實際檢查</span><h1>問題出在操作的路徑。</h1><p class="analysis-lede">目前同時保留對話、步驟表單、查詢與確認卡，使用者要先理解系統的分工，才能完成自己的作業。</p></header>
+  <div class="scope-note"><strong>檢查基準</strong><p>main · <code>71506e7</code> · 2026/10/30。已在隔離模擬環境打開原版畫面，操作新增報工、選工單、填數量、核對與返回修改。未連接正式 MES，也未設定真實模型金鑰；對話回覆品質與正式環境狀態不在本次驗證範圍。</p></div>
+  <div class="evidence-grid">${cards.map(c=>`<article class="evidence-card"><div class="evidence-meta"><span class="evidence-number">${c.n}</span><span class="evidence-tag">${c.tag}</span></div><h2>${c.title}</h2><p>${c.body}</p><div class="evidence-change"><span>改版方向</span><p>${c.change}</p></div>${c.link}</article>`).join('')}</div>
+  <section class="recommendation-card"><h2>既有保護應繼續保留</h2><p>版本化草稿、人工確認後執行、修改後重新核對，以及結果未知時先查核，不自動重送。介面可以變簡單，寫入邊界仍需完整。</p>${source('frontend/src/confirmation.ts', '查看既有確認與查核流程')}</section>
+`;
+
+document.querySelector('#compare-content').innerHTML = `
+  <header class="analysis-heading"><span class="eyebrow">方案比較</span><h1>先讓人會用，再讓熟手更快。</h1><p class="analysis-lede">我建議以 01 作為預設入口；資料較多時才展開 02 的摘要。第一次培訓可選 05，熟悉機台與工單後再用 04。</p></header>
+  <section class="recommendation-card primary-recommendation"><div><span class="evidence-tag">推薦先試</span><h2>01 對話式助理</h2><p>直接說「幫 MC37 報工」，需要選工單時給選項，需要數量時給小表單，核對與完成都留在同一條流程。</p></div><button class="lab-primary" data-mode="1">體驗推薦方案 <span aria-hidden="true">↗</span></button></section>
+  <div class="table-wrap"><table class="comparison-table"><caption>設計取捨比較；以下為設計判斷，尚未進行新人使用者測試。</caption><thead><tr><th scope="col">方案</th><th scope="col">最適合</th><th scope="col">新人如何開始</th><th scope="col">主要取捨</th><th scope="col">體驗</th></tr></thead><tbody>
+    <tr><th scope="row">01 對話式助理</th><td>日常作業與一般新人</td><td>說需求或點一句範例</td><td>大型排程仍需結構化明細卡</td><td><button class="text-link" data-mode="1">開啟 01</button></td></tr>
+    <tr><th scope="row">02 對話＋作業摘要</th><td>桌面作業、資料較多的任務</td><td>先聊天，再看逐步整理的摘要</td><td>需控制側欄密度，避免重回雙軌操作</td><td><button class="text-link" data-mode="2">開啟 02</button></td></tr>
+    <tr><th scope="row">03 任務入口</th><td>不知道系統能做什麼的人</td><td>點「登記這次產量」</td><td>新增能力時要管理入口數量</td><td><button class="text-link" data-mode="3">開啟 03</button></td></tr>
+    <tr><th scope="row">04 工單工作台</th><td>現場重複作業、MES 內嵌入口</td><td>先找工單，再就地操作</td><td>需要知道機台或工單，不宜作唯一新手入口</td><td><button class="text-link" data-mode="4">開啟 04</button></td></tr>
+    <tr><th scope="row">05 一步一問教練</th><td>第一次報工、現場培訓</td><td>每張卡只做一個決定</td><td>操作次數較多，熟手應能切換模式</td><td><button class="text-link" data-mode="5">開啟 05</button></td></tr>
+  </tbody></table></div>
+  <div class="evidence-grid"><section class="evidence-card"><span class="evidence-tag">同一個比較任務</span><h2>五版都用這筆報工</h2><ol class="test-list"><li>選 MC37 的 WO-A／EPS-A。</li><li>填人工良品 100、缺料 2。</li><li>核對前把良品改為 120。</li><li>確認後看本次結果與識別碼。</li><li>切換「回應中斷」，觀察如何查核結果。</li></ol><p>也能選 WO-B，核對卡與完成結果會跟著所選工單改變。</p></section><section class="evidence-card"><span class="evidence-tag">接著找新人驗證</span><h2>看能否完成，不先問喜不喜歡</h2><ol class="test-list"><li>不口頭提示，請新人找到報工入口。</li><li>觀察是否能選對同機台的工單。</li><li>請他在送出前修改一次數量。</li><li>問「這筆現在送出了嗎？」確認狀態是否清楚。</li><li>記錄完成時間、誤點、回頭找按鈕及求助次數。</li></ol><p>先比較 01 與 02，再決定是否把 05 留作第一次操作的導引。</p></section></div>
+  <div class="scope-note"><strong>Demo 範圍</strong><p>五種方案完整比較同一個「新增人工報工」流程，資料為合成情境，對話使用固定範例與規則，沒有呼叫真實 AI 或 MES。這版聚焦繁體中文與深淺主題。正式改版仍需保留原本三語、可信身分、權限、版本與確認契約；排程多明細及模具各階段需再依現有業務規格實作。</p></div>
+`;
+
+const viewIds = ['gallery', 'demo', 'audit', 'compare'];
+const instances = new Map();
+let currentMode = 1;
+let currentPage = 'gallery';
+let scenario = document.querySelector('#scenario-switch')?.value || 'normal';
+let generation = 0;
+function showPage(page) {
+  for (const id of viewIds) document.querySelector(`#${id}-view`).hidden = id !== page;
+  currentPage = page;
+  document.body.dataset.page = page;
+  document.querySelectorAll('button[data-page],a[data-page]').forEach(el => {
+    const active = el.dataset.page === (page === 'demo' ? 'gallery' : page);
+    el.classList.toggle('active', active);
+    el.classList.toggle('is-active', active);
+    if (active) el.setAttribute('aria-current', 'page'); else el.removeAttribute('aria-current');
+  });
+}
+function openMode(mode) {
+  if (!MODES.some(m=>m.id===mode)) mode=1;
+  currentMode=mode;
+  showPage('demo');
+  const definition=MODES[mode-1];
+  document.querySelector('#demo-number').textContent=String(mode).padStart(2,'0');
+  document.querySelector('#demo-title').textContent=definition.name;
+  document.querySelector('#demo-description').textContent=definition.description;
+  document.querySelectorAll('#demo-view [data-mode]').forEach(el=>{
+    const active=Number(el.dataset.mode)===mode;
+    el.classList.toggle('active',active);
+    el.classList.toggle('is-active',active);
+    el.setAttribute('aria-pressed',String(active));
+    if(active)el.setAttribute('aria-current','page');else el.removeAttribute('aria-current');
+  });
+  const host=document.querySelector('#demo-root');
+  host.querySelectorAll('[data-mode-surface]').forEach(el=>el.hidden=Number(el.dataset.modeSurface)!==mode);
+  if(!instances.has(mode)){
+    const surface=document.createElement('section');
+    surface.dataset.modeSurface=String(mode);
+    surface.className='mode-surface';
+    host.append(surface);
+    const record={surface,handle:null,progress:'準備開始'};
+    instances.set(mode,record);
+    record.handle=mountDemo(surface,{mode,scenario,onProgress(progress){
+      record.progress=progress?.title||progress?.step||'準備開始';
+      if(currentMode===mode) document.querySelector('#demo-step').textContent=record.progress;
+    }});
+  }
+  const record=instances.get(mode);
+  record.surface.hidden=false;
+  record.handle?.setScenario(scenario);
+  document.querySelector('#demo-step').textContent=record.progress;
+  document.title=`${String(mode).padStart(2,'0')} ${definition.name}｜Emerald.AI 流程實驗室`;
+}
+function route(){
+  const hash=location.hash.slice(1);
+  if(/^demo\/[1-5]$/.test(hash)) openMode(Number(hash.split('/')[1]));
+  else {
+    const page=['audit','compare'].includes(hash)?hash:'gallery';
+    showPage(page);
+    document.title='Emerald.AI｜五種新人操作流程';
+  }
+  generation++;
+  const revision=generation;
+  requestAnimationFrame(()=>{if(revision===generation) window.scrollTo({top:0,behavior:'instant'});});
+}
+function navigate(hash){
+  if(location.hash===`#${hash}`) route(); else location.hash=hash;
+}
+document.addEventListener('click',event=>{
+  const target=event.target instanceof Element?event.target:null;
+  const modeLink=target?.closest('button[data-mode],a[data-mode]');
+  if(modeLink){event.preventDefault();navigate(`demo/${modeLink.dataset.mode}`);return;}
+  const pageLink=target?.closest('button[data-page],a[data-page]');
+  if(pageLink){event.preventDefault();navigate(pageLink.dataset.page);}
+});
+document.querySelector('#back-gallery').addEventListener('click',()=>navigate('gallery'));
+document.querySelector('#reset-demo').addEventListener('click',()=>instances.get(currentMode)?.handle.reset());
+document.querySelector('#scenario-switch').addEventListener('change',event=>{
+  scenario=event.target.value;
+  for(const record of instances.values()) record.handle?.setScenario(scenario);
+});
+function applyTheme(theme){
+  document.body.dataset.theme=theme;
+  const button=document.querySelector('#theme-toggle');
+  button.setAttribute('aria-label',theme==='dark'?'切換淺色主題':'切換深色主題');
+  button.setAttribute('title',theme==='dark'?'切換淺色主題':'切換深色主題');
+  button.setAttribute('aria-pressed',String(theme==='dark'));
+  try{localStorage.setItem('emerald-ux-lab-theme',theme);}catch{}
+}
+let initialTheme='light';
+try{if(localStorage.getItem('emerald-ux-lab-theme')==='dark')initialTheme='dark';}catch{}
+applyTheme(initialTheme);
+document.querySelector('#theme-toggle').addEventListener('click',()=>applyTheme(document.body.dataset.theme==='dark'?'light':'dark'));
+window.addEventListener('hashchange',route);
+route();
+
+</script>
+</body>
+</html>
