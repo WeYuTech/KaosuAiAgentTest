@@ -1,0 +1,30 @@
+/* 對話優先：單一編輯與確認入口，摘要僅在使用者需要時展開。 */
+.conversation-first.desktop-workbench { display: flex; }
+.conversation-first .chat-layout { flex: 1; }
+.conversation-first .operation-pane { flex: 0 0 340px; max-width: 40%; }
+.conversation-first .operation-pane[hidden] { display: none; }
+.conversation-first .conversation-scroll { padding: 24px max(24px,calc((100% - 820px)/2)); }
+.conversation-first .composer-area { padding: 14px max(24px,calc((100% - 820px)/2)); }
+.conversation-first .guided-flow { margin-top: 20px; }
+.conversation-first .chat-welcome { padding: 12px 0; max-width: none; }
+.conversation-first .context-tools { display: flex; gap: 8px; flex-wrap: wrap; }
+.conversation-first .guide-action-grid { grid-template-columns: repeat(2,minmax(0,1fr)); }
+.conversation-first .guided-flow h2 { font-size: 20px; }
+.conversation-first .guided-flow,.conversation-first .message,.conversation-first .composer textarea,.conversation-first .guide-field input,.conversation-first .guide-field select,.conversation-first .guided-flow .primary,.conversation-first .guided-flow .secondary,.conversation-first .proposal { font-size: 16px; }
+#mes-ai-chat-root .conversation-first button,#mes-ai-chat-root .conversation-first input:not([type=checkbox]),#mes-ai-chat-root .conversation-first select { min-height: 40px; }
+.conversation-first .proposal-actions { position: sticky; bottom: -24px; z-index: 2; padding: 12px; background: var(--card); border-top: 1px solid var(--border); }
+.conversation-first .guide-body { min-width: 0; }
+.conversation-first .operation-sheet { overflow-wrap: anywhere; }
+.conversation-first .query-results { border-top: 1px solid var(--border); padding-top: 12px; }
+.task-context { padding: 8px 24px; font-size: 14px; border-bottom: 1px solid var(--border); overflow-wrap: anywhere; }
+.query-candidates { display: grid; gap: 10px; margin: 16px 0; }
+@container mes-chat-shell (max-width: 850px) {
+  .conversation-first.desktop-workbench { overflow-x: clip; }
+  .conversation-first .operation-pane { position: absolute; inset: 56px 0 32px; z-index: 8; max-width: none; background: var(--background); }
+  .conversation-first .pane-heading { padding: 10px; flex-wrap: wrap; }
+  .conversation-first .conversation-scroll,.conversation-first .composer-area { padding: 16px; }
+  .conversation-first .guide-fields,.conversation-first .guide-action-grid { grid-template-columns: 1fr; }
+  #mes-ai-chat-root .conversation-first button,#mes-ai-chat-root .conversation-first input:not([type=checkbox]),#mes-ai-chat-root .conversation-first select { min-height: 44px; }
+  .module-switcher { margin-left: 0; flex-wrap: wrap; }
+  .workspace-bar { flex-wrap: wrap; }
+}
