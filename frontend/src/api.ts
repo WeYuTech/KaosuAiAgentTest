@@ -1,40 +1,48 @@
+import { getLocale, t } from './i18n.ts';
 export type Module = 'schedule' | 'report' | 'mold';
 export type Identity = 'planner' | 'operator' | 'technician' | 'supervisor';
 export type Row = Record<string, unknown>;
 export interface Session { actor: { id: string; name: string; roles: string[] }; mode: string }
-export interface Message { role: string; content: string }
+export interface Message { role: string; content: string; proposal?: Proposal | null }
 export interface Change { table: string; key: unknown; field: string; before: unknown; after: unknown }
 export interface Proposal { id: string; digest: string; summary: string; changes: Change[]; expires_at: string; action: string; args: Row; status?: string; independent_confirmation?: boolean; writes_enabled?: boolean; business_timezone?: string; time_policy?: string; new_id_policy?: string; preview?: { time_policy?: string; new_id_policy?: string }; target?: { equipment?: string; work_order?: string; schedule_id?: string; execution_id?: string; report_id?: string; affected_orders?: unknown[]; schedule_details?: Row[] } }
-export interface Conversation { id: string; module: Module; messages: Message[] }
+export interface Conversation { id: string; module: Module; messages: Message[]; locale?: string; actor_id?: string }
 export interface Reply { messages?: Message[]; proposal?: Proposal; data?: unknown; message?: string }
 export interface Workspace { records: Row[]; catalogs: Record<string, unknown>; total?: number; page?: number; page_size?: number }
 export interface Schema { type?: string | string[]; title?: string; description?: string; module?: string; properties?: Record<string, Schema>; required?: string[]; enum?: unknown[]; default?: unknown; items?: Schema; minimum?: number; maximum?: number; format?: string; parameters?: Schema; input_schema?: Schema }
 
 export class ApiError extends Error {
   status: number;
-  constructor(message: string, status: number) { super(message); this.name = 'ApiError'; this.status = status; }
+  code?: string;
+  params?: unknown;
+  constructor(message: string, status: number, code?: string, params?: unknown) { super(message); this.name = 'ApiError'; this.status = status; this.code = code; this.params = params; }
 }
 
 export async function api<T>(path: string, body?: unknown): Promise<T> {
   const endpoint = new URL(path.replace(/^\/+/, ''), new URL('./', location.href));
-  if (endpoint.origin !== location.origin) throw new Error('作業服務必須與目前 MES 頁面同源。');
-  const response = await fetch(endpoint, {
+  if (endpoint.origin !== location.origin) throw new Error(t('作業服務必須與目前 MES 頁面同源。'));
+  let response: Response;
+  try { response = await fetch(endpoint, {
     method: body === undefined ? 'GET' : 'POST', credentials: 'same-origin',
-    headers: { Accept: 'application/json', ...(body === undefined ? {} : { 'Content-Type': 'application/json' }) },
+    headers: { Accept: 'application/json', 'Accept-Language': getLocale(), 'X-AI-Locale': getLocale(), ...(body === undefined ? {} : { 'Content-Type': 'application/json' }) },
     ...(body === undefined ? {} : { body: JSON.stringify(body) }),
-  });
+  }); } catch { throw new ApiError(t('無法連線至作業服務，請確認網路後再試。'), 0, 'network'); }
   const text = await response.text();
   let value: unknown;
-  try { value = text ? JSON.parse(text) : {}; } catch { throw new Error('伺服器回應格式異常，請重新整理資料後再試。'); }
+  try { value = text ? JSON.parse(text) : {}; } catch { throw new Error(t('伺服器回應格式異常，請重新整理資料後再試。')); }
   if (!response.ok) {
-    const detail = (value as Row)?.detail ?? (value as Row)?.message ?? (value as Row)?.error;
-    throw new ApiError(typeof detail === 'string' ? detail : typeof detail === 'object' && detail && 'message' in detail ? String(detail.message) : detail ? JSON.stringify(detail) : `請求未完成（${response.status}）`, response.status);
+    const result = value as Row;
+    const detail = result?.detail ?? result?.error;
+    const fallback = typeof detail === 'string' ? detail : typeof detail === 'object' && detail && 'message' in detail ? String(detail.message) : t('請求未完成（{0}）', {0: response.status});
+    const code = result?.code ?? (typeof detail === 'object' && detail ? (detail as Row).code : undefined);
+    throw new ApiError(typeof result?.message === 'string' ? result.message : t(fallback), response.status, typeof code === 'string' ? code : undefined, result?.params);
   }
   return value as T;
 }
 
 export const labels: Record<string, string> = {
   EQP_NO: '設備', WO: '工單', WO_NO: '工單', PART_NO: '料號', SPEC: '規格', MOLD_NO: '模具',
+  PART_SPEC: '規格', EQP_NAME: '設備名稱', TOL_DETALS_NAME: '模具明細名稱', TOL_DETALS_NO: '模具明細編號',
   SHIFT_DAY: '班日', SCHEDULE_DATE: '排程日期', OPERATION: '製程', COMPLETED: '完工狀態',
   OPI_CAV: '報工模穴', CUR_CAV: '排程模穴', SCHEDULE_CUR_CAV: '排程模穴', CYCLE_TIME: '週期秒數',
   OK_QTY: '人工良品數', NG_QTY: '不良數', OK_TOTAL: '人工良品數', NG_TOTAL: '不良總數',
@@ -56,5 +64,5 @@ export const labels: Record<string, string> = {
   time: '操作時間', event_time: '事件時間', changes: '欄位變更明細', mode: '環境',
   limit_usd: '使用額度（美元）', spent_usd: '已使用（美元）', reserved_usd: '處理中預留（美元）', calls: 'API 呼叫次數',
 };
-export const label = (key: string) => labels[key] ?? key;
+export const label = (key: string) => t(labels[key] ?? key);
 export const display = (value: unknown): string => value === null || value === undefined ? '—' : typeof value === 'object' ? JSON.stringify(value, null, 2) : String(value);

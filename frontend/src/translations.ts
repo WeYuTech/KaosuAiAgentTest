@@ -1,0 +1,393 @@
+/* 固定介面詞彙：中文原文為鍵，不翻譯 MES 主檔名稱或歷史訊息。 */
+export const translations: Record<string, [string, string]> = Object.fromEntries(`
+預計結束|Scheduled end|เวลาสิ้นสุดตามแผน
+目標件數|Target units|จำนวนชิ้นเป้าหมาย
+進站時間|Check-in time|เวลาเข้างาน
+出站時間|Check-out time|เวลาออกงาน
+其他工具／進階|Other tools / Advanced|เครื่องมืออื่น / ขั้นสูง
+MES伺服器當地日期時間 YYYY-MM-DD HH:mm:ss；帶明確 ISO 時區時依伺服器設定換算，無時區輸入保持原數字。|MES local date and time, YYYY-MM-DD HH:mm:ss. Explicit ISO timezones are converted to MES time; values without a timezone stay unchanged.|วันเวลาท้องถิ่นของ MES รูปแบบ YYYY-MM-DD HH:mm:ss เขตเวลา ISO ที่ระบุจะถูกแปลงเป็นเวลา MES หากไม่ระบุจะคงตัวเลขเดิม
+既有排程明細的 ZZ_KAOSU_PROD_SCHEDULE_DETAIL_SID；修改該列時保留。|Existing schedule detail ID; preserve it when editing that row.|รหัสรายละเอียดตารางผลิตเดิม ให้คงไว้เมื่อแก้ไขแถวนั้น
+模具明細的 TOL_DETALS_SID；從 catalogs.molds[].DETAILS 選取。同模具同品號有多筆時必須明確選擇，不得猜第一筆。修改已明確選定的排程明細時可省略以保留原模具明細。|Select the mold detail from the catalog. If several details share the same part, choose explicitly. For an existing selected schedule detail, omission preserves the original mold detail.|เลือกรายละเอียดแม่พิมพ์จากรายการ หากชิ้นงานเดียวกันมีหลายรายการต้องเลือกให้ชัดเจน สำหรับรายละเอียดตารางเดิมที่เลือกแล้ว สามารถเว้นไว้เพื่อคงรายละเอียดแม่พิมพ์เดิม
+此確認卡已處理，未重複執行|This card was already processed; the operation was not repeated.|บัตรนี้ดำเนินการแล้ว ไม่ได้ทำงานซ้ำ
+結果尚待核對，請保留操作識別碼，不得重新送出相同操作|Result needs checking. Keep the operation ID and do not resubmit.|ต้องตรวจสอบผล เก็บรหัสการดำเนินการไว้และห้ามส่งงานซ้ำ
+已完成並記錄異動|Completed and changes recorded|ดำเนินการสำเร็จและบันทึกการเปลี่ยนแปลงแล้ว
+已取消，未寫入業務資料|Cancelled; no business data was written|ยกเลิกแล้ว ไม่มีการบันทึกข้อมูลงาน
+已從既有提交紀錄查核成功，沒有重送業務操作|Existing submission verified successfully; no operation was resubmitted.|ตรวจสอบรายการที่ส่งไว้แล้วสำเร็จ ไม่มีการส่งงานซ้ำ
+尚無完整提交證據，請保留操作識別碼交由管理員核對；未重送業務操作|Submission evidence is incomplete. Keep the operation ID for administrator review; nothing was resubmitted.|หลักฐานการส่งยังไม่ครบ เก็บรหัสงานให้ผู้ดูแลตรวจสอบ ไม่มีการส่งงานซ้ำ
+已查回確認卡目前狀態，未執行業務寫入|Current card status retrieved; no business write was performed.|เรียกสถานะบัตรปัจจุบันแล้ว ไม่มีการบันทึกข้อมูลงาน
+無法連線至作業服務，請確認網路後再試。|Cannot connect to the operation service. Check the network and try again.|เชื่อมต่อบริการงานไม่ได้ กรุณาตรวจสอบเครือข่ายแล้วลองใหม่
+設備名稱|Equipment name|ชื่อเครื่องจักร
+模具明細名稱|Mold detail name|ชื่อรายละเอียดแม่พิมพ์
+模具明細編號|Mold detail number|หมายเลขรายละเอียดแม่พิมพ์
+異動時間以人員確認後執行時的 MES 伺服器時間為準；目前顯示為預覽時間|Changes use MES server time when the confirmed operation executes; the time shown now is a preview.|ใช้เวลาเซิร์ฟเวอร์ MES ขณะดำเนินงานหลังยืนยัน เวลาที่แสดงตอนนี้เป็นตัวอย่าง
+新增識別碼在提交時由 MES GetSid 配置，預覽不代表正式識別碼|MES assigns new IDs on submission. Preview IDs are not final.|MES กำหนดรหัสใหม่เมื่อส่งงาน รหัสในตัวอย่างไม่ใช่รหัสจริง
+新增排程與明細識別碼於確認執行時分配；模具明細編號與識別為已核對的正式主檔。|New schedule and detail IDs are assigned on execution; mold detail identifiers refer to verified master data.|กำหนดรหัสตารางผลิตและรายละเอียดใหม่เมื่อดำเนินงาน รหัสรายละเอียดแม่พิมพ์อ้างอิงข้อมูลหลักที่ตรวจสอบแล้ว
+歷史對話|Conversation history|ประวัติการสนทนา
+生產排程|Production scheduling|จัดตารางการผลิต
+排程|Scheduling|ตารางผลิต
+安排設備、工單與模穴，確認每一個生產時段。|Plan equipment, work orders and cavities for each production slot.|วางแผนเครื่องจักร ใบสั่งผลิต และจำนวนคาวิตี้ในแต่ละช่วงการผลิต
+查詢目前的生產排程|Show current production schedules|แสดงตารางการผลิตปัจจุบัน
+幫我安排一筆新排程，請引導我補齊需要的資料|Help me create a schedule and ask for the required details|ช่วยสร้างตารางผลิตใหม่และสอบถามข้อมูลที่จำเป็น
+我要修改排程的工單與模穴數|I want to change the work order and cavities in a schedule|ต้องการแก้ไขใบสั่งผลิตและจำนวนคาวิตี้ในตารางผลิต
+生產報工|Production reporting|บันทึกผลผลิต
+報工|Reporting|รายงานผลผลิต
+記錄良品與不良、修改報工、調整模穴及完工。|Record good and defective quantities, edit reports, adjust cavities and complete work.|บันทึกชิ้นงานดีและของเสีย แก้ไขรายงาน ปรับคาวิตี้ และจบงาน
+查看目前可以報工的工單|Show work orders available for reporting|แสดงใบสั่งผลิตที่บันทึกผลผลิตได้
+我要新增一筆報工，請先確認工單和數量|Create a production report; first confirm the work order and quantities|สร้างรายงานผลผลิต โดยยืนยันใบสั่งผลิตและจำนวนก่อน
+查看報工歷史，分開列出人工報工與 IoT 產量|Show report history with manual and IoT quantities separately|แสดงประวัติรายงานโดยแยกจำนวนที่บันทึกเองกับ IoT
+模具上下模|Mold mounting and removal|ขึ้นและลงแม่พิมพ์
+上下模|Mold operations|งานแม่พิมพ์
+依現場進度，完成上模與下模各階段作業。|Follow each mounting and removal stage according to shop-floor progress.|ดำเนินการขึ้นและลงแม่พิมพ์แต่ละขั้นตอนตามงานจริง
+查詢各設備目前的模具狀態|Show the mold status of each machine|แสดงสถานะแม่พิมพ์ของแต่ละเครื่องจักร
+我要開始上模，請確認排程與模具|Start mounting; confirm the schedule and mold first|เริ่มขึ้นแม่พิมพ์ กรุณายืนยันตารางผลิตและแม่พิมพ์
+查詢可以開始下模的排程|Show schedules ready for mold removal|แสดงตารางผลิตที่พร้อมเริ่มลงแม่พิมพ์
+生管人員|Production planner|ผู้วางแผนการผลิต
+安排與調整生產排程|Create and adjust production schedules|สร้างและปรับตารางการผลิต
+現場作業員|Production operator|พนักงานฝ่ายผลิต
+登錄產量與報工資料|Record quantities and production reports|บันทึกจำนวนและรายงานผลผลิต
+模具技術員|Mold technician|ช่างแม่พิมพ์
+執行模具上下模作業|Mount and remove molds|ดำเนินงานขึ้นและลงแม่พิมพ์
+現場主管|Shop-floor supervisor|หัวหน้าฝ่ายผลิต
+跨模組驗證與作業確認|Review and confirm operations across modules|ตรวจสอบและยืนยันงานข้ามโมดูล
+儲存排程|Save schedule|บันทึกตารางผลิต
+新增報工|Add production report|เพิ่มรายงานผลผลิต
+修改報工|Edit production report|แก้ไขรายงานผลผลิต
+刪除報工|Delete production report|ลบรายงานผลผลิต
+調整模穴數|Adjust cavities|ปรับจำนวนคาวิตี้
+排程完工|Complete schedule|จบตารางผลิต
+清空上下模|Clear mold operation times|ล้างเวลาขึ้นลงแม่พิมพ์
+開始上模|Start mounting|เริ่มขึ้นแม่พิมพ์
+完成上模|Finish mounting|ขึ้นแม่พิมพ์เสร็จ
+開始下模|Start removal|เริ่มลงแม่พิมพ์
+完成下模|Finish removal|ลงแม่พิมพ์เสร็จ
+威友科技|WeYu Technology|WeYu Technology
+生產情報助理|Production assistant|ผู้ช่วยงานผลิต
+尚未連上作業服務，請確認後端已啟動。|Cannot reach the operation service. Check that it is running.|เชื่อมต่อบริการงานไม่ได้ กรุณาตรวจสอบว่าบริการทำงานอยู่
+操作未完成，請稍後再試。|Operation incomplete. Please try again later.|ดำเนินการไม่สำเร็จ กรุณาลองใหม่ภายหลัง
+正式 MES 必須沿用目前登入身分。|Live MES must use the current signed-in identity.|MES จริงต้องใช้บัญชีที่เข้าสู่ระบบอยู่
+請先選擇作業身分。|Select an operating identity first.|กรุณาเลือกผู้ปฏิบัติงานก่อน
+初次資料查詢未完成|Initial data query incomplete|เรียกข้อมูลครั้งแรกไม่สำเร็จ
+初次資料查詢未完成：{0}。你仍可在對話補充設備與日期，或到「作業資料」縮小查詢範圍。|Initial query incomplete: {0}. Specify equipment and dates in chat, or narrow the query in Work data.|เรียกข้อมูลครั้งแรกไม่สำเร็จ: {0} ระบุเครื่องจักรและวันที่ในแชต หรือจำกัดช่วงค้นหาในข้อมูลงาน
+已依補充需求取代前一張草稿，請核對新的確認卡。|The previous draft was replaced. Review the new confirmation card.|แทนที่ร่างเดิมตามข้อมูลเพิ่มเติมแล้ว กรุณาตรวจสอบบัตรยืนยันใหม่
+前一張草稿已停止確認。補齊資料後會建立新的確認卡。|The previous draft can no longer be confirmed. Complete the details for a new card.|ร่างเดิมไม่สามารถยืนยันได้แล้ว เมื่อข้อมูลครบจะสร้างบัตรใหม่
+正式寫入尚未啟用。可以查看預覽或取消草稿。|Live writes are disabled. You can preview or cancel the draft.|ยังไม่เปิดการบันทึกจริง สามารถดูตัวอย่างหรือยกเลิกร่างได้
+此操作結果待核對，請先查核執行結果。|This operation needs reconciliation. Check its result first.|ต้องตรวจสอบผลของงานนี้ก่อน กรุณาตรวจสอบผลการดำเนินการ
+目前有待確認的草稿。請先確認或取消，再切換作業資料。|Confirm or cancel the pending draft before switching work data.|กรุณายืนยันหรือยกเลิกร่างที่รออยู่ก่อนเปลี่ยนข้อมูลงาน
+已切換作業資料，接下來的對話會帶入這筆資料。|Work data switched. The conversation will use this record.|เปลี่ยนข้อมูลงานแล้ว การสนทนาถัดไปจะใช้รายการนี้
+MES 作業測試|MES operation test|ทดสอบงาน MES
+MES 生產作業|MES production operations|งานผลิต MES
+排程、報工與模具上下模。|Scheduling, production reporting and mold operations.|ตารางผลิต รายงานผลผลิต และงานขึ้นลงแม่พิมพ์
+目前使用隔離模擬資料。|Using isolated simulation data.|กำลังใช้ข้อมูลจำลองแยกจากระบบจริง
+沿用目前 MES 登入身分。|Using the current MES identity.|ใช้บัญชี MES ที่เข้าสู่ระบบอยู่
+正在確認作業環境。|Checking the operating environment.|กำลังตรวจสอบสภาพแวดล้อมการทำงาน
+點選右下角助理開始操作。|Open the assistant at the bottom right to begin.|เปิดผู้ช่วยที่มุมล่างขวาเพื่อเริ่มงาน
+開啟生產情報助理|Open production assistant|เปิดผู้ช่วยงานผลิต
+收合生產情報助理|Collapse production assistant|ย่อผู้ช่วยงานผลิต
+縮小聊天室|Reduce chat window|ย่อหน้าต่างแชต
+放大聊天室|Expand chat window|ขยายหน้าต่างแชต
+縮小助理|Minimize assistant|ย่อผู้ช่วย
+縮小助理（Esc）|Minimize assistant (Esc)|ย่อผู้ช่วย (Esc)
+01 / 選擇作業|01 / Select operation|01 / เลือกงาน
+02 / 確認身分|02 / Confirm identity|02 / ยืนยันผู้ปฏิบัติงาน
+返回選擇|Back to selection|กลับไปเลือก
+今天，想完成什麼作業？|What would you like to do today?|วันนี้ต้องการทำงานอะไร?
+開始{0}前，選擇你的身分|Select your identity before {0}|เลือกผู้ปฏิบัติงานก่อนเริ่ม {0}
+開始{0}前，確認登入身分|Confirm your identity before {0}|ยืนยันบัญชีก่อนเริ่ม {0}
+選擇一個入口，我會陪你確認資料，完成現場作業。|Choose an operation. I will help you check the details and complete the work.|เลือกงาน ผู้ช่วยจะช่วยตรวจสอบข้อมูลและดำเนินงานให้เสร็จ
+身分決定可執行的功能；每次寫入都會留下操作紀錄。|Your identity determines available actions. Every write is logged.|สิทธิ์ของบัญชีกำหนดงานที่ทำได้ และทุกการบันทึกมีประวัติ
+目前登入身分無此模組權限|Your identity has no access to this module|บัญชีนี้ไม่มีสิทธิ์ใช้งานโมดูลนี้
+進入|Enter|เข้าสู่
+目前為模擬驗證環境。此處身分切換僅供測試，正式 MES 將沿用已登入身分與伺服器權限。|This is a simulation. Identity switching is for testing only; live MES uses the signed-in identity and server permissions.|นี่คือระบบจำลอง การเปลี่ยนผู้ใช้ใช้เพื่อทดสอบเท่านั้น MES จริงใช้บัญชีที่เข้าสู่ระบบและสิทธิ์จากเซิร์ฟเวอร์
+沿用目前 MES 已登入身分與伺服器授予的模組權限。確認身分後即可開始，不需再次輸入帳號密碼。|Use your MES sign-in and assigned permissions. Confirm your identity to begin without entering credentials again.|ใช้บัญชี MES และสิทธิ์ที่ได้รับ ยืนยันบัญชีเพื่อเริ่มโดยไม่ต้องกรอกรหัสผ่านซ้ำ
+沿用目前身分：|Current identity: |บัญชีปัจจุบัน:\u0020
+（此入口無權限）|(No access)|(ไม่มีสิทธิ์)
+尚未取得可信的 MES 登入身分。請先在原 MES 登入，再重新開啟助理。|No verified MES identity. Sign in to MES, then reopen the assistant.|ยังไม่มีบัญชี MES ที่ยืนยันแล้ว กรุณาเข้าสู่ MES แล้วเปิดผู้ช่วยใหม่
+重新確認登入|Check sign-in again|ตรวจสอบการเข้าสู่ระบบอีกครั้ง
+正在準備作業資料…|Preparing work data…|กำลังเตรียมข้อมูลงาน…
+自然語言操作|Natural language operation|สั่งงานด้วยภาษาธรรมชาติ
+確認後寫入|Write after confirmation|บันทึกหลังยืนยัน
+完整作業紀錄|Traceable operations|ประวัติงานตรวจสอบได้
+返回模組入口|Back to modules|กลับไปเลือกโมดูล
+請先查核執行結果|Check the operation result first|ตรวจสอบผลการดำเนินการก่อน
+請先確認或取消草稿|Confirm or cancel the draft first|ยืนยันหรือยกเลิกร่างก่อน
+EPS 成型|EPS forming|ขึ้นรูป EPS
+AI 已連線|AI connected|เชื่อมต่อ AI แล้ว
+AI 尚未設定|AI not configured|ยังไม่ได้ตั้งค่า AI
+檢查連線中|Checking connection|กำลังตรวจสอบการเชื่อมต่อ
+作業檢視|Operation views|มุมมองงาน
+對話作業|Chat|สนทนางาน
+作業資料|Work data|ข้อมูลงาน
+操作紀錄|Operation log|ประวัติการดำเนินการ
+關閉錯誤訊息|Dismiss error|ปิดข้อความผิดพลาด
+目前作業資料|Current work data|ข้อมูลงานปัจจุบัน
+查看|View|ดู
+一起完成這次|Let's complete this |มาทำงานนี้ให้เสร็จ:\u0020
+直接描述你要做的事。缺少的資料，我會逐一詢問；|Describe your task. I will ask for any missing details.|บอกงานที่ต้องการ ผู้ช่วยจะถามข้อมูลที่ยังขาดทีละรายการ
+準備好後，會先提供變更清單讓你核對。|Once ready, I will show the changes for your review.|เมื่อพร้อมจะแสดงรายการเปลี่ยนแปลงให้ตรวจสอบก่อน
+你|You|คุณ
+操作確認卡|Operation confirmation|บัตรยืนยันงาน
+作業處理結果|Operation result|ผลการดำเนินงาน
+待你確認 · 尚未寫入|Awaiting confirmation · not written|รอการยืนยัน · ยังไม่บันทึก
+已過期|Expired|หมดอายุ
+MES 時間|MES time|เวลา MES
+；未指定時區的作業時間依 MES 顯示時間解讀。|; times without a timezone use the MES clock.|; เวลาที่ไม่ระบุเขตเวลาใช้ตามนาฬิกา MES
+正式寫入尚未啟用|Live writes disabled|ยังไม่เปิดการบันทึกจริง
+目前可查詢及預覽異動，尚不能執行寫入。你仍可取消或修改這筆草稿。|Queries and previews are available; live writes are disabled. You can cancel or edit this draft.|ค้นหาและดูตัวอย่างการเปลี่ยนแปลงได้ แต่ยังบันทึกจริงไม่ได้ สามารถยกเลิกหรือแก้ไขร่างได้
+查看資料異動明細|View detailed changes|ดูรายละเอียดการเปลี่ยนแปลง
+項|items|รายการ
+檢視完整操作參數|View full operation parameters|ดูพารามิเตอร์งานทั้งหมด
+確認已過期，請重新建立草稿。|Confirmation expired. Create a new draft.|การยืนยันหมดอายุ กรุณาสร้างร่างใหม่
+確認期限：{0}|Confirm by: {0}|ยืนยันภายใน: {0}
+我已核對這筆「|I have checked the target and impact of “|ตรวจสอบเป้าหมายและผลกระทบของ “
+」的對象及影響，確認要單獨執行。|” and confirm this individual operation.|” แล้ว และยืนยันให้ดำเนินงานนี้แยกต่างหาก
+取消草稿|Cancel draft|ยกเลิกร่าง
+確認這筆操作|Confirm this operation|ยืนยันงานนี้
+同意並寫入|Approve and save|ยืนยันและบันทึก
+操作識別碼：|Operation ID: |รหัสการดำเนินการ:\u0020
+結果待核對|Result needs checking|ต้องตรวจสอบผล
+請保留操作識別碼。查核只讀取執行紀錄，不會再次送出報工或其他業務操作。|Keep the operation ID. Checking only reads the execution record and never resubmits the operation.|เก็บรหัสการดำเนินการไว้ การตรวจสอบอ่านประวัติเท่านั้น ไม่ส่งงานซ้ำ
+查核執行結果|Check operation result|ตรวจสอบผลการดำเนินการ
+正在核對資料與處理作業…|Checking data and processing…|กำลังตรวจสอบข้อมูลและดำเนินงาน…
+尚未設定 AI 模型，自然語言對話暫不可用。可展開「結構化操作草稿」驗證流程。|AI is not configured. Natural language chat is unavailable; use the structured draft form to test the workflow.|ยังไม่ตั้งค่า AI จึงใช้สนทนาธรรมชาติไม่ได้ สามารถใช้แบบฟอร์มร่างงานเพื่อทดสอบขั้นตอน
+描述作業需求|Describe your task|อธิบายงานที่ต้องการ
+此操作結果待核對，請先按確認卡的「查核執行結果」|Check the result using the confirmation card before continuing|ตรวจสอบผลด้วยปุ่มบนบัตรยืนยันก่อนดำเนินการต่อ
+可直接補充修改，例如：良品改成 25，請重新確認|Add a correction, e.g. change good quantity to 25 and confirm again|แก้ไขเพิ่มเติมได้ เช่น เปลี่ยนชิ้นงานดีเป็น 25 แล้วขอยืนยันใหม่
+描述你的{0}需求，例如：{1}|Describe your {0} task, e.g. {1}|อธิบายงาน {0} เช่น {1}
+送出訊息|Send message|ส่งข้อความ
+確認後才會寫入|Written only after confirmation|บันทึกเมื่อยืนยันแล้วเท่านั้น
+Enter 送出 · Shift + Enter 換行|Enter to send · Shift + Enter for a new line|Enter เพื่อส่ง · Shift + Enter เพื่อขึ้นบรรทัดใหม่
+選擇一筆資料，帶入新的作業對話。|Select a record to start a new work conversation.|เลือกรายการเพื่อเริ่มการสนทนางานใหม่
+重新整理|Refresh|รีเฟรช
+人工報工與 IoT 推算數量各自呈現；未有 IoT 資料不代表產量為零。|Manual reports and IoT estimates are shown separately. Missing IoT data does not mean zero output.|แสดงจำนวนที่บันทึกเองและค่าประมาณ IoT แยกกัน ไม่มีข้อมูล IoT ไม่ได้หมายถึงผลผลิตเป็นศูนย์
+第 {0} 筆|Record {0}|รายการที่ {0}
+已完工|Completed|จบงานแล้ว
+以此筆資料開始|Start with this record|เริ่มด้วยรายการนี้
+尚無作業資料|No work data yet|ยังไม่มีข้อมูลงาน
+請重新整理，或從對話建立需要的作業。|Refresh or create the required operation in chat.|รีเฟรชหรือสร้างงานที่ต้องการผ่านการสนทนา
+查看設備、工單與模具選項|View equipment, work order and mold options|ดูตัวเลือกเครื่องจักร ใบสั่งผลิต และแม่พิมพ์
+作業選項|Operation options|ตัวเลือกงาน
+每次變更，都有紀錄。|Every change is recorded.|ทุกการเปลี่ยนแปลงมีประวัติ
+核對操作時間、執行人員與資料前後差異。|Check when, who and what changed.|ตรวจสอบเวลา ผู้ดำเนินการ และข้อมูลก่อนหลัง
+回報問題與用量|Feedback and usage|แจ้งปัญหาและการใช้งาน
+讓作業經驗留下來|Keep operational knowledge|เก็บความรู้จากการปฏิบัติงาน
+錯誤回報先送審核，再經候選案例回歸後發布，不會自動改變卡控。|Feedback is reviewed and regression-tested before publication; it never changes safeguards automatically.|ข้อเสนอแนะต้องตรวจสอบและทดสอบก่อนเผยแพร่ ไม่เปลี่ยนกฎควบคุมอัตโนมัติ
+關閉問題回報|Close feedback|ปิดการแจ้งปัญหา
+遇到什麼問題？|What went wrong?|พบปัญหาอะไร?
+描述你預期的結果、實際發生的情況，或需要補充的操作知識。|Describe the expected result, what happened, or missing operational knowledge.|อธิบายผลที่คาดหวัง สิ่งที่เกิดขึ้นจริง หรือความรู้ที่ต้องเพิ่มเติม
+送出問題回報|Submit feedback|ส่งแจ้งปัญหา
+已收到，將由主管審查後處理。|Received. A supervisor will review it.|ได้รับแล้ว หัวหน้างานจะตรวจสอบก่อนดำเนินการ
+來源版本與 API 用量|Source version and API usage|รุ่นข้อมูลอ้างอิงและการใช้ API
+作業盤點版本：979d2c6 · 2026-10-30|Inventory version: 979d2c6 · 2026-10-30|รุ่นรายการงาน: 979d2c6 · 2026-10-30
+目前無法取得用量資訊。|Usage information is unavailable.|ไม่สามารถเรียกข้อมูลการใช้งานได้
+回報問題與來源|Feedback and sources|แจ้งปัญหาและแหล่งข้อมูล
+高塑 · 生產作業助理|Kaosu · Production assistant|Kaosu · ผู้ช่วยงานผลิต
+設備|Equipment|เครื่องจักร
+全部設備|All equipment|เครื่องจักรทั้งหมด
+日期或區間|Date or range|วันที่หรือช่วงวันที่
+2026-10-30 或 起日~迄日|2026-10-30 or start~end|2026-10-30 หรือ วันเริ่ม~วันสิ้นสุด
+工單|Work order|ใบสั่งผลิต
+全部工單|All work orders|ใบสั่งผลิตทั้งหมด
+每頁|Per page|ต่อหน้า
+20 筆|20 records|20 รายการ
+50 筆|50 records|50 รายการ
+100 筆|100 records|100 รายการ
+套用查詢|Apply filters|ใช้ตัวกรอง
+共|Total|ทั้งหมด
+筆 · 第|records · Page|รายการ · หน้า
+頁|page|หน้า
+上一頁|Previous page|หน้าก่อนหน้า
+下一頁|Next page|หน้าถัดไป
+查詢結果|Query results|ผลการค้นหา
+筆|records|รายการ
+第|Record|รายการที่
+目前沒有符合條件的資料。|No matching records.|ไม่มีข้อมูลตรงตามเงื่อนไข
+展開內容|Show contents|แสดงเนื้อหา
+未知|Unknown|ไม่ทราบ
+人工報工歷史（|Manual report history (|ประวัติรายงานด้วยตนเอง (
+筆）|records)|รายการ)
+人工報工明細|Manual report details|รายละเอียดรายงานด้วยตนเอง
+詳細資料|Details|รายละเอียด
+結構化操作草稿|Structured operation draft|แบบฟอร์มร่างงาน
+依伺服器規格填寫|Follow the server schema|กรอกตามรูปแบบเซิร์ฟเวอร์
+這是人工表單，適合核對欄位或測試流程。送出只建立預覽，確認後才寫入。|Use this manual form to check fields or test workflows. Submission creates a preview; confirmation is required to write.|ใช้แบบฟอร์มนี้ตรวจสอบช่องข้อมูลหรือทดสอบขั้นตอน การส่งสร้างตัวอย่างเท่านั้น ต้องยืนยันก่อนบันทึก
+請填寫{0}|Enter {0}|กรุณากรอก {0}
+{0}必須為有效數字|{0} must be a valid number|{0} ต้องเป็นตัวเลขที่ถูกต้อง
+{0}必須為整數|{0} must be an integer|{0} ต้องเป็นจำนวนเต็ม
+草稿格式不正確|Invalid draft format|รูปแบบร่างไม่ถูกต้อง
+操作類型|Operation type|ประเภทงาน
+選擇要執行的功能|Select an action|เลือกงานที่ต้องการ
+請選擇|Please select|กรุณาเลือก
+是|Yes|ใช่
+否|No|ไม่ใช่
+請填寫 JSON；欄位格式會由伺服器再次驗證。|Enter JSON; the server will validate the fields again.|กรอก JSON เซิร์ฟเวอร์จะตรวจสอบรูปแบบข้อมูลอีกครั้ง
+建立確認草稿|Create confirmation draft|สร้างร่างเพื่อยืนยัน
+待審核|Awaiting review|รอตรวจสอบ
+已審核，待案例回歸與發布|Reviewed; awaiting regression and publication|ตรวจสอบแล้ว รอทดสอบและเผยแพร่
+已發布|Published|เผยแพร่แล้ว
+無法取得回饋紀錄。|Unable to load feedback.|ไม่สามารถเรียกประวัติข้อเสนอแนะได้
+回饋紀錄與審核|Feedback records and review|ประวัติข้อเสนอแนะและการตรวจสอบ
+回饋追蹤與知識審核|Feedback tracking and knowledge review|ติดตามข้อเสนอแนะและตรวจสอบความรู้
+我的回饋紀錄|My feedback|ข้อเสนอแนะของฉัน
+只顯示你獲授權的模組；審核後仍須由管理員完成候選案例回歸，才會發布。|Only authorized modules are shown. Publication requires administrator regression tests after review.|แสดงเฉพาะโมดูลที่มีสิทธิ์ หลังตรวจสอบผู้ดูแลยังต้องทดสอบก่อนเผยแพร่
+查看回饋處理進度；修正內容經審核與案例回歸後才會發布。|Track feedback progress. Corrections are published only after review and regression tests.|ติดตามความคืบหน้าข้อเสนอแนะ การแก้ไขเผยแพร่หลังตรวจสอบและทดสอบแล้วเท่านั้น
+重新整理回饋|Refresh feedback|รีเฟรชข้อเสนอแนะ
+處理狀態|Processing status|สถานะการดำเนินการ
+全部|All|ทั้งหมด
+已審核，待發布|Reviewed; awaiting publication|ตรวจสอบแล้ว รอเผยแพร่
+回報人員：|Reported by: |ผู้แจ้ง:\u0020
+查看審核內容與來源|View review and source|ดูเนื้อหาที่ตรวจสอบและแหล่งข้อมูล
+來源：|Source: |แหล่งข้อมูล:\u0020
+審核人員：|Reviewer: |ผู้ตรวจสอบ:\u0020
+修訂審核內容|Revise review|แก้ไขเนื้อหาการตรวจสอบ
+審核這筆回饋|Review this feedback|ตรวจสอบข้อเสนอแนะนี้
+目前沒有此狀態的回饋。|No feedback with this status.|ไม่มีข้อเสนอแนะในสถานะนี้
+知識審核表單|Knowledge review form|แบบฟอร์มตรวจสอบความรู้
+已提交審核內容，尚未發布。請交由管理員完成候選案例回歸。|Review submitted, not published. Ask an administrator to run candidate regression tests.|ส่งผลตรวจสอบแล้ว ยังไม่เผยแพร่ ให้ผู้ดูแลทดสอบกรณีตัวอย่างก่อน
+審核未完成。|Review incomplete.|ตรวจสอบไม่สำเร็จ
+審核|Review|ตรวจสอบ
+回饋|feedback|ข้อเสนอแนะ
+原回饋：|Original feedback: |ข้อเสนอแนะเดิม:\u0020
+修正後的知識說明|Corrected knowledge|คำอธิบายความรู้ที่แก้ไขแล้ว
+填入已核對的正確說明；不能以知識文字改寫業務卡控。|Enter verified guidance; knowledge text cannot override business safeguards.|กรอกคำอธิบายที่ตรวจสอบแล้ว ข้อความความรู้ไม่สามารถเปลี่ยนกฎควบคุมงานได้
+核實來源|Verified source|แหล่งข้อมูลที่ตรวจสอบแล้ว
+文件、程式版本或其他可追查的來源。|Document, code version or other traceable source.|เอกสาร รุ่นโปรแกรม หรือแหล่งข้อมูลที่ตรวจสอบย้อนกลับได้
+取消編輯|Cancel editing|ยกเลิกการแก้ไข
+提交審核（尚不發布）|Submit review (not publish)|ส่งผลตรวจสอบ (ยังไม่เผยแพร่)
+模具明細待核對|Mold detail needs checking|ต้องตรวจสอบรายละเอียดแม่พิมพ์
+人工良品|Manual good quantity|ชิ้นงานดีที่บันทึกเอง
+件|pcs|ชิ้น
+不良合計|Total defects|ของเสียรวม
+不良原因|Defect reason|สาเหตุของเสีย
+以上為人工報工數量，與 IoT 推算產量分開記錄。|These are manually reported quantities, recorded separately from IoT estimates.|จำนวนนี้บันทึกด้วยตนเอง แยกจากค่าประมาณผลผลิต IoT
+將刪除人工良品|Manual good quantity to delete|ชิ้นงานดีที่บันทึกเองที่จะลบ
+將刪除不良數|Defective quantity to delete|จำนวนของเสียที่จะลบ
+報工模穴數|Reported cavities|คาวิตี้สำหรับรายงาน
+穴|cavities|คาวิตี้
+完工時間|Completion time|เวลาจบงาน
+開始上模時間|Mounting start time|เวลาเริ่มขึ้นแม่พิมพ์
+完成上模時間|Mounting finish time|เวลาขึ้นแม่พิมพ์เสร็จ
+開始下模時間|Removal start time|เวลาเริ่มลงแม่พิมพ์
+完成下模時間|Removal finish time|เวลาลงแม่พิมพ์เสร็จ
+清除時間|Clear time|ล้างเวลา
+預計開始|Scheduled start|กำหนดเริ่ม
+模具|Mold|แม่พิมพ์
+週期|Cycle time|เวลารอบ
+秒|seconds|วินาที
+目標模次|Target shots|จำนวนรอบเป้าหมาย
+模|shots|รอบ
+工單與模具明細分配|Work order and mold detail allocation|การจัดสรรใบสั่งผลิตและรายละเอียดแม่พิมพ์
+影響工單|Affected work orders|ใบสั่งผลิตที่ได้รับผลกระทบ
+請核對上方作業對象與摘要。|Check the target and summary above.|ตรวจสอบเป้าหมายและสรุปงานด้านบน
+同一排程的所有工單會一併完工。|All work orders in this schedule will be completed together.|ใบสั่งผลิตทั้งหมดในตารางนี้จะจบงานพร้อมกัน
+會清除這張排程的上下模時間，請確認現場狀態。|This clears the schedule's mold operation times. Check the shop-floor status.|จะล้างเวลาขึ้นลงแม่พิมพ์ของตารางนี้ กรุณาตรวจสอบสถานะหน้างาน
+連動作業|Related changes|งานที่เปลี่ยนแปลงร่วมกัน
+下一張排程的實際開始時間會一併更新為：|The next schedule's actual start will also change to: |เวลาเริ่มจริงของตารางถัดไปจะเปลี่ยนเป็น:\u0020
+備註|Comment|หมายเหตุ
+圖片：|Image: |ภาพ:\u0020
+未提供說明|No description|ไม่มีคำอธิบาย
+助理回覆表格|Assistant response table|ตารางคำตอบของผู้ช่วย
+結果待核對。請保留操作識別碼，按「查核執行結果」讀取紀錄；不要重新送出相同操作。|Result needs checking. Keep the operation ID and use Check operation result; do not resubmit.|ต้องตรวจสอบผล เก็บรหัสงานและใช้ปุ่มตรวจสอบผล ห้ามส่งงานเดิมซ้ำ
+待確認|Awaiting confirmation|รอยืนยัน
+已完成|Succeeded|สำเร็จแล้ว
+已取消|Cancelled|ยกเลิกแล้ว
+已被取代|Superseded|ถูกแทนที่แล้ว
+未完成|Failed|ไม่สำเร็จ
+已拒絕|Rejected|ถูกปฏิเสธ
+已查核執行成功並記錄異動。|Execution confirmed and changes recorded.|ตรวจสอบแล้วว่าดำเนินการสำเร็จและบันทึกการเปลี่ยนแปลงแล้ว
+此操作{0}。|Operation status: {0}.|สถานะงาน: {0}
+作業服務必須與目前 MES 頁面同源。|The operation service must share the MES page origin.|บริการงานต้องมีต้นทางเดียวกับหน้า MES
+伺服器回應格式異常，請重新整理資料後再試。|Invalid server response. Refresh the data and try again.|รูปแบบคำตอบเซิร์ฟเวอร์ผิดปกติ กรุณารีเฟรชข้อมูลแล้วลองใหม่
+料號|Part number|รหัสชิ้นงาน
+規格|Specification|ข้อกำหนด
+班日|Shift date|วันที่กะ
+排程日期|Schedule date|วันที่ตารางผลิต
+製程|Process|กระบวนการ
+完工狀態|Completion status|สถานะจบงาน
+報工模穴|Reporting cavities|คาวิตี้รายงานผลผลิต
+排程模穴|Scheduled cavities|คาวิตี้ตามแผน
+週期秒數|Cycle seconds|เวลารอบเป็นวินาที
+人工良品數|Manual good quantity|จำนวนชิ้นงานดีที่บันทึกเอง
+不良數|Defective quantity|จำนวนของเสีย
+不良總數|Total defective quantity|จำนวนของเสียรวม
+IoT 產量|IoT quantity|จำนวนผลผลิต IoT
+IoT 模次|IoT shots|จำนวนรอบ IoT
+目標產量|Target quantity|จำนวนผลผลิตเป้าหมาย
+建立時間|Created at|เวลาสร้าง
+更新時間|Updated at|เวลาอัปเดต
+實際開始時間|Actual start time|เวลาเริ่มจริง
+預計開始時間|Scheduled start time|เวลาเริ่มตามแผน
+預計結束時間|Scheduled end time|เวลาสิ้นสุดตามแผน
+啟用狀態|Enabled status|สถานะเปิดใช้งาน
+執行識別|Execution ID|รหัสการปฏิบัติงาน
+報工識別|Report ID|รหัสรายงาน
+排程識別|Schedule ID|รหัสตารางผลิต
+不良原因明細|Defect reason details|รายละเอียดสาเหตุของเสีย
+不良數量|Defective quantity|จำนวนของเสีย
+操作|Action|การดำเนินการ
+模組|Module|โมดูล
+操作人員|Operator|ผู้ปฏิบัติงาน
+結果|Result|ผลลัพธ์
+執行時間|Executed at|เวลาดำเนินการ
+排程識別（新增時留空）|Schedule ID (leave blank for new)|รหัสตารางผลิต (เว้นว่างเมื่อสร้างใหม่)
+不良明細|Defect details|รายละเอียดของเสีย
+模穴數|Cavity count|จำนวนคาวิตี้
+設備編號|Equipment number|หมายเลขเครื่องจักร
+模具編號|Mold number|หมายเลขแม่พิมพ์
+開始時間|Start time|เวลาเริ่ม
+週期（秒）|Cycle (seconds)|รอบ (วินาที)
+模具模穴明細識別|Mold cavity detail ID|รหัสรายละเอียดคาวิตี้แม่พิมพ์
+既有排程明細識別|Existing schedule detail ID|รหัสรายละเอียดตารางผลิตเดิม
+優先順序|Priority|ลำดับความสำคัญ
+工單與模穴明細|Work order and cavity details|รายละเอียดใบสั่งผลิตและคาวิตี้
+原因代碼|Reason code|รหัสสาเหตุ
+數量|Quantity|จำนวน
+人工報工良品合計|Total manually reported good quantity|ชิ้นงานดีที่บันทึกเองรวม
+人工報工不良合計|Total manually reported defects|ของเสียที่บันทึกเองรวม
+IoT 推算良品（IoT 產量－不良數）|IoT estimated good quantity (IoT − defects)|ชิ้นงานดีประมาณจาก IoT (IoT − ของเสีย)
+人工報工歷史|Manual report history|ประวัติรายงานด้วยตนเอง
+下一階段|Next stage|ขั้นตอนถัดไป
+操作時間|Operation time|เวลาปฏิบัติงาน
+事件時間|Event time|เวลาเหตุการณ์
+欄位變更明細|Field changes|รายละเอียดการเปลี่ยนแปลงช่องข้อมูล
+環境|Environment|สภาพแวดล้อม
+使用額度（美元）|Budget (USD)|งบประมาณ (USD)
+已使用（美元）|Spent (USD)|ใช้แล้ว (USD)
+處理中預留（美元）|Reserved (USD)|สำรองไว้ (USD)
+API 呼叫次數|API calls|จำนวนครั้งเรียก API
+語言|Language|ภาษา
+主題|Theme|ธีม
+淺色|Light|สว่าง
+深色|Dark|มืด
+跟隨系統|System|ตามระบบ
+切換語言未完成，請稍後再試。|Could not change language. Please try again.|เปลี่ยนภาษาไม่สำเร็จ กรุณาลองใหม่
+請求未完成（{0}）|Request failed ({0})|คำขอไม่สำเร็จ ({0})
+新增人工報工|Add manual report|เพิ่มรายงานด้วยตนเอง
+修改人工報工|Edit manual report|แก้ไขรายงานด้วยตนเอง
+刪除人工報工|Delete manual report|ลบรายงานด้วยตนเอง
+調整報工模穴|Adjust reporting cavities|ปรับคาวิตี้รายงาน
+清除上下模|Clear mold operation times|ล้างเวลาขึ้นลงแม่พิมพ์
+執行時伺服器時間|Server time at execution|เวลาเซิร์ฟเวอร์ขณะดำเนินการ
+提交後取得識別碼|ID assigned after submission|รับรหัสหลังส่งงาน
+不良原因名稱|Defect reason name|ชื่อสาเหตุของเสีย
+資料明細|Record details|รายละเอียดรายการ
+項目 {0}|Item {0}|รายการ {0}
+技術資料|Technical details|ข้อมูลทางเทคนิค
+不可讀取|Unavailable|ไม่พร้อมใช้งาน
+請核對「{0}」的對象及影響，再獨立確認執行。|Review the target and impact of “{0}”, then confirm this operation separately.|ตรวจสอบเป้าหมายและผลกระทบของ “{0}” แล้วยืนยันงานนี้แยกต่างหาก
+共 {0} 筆 · 第 {1} / {2} 頁|{0} records · Page {1} / {2}|ทั้งหมด {0} รายการ · หน้า {1} / {2}
+人工報工歷史（{0} 筆）|Manual report history ({0} records)|ประวัติรายงานด้วยตนเอง ({0} รายการ)
+模擬資料|Simulation data|ข้อมูลจำลอง
+時間將於執行時由伺服器產生|Time will be assigned by the server at execution|เซิร์ฟเวอร์จะกำหนดเวลาขณะดำเนินการ
+新增識別碼於提交後取得|New ID will be assigned after submission|รับรหัสใหม่หลังส่งงาน
+資料已更新，請重新建立確認卡|Data changed. Create a new confirmation card|ข้อมูลเปลี่ยนแล้ว กรุณาสร้างบัตรยืนยันใหม่
+沒有此模組權限。|You do not have permission for this module.|ไม่มีสิทธิ์ใช้โมดูลนี้
+正式寫入未啟用。|Live writes are disabled.|ยังไม่เปิดการบันทึกจริง
+請先登入並核對操作身分|Sign in and verify your identity first|กรุณาเข้าสู่ระบบและยืนยันผู้ปฏิบัติงานก่อน
+目前身分沒有此模組的操作權限|Your identity cannot operate this module|บัญชีนี้ไม่มีสิทธิ์ดำเนินงานในโมดูลนี้
+MES 登入身分已改變，請重新開啟對話並核對操作身分。|MES identity changed. Reopen the conversation and verify your identity.|บัญชี MES เปลี่ยนแล้ว กรุณาเปิดการสนทนาใหม่และยืนยันผู้ปฏิบัติงาน
+MES 登入無法驗證；請重新登入或洽管理員。|MES sign-in could not be verified. Sign in again or contact an administrator.|ยืนยันการเข้าสู่ MES ไม่ได้ กรุณาเข้าสู่ระบบใหม่หรือติดต่อผู้ดูแล
+來源不在允許清單|Origin is not allowed|ต้นทางไม่ได้รับอนุญาต
+上一則訊息仍在處理|The previous message is still processing|ข้อความก่อนหน้ายังอยู่ระหว่างดำเนินการ
+找不到此對話|Conversation not found|ไม่พบการสนทนานี้
+確認卡已過期|Confirmation card expired|บัตรยืนยันหมดอายุ
+` .trim().split('\n').map(line => { const [key, en, th] = line.split('|'); return [key, [en, th]]; }));

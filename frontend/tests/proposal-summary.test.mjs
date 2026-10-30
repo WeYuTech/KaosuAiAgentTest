@@ -18,6 +18,19 @@ const molds = [{ TOL_NO: 'MOLD-SPLIT', DETAILS: [
 ] }, { TOL_NO: 'MOLD-ONE', DETAILS: [
   { TOL_DETALS_SID: '61', PART_NO: 'EPS-A', TOL_DETALS_NO: 'MOLD-ONE-L', TOL_DETALS_NAME: '單一模穴' },
 ] }];
+
+test('排程核對直接呈現後端生產日與結束時間，以及各模穴目標件數', () => {
+  const proposal = { action: 'schedule.save', args: { start_time: '2026-10-31 07:59', target_shots: 10, cycle_seconds: 60, details: [{ wo: 'WO-A', part_no: 'EPS-A', cavities: 2 }] },
+    changes: [{ field: 'SCHEDULE_DATE', after: '2026-10-30' }, { field: 'SCHEDULE_END_TIME', after: '2026-10-31 08:09:00' }] };
+  const html = renderToStaticMarkup(createElement(ProposalBusinessSummary, { proposal, workspace: { records: [], catalogs: {} } }));
+  for (const text of ['2026-10-30', '2026-10-31 08:09:00', '目標件數', '20<small>件</small>']) assert.ok(html.includes(text), text);
+});
+
+test('清除換模核對卡包含進出站與完工取消，不僅四個上下模時間', () => {
+  const proposal = { action: 'mold.clear', args: {}, changes: [{ field:'CHECK_IN_TIME', before:'2026-10-30 08:00', after:null }, { field:'CHECK_OUT_TIME', before:'2026-10-30 12:00', after:null }, { field:'COMPLETED', before:'Y', after:'N' }] };
+  const html = renderToStaticMarkup(createElement(ProposalBusinessSummary, { proposal, workspace: { records: [], catalogs: {} } }));
+  for (const text of ['進站時間','出站時間','完工狀態','2026-10-30 12:00','清除時間']) assert.ok(html.includes(text));
+});
 function render(details, records = [], extra = {}) {
   const proposal = { action: 'schedule.save', args: { mold_no: 'MOLD-SPLIT', details, ...extra }, changes: [] };
   return renderToStaticMarkup(createElement(ProposalBusinessSummary, { proposal, workspace: { records, catalogs: { molds } } }));

@@ -18,10 +18,11 @@ BUSINESS_TZ = timezone(timedelta(hours=float(os.getenv("MES_SERVER_UTC_OFFSET_HO
 
 
 class BusinessError(Exception):
-    def __init__(self, message, code="validation"):
+    def __init__(self, message, code="validation", **params):
         super().__init__(message)
         self.message = message
         self.code = code
+        self.params = params
 
 
 def _schema(properties, required):
@@ -115,7 +116,7 @@ def _pick(rows, field, value, label):
 
 def _integer(value, label, minimum=0):
     if isinstance(value, bool) or not isinstance(value, (int, float)) or (isinstance(value, float) and not math.isfinite(value)) or int(value) != value or value < minimum or value > 2147483647:
-        raise BusinessError(f"{label}須為 {minimum} 至 2147483647 的整數，不接受截斷小數。")
+        raise BusinessError(f"{label}須為 {minimum} 至 2147483647 的整數，不接受截斷小數。", field=label, rule="integer_range", minimum=minimum, maximum=2147483647)
     return int(value)
 
 
@@ -126,7 +127,7 @@ def _time(value):
             result = result.astimezone(BUSINESS_TZ).replace(tzinfo=None)
         return result
     except (ValueError, TypeError, OverflowError):
-        raise BusinessError("時間須為MES伺服器當地日期時間，例如 2026-10-30 08:00。") from None
+        raise BusinessError("時間須為MES伺服器當地日期時間，例如 2026-10-30 08:00。", rule="time_format", field="start_time") from None
 
 
 def _date(value):
@@ -375,7 +376,7 @@ def _validate_schema(value, schema, field="操作參數"):
             raise BusinessError(f"{field}須為欄位物件。")
         missing = [k for k in schema["required"] if k not in value]
         if missing:
-            raise BusinessError("缺少必要資料：" + "、".join(missing))
+            raise BusinessError("缺少必要資料：" + "、".join(missing), rule="missing", fields=missing)
         if set(value) - set(schema["properties"]):
             raise BusinessError("含未允許的操作參數。")
         for key, child in value.items():
@@ -392,11 +393,11 @@ def _validate_schema(value, schema, field="操作參數"):
             raise BusinessError(f"{field}須為有效文字，且不得超出長度限制。")
     elif kind in {"integer", "number"}:
         if isinstance(value, bool) or not isinstance(value, (int, float)) or (isinstance(value, float) and not math.isfinite(value)):
-            raise BusinessError(f"{field}須為有效數字。")
+            raise BusinessError(f"{field}須為有效數字。", field=field, rule="type", expected=kind)
         if kind == "integer" and int(value) != value:
-            raise BusinessError(f"{field}須為整數，不接受截斷小數。")
+            raise BusinessError(f"{field}須為整數，不接受截斷小數。", field=field, rule="type", expected="integer")
         if value < schema.get("minimum", float("-inf")) or value > schema.get("maximum", float("inf")):
-            raise BusinessError(f"{field}超出允許範圍。")
+            raise BusinessError(f"{field}超出允許範圍。", field=field, rule="range", minimum=schema.get("minimum"), maximum=schema.get("maximum"))
     if "enum" in schema and value not in schema["enum"]:
         raise BusinessError(f"{field}不在允許選項中。")
 
@@ -421,20 +422,20 @@ def _mold(state, action, sid, actor, now):
     rows = _executions(state, sid)
     if action == "mold.clear":
         if not rows or not any(r.get("ZZ_MODLE_UPLOAD_START") for r in rows):
-            raise BusinessError("沒有上模紀錄可清除。", "state_conflict")
+            raise BusinessError("沒有上模紀錄可清除。", "state_conflict", rule="no_mount_record")
         for row in rows:
             row.update({field: None for field in MOLD_FIELDS + ("CHECK_IN_TIME", "CHECK_OUT_TIME", "COMPLETED_TIME")})
             row.update(COMPLETED="N", EDIT_USER=actor["id"], EDIT_TIME=_stamp(now))
         return
     if _mold_next(rows) != action:
-        raise BusinessError("換模階段不符或多筆工單狀態不一致，請重新查詢。", "state_conflict")
+        raise BusinessError("換模階段不符或多筆工單狀態不一致，請重新查詢。", "state_conflict", rule="mold_stage", expected_action=_mold_next(rows))
     if not rows:
         raise BusinessError("排程尚無執行紀錄，不能執行換模。", "not_found")
     stage = MOLD_ACTIONS.index(action)
     stamp = _stamp(now)
     for row in rows:
         if stage and _time(row[MOLD_FIELDS[stage - 1]]) > now:
-            raise BusinessError("本次時間早於上一階段，請核對伺服器時間。", "state_conflict")
+            raise BusinessError("本次時間早於上一階段，請核對伺服器時間。", "state_conflict", rule="time_order")
         row[MOLD_FIELDS[stage]] = stamp
         row.update(EDIT_USER=actor["id"], EDIT_TIME=stamp)
         if stage == 0:
@@ -492,7 +493,7 @@ def _complete(state, schedule_id, actor, now):
     if not rows:
         raise BusinessError("排程沒有執行紀錄，不能宣稱已完工。")
     if all(r["COMPLETED"] == "Y" for r in rows):
-        raise BusinessError("此排程已完工，不重複覆寫完工時間。", "state_conflict")
+        raise BusinessError("此排程已完工，不重複覆寫完工時間。", "state_conflict", rule="already_completed")
     stamp = _stamp(now)
     for row in rows:
         row.update(COMPLETED="Y", COMPLETED_USER=actor["id"], COMPLETED_TIME=stamp)
@@ -595,11 +596,11 @@ def _save_schedule(state, args, actor, now):
         seen.add(mold_detail["TOL_DETALS_SID"])
         wo = _pick(state["catalogs"]["work_orders"], "WO", supplied["wo"], "工單") if supplied.get("wo") else None
         if (wo and wo["PART_NO"] != part["PART_NO"]) or (cav and not wo):
-            raise BusinessError("工單須對應該品號，非零模穴必須選擇工單。")
+            raise BusinessError("工單須對應該品號，非零模穴必須選擇工單。", rule="work_order_match")
         has_wo = has_wo or bool(wo)
         details.append({"ZZ_KAOSU_PROD_SCHEDULE_DETAIL_SID": did, "ZZ_KAOSU_PROD_SCHEDULE_SID": sid, "TOL_DETALS_SID": mold_detail["TOL_DETALS_SID"], "SCHEDULE_CUR_CAV": cav, "PART_NO": part["PART_NO"], "PART_SPEC": part["PART_SPEC"], "WO_SID": wo["WO_SID"] if wo else "0", "WO_QUANTITY": wo["WO_QTY"] if wo else 0, "TARGET_PCS": shots * cav, "CREATE_USER": old.get("CREATE_USER") if old else actor["id"], "CREATE_TIME": old.get("CREATE_TIME") if old else _stamp(now), "EDIT_USER": actor["id"], "EDIT_TIME": _stamp(now)})
     if not has_wo:
-        raise BusinessError("至少一筆明細須有有效工單，零模穴的合法工單亦可。")
+        raise BusinessError("至少一筆明細須有有效工單，零模穴的合法工單亦可。", rule="work_order_required")
     row = {"ZZ_KAOSU_PROD_SCHEDULE_SID": sid, "SCHEDULE_DATE": day, "SCHEDULE_START_TIME": _stamp(start), "SCHEDULE_END_TIME": _stamp(end), "OPERATION_CODE": "EPS-FORMING", "EQP_SID": eqp["EQP_SID"], "TOL_SID": mold["TOL_SID"], "SCHEDULE_CYCLE_TIME": cycle, "TARGET_SHOT": shots, "CHANGE_MOLD": "Y", "COMMENT": args.get("comment", ""), "PRODUCTION_STATUS": args["status"], "PRIORITY": priority, "SHIFT_TYPE": None, "ZZ_KAOSU_PROD_SHIFT_DAILY_REPORT_BASE_SID": shift["ZZ_KAOSU_PROD_SHIFT_DAILY_REPORT_BASE_SID"], "CREATE_USER": previous.get("CREATE_USER") if previous else actor["id"], "CREATE_TIME": previous.get("CREATE_TIME") if previous else _stamp(now), "EDIT_USER": actor["id"], "EDIT_TIME": _stamp(now)}
     for n in (1, 2):
         row[f"SHIFT_CLASS_{n}"] = shift[f"SHIFT_CLASS_{n}"]

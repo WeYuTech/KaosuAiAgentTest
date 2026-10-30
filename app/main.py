@@ -10,6 +10,7 @@ from typing import Any, Literal
 from dotenv import load_dotenv
 from fastapi import FastAPI, HTTPException, Request, Response
 from fastapi.responses import JSONResponse
+from fastapi.exceptions import RequestValidationError
 from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel, ConfigDict, Field
 
@@ -76,6 +77,13 @@ class Proposal(Input):
     action: str = Field(max_length=60)
     args: dict[str, Any]
     conversation_id: str | None = None
+    version: int | None = Field(default=None, ge=0, strict=True)
+
+
+class ChatProposal(Input):
+    action: str = Field(max_length=60)
+    args: dict[str, Any]
+    version: int | None = Field(default=None, ge=0, strict=True)
 
 
 class Confirmation(Input):
@@ -86,6 +94,19 @@ class Confirmation(Input):
 class Conversation(Input):
     module: Literal["schedule", "report", "mold"]
     context: dict[str, Any] = Field(default_factory=dict)
+    locale: Literal["zh-TW", "en", "th"] = "zh-TW"
+
+
+class GuideUpdate(Input):
+    version: int = Field(ge=0, strict=True)
+    action: str | None = Field(default=None, max_length=60)
+    intent: Literal["create", "update"] | None = None
+    args: dict[str, Any] | None = None
+    step: Literal["action", "target", "details", "review", "result"] | None = None
+
+
+class LocaleUpdate(Input):
+    locale: Literal["zh-TW", "en", "th"]
 
 
 class Message(Input):
@@ -119,11 +140,28 @@ def create_app(db_path=None, model=None):
 
     from app.mes import MesError
 
+    def error_body(request, detail, status):
+        from app.presentation import error_payload
+        locale = request.headers.get("x-ai-locale")
+        if locale not in {"zh-TW", "en", "th"}:
+            cid = request.path_params.get("cid")
+            with store.transaction() as db:
+                convo = store.get(db, "CONVERSATION", cid) if cid else None
+            locale = (convo or {}).get("locale", "zh-TW")
+        return error_payload(detail, status, locale)
+
+    @app.exception_handler(RequestValidationError)
+    async def invalid_request(request, exc):
+        detail = [{"loc": list(item["loc"]), "type": item["type"], "msg": item["msg"]} for item in exc.errors()]
+        result = error_body(request, {"code": "validation", "message": "請求欄位格式不符。", "params": {"fields": [item["loc"] for item in detail]}}, 422)
+        result["detail"] = detail
+        return JSONResponse(result, status_code=422)
+
     @app.exception_handler(MesError)
     async def mes_error(request, exc):
         status = {"unauthorized": 401, "forbidden": 403, "validation": 422, "not_found": 404,
                   "stale": 409, "conflict": 409, "linked_reports": 409, "scope_too_large": 422}.get(exc.code, 503)
-        return JSONResponse({"detail": {"code": exc.code, "message": str(exc)}}, status_code=status)
+        return JSONResponse(error_body(request, {"code": exc.code, "message": str(exc)}, status), status_code=status)
 
     @app.exception_handler(HTTPException)
     async def rejected(request, exc):
@@ -137,7 +175,7 @@ def create_app(db_path=None, model=None):
                                              "mode": mode, "changes": [], "http_status": exc.status_code})
             except (HTTPException, MesError):
                 pass
-        return JSONResponse({"detail": exc.detail}, status_code=exc.status_code, headers=exc.headers)
+        return JSONResponse(error_body(request, exc.detail, exc.status_code), status_code=exc.status_code, headers=exc.headers)
 
     @app.middleware("http")
     async def guard_origin(request: Request, call_next):
@@ -186,7 +224,48 @@ def create_app(db_path=None, model=None):
         try:
             return fn(*args)
         except BusinessError as exc:
-            raise HTTPException(422, {"code": getattr(exc, "code", "validation"), "message": str(exc)}) from exc
+            raise HTTPException(422, {"code": getattr(exc, "code", "validation"), "message": str(exc), "params": getattr(exc, "params", {})}) from exc
+
+    def check_conversation_edit(db, convo, intent_token=None, version=None):
+        from app.guide import initial, reject
+        processing = convo.get("processing") or {}
+        if intent_token:
+            if processing.get("token") != intent_token or processing.get("expires_at", "") < now().isoformat():
+                reject("guide_stale", "這輪對話已失效，請重新核對需求。")
+        elif processing.get("expires_at", "") > now().isoformat():
+            reject("conversation_busy", "上一則訊息仍在處理，請稍後修改。")
+        if any(p.get("conversation_id") == convo["id"] and p["status"] == "unknown" for p in store.all(db, "PROPOSAL")):
+            reject("outcome_unknown", "操作結果待核對，不得修改或重送。")
+        if version is not None and version != convo.get("guide", initial())["version"]:
+            reject("guide_stale", "草稿版本已變更，請重新讀取。", current_version=convo.get("guide", initial())["version"])
+
+    def guide_view(db, convo):
+        from app.guide import initial
+        guide = dict(convo.get("guide") or initial())
+        pid = guide.pop("proposal_id", None)
+        if pid:
+            guide["proposal"] = store.get(db, "PROPOSAL", pid)
+            if guide["proposal"] and guide["proposal"]["status"] in {"succeeded", "unknown", "cancelled"}:
+                guide["step"] = "result"
+        return guide
+
+    def save_guide(cid, actor, patch, version=None, intent_token=None):
+        from app.guide import merge
+        with store.transaction() as db:
+            convo = store.get(db, "CONVERSATION", cid)
+            if not convo or convo["actor_id"] != actor["id"]:
+                raise HTTPException(404, "找不到此對話")
+            allowed(actor, convo["module"])
+            check_conversation_edit(db, convo, intent_token, version)
+            convo["guide"] = merge(convo.get("guide"), convo["module"], patch)
+            if not intent_token:
+                convo["revision"] = convo.get("revision", 0) + 1
+            for old in store.all(db, "PROPOSAL"):
+                if old.get("conversation_id") == cid and old["status"] == "pending":
+                    old["status"] = "superseded"
+                    store.put(db, "PROPOSAL", old["id"], old)
+            store.put(db, "CONVERSATION", cid, convo)
+            return guide_view(db, convo)
 
     def make_proposal(body, actor, intent_token=None):
         from app.domain import execute
@@ -201,6 +280,19 @@ def create_app(db_path=None, model=None):
                     raise HTTPException(404, "找不到此對話")
                 if convo["module"] != body.module:
                     raise HTTPException(422, "草稿模組與對話不符")
+                check_conversation_edit(db, convo, intent_token, body.version)
+                guide = convo.get("guide") or {}
+                from app.guide import reject
+                if body.version is not None:
+                    if not guide.get("ready"):
+                        reject("guide_invalid", "請先補齊引導草稿。", rule="missing", fields=guide.get("missing", ["action"]))
+                    if guide.get("action") != body.action or guide.get("args") != body.args:
+                        reject("guide_stale", "送出的內容與目前草稿不符，請先更新草稿。")
+                if body.action == "schedule.save" and guide.get("action") == body.action:
+                    if guide.get("intent") == "update" and not body.args.get("schedule_id"):
+                        reject("guide_invalid", "修改排程必須先選擇既有排程。", rule="missing", fields=["schedule_id"])
+                    if guide.get("intent") == "create" and body.args.get("schedule_id"):
+                        reject("guide_invalid", "新增排程不可帶入既有排程識別。", field="schedule_id", rule="create_target")
                 processing = convo.get("processing") or {}
                 if intent_token:
                     if processing.get("token") != intent_token or processing.get("expires_at", "") < instant.isoformat():
@@ -244,6 +336,13 @@ def create_app(db_path=None, model=None):
                         old["status"] = "superseded"
                         store.put(db, "PROPOSAL", old["id"], old)
             store.put(db, "PROPOSAL", proposal["id"], proposal)
+            if body.conversation_id:
+                from app.guide import merge
+                intent = ("update" if body.args.get("schedule_id") else "create") if body.action == "schedule.save" else None
+                convo["guide"] = merge(convo.get("guide"), body.module, {"action": body.action, "intent": intent, "args": body.args, "step": "review"})
+                convo["guide"]["args"] = body.args
+                convo["guide"]["proposal_id"] = proposal["id"]
+                store.put(db, "CONVERSATION", body.conversation_id, convo)
         return {"proposal": proposal}
 
     @app.get("/api/health")
@@ -442,7 +541,7 @@ def create_app(db_path=None, model=None):
         actor = actor_for(request)
         allowed(actor, body.module)
         convo = {"id": secrets.token_urlsafe(18), "module": body.module, "context": body.context,
-                 "actor_id": actor["id"], "messages": [], "created_at": now().isoformat()}
+                 "actor_id": actor["id"], "locale": body.locale, "messages": [], "created_at": now().isoformat()}
         with store.transaction() as db:
             store.put(db, "CONVERSATION", convo["id"], convo)
         return convo
@@ -464,11 +563,35 @@ def create_app(db_path=None, model=None):
     def get_chat(cid: str, request: Request):
         return get_conversation(cid, actor_for(request))
 
+    @app.get("/api/conversations/{cid}/guide")
+    def read_guide(cid: str, request: Request):
+        actor = actor_for(request)
+        get_conversation(cid, actor)
+        with store.transaction() as db:
+            return guide_view(db, store.get(db, "CONVERSATION", cid))
+
+    @app.post("/api/conversations/{cid}/guide")
+    def update_guide(cid: str, body: GuideUpdate, request: Request):
+        patch = body.model_dump(exclude_unset=True, exclude={"version"})
+        if patch.get("step") is None:
+            patch.pop("step", None)
+        return save_guide(cid, actor_for(request), patch, body.version)
+
+    @app.post("/api/conversations/{cid}/locale")
+    def update_locale(cid: str, body: LocaleUpdate, request: Request):
+        actor = actor_for(request)
+        get_conversation(cid, actor)
+        with store.transaction() as db:
+            convo = store.get(db, "CONVERSATION", cid)
+            convo["locale"] = body.locale
+            store.put(db, "CONVERSATION", cid, convo)
+        return {"locale": body.locale}
+
     @app.post("/api/conversations/{cid}/proposals")
-    def chat_proposal(cid: str, body: dict, request: Request):
+    def chat_proposal(cid: str, body: ChatProposal, request: Request):
         actor = actor_for(request)
         convo = get_conversation(cid, actor)
-        return make_proposal(Proposal(module=convo["module"], action=body.get("action", ""), args=body.get("args", {}), conversation_id=cid), actor)
+        return make_proposal(Proposal(module=convo["module"], action=body.action, args=body.args, conversation_id=cid, version=body.version), actor)
 
     @app.post("/api/conversations/{cid}/messages")
     def message(cid: str, body: Message, request: Request):
@@ -477,6 +600,7 @@ def create_app(db_path=None, model=None):
         intent_token = secrets.token_urlsafe(24)
         with store.transaction() as db:
             convo = store.get(db, "CONVERSATION", cid)
+            check_conversation_edit(db, convo)
             if (convo.get("processing") or {}).get("expires_at", "") > now().isoformat():
                 raise HTTPException(409, "上一則訊息仍在處理")
             convo["revision"] = convo.get("revision", 0) + 1
@@ -505,6 +629,7 @@ def create_app(db_path=None, model=None):
             else:
                 query_fn = (lambda filters: mes_bridge().snapshot(tool_actor(), convo["module"], filters)) if mode != "simulation" else None
                 result = respond(convo, state, store, query_fn=query_fn,
+                                 draft_fn=lambda patch, version: save_guide(cid, tool_actor(), patch, version, intent_token),
                                  prepare_fn=lambda action, args: make_proposal(Proposal(module=convo["module"], action=action, args=args, conversation_id=cid), tool_actor(), intent_token))
             proposal = result.get("proposal")
             if result.get("action"):
@@ -521,7 +646,8 @@ def create_app(db_path=None, model=None):
                 convo["messages"].append({"role": "assistant", "content": result["content"], "proposal": proposal, "data": result.get("data"), "knowledge": result.get("knowledge", [])})
                 convo.pop("processing", None)
                 store.put(db, "CONVERSATION", cid, convo)
-            return {"messages": convo["messages"], "proposal": proposal, "data": result.get("data")}
+                guide = guide_view(db, convo)
+            return {"messages": convo["messages"], "proposal": proposal, "data": result.get("data"), "guide": guide}
         finally:
             with store.transaction() as db:
                 current = store.get(db, "CONVERSATION", cid)
