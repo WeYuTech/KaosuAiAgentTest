@@ -1,6 +1,6 @@
 # 高塑 MES 對話操作助理
 
-以自然語言操作 EPS 排程、報工及模具上下模。延續 Emerald.AI 的右下角入口，先選模組與操作身分，對話補齊資訊，核對逐欄確認卡後才寫入。
+以自然語言操作 EPS 排程、報工及模具上下模。直接沿用 Emerald.AI 原版黑白 Zinc 配色、品牌圖與字體，右下角圓形入口展開聊天室，可放大為全畫面；先選模組與操作身分，對話補齊資訊，核對確認卡後才寫入。
 
 目前預設為**隔離模擬環境**，內建設備、模具、工單、班別與人工／IoT 資料皆為合成資料。正式 MES 串接狀態與限制見 `docs/MES整合.md`，不可將模擬驗收視為正式寫入已驗證。
 
@@ -38,13 +38,13 @@ cd ..
 
 使用 **OpenAI Responses API + gpt-6.1-sol**，以嚴格工具參數產生受限草稿，沒有模型可呼叫的執行／同意工具。原查詢、業務規則與交易由後端控制，不讓模型生成 SQL。
 
-第一版 RAG 採本機已審核知識檢索，使用詞與中文字組排序；沒有額外購買向量資料庫或建立雲端 Vector Store。知識有來源、版本與模組。回饋先待審，主管修正後仍不會自動上線；部署管理員執行固定回歸測試後才發佈：
+第一版 RAG 採本機已審核知識檢索，使用詞與中文字組排序；沒有額外購買向量資料庫或建立雲端 Vector Store。知識有來源、版本與模組。回饋先待審，主管修正後仍不會自動上線；部署管理員必須提供具體問答案例，固定回歸及候選知識的真實模型驗證通過後才發布：
 
 ```powershell
-.\.venv\Scripts\python.exe scripts/publish_knowledge.py <已審核回饋ID>
+.\.venv\Scripts\python.exe scripts/publish_knowledge.py --case .local/knowledge-case.json -- <已審核回饋ID>
 ```
 
-這是知識修正流程，**不是模型自行訓練**。新的業務規則仍須修改程式與對應測試；不能只改知識文字來繞過卡控。
+案例格式與發布證據見 [模型選型與知識修正](docs/模型選型與知識修正.md)。候選只在隔離資料庫與既有已發布知識共同檢索，必須命中同一內容雜湊、回覆符合案例，且沒有產生操作草稿才可發布；真實模型呼叫共用下列累計預算。這是知識修正流程，**不是模型自行訓練**。新的業務規則仍須修改程式與對應測試；不能只改知識文字來繞過卡控。
 
 模型呼叫用量寫入 `.local/model-budget.db`，跨啟動累計。本次上限 US$20，呼叫前預留費用，回傳用量後結算；逾時未知保留預留且不自動重試。不要刪除該帳本來重置預算。前端只呼叫本機後端，不持有 OpenAI 金鑰。
 
@@ -56,6 +56,7 @@ cd ..
 .\.venv\Scripts\python.exe -m pytest -q
 # 以下會使用真實模型，與全專案共用 US$20 帳本。
 .\.venv\Scripts\python.exe scripts/evaluate_dialogue.py
+.\.venv\Scripts\python.exe scripts/evaluate_lifecycle.py
 ```
 
 公開 API 包含 `/api/session`、`/api/workspace`、`/api/conversations`、`/api/proposals`、`/api/audit`、`/api/feedback` 與 `/api/budget`；詳細契約可查看啟動後的 `/docs`。
@@ -69,5 +70,7 @@ cd ..
 - `docs/模擬情境.md`：合成資料與模擬投影的界線。
 - `docs/前端操作.md`：介面與嵌入方式。
 - `docs/MES整合.md`：正式登入、查詢、交易及部署限制。
+- `docs/SQL驗收.md`：隔離 SQL Server 真實交易、觸發器及失敗回復。
+- `docs/驗收報告.md`：本次完成項目、測試證據、模型費用與交付界線。
 
 來源版本為 `WeYuTech/test@979d2c63d90a3310b00486c755c18e7a25aaba5c`。不把舊版 OPI 排程規則誤套到現行 setup 新版，也不把原程式缺陷當成必須複製的功能。

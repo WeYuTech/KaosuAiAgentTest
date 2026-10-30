@@ -42,7 +42,8 @@ def proposal_target(state, args):
     schedule_id = args.get("schedule_id") or execution.get("ZZ_KAOSU_PROD_SCHEDULE_SID")
     schedule = tables.get(SCHEDULE, {}).get(schedule_id, {})
     equipment = args.get("equipment") or execution.get("EQP_NO") or tables.get("EQP_MASTER", {}).get(schedule.get("EQP_SID"), {}).get("EQP_NO")
-    affected = sorted({r.get("WO", "") for r in tables.get(EXECUTION, {}).values() if r.get("ZZ_KAOSU_PROD_SCHEDULE_SID") == schedule_id} - {""})
+    affected = sorted({r["WO"] for r in tables.get(EXECUTION, {}).values()
+                       if r.get("ZZ_KAOSU_PROD_SCHEDULE_SID") == schedule_id and r.get("WO")})
     return {"equipment": equipment, "work_order": execution.get("WO"), "schedule_id": schedule_id,
             "execution_id": execution_id, "report_id": report_id, "affected_orders": affected or [d.get("wo") for d in args.get("details", []) if d.get("wo")]}
 

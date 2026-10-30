@@ -1,7 +1,74 @@
 from fastapi.testclient import TestClient
 import pytest
-
 from app.main import create_app
+
+
+@pytest.mark.parametrize("module,filters,key,expected", [
+    ("report", {"execution_id":"2002"}, "WIP_OPI_WDOEACICO_HIST_SID", ["2002"]),
+    ("report", {"execution_id":"不存在"}, "WIP_OPI_WDOEACICO_HIST_SID", []),
+    ("schedule", {"schedule_id":"1002"}, "ZZ_KAOSU_PROD_SCHEDULE_SID", ["1002"]),
+    ("report", {"schedule_id":"1001"}, "WIP_OPI_WDOEACICO_HIST_SID", ["2001","2002"]),
+    ("mold", {"schedule_id":"1003"}, "ZZ_KAOSU_PROD_SCHEDULE_SID", ["1003"]),
+    ("schedule", {"schedule_id":"不存在"}, "ZZ_KAOSU_PROD_SCHEDULE_SID", []),
+    ("mold", {"schedule_id":"不存在"}, "ZZ_KAOSU_PROD_SCHEDULE_SID", []),
+    ("report", {"execution_id":"2001","schedule_id":"1002"}, "WIP_OPI_WDOEACICO_HIST_SID", []),
+])
+def test_查詢識別碼精確定位且不存在或交集不符回空(tmp_path,module,filters,key,expected):
+    with TestClient(create_app(db_path=tmp_path/"id-query.db")) as client:
+        client.post("/api/session/demo",json={"identity":"supervisor"})
+        response=client.get("/api/workspace",params={"module":module,**filters})
+        assert response.status_code==200,response.text
+        result=response.json()
+        assert sorted(r[key] for r in result["records"])==expected
+        assert result["total"]==len(expected)
+
+@pytest.mark.parametrize("module,part_no,expected", [
+    ("report", "EPS-B", ["2002"]),
+    ("schedule", "EPS-B", ["1001"]),
+    ("mold", "EPS-B", ["1001"]),
+    ("report", "不存在", []),
+    ("schedule", "不存在", []),
+    ("mold", "不存在", []),
+])
+def test_品號依明細關聯篩選三模組(tmp_path, module, part_no, expected):
+    with TestClient(create_app(db_path=tmp_path / "part-query.db")) as client:
+        client.post("/api/session/demo", json={"identity": "supervisor"})
+        response = client.get("/api/workspace", params={"module": module, "part_no": part_no})
+        assert response.status_code == 200, response.text
+        key = "WIP_OPI_WDOEACICO_HIST_SID" if module == "report" else "ZZ_KAOSU_PROD_SCHEDULE_SID"
+        assert sorted(r[key] for r in response.json()["records"]) == expected
+
+
+@pytest.mark.parametrize("filters,parts,molds,orders", [
+    ({"catalog": "parts", "search": "右側"}, ["EPS-B"], [], []),
+    ({"catalog": "parts", "search": "eps-a"}, ["EPS-A"], [], []),
+    ({"catalog": "parts", "search": "不存在"}, [], [], []),
+    ({"catalog": "molds", "part_no": "EPS-B"}, ["EPS-B"], ["MOLD-A"], ["WO-A", "WO-B"]),
+    ({"catalog": "molds", "part_no": "不存在"}, [], [], []),
+    ({"catalog": "work_orders", "mold_no": "MOLD-A", "wo": "WO-B"}, ["EPS-A", "EPS-B"], ["MOLD-A"], ["WO-B"]),
+    ({"catalog": "molds", "mold_no": "不存在"}, ["EPS-A", "EPS-B"], [], []),
+])
+def test_選項搜尋不回作業列且保留模具全部品號明細(tmp_path, filters, parts, molds, orders):
+    with TestClient(create_app(db_path=tmp_path / "catalog-query.db")) as client:
+        client.post("/api/session/demo", json={"identity": "supervisor"})
+        response = client.get("/api/workspace", params={"module": "schedule", **filters})
+        assert response.status_code == 200, response.text
+        result = response.json()
+        assert result["records"] == [] and result["total"] == 0
+        catalogs = result["catalogs"]
+        assert [p["PART_NO"] for p in catalogs["parts"]] == parts
+        assert [m["TOL_NO"] for m in catalogs["molds"]] == molds
+        assert [w["WO"] for w in catalogs["work_orders"]] == orders
+        if molds:
+            assert [d["PART_NO"] for d in catalogs["molds"][0]["DETAILS"]] == ["EPS-A", "EPS-B"]
+
+
+@pytest.mark.parametrize("module", ["schedule", "report", "mold"])
+def test_模具編號別名支援部分搜尋與未知回空(tmp_path, module):
+    with TestClient(create_app(db_path=tmp_path / "mold-query.db")) as client:
+        client.post("/api/session/demo", json={"identity": "supervisor"})
+        assert client.get("/api/workspace", params={"module": module, "mold_no": "old-a"}).json()["total"] > 0
+        assert client.get("/api/workspace", params={"module": module, "mold_no": "不存在"}).json()["total"] == 0
 
 
 def confirm(client, module, action, args):

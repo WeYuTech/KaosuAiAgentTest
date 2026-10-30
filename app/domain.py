@@ -139,6 +139,24 @@ def _catalogs(state):
     return result
 
 
+def _query_catalogs(state, filters, records):
+    result = _catalogs(state)
+    if not any(filters.get(k) for k in ("catalog", "part_no", "search", "mold_no", "tol_no")):
+        return result
+    part_no = filters.get("part_no")
+    search = str(filters.get("search") or "").casefold()
+    result["parts"] = [p for p in result["parts"] if (not part_no or p["PART_NO"] == part_no) and (not search or search in str(p["PART_NO"]).casefold() or search in str(p.get("PART_SPEC", "")).casefold())]
+    selected_parts = {part_no} if part_no else {d["PART_NO"] for row in records for d in row.get("DETAILS", [])}
+    mold_no = filters.get("mold_no") or filters.get("tol_no")
+    result["molds"] = [m for m in result["molds"] if selected_parts.intersection(m["PART_NOS"]) or (mold_no and m["TOL_NO"] == mold_no)]
+    for mold in result["molds"]:
+        selected_parts.update(mold["PART_NOS"])
+    result["work_orders"] = [w for w in result["work_orders"] if w["PART_NO"] in selected_parts and (not filters.get("wo") or w["WO"] == filters["wo"])]
+    schedule_ids = {r.get("ZZ_KAOSU_PROD_SCHEDULE_SID") for r in records}
+    result["schedules"] = [s for s in result["schedules"] if s["schedule_id"] in schedule_ids]
+    return result
+
+
 def query(state, module, filters=None):
     filters = filters or {}
     history = str(filters.get("history") or "all").lower()
@@ -205,6 +223,18 @@ def query(state, module, filters=None):
                 year, month_zero = divmod(month_index, 12)
                 cutoff = today.replace(year=year, month=month_zero + 1, day=min(today.day, monthrange(year, month_zero + 1)[1])).date().isoformat()
                 records = [r for r in records if r.get("ZZ_MODLE_UPLOAD_START") and str(r.get("CREATE_TIME", "")) >= cutoff]
+    if filters.get("schedule_id"):
+        records = [r for r in records if str(r.get("ZZ_KAOSU_PROD_SCHEDULE_SID")) == str(filters["schedule_id"])]
+    if filters.get("execution_id"):
+        if module != "report":
+            raise BusinessError("歷程識別碼僅供報工模組查詢。")
+        records = [r for r in records if str(r.get("WIP_OPI_WDOEACICO_HIST_SID")) == str(filters["execution_id"])]
+    if filters.get("part_no"):
+        if module == "report":
+            records = [r for r in records if r.get("PART_NO") == filters["part_no"]]
+        else:
+            schedule_ids = {d["ZZ_KAOSU_PROD_SCHEDULE_SID"] for d in state["tables"][DETAIL].values() if d["PART_NO"] == filters["part_no"]}
+            records = [r for r in records if r.get("ZZ_KAOSU_PROD_SCHEDULE_SID") in schedule_ids]
     equipment = filters.get("equipment") or filters.get("eqp_no")
     date = filters.get("date") or filters.get("schedule_date")
     wo = filters.get("wo")
@@ -227,7 +257,7 @@ def query(state, module, filters=None):
             match = re.search(r"\d+", row.get("EQP_NO", ""))
             return bounds and match and bounds[0] <= int(match.group()) <= bounds[1]
         records = [r for r in records if in_factory(r)]
-    mold = filters.get("mold") or filters.get("tol_no")
+    mold = filters.get("mold") or filters.get("tol_no") or filters.get("mold_no")
     if mold:
         records = [r for r in records if str(mold).lower() in str(r.get("TOL_NO", "")).lower()]
     completed = str(filters.get("completed") or "").upper()
@@ -259,9 +289,12 @@ def query(state, module, filters=None):
         page_size = min(100, max(1, int(filters.get("page_size", 20))))
     except (TypeError, ValueError):
         raise BusinessError("頁碼與每頁筆數須為整數。") from None
+    if filters.get("catalog"):
+        records = []
     total = len(records)
     page = min(page, max(1, (total + page_size - 1) // page_size))
-    return {"module": module, "mode": "simulation", "label": state["label"], "records": records[(page - 1) * page_size:page * page_size], "total": total, "page": page, "page_size": page_size, "catalogs": _catalogs(state)}
+    selected = records[(page - 1) * page_size:page * page_size]
+    return {"module": module, "mode": "simulation", "label": state["label"], "records": selected, "total": total, "page": page, "page_size": page_size, "catalogs": _query_catalogs(state, filters, selected)}
 
 
 def _mold_candidates(state, equipment):
