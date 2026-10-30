@@ -2,6 +2,8 @@
 
 本文件為原系統唯讀程式盤點，未執行業務寫入。來源版本：`WeYuTech/test`，commit `979d2c63d90a3310b00486c755c18e7a25aaba5c`。反編譯結果用於還原部署 DLL 的可見邏輯，不能取代尚未取得的資料庫函式、約束與觸發器定義。
 
+2026-10-30 補證：已唯讀取得正式資料庫排程明細觸發器，確認排程保存即生成／同步執行歷程。以下最後一節的新證據取代前文「歷程生成機制未取得」的當時限制；未執行正式寫入。
+
 ## 來源定位
 
 以下行號以盤點時檔案為準，縮寫對應完整相對路徑：
@@ -236,4 +238,51 @@ HTML 的模具與週期雖標 readonly（頁面：254、270），但編輯：85�
 | 取消確認 | 零業務寫入，保留取消結果即可 |
 | 查詢無資料與工單無匹配 | 清楚回答空結果，不轉成未授權的新增動作 |
 
-尚待取得的證據：五個 GET_ZZ_KAOSU_* 函式定義、Grid SID 設定實際 SQL、兩張排程表的 schema／constraint／trigger、dbo.GetSid 與時間函式定義、正式登入與角色授權映射、原 API 的新 SID 回傳改善方式。完成這些核對前，不宣稱已重現資料庫全部隱藏卡控。
+上節最初以原始碼完成盤點時，資料庫函式、Grid SID、schema／constraint／trigger、GetSid 與時間函式尚未取得；其後已補查部署資料庫，以下節直接證據為準。正式登入與角色授權、部署啟用及現場人員驗收仍須依整體整合規格確認，不宣稱已執行原正式庫寫入。
+
+## 資料庫補證：排程明細觸發器生成與同步執行歷程
+
+2026-10-30 以 ApplicationIntent=ReadOnly、唯讀 ODBC 連線查 `sys.sql_modules`、`sys.triggers`、`sys.foreign_keys`，查完 rollback；沒有執行業務 DML。來源資料庫 `kaosu_MES_KSS`。證據保存於 references 的 `database-readonly/ZZ_KAOSU_PROD_SCHEDULE_DETAIL_OPI_InsertUpdate.sql` 與 `schedule-trigger-metadata.json`，不含連線密碼。此為當時部署 DB 的直接證據，不屬 Git commit 內檔案。
+
+啟用的 `dbo.ZZ_KAOSU_PROD_SCHEDULE_DETAIL_OPI_InsertUpdate` 掛在 `ZZ_KAOSU_PROD_SCHEDULE_DETAIL`，事件為 AFTER INSERT、UPDATE、DELETE（SQL：10–12）。沒有另靠上模 API 建立歷程：儲存排程明細後即觸發；原 Save 使用交易，觸發器在同一寫入交易內執行。
+
+| 明細動作 | 執行歷程實際連動 | SQL 行號 |
+|---|---|---|
+| INSERT | 新增 HIST，`WIP_OPI_WDOEACICO_HIST_SID = ZZ_KAOSU_PROD_SCHEDULE_DETAIL_SID`，並非另取 GetSid | 24–33、66–67 |
+| INSERT 主檔帶入 | WO 由 WOR_MASTER；DEPT_NO、OPERATION_CODE、EQP_NO、TOL_SID、六個班別欄位、SHIFT_DAY 由排程與機台主檔 | 34–59 |
+| INSERT 初始值 | ENABLE_FLAG=Y、CREATE/EDIT_USER=`SQLtrigger_user`、CREATE/EDIT_TIME=GETDATE()；SCHEDULE_CUR_CAV、OPI_CAV=排程模穴；COMPLETED=N；SCHEDULE_EDIT_USER/TIME=明細編輯者時間；ZZ_TOL_DETALS_NO 由模具明細 | 43–65 |
+| UPDATE | 以 HIST主鍵=傳入明細SID 更新 WO、EQP_NO、SCHEDULE_CUR_CAV、班別、SCHEDULE_EDIT_*、SHIFT_DAY、TOL_SID、ZZ_TOL_DETALS_NO、排程SID、OPI_CAV、排程明細SID | 69–100 |
+| DELETE | 刪除 HIST主鍵=被刪明細SID 的執行列 | 16–22 |
+
+重要影響：
+
+- INSERT 包含零模穴、WO_SID=0 的明細，沒有排除；此時 WO 查不到會是 NULL。不能只對有工單的列建立模擬歷程。
+- UPDATE 每次把 OPI_CAV 改回 SCHEDULE_CUR_CAV，所以人工改過報工模穴後，再保存排程會覆蓋該模穴，即使排程模穴本次沒有改。確認卡須揭露這項連動。
+- UPDATE 不重設四個模具階段、CHECK_IN_TIME、CHECK_OUT_TIME、REAL_CHECK_IN_TIME、COMPLETED 與完工時間，也不更新 HIST 的 CREATE_*／EDIT_*；改的是 SCHEDULE_EDIT_*。DEPT_NO／OPERATION_CODE 也只在 INSERT 設定。
+- UPDATE 只更新已有同鍵 HIST，不會補建遺失的執行歷程。正式服務不能把0列同步當完整成功。
+- 主表本身沒有相關觸發器；更新主表後要有明細 UPDATE，班別、設備等才隨之同步。現行 Save 會逐筆更新明細，因此正常流程會觸發。
+- DELETE 只刪 HIST，不刪人工報工 OUTPUT 或不良原因。查到相關表之間無 FK、OUTPUT／NG_DETAIL 沒有觸發器，故刪帶有報工的明細可能留下孤兒報工。新服務應在單獨核准清理政策前拒絕此類刪除，並標為新防護。
+- sys.sql_modules 掃描沒有找到另一個排程服務 SP 寫入鏈，已部署六個 DLL 也未找到該排程生成邏輯。`H5_KAOSU_SCHEDULE_CREATE` 實際為班別設定。來源 tree 的 exe 僅見 Roslyn 工具，相關 SQL Agent job 搜尋為空；現有觸發器已足以解釋目前鏈。
+
+唯讀主檔函式補證也存於 `database-readonly/`：GET_ZZ_KAOSU_PLAN_PART、GET_ZZ_KAOSU_PLAN_TOL、GET_ZZ_KAOSU_PLAN_TOL_DETAILS、V_ZZ_SCHEDULE_WO_TOL_SID_NEW、GetSid、GET_DATETIME_STRING。可選工單為 STATUS=Release 且累計量小於工單量1.1倍；模具清單要求模具ENABLE_FLAG=Y，模具明細清單要求明細ENABLE_FLAG=Y。GetSid 是時間秒＋毫秒＋rand_view 的亂數字串組成，並非 sequence；正式新增須驗衝突與可靠回傳 SID。
+
+正式完整鏈現在可明確表達：排程表頭保存 → 明細 INSERT／UPDATE／DELETE → 同交易觸發 HIST → 模具候選查詢 → 上模改 HIST 時間 → 報工 OUTPUT／NG_DETAIL → 整排程完工／下模。新服務的稽核必須讀回包含 trigger 的 HIST 差異，不能只記錄直接發出的兩張排程表 SQL。
+
+## 正式排程交易適配器與隔離 SQL 驗收
+
+`app/mes_schedule.py` 提供 `prepare`／`execute`，由既有 `MesBridge` 的 `schedule.save` 分派。預覽與確認均重驗設備、FAB、啟用模具與明細、品號、可排工單及唯一班別；核對明細 trigger 啟用狀態與已盤點定義摘要。觸發器版本變動、遺失同鍵歷程或資料不唯一時拒絕自動寫入，避免以猜測填補契約。
+
+確認使用 SERIALIZABLE、XACT_ABORT、應用鎖及主檔／目標資料鎖重新核對版本。新主鍵取自原 `dbo.GetSid()`，檢查重複並回傳實際分配的 SID；暫存預覽 SID 不寫入。只直接修改排程主表及明細，HIST 由原 trigger 產生，隨後逐欄讀回核對。實際差異連同操作記錄寫入 `ZZ_AI_AGENT_OPERATION_OPERATION`／`ZZ_AI_AGENT_OPERATION_CHANGE`，與業務異動同交易提交；稽核每批最多200列，減少逐欄網路往返。重送相同操作 ID 與內容只回原結果。
+
+新防護另包含：有人工報工的明細禁止刪除或更換工單、品號、模具明細；備註最多255個UTF-16單位；目標件數不得超過 `decimal(18,0)`。這些是已標示的修正，不假稱原 API 已有。
+
+測試檔 `tests/test_mes_schedule_http.py` 預設略過，必須明確設定 `MES_SQL_ACCEPTANCE=1`。每次連線都經 `scripts.sql_acceptance.target_connection` 驗證 DB_NAME 為 `ZZ_AI_AGENT_OPERATION_TEST_20261030` 且存在本次新庫 marker。連線只從本機忽略檔載入；沒有在文件或程式寫入連線密碼。新庫業務表、欄位、預設、主鍵、函式及 trigger 複製自原庫結構，業務資料全部合成。登入 HTTP 使用替身，SEC_USER 對應與交易使用真實 SQL Server；本測試不宣稱驗證正式網站登入或原庫寫入。
+
+2026-10-30 明確執行：
+
+```powershell
+$env:MES_SQL_ACCEPTANCE='1'
+.venv\Scripts\python.exe -m pytest tests/test_mes_schedule_http.py -q
+```
+
+已實跑四個案例：新增排程同交易產生同鍵 HIST 並稽核、重送去重；修改重設 OPI_CAV 並保留上下模／進站時間及刪除明細連動 HIST；過期卡拒絕與已有報工明細刪除拒絕；SQL 稽核 trigger 拋錯使整筆排程交易回復。前三項合計120.68秒；第四項單獨33.56秒。耗時含真實跨網路 SQL 連線、主檔與鎖定檢查、trigger 與讀回；不在一般測試或知識發布流程自動執行。未設定開關的整體驗證結果為29個領域 HTTP 測試通過、4個 SQL 測試略過。
