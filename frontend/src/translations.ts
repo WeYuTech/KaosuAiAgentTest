@@ -1,5 +1,20 @@
 /* 固定介面詞彙：中文原文為鍵，不翻譯 MES 主檔名稱或歷史訊息。 */
 export const translations: Record<string, [string, string]> = Object.fromEntries(`
+查詢不會寫入；實際異動請核對作業單。|Queries do not save changes. Review the operation sheet before writing.|การค้นหาไม่บันทึกการเปลี่ยนแปลง โปรดตรวจสอบใบงานก่อนบันทึก
+瀏覽其他工單|Browse other orders|ดูใบสั่งผลิตอื่น
+開始上模並進站|Start mounting and check in|เริ่มติดตั้งแม่พิมพ์และเข้างาน
+完成下模、出站及完工|Finish removal, check out and complete production|ถอดแม่พิมพ์เสร็จ ออกจากงาน และจบการผลิต
+清除換模與進出站時間並取消完工|Clear mold and check-in/out times and undo completion|ล้างเวลาเปลี่ยนแม่พิมพ์และเข้าออกงาน และยกเลิกสถานะเสร็จ
+修改報工模穴|Change production cavities|แก้ไขจำนวนโพรงสำหรับผลผลิต
+與助理對話|Chat with assistant|สนทนากับผู้ช่วย
+本次作業|Current operation|งานครั้งนี้
+作業單|Operation sheet|ใบงาน
+查詢資料|Find records|ค้นหาข้อมูล
+描述需求，右側同步整理|Describe your task; review it on the right|บอกสิ่งที่ต้องการ แล้วตรวจสอบทางขวา
+說說你想完成的作業|What would you like to do?|คุณต้องการทำงานอะไร?
+可以直接描述完整需求，也可以在右側選擇作業。|Describe your task or choose an operation on the right.|บอกสิ่งที่ต้องการ หรือเลือกงานทางขวา
+切換作業模組|Switch operation module|เปลี่ยนโมดูลงาน
+尚未設定 AI 模型，可使用右側作業單。|AI is not configured. You can use the operation sheet on the right.|ยังไม่ได้ตั้งค่า AI สามารถใช้ใบงานทางขวาได้
 預計結束|Scheduled end|เวลาสิ้นสุดตามแผน
 目標件數|Target units|จำนวนชิ้นเป้าหมาย
 進站時間|Check-in time|เวลาเข้างาน
