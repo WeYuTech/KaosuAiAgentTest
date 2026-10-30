@@ -1,0 +1,28 @@
+{
+  "name": "kaosu-operation-assistant",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "description": "高塑生產作業助理：排程、報工與模具上下模對話介面",
+  "scripts": {
+    "dev": "vite --host 127.0.0.1 --port 5173",
+    "typecheck": "tsc --noEmit",
+    "test": "node --test tests/*.test.mjs",
+    "build": "npm run typecheck && vite build",
+    "preview": "vite preview --host 127.0.0.1 --port 5173"
+  },
+  "dependencies": {
+    "lucide-react": "1.52.0",
+    "react": "19.3.0",
+    "react-dom": "19.3.0",
+    "react-markdown": "10.1.0",
+    "remark-breaks": "4.0.0",
+    "remark-gfm": "4.0.1"
+  },
+  "devDependencies": {
+    "@types/react": "19.3.0",
+    "@types/react-dom": "19.3.0",
+    "typescript": "7.0.2",
+    "vite": "8.3.3"
+  }
+}
