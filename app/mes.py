@@ -67,6 +67,8 @@ class MesConfig:
     timeout: float = 10.0
     max_rows: int = 1000
     server_utc_offset_hours: float = 8
+    knowledge_reviewers: tuple[str, ...] = ()
+    identity_contract: str = "legacy-token"
 
 
 class MesBridge:
@@ -79,6 +81,8 @@ class MesBridge:
             raise MesError("MES Cookie 名稱設定不合法。", "configuration")
         if not -14 <= config.server_utc_offset_hours <= 14:
             raise MesError("MES 伺服器 UTC 時差設定不合法。", "configuration")
+        if config.identity_contract not in {"legacy-token", "session-registry-v1"}:
+            raise MesError("MES 身分橋接契約不合法。", "configuration")
         self._transport, self._connector = transport, connect
         self._clock = clock or (lambda: datetime.now(timezone.utc))
         self._signing_key = secrets.token_bytes(32)
@@ -92,13 +96,17 @@ class MesBridge:
             allow = json.loads(os.getenv("MES_MODULE_ALLOWLIST", "{}"))
             if not isinstance(allow, dict) or any(not isinstance(v, list) or set(v) - MODULES for v in allow.values()):
                 raise ValueError()
+            reviewers = json.loads(os.getenv("MES_KNOWLEDGE_REVIEWERS", "[]"))
+            if not isinstance(reviewers, list) or any(not isinstance(account, str) or not account.strip() or account != account.strip() for account in reviewers):
+                raise ValueError()
             server_offset = float(os.getenv("MES_SERVER_UTC_OFFSET_HOURS", "8"))
         except (ValueError, TypeError):
-            raise MesError("MES 模組授權清單格式錯誤。", "configuration") from None
+            raise MesError("MES 模組或知識審核授權清單格式錯誤。", "configuration") from None
         return cls(MesConfig(base.rstrip("/"), conn, allow,
                              os.getenv("MES_SESSION_COOKIE", "ASP.NET_SessionId"),
                              os.getenv("MES_ENABLE_WRITES") == "1" and os.getenv("MES_WRITE_CONTRACT") == "transaction-v1",
-                             server_utc_offset_hours=server_offset))
+                             server_utc_offset_hours=server_offset, knowledge_reviewers=tuple(reviewers),
+                             identity_contract=os.getenv("MES_IDENTITY_CONTRACT", "legacy-token")))
 
     @contextmanager
     def _db(self, write=False):
@@ -137,25 +145,37 @@ class MesBridge:
         if not re.fullmatch(r"[A-Za-z0-9_-]{16,128}", value):
             raise MesError("MES 登入 Cookie 無效。", "unauthorized")
         try:
+            identity_path = "/AiAgentSession.ashx" if self.config.identity_contract == "session-registry-v1" else "/api/session/check"
             with httpx.Client(transport=self._transport, timeout=self.config.timeout, follow_redirects=False, trust_env=False) as client:
-                response = client.get(self.config.base_url.rstrip("/") + "/api/session/check", headers={"Cookie": f"{name}={value}"})
+                response = client.get(self.config.base_url.rstrip("/") + identity_path, headers={"Cookie": f"{name}={value}"})
             if response.status_code != 200 or len(response.content) > 16384:
                 raise ValueError()
             payload = response.json()
-            token = payload.get("TokenKey")
             expiry = datetime.fromisoformat(payload["Expiration"])
             if expiry.tzinfo is None:
                 expiry = expiry.replace(tzinfo=timezone(timedelta(hours=self.config.server_utc_offset_hours)))
-            if expiry <= self._clock() or not isinstance(token, str) or not 16 <= len(token) <= 4096:
+            if expiry <= self._clock():
                 raise ValueError()
-            # 舊 SessionHelper 可能多加固定標記；只去掉有證據的前置標記。
-            for _ in range(8):
-                if token.startswith("WeyuTech"):
-                    token = token[8:]
-            with self._db() as db:
-                cursor = db.cursor()
-                cursor.execute("SELECT USER_SID,ACCOUNT_NO,USER_NAME FROM dbo.SEC_USER WHERE ENABLE_FLAG=? AND REFRESH_TOKEN COLLATE Latin1_General_100_BIN2=?", "Y", token)
-                rows = cursor.fetchmany(2)
+            if self.config.identity_contract == "session-registry-v1":
+                registry_id = UUID(payload["SessionId"])
+                if registry_id.int == 0:
+                    raise ValueError()
+                with self._db() as db:
+                    cursor = db.cursor()
+                    cursor.execute("SELECT u.USER_SID,u.ACCOUNT_NO,u.USER_NAME FROM dbo.SEC_APP_SESSION_REGISTRY r JOIN dbo.SEC_USER u ON u.ACCOUNT_NO=r.USER_ID WHERE r.SESSION_ID=? AND r.IS_DELETE=0 AND u.ENABLE_FLAG=?", str(registry_id), "Y")
+                    rows = cursor.fetchmany(2)
+            else:
+                token = payload.get("TokenKey")
+                if not isinstance(token, str) or not 16 <= len(token) <= 4096:
+                    raise ValueError()
+                # 舊契約只供相容；輪替後的 Token 不可猜測對應帳號，也不作新契約失敗時的回退。
+                for _ in range(8):
+                    if token.startswith("WeyuTech"):
+                        token = token[8:]
+                with self._db() as db:
+                    cursor = db.cursor()
+                    cursor.execute("SELECT USER_SID,ACCOUNT_NO,USER_NAME FROM dbo.SEC_USER WHERE ENABLE_FLAG=? AND REFRESH_TOKEN COLLATE Latin1_General_100_BIN2=?", "Y", token)
+                    rows = cursor.fetchmany(2)
             if len(rows) != 1:
                 raise ValueError()
             account = str(rows[0][1]).strip()
@@ -165,6 +185,8 @@ class MesBridge:
             actor = {"id": account, "name": str(rows[0][2]), "user_sid": str(rows[0][0]),
                      "modules": list(modules), "roles": list(modules), "source": "mes_session",
                      "_expires": min(expiry.timestamp(), self._clock().timestamp() + 60)}
+            if account in self.config.knowledge_reviewers:
+                actor["roles"].append("review")
             actor["_proof"] = self._sign(actor)
             return actor
         except MesError:
@@ -279,7 +301,9 @@ class MesBridge:
         for key, column in (("equipment", "EQP_NO"), ("eqp_no", "EQP_NO"), ("schedule_id", PK[SCHEDULE]), ("execution_id", PK[EXECUTION])):
             if filters.get(key):
                 if key == "execution_id" and module != "report":
-                    raise MesError("只有報工查詢接受作業識別碼。", "validation")
+                    clauses.append("EXISTS(SELECT 1 FROM dbo.WIP_OPI_WDOEACICO_HIST h WHERE h.WIP_OPI_WDOEACICO_HIST_SID=? AND h.ZZ_KAOSU_PROD_SCHEDULE_SID=v.ZZ_KAOSU_PROD_SCHEDULE_SID)")
+                    values.append(str(filters[key]))
+                    continue
                 clauses.append(f"v.[{column}]=?"); values.append(str(filters[key]))
         day = filters.get("date") or filters.get("schedule_date")
         if day:
@@ -405,9 +429,13 @@ class MesBridge:
             if mold_filter:
                 for mold in self._query_rows(cursor,"(SELECT TOL_SID,TOL_NO,TOL_NAME FROM dbo.TOL_MASTER) AS m",where="m.TOL_NO=?",conditions=(str(mold_filter),)):
                     molds.setdefault(mold["TOL_SID"],{**mold,"PART_NOS":[]})
-            for sid,mold in molds.items():
+                molds = {sid: mold for sid, mold in molds.items() if mold["TOL_NO"] == str(mold_filter)}
+            for sid,mold in list(molds.items()):
                 mold["DETAILS"]=self._query_rows(cursor,"dbo.GET_ZZ_KAOSU_PLAN_TOL_DETAILS(?) AS d",(sid,))
                 mold["PART_NOS"]=sorted(set(mold["PART_NOS"])|{d["PART_NO"] for d in mold["DETAILS"]})
+                if filters.get("part_no") and str(filters["part_no"]) not in mold["PART_NOS"]:
+                    del molds[sid]
+                    continue
                 selected_parts.update(mold["PART_NOS"])
             result["molds"]=list(molds.values())
             if selected_parts:
@@ -574,6 +602,32 @@ class MesBridge:
                     cursor.execute(f"UPDATE dbo.[{table}] SET " + ",".join(f"[{c}]=?" for c in columns) + f" WHERE [{PK[table]}]=?", *(row[c] for c in columns), key)
                 if cursor.rowcount != 1:
                     raise MesError("寫入影響筆數不符，已取消交易。", "conflict")
+
+    def operation_result(self, identity, module, action, args, expected_version, operation_id):
+        """只查原操作的提交證據；沒有紀錄不等於已證明失敗，絕不重送命令。"""
+        self._authorize(identity, module)
+        try:
+            operation_id = str(UUID(operation_id))
+        except (ValueError, TypeError, AttributeError):
+            raise MesError("操作識別碼必須是 UUID。", "validation") from None
+        fingerprint = digest({"actor": identity["id"], "module": module, "action": action, "args": args, "version": expected_version})
+        try:
+            with self._db() as db:
+                cursor = db.cursor()
+                cursor.execute(f"SELECT REQUEST_HASH,RESULT_JSON,OCCURRED_AT FROM dbo.{PREFIX}OPERATION WHERE OPERATION_ID=?", operation_id)
+                row = cursor.fetchone()
+                if row is None:
+                    return None
+                if not hmac.compare_digest(str(row[0]), fingerprint):
+                    raise MesError("操作紀錄與原確認內容不符，禁止自動判定結果。", "conflict")
+                result = json.loads(row[1])
+                if result.get("operation_id") != operation_id or result.get("status") != "executed" or not isinstance(result.get("changes"), list):
+                    raise MesError("操作紀錄不完整，需由管理員核對。", "verification_failed")
+                return {**result, "executed_at": str(row[2]), "reconciled": True}
+        except MesError:
+            raise
+        except Exception:
+            raise MesError("目前無法查核提交紀錄，結果保持待核對；未重送業務操作。") from None
 
     def execute(self, identity, module, action, args, expected_version, operation_id):
         self._authorize(identity, module)

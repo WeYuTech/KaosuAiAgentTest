@@ -4,11 +4,16 @@ export type Row = Record<string, unknown>;
 export interface Session { actor: { id: string; name: string; roles: string[] }; mode: string }
 export interface Message { role: string; content: string }
 export interface Change { table: string; key: unknown; field: string; before: unknown; after: unknown }
-export interface Proposal { id: string; digest: string; summary: string; changes: Change[]; expires_at: string; action: string; args: Row; status?: string; independent_confirmation?: boolean; writes_enabled?: boolean; business_timezone?: string; time_policy?: string; new_id_policy?: string; preview?: { time_policy?: string; new_id_policy?: string }; target?: { equipment?: string; work_order?: string; schedule_id?: string; execution_id?: string; report_id?: string; affected_orders?: unknown[] } }
+export interface Proposal { id: string; digest: string; summary: string; changes: Change[]; expires_at: string; action: string; args: Row; status?: string; independent_confirmation?: boolean; writes_enabled?: boolean; business_timezone?: string; time_policy?: string; new_id_policy?: string; preview?: { time_policy?: string; new_id_policy?: string }; target?: { equipment?: string; work_order?: string; schedule_id?: string; execution_id?: string; report_id?: string; affected_orders?: unknown[]; schedule_details?: Row[] } }
 export interface Conversation { id: string; module: Module; messages: Message[] }
 export interface Reply { messages?: Message[]; proposal?: Proposal; data?: unknown; message?: string }
 export interface Workspace { records: Row[]; catalogs: Record<string, unknown>; total?: number; page?: number; page_size?: number }
 export interface Schema { type?: string | string[]; title?: string; description?: string; module?: string; properties?: Record<string, Schema>; required?: string[]; enum?: unknown[]; default?: unknown; items?: Schema; minimum?: number; maximum?: number; format?: string; parameters?: Schema; input_schema?: Schema }
+
+export class ApiError extends Error {
+  status: number;
+  constructor(message: string, status: number) { super(message); this.name = 'ApiError'; this.status = status; }
+}
 
 export async function api<T>(path: string, body?: unknown): Promise<T> {
   const endpoint = new URL(path.replace(/^\/+/, ''), new URL('./', location.href));
@@ -23,7 +28,7 @@ export async function api<T>(path: string, body?: unknown): Promise<T> {
   try { value = text ? JSON.parse(text) : {}; } catch { throw new Error('伺服器回應格式異常，請重新整理資料後再試。'); }
   if (!response.ok) {
     const detail = (value as Row)?.detail ?? (value as Row)?.message ?? (value as Row)?.error;
-    throw new Error(typeof detail === 'string' ? detail : typeof detail === 'object' && detail && 'message' in detail ? String(detail.message) : detail ? JSON.stringify(detail) : `請求未完成（${response.status}）`);
+    throw new ApiError(typeof detail === 'string' ? detail : typeof detail === 'object' && detail && 'message' in detail ? String(detail.message) : detail ? JSON.stringify(detail) : `請求未完成（${response.status}）`, response.status);
   }
   return value as T;
 }
@@ -42,6 +47,7 @@ export const labels: Record<string, string> = {
   execution_id: '執行識別', report_id: '報工識別', schedule_id: '排程識別（新增時留空）',
   ok: '人工良品數', defects: '不良明細', comment: '備註', cavities: '模穴數', equipment: '設備編號',
   part_no: '料號', mold_no: '模具編號', start_time: '開始時間', cycle_seconds: '週期（秒）',
+  mold_detail_id: '模具模穴明細識別', detail_id: '既有排程明細識別', TOL_DETALS_SID: '模具模穴明細識別',
   target_shots: '目標模次', priority: '優先順序', details: '工單與模穴明細', code: '原因代碼', quantity: '數量',
   MANUAL_OK: '人工報工良品合計', MANUAL_NG: '人工報工不良合計', IOT_QUANTITY: 'IoT 產量',
   IOT_INFERRED_OK: 'IoT 推算良品（IoT 產量－不良數）', REPORTS: '人工報工歷史', DEFECTS: '不良原因明細',

@@ -9,6 +9,10 @@
   for (const key of ['OPERATION', 'SCHEDULE_DATE', 'WIP_OPI_WDOEACICO_HIST_SID', 'ZZ_KAOSU_PROD_SCHEDULE_SID', 'EQP_NO']) {
     if (context.has(key)) target.searchParams.set(key, context.get(key));
   }
+  if (location.pathname.toLowerCase().endsWith('/mes-wip/setup/wip-query_schedule_detail_new.html') && !context.get('ZZ_KAOSU_PROD_SCHEDULE_SID') && context.getAll('SID').length === 1 && /^[1-9]\d{0,17}$/.test(context.get('SID') || '')) {
+    target.searchParams.set('ZZ_KAOSU_PROD_SCHEDULE_SID', context.get('SID'));
+  }
+  if (context.getAll('fac').length === 1 && ['fac1', 'fac2', 'fac3'].includes(context.get('fac'))) target.searchParams.set('fac', context.get('fac'));
   const host = document.createElement('div');
   host.dataset.kaosuAssistantHost = '';
   const shadow = host.attachShadow({ mode: 'open' });

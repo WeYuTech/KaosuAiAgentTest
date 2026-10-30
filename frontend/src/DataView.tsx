@@ -11,5 +11,20 @@ export function DataView({ data, title = '查詢結果' }: { data: unknown; titl
 
 export function Fields({ value }: { value: unknown }) {
   if (typeof value !== 'object' || value === null) return <p className="preserve">{display(value)}</p>;
+  if (Object.hasOwn(value, 'MANUAL_OK') && Object.hasOwn(value, 'IOT_INFERRED_OK')) return <ReportExecutionFields record={value as Row}/>;
   return <dl className="fields">{Object.entries(value).map(([key, item]) => <div key={key}><dt>{label(key)}</dt><dd>{typeof item === 'object' && item !== null ? <details><summary>展開內容</summary><pre>{display(item)}</pre></details> : display(item)}</dd></div>)}</dl>;
+}
+
+function ReportExecutionFields({ record }: { record: Row }) {
+  const summaryKeys = ['MANUAL_OK', 'MANUAL_NG', 'IOT_QUANTITY', 'IOT_INFERRED_OK'];
+  const contextKeys = ['EQP_NO', 'WO', 'PART_NO', 'TOL_NO', 'OPI_CAV'];
+  const hidden = new Set([...summaryKeys, ...contextKeys, 'OK_QTY', 'IOT_PCS', 'NG_QTY', 'REPORTS']);
+  const context = Object.fromEntries(contextKeys.filter(key => Object.hasOwn(record, key)).map(key => [key, record[key]]));
+  const details = Object.fromEntries(Object.entries(record).filter(([key]) => !hidden.has(key)));
+  return <>
+    <dl className="fields">{summaryKeys.map(key => <div key={key}><dt>{label(key)}</dt><dd>{key.startsWith('IOT_') && record[key] == null ? '未知' : display(record[key])}</dd></div>)}</dl>
+    {Object.keys(context).length > 0 && <Fields value={context}/>}
+    {Array.isArray(record.REPORTS) && <details className="record-detail"><summary>人工報工歷史（{record.REPORTS.length} 筆）</summary><DataView data={record.REPORTS} title="人工報工明細"/></details>}
+    {Object.keys(details).length > 0 && <details className="record-detail"><summary>詳細資料</summary><Fields value={details}/></details>}
+  </>;
 }

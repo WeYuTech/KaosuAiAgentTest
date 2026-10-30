@@ -268,6 +268,12 @@ HTML 的模具與週期雖標 readonly（頁面：254、270），但編輯：85�
 
 正式完整鏈現在可明確表達：排程表頭保存 → 明細 INSERT／UPDATE／DELETE → 同交易觸發 HIST → 模具候選查詢 → 上模改 HIST 時間 → 報工 OUTPUT／NG_DETAIL → 整排程完工／下模。新服務的稽核必須讀回包含 trigger 的 HIST 差異，不能只記錄直接發出的兩張排程表 SQL。
 
+### 同品號多模具明細補證
+
+原新版編輯頁逐列保存 `TOL_DETALS_SID`（`snapshot/wwwroot/MES-WIP/setup/wip-query_schedule_detail_new.js:373、496`），不能將品號視為模具明細唯一鍵。2026-10-30 唯讀查詢啟用的 EPS 模具／模具明細，按 TOL_NO、PART_NO 分組後 `COUNT(*)>1` 實際有18組；只回傳分組總數，未修改正式資料。因此，限制同模具只能出現一次品號會阻擋現有合法情境。
+
+`schedule.save.details[].mold_detail_id` 對應選項 `catalogs.molds[].DETAILS[].TOL_DETALS_SID`。新增歧義時回傳明確候選，由對話追問；修改既有 `detail_id` 可保留其已核對的模具明細關聯。新防護驗證該模具明細確屬所選模具與品號，並拒絕重複模具明細 SID 或重複排程明細 SID；不以品號去重明細。正式預覽讀取品號目錄時另按 PART_NO 去重，模具明細目錄仍保留每個 SID。保存後原 trigger 會分別同步各列的 `ZZ_TOL_DETALS_NO` 與 OPI_CAV。
+
 ## 正式排程交易適配器與隔離 SQL 驗收
 
 `app/mes_schedule.py` 提供 `prepare`／`execute`，由既有 `MesBridge` 的 `schedule.save` 分派。預覽與確認均重驗設備、FAB、啟用模具與明細、品號、可排工單及唯一班別；核對明細 trigger 啟用狀態與已盤點定義摘要。觸發器版本變動、遺失同鍵歷程或資料不唯一時拒絕自動寫入，避免以猜測填補契約。
@@ -286,3 +292,12 @@ $env:MES_SQL_ACCEPTANCE='1'
 ```
 
 已實跑四個案例：新增排程同交易產生同鍵 HIST 並稽核、重送去重；修改重設 OPI_CAV 並保留上下模／進站時間及刪除明細連動 HIST；過期卡拒絕與已有報工明細刪除拒絕；SQL 稽核 trigger 拋錯使整筆排程交易回復。前三項合計120.68秒；第四項單獨33.56秒。耗時含真實跨網路 SQL 連線、主檔與鎖定檢查、trigger 與讀回；不在一般測試或知識發布流程自動執行。未設定開關的整體驗證結果為29個領域 HTTP 測試通過、4個 SQL 測試略過。
+
+後續同品號多明細補驗：新增 `test_真SQL同品號多模具明細新增與修改維持兩筆不同關聯`。僅在指定新隔離庫，用新的 GetSid 建立本次專用模具及兩筆同品號明細，不變更既有 fixture；經公開 HTTP 新增排程，再反轉明細順序、保留既有排程明細識別並分別改成3／4穴。讀回主表、表身及原 trigger 的同鍵 HIST，左右模具明細仍正確，TARGET_PCS 分別30／40，OPI_CAV 分別3／4。明確啟用單項測試通過，耗時49.85秒，資料保留可追溯，原正式庫沒有寫入。
+
+```powershell
+$env:MES_SQL_ACCEPTANCE='1'
+.venv\Scripts\python.exe -m pytest tests/test_mes_schedule_http.py -q -k 真SQL同品號
+```
+
+同輪快速驗證：`test_domain_http.py` 59項通過；連同空工單生命週期測試共60項通過，5項本檔 SQL 測試在未明確啟用時略過。新增快速案例涵蓋同品號明細新增／修改、明細歧義、跨模具／錯品號、重複模具／排程明細、品號與模具交集選項；正式 adapter 的品號目錄去重，模具明細不去重。

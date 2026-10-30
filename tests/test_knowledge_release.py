@@ -48,6 +48,46 @@ def test_候選實際參與檢索與回覆才可發布(reviewed, tmp_path):
     assert len(published["regression"]["cases"][0]["model_result_hash"]) == 64
 
 
+def test_正式設定發布CLI只將回歸子程序隔離為模擬(reviewed, tmp_path, monkeypatch):
+    import os
+    import subprocess
+    import sys
+    from app.knowledge_release import release_cli
+    from app.knowledge import retrieve
+    client, database, feedback_id = reviewed
+    cases = tmp_path / "cases.json"
+    cases.write_text(json.dumps({"cases": [{"question": "換模後首件驗證使用什麼識別卡？", "expected_contains": ["藍色識別卡"]}]}, ensure_ascii=False), encoding="utf-8")
+    monkeypatch.setenv("MES_MODE", "live")
+    monkeypatch.setenv("MES_SQL_ACCEPTANCE", "1")
+    monkeypatch.setenv("OPENAI_MODEL", "合成模型設定保留")
+    monkeypatch.setenv("AI_TEST_BUDGET_USD", "17")
+    monkeypatch.setenv("MES_BASE_URL", "https://mes.invalid/KSS_MES")
+    monkeypatch.setenv("MES_CONNECTION_STRING", "合成測試連線")
+    actual_run = subprocess.run
+    captured = []
+
+    def run_regression(command, **kwargs):
+        assert command == [sys.executable, "-m", "pytest", "tests", "-q"]
+        # 在公開 CLI 上真的執行一個依賴模擬登入的 HTTP 測試，避免整套遞迴呼叫自身。
+        captured.append(kwargs.get("env"))
+        return actual_run([sys.executable, "-m", "pytest", "tests/test_session.py", "-q"], **kwargs)
+
+    def model(conversation, state, isolated, **kwargs):
+        assert os.environ["MES_MODE"] == "live"
+        assert os.environ["MES_SQL_ACCEPTANCE"] == "1"
+        assert os.environ["OPENAI_MODEL"] == "合成模型設定保留"
+        assert os.environ["AI_TEST_BUDGET_USD"] == "17"
+        return {"content": "藍色識別卡", "knowledge": retrieve(isolated, "mold", conversation["messages"][-1]["content"])}
+
+    monkeypatch.setattr(subprocess, "run", run_regression)
+    assert release_cli(["--db", str(database), "--case", str(cases), "--", feedback_id], model_caller=model) == 0
+    assert captured[0]["MES_MODE"] == "simulation"
+    assert captured[0]["MES_SQL_ACCEPTANCE"] == "0"
+    assert captured[0]["OPENAI_MODEL"] == "合成模型設定保留"
+    assert captured[0]["AI_TEST_BUDGET_USD"] == "17"
+    assert any(row["id"] == feedback_id for row in client.get("/api/knowledge?module=mold").json()["records"])
+
+
 @pytest.mark.parametrize("failure", ["未使用候選", "回答不符", "包含禁止片段", "產生動作", "產生草稿"])
 def test_模型結果不符合候選回歸時不得發布(reviewed, tmp_path, failure):
     from app.knowledge_release import release_cli

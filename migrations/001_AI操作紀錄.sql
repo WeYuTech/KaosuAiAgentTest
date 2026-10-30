@@ -1,5 +1,5 @@
--- AI 專用資料表。僅供部署審核，本次開發不會對正式資料庫執行。
--- 時間 OCCURRED_AT 依 MES 資料庫當地時間（台灣），其餘 *_UTC 使用 UTC。
+-- AI 專用資料表；部署時只新增此前綴資料表，不修改 MES 業務資料。
+-- 時間 OCCURRED_AT 依 MES 資料庫當地時間（本環境 UTC+07:00），其餘 *_UTC 使用 UTC。
 -- 需於隔離 SQL Server 資料庫驗證後，以具 DDL 權限的部署身分執行。
 SET XACT_ABORT ON;
 BEGIN TRANSACTION;

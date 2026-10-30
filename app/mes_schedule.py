@@ -85,7 +85,7 @@ def _load(cursor, args, lock=False):
     mold_details = _rows(cursor, f"SELECT d.TOL_DETALS_SID,d.TOL_DETALS_NAME,d.TOL_DETALS_NO,d.CUR_CAV,d.PART_NO,p.PART_SPEC FROM dbo.TOL_MASTER_DETAILS d{hint} JOIN dbo.BAS_PARTNO p{hint} ON p.PART_NO=d.PART_NO WHERE d.TOL_NO=? AND d.ENABLE_FLAG=? ORDER BY d.TOL_DETALS_SID", (mold["TOL_NO"], "Y"))
     mold["DETAILS"] = mold_details
     mold["PART_NOS"] = sorted({d["PART_NO"] for d in mold_details})
-    parts = [{"PART_NO": d["PART_NO"], "PART_SPEC": d["PART_SPEC"]} for d in mold_details]
+    parts = list({d["PART_NO"]: {"PART_NO": d["PART_NO"], "PART_SPEC": d["PART_SPEC"]} for d in mold_details}.values())
     orders = []
     for wo in sorted({d["wo"] for d in args["details"] if d["wo"]}):
         orders.append(_one(_rows(cursor, f"SELECT WO_SID,WO,PART_NO,QUANTITY AS WO_QTY,ISNULL(ACCUMULATED_QUANTITY,0) AS ACCUMULATED_QTY FROM dbo.WOR_MASTER{hint} WHERE WO=? AND STATUS=? AND ISNULL(ACCUMULATED_QUANTITY,0)<QUANTITY*1.1", (wo, "Release")), "可排工單"))
@@ -165,7 +165,13 @@ def prepare(bridge, identity, args):
             cursor.execute("SET TRANSACTION ISOLATION LEVEL SERIALIZABLE")
             state = _load(cursor, args)
             after = _plan(state, identity, args, _clock(cursor))
-            return {"module": "schedule", "action": "schedule.save", "args": deepcopy(args), "version": bridge._version(state, identity, "schedule", "schedule.save", args), "changes": changes(state, after), "writes_enabled": bridge.config.writes_enabled, "live_write_verified": False, "label": "排程與觸發器連動預覽；新增識別碼於執行時分配", "trigger_effects": True}
+            target = domain.schedule_confirmation_target(state, after, args)
+            # 新增鍵只供差異預覽，確認摘要不可將其當成正式識別碼。
+            target["schedule_id"] = args.get("schedule_id")
+            for detail in target["schedule_details"]:
+                if detail["detail_id"] not in state["tables"][DETAIL]:
+                    detail["detail_id"] = None
+            return {"module": "schedule", "action": "schedule.save", "args": deepcopy(args), "target": target, "version": bridge._version(state, identity, "schedule", "schedule.save", args), "changes": changes(state, after), "writes_enabled": bridge.config.writes_enabled, "live_write_verified": False, "label": "排程與觸發器連動預覽；新增識別碼於執行時分配", "new_id_policy": "新增排程與明細識別碼於確認執行時分配；模具明細編號與識別為已核對的正式主檔。", "trigger_effects": True}
     except (MesError, domain.BusinessError):
         raise
     except Exception:

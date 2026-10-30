@@ -45,7 +45,10 @@ def load_cases(path):
 
 
 def fixed_regression():
-    run = subprocess.run([sys.executable, "-m", "pytest", "tests", "-q"], cwd=ROOT, capture_output=True)
+    environment = os.environ.copy()
+    # 只隔離測試子程序，主發布程序的真實模型及共用預算設定維持原值。
+    environment.update(MES_MODE="simulation", MES_SQL_ACCEPTANCE="0")
+    run = subprocess.run([sys.executable, "-m", "pytest", "tests", "-q"], cwd=ROOT, capture_output=True, env=environment)
     if run.returncode:
         raise ReleaseRejected("固定回歸測試未通過，候選保持未發布。")
     return {"suite": "公開 HTTP 與 CLI 回歸測試", "sha256": hashlib.sha256(run.stdout + run.stderr).hexdigest()}

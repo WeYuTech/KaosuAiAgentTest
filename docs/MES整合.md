@@ -1,6 +1,6 @@
 # MES 整合與正式寫入狀態
 
-本版有可信 MES 登入橋接、正式資料唯讀查詢，以及報工／模具交易執行器。正式寫入預設鎖閉。已完成 SQL 替身與新隔離 SQL Server 的交易驗收，結果見 `SQL驗收.md`；隔離通過不代表正式環境已獲准上線。排程另交由 `mes_schedule.py` 的受控交易適配器，沿用同一可信身分與確認邊界。
+本版有可信 MES 登入橋接、正式資料查詢，以及排程／報工／模具受控交易執行器。來源庫預設鎖閉正式寫入；2026-10-30 已依授權部署至指定 IIS，正式設定採 `session-registry-v1` 並開放人員確認交易，見 [IIS 部署紀錄](IIS部署.md)。已完成 SQL 替身與新隔離 SQL Server 的交易驗收，結果見 `SQL驗收.md`；正式環境只做查詢、預覽與取消，未執行業務測試寫入。
 
 ## 已確認的資料來源
 
@@ -18,7 +18,9 @@
 
 EPS 原因查詢 SID `391182452103864` 的 MASTER_SQL 指向 `BAS_REASON WHERE REASON_TYPE='NG_EPS'`；`350218189246470` 指向 NG_SCR。適配器將已確認的 NG_EPS 查詢寫成固定 SQL 加參數，不執行 registry 裡的任意 SQL。
 
-## 可信身分沿用
+## 初期身分契約與相容界線
+
+以下 Token 契約保留為來源盤點與相容實作記錄，**正式部署已停用此契約**。原頁查詢會輪替 Token，使其不能可靠對應登入時保存的 REFRESH_TOKEN。現行契約以原 MES 伺服器工作階段及登入登錄驗證，詳見本文件後續修正及 [ADR 003](adr/003_可信MES工作階段橋接.md)；驗證失敗不回退舊契約。
 
 呼叫鏈如下：
 
@@ -108,15 +110,27 @@ catalogs 包含設備、NG_EPS 不良原因、排程候選；排程模組另提�
 | MES_SESSION_COOKIE | 預設 ASP.NET_SessionId |
 | MES_SERVER_UTC_OFFSET_HOURS | 無時區 MES Session 時間的伺服器 UTC 時差；本環境為 7，未設定預設 8 |
 | MES_MODULE_ALLOWLIST | JSON，例：`{"TEST":["report","mold"]}`；未列帳號預設拒絕 |
+| MES_KNOWLEDGE_REVIEWERS | JSON 帳號陣列，預設 `[]`；例：`["TEST"]`。只有可信 MES 登入核對出的帳號命中清單才加入 `review` 角色，且只能審核已獲模組授權的回饋 |
 | MES_ENABLE_WRITES | 預設關閉；完成隔離驗收後才可明確設為 1 |
 | MES_WRITE_CONTRACT | 必須同時設定 transaction-v1 才開啟交易路徑 |
 
 以同站來源的反向代理部署助理，使原 MES Session Cookie 可到達助理後端；Cookie 的 Domain／Path 必須實際驗證。不能把跨站 localStorage 或前端傳來的帳號當作同等登入。多 worker 部署目前每個 worker 簽章金鑰不同，未執行確認卡可能失效；應先採單 worker，或另設受控共用簽章金鑰與輪替規則後再擴展。程式沒有把簽章金鑰寫入磁碟。
 
-遷移檔 `migrations/001_AI操作紀錄.sql` 只建立 AI 前綴資料表：OPERATION、CHANGE、PROPOSAL、FEEDBACK、KNOWLEDGE、BUDGET；沒有對正式業務表做測試寫入。此檔未執行。正式交易程式目前使用 OPERATION／CHANGE，其餘供後續正式確認、回饋與知識核准流程接入，不宣稱已取代本機 SQLite。
+遷移檔 `migrations/001_AI操作紀錄.sql` 只建立 AI 前綴資料表：OPERATION、CHANGE、PROPOSAL、FEEDBACK、KNOWLEDGE、BUDGET；沒有對正式業務表做測試寫入。開發初期未執行；2026-10-30 已依授權部署在正式庫建立 AI 前綴空表，詳見 `IIS部署.md`。正式交易程式目前使用 OPERATION／CHANGE，其餘供後續正式確認、回饋與知識核准流程接入，不宣稱已取代本機 SQLite。
 
 ## 驗證紀錄與未完成部署條件
 
 `tests/test_mes_http.py` 已通過 22 項快速測試，包括固定 HTTP 來源、Cookie 不外送、假帳號無效、逾期／重複登入拒絕、伺服器時差、部署授權、參數化、操作重送、稽核失敗回復、零筆寫入拒絕、過期確認、報工新增修改刪除、模穴、整批完工及下一張連動、四階段與清除。
 
 快速測試使用 HTTP MockTransport 與 SQL 交易替身。另已完成正式資料庫 schema／TVF 唯讀核對、真實 Session 登入鏈，以及全新隔離 SQL Server 的遷移、實際 GetSid、參數化寫入／讀回、過期確認、重送與稽核故障回復。公開 HTTP SQL 測試與證據分開記載於 `SQL驗收.md`。正式資料庫沒有執行業務寫入；正式部署權限、並行及斷線處理仍須按現場條件驗證，不能僅切環境變數便宣稱上線完成。
+## 原 MES 查詢後的可信身分橋接補正
+
+來源證據：`SECFun_H5.VeriftyAndGetTokenObj`（反編譯 `decompiled-schedule-sec/WeYuSEC_H5/SECFun_H5.cs:247–280`）在每次成功驗證後產生新的 Token；`DBQuery_H5.GetReader`（183–198）會呼叫它，`SessionHelper.UpdateToken`（24–25）再將新 Key 保存到原 ASP.NET Session。`SEC_USER.REFRESH_TOKEN` 卻只在登入的 `Auth_H5.UserLoginHis`（364–384）更新。因此原頁查詢後，不能繼續以 Session Key 等同資料庫登入 Token 判斷身分；移除更多字首或解密 Token 都不能還原帳號映射。
+
+正式環境改設 `MES_IDENTITY_CONTRACT=session-registry-v1`，將發行檔 `scripts/mes_session_bridge.ashx` 複製為原 **KSS_MES 應用根目錄**的 `AiAgentSession.ashx`，不可放在助理子應用。此單檔 ASP.NET Handler 使用 `IReadOnlySessionState`，只接受 loopback 的 GET，確認伺服器 Session 內 Key 非空且非失敗值、SessionId 是合法非零 GUID、Expiration 尚有效；只回 SessionId 與 Expiration，不輸出 Token、不讀取請求中的 UID，也不修改 Session 或資料庫。需使用可指向原應用的 `MES_BASE_URL=http://127.0.0.1/KSS_MES`；若 IIS 有 Host 綁定限制，先核對固定站台路由，不能為此放寬外部存取 Handler。
+
+Python 僅對此固定路徑傳送原 ASP.NET Cookie，以參數化 SQL 將可信 SessionId 對應 `SEC_APP_SESSION_REGISTRY.SESSION_ID`，要求 `IS_DELETE=0` 並 JOIN `SEC_USER` 的啟用帳號；零筆或多筆均拒絕，再套用既有模組與審核主管授權清單。新契約任何環節失敗都直接拒絕，不回退舊 Token 契約。`MesConfig.identity_contract` 預設 `legacy-token` 僅維持相容測試及舊部署；不能將它當作原頁輪替後的修復方案。
+
+期限由原應用檢查 Session Expiration，Python 再按已核實 MES 時區核對；本輪不另套用 `LAST_SEEN_AT` 時差推論。原 `DatabaseTimeProvider.GetUtcNow` 名稱雖帶 UTC，實際 SQL 是 `GETDATE()`（同名類別27行），故不能直接當 UTC timestamp。原登入成功會建立登記並保存 SessionId，登出會標記登記刪除且清除 Session，橋接沿用這個可信關聯。
+
+離線證據由 `tests/test_session_registry_http.py` 經公開 HTTP 及 SQL 替身驗證 Token 輪替後辨識、缺 ID、錯誤 GUID、過期、刪除登記、停用帳號及橋接拒絕。這些測試不代表原 IIS Handler 已編譯或正式資料庫 schema 已驗證；現場部署需另記錄編譯、登入後原頁查詢及助理身分的只讀驗證。

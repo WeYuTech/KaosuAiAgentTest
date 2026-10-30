@@ -31,7 +31,7 @@ def _schema(properties, required):
 def actions():
     text = {"type": "string", "minLength": 1}
     count = {"type": "integer", "minimum": 0, "maximum": 2147483647}
-    detail = _schema({"detail_id": text, "part_no": text, "wo": {"type": "string"}, "cavities": count}, ["part_no", "wo", "cavities"])
+    detail = _schema({"detail_id": {**text, "description": "既有排程明細的 ZZ_KAOSU_PROD_SCHEDULE_DETAIL_SID；修改該列時保留。"}, "mold_detail_id": {**text, "description": "模具明細的 TOL_DETALS_SID；從 catalogs.molds[].DETAILS 選取。同模具同品號有多筆時必須明確選擇，不得猜第一筆。修改已明確選定的排程明細時可省略以保留原模具明細。"}, "part_no": text, "wo": {"type": "string"}, "cavities": count}, ["part_no", "wo", "cavities"])
     schemas = {"schedule.save": _schema({
         "schedule_id": text, "equipment": text, "part_no": text, "mold_no": text,
         "start_time": {**text, "description": "MES伺服器當地日期時間 YYYY-MM-DD HH:mm:ss；帶明確 ISO 時區時依伺服器設定換算，無時區輸入保持原數字。"}, "cycle_seconds": {**count, "minimum": 1},
@@ -66,6 +66,7 @@ def seed_state():
         "work_orders": [{"WO_SID": "71", "WO": "WO-A", "PART_NO": "EPS-A", "WO_QTY": 1000, "ACCUMULATED_QTY": 100}, {"WO_SID": "72", "WO": "WO-B", "PART_NO": "EPS-B", "WO_QTY": 1000, "ACCUMULATED_QTY": 50}],
         "defect_reasons": [{"NG_CODE_NO": "NG01", "NG_CODE_NAME": "缺料"}, {"NG_CODE_NO": "NG02", "NG_CODE_NAME": "破損"}],
     }
+    state["catalogs"]["molds"].append({"TOL_SID": "52", "TOL_NO": "MOLD-SPLIT", "PART_NOS": ["EPS-A"], "DEFAULT_CYCLE_TIME": 60, "DETAILS": [{"TOL_DETALS_SID": "63", "TOL_DETALS_NO": "MOLD-SPLIT-L", "TOL_DETALS_NAME": "同品號左模穴", "PART_NO": "EPS-A", "CUR_CAV": 2}, {"TOL_DETALS_SID": "64", "TOL_DETALS_NO": "MOLD-SPLIT-R", "TOL_DETALS_NAME": "同品號右模穴", "PART_NO": "EPS-A", "CUR_CAV": 1}]})
     tables[SCHEDULE], tables[DETAIL], tables[EXECUTION], tables[OUTPUT], tables[DEFECT] = {}, {}, {}, {}, {}
     for sid, eqp, hour in [("1001", "37", 8), ("1002", "37", 14), ("1003", "36", 8)]:
         tables[SCHEDULE][sid] = {"ZZ_KAOSU_PROD_SCHEDULE_SID": sid, "SCHEDULE_DATE": "2026-10-30", "SCHEDULE_START_TIME": f"2026-10-30 {hour:02d}:00:00", "SCHEDULE_END_TIME": f"2026-10-30 {hour + 2:02d}:00:00", "OPERATION_CODE": "EPS-FORMING", "EQP_SID": eqp, "TOL_SID": "51", "SCHEDULE_CYCLE_TIME": 60, "TARGET_SHOT": 120, "CHANGE_MOLD": "Y", "COMMENT": "合成模擬資料", "PRODUCTION_STATUS": "RUN", "PRIORITY": 3, "CREATE_USER": "DEMO", "CREATE_TIME": "2026-10-30 07:00:00", "EDIT_USER": "DEMO", "EDIT_TIME": "2026-10-30 07:00:00", "ZZ_KAOSU_PROD_SHIFT_DAILY_REPORT_BASE_SID": "7001"}
@@ -79,6 +80,30 @@ def seed_state():
         tables[EXECUTION][eid] = {"WIP_OPI_WDOEACICO_HIST_SID": eid, "ZZ_KAOSU_PROD_SCHEDULE_SID": schedule["ZZ_KAOSU_PROD_SCHEDULE_SID"], "ZZ_KAOSU_PROD_SCHEDULE_DETAIL_SID": did, "EQP_NO": "MC" + schedule["EQP_SID"], "WO": "WO-A" if detail["PART_NO"] == "EPS-A" else "WO-B", "SHIFT_DAY": "2026-10-30", "OPERATION_CODE": "EPS-FORMING", "OPI_CAV": detail["SCHEDULE_CUR_CAV"], "COMPLETED": "N", "COMPLETED_TIME": None, "CHECK_IN_TIME": "2026-10-30 08:00:00" if running else None, "REAL_CHECK_IN_TIME": "2026-10-30 08:10:00" if running else None, "CHECK_OUT_TIME": None, "ZZ_MODLE_UPLOAD_START": "2026-10-30 08:00:00" if running else None, "ZZ_MODLE_UPLOAD_END": "2026-10-30 08:10:00" if running else None, "ZZ_MODLE_REMOVE_START": None, "ZZ_MODLE_REMOVE_END": None, "ENABLE_FLAG": "Y"}
     state["iot"] = {"2001": 250, "2002": None, "2003": None, "2004": None}
     return state
+
+
+def schedule_confirmation_target(before, after, args):
+    """從已驗證的預覽結果取白名單摘要，避免確認畫面依賴目前查詢分頁。"""
+    tables = after["tables"]
+    sid = args.get("schedule_id") or next(iter(set(tables[SCHEDULE]) - set(before["tables"][SCHEDULE])))
+    schedule = tables[SCHEDULE][sid]
+    mold = _pick(after["catalogs"]["molds"], "TOL_SID", schedule["TOL_SID"], "預覽模具")
+    rows = [d for d in tables[DETAIL].values() if d["ZZ_KAOSU_PROD_SCHEDULE_SID"] == sid]
+    details = []
+    for item in args["details"]:
+        if item.get("detail_id"):
+            row = _pick(rows, "ZZ_KAOSU_PROD_SCHEDULE_DETAIL_SID", item["detail_id"], "預覽排程明細")
+        elif item.get("mold_detail_id"):
+            row = _pick(rows, "TOL_DETALS_SID", item["mold_detail_id"], "預覽模具明細")
+        else:
+            row = _pick(rows, "PART_NO", item["part_no"], "預覽品號明細")
+        detail = _pick(mold["DETAILS"], "TOL_DETALS_SID", row["TOL_DETALS_SID"], "預覽模具明細")
+        wo = next((w["WO"] for w in after["catalogs"]["work_orders"] if w["WO_SID"] == row["WO_SID"]), "")
+        details.append({"detail_id": row["ZZ_KAOSU_PROD_SCHEDULE_DETAIL_SID"], "mold_detail_id": row["TOL_DETALS_SID"],
+                        "mold_detail_no": detail.get("TOL_DETALS_NO"), "mold_detail_name": detail.get("TOL_DETALS_NAME"),
+                        "part_no": row["PART_NO"], "wo": wo, "cavities": row["SCHEDULE_CUR_CAV"]})
+    return {"schedule_id": sid, "equipment": tables["EQP_MASTER"][schedule["EQP_SID"]]["EQP_NO"],
+            "mold_no": mold["TOL_NO"], "schedule_details": details, "affected_orders": sorted({d["wo"] for d in details if d["wo"]})}
 
 
 def _pick(rows, field, value, label):
@@ -148,7 +173,7 @@ def _query_catalogs(state, filters, records):
     result["parts"] = [p for p in result["parts"] if (not part_no or p["PART_NO"] == part_no) and (not search or search in str(p["PART_NO"]).casefold() or search in str(p.get("PART_SPEC", "")).casefold())]
     selected_parts = {part_no} if part_no else {d["PART_NO"] for row in records for d in row.get("DETAILS", [])}
     mold_no = filters.get("mold_no") or filters.get("tol_no")
-    result["molds"] = [m for m in result["molds"] if selected_parts.intersection(m["PART_NOS"]) or (mold_no and m["TOL_NO"] == mold_no)]
+    result["molds"] = [m for m in result["molds"] if (not mold_no or m["TOL_NO"] == mold_no) and (not part_no or part_no in m["PART_NOS"]) and (selected_parts.intersection(m["PART_NOS"]) or mold_no)]
     for mold in result["molds"]:
         selected_parts.update(mold["PART_NOS"])
     result["work_orders"] = [w for w in result["work_orders"] if w["PART_NO"] in selected_parts and (not filters.get("wo") or w["WO"] == filters["wo"])]
@@ -226,9 +251,12 @@ def query(state, module, filters=None):
     if filters.get("schedule_id"):
         records = [r for r in records if str(r.get("ZZ_KAOSU_PROD_SCHEDULE_SID")) == str(filters["schedule_id"])]
     if filters.get("execution_id"):
-        if module != "report":
-            raise BusinessError("歷程識別碼僅供報工模組查詢。")
-        records = [r for r in records if str(r.get("WIP_OPI_WDOEACICO_HIST_SID")) == str(filters["execution_id"])]
+        if module == "report":
+            records = [r for r in records if str(r.get("WIP_OPI_WDOEACICO_HIST_SID")) == str(filters["execution_id"])]
+        else:
+            execution = state["tables"][EXECUTION].get(str(filters["execution_id"]), {})
+            parent = execution.get("ZZ_KAOSU_PROD_SCHEDULE_SID")
+            records = [r for r in records if parent is not None and str(r.get("ZZ_KAOSU_PROD_SCHEDULE_SID")) == str(parent)]
     if filters.get("part_no"):
         if module == "report":
             records = [r for r in records if r.get("PART_NO") == filters["part_no"]]
@@ -535,26 +563,40 @@ def _save_schedule(state, args, actor, now):
     previous = _row(state, SCHEDULE, sid) if args.get("schedule_id") else None
     if not args["details"]:
         raise BusinessError("至少需要一筆排程明細。")
-    details, has_wo, seen = [], False, set()
+    details, has_wo, seen, seen_rows = [], False, set(), set()
     for supplied in args["details"]:
-        if not isinstance(supplied, dict) or set(supplied) - {"detail_id", "part_no", "wo", "cavities"}:
+        if not isinstance(supplied, dict) or set(supplied) - {"detail_id", "mold_detail_id", "part_no", "wo", "cavities"}:
             raise BusinessError("排程明細含不合法欄位。")
         cav = _integer(supplied.get("cavities"), "模穴數")
         if shots * cav > 999999999999999999:
             raise BusinessError("目標模次乘以模穴數超過資料庫目標件數的18位整數上限。")
         part = _pick(state["catalogs"]["parts"], "PART_NO", supplied.get("part_no"), "品號")
-        mold_detail = _pick(mold["DETAILS"], "PART_NO", part["PART_NO"], "模具明細")
-        if part["PART_NO"] in seen:
-            raise BusinessError("同一模具明細不可重複。")
-        seen.add(part["PART_NO"])
-        wo = _pick(state["catalogs"]["work_orders"], "WO", supplied["wo"], "工單") if supplied.get("wo") else None
-        if (wo and wo["PART_NO"] != part["PART_NO"]) or (cav and not wo):
-            raise BusinessError("工單須對應該品號，非零模穴必須選擇工單。")
-        has_wo = has_wo or bool(wo)
         did = supplied.get("detail_id") or _new_id(state)
         old = _row(state, DETAIL, did) if supplied.get("detail_id") else None
         if old and old["ZZ_KAOSU_PROD_SCHEDULE_SID"] != sid:
             raise BusinessError("明細不屬於本排程。")
+        if did in seen_rows:
+            raise BusinessError("同一排程明細識別碼不可重複。")
+        seen_rows.add(did)
+        choices = [d for d in mold["DETAILS"] if d["PART_NO"] == part["PART_NO"]]
+        selected_mold_detail = supplied.get("mold_detail_id")
+        if selected_mold_detail is None and old and old["PART_NO"] == part["PART_NO"] and previous["TOL_SID"] == mold["TOL_SID"]:
+            # 同一模具／品號的原關聯失效時拒絕，不能默默換到另一個有效明細。
+            selected_mold_detail = old["TOL_DETALS_SID"]
+        if selected_mold_detail is not None:
+            mold_detail = _pick(choices, "TOL_DETALS_SID", selected_mold_detail, "此模具與品號的模具明細")
+        elif len(choices) == 1:
+            mold_detail = choices[0]
+        else:
+            options = "、".join(f"{d.get('TOL_DETALS_NAME') or d.get('TOL_DETALS_NO') or d['TOL_DETALS_SID']}（mold_detail_id={d['TOL_DETALS_SID']}）" for d in choices)
+            raise BusinessError("模具明細不存在或有多筆；請明確選擇 mold_detail_id。候選：" + options, "ambiguous")
+        if mold_detail["TOL_DETALS_SID"] in seen:
+            raise BusinessError("同一模具明細不可重複。")
+        seen.add(mold_detail["TOL_DETALS_SID"])
+        wo = _pick(state["catalogs"]["work_orders"], "WO", supplied["wo"], "工單") if supplied.get("wo") else None
+        if (wo and wo["PART_NO"] != part["PART_NO"]) or (cav and not wo):
+            raise BusinessError("工單須對應該品號，非零模穴必須選擇工單。")
+        has_wo = has_wo or bool(wo)
         details.append({"ZZ_KAOSU_PROD_SCHEDULE_DETAIL_SID": did, "ZZ_KAOSU_PROD_SCHEDULE_SID": sid, "TOL_DETALS_SID": mold_detail["TOL_DETALS_SID"], "SCHEDULE_CUR_CAV": cav, "PART_NO": part["PART_NO"], "PART_SPEC": part["PART_SPEC"], "WO_SID": wo["WO_SID"] if wo else "0", "WO_QUANTITY": wo["WO_QTY"] if wo else 0, "TARGET_PCS": shots * cav, "CREATE_USER": old.get("CREATE_USER") if old else actor["id"], "CREATE_TIME": old.get("CREATE_TIME") if old else _stamp(now), "EDIT_USER": actor["id"], "EDIT_TIME": _stamp(now)})
     if not has_wo:
         raise BusinessError("至少一筆明細須有有效工單，零模穴的合法工單亦可。")

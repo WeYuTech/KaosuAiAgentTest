@@ -1,6 +1,6 @@
 # 隔離 SQL Server 驗收紀錄
 
-驗收日期：2026-10-30。正式來源 `kaosu_MES_KSS` 保持業務資料零寫入；只讀取 metadata、查詢結果及執行使用者授權的原登入流程。所有業務測試僅使用本次全新建立的 `ZZ_AI_AGENT_OPERATION_TEST_20261030`。
+驗收日期：2026-10-30。正式來源 `kaosu_MES_KSS` 未執行業務測試寫入；來源盤點只讀 metadata、查詢結果及使用者授權的原登入流程。部署階段已另建立六張 `ZZ_AI_AGENT_OPERATION_` 前綴 AI 專用表，不能因此描述成正式資料庫從未有 DDL 異動。所有業務寫入測試僅使用本次全新建立的 `ZZ_AI_AGENT_OPERATION_TEST_20261030`；正式寫入啟用與現場狀態以 [IIS 部署紀錄](IIS部署.md) 為準。
 
 ## 建立與隔離保護
 
@@ -56,11 +56,28 @@
 
 此測試需明確 `MES_SQL_ACCEPTANCE=1` 才執行，預設跳過，不能在一般測試偷偷連正式資料庫。10 個公開 HTTP 操作 UUID 與結果另存 `.local/sql-http-lifecycle-result.json`。這輪 session/check 使用合成 Token 的 HTTP 替身，其後 SEC 身分對應、業務寫入與稽核均為新庫真實 SQL；不把它冒稱正式站台業務寫入。
 
+## 本輪追加 SQL 驗收
+
+以下四項分別通過，與前述五項合計九條選擇性 SQL 測試。它們使用同一新庫名稱與 marker 防護，不會因未設定驗收連線而改連正式庫。
+
+| 測試 | 驗收內容與結果 |
+|---|---|
+| `test_真SQL同品號多模具明細新增與修改維持兩筆不同關聯` | 使用 GetSid 建立本輪專用合成模具及兩筆同品號左右明細，透過 HTTP 新增排程，再以反向列序修改並省略 `mold_detail_id`。兩筆不同關聯均保留，原 trigger 的模具明細編號、模穴及目標件數正確。1 passed，49.85 秒；合成資料與稽核保留 |
+| `test_SQL已提交但回應中斷可查核且不重複寫入` | 真 SQL 提交成功後故意令呼叫端收到結果未知；再次確認不重送，`/reconcile` 僅查核原操作紀錄並還原成功狀態。業務執行一次、SQL 稽核一筆，前後值與原成功結果一致；結果留在 `.local/sql-reconciliation-result.json` |
+| `test_SQL指定品號與模具必須相容才回選項` | 以公開查詢同時指定不相容品號及模具，正式適配器回空模具選項，不能忽略品號條件；只讀，未寫業務資料 |
+| `test_真SQL確認卡解析新增與離頁修改模具明細且不寫入` | 新增預覽核對正式模具明細，省略唯一識別亦能解析；修改讀取既有左右明細，確認摘要不依賴前端目前分頁，名稱／編號／模穴與原主檔一致且納入 digest。新增暫存排程與明細 SID 不當正式 ID 顯示。1 passed，70.55 秒；只做預覽及讀取，沒有呼叫確認寫入 |
+
+最後一條首次測試確實抓到新增摘要顯示暫存 SID，修正後重跑通過。四條前端摘要渲染案例另驗證同品號雙明細、修改省略識別並調換順序、新增唯一識別省略與零穴、離頁修改；這是畫面層證據，不混算為四條 SQL 測試。
+
+完整快速套件最新為 **140 passed／10 skipped**；其中九條 SQL 因未明確啟用而跳過，均有上述分項驗收；剩餘一條為 Windows 符號連結權限限制。SQL 測試包含真實連線、主檔／班別查詢、交易與 trigger，耗時明顯高於本地測試，故分別依異動範圍執行，未宣稱九條於同一次命令重跑。
+
 ## 真實 MES 登入與只讀核對
 
 另使用原登入 API 的正常登入流程，取得 Session Cookie，再由 MesBridge 固定呼叫 session/check，於正式 SEC_USER 以 token 唯一對應帳號及部署 allowlist，最後讀取指定報工作業。成功帳號為 ADMINV2，授權模組為 schedule／report／mold，回傳 1 筆正式唯讀資料。第一次完整呼叫遇到 unauthorized，逐段核對後第二次完整鏈通過；不把首次失敗從驗收紀錄刪除。沒有輸出或保存實際憑證。
 
 只讀比較 SQL GETDATE() 與 SYSUTCDATETIME()，此 MES 伺服器目前時差為 UTC+07:00。MesConfig.server_utc_offset_hours／MES_SERVER_UTC_OFFSET_HOURS 已新增，Session 的無時區期限依部署設定解讀；本環境使用 7。不能因操作人員在台灣而把資料庫記錄時間標示為 UTC+08:00。
+
+IIS 部署後另由實際後端呼叫 Responses，指定 `425929454366110` 的報工作業唯讀查詢成功，沒有生成 proposal。正式 AI 表與入口部署屬已授權基礎設施變更，與隔離庫的業務交易驗收分別記載。
 
 ## 重現方式與剩餘界線
 
@@ -68,4 +85,14 @@
 
 一般快速測試執行 `python -m pytest tests/test_mes_http.py -q`。公開 HTTP 真 SQL 測試需額外設定 MES_SQL_ACCEPTANCE=1，再執行指定 SQL 測試。未提供驗收連線或未顯式啟用時跳過，不降級到正式庫。
 
-目前正式寫入部署仍維持預設鎖閉。隔離資料庫測試不代表已獲准在正式 MES 建 AI 表或執行業務寫入。正式上線前仍要核對實際代理路徑與 Cookie 範圍、帳號模組授權、DDL 部署、來源物件版本、並行操作、網路中斷與提交結果未知的現場處理流程。
+本輪指定重現命令如下；第一組為隔離庫業務寫入驗收，最後一條只做預覽及讀取。執行前須由部署管理員確認本機被忽略的測試連線設定與專用 marker。
+
+```powershell
+$env:MES_SQL_ACCEPTANCE = '1'
+.\.venv\Scripts\python.exe -m pytest tests/test_mes_schedule_http.py -k 真SQL同品號多模具明細 -q
+.\.venv\Scripts\python.exe -m pytest tests/test_operation_reconciliation.py -k SQL -q
+.\.venv\Scripts\python.exe -m pytest tests/test_mes_schedule_http.py -k 真SQL確認卡解析 -q
+Remove-Item Env:MES_SQL_ACCEPTANCE
+```
+
+正式 IIS 入口與六張 AI 專用表已部署；正式寫入是否開放、人員確認與最後現場核對結果，以 [IIS 部署紀錄](IIS部署.md) 為準。隔離資料庫測試不等同正式業務寫入驗收，外部 ERP／報表連動仍受本文件所列結構範圍限制。代理、Cookie、授權、來源物件版本與未知結果處理的現場紀錄，應連同部署文件保存。

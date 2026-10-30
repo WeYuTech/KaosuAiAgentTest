@@ -17,6 +17,21 @@ export function ProposalBusinessSummary({ proposal, workspace }: { proposal: Pro
   const defects = Array.isArray(args.defects) ? args.defects as { code: string; quantity: number }[] : [];
   const findChange = (field: string) => changes.find(change => change.field === field);
   const nextTimes = changes.filter(change => change.field === 'REAL_CHECK_IN_TIME' && change.before !== change.after);
+  const molds = Array.isArray(workspace.catalogs.molds) ? workspace.catalogs.molds as Row[] : [];
+  const mold = molds.find(row => String(row.TOL_NO) === String(args.mold_no));
+  const moldDetails = Array.isArray(mold?.DETAILS) ? mold.DETAILS as Row[] : [];
+  const allocations = target.schedule_details ?? (Array.isArray(args.details) ? args.details as Row[] : []);
+  const allocationLabel = (item: Row) => {
+    const savedDetails = Array.isArray(record?.DETAILS) ? record.DETAILS as Row[] : [];
+    const saved = item.detail_id ? savedDetails.find(row => String(row.ZZ_KAOSU_PROD_SCHEDULE_DETAIL_SID) === String(item.detail_id)) : undefined;
+    const detailId = item.mold_detail_id ?? saved?.TOL_DETALS_SID;
+    const candidates = moldDetails.filter(row => String(row.PART_NO) === String(item.part_no));
+    const detail = detailId != null ? moldDetails.find(row => String(row.TOL_DETALS_SID) === String(detailId)) : candidates.length === 1 ? candidates[0] : undefined;
+    const name = item.mold_detail_name ?? detail?.TOL_DETALS_NAME;
+    const number = item.mold_detail_no ?? detail?.TOL_DETALS_NO ?? detailId;
+    const identity = name && number ? `${display(name)}（${display(number)}）` : display(name ?? number ?? '模具明細待核對');
+    return `${display(item.wo || item.part_no)} · ${identity}`;
+  };
   const businessRow = (title: string, after: unknown, before?: unknown, unit = '') => <div className="business-value"><span>{title}</span><strong>{before !== undefined && before !== null && <><span className="business-before">{display(before)}</span><ArrowRight size={14}/></>}{display(after)}{unit && <small>{unit}</small>}</strong></div>;
 
   return <div className="business-summary">
@@ -45,7 +60,7 @@ export function ProposalBusinessSummary({ proposal, workspace }: { proposal: Pro
       {businessRow('預計開始', args.start_time)}
       {businessRow('模具', args.mold_no)}
       <div className="business-quantities">{businessRow('週期', args.cycle_seconds, undefined, '秒')}{businessRow('目標模次', args.target_shots, undefined, '模')}</div>
-      {Array.isArray(args.details) && <div className="business-defects"><span className="business-caption">工單分配</span>{(args.details as Row[]).map((item, index) => <div key={index}>{businessRow(display(item.wo || item.part_no), item.cavities, undefined, '穴')}</div>)}</div>}
+      {allocations.length > 0 && <div className="business-defects"><span className="business-caption">工單與模具明細分配</span>{allocations.map((item, index) => <div key={index}>{businessRow(allocationLabel(item), item.cavities, undefined, '穴')}</div>)}</div>}
     </>}
     {(action === 'report.complete' || action === 'report.delete' || action === 'mold.clear' || action === 'mold.unmount_finish') && <div className="business-impact"><strong>影響工單</strong>{affected.length ? <ul>{affected.map(order => <li key={order}>{order}</li>)}</ul> : workOrder ? <p>{display(workOrder)}</p> : <p>請核對上方作業對象與摘要。</p>}{action === 'report.complete' && <p>同一排程的所有工單會一併完工。</p>}{action === 'mold.clear' && <p>會清除這張排程的上下模時間，請確認現場狀態。</p>}</div>}
     {nextTimes.length > 0 && <div className="business-impact"><strong>連動作業</strong><p>下一張排程的實際開始時間會一併更新為：{display(nextTimes[0].after)}</p></div>}

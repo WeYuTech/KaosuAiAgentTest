@@ -58,6 +58,26 @@ def saved_ids(result):
     return next(iter(schedules)), details
 
 
+def test_真SQL確認卡解析新增與離頁修改模具明細且不寫入(sql_client):
+    from scripts.sql_acceptance import target_connection
+    from app.store import digest
+    created = preview(sql_client, save_args())
+    assert created["target"]["schedule_id"] is None
+    assert [(d["mold_detail_id"], d["cavities"]) for d in created["target"]["schedule_details"]] == [("80000061", 2), ("80000062", 1)]
+    assert all(d["detail_id"] is None for d in created["target"]["schedule_details"])
+    with target_connection(write=False) as db:
+        cursor = db.cursor()
+        header = cursor.execute("SELECT TOP 1 s.ZZ_KAOSU_PROD_SCHEDULE_SID,t.TOL_NO FROM dbo.ZZ_KAOSU_PROD_SCHEDULE s JOIN dbo.TOL_MASTER t ON t.TOL_SID=s.TOL_SID WHERE t.TOL_NO LIKE 'SQL-SPLIT-%' ORDER BY s.CREATE_TIME DESC").fetchone()
+        assert header is not None, "需先完成同品號多模具明細隔離驗收情境。"
+        details = cursor.execute("SELECT d.ZZ_KAOSU_PROD_SCHEDULE_DETAIL_SID,d.TOL_DETALS_SID,m.TOL_DETALS_NO,m.TOL_DETALS_NAME FROM dbo.ZZ_KAOSU_PROD_SCHEDULE_DETAIL d JOIN dbo.TOL_MASTER_DETAILS m ON m.TOL_DETALS_SID=d.TOL_DETALS_SID WHERE d.ZZ_KAOSU_PROD_SCHEDULE_SID=? ORDER BY m.TOL_DETALS_NO DESC", header[0]).fetchall()
+        db.rollback()
+    args = save_args()
+    args.update(schedule_id=str(header[0]), mold_no=header[1], details=[{"detail_id": str(d[0]), "part_no": "TEST-PART-A", "wo": "TEST-WO-A", "cavities": 5} for d in details])
+    updated = preview(sql_client, args)
+    assert [(d["mold_detail_id"], d["mold_detail_no"], d["mold_detail_name"], d["cavities"]) for d in updated["target"]["schedule_details"]] == [(str(d[1]), d[2], d[3], 5) for d in details]
+    assert digest({k: v for k, v in updated.items() if k != "digest"}) == updated["digest"]
+
+
 def test_新增排程於同交易觸發歷程並稽核可靠主鍵(sql_client):
     marker = "隔離排程驗收-" + uuid4().hex[:8]
     args = {"equipment": "TEST-MC36", "part_no": "TEST-PART-A", "mold_no": "TEST-MOLD-A", "start_time": "2026-10-31 07:59", "cycle_seconds": 60, "target_shots": 10, "status": "RUN", "comment": marker, "details": [{"part_no": "TEST-PART-A", "wo": "TEST-WO-A", "cavities": 2}]}
@@ -150,4 +170,36 @@ def test_稽核失敗表頭明細與觸發歷程一併回復(sql_client):
         assert cursor.execute("SELECT COUNT(*) FROM dbo.ZZ_AI_AGENT_OPERATION_OPERATION WHERE OPERATION_ID=?", proposal["id"]).fetchone()[0] == 0
         # 所有新表身與 HIST 都在同一交易，且同鍵；無表頭的新增孤兒必須不存在。
         assert cursor.execute("SELECT COUNT(*) FROM dbo.ZZ_KAOSU_PROD_SCHEDULE_DETAIL d LEFT JOIN dbo.ZZ_KAOSU_PROD_SCHEDULE h ON h.ZZ_KAOSU_PROD_SCHEDULE_SID=d.ZZ_KAOSU_PROD_SCHEDULE_SID WHERE h.ZZ_KAOSU_PROD_SCHEDULE_SID IS NULL").fetchone()[0] == 0
+        db.rollback()
+
+
+def test_真SQL同品號多模具明細新增與修改維持兩筆不同關聯(sql_client):
+    from scripts.sql_acceptance import target_connection, insert_synthetic
+    mold_no = "SQL-SPLIT-" + uuid4().hex[:8]
+    with target_connection() as db:
+        cursor = db.cursor()
+        mold_sid = str(cursor.execute("SELECT dbo.GetSid()").fetchone()[0])
+        insert_synthetic(cursor, "TOL_MASTER", {"TOL_SID": mold_sid, "TOL_NO": mold_no, "TOL_NAME": "同品號多明細隔離驗收", "TOL_OPERATION": "EPS-FORMING", "ENABLE_FLAG": "Y", "DEFAULT_CYCLE_TIME": 60})
+        mids = []
+        for suffix in ("L", "R"):
+            mid = str(cursor.execute("SELECT dbo.GetSid()").fetchone()[0])
+            assert mid not in mids
+            mids.append(mid)
+            insert_synthetic(cursor, "TOL_MASTER_DETAILS", {"TOL_DETALS_SID": mid, "TOL_SID": mold_sid, "TOL_NO": mold_no, "TOL_DETALS_NO": mold_no + "-" + suffix, "TOL_DETALS_NAME": "同品號模具明細" + suffix, "PART_NO": "TEST-PART-A", "CUR_CAV": 2, "ENABLE_FLAG": "Y"})
+        db.commit()
+    args = save_args()
+    args.update(mold_no=mold_no, details=[{"mold_detail_id": mid, "part_no": "TEST-PART-A", "wo": "TEST-WO-A", "cavities": 2} for mid in mids])
+    result = confirm(sql_client, preview(sql_client, args))
+    sid = next(c["key"] for c in result["changes"] if c["table"] == "ZZ_KAOSU_PROD_SCHEDULE")
+    dids = {c["after"]: c["key"] for c in result["changes"] if c["table"] == "ZZ_KAOSU_PROD_SCHEDULE_DETAIL" and c["field"] == "TOL_DETALS_SID"}
+    assert set(dids) == set(mids) and len(set(dids.values())) == 2
+    assert {c["key"] for c in result["changes"] if c["table"] == "WIP_OPI_WDOEACICO_HIST"} == set(dids.values())
+    # 修改以明確既有排程明細保留來源模具明細，不受傳入順序影響。
+    args.update(schedule_id=sid, details=[{"detail_id": dids[mids[1]], "part_no": "TEST-PART-A", "wo": "TEST-WO-A", "cavities": 4}, {"detail_id": dids[mids[0]], "part_no": "TEST-PART-A", "wo": "TEST-WO-A", "cavities": 3}])
+    updated = confirm(sql_client, preview(sql_client, args))
+    assert {c["key"]: c["after"] for c in updated["changes"] if c["table"] == "WIP_OPI_WDOEACICO_HIST" and c["field"] == "OPI_CAV"} == {dids[mids[0]]: 3, dids[mids[1]]: 4}
+    with target_connection(write=False) as db:
+        cursor = db.cursor()
+        rows = cursor.execute("SELECT d.ZZ_KAOSU_PROD_SCHEDULE_DETAIL_SID,d.TOL_DETALS_SID,d.TARGET_PCS,h.OPI_CAV,h.ZZ_TOL_DETALS_NO FROM dbo.ZZ_KAOSU_PROD_SCHEDULE_DETAIL d JOIN dbo.WIP_OPI_WDOEACICO_HIST h ON h.WIP_OPI_WDOEACICO_HIST_SID=d.ZZ_KAOSU_PROD_SCHEDULE_DETAIL_SID WHERE d.ZZ_KAOSU_PROD_SCHEDULE_SID=?", sid).fetchall()
+        assert {str(r[1]): (str(r[0]), int(r[2]), int(r[3]), r[4]) for r in rows} == {mids[0]: (dids[mids[0]], 30, 3, mold_no + "-L"), mids[1]: (dids[mids[1]], 40, 4, mold_no + "-R")}
         db.rollback()

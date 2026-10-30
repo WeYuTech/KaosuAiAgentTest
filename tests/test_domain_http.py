@@ -12,6 +12,15 @@ from app.main import create_app
     ("schedule", {"schedule_id":"不存在"}, "ZZ_KAOSU_PROD_SCHEDULE_SID", []),
     ("mold", {"schedule_id":"不存在"}, "ZZ_KAOSU_PROD_SCHEDULE_SID", []),
     ("report", {"execution_id":"2001","schedule_id":"1002"}, "WIP_OPI_WDOEACICO_HIST_SID", []),
+    ("schedule", {"execution_id":"2002"}, "ZZ_KAOSU_PROD_SCHEDULE_SID", ["1001"]),
+    ("mold", {"execution_id":"2002"}, "ZZ_KAOSU_PROD_SCHEDULE_SID", ["1001"]),
+    ("schedule", {"execution_id":"不存在"}, "ZZ_KAOSU_PROD_SCHEDULE_SID", []),
+    ("mold", {"execution_id":"不存在"}, "ZZ_KAOSU_PROD_SCHEDULE_SID", []),
+    ("schedule", {"execution_id":"2001","schedule_id":"1002"}, "ZZ_KAOSU_PROD_SCHEDULE_SID", []),
+    ("mold", {"execution_id":"2001","history":"running"}, "ZZ_KAOSU_PROD_SCHEDULE_SID", ["1001"]),
+    ("mold", {"execution_id":"2003","history":"running"}, "ZZ_KAOSU_PROD_SCHEDULE_SID", []),
+    ("mold", {"execution_id":"2001","history":"pending"}, "ZZ_KAOSU_PROD_SCHEDULE_SID", []),
+    ("mold", {"execution_id":"2003","history":"pending"}, "ZZ_KAOSU_PROD_SCHEDULE_SID", ["1002"]),
 ])
 def test_查詢識別碼精確定位且不存在或交集不符回空(tmp_path,module,filters,key,expected):
     with TestClient(create_app(db_path=tmp_path/"id-query.db")) as client:
@@ -81,6 +90,29 @@ def confirm(client, module, action, args):
     return result.json()
 
 
+def test_排程確認卡包含後端解析明細且不依賴目前查詢頁面(tmp_path):
+    from app.store import digest
+    with TestClient(create_app(db_path=tmp_path / "resolved-card.db")) as client:
+        client.post("/api/session/demo", json={"identity": "planner"})
+        args = {"equipment": "MC36", "part_no": "EPS-A", "mold_no": "MOLD-SPLIT", "start_time": "2026-10-31 08:00", "cycle_seconds": 60, "target_shots": 10, "status": "RUN", "details": [{"part_no": "EPS-A", "wo": "WO-A", "mold_detail_id": "63", "cavities": 2}, {"part_no": "EPS-A", "wo": "WO-A", "mold_detail_id": "64", "cavities": 3}]}
+        response = client.post("/api/proposals", json={"module": "schedule", "action": "schedule.save", "args": args})
+        assert response.status_code == 200, response.text
+        proposal = response.json()["proposal"]
+        details = proposal["target"]["schedule_details"]
+        assert [(d["mold_detail_id"], d["mold_detail_no"], d["mold_detail_name"], d["cavities"]) for d in details] == [("63", "MOLD-SPLIT-L", "同品號左模穴", 2), ("64", "MOLD-SPLIT-R", "同品號右模穴", 3)]
+        assert digest({k: v for k, v in proposal.items() if k != "digest"}) == proposal["digest"]
+        assert client.post(f"/api/proposals/{proposal['id']}/confirm", json={"digest": proposal["digest"], "approved": True}).status_code == 200
+        args["schedule_id"] = proposal["target"]["schedule_id"]
+        args["details"] = [{"detail_id": d["detail_id"], "part_no": d["part_no"], "wo": d["wo"], "cavities": d["cavities"] + 1} for d in reversed(details)]
+        assert client.get("/api/workspace?module=schedule&equipment=不存在").json()["records"] == []
+        changed = client.post("/api/proposals", json={"module": "schedule", "action": "schedule.save", "args": args}).json()["proposal"]
+        resolved = changed["target"]["schedule_details"]
+        assert [(d["mold_detail_no"], d["cavities"]) for d in resolved] == [("MOLD-SPLIT-R", 4), ("MOLD-SPLIT-L", 3)]
+        assert digest({k: v for k, v in changed.items() if k != "digest"}) == changed["digest"]
+        changed["target"]["schedule_details"][0]["mold_detail_no"] = "偽造模穴"
+        assert digest({k: v for k, v in changed.items() if k != "digest"}) != changed["digest"]
+
+
 def test_排程草稿確認後才出現且跨八點正確歸日(tmp_path):
     with TestClient(create_app(db_path=tmp_path / "schedule.db")) as client:
         assert client.post("/api/session/demo", json={"identity": "planner"}).status_code == 200
@@ -120,6 +152,59 @@ def test_新排程保存立即產生全部明細歷程包含零模穴空工單(t
         assert blank["WO"] is None
         assert all(r["CREATE_USER"] == "SQLtrigger_user" and r["SHIFT_DAY"] == "2026-10-30" for r in rows)
         assert any(c["table"] == "WIP_OPI_WDOEACICO_HIST" for c in result["changes"])
+
+
+def test_同品號多模具明細可明確選取新增並各自同步歷程(tmp_path):
+    with TestClient(create_app(db_path=tmp_path / "split-mold.db")) as client:
+        client.post("/api/session/demo", json={"identity": "supervisor"})
+        options = client.get("/api/workspace?module=schedule&catalog=molds&part_no=EPS-A&mold_no=MOLD-SPLIT").json()["catalogs"]["molds"]
+        assert len(options) == 1
+        assert [(d["TOL_DETALS_SID"], d["PART_NO"]) for d in options[0]["DETAILS"]] == [("63", "EPS-A"), ("64", "EPS-A")]
+        args = {"equipment": "MC36", "part_no": "EPS-A", "mold_no": "MOLD-SPLIT", "start_time": "2026-10-31 08:00", "cycle_seconds": 60, "target_shots": 10, "status": "RUN", "comment": "同品號多明細", "details": [{"mold_detail_id": "63", "part_no": "EPS-A", "wo": "WO-A", "cavities": 2}, {"mold_detail_id": "64", "part_no": "EPS-A", "wo": "", "cavities": 0}]}
+        confirm(client, "schedule", "schedule.save", args)
+        saved = next(r for r in client.get("/api/workspace?module=schedule").json()["records"] if r["COMMENT"] == "同品號多明細")
+        assert {d["TOL_DETALS_SID"] for d in saved["DETAILS"]} == {"63", "64"}
+        rows = client.get("/api/workspace", params={"module": "report", "schedule_id": saved["ZZ_KAOSU_PROD_SCHEDULE_SID"]}).json()["records"]
+        assert {r["ZZ_TOL_DETALS_NO"] for r in rows} == {"MOLD-SPLIT-L", "MOLD-SPLIT-R"}
+        assert sorted(r["OPI_CAV"] for r in rows) == [0, 2]
+
+
+def test_修改同品號多明細保留原模具明細識別且重排順序不改關聯(tmp_path):
+    with TestClient(create_app(db_path=tmp_path / "split-update.db")) as client:
+        client.post("/api/session/demo", json={"identity": "supervisor"})
+        args = {"equipment": "MC36", "part_no": "EPS-A", "mold_no": "MOLD-SPLIT", "start_time": "2026-10-31 08:00", "cycle_seconds": 60, "target_shots": 10, "status": "RUN", "comment": "多明細修改", "details": [{"mold_detail_id": "63", "part_no": "EPS-A", "wo": "WO-A", "cavities": 2}, {"mold_detail_id": "64", "part_no": "EPS-A", "wo": "WO-A", "cavities": 1}]}
+        confirm(client, "schedule", "schedule.save", args)
+        saved = next(r for r in client.get("/api/workspace?module=schedule").json()["records"] if r["COMMENT"] == "多明細修改")
+        ids = {d["TOL_DETALS_SID"]: d["ZZ_KAOSU_PROD_SCHEDULE_DETAIL_SID"] for d in saved["DETAILS"]}
+        args.update(schedule_id=saved["ZZ_KAOSU_PROD_SCHEDULE_SID"], details=[{"detail_id": ids["64"], "part_no": "EPS-A", "wo": "WO-A", "cavities": 4}, {"detail_id": ids["63"], "part_no": "EPS-A", "wo": "WO-A", "cavities": 3}])
+        confirm(client, "schedule", "schedule.save", args)
+        updated = client.get("/api/workspace", params={"module": "schedule", "schedule_id": args["schedule_id"]}).json()["records"][0]
+        assert {d["TOL_DETALS_SID"]: (d["ZZ_KAOSU_PROD_SCHEDULE_DETAIL_SID"], d["TARGET_PCS"]) for d in updated["DETAILS"]} == {"63": (ids["63"], 30), "64": (ids["64"], 40)}
+        rows = client.get("/api/workspace", params={"module": "report", "schedule_id": args["schedule_id"]}).json()["records"]
+        assert {r["ZZ_TOL_DETALS_NO"]: r["OPI_CAV"] for r in rows} == {"MOLD-SPLIT-L": 3, "MOLD-SPLIT-R": 4}
+        args["details"][1].update(detail_id=ids["64"], mold_detail_id="63")
+        response = client.post("/api/proposals", json={"module": "schedule", "action": "schedule.save", "args": args})
+        assert response.status_code == 422 and "排程明細識別碼不可重複" in response.json()["detail"]["message"]
+        assert client.get("/api/workspace", params={"module": "schedule", "schedule_id": args["schedule_id"]}).json()["records"][0] == updated
+
+
+@pytest.mark.parametrize("details", [
+    [{"part_no": "EPS-A", "wo": "WO-A", "cavities": 2}],
+    [{"mold_detail_id": "61", "part_no": "EPS-A", "wo": "WO-A", "cavities": 2}],
+    [{"mold_detail_id": "63", "part_no": "EPS-B", "wo": "WO-B", "cavities": 2}],
+    [{"mold_detail_id": "63", "part_no": "EPS-A", "wo": "WO-A", "cavities": 2}, {"mold_detail_id": "63", "part_no": "EPS-A", "wo": "WO-A", "cavities": 1}],
+])
+def test_模具明細歧義跨模具錯品號或重複都拒絕且不猜第一筆(tmp_path, details):
+    with TestClient(create_app(db_path=tmp_path / "split-invalid.db")) as client:
+        client.post("/api/session/demo", json={"identity": "supervisor"})
+        args = {"equipment": "MC36", "part_no": "EPS-A", "mold_no": "MOLD-SPLIT", "start_time": "2026-10-31 08:00", "cycle_seconds": 60, "target_shots": 10, "status": "RUN", "details": details}
+        before = client.get("/api/workspace?module=schedule").json()
+        response = client.post("/api/proposals", json={"module": "schedule", "action": "schedule.save", "args": args})
+        assert response.status_code == 422
+        if "mold_detail_id" not in details[0]:
+            assert response.json()["detail"]["code"] == "ambiguous"
+            assert "63" in response.json()["detail"]["message"] and "64" in response.json()["detail"]["message"]
+        assert client.get("/api/workspace?module=schedule").json() == before
 
 
 def test_保存排程同步既有歷程模穴與刪除但保留完工上下模時間(tmp_path):
