@@ -1,4 +1,4 @@
-/* 沿用 Emerald 原版 44px 圓形啟動器、400×500 對話框與全視窗切換。 */
+/* WeYu main 視覺：深藍黃邊啟動器、520×760 上限；保留 Kaosu 同源與展開契約。 */
 (() => {
   const script = document.currentScript;
   if (!script || document.querySelector('[data-kaosu-assistant-host]')) return;
@@ -17,24 +17,25 @@
   host.dataset.kaosuAssistantHost = '';
   const shadow = host.attachShadow({ mode: 'open' });
   const style = document.createElement('style');
-  style.textContent = ':host{all:initial}button{position:fixed;right:16px;bottom:16px;z-index:2147483000;width:44px;height:44px;padding:0;display:grid;place-items:center;border:1px solid oklch(0.92 0.004 286.32);border-radius:50%;background:white;color:oklch(0.141 0.005 285.823);cursor:pointer;transition:border-color 150ms,scale 150ms}button:active{scale:.96}button:focus-visible{outline:2px solid oklch(0.705 0.015 286.067);outline-offset:2px}svg{width:20px;height:20px}iframe{position:fixed;right:16px;bottom:76px;width:400px;max-width:calc(100vw - 32px);height:500px;max-height:calc(100dvh - 96px);border:1px solid rgb(0 0 0 / .1);border-radius:14px;background:white;box-shadow:0 16px 48px -24px rgb(0 0 0 / .25);z-index:2147482999;display:none}iframe[data-expanded=true]{inset:0;width:100vw;height:100dvh;max-width:none;max-height:none;border:0;border-radius:0;z-index:2147483001}@media(max-width:640px){iframe{inset:0;width:100vw;height:100dvh;max-width:none;max-height:none;border:0;border-radius:0;z-index:2147483001}}@media(prefers-reduced-motion:reduce){button{transition:none}}';
+  style.textContent = ':host{all:initial}button{position:fixed;right:max(24px,env(safe-area-inset-right));bottom:max(24px,env(safe-area-inset-bottom));z-index:2147483000;min-height:52px;padding:0 20px;display:flex;gap:8px;align-items:center;border:2px solid #ffce00;border-radius:999px;background:#171d63;color:white;cursor:pointer;font:16px "Microsoft JhengHei","Segoe UI",sans-serif;box-shadow:0 12px 30px #191b2147}button:hover{background:#11164f}button:focus-visible{outline:3px solid #242d83;outline-offset:2px}svg{width:20px;height:20px}iframe{position:fixed;right:max(24px,env(safe-area-inset-right));bottom:max(24px,env(safe-area-inset-bottom));width:min(520px,calc(100vw - 48px));height:min(760px,calc(100dvh - 48px));border:1px solid #e2e8f0;border-radius:24px;background:white;box-shadow:0 28px 80px rgba(15,23,42,.24);z-index:2147483001;display:none}iframe[data-expanded=true]{inset:0;width:100vw;height:100dvh;border:0;border-radius:0}@media(max-width:600px){iframe{inset:0;width:100vw;height:100dvh;border:0;border-radius:0}}';
   const bot = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 8V4H8"/><rect width="16" height="12" x="4" y="8" rx="2"/><path d="M2 14h2m16 0h2M9 13v2m6-2v2"/></svg>';
   const down = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>';
   const launcher = document.createElement('button');
-  launcher.type = 'button'; launcher.innerHTML = bot; launcher.setAttribute('aria-label', '開啟生產情報助理'); launcher.title = '生產情報助理';
+  launcher.type = 'button'; launcher.innerHTML = bot + '<span>生產情報助理</span>'; launcher.setAttribute('aria-label', '開啟生產情報助理'); launcher.title = '生產情報助理';
   const frame = document.createElement('iframe');
-  frame.title = 'Emerald.AI 生產情報助理 · 作業'; frame.referrerPolicy = 'strict-origin-when-cross-origin';
+  frame.title = 'WeYu AI 生產情報助理 · 作業'; frame.referrerPolicy = 'strict-origin-when-cross-origin';
   let loaded = false, opened = false;
   let locale = 'zh-TW';
   const captions = () => locale === 'en' ? ['Open production assistant', 'Close production assistant', 'Production assistant'] : locale === 'th' ? ['เปิดผู้ช่วยการผลิต', 'ปิดผู้ช่วยการผลิต', 'ผู้ช่วยการผลิต'] : ['開啟生產情報助理', '收合生產情報助理', '生產情報助理'];
   const paint = resolved => {
     const dark = resolved === 'dark';
-    launcher.style.background = dark ? 'oklch(0.21 0.006 285.885)' : 'white';
-    launcher.style.color = dark ? 'oklch(0.985 0 0)' : 'oklch(0.141 0.005 285.823)';
-    launcher.style.borderColor = dark ? 'oklch(0.37 0.013 285.806)' : 'oklch(0.92 0.004 286.32)';
-    frame.style.background = dark ? 'oklch(0.141 0.005 285.823)' : 'white';
+    launcher.style.background = '#171d63';
+    launcher.style.color = '#ffffff';
+    launcher.style.borderColor = '#ffce00';
+    frame.style.background = dark ? '#10172a' : '#f7f8fa';
     launcher.setAttribute('aria-label', captions()[opened ? 1 : 0]);
-    launcher.title = captions()[2]; frame.title = `Emerald.AI · ${captions()[2]}`;
+    launcher.innerHTML = bot + '<span>' + captions()[2] + '</span>';
+    launcher.title = captions()[2]; frame.title = `WeYu AI · ${captions()[2]}`;
   };
   try {
     const savedLocale = localStorage.getItem('kaosu-assistant:locale');
@@ -46,8 +47,8 @@
     opened = next;
     if (next && !loaded) { frame.src = target.href; loaded = true; }
     frame.style.display = next ? 'block' : 'none';
-    launcher.style.display = '';
-    launcher.innerHTML = next ? down : bot;
+    launcher.style.display = next ? 'none' : '';
+    launcher.innerHTML = (next ? down : bot) + '<span>' + captions()[2] + '</span>';
     launcher.setAttribute('aria-expanded', String(next));
     launcher.setAttribute('aria-label', captions()[next ? 1 : 0]);
     if (next) { frame.contentWindow?.postMessage({ type: 'kaosu-assistant:open' }, target.origin); frame.focus(); }
@@ -65,7 +66,7 @@
     if (event.data?.type === 'kaosu-assistant:resize') {
       const expanded = event.data.expanded === true;
       frame.dataset.expanded = String(expanded);
-      launcher.style.display = expanded ? 'none' : '';
+      launcher.style.display = opened ? 'none' : '';
     }
   });
   shadow.append(style, launcher, frame); document.body.append(host);

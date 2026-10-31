@@ -1,13 +1,16 @@
 import { t } from './i18n';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { RefreshCw } from 'lucide-react';
-import { api, type Module, type Session } from './api';
+import { api, ApiError, type Module, type Session } from './api';
 
 interface FeedbackEntry { id: string; module: Module; message: string; actor_id: string; status: string; time: string; text?: string; source?: string; reviewer?: string }
 const statuses: Record<string, string> = { pending: '待審核', reviewed: '已審核，待案例回歸與發布', published: '已發布' };
 const modules = { schedule: '排程', report: '報工', mold: '模具上下模' };
 
-export function FeedbackReview({ session, refreshToken }: { session: Session | null; refreshToken: boolean }) {
+export function FeedbackReview({ session, refreshToken, onAccessDenied, apiRequest = api }: { apiRequest?: typeof api; session: Session | null; refreshToken: boolean; onAccessDenied?: () => void }) {
+  const alive = useRef(true);
+  const generation = useRef(0);
+  useEffect(() => { alive.current=true; return () => {alive.current=false;generation.current++;}; }, []);
   const [records, setRecords] = useState<FeedbackEntry[]>([]);
   const [filter, setFilter] = useState('all');
   const [selected, setSelected] = useState<FeedbackEntry | null>(null);
@@ -18,8 +21,8 @@ export function FeedbackReview({ session, refreshToken }: { session: Session | n
   const [notice, setNotice] = useState('');
   const reviewer = session?.actor.roles.includes('review');
 
-  async function load() { const result = await api<{ records: FeedbackEntry[] }>('/api/feedback'); setRecords(result.records); }
-  async function refresh() { setBusy(true); setError(''); try { await load(); } catch (e) { setError(e instanceof Error ? e.message : t("無法取得回饋紀錄。")); } finally { setBusy(false); } }
+  async function load() { const token=++generation.current; const result = await apiRequest<{ records: FeedbackEntry[] }>('/api/feedback'); if(alive.current && token===generation.current) setRecords(result.records); }
+  async function refresh() { setRecords([]); setSelected(null); setText('');setSource('');setBusy(true); setError(''); try { await load(); } catch (e) { if(!alive.current)return; if(e instanceof ApiError && [401,403].includes(e.status))onAccessDenied?.(); else setError(e instanceof Error ? e.message : t("無法取得回饋紀錄。")); } finally { if(alive.current)setBusy(false); } }
   useEffect(() => { void refresh(); }, [session?.actor.id, refreshToken]);
 
   return <section className="feedback-review" aria-label={t("回饋紀錄與審核")}>
@@ -35,7 +38,7 @@ export function FeedbackReview({ session, refreshToken }: { session: Session | n
     {!busy && !records.some(row => filter === 'all' || row.status === filter) && <p className="muted">{t("目前沒有此狀態的回饋。")}</p>}
     {selected && <form className="feedback-review-form" aria-label={t("知識審核表單")} onSubmit={e => {
       e.preventDefault(); setBusy(true); setError(''); setNotice('');
-      void (async () => { try { await api(`/api/feedback/${selected.id}/review`, { text: text.trim(), source: source.trim() }); setSelected(null); setNotice(t("已提交審核內容，尚未發布。請交由管理員完成候選案例回歸。")); await load(); } catch (e) { setError(e instanceof Error ? e.message : t("審核未完成。")); } finally { setBusy(false); } })();
+      void (async () => { try { await apiRequest(`/api/feedback/${selected.id}/review`, { text: text.trim(), source: source.trim() }); if(!alive.current)return; setSelected(null); setNotice(t("已提交審核內容，尚未發布。請交由管理員完成候選案例回歸。")); await load(); } catch (e) { if(!alive.current)return; if(e instanceof ApiError && [401,403].includes(e.status))onAccessDenied?.();else setError(e instanceof Error ? e.message : t("審核未完成。")); } finally { if(alive.current)setBusy(false); } })();
     }}>
       <h3>{t("審核")}{t(modules[selected.module])}{t("回饋")}</h3><p className="message-body">{t("原回饋：")}{selected.message}</p>
       <label className="form-field">{t("修正後的知識說明")}<textarea required rows={5} maxLength={4000} value={text} onChange={e => setText(e.target.value)} disabled={busy} placeholder={t("填入已核對的正確說明；不能以知識文字改寫業務卡控。")}/></label>

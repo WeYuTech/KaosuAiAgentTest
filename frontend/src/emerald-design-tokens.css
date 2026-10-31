@@ -1,163 +1,58 @@
-/* 官方 assistant-ui Starter Zinc 主題；僅在助理與預覽 root 生效。
- * 上游來源與 SHA 見 src/components/assistant-ui/來源清單.json。
- * 官方主題以外的自訂視覺值只在此檔定義。 */
-:where(#mes-ai-chat-root, #mes-ai-preview-root) {
-  --radius: 0.625rem;
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.141 0.005 285.823);
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.141 0.005 285.823);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.141 0.005 285.823);
-  --primary: oklch(0.21 0.006 285.885);
-  --primary-foreground: oklch(0.985 0 0);
-  --secondary: oklch(0.967 0.001 286.375);
-  --secondary-foreground: oklch(0.21 0.006 285.885);
-  --muted: oklch(0.967 0.001 286.375);
-  --muted-foreground: oklch(0.552 0.016 285.938);
-  --accent: oklch(0.967 0.001 286.375);
-  --accent-foreground: oklch(0.21 0.006 285.885);
-  --destructive: oklch(0.577 0.245 27.325);
-  --border: oklch(0.92 0.004 286.32);
-  --input: oklch(0.92 0.004 286.32);
-  --ring: oklch(0.705 0.015 286.067);
-  --chart-1: oklch(0.646 0.222 41.116);
-  --chart-2: oklch(0.6 0.118 184.704);
-  --chart-3: oklch(0.398 0.07 227.392);
-  --chart-4: oklch(0.828 0.189 84.429);
-  --chart-5: oklch(0.769 0.188 70.08);
-  --sidebar: oklch(0.985 0 0);
-  --sidebar-foreground: oklch(0.141 0.005 285.823);
-  --sidebar-primary: oklch(0.21 0.006 285.885);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.967 0.001 286.375);
-  --sidebar-accent-foreground: oklch(0.21 0.006 285.885);
-  --sidebar-border: oklch(0.92 0.004 286.32);
-  --sidebar-ring: oklch(0.705 0.015 286.067);
-  /* 可讀性尺度僅作用於助理；不縮放宿主頁面或圖表資料。 */
-  --mes-space-unit: 0.28125rem;
-  --mes-text-xs: 0.8125rem;
-  --mes-text-sm: 0.9375rem;
-  --mes-text-base: 1.0625rem;
-  --mes-text-lg: 1.1875rem;
-  --mes-text-xl: 1.375rem;
-  --mes-text-2xl: 1.625rem;
-  --mes-text-line-height: 1.5;
-  --aui-control-min-size: 2.25rem;
-  --aui-control-height: 2.5rem;
-  --aui-control-touch-size: 2.75rem;
-  --aui-control-icon-size: 1.125rem;
-  --aui-header-height: 3.5rem;
-  --aui-header-padding: 0.5rem;
-  --aui-header-gap: 0.5rem;
-  --aui-assistant-action-reserve: calc(var(--aui-control-min-size) + var(--mes-space-unit) * 1.5);
-  /* 本機字型與宿主整合值。 */
-  --font-inter: "Inter Variable", "Microsoft JhengHei", "PingFang TC", "Noto Sans TC", ui-sans-serif, system-ui, sans-serif;
-  --font-ibm-plex-mono: "IBM Plex Mono", "Microsoft JhengHei", "PingFang TC", "Noto Sans TC", ui-monospace, monospace;
-  --aui-widget-layer: 2147483000;
-  --aui-portal-overlay-layer: 2147483001;
-  --aui-portal-content-layer: 2147483002;
-  --aui-viewport-height: 100dvh;
-  --aui-viewport-width: 100vw;
-  --aui-safe-area-bottom: env(safe-area-inset-bottom, 0px);
-  --aui-focus-width: 2px;
-  --aui-focus-offset: 2px;
-  --aui-hidden-size: 1px;
-  --aui-brand-logo-height: 1.875rem;
-  --aui-brand-logo-max-width: 8rem;
-  --aui-brand-logo-filter: none;
-  --aui-thread-max-width: 48rem;
-  --mes-documentation-sidebar-width: 17rem;
-  --mes-documentation-reading-width: 64rem;
-  --mes-chart-height: 13.75rem;
-  --mes-chart-bar-size: 24px;
-  --mes-chart-line-width: 2px;
-  --mes-chart-line-dash: 5 3;
-  --mes-chart-edge-padding: 32px;
-  --mes-chart-tall-height: 20rem;
-  --mes-heat-low: color-mix(in srgb, var(--chart-2) 10%, var(--background));
-  --mes-heat-mid-low: color-mix(in srgb, var(--chart-2) 20%, var(--background));
-  --mes-heat-mid-high: color-mix(in srgb, var(--chart-2) 30%, var(--background));
-  --mes-heat-high: color-mix(in srgb, var(--chart-2) 45%, var(--background));
-  --aui-copyright-padding: 0.5rem;
-  --aui-message-action-size: var(--aui-control-min-size);
-  --aui-message-edit-radius: 1.5rem;
-  --aui-message-edit-padding: 0.75rem;
-  --aui-message-edit-gap: 0.5rem;
-  --aui-message-edit-min-height: 3rem;
-  --aui-settings-max-height: calc(var(--aui-viewport-height) - 2rem - var(--aui-safe-area-bottom) - env(safe-area-inset-top, 0px));
-  --mes-trace-success: oklch(0.45 0.12 165);
-  --mes-trace-duration: 200ms;
+/* WeYu main@4503d121 淺色有效語意；深色為 Kaosu 延伸。 */
+:where(#mes-ai-chat-root,#mes-ai-preview-root) {
+  --radius:12px;
+  --background:#f7f8fa;
+  --foreground:#202123;
+  --card:#fff;
+  --card-foreground:#0f172a;
+  --popover:var(--card);
+  --popover-foreground:var(--foreground);
+  --brand:#171d63;
+  --brand-hover:#11164f;
+  --primary:#ffce00;
+  --primary-foreground:#0f172a;
+  --secondary:#f3f4fa;
+  --secondary-foreground:#171d63;
+  --muted:#f1f5f9;
+  --muted-foreground:#475569;
+  --accent:#fffbeb;
+  --accent-foreground:#78350f;
+  --selected-border:#a67800;
+  --destructive:#b42318;
+  --error-surface:#fef2f2;
+  --border:#e2e8f0;
+  --input:#7c899b;
+  --ring:#242d83;
+  --user-border:#e8eaf5;
+  --panel-shadow:0 28px 80px rgba(15,23,42,.24);
+  --card-shadow:0 8px 24px rgba(15,23,42,.07);
+  --font-inter:"Noto Sans TC","Microsoft JhengHei","Noto Sans Thai","Segoe UI",sans-serif;
+  --font-ibm-plex-mono:"IBM Plex Mono",monospace;
+  --mes-text-base:16px;
+  --mes-text-sm:14px;
+  --mes-text-xs:12px;
+  --mes-text-line-height:1.6;
 }
 
-@media (max-width: 640px) {
-  :where(#mes-ai-chat-root, #mes-ai-preview-root) {
-    --aui-control-min-size: var(--aui-control-touch-size);
-    --aui-control-height: var(--aui-control-touch-size);
-  }
-}
-
-:where(#mes-ai-chat-root, #mes-ai-preview-root).dark {
-  --mes-trace-success: oklch(0.75 0.14 165);
-  --aui-brand-logo-filter: brightness(0) invert(1);
-  --background: oklch(0.141 0.005 285.823);
-  --foreground: oklch(0.985 0 0);
-  --card: oklch(0.21 0.006 285.885);
-  --card-foreground: oklch(0.985 0 0);
-  --popover: oklch(0.21 0.006 285.885);
-  --popover-foreground: oklch(0.985 0 0);
-  --primary: oklch(0.92 0.004 286.32);
-  --primary-foreground: oklch(0.21 0.006 285.885);
-  --secondary: oklch(0.274 0.006 286.033);
-  --secondary-foreground: oklch(0.985 0 0);
-  --muted: oklch(0.274 0.006 286.033);
-  --muted-foreground: oklch(0.705 0.015 286.067);
-  --accent: oklch(0.274 0.006 286.033);
-  --accent-foreground: oklch(0.985 0 0);
-  --destructive: oklch(0.704 0.191 22.216);
-  --border: oklch(1 0 0 / 10%);
-  --input: oklch(1 0 0 / 15%);
-  --ring: oklch(0.552 0.016 285.938);
-  --chart-1: oklch(0.488 0.243 264.376);
-  --chart-2: oklch(0.696 0.17 162.48);
-  --chart-3: oklch(0.769 0.188 70.08);
-  --chart-4: oklch(0.627 0.265 303.9);
-  --chart-5: oklch(0.645 0.246 16.439);
-  --sidebar: oklch(0.21 0.006 285.885);
-  --sidebar-foreground: oklch(0.985 0 0);
-  --sidebar-primary: oklch(0.488 0.243 264.376);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.274 0.006 286.033);
-  --sidebar-accent-foreground: oklch(0.985 0 0);
-  --sidebar-border: oklch(1 0 0 / 10%);
-  --sidebar-ring: oklch(0.552 0.016 285.938);
-}
-
-/* 深藍以官方 dark 變數契約延伸；不改寫元件的排版與樣式類別。 */
-#mes-ai-chat-root.dark[data-theme="navy"] {
-  --background: #10182d;
-  --foreground: #f4f7fc;
-  --card: #162139;
-  --card-foreground: #f4f7fc;
-  --popover: #1b2946;
-  --popover-foreground: #f4f7fc;
-  --primary: #c4d5ff;
-  --primary-foreground: #10182d;
-  --secondary: #23314e;
-  --secondary-foreground: #f4f7fc;
-  --muted: #23314e;
-  --muted-foreground: #a9b8d3;
-  --accent: #2b3d63;
-  --accent-foreground: #f4f7fc;
-  --border: #3c4c6d;
-  --input: #455577;
-  --ring: #9bbcff;
-  --sidebar: #0d1528;
-  --sidebar-foreground: #f4f7fc;
-  --sidebar-primary: #b8cdff;
-  --sidebar-primary-foreground: #10182d;
-  --sidebar-accent: #213352;
-  --sidebar-accent-foreground: #f4f7fc;
-  --sidebar-border: #3c4c6d;
-  --sidebar-ring: #9bbcff;
+:where(#mes-ai-chat-root,#mes-ai-preview-root).dark {
+  --background:#10172a;
+  --foreground:#edf1fa;
+  --card:#19243a;
+  --card-foreground:#f5f7ff;
+  --brand:#c1c8ff;
+  --brand-hover:#d8ddff;
+  --secondary:#253250;
+  --secondary-foreground:#e2e6ff;
+  --muted:#222f46;
+  --muted-foreground:#b6c3d9;
+  --accent:#3c321c;
+  --accent-foreground:#ffe6a1;
+  --selected-border:#ffce00;
+  --destructive:#ffafa8;
+  --error-surface:#3e2029;
+  --border:#40516d;
+  --input:#7c91b2;
+  --ring:#adb8ff;
+  --user-border:#465783;
+  --card-shadow:0 8px 24px rgba(0,0,0,.16);
 }

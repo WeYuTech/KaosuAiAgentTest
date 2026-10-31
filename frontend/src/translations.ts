@@ -1,5 +1,17 @@
 /* 固定介面詞彙：中文原文為鍵，不翻譯 MES 主檔名稱或歷史訊息。 */
 export const translations: Record<string, [string, string]> = Object.fromEntries(`
+設定|Settings|การตั้งค่า
+語言與外觀|Language and appearance|ภาษาและรูปลักษณ์
+目前階段|Current stage|ขั้นตอนปัจจุบัน
+尚需補充|Still needed|ข้อมูลที่ยังขาด
+清除文字，繼續人工操作|Clear text and continue manually|ล้างข้อความและดำเนินการด้วยตนเอง
+AI 尚未設定，文字可保留或清除，請從操作卡填寫資料。|AI is not configured. Keep or clear your text and enter details using the operation card.|ยังไม่ได้ตั้งค่า AI เก็บหรือล้างข้อความและกรอกข้อมูลในบัตรงาน
+選好作業範圍後，將接續送出這段需求。|After you choose a task, this request will be sent once.|เมื่อเลือกงานแล้ว ระบบจะส่งคำขอนี้หนึ่งครั้ง
+另一分頁的操作仍待核對，請先查看原操作。|An operation in another tab needs verification. Open the original operation first.|งานในแท็บอื่นยังรอตรวจสอบ โปรดเปิดงานเดิมก่อน
+恢復並查核原操作|Restore and verify original operation|กู้คืนและตรวจสอบงานเดิม
+返回先前作業|Return to previous task|กลับไปยังงานก่อนหน้า
+已查回原操作結果。|The original operation result has been retrieved.|อ่านผลการดำเนินงานเดิมแล้ว
+作業情境已切換|The task context has changed|บริบทงานเปลี่ยนแล้ว
 草稿保存狀態|Draft save status|สถานะการบันทึกฉบับร่าง
 本次提交已拒絕，請返回修改後重新核對。|This submission was rejected. Go back, update the details and review again.|การส่งครั้งนี้ถูกปฏิเสธ โปรดย้อนกลับ แก้ไขข้อมูลและตรวจสอบอีกครั้ง
 登入或權限已失效，請重新核對MES身分。|Login or permission expired. Verify your MES identity again.|การเข้าสู่ระบบหรือสิทธิ์หมดอายุ โปรดยืนยันตัวตน MES อีกครั้ง
