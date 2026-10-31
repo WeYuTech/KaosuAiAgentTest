@@ -1,0 +1,345 @@
+<!doctype html>
+<html lang="zh-Hant"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline'; script-src 'unsafe-inline'; img-src data:; font-src data:; connect-src 'none'; base-uri 'none'; form-action 'none'"><title>生產助理 · 視覺改版互動示範</title><style>html,body{margin:0;min-height:100%;font-family:system-ui,sans-serif}body{background:#181e25}#emerald-redesign{min-height:100svh;display:flex;flex-direction:column}#emerald-redesign .cursor-interaction{cursor:pointer}#emerald-redesign .er-shell{flex:1;display:flex;flex-direction:column}#emerald-redesign .er-workspace{flex:1}#emerald-redesign .er-thread{height:100%}@media(pointer:coarse){#emerald-redesign button{min-height:44px}#emerald-redesign .er-theme,#emerald-redesign .er-side-close{min-width:44px}}</style></head><body>
+<section id="emerald-redesign" aria-label="生產助理介面改版預覽">
+  <style>
+    #emerald-redesign{color-scheme:light dark;--er-bg:light-dark(#f5f4f1,#181e25);--er-top:light-dark(#ffffff,#171d23);--er-surface:light-dark(#ffffff,#232b34);--er-raised:light-dark(#f7f9fb,#242f3a);--er-field:light-dark(#ffffff,#151c23);--er-text:light-dark(#17232e,#edf1f5);--er-muted:light-dark(#5b6875,#aab8c6);--er-soft:light-dark(#6a7783,#96a6b5);--er-line:light-dark(#dbe2e8,#35414d);--er-line-soft:light-dark(#e8edf1,#34404b);--er-control-line:light-dark(#7c8997,#687b8e);--er-blue:light-dark(#2458ad,#aacaff);--er-blue-fill:light-dark(#edf3ff,#233853);--er-blue-border:light-dark(#c4d5f2,#48678e);--er-cta:light-dark(#2458ad,#aacaff);--er-cta-text:light-dark(#ffffff,#112239);--er-green:light-dark(#236443,#8ed5b2);--er-green-bg:light-dark(#ecf7ef,#203b30);--er-orange:light-dark(#8b4d0d,#f4c383);--er-orange-bg:light-dark(#fff5e7,#3b3023);font-family:Inter,"Microsoft JhengHei","PingFang TC",system-ui,sans-serif;font-size:16px;line-height:1.55;color:var(--er-text);background:var(--er-bg);text-align:left;isolation:isolate;container-type:inline-size;overflow-wrap:anywhere}
+    #emerald-redesign *{box-sizing:border-box}
+    #emerald-redesign [hidden]{display:none!important}
+    #emerald-redesign button,#emerald-redesign input,#emerald-redesign select,#emerald-redesign textarea{font:inherit}
+    #emerald-redesign button{color:inherit}
+    #emerald-redesign button:disabled{cursor:not-allowed;opacity:.48}
+    #emerald-redesign button:hover:not(:disabled){filter:brightness(1.06)}
+    #emerald-redesign button:focus-visible,#emerald-redesign input:focus-visible,#emerald-redesign select:focus-visible,#emerald-redesign textarea:focus-visible{outline:2px solid var(--er-blue);outline-offset:3px}
+    #emerald-redesign h1,#emerald-redesign h2,#emerald-redesign h3,#emerald-redesign p{margin:0;color:inherit}
+    #emerald-redesign h1{font-size:28px;line-height:1.35;font-weight:600;letter-spacing:-.5px}
+    #emerald-redesign h2{font-size:19px;line-height:1.4;font-weight:600}
+    #emerald-redesign h3{font-size:16px;font-weight:600}
+    #emerald-redesign .er-icon,#emerald-redesign [data-lucide],#emerald-redesign svg{width:18px;height:18px;flex:none;stroke-width:1.7;vertical-align:middle}
+    #emerald-redesign .er-preview{padding:7px 22px;background:var(--er-raised);color:var(--er-muted);font-size:12px;display:flex;justify-content:space-between;gap:12px}
+    #emerald-redesign .er-preview strong{color:var(--er-text);font-weight:500}
+    #emerald-redesign .er-topbar{min-height:62px;border-bottom:1px solid var(--er-line-soft);background:var(--er-top);display:flex;align-items:center;justify-content:space-between;gap:20px;padding:0 24px}
+    #emerald-redesign .er-brand{display:flex;align-items:center;gap:14px;min-width:0;white-space:nowrap}
+    #emerald-redesign .er-brand img{width:97px;height:24px;object-fit:contain}
+    #emerald-redesign[data-appearance="dark"] .er-brand img{filter:brightness(0) invert(1);opacity:.94}
+    @media(prefers-color-scheme:dark){#emerald-redesign:not([data-appearance="light"]) .er-brand img{filter:brightness(0) invert(1);opacity:.94}}
+    #emerald-redesign .er-brand-name{font-size:14px;border-left:1px solid var(--er-line);padding-left:14px;letter-spacing:.3px}
+    #emerald-redesign .er-modules{display:flex;align-items:center;gap:4px;background:var(--er-bg);padding:4px;border-radius:10px}
+    #emerald-redesign .er-module{min-height:35px;display:flex;align-items:center;gap:8px;border:0;border-radius:7px;background:transparent;padding:6px 15px;font-size:14px;color:var(--er-muted);white-space:nowrap}
+    #emerald-redesign .er-module[aria-pressed="true"]{background:var(--er-surface);color:var(--er-text);box-shadow:0 1px 3px #00000012}
+    #emerald-redesign .er-module[aria-pressed="true"] svg{color:var(--er-blue)}
+    #emerald-redesign .er-top-tools{display:flex;align-items:center;gap:12px}
+    #emerald-redesign .er-theme{width:36px;height:36px;border:1px solid var(--er-line-soft);border-radius:9px;background:transparent;display:grid;place-items:center}
+    #emerald-redesign .er-user{display:flex;align-items:center;gap:8px;font-size:12px;color:var(--er-muted);white-space:nowrap}
+    #emerald-redesign .er-avatar{display:grid;place-items:center;width:29px;height:29px;border-radius:50%;background:var(--er-raised);color:var(--er-text);font-size:12px}
+    #emerald-redesign .er-shell{width:min(100%,1120px);margin:0 auto;padding:0 28px}
+    #emerald-redesign .er-workbar{min-height:50px;display:flex;align-items:center;justify-content:space-between;gap:16px}
+    #emerald-redesign .er-breadcrumb{display:flex;align-items:center;gap:10px;min-width:0;font-size:13px;color:var(--er-muted)}
+    #emerald-redesign .er-breadcrumb strong{color:var(--er-text);font-weight:500;white-space:nowrap}
+    #emerald-redesign .er-breadcrumb .er-slash{color:var(--er-soft)}
+    #emerald-redesign .er-context-tools{display:flex;gap:6px;align-items:center;flex-wrap:wrap;justify-content:flex-end}
+    #emerald-redesign .er-tool{display:flex;align-items:center;gap:6px;background:transparent;border:0;border-radius:7px;font-size:12px;padding:7px 9px;min-height:34px;color:var(--er-muted);white-space:nowrap}
+    #emerald-redesign .er-tool[aria-expanded="true"]{color:var(--er-blue);background:var(--er-blue-fill)}
+    #emerald-redesign .er-workspace{display:grid;grid-template-columns:minmax(0,1fr);gap:24px;padding:14px 0 24px}
+    #emerald-redesign .er-workspace.er-has-side{grid-template-columns:minmax(0,1fr) 280px}
+    #emerald-redesign .er-thread{width:min(100%,880px);margin:auto;min-width:0;display:flex;flex-direction:column;min-height:560px}
+    #emerald-redesign .er-body{flex:1;min-width:0}
+    #emerald-redesign .er-thread:has(.er-home:not([hidden])){justify-content:center;min-height:560px}
+    #emerald-redesign .er-thread:has(.er-home:not([hidden])) .er-body{flex:0 0 auto}
+    #emerald-redesign .er-thread:has(.er-home:not([hidden])) .er-composer-area{margin-top:10px}
+    #emerald-redesign .er-home{padding:32px 0 14px}
+    #emerald-redesign .er-eyebrow{display:flex;align-items:center;gap:10px;color:var(--er-blue);font-size:11px;font-weight:600;letter-spacing:1.7px;margin-bottom:18px}
+    #emerald-redesign .er-small-mark{width:25px;height:25px;display:grid;place-items:center;border:1px solid var(--er-blue-border);border-radius:7px;background:var(--er-blue-fill);color:var(--er-blue);font-family:Georgia,serif;font-size:16px;letter-spacing:0}
+    #emerald-redesign .er-home p{color:var(--er-muted);margin-top:12px;font-size:16px;line-height:1.8;max-width:600px}
+    #emerald-redesign .er-task-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-top:28px}
+    #emerald-redesign .er-task{min-width:0;min-height:132px;border:1px solid var(--er-line);border-radius:13px;background:var(--er-surface);padding:19px;text-align:left;transition:background .15s,border-color .15s,transform .15s}
+    #emerald-redesign .er-task:hover{border-color:var(--er-blue-border);transform:translateY(-2px)}
+    #emerald-redesign .er-task.er-featured{border-color:var(--er-blue-border);background:var(--er-blue-fill)}
+    #emerald-redesign .er-task .er-task-icon{color:var(--er-muted);display:block;margin-bottom:12px}
+    #emerald-redesign .er-task.er-featured .er-task-icon{color:var(--er-blue)}
+    #emerald-redesign .er-task strong{display:block;font-size:16px;font-weight:600}
+    #emerald-redesign .er-task small{display:block;margin-top:5px;font-size:14px;color:var(--er-muted);line-height:1.5}
+    #emerald-redesign .er-home-note{display:flex;gap:7px;align-items:center;margin-top:20px;color:var(--er-soft);font-size:12px}
+    #emerald-redesign .er-home-note svg{width:14px;height:14px}
+    #emerald-redesign .er-user-line{display:flex;justify-content:flex-end;margin:6px 0 24px}
+    #emerald-redesign .er-user-line p{max-width:86%;padding:12px 16px;background:var(--er-raised);border-radius:13px 13px 4px 13px;font-size:16px;white-space:pre-wrap}
+    #emerald-redesign .er-assistant-label{display:flex;align-items:center;gap:9px;font-size:12px;color:var(--er-muted);margin:0 0 14px}
+    #emerald-redesign .er-assistant-label .er-small-mark{width:22px;height:22px;font-size:14px}
+    #emerald-redesign .er-prompt-copy{margin:0 0 18px}
+    #emerald-redesign .er-prompt-copy p{font-size:14px;color:var(--er-muted);margin-top:7px}
+    #emerald-redesign .er-candidates{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+    #emerald-redesign .er-candidate{border:1px solid var(--er-line);border-radius:12px;background:var(--er-surface);padding:17px 18px;text-align:left;min-width:0}
+    #emerald-redesign .er-candidate:hover{border-color:var(--er-blue);background:var(--er-blue-fill)}
+    #emerald-redesign .er-candidate-top{display:flex;justify-content:space-between;gap:10px;align-items:center}
+    #emerald-redesign .er-candidate strong{font-size:17px;font-weight:600;letter-spacing:.2px}
+    #emerald-redesign .er-candidate .er-candidate-detail{display:block;margin:12px 0 4px;font-size:13px;color:var(--er-muted)}
+    #emerald-redesign .er-candidate .er-candidate-bottom{display:flex;justify-content:space-between;align-items:center;gap:8px;font-size:12px;color:var(--er-soft)}
+    #emerald-redesign .er-candidate .er-candidate-bottom svg{color:var(--er-blue);width:16px;height:16px}
+    #emerald-redesign .er-tag{font-size:11px;padding:3px 8px;border-radius:5px;white-space:nowrap;background:var(--er-raised);color:var(--er-muted);font-weight:400}
+    #emerald-redesign .er-tag.er-blue{background:var(--er-blue-fill);color:var(--er-blue)}
+    #emerald-redesign .er-tag.er-green{background:var(--er-green-bg);color:var(--er-green)}
+    #emerald-redesign .er-form-card,#emerald-redesign .er-review-card,#emerald-redesign .er-query-card{border:1px solid var(--er-line);border-radius:14px;background:var(--er-surface);overflow:hidden}
+    #emerald-redesign .er-card-head{padding:20px 22px;border-bottom:1px solid var(--er-line-soft);display:flex;align-items:center;justify-content:space-between;gap:12px}
+    #emerald-redesign .er-card-head p{font-size:12px;color:var(--er-muted);margin-top:4px}
+    #emerald-redesign .er-form-content{padding:20px 22px}
+    #emerald-redesign .er-object{display:flex;align-items:center;flex-wrap:wrap;gap:8px;color:var(--er-muted);font-size:12px;margin-bottom:20px}
+    #emerald-redesign .er-object strong{font-size:14px;font-weight:600;color:var(--er-text)}
+    #emerald-redesign .er-link{background:none;border:0;padding:3px 0;color:var(--er-blue);font-size:12px;text-align:left}
+    #emerald-redesign .er-object .er-link{margin-left:auto}
+    #emerald-redesign .er-fields{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+    #emerald-redesign .er-field{display:flex;flex-direction:column;gap:7px;min-width:0;font-size:14px;color:var(--er-muted)}
+    #emerald-redesign .er-field.er-wide{grid-column:1/-1}
+    #emerald-redesign .er-field input,#emerald-redesign .er-field select{min-width:0;width:100%;height:44px;border:1px solid var(--er-control-line);border-radius:8px;background:var(--er-field);color:var(--er-text);padding:10px 12px;font-size:16px}
+    #emerald-redesign .er-field input::placeholder{color:var(--er-soft)}
+    #emerald-redesign .er-field-help{font-size:11px;color:var(--er-soft)}
+    #emerald-redesign .er-choice-group{display:flex;flex-wrap:wrap;gap:10px;border:0;margin:0;padding:0;min-width:0;grid-column:1/-1}
+    #emerald-redesign .er-choice-group legend{font-size:12px;color:var(--er-muted);padding:0;margin-bottom:8px}
+    #emerald-redesign .er-choice-group label{display:flex;align-items:center;gap:8px;min-height:40px;background:var(--er-field);border:1px solid var(--er-line);border-radius:8px;padding:8px 12px;font-size:13px}
+    #emerald-redesign .er-choice-group label:has(input:checked){background:var(--er-blue-fill);border-color:var(--er-blue-border)}
+    #emerald-redesign .er-choice-group input{accent-color:var(--er-blue);width:15px;height:15px;margin:0}
+    #emerald-redesign .er-form-actions{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:16px 22px;background:var(--er-raised);border-top:1px solid var(--er-line-soft)}
+    #emerald-redesign .er-button{border:1px solid var(--er-line);border-radius:8px;min-height:40px;background:var(--er-surface);padding:9px 14px;display:inline-flex;align-items:center;justify-content:center;gap:8px;font-size:13px;font-weight:500;white-space:normal;text-align:center}
+    #emerald-redesign .er-button.er-primary{background:var(--er-cta);border-color:var(--er-cta);color:var(--er-cta-text)}
+    #emerald-redesign .er-button.er-quiet{border-color:transparent;background:transparent;color:var(--er-muted)}
+    #emerald-redesign .er-button svg{width:16px;height:16px}
+    #emerald-redesign .er-review-card .er-card-head{background:var(--er-blue-fill)}
+    #emerald-redesign .er-review-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));margin:0;gap:0 24px}
+    #emerald-redesign .er-review-grid div{padding:15px 0;border-bottom:1px solid var(--er-line-soft);min-width:0}
+    #emerald-redesign .er-review-grid dt{font-size:14px;color:var(--er-muted);margin-bottom:5px}
+    #emerald-redesign .er-review-grid dd{font-size:20px;font-weight:500;margin:0;letter-spacing:-.3px;font-variant-numeric:tabular-nums}
+    #emerald-redesign .er-review-note{display:flex;align-items:flex-start;gap:8px;color:var(--er-muted);font-size:12px;margin-top:16px}
+    #emerald-redesign .er-review-note svg{width:15px;height:15px;margin-top:2px}
+    #emerald-redesign .er-review-actions{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+    #emerald-redesign .er-review-actions .er-primary{margin-left:auto}
+    #emerald-redesign .er-success{border:1px solid var(--er-line);border-radius:14px;background:var(--er-surface);padding:26px}
+    #emerald-redesign .er-success-icon{display:grid;place-items:center;width:38px;height:38px;border-radius:10px;background:var(--er-green-bg);color:var(--er-green);margin-bottom:16px}
+    #emerald-redesign .er-success p{margin-top:8px;color:var(--er-muted);font-size:13px}
+    #emerald-redesign .er-success .er-result-summary{border-top:1px solid var(--er-line-soft);margin:20px 0;padding-top:16px;font-size:14px;color:var(--er-text)}
+    #emerald-redesign .er-notice{border:1px solid var(--er-blue-border);background:var(--er-blue-fill);color:var(--er-text);padding:10px 12px;border-radius:8px;margin:0 0 16px;font-size:13px}
+    #emerald-redesign .er-error{color:var(--er-orange);background:var(--er-orange-bg);padding:10px 12px;border-radius:8px;margin:0 0 16px;font-size:13px}
+    #emerald-redesign .er-composer-area{margin-top:30px;padding-top:8px}
+    #emerald-redesign .er-composer{background:var(--er-surface);border:1px solid var(--er-line);border-radius:14px;padding:14px 14px 12px;box-shadow:0 4px 20px #00000008}
+    #emerald-redesign .er-composer:focus-within{border-color:var(--er-blue-border);box-shadow:0 0 0 3px color-mix(in srgb,var(--er-blue) 8%,transparent)}
+    #emerald-redesign .er-composer-row{display:flex;align-items:flex-end;gap:12px}
+    #emerald-redesign .er-composer textarea{flex:1;min-width:0;resize:none;min-height:39px;height:39px;max-height:132px;border:0;background:transparent;color:var(--er-text);padding:5px 4px;line-height:1.55;font-size:16px;box-shadow:none}
+    #emerald-redesign .er-composer textarea::placeholder{color:var(--er-soft)}
+    #emerald-redesign .er-send{border:0;flex:none;width:36px;height:36px;border-radius:10px;background:var(--er-cta);color:var(--er-cta-text);display:grid;place-items:center}
+    #emerald-redesign .er-composer-foot{display:flex;align-items:center;justify-content:space-between;gap:12px;color:var(--er-soft);font-size:11px;margin:9px 2px 0}
+    #emerald-redesign .er-composer-foot span{display:flex;align-items:center;gap:5px}
+    #emerald-redesign .er-composer-foot svg{width:13px;height:13px}
+    #emerald-redesign .er-side{align-self:start;background:var(--er-surface);border:1px solid var(--er-line);border-radius:13px;min-width:0;overflow:hidden}
+    #emerald-redesign .er-side-head{display:flex;justify-content:space-between;align-items:center;padding:16px 18px;border-bottom:1px solid var(--er-line-soft)}
+    #emerald-redesign .er-side-head h2{font-size:15px}
+    #emerald-redesign .er-side-close{border:0;background:transparent;display:grid;place-items:center;width:40px;height:40px;border-radius:7px;color:var(--er-muted)}
+    #emerald-redesign .er-side-content{padding:18px;font-size:13px}
+    #emerald-redesign .er-side-content>p{color:var(--er-muted);margin-bottom:14px}
+    #emerald-redesign .er-side dl{margin:0}
+    #emerald-redesign .er-side dl div{display:flex;justify-content:space-between;gap:14px;padding:10px 0;border-bottom:1px solid var(--er-line-soft)}
+    #emerald-redesign .er-side dt{color:var(--er-muted);font-size:12px}
+    #emerald-redesign .er-side dd{margin:0;text-align:right;max-width:65%;font-variant-numeric:tabular-nums}
+    #emerald-redesign .er-side ul{padding:0;margin:16px 0 0;list-style:none}
+    #emerald-redesign .er-side li{padding:8px 0}
+    #emerald-redesign .er-side .er-side-subtitle{font-size:12px;color:var(--er-soft);margin-top:20px;margin-bottom:7px}
+    #emerald-redesign .er-side-record{border-bottom:1px solid var(--er-line-soft);padding:12px 0}
+    #emerald-redesign .er-side-record:first-child{padding-top:0}
+    #emerald-redesign .er-side-record strong{font-size:14px;font-weight:500}
+    #emerald-redesign .er-side-record p{font-size:12px;margin:5px 0;color:var(--er-muted)}
+    #emerald-redesign .er-side-record .er-tag{display:inline-block;margin:4px 0}
+    #emerald-redesign .er-sr{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap;border:0}
+    @container (min-width:1500px){#emerald-redesign .er-shell{width:min(100%,1240px)}#emerald-redesign .er-thread{width:min(100%,960px)}#emerald-redesign .er-home{padding-top:66px}#emerald-redesign .er-thread{min-height:600px}}
+    @container (max-width:860px){#emerald-redesign .er-topbar{gap:12px;padding:0 20px}#emerald-redesign .er-brand-name,#emerald-redesign .er-user-name{display:none}#emerald-redesign .er-top-tools{gap:8px}#emerald-redesign .er-shell{padding:0 20px}#emerald-redesign .er-workspace.er-has-side{grid-template-columns:minmax(0,1fr)}#emerald-redesign .er-workspace.er-has-side .er-thread{display:none}#emerald-redesign .er-side{width:100%;min-height:380px}#emerald-redesign .er-workbar{gap:8px}#emerald-redesign .er-context-tools{gap:0}#emerald-redesign .er-tool{padding:7px}#emerald-redesign .er-tool span{display:none}#emerald-redesign .er-thread{min-height:540px}}
+    @container (max-width:560px){#emerald-redesign .er-preview{padding:7px 16px;font-size:11px}#emerald-redesign .er-preview .er-preview-detail{display:none}#emerald-redesign .er-topbar{flex-wrap:wrap;padding:12px 16px;gap:12px;min-height:64px}#emerald-redesign .er-brand img{width:88px;height:21px}#emerald-redesign .er-top-tools{margin-left:auto}#emerald-redesign .er-modules{order:3;width:100%;justify-content:space-between}#emerald-redesign .er-module{flex:1;justify-content:center;min-height:44px;padding:7px 12px}#emerald-redesign .er-shell{padding:0 16px}#emerald-redesign .er-workbar{min-height:48px}#emerald-redesign .er-breadcrumb{font-size:12px}#emerald-redesign .er-breadcrumb .er-factory{display:none}#emerald-redesign .er-workspace{padding:0 0 20px}#emerald-redesign .er-thread{min-height:490px}#emerald-redesign .er-home{padding:28px 0 22px}#emerald-redesign h1{font-size:25px}#emerald-redesign .er-home p{font-size:13px}#emerald-redesign .er-eyebrow{margin-bottom:16px}#emerald-redesign .er-task-grid{grid-template-columns:1fr;gap:10px;margin-top:22px}#emerald-redesign .er-task{min-height:76px;padding:14px 16px;display:grid;grid-template-columns:25px minmax(0,1fr);align-items:center;column-gap:12px}#emerald-redesign .er-task .er-task-icon{grid-row:1/3;margin:0}#emerald-redesign .er-task strong{font-size:14px}#emerald-redesign .er-task small{margin-top:2px;font-size:12px}#emerald-redesign .er-home-note{margin-top:16px;font-size:11px}#emerald-redesign .er-composer-area{margin-top:14px}#emerald-redesign .er-composer textarea{font-size:16px}#emerald-redesign .er-send,#emerald-redesign .er-theme,#emerald-redesign .er-side-close{width:44px;height:44px}#emerald-redesign .er-composer-foot .er-keyboard-hint{display:none}#emerald-redesign .er-candidates{grid-template-columns:1fr}#emerald-redesign .er-card-head,#emerald-redesign .er-form-content{padding:17px}#emerald-redesign .er-card-head{align-items:flex-start}#emerald-redesign .er-form-actions{padding:14px 17px;flex-wrap:wrap}#emerald-redesign .er-fields{grid-template-columns:1fr;gap:14px}#emerald-redesign .er-field input,#emerald-redesign .er-field select{font-size:16px;min-height:44px}#emerald-redesign .er-field{font-size:13px}#emerald-redesign .er-button{min-height:44px}#emerald-redesign .er-review-actions{width:100%}#emerald-redesign .er-review-actions .er-primary{width:100%;order:-1;margin:0}#emerald-redesign .er-review-grid{gap:0 16px}#emerald-redesign .er-review-grid dd{font-size:18px}#emerald-redesign .er-success{padding:22px}#emerald-redesign .er-object{gap:7px}#emerald-redesign .er-tool{width:44px;min-height:44px}#emerald-redesign .er-user-line{margin-top:8px;margin-bottom:20px}}
+    @media(prefers-reduced-motion:reduce){#emerald-redesign *{transition:none!important}}
+  </style>
+
+  <div class="er-preview"><strong>新版畫面提案</strong><span>互動示範 <span class="er-preview-detail">· 示範資料，未連接 MES</span></span></div>
+  <header class="er-topbar">
+    <div class="er-brand"><img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjI0IDE4IDIwNSA0OCIgcm9sZT0iaW1nIiBhcmlhLWxhYmVsbGVkYnk9ImJyYW5kLXRpdGxlIj4KICA8dGl0bGUgaWQ9ImJyYW5kLXRpdGxlIj7lqIHlj4vnp5HmioDlk4HniYzmqJnoqow8L3RpdGxlPgogIDxkZXNjPuS+neaXouacieWogeWPi+enkeaKgOaomeiqjOi8quW7k+e5quijve+8jOS9v+eUqOmAj+aYjuiDjOaZr+iIh+a3seiXjeiJsu+8m21hcmsg5qqi6KaW5Y+q6aGv56S65ZOB54mM56ym6Jmf44CCPC9kZXNjPgogIDx2aWV3IGlkPSJtYXJrIiB2aWV3Qm94PSIyNCAxOCA1NCA0OCIvPgogIDxwYXRoIGZpbGw9IiMxNzFkNjMiIGZpbGwtcnVsZT0iZXZlbm9kZCIgZD0iTTI3IDIzIEwyOCAyMyBMMjggMjIgTDM1IDIyIEwzNSAyMyBMMzYgMjMgTDM2IDI0IEwzNyAyNCBMMzcgMjUgTDM4IDI1IEwzOCAyNiBMMzkgMjYgTDM5IDI3IEw0MSAyOCBMNDEgMzAgTDQyIDMwIEw0MiAzMSBMNDMgMzEgTDQzIDMyIEw0NSAzMyBMNDUgMzUgTDQ2IDM1IEw0NiAzNiBMNDggMzcgTDQ3IDQxIEw0NiA0MSBMNDYgNDIgTDQ0IDQzIEw0NCA0NSBMNDMgNDUgTDQzIDQ2IEw0MSA0NyBMNDEgNDkgTDM5IDUwIEwzOSA1MiBMMzggNTIgTDM4IDUzIEwzNyA1MyBMMzYgNTUgTDM0IDU1IEwzNCA1MCBMMzMgNTAgTDMzIDQ2IEwzMiA0NiBMMzIgNDIgTDMxIDQyIEwzMSAzNyBMMzAgMzcgTDMwIDMzIEwyOSAzMyBMMjkgMjkgTDI4IDI5IEwyOCAyNCBMMjcgMjQgWiBNMzggNTggTDM5IDU4IEwzOSA1NiBMNDAgNTYgTDQwIDU1IEw0MiA1NCBMNDIgNTIgTDQzIDUyIEw0MyA1MSBMNDUgNTAgTDQ1IDQ4IEw0NiA0OCBMNDYgNDcgTDQ4IDQ2IEw0OCA0NCBMNDkgNDQgTDQ5IDQzIEw1MSA0MiBMNTEgNDAgTDUyIDQwIEw1MiAzOSBMNTQgMzggTDU0IDM2IEw1NSAzNiBMNTUgMzUgTDU3IDM0IEw1NyAzMiBMNTggMzIgTDU4IDMxIEw2MCAzMCBMNjAgMjggTDYxIDI4IEw2MSAyNyBMNjMgMjYgTDYzIDI0IEw2NCAyNCBMNjUgMjIgTDczIDIyIEw3MyAyMyBMNzQgMjMgTDc0IDI1IEw3MyAyNSBMNzMgMjkgTDcyIDI5IEw3MiAzNSBMNzEgMzUgTDcxIDM5IEw3MCAzOSBMNzAgNDUgTDY5IDQ1IEw2OSA0OSBMNjggNDkgTDY3IDYwIEw2NSA2MCBMNjUgNjEgTDYxIDYwIEw2MSA1OSBMNjAgNTkgTDYwIDU3IEw1OSA1NyBMNTkgNTYgTDU4IDU2IEw1OCA1NSBMNTYgNTQgTDU1IDUwIEw1NiA1MCBMNTYgNDggTDU3IDQ4IEw1NyA0NiBMNTggNDYgTDU4IDQ0IEw1NyA0NCBMNTcgNDMgTDU1IDQzIEw1NSA0NCBMNTQgNDQgTDU0IDQ1IEw1MyA0NSBMNTMgNDYgTDUxIDQ3IEw1MSA0OSBMNTAgNDkgTDUwIDUwIEw0OSA1MCBMNDkgNTEgTDQ3IDUyIEw0NyA1NCBMNDYgNTQgTDQ2IDU1IEw0NSA1NSBMNDUgNTYgTDQ0IDU2IEw0NCA1NyBMNDMgNTcgTDQzIDU4IEw0MiA1OCBMNDIgNTkgTDQxIDU5IEw0MCA2MSBMMzggNjAgWiBNODMgNTQgTDg0IDU0IEw4NCA1MiBMODUgNTIgTDg1IDQ3IEw4NiA0NyBMODYgMzAgTDEwMyAzMCBMMTAzIDI2IEwxMDcgMjYgTDEwNyAzMCBMMTExIDMwIEwxMTEgMjkgTDEwOSAyOCBMMTA5IDI2IEwxMTIgMjYgTDExMiAyNyBMMTE0IDI4IEwxMTMgMzAgTDExNSAzMCBMMTE1IDMzIEwxMDggMzMgTDEwOCAzNCBMMTA3IDM0IEwxMDcgNDEgTDEwOCA0MSBMMTA4IDQ0IEwxMDkgNDQgTDEwOSA0MSBMMTEwIDQxIEwxMTAgMzcgTDExNCAzNyBMMTE0IDM5IEwxMTMgMzkgTDExMyA0MyBMMTEyIDQzIEwxMTIgNDUgTDExMSA0NSBMMTExIDQ3IEwxMTAgNDcgTDExMCA0OSBMMTA5IDQ5IEwxMTAgNTMgTDExMiA1MyBMMTEyIDUyIEwxMTMgNTIgTDExMyA0OSBMMTE1IDQ5IEwxMTUgNTAgTDExNiA1MCBMMTE2IDUxIEwxMTUgNTEgTDExNSA1NSBMMTE0IDU1IEwxMTMgNTcgTDExMCA1NyBMMTEwIDU2IEwxMDggNTYgTDEwOCA1NCBMMTA3IDU0IEwxMDcgNTMgTDEwNiA1MyBMMTA2IDU0IEwxMDUgNTQgTDEwNCA1NiBMMTAxIDU2IEwxMDEgNTUgTDEwMCA1NSBMMTAwIDU0IEw5OCA1NCBMOTggNTMgTDk3IDUzIEw5NyA1NCBMOTUgNTQgTDk1IDU1IEw5NCA1NSBMOTQgNTYgTDkyIDU2IEw5MiA1NyBMOTEgNTcgTDkxIDU1IEw5MCA1NSBMOTAgNTQgTDkyIDU0IEw5MiA1MyBMOTQgNTMgTDk0IDUyIEw5NSA1MiBMOTQgNTAgTDkxIDUwIEw5MSA0NiBMOTIgNDYgTDkyIDQ0IEw5MCA0MyBMOTAgNDEgTDkzIDQxIEw5MyA0MCBMOTQgNDAgTDk0IDM4IEw5MSAzOCBMOTEgMzYgTDEwMiAzNiBMMTAyIDM4IEw5NyAzOCBMOTcgNDAgTDk2IDQwIEw5NiA0MSBMMTAzIDQxIEwxMDMgNDQgTDEwMSA0NCBMMTAxIDQ3IEwxMDAgNDcgTDEwMCA1MSBMMTAxIDUxIEwxMDEgNTMgTDEwNSA1MSBMMTA1IDQ1IEwxMDQgNDUgTDEwNCAzNCBMMTAzIDM0IEwxMDMgMzMgTDkwIDMzIEw5MCAzNCBMODkgMzQgTDg5IDQ4IEw4OCA0OCBMODggNTMgTDg3IDUzIEw4NyA1NSBMODYgNTUgTDg2IDU2IEw4NSA1NiBMODUgNTUgTDgzIDU1IFogTTk0IDQ1IEw5NCA0OCBMOTYgNDggTDk2IDQ5IEw5NyA0OSBMOTcgNDggTDk4IDQ4IEw5OCA0NCBMOTUgNDQgTDk1IDQ1IFogTTEyMCA1MiBMMTIxIDUyIEwxMjEgNTEgTDEyMiA1MSBMMTIyIDUwIEwxMjQgNDkgTDEyNCA0NyBMMTI1IDQ3IEwxMjUgNDUgTDEyNiA0NSBMMTI2IDQzIEwxMjcgNDMgTDEyNyA0MCBMMTI4IDQwIEwxMjggMzYgTDEyOSAzNiBMMTI5IDM0IEwxMjEgMzQgTDEyMSAzMSBMMTI5IDMxIEwxMjkgMjYgTDEzMyAyNiBMMTMzIDMxIEwxNTAgMzEgTDE1MCAzNCBMMTMyIDM0IEwxMzIgMzggTDE0NiAzOCBMMTQ2IDM5IEwxNDcgMzkgTDE0NyA0MiBMMTQ2IDQyIEwxNDUgNDYgTDE0NCA0NiBMMTQ0IDQ3IEwxNDIgNDggTDE0MiA1MSBMMTQ0IDUxIEwxNDQgNTIgTDE0NyA1MiBMMTQ3IDUzIEwxNTEgNTMgTDE1MSA1NCBMMTUwIDU0IEwxNTAgNTYgTDE0NSA1NiBMMTQ1IDU1IEwxNDMgNTUgTDE0MyA1NCBMMTQwIDU0IEwxNDAgNTMgTDEzNyA1MyBMMTM3IDU0IEwxMzUgNTQgTDEzNSA1NSBMMTMzIDU1IEwxMzMgNTYgTDEyOSA1NiBMMTI5IDU1IEwxMjggNTUgTDEyOCA1MyBMMTMxIDUzIEwxMzEgNTIgTDEzNSA1MSBMMTM1IDQ5IEwxMzMgNDggTDEzMyA0NiBMMTMyIDQ2IEwxMzEgNDQgTDEyOSA0NSBMMTI5IDQ3IEwxMjggNDcgTDEyOCA0OSBMMTI3IDQ5IEwxMjcgNTEgTDEyNSA1MiBMMTI1IDU0IEwxMjQgNTQgTDEyNCA1NSBMMTIwIDU0IFogTTEzNCA0MSBMMTM0IDQ0IEwxMzUgNDQgTDEzNSA0NSBMMTM2IDQ1IEwxMzYgNDYgTDEzNyA0NiBMMTM3IDQ3IEwxMzkgNDggTDEzOSA0NyBMMTQwIDQ3IEwxNDAgNDUgTDE0MiA0NCBMMTQyIDQxIFogTTE1NiAzNSBMMTYxIDM1IEwxNjEgMzEgTDE1NyAzMSBMMTU3IDI5IEwxNTggMjkgTDE1OCAyOCBMMTYyIDI4IEwxNjIgMjcgTDE2NiAyNyBMMTY2IDI2IEwxNjcgMjYgTDE2NyAyNyBMMTY5IDI4IEwxNjkgMjkgTDE2NSAzMCBMMTY1IDM1IEwxNjkgMzUgTDE2OSAzOCBMMTY1IDM4IEwxNjUgNDAgTDE2NiA0MCBMMTY2IDQxIEwxNjcgNDEgTDE2NyA0MiBMMTY5IDQzIEwxNjkgNDUgTDE2OCA0NSBMMTY4IDQ2IEwxNjcgNDYgTDE2NyA0NSBMMTY1IDQ0IEwxNjUgNTcgTDE2MSA1NyBMMTYxIDQ1IEwxNjAgNDUgTDE2MCA0NyBMMTU5IDQ3IEwxNTggNTEgTDE1NyA1MSBMMTU3IDQ5IEwxNTYgNDkgTDE1NyA0NSBMMTU4IDQ1IEwxNTggNDQgTDE1OSA0NCBMMTU5IDQyIEwxNjAgNDIgTDE2MCAzOCBMMTU2IDM4IFogTTE3MCA0NyBMMTc1IDQ3IEwxNzUgNDYgTDE4MCA0NiBMMTgwIDQ1IEwxODEgNDUgTDE4MSAyNiBMMTg0IDI2IEwxODQgNDUgTDE4NiA0NSBMMTg2IDQ0IEwxODggNDUgTDE4OCA0OCBMMTg0IDQ4IEwxODQgNTcgTDE4MSA1NyBMMTgxIDQ5IEwxNzcgNDkgTDE3NyA1MCBMMTcwIDUwIFogTTE3MSAzOCBMMTcyIDM4IEwxNzIgMzcgTDE3NCAzNyBMMTc0IDM4IEwxNzUgMzggTDE3NSAzOSBMMTc3IDQwIEwxNzcgNDMgTDE3NSA0MyBMMTc1IDQyIEwxNzQgNDIgTDE3NCA0MSBMMTczIDQxIEwxNzMgNDAgTDE3MiA0MCBaIE0xNzIgMjkgTDE3MyAyOSBMMTczIDI4IEwxNzUgMjggTDE3NSAyOSBMMTc2IDI5IEwxNzYgMzAgTDE3NyAzMCBMMTc3IDMxIEwxNzggMzEgTDE3OSAzMyBMMTc3IDMzIEwxNzcgMzQgTDE3NiAzNCBMMTc2IDMzIEwxNzUgMzMgTDE3NSAzMiBMMTc0IDMyIEwxNzQgMzEgTDE3MyAzMSBaIE0xOTIgNDMgTDE5MyA0MyBMMTkzIDQyIEwxOTcgNDIgTDE5NyAzNiBMMTk2IDM2IEwxOTYgMzUgTDE5MyAzNSBMMTkzIDMyIEwxOTcgMzIgTDE5NyAyNiBMMjAwIDI2IEwyMDAgMzIgTDIwNCAzMiBMMjA0IDM1IEwyMDEgMzUgTDIwMSAzNiBMMjAwIDM2IEwyMDAgNDEgTDIwMiA0MSBMMjAyIDQwIEwyMDQgNDEgTDIwNCA0MyBMMjAzIDQzIEwyMDMgNDQgTDIwMCA0NCBMMjAwIDU1IEwxOTkgNTUgTDE5OSA1NiBMMTk2IDU2IEwxOTYgNTcgTDE5NCA1NyBMMTk0IDU1IEwxOTMgNTUgTDE5MyA1NCBMMTk2IDU0IEwxOTYgNTMgTDE5NyA1MyBMMTk3IDQ2IEwxOTYgNDYgTDE5NiA0NSBMMTk1IDQ1IEwxOTUgNDYgTDE5MyA0NiBMMTkzIDQ0IEwxOTIgNDQgWiBNMjAzIDUzIEwyMDcgNTMgTDIwNyA1MiBMMjExIDUxIEwyMTEgNDkgTDIxMCA0OSBMMjEwIDQ4IEwyMDggNDcgTDIwOCA0NSBMMjA3IDQ1IEwyMDcgNDMgTDIwNiA0MyBMMjA2IDQxIEwyMDUgNDEgTDIwNSAzOCBMMjEyIDM4IEwyMTIgMzQgTDIwNSAzNCBMMjA1IDMxIEwyMTIgMzEgTDIxMiAyNiBMMjE2IDI2IEwyMTYgMzEgTDIyMyAzMSBMMjIzIDM0IEwyMTYgMzQgTDIxNiAzOCBMMjIyIDM4IEwyMjIgMzkgTDIyMyAzOSBMMjIzIDQxIEwyMjIgNDEgTDIyMiA0MyBMMjIxIDQzIEwyMjAgNDcgTDIxOSA0NyBMMjE5IDQ4IEwyMTcgNDkgTDIxNyA1MSBMMjE5IDUxIEwyMjAgNTMgTDIyMyA1MyBMMjI0IDU1IEwyMjMgNTUgTDIyMyA1NiBMMjE5IDU2IEwyMTkgNTUgTDIxNyA1NSBMMjE3IDU0IEwyMTUgNTQgTDIxNSA1MyBMMjEyIDUzIEwyMTIgNTQgTDIxMCA1NCBMMjEwIDU1IEwyMDggNTUgTDIwOCA1NiBMMjA0IDU2IEwyMDQgNTUgTDIwMyA1NSBaIE0yMTAgNDEgTDIxMCA0NCBMMjEyIDQ1IEwyMTIgNDcgTDIxMyA0NyBMMjEzIDQ4IEwyMTQgNDggTDIxNCA0NyBMMjE1IDQ3IEwyMTUgNDYgTDIxNiA0NiBMMjE2IDQ1IEwyMTggNDQgTDIxOCA0MSBaIi8+Cjwvc3ZnPgo=" alt="威友科技"><span class="er-brand-name">生產助理</span></div>
+    <nav class="er-modules" aria-label="作業模組">
+      <button class="er-module" data-module="schedule" aria-pressed="true" type="button"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-calendar-days" aria-hidden="true"><path d="M8 2v3"></path><path d="M16 2v3"></path><rect x="3" y="3" width="18" height="18" rx="2"></rect><path d="M3 9h18"></path><path d="M8 13h.01"></path><path d="M12 13h.01"></path><path d="M16 13h.01"></path><path d="M8 17h.01"></path><path d="M12 17h.01"></path><path d="M16 17h.01"></path></svg>排程</button>
+      <button class="er-module" data-module="report" aria-pressed="false" type="button"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-clipboard-check" aria-hidden="true"><rect width="8" height="4" x="8" y="2" rx="1" ry="1"></rect><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path><path d="m9 14 2 2 4-4"></path></svg>報工</button>
+      <button class="er-module" data-module="mold" aria-pressed="false" type="button"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-wrench" aria-hidden="true"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.106-3.105c.32-.322.863-.22.983.218a6 6 0 0 1-8.259 7.057l-7.91 7.91a1 1 0 0 1-2.999-3l7.91-7.91a6 6 0 0 1 7.057-8.259c.438.12.54.662.219.984z"></path></svg>上下模</button>
+    </nav>
+    <div class="er-top-tools"><button class="er-theme" type="button" aria-label="切換深色或淺色主題"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-sun-moon" aria-hidden="true"><path d="M12 2v2"></path><path d="M14.837 16.385a6 6 0 1 1-7.223-7.222c.624-.147.97.66.715 1.248a4 4 0 0 0 5.26 5.259c.589-.255 1.396.09 1.248.715"></path><path d="M16 12a4 4 0 0 0-4-4"></path><path d="m19 5-1.256 1.256"></path><path d="M20 12h2"></path></svg></button><div class="er-user"><span class="er-avatar" aria-hidden="true">示</span><span class="er-user-name">示範人員</span></div></div>
+  </header>
+  <div class="er-shell">
+    <div class="er-workbar">
+      <div class="er-breadcrumb"><span class="er-factory">高塑 · EPS 成型</span><span class="er-slash er-factory">/</span><strong id="er-module-title">生產排程</strong></div>
+      <div class="er-context-tools" hidden>
+        <button class="er-tool" data-panel="summary" type="button" aria-label="本次作業摘要" aria-expanded="false"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-panel-right" aria-hidden="true"><rect width="18" height="18" x="3" y="3" rx="2"></rect><path d="M15 3v18"></path></svg><span>本次作業</span></button>
+        <button class="er-tool" data-panel="data" type="button" aria-label="查看資料" aria-expanded="false"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-search" aria-hidden="true"><path d="m21 21-4.34-4.34"></path><circle cx="11" cy="11" r="8"></circle></svg><span>查看資料</span></button>
+        <button class="er-tool" data-panel="history" type="button" aria-label="操作紀錄" aria-expanded="false"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-rotate-ccw-clock lucide-history" aria-hidden="true"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"></path><path d="M3 3v5h5"></path><path d="M12 7v5l4 2"></path></svg><span>操作紀錄</span></button>
+      </div>
+    </div>
+    <div class="er-workspace">
+      <main class="er-thread">
+        <div class="er-body">
+          <div class="er-notice" role="status" hidden></div>
+          <div class="er-user-line" hidden><p></p></div>
+          <section class="er-home" aria-label="開始作業">
+            <div class="er-eyebrow"><span class="er-small-mark" aria-hidden="true">e</span>EMERALD ASSISTANT</div>
+            <h1>今天，要安排什麼？</h1>
+            <p>描述需求，或選一項作業開始。<br>需要的資料，我會帶你一步步補齊。</p>
+            <div class="er-task-grid">
+              <button type="button" class="er-task er-featured" data-start="create"><span class="er-task-icon"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-calendar-plus" aria-hidden="true"><path d="M16 18h6"></path><path d="M16 2v3"></path><path d="M19 15v6"></path><path d="M21 11.5V5a2 2 0 00-2-2H5a2 2 0 00-2 2v14a2 2 0 002 2h8.3"></path><path d="M3 9h18"></path><path d="M8 2v3"></path></svg></span><strong>新增排程</strong><small>選設備、工單與生產參數</small></button>
+              <button type="button" class="er-task" data-start="query"><span class="er-task-icon"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-search" aria-hidden="true"><path d="m21 21-4.34-4.34"></path><circle cx="11" cy="11" r="8"></circle></svg></span><strong>查詢排程</strong><small>先看資料，不變更現場作業</small></button>
+              <button type="button" class="er-task" data-start="edit"><span class="er-task-icon"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-sliders-horizontal" aria-hidden="true"><path d="M10 5H3"></path><path d="M12 19H3"></path><path d="M14 3v4"></path><path d="M16 17v4"></path><path d="M21 12h-9"></path><path d="M21 19h-5"></path><path d="M21 5h-7"></path><path d="M8 10v4"></path><path d="M8 12H3"></path></svg></span><strong>調整排程</strong><small>找到原排程，再修改內容</small></button>
+            </div>
+            <div class="er-home-note"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-shield-check" aria-hidden="true"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"></path><path d="m9 12 2 2 4-4"></path></svg>每次變更都會先讓你核對，確認後才執行。</div>
+          </section>
+
+          <section class="er-conversation" aria-label="目前作業" hidden>
+            <div class="er-assistant-label"><span class="er-small-mark" aria-hidden="true">e</span>Emerald <span>·</span><span class="er-assistant-stage">先確認作業對象</span></div>
+            <section class="er-select-stage">
+              <div class="er-prompt-copy"><h2>先選擇這次的設備與工單</h2><p>選好對象後，接著填寫本次作業內容。</p></div>
+              <div class="er-candidates">
+                <button type="button" class="er-candidate" data-order="A"><span class="er-candidate-top"><strong>WO-A</strong><span class="er-tag er-blue">可安排</span></span><span class="er-candidate-detail">MC37 · EPS-A</span><span class="er-candidate-bottom"><span>MOLD-A · 工單 A</span><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-up-right" aria-hidden="true"><path d="M7 7h10v10"></path><path d="M7 17 17 7"></path></svg></span></button>
+                <button type="button" class="er-candidate" data-order="B"><span class="er-candidate-top"><strong>WO-B</strong><span class="er-tag er-blue">可安排</span></span><span class="er-candidate-detail">MC37 · EPS-B</span><span class="er-candidate-bottom"><span>MOLD-A · 工單 B</span><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-up-right" aria-hidden="true"><path d="M7 7h10v10"></path><path d="M7 17 17 7"></path></svg></span></button>
+              </div>
+              <div style="margin-top:18px"><button class="er-button er-quiet" type="button" data-action="home"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-left" aria-hidden="true"><path d="m12 19-7-7 7-7"></path><path d="M19 12H5"></path></svg>回作業選擇</button></div>
+            </section>
+
+            <section class="er-query-card" aria-label="唯讀查詢結果" hidden>
+              <div class="er-card-head"><div><h2>工單資料</h2><p>目前只查看資料，尚未建立異動草稿。</p></div><span class="er-tag">唯讀</span></div>
+              <div class="er-form-content"><div class="er-object"><strong class="er-selected-machine">MC37</strong><span>·</span><strong class="er-selected-order">WO-A</strong><span class="er-selected-part">EPS-A / MOLD-A</span></div><dl class="er-review-grid er-query-grid"></dl><p class="er-review-note">以上為合成的示範資料；正式產品須讀取即時資料。</p></div>
+              <div class="er-form-actions"><button class="er-button er-quiet" type="button" data-action="home">回作業選擇</button><button class="er-button er-primary" type="button" data-action="from-query">以此工單新增排程</button></div>
+            </section>
+
+            <form class="er-form-card" novalidate hidden>
+              <div class="er-card-head"><div><h2 class="er-form-title">填寫生產參數</h2><p>補齊內容後，再一起核對。</p></div><span class="er-tag">草稿 · 尚未寫入</span></div>
+              <div class="er-form-content">
+                <div class="er-object"><strong class="er-selected-machine">MC37</strong><span>·</span><strong class="er-selected-order">WO-A</strong><span class="er-selected-part">EPS-A / MOLD-A</span><button type="button" class="er-link" data-action="change-order">更換工單</button></div>
+                <div class="er-error" role="alert" hidden></div>
+                <div class="er-fields" data-fields="schedule">
+                  <label class="er-field er-wide" for="er-start-time">開始時間（MES UTC+07:00）<input id="er-start-time" name="start_time" type="datetime-local" value="2026-11-01T08:00" required></label>
+                  <label class="er-field" for="er-cycle">週期（秒）<input id="er-cycle" name="cycle_seconds" type="number" min="1" max="2147483647" step="1" value="60" required></label>
+                  <label class="er-field" for="er-shots">目標模次<input id="er-shots" name="target_shots" type="number" min="0" max="2147483647" step="1" placeholder="例如 500" required></label>
+                  <label class="er-field" for="er-cavities">工單分配模穴數<input id="er-cavities" name="cavities" type="number" min="0" max="2147483647" step="1" value="2" required></label>
+                  <label class="er-field" for="er-production-state">生產狀態<select id="er-production-state" name="status"><option value="RUN">RUN</option><option value="DO">DO</option><option value="TRY">TRY</option></select></label>
+                </div>
+                <div class="er-fields" data-fields="report" hidden>
+                  <label class="er-field er-wide" for="er-good">這一筆人工良品數量<input id="er-good" name="ok" type="number" min="0" max="2147483647" step="1" placeholder="例如 120" required><span class="er-field-help">填寫本次新增量，人工報工與 IoT 推算產量分開記錄。</span></label>
+                  <fieldset class="er-choice-group"><legend>有不良品嗎？</legend><label><input type="radio" name="er-defect-choice" value="none">沒有不良品</label><label><input type="radio" name="er-defect-choice" value="some">有，補充原因與數量</label></fieldset>
+                  <label class="er-field er-defect-field" for="er-defect-code" hidden>不良原因<select id="er-defect-code" name="defect_code"><option value="">請選擇</option><option value="NG01">NG01 · 缺料</option><option value="NG02">NG02 · 破損</option></select></label>
+                  <label class="er-field er-defect-field" for="er-defect-qty" hidden>不良數量<input id="er-defect-qty" name="defect_quantity" type="number" min="0" max="2147483647" step="1" placeholder="例如 2"></label>
+                </div>
+                <div class="er-fields" data-fields="mold" hidden>
+                  <div class="er-field er-wide">本次操作<strong style="color:var(--er-text);font-weight:500;font-size:16px">上模開始</strong><span class="er-field-help">只處理這一階段，其他階段仍需分別核對。</span></div>
+                  <label class="er-field er-wide" for="er-mold-time">執行時間（由 MES 記錄）<input id="er-mold-time" type="text" value="確認執行時，由 MES 記錄" readonly><span class="er-field-help">使用 MES UTC+07:00；這個欄位不提供人工補登。</span></label>
+                </div>
+              </div>
+              <div class="er-form-actions"><button class="er-button er-quiet" type="button" data-action="home">取消本次草稿</button><button class="er-button er-primary" type="submit">下一步：核對內容<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right" aria-hidden="true"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg></button></div>
+            </form>
+
+            <section class="er-review-card" aria-label="核對內容" hidden>
+              <div class="er-card-head"><div><h2 class="er-review-title">核對這筆排程</h2><p>確認設備、工單與本次異動。</p></div><span class="er-tag er-blue">待你確認</span></div>
+              <div class="er-form-content"><div class="er-object"><strong class="er-selected-machine">MC37</strong><span>·</span><strong class="er-selected-order">WO-A</strong><span class="er-selected-part">EPS-A / MOLD-A</span></div><dl class="er-review-grid"></dl><p class="er-review-note"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-shield-check" aria-hidden="true"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"></path><path d="m9 12 2 2 4-4"></path></svg><span>這是示範確認卡。點選同意只會展示回執，不會寫入 MES。</span></p></div>
+              <div class="er-form-actions er-review-actions"><button class="er-button" type="button" data-action="edit"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-pencil" aria-hidden="true"><path d="M21.174 6.812a1 1 0 0 0-3.986-3.987L3.842 16.174a2 2 0 0 0-.5.83l-1.321 4.352a.5.5 0 0 0 .623.622l4.353-1.32a2 2 0 0 0 .83-.497z"></path><path d="m15 5 4 4"></path></svg>返回修改</button><button class="er-button er-quiet" type="button" data-action="home">取消草稿</button><button class="er-button er-primary" type="button" data-action="confirm"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-check" aria-hidden="true"><path d="M20 6 9 17l-5-5"></path></svg>同意並完成示範</button></div>
+            </section>
+
+            <section class="er-success" aria-label="示範結果" hidden><div class="er-success-icon"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-check-check" aria-hidden="true"><path d="M18 6 7 17l-5-5"></path><path d="m22 10-7.5 7.5L13 16"></path></svg></div><h2>這筆作業，已完成示範</h2><p>整段流程保留在同一個工作區，不需要重新找入口。</p><div class="er-result-summary"></div><p>此預覽未連接 MES，沒有產生正式異動。</p><div style="display:flex;flex-wrap:wrap;gap:10px;margin-top:20px"><button class="er-button er-primary" type="button" data-action="again">同工單再做一筆</button><button class="er-button" type="button" data-action="home">回作業選擇</button></div></section>
+          </section>
+        </div>
+
+        <div class="er-composer-area">
+          <form class="er-composer"><div class="er-composer-row"><label class="er-sr" for="er-message">描述作業需求</label><textarea id="er-message" rows="1" placeholder="例如：幫 MC37 安排一筆排程" maxlength="1000"></textarea><button class="er-send" type="submit" aria-label="送出需求"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-up" aria-hidden="true"><path d="m5 12 7-7 7 7"></path><path d="M12 19V5"></path></svg></button></div></form>
+          <div class="er-composer-foot"><span><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-shield-check" aria-hidden="true"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"></path><path d="m9 12 2 2 4-4"></path></svg>核對後才會寫入</span><span class="er-keyboard-hint">Enter 送出 · Shift + Enter 換行</span><span>MES UTC+07:00</span></div>
+        </div>
+      </main>
+      <aside class="er-side" aria-label="作業附屬面板" hidden><div class="er-side-head"><h2>本次作業</h2><button class="er-side-close" type="button" aria-label="收起附屬面板"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-x" aria-hidden="true"><path d="M18 6 6 18"></path><path d="m6 6 12 12"></path></svg></button></div><div class="er-side-content"></div></aside>
+    </div>
+  </div>
+  <div class="er-sr er-announcement" role="status" aria-live="polite"></div>
+  <script>
+    (()=>{
+      const root=document.getElementById('emerald-redesign');
+      if(!root||root.dataset.initialized)return;
+      root.dataset.initialized='true';
+      const q=s=>root.querySelector(s),qa=s=>Array.from(root.querySelectorAll(s));
+      const safe=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+      const configs={
+        schedule:{title:'生產排程',hero:'今天，要安排什麼？',tasks:['新增排程','查詢排程','調整排程'],details:['選設備、工單與生產參數','先看資料，不變更現場作業','找到原排程，再修改內容'],example:'例如：幫 MC37 安排一筆排程',form:'填寫生產參數',review:'核對這筆排程',machine:'MC37',status:'可安排',first:'er-shots'},
+        report:{title:'生產報工',hero:'這次產量，記好了嗎？',tasks:['新增報工','查詢報工','修改報工'],details:['記下本次良品與不良','查看人工報工與生產紀錄','找到原報工，再核對修改'],example:'例如：MC37 良品 120、缺料 2',form:'填寫這次的產量',review:'核對這筆人工報工',machine:'MC37',status:'生產中',first:'er-good'},
+        mold:{title:'模具上下模',hero:'一起完成現場換模。',tasks:['開始上模','查詢模具','查看作業紀錄'],details:['確認設備與上模開始','先確認設備與模具狀態','查看本次預覽已完成的操作'],example:'例如：我要查看 MC36 的待上模工單',form:'確認這次的上模作業',review:'核對上模開始',machine:'MC36',status:'待上模',first:'er-mold-time'}
+      };
+      let module='schedule',stage='home',intent='create',order='A',panel=null,lastTrigger=null,changingOrder=false;
+      const history=[];
+      const announce=text=>q('.er-announcement').textContent=text;
+      function icons(){if(typeof lucide!=='undefined')lucide.createIcons({attrs:{width:18,height:18}});}
+      function showNotice(text){q('.er-notice').textContent=text;q('.er-notice').hidden=!text;}
+      function theme(){const current=root.dataset.appearance||(matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light');const next=current==='dark'?'light':'dark';root.dataset.appearance=next;root.style.colorScheme=next;announce(next==='dark'?'已切換深色主題':'已切換淺色主題');}
+      q('.er-theme').addEventListener('click',theme);
+      function fields(){return q('[data-fields="'+module+'"]');}
+      function activeInputs(){return Array.from(fields().querySelectorAll('input,select')).filter(el=>!el.closest('[hidden]'));}
+      function summaryEntries(){
+        if(module==='schedule')return [['開始時間 · UTC+07:00',q('#er-start-time').value.replace('T',' ')||'尚未填寫'],['週期',q('#er-cycle').value?q('#er-cycle').value+' 秒':'尚未填寫'],['目標模次',q('#er-shots').value!==''?q('#er-shots').value+' 模次':'尚未填寫'],['模穴數',q('#er-cavities').value!==''?q('#er-cavities').value+' 穴':'尚未填寫'],['生產狀態',q('#er-production-state').value]];
+        if(module==='report'){const choice=q('[name="er-defect-choice"]:checked')?.value;return [['人工良品',q('#er-good').value!==''?q('#er-good').value+' 件':'尚未填寫'],['不良品',!choice?'尚未回答':choice==='none'?'沒有不良品':(q('#er-defect-code').selectedOptions[0].textContent+' / '+(q('#er-defect-qty').value||'未填')+' 件')]];}
+        return [['本次動作','上模開始'],['執行時間','由 MES 於執行時記錄（UTC+07:00）']];
+      }
+      function missing(){
+        const rows=[];
+        for(const el of activeInputs())if(el.required&&el.value==='')rows.push({id:el.id,label:el.closest('label')?.childNodes[0]?.textContent?.trim()||'必填資料'});
+        if(module==='report'&&!q('[name="er-defect-choice"]:checked'))rows.push({id:'defect-choice',label:'有無不良品'});
+        return rows;
+      }
+      function closePanel(restore=true){panel=null;q('.er-side').hidden=true;q('.er-workspace').classList.remove('er-has-side');qa('[data-panel]').forEach(el=>el.setAttribute('aria-expanded','false'));if(restore&&lastTrigger?.isConnected)lastTrigger.focus();}
+      function fillSide(){
+        if(!panel)return;
+        const content=q('.er-side-content'),conf=configs[module];
+        q('.er-side-head h2').textContent={summary:'本次作業',data:'查看資料',history:'操作紀錄'}[panel];
+        if(panel==='summary'){
+          const hasOrder=['query','form','review','result'].includes(stage),status={home:'尚未開始',select:'選擇對象',query:'唯讀查詢',form:'補齊資料',review:'等待核對',result:'示範完成'}[stage];
+          content.innerHTML='<p><span class="er-tag er-blue">'+safe(status)+'</span></p>'+(hasOrder?'<h3>'+conf.machine+' · WO-'+order+'</h3><p class="er-side-subtitle">EPS-'+order+' / MOLD-A</p><dl>'+summaryEntries().map(([k,v])=>'<div><dt>'+safe(k)+'</dt><dd>'+safe(v)+'</dd></div>').join('')+'</dl>':'<p>先選擇本次作業對象，摘要會跟著更新。</p>');
+          if(stage==='form'){const lacks=missing();content.innerHTML+='<p class="er-side-subtitle">'+(lacks.length?'尚需補充':'已填齊，可前往核對')+'</p><ul>'+lacks.map(x=>'<li><button type="button" class="er-link" data-focus="'+safe(x.id)+'">補上'+safe(x.label)+' →</button></li>').join('')+'</ul><p class="er-side-subtitle">此為本機示範草稿，未寫入 MES。</p>';}
+          if(stage==='review')content.innerHTML+='<p class="er-side-subtitle">確認按鈕保留在主流程，這裡只提供摘要。</p>';
+        }else if(panel==='data'){
+          content.innerHTML='<p>示範工單資料。查看不會改變目前草稿。</p>'+['A','B'].map(x=>'<article class="er-side-record"><strong>'+conf.machine+' · WO-'+x+'</strong><p>EPS-'+x+' / MOLD-A</p><span class="er-tag">'+conf.status+'</span></article>').join('');
+        }else{
+          const rows=history.filter(x=>x.module===module);content.innerHTML=rows.length?rows.map(x=>'<article class="er-side-record"><span class="er-tag er-green">示範完成</span><p><strong>'+safe(x.title)+'</strong></p><p>'+safe(x.summary)+'</p><p>本機預覽紀錄 · 無 MES 寫入</p></article>').join(''):'<p>目前還沒有示範完成的紀錄。</p><p>完成一次核對流程後，這裡會保留本次預覽的操作紀錄。</p>';
+        }
+      }
+      function openPanel(name,trigger){if(panel===name){closePanel();return;}panel=name;lastTrigger=trigger;q('.er-side').hidden=false;q('.er-workspace').classList.add('er-has-side');qa('[data-panel]').forEach(el=>el.setAttribute('aria-expanded',String(el.dataset.panel===name)));fillSide();q('.er-side-close').focus();}
+      qa('[data-panel]').forEach(el=>el.addEventListener('click',()=>openPanel(el.dataset.panel,el)));
+      q('.er-side-close').addEventListener('click',()=>closePanel());
+      q('.er-side-content').addEventListener('click',event=>{const button=event.target.closest('[data-focus]');if(!button)return;const id=button.dataset.focus;closePanel(false);if(id==='defect-choice')q('[name="er-defect-choice"]').focus();else q('#'+id)?.focus();});
+      root.addEventListener('keydown',event=>{if(event.key==='Escape'&&panel){event.preventDefault();closePanel();}});
+      function setStage(next){stage=next;const home=next==='home';q('.er-home').hidden=!home;q('.er-conversation').hidden=home;q('.er-context-tools').hidden=home;q('.er-select-stage').hidden=next!=='select';q('.er-query-card').hidden=next!=='query';q('.er-form-card').hidden=next!=='form';q('.er-review-card').hidden=next!=='review';q('.er-success').hidden=next!=='result';qa('[data-module]').forEach(el=>el.disabled=!['home','result'].includes(next));q('#er-message').disabled=next==='review';q('.er-send').disabled=next==='review';q('#er-message').placeholder=next==='review'?'請先核對確認卡，或返回修改。':next==='home'?configs[module].example:'繼續描述需求，或使用上方作業卡';q('.er-assistant-stage').textContent={home:'',select:intent==='query'?'查詢資料 · 尚未變更作業':'先確認作業對象',query:'查看資料 · 唯讀',form:'補齊本次資料',review:'最後核對',result:'本次示範結果'}[next];fillSide();}
+      function objectText(){qa('.er-selected-machine').forEach(el=>el.textContent=configs[module].machine);qa('.er-selected-order').forEach(el=>el.textContent='WO-'+order);qa('.er-selected-part').forEach(el=>el.textContent='EPS-'+order+' / MOLD-A');}
+      function resetDraft(){q('.er-form-card').reset();qa('.er-defect-field').forEach(el=>el.hidden=true);q('#er-defect-code').required=false;q('#er-defect-qty').required=false;q('.er-error').hidden=true;changingOrder=false;}
+      function updateModule(next){resetDraft();module=next;intent='create';order='A';const conf=configs[module];qa('[data-module]').forEach(el=>el.setAttribute('aria-pressed',String(el.dataset.module===module)));q('#er-module-title').textContent=conf.title;q('.er-home h1').textContent=conf.hero;q('.er-home p').innerHTML='描述需求，或選一項作業開始。<br>需要的資料，我會帶你一步步補齊。';qa('[data-start]').forEach((el,i)=>{el.querySelector('strong').textContent=conf.tasks[i];el.querySelector('small').textContent=conf.details[i];});q('.er-form-title').textContent=conf.form;q('[data-action="again"]').textContent=module==='mold'?'重新體驗上模示範':'同工單再做一筆';q('.er-review-title').textContent=conf.review;qa('[data-fields]').forEach(el=>el.hidden=el.dataset.fields!==module);qa('.er-candidate').forEach(el=>{const x=el.dataset.order;el.querySelector('.er-tag').textContent=conf.status;el.querySelector('.er-candidate-detail').textContent=conf.machine+' · EPS-'+x;});q('.er-user-line').hidden=true;closePanel(false);showNotice('');setStage('home');objectText();}
+      qa('[data-module]').forEach(el=>el.addEventListener('click',()=>updateModule(el.dataset.module)));
+      function start(which){
+        resetDraft();intent=which;q('.er-form-title').textContent=configs[module].form+(which==='edit'?'（修改示意）':'');q('.er-review-title').textContent=which==='edit'?(module==='report'?'核對報工修改（示意）':'核對排程調整（示意）'):configs[module].review;q('.er-form-card .er-card-head p').textContent=which==='edit'?'此處示範修改版面；正式產品須帶入原紀錄與版本。':'補齊內容後，再一起核對。';const index=['create','query','edit'].indexOf(which);
+        if(q('.er-user-line').hidden){q('.er-user-line p').textContent=configs[module].tasks[index];q('.er-user-line').hidden=false;}
+        showNotice('');
+        q('.er-select-stage [data-action="home"]').lastChild.textContent='回作業選擇';q('.er-select-stage h2').textContent=which==='query'?'找到兩筆示範資料':which==='edit'?'先找到要調整的作業':'先選擇這次的設備與工單';
+        q('.er-select-stage .er-prompt-copy p').textContent=which==='query'?'選擇一筆查看詳細資料，不會建立異動草稿。':'選好對象後，接著填寫本次作業內容。';
+        setStage('select');q('.er-candidate').focus();announce('請選擇作業對象。');
+      }
+      qa('[data-start]').forEach(el=>el.addEventListener('click',()=>{if(module==='mold'&&el.dataset.start==='edit'){openPanel('history',el);return;}start(el.dataset.start);}));
+      function selectOrder(which){
+        if(changingOrder&&which!==order)resetDraft();changingOrder=false;order=which;objectText();showNotice('');
+        if(intent==='query'){
+          const conf=configs[module];q('.er-query-grid').innerHTML=[['設備',conf.machine],['目前狀態',conf.status],['品號','EPS-'+order],['模具','MOLD-A']].map(([k,v])=>'<div><dt>'+safe(k)+'</dt><dd>'+safe(v)+'</dd></div>').join('');
+          q('[data-action="from-query"]').textContent='以此工單'+conf.tasks[0];setStage('query');q('[data-action="from-query"]').focus();announce('正在查看唯讀工單資料。');return;
+        }
+        setStage('form');q('#'+configs[module].first).focus();announce('已選擇'+configs[module].machine+'，工單 WO-'+order+'。');
+      }
+      qa('[data-order]').forEach(el=>el.addEventListener('click',()=>selectOrder(el.dataset.order)));
+      q('.er-form-card').addEventListener('input',()=>{q('.er-error').hidden=true;fillSide();});
+      qa('[name="er-defect-choice"]').forEach(el=>el.addEventListener('change',()=>{const some=el.value==='some';qa('.er-defect-field').forEach(x=>x.hidden=!some);q('#er-defect-code').required=some;q('#er-defect-qty').required=some;fillSide();}));
+      q('.er-form-card').addEventListener('submit',event=>{
+        event.preventDefault();const invalid=activeInputs().find(el=>el.type!=='radio'&&!el.checkValidity());const lacks=missing();
+        if(invalid||lacks.length){const message=lacks.length?'還差'+lacks.map(x=>x.label).join('、')+'，補好就能核對。':'請確認數量範圍與日期格式。';q('.er-error').textContent=message;q('.er-error').hidden=false;const target=invalid||(lacks[0]?.id==='defect-choice'?q('[name="er-defect-choice"]'):q('#'+lacks[0]?.id));target?.focus();return;}
+        q('.er-review-card .er-review-grid').innerHTML=summaryEntries().map(([k,v])=>'<div><dt>'+safe(k)+'</dt><dd>'+safe(v)+'</dd></div>').join('');setStage('review');q('[data-action="confirm"]').focus();announce('資料已填齊，請核對這筆作業。');
+      });
+      function home(){closePanel(false);showNotice('');q('.er-user-line').hidden=true;q('.er-form-card').reset();qa('.er-defect-field').forEach(el=>el.hidden=true);q('#er-defect-code').required=false;q('#er-defect-qty').required=false;q('.er-error').hidden=true;updateModule(module);q('[data-start="create"]').focus();}
+      qa('[data-action]').forEach(el=>el.addEventListener('click',()=>{const action=el.dataset.action;if(action==='home'){if(changingOrder){changingOrder=false;setStage('form');q('[data-action="change-order"]').focus();}else home();return;}if(action==='from-query'){resetDraft();intent='create';q('.er-form-title').textContent=configs[module].form;q('.er-review-title').textContent=configs[module].review;q('.er-form-card .er-card-head p').textContent='補齊內容後，再一起核對。';q('.er-user-line p').textContent=configs[module].tasks[0];setStage('form');q('#'+configs[module].first).focus();return;}if(action==='change-order'){closePanel(false);q('.er-select-stage h2').textContent='重新選擇作業對象';q('.er-select-stage .er-prompt-copy p').textContent='選擇另一張工單會清除剛才的數量，避免帶入錯誤對象。';changingOrder=true;q('.er-select-stage [data-action="home"]').lastChild.textContent='返回目前草稿';setStage('select');q('.er-candidate').focus();return;}if(action==='edit'){setStage('form');q('#'+configs[module].first).focus();return;}if(action==='confirm'){const details=summaryEntries().map(([k,v])=>k+' '+v).join(' · ');q('.er-result-summary').textContent=configs[module].machine+' / WO-'+order+' — '+details;history.unshift({module,title:configs[module].tasks[intent==='edit'?2:0]+' · WO-'+order,summary:details});setStage('result');q('[data-action="again"]').focus();announce('示範完成，沒有寫入 MES。');return;}if(action==='again'){resetDraft();intent='create';q('.er-form-title').textContent=configs[module].form;q('.er-review-title').textContent=configs[module].review;q('.er-form-card .er-card-head p').textContent='補齊內容後，再一起核對。';q('.er-user-line p').textContent=configs[module].tasks[0];setStage('form');q('#'+configs[module].first).focus();}}));
+      q('.er-composer').addEventListener('submit',event=>{event.preventDefault();const text=q('#er-message').value.trim();if(!text)return;if(stage!=='home'){showNotice('這版是互動設計示範，請使用目前作業卡修改資料；輸入文字已保留。');return;}q('.er-user-line p').textContent=text;q('.er-user-line').hidden=false;q('#er-message').value='';q('.er-home h1').textContent='想先做哪一項？';q('.er-home p').textContent='這是離線互動示範，請選擇本次作業類型，接著體驗填寫與核對。';q('[data-start="create"]').focus();});
+      q('#er-message').addEventListener('keydown',event=>{if(event.key==='Enter'&&!event.shiftKey&&!event.isComposing){event.preventDefault();q('.er-composer').requestSubmit();}});
+      q('#er-message').addEventListener('input',event=>{event.target.style.height='39px';event.target.style.height=Math.min(event.target.scrollHeight,132)+'px';});
+      qa('button').forEach(el=>el.classList.add('cursor-interaction'));updateModule(module);icons();
+    })();
+  </script>
+</section>
+
+</body></html>
