@@ -9,6 +9,14 @@ export interface RequestContext {
   invalidate: () => void;
 }
 
+/** 恢復流程可能把網路錯誤轉為 unknown；正常返回仍須核對原情境。 */
+export async function resultInContext<T>(context: RequestContext, work: () => Promise<T>): Promise<T> {
+  const epoch = context.epoch();
+  const result = await work();
+  if (epoch !== context.epoch()) throw new ObsoleteContext();
+  return result;
+}
+
 export async function requestInContext<T>(context: RequestContext, path: string, body?: unknown,
   request: typeof api = api): Promise<T> {
   const epoch = context.epoch();

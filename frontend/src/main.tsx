@@ -13,7 +13,7 @@ import { FeedbackReview } from './FeedbackReview';
 import './styles.css';
 import './desktop.css';
 import './conversation.css';
-import { ObsoleteContext, requestInContext } from './context-request';
+import { ObsoleteContext, requestInContext, resultInContext } from './context-request';
 import { restoreSubmission, submitRecoverably, hasSubmission, pendingSubmission, SubmissionBlocked, type Marker } from './submission-recovery';
 
 const modules = {
@@ -62,10 +62,11 @@ export function App({ initialOpen = false }: { initialOpen?: boolean } = {}) {
   const contextEpoch = useRef(0);
   const renderEpoch = contextEpoch.current;
   const [recoveryTarget, setRecoveryTarget] = useState<Marker | null>(null);
+  const [externalRecovery, setExternalRecovery] = useState<ConfirmationResult | null>(null);
   const suspendedChat = useRef<Conversation | null>(null);
   const [returnChat, setReturnChat] = useState<Conversation | null>(null);
   const initialIntent = useRef<string | null>(null);
-  const requestContext = { epoch: () => contextEpoch.current, actor: () => session?.actor.id, invalidate: clearSession };
+  const requestContext = { epoch: () => contextEpoch.current, actor: () => checkedActor.current || session?.actor.id, invalidate: clearSession };
   async function request<T>(path: string, body?: unknown): Promise<T> {
     return requestInContext<T>(requestContext, path, body);
   }
@@ -88,6 +89,7 @@ export function App({ initialOpen = false }: { initialOpen?: boolean } = {}) {
   useEffect(() => { if (guideWorking) { setNotice(''); setError(''); } }, [guideWorking]);
   const [summaryOpen, setSummaryOpen] = useState(false);
   const panelTrigger = useRef<HTMLElement | null>(null);
+  const helpTrigger = useRef<HTMLElement | null>(null);
   const [guideSnapshot, setGuideSnapshot] = useState<Row>({});
   const draftMemory = useRef(new Map<string, string>());
   const submitting = useRef(false);
@@ -150,7 +152,7 @@ export function App({ initialOpen = false }: { initialOpen?: boolean } = {}) {
         }
       } catch (error) {
         if (hasSubmission(memoryKey(actorId,currentModule))) throw error;
-        if (!(error instanceof ApiError) || ![403, 404].includes(error.status)) throw error;
+        if (!(error instanceof ApiError) || error.status !== 404) throw error;
       }
     }
     const chat = await request<Conversation>('/api/conversations', { module: currentModule, context: hostContext, locale: getLocale() });
@@ -169,6 +171,10 @@ export function App({ initialOpen = false }: { initialOpen?: boolean } = {}) {
     if (summaryOpen || tab !== 'chat') panelRef.current?.querySelector<HTMLElement>('.operation-pane button')?.focus();
     else panelTrigger.current?.focus();
   }, [summaryOpen, tab]);
+  useEffect(() => {
+    if(helpOpen) panelRef.current?.querySelector<HTMLElement>('.help-panel button')?.focus();
+    else helpTrigger.current?.focus();
+  }, [helpOpen]);
   async function changeLanguage(next: Locale) {
     if (!isLocale(next) || next === locale || localeBusy || busy) return;
     setLocaleBusy(true); setIndependentApproval(false);
@@ -229,8 +235,27 @@ export function App({ initialOpen = false }: { initialOpen?: boolean } = {}) {
     sync(); window.addEventListener('storage',sync); window.addEventListener('focus',sync);
     return ()=>{window.removeEventListener('storage',sync);window.removeEventListener('focus',sync);};
   },[session?.actor.id,conversation?.id,proposal?.id,module]);
+  async function checkOriginal() {
+    if (!recoveryTarget || !session || busy) return;
+    const marker = recoveryTarget;
+    await guarded(async () => {
+      const read = await request<{proposal:Proposal}>(`/api/proposals/${marker.proposal}`);
+      const original = restoreSubmission(memoryKey(session.actor.id),marker.conversation,read.proposal);
+      const terminal = !confirmationView(original.status ?? 'pending').canReconcile && original.status !== 'pending';
+      const result = terminal || original.local_rejection
+        ? {proposal:original,status:original.status ?? 'pending',message:t('已查回原操作結果。')}
+        : await resultInContext(requestContext, () => reconcileProposal(original,scopedRequest));
+      if (renderEpoch !== contextEpoch.current) throw new ObsoleteContext();
+      restoreSubmission(memoryKey(session.actor.id),marker.conversation,result.proposal);
+      setExternalRecovery(result);
+      setRecoveryTarget(pendingSubmission(memoryKey(session.actor.id)) ?? null);
+    });
+  }
   async function recoverOriginal() {
-    if(!recoveryTarget || !conversation || busy || guideBusy) return;
+    if(!recoveryTarget || !conversation || busy || guideWorking) return;
+    try { await guideRef.current?.flush(); }
+    catch(error) {if(renderEpoch===contextEpoch.current)setError(error instanceof Error?error.message:String(error));return;}
+    if(renderEpoch!==contextEpoch.current)return;
     suspendedChat.current=conversation; draftMemory.current.set(conversation.id,draft);
     const restored = await start(undefined,module,recoveryTarget.conversation);
     if (restored) setReturnChat(suspendedChat.current);
@@ -248,13 +273,14 @@ export function App({ initialOpen = false }: { initialOpen?: boolean } = {}) {
   }
   function keyDialog(event: React.KeyboardEvent) {
     if (event.key === 'Escape') { event.preventDefault(); if(helpOpen){setHelpOpen(false);return;} if (summaryOpen || tab !== 'chat') { setSummaryOpen(false); setTab('chat'); } else minimize(); }
-    if (!expanded && !narrowPanel && !helpOpen) return;
+    if (!expanded && !embedded && !helpOpen && !(narrowPanel && (summaryOpen || tab !== 'chat'))) return;
     if (event.key !== 'Tab') return;
     const focusRoot=helpOpen ? panelRef.current?.querySelector('.help-panel') : narrowPanel && (summaryOpen || tab!=='chat') ? panelRef.current?.querySelector('.operation-pane') : panelRef.current;
     const focusable = focusRoot?.querySelectorAll<HTMLElement>('button:not(:disabled), input:not(:disabled), select:not(:disabled), textarea:not(:disabled), summary, [tabindex="0"]');
     const visible = Array.from(focusable ?? []).filter(el => el.getClientRects().length > 0);
     const first = visible[0], last = visible.at(-1);
-    if (event.shiftKey && (document.activeElement === first || document.activeElement === titleRef.current)) { event.preventDefault(); last?.focus(); }
+    if (focusRoot && !focusRoot.contains(document.activeElement)) {event.preventDefault();(event.shiftKey ? last : first)?.focus();}
+    else if (event.shiftKey && (document.activeElement === first || document.activeElement === titleRef.current)) { event.preventDefault(); last?.focus(); }
     else if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first?.focus(); }
   }
   function clearSession() {
@@ -263,7 +289,7 @@ export function App({ initialOpen = false }: { initialOpen?: boolean } = {}) {
     setAudit([]); setFeedback(''); setFeedbackSent(false); setBudget(null); setHelpOpen(false);
     setGuideSnapshot({}); setSheetContext(''); setSummaryOpen(false); setTab('chat');
     setNotice(''); setQueryError(''); setIndependentApproval(false); setContextFilter({});
-    setFilters({equipment:'',date:'',wo:''}); setRecoveryTarget(null); setReturnChat(null);
+    setFilters({equipment:'',date:'',wo:''}); setRecoveryTarget(null); setExternalRecovery(null); setReturnChat(null);
     suspendedChat.current=null; initialIntent.current=null;
     setSession(null); setConversation(null); setMessages([]); setWorkspace({records:[],catalogs:{}}); setProposal(null); setProposalStatus(''); setDraft(''); setSelected(null); setQueryData(null); setStage('identity');
     draftMemory.current.clear(); checkedActor.current = '';
@@ -334,7 +360,7 @@ export function App({ initialOpen = false }: { initialOpen?: boolean } = {}) {
       setModule(currentModule); setWorkspace(work.data); setConversation(chat); setMessages(chat.messages ?? []);
       setFilters(initialFilters); setContextFilter(initialContextFilter); setPageSize(20);
       setSelected(null); setProposal(authoritative); setProposalStatus(authoritative?.status === 'pending' ? '' : authoritative?.status ?? ''); setIndependentApproval(false); setQueryData(null); setDraft(value => draftMemory.current.get(chat.id) ?? (conversation ? '' : value)); setTab('chat'); setStage('chat'); expandAssistant();
-      setRecoveryTarget(null);
+      setRecoveryTarget(null); setExternalRecovery(null);
       if (initialIntent.current !== null && modelConfigured === true && !authoritative && !recovery) {
         const text=initialIntent.current; initialIntent.current=null;
         setMessages(previous=>[...previous,{role:'user',content:text}]);
@@ -360,7 +386,7 @@ export function App({ initialOpen = false }: { initialOpen?: boolean } = {}) {
     if (reply.data !== undefined) setQueryData(reply.data);
   }
   async function send(event?: React.FormEvent) {
-    event?.preventDefault(); const text = draft.trim(); if (!text || !conversation || busy || guideWorking || unresolved || modelConfigured === false) return;
+    event?.preventDefault(); const text = draft.trim(); if (!text || !conversation || busy || guideWorking || unresolved || recoveryTarget || modelConfigured !== true) return;
     await guarded(async () => {
       await guideRef.current?.flush();
       const replacing = pending;
@@ -372,6 +398,7 @@ export function App({ initialOpen = false }: { initialOpen?: boolean } = {}) {
     inputRef.current?.focus();
   }
   async function applyConfirmation(result: ConfirmationResult) {
+    if(renderEpoch!==contextEpoch.current)throw new ObsoleteContext();
     setProposal(result.proposal); setProposalStatus(result.status === 'pending' ? '' : result.status);
     setNotice(result.message); setIndependentApproval(false);
     if (result.status === 'succeeded') {
@@ -385,7 +412,7 @@ export function App({ initialOpen = false }: { initialOpen?: boolean } = {}) {
     if (approved && !writesEnabled) { setError(t("正式寫入尚未啟用。可以查看預覽或取消草稿。")); return; }
     submitting.current = true;
     try { await guarded(async () => { if (!session || !conversation) return;
-      try { await applyConfirmation(await submitRecoverably(memoryKey(session.actor.id), conversation.id, proposal, approved, undefined, scopedRequest)); }
+      try { await applyConfirmation(await resultInContext(requestContext, () => submitRecoverably(memoryKey(session.actor.id), conversation.id, proposal, approved, undefined, scopedRequest))); }
       catch (error) { if (renderEpoch !== contextEpoch.current) throw error; if (error instanceof SubmissionBlocked && error.marker) setRecoveryTarget(error.marker); const restored = restoreSubmission(memoryKey(session.actor.id), conversation.id, proposal, undefined, false); setProposal(restored); setProposalStatus(restored.status === 'pending' ? '' : restored.status ?? ''); throw error; }
     }); }
     finally { submitting.current = false; }
@@ -398,7 +425,7 @@ export function App({ initialOpen = false }: { initialOpen?: boolean } = {}) {
       const restored=restoreSubmission(memoryKey(session.actor.id),conversation.id,read.proposal);
       if(restored.local_rejection && restored.status==='pending' || !confirmationView(restored.status??'pending').canReconcile && restored.status!=='pending') {
         await applyConfirmation({proposal:restored,status:restored.status??'pending',message:restored.local_rejection?t('本次提交已拒絕，請返回修改後重新核對。'):t('已查回原操作結果。')});
-      } else await applyConfirmation(await reconcileProposal(proposal,request));
+      } else await applyConfirmation(await resultInContext(requestContext, () => reconcileProposal(proposal,scopedRequest)));
     });
   }
   async function chooseRecord(record: Row) {
@@ -420,7 +447,7 @@ export function App({ initialOpen = false }: { initialOpen?: boolean } = {}) {
     try { const value=await request<{records:Row[]}>('/api/audit');if(generation===queryGeneration.current)setAudit(value.records); }
     catch(error){if(generation===queryGeneration.current){if(error instanceof ApiError && [401,403].includes(error.status))clearSession();else setQueryError(error instanceof Error?error.message:String(error));}}
     finally{if(generation===queryGeneration.current)setQueryBusy(false);}
-  }  async function showHelp() { setHelpOpen(v => !v); if (!budget) { try { setBudget(await request<Row>('/api/budget')); } catch { /* 用量服務失敗不影響回報問題。 */ } } }
+  }  async function showHelp() { helpTrigger.current = document.activeElement as HTMLElement; setHelpOpen(v => !v); if (!budget) { try { setBudget(await request<Row>('/api/budget')); } catch { /* 用量服務失敗不影響回報問題。 */ } } }
 
 
   return <>
@@ -446,7 +473,8 @@ export function App({ initialOpen = false }: { initialOpen?: boolean } = {}) {
       </div> : <>
         <div className="workspace-bar"><button className="icon-button" aria-label={t("返回模組入口")} disabled={busy || lockedTarget} title={unresolved ? t("請先查核執行結果") : pending ? t("請先確認或取消草稿") : t("返回模組入口")} onClick={() => setStage('modules')}><ArrowLeft size={18}/></button><span className="module-badge"><ModuleIcon size={18}/></span><div><h1 id="assistant-title" ref={titleRef} tabIndex={-1}>{t(active.title)}</h1><p>{session?.actor.name} <span>·</span>{t("EPS 成型")}</p></div><nav className="module-switcher" aria-label={t("切換作業模組")}>{Object.entries(modules).map(([key, item]) => <button key={key} className="text-button" aria-current={module === key ? 'page' : undefined} disabled={busy || lockedTarget || !session?.actor.roles.includes(key)} onClick={() => { if (key !== module) void start(undefined, key as Module); }}><item.icon size={16}/>{t(item.short)}</button>)}</nav><span className={`connection ${modelConfigured ? 'ready' : ''}`}><span/>{modelConfigured === true ? t("AI 已設定") : modelConfigured === false ? t("AI 尚未設定") : t("檢查連線中")}</span></div>
 
-        {recoveryTarget && <div className="notice-banner" role="status"><span>{t('另一分頁的操作仍待核對，請先查看原操作。')}</span><button className="secondary" disabled={busy || guideBusy} onClick={()=>void recoverOriginal()}>{t('恢復並查核原操作')}</button></div>}
+        {recoveryTarget && <div className="notice-banner" role="status"><span>{t('另一分頁的操作仍待核對，請先查看原操作。')}</span><button className="secondary" disabled={busy || guideWorking} onClick={()=>void recoverOriginal()}>{t('恢復並查核原操作')}</button><button className="secondary" disabled={busy} onClick={()=>void checkOriginal()}>{t('保留本頁，只查核原操作')}</button></div>}
+        {externalRecovery && <details className="external-recovery"><summary>{t('原操作查核結果')}：{externalRecovery.proposal.local_rejection ? t('本次提交已拒絕，請返回修改後重新核對。') : confirmationView(externalRecovery.status).label}</summary><p>{externalRecovery.message}</p><ProposalBusinessSummary proposal={externalRecovery.proposal} workspace={workspace}/><p>{t('操作識別碼：')}<code>{externalRecovery.proposal.id}</code></p></details>}
         {returnChat && !unresolved && !pending && <button className="secondary" disabled={busy} onClick={()=>{const chat=returnChat;setReturnChat(null);void start(undefined,chat.module,chat.id);}}>{t('返回先前作業')}</button>}
         {error && <div className="error-banner" role="alert"><span>{t(error)}</span><button className="icon-button" aria-label={t("關閉錯誤訊息")} onClick={() => setError('')}><X size={17}/></button></div>}{notice && <div className="notice-banner" role="status"><Check size={17}/><span>{t(notice)}</span></div>}
         <div className={`desktop-workbench conversation-first ${summaryOpen || tab !== 'chat' ? 'with-summary' : ''}`}><section className="chat-layout" inert={helpOpen || narrowPanel && (summaryOpen || tab!=='chat') ? true : undefined} aria-label={t("與助理對話")}><div className="pane-heading"><div className="context-tools"><button className="text-button" aria-expanded={summaryOpen} onClick={event => { panelTrigger.current = event.currentTarget; setSummaryOpen(v => !v); }}>{t("本次作業摘要")}</button><button className="text-button" onClick={event => { panelTrigger.current = event.currentTarget; setTab(tab === 'data' ? 'chat' : 'data'); }}>{t("查看資料")}</button><button className="text-button" onClick={() => void showAudit()}>{t("操作紀錄")}</button></div></div>{Boolean(guideSnapshot._started) && <div className="task-context">{sheetContext}</div>}<div className="conversation-scroll" role="tabpanel" aria-label={t("對話作業")}>
@@ -469,7 +497,7 @@ export function App({ initialOpen = false }: { initialOpen?: boolean } = {}) {
           </section>}{module === 'report' && queryData !== null && !lockedTarget && <div className="query-candidates">{((queryData as Workspace)?.records ?? []).filter(record => record.WIP_OPI_WDOEACICO_HIST_SID).map((record,i) => <button className="secondary guide-record" key={i} disabled={busy || guideWorking} onClick={() => void guideRef.current?.beginReport(record)}><strong>{[record.EQP_NO,record.WO ?? record.WO_NO,record.PART_NO].filter(Boolean).join(' · ')}</strong><span>{display(record.REAL_CHECK_IN_TIME ?? record.SHIFT_DAY)} · {t("以此工單報工")}</span></button>)}</div>}{queryData !== null && <details className="query-results"><summary>{t("查詢結果")}</summary><DataView data={queryData}/></details>}
           {busy && <div className="loading" role="status"><LoaderCircle className="spin" size={18}/>{t("正在核對資料與處理作業…")}</div>}
 <div ref={endRef}/>
-        </div><div className="composer-area">{modelConfigured === false && <div className="model-notice"><CircleHelp size={17}/><span>{t("AI 尚未設定，可用下方操作卡完成作業。")}</span></div>}{draft && modelConfigured === false && <button className="text-button" onClick={() => {setDraft('');initialIntent.current=null;inputRef.current?.focus();}}>{t('清除文字，繼續人工操作')}</button>}<form className="composer" onSubmit={e => void send(e)}><label className="sr-only" htmlFor="chat-input">{t("描述作業需求")}</label><textarea ref={inputRef} id="chat-input" rows={1} placeholder={unresolved ? t("此操作結果待核對，請先按確認卡的「查核執行結果」") : pending ? t("可直接補充修改，例如：良品改成 25，請重新確認") : t("描述你的{0}需求，例如：{1}", {0: t(active.short), 1: t(active.prompts[0])})} value={draft} disabled={busy || guideWorking || unresolved} onChange={e => {setDraft(e.target.value);e.target.style.height="auto";e.target.style.height=`${Math.min(e.target.scrollHeight,112)}px`;}} onKeyDown={e => { if (e.key === 'Enter' && !e.shiftKey && !e.nativeEvent.isComposing) { e.preventDefault(); void send(); } }}/><button type="submit" className="send-button" disabled={busy || guideWorking || unresolved || !draft.trim() || modelConfigured !== true} aria-label={t("送出訊息")}>{busy ? <LoaderCircle className="spin" size={20}/> : <ArrowUp size={18}/>}</button></form><div className="composer-footnote"><span><ShieldCheck size={13}/>{t("確認後才會寫入")}</span><span>{t("Enter 送出 · Shift + Enter 換行")}</span></div></div></section><aside className="operation-pane" hidden={!summaryOpen && tab === 'chat'} aria-label={t("本次作業")}><button className="text-button" onClick={() => {setSummaryOpen(false);setTab('chat');}}>{t("收起附屬面板")}</button><div className="pane-heading"><h2>{t("本次作業")}</h2><span>{t("確認後才會寫入")}</span></div>{queryBusy && <p role="status">{t("正在讀取資料…")}</p>}{queryError && <p role="alert">{queryError}</p>}{!(proposal && proposalStatus !== 'superseded') && <div className="sheet-context" aria-label={t("目前作業資料")}>{sheetContext || t("尚未選擇工單")}</div>}        <div className="tabs" role="tablist" aria-label={t("作業檢視")}><button role="tab" aria-selected={tab === 'chat'} onClick={() => setTab('chat')}><MessageSquare size={16}/>{t("作業單")}</button><button role="tab" aria-selected={tab === 'data'} onClick={() => setTab('data')}><ClipboardList size={16}/>{t("查詢資料")}<span className="count">{workspace.records.length}</span></button><button role="tab" aria-selected={tab === 'audit'} disabled={busy} onClick={() => void showAudit()}><History size={16}/>{t("操作紀錄")}</button></div><div className="operation-sheet" hidden={tab !== 'chat'}><p className="summary-stage">{t("目前階段")}：{String(guideSnapshot._stage_label ?? "")}</p><p role="status">{String(guideSnapshot.draft_save_state ?? "")}</p>{Array.isArray(guideSnapshot._missing) && guideSnapshot._missing.length>0 && <section className="summary-missing"><h3>{t("尚需補充")}</h3>{(guideSnapshot._missing as {key:string;text:string}[]).map(item=><button className="text-button" key={item.key} onClick={()=>{setSummaryOpen(false);setTab('chat');requestAnimationFrame(()=>guideRef.current?.focusField(item.key));}}>{item.text}<ArrowRight size={16}/></button>)}</section>}{proposal && proposalStatus !== 'superseded' ? <ProposalBusinessSummary proposal={proposal} workspace={workspace}/> : <Fields value={{...Object.fromEntries(Object.entries(guideSnapshot).filter(([key])=>!key.startsWith("_") && key!=="draft_save_state")), action: t(actionNames[String(guideSnapshot.action)] ?? String(guideSnapshot.action ?? ""))}}/>}
+        </div><div className="composer-area">{modelConfigured === false && <div className="model-notice"><CircleHelp size={17}/><span>{t("AI 尚未設定，可用下方操作卡完成作業。")}</span></div>}{draft && modelConfigured === false && <button className="text-button" onClick={() => {setDraft('');initialIntent.current=null;inputRef.current?.focus();}}>{t('清除文字，繼續人工操作')}</button>}<form className="composer" onSubmit={e => void send(e)}><label className="sr-only" htmlFor="chat-input">{t("描述作業需求")}</label><textarea ref={inputRef} id="chat-input" rows={1} placeholder={unresolved ? t("此操作結果待核對，請先按確認卡的「查核執行結果」") : pending ? t("可直接補充修改，例如：良品改成 25，請重新確認") : t("描述你的{0}需求，例如：{1}", {0: t(active.short), 1: t(active.prompts[0])})} value={draft} disabled={busy || guideWorking || unresolved || Boolean(recoveryTarget)} onChange={e => {setDraft(e.target.value);e.target.style.height="auto";e.target.style.height=`${Math.min(e.target.scrollHeight,112)}px`;}} onKeyDown={e => { if (e.key === 'Enter' && !e.shiftKey && !e.nativeEvent.isComposing) { e.preventDefault(); void send(); } }}/><button type="submit" className="send-button" disabled={busy || guideWorking || unresolved || Boolean(recoveryTarget) || !draft.trim() || modelConfigured !== true} aria-label={t("送出訊息")}>{busy ? <LoaderCircle className="spin" size={20}/> : <ArrowUp size={18}/>}</button></form><div className="composer-footnote"><span><ShieldCheck size={13}/>{t("確認後才會寫入")}</span><span>{t("Enter 送出 · Shift + Enter 換行")}</span></div></div></section><aside className="operation-pane" hidden={!summaryOpen && tab === 'chat'} aria-label={t("本次作業")}><button className="text-button" onClick={() => {setSummaryOpen(false);setTab('chat');}}>{t("收起附屬面板")}</button><div className="pane-heading"><h2>{t("本次作業")}</h2><span>{t("確認後才會寫入")}</span></div>{queryBusy && <p role="status">{t("正在讀取資料…")}</p>}{queryError && <p role="alert">{queryError}</p>}{!(proposal && proposalStatus !== 'superseded') && <div className="sheet-context" aria-label={t("目前作業資料")}>{sheetContext || t("尚未選擇工單")}</div>}        <div className="tabs" role="tablist" aria-label={t("作業檢視")}><button role="tab" aria-selected={tab === 'chat'} onClick={() => setTab('chat')}><MessageSquare size={16}/>{t("作業單")}</button><button role="tab" aria-selected={tab === 'data'} onClick={() => setTab('data')}><ClipboardList size={16}/>{t("查詢資料")}<span className="count">{workspace.records.length}</span></button><button role="tab" aria-selected={tab === 'audit'} disabled={busy} onClick={() => void showAudit()}><History size={16}/>{t("操作紀錄")}</button></div><div className="operation-sheet" hidden={tab !== 'chat'}><p className="summary-stage">{t("目前階段")}：{String(guideSnapshot._stage_label ?? "")}</p><p role="status">{String(guideSnapshot.draft_save_state ?? "")}</p>{Array.isArray(guideSnapshot._missing) && guideSnapshot._missing.length>0 && <section className="summary-missing"><h3>{t("尚需補充")}</h3>{(guideSnapshot._missing as {key:string;text:string}[]).map(item=><button className="text-button" key={item.key} onClick={()=>{setSummaryOpen(false);setTab('chat');requestAnimationFrame(()=>guideRef.current?.focusField(item.key));}}>{item.text}<ArrowRight size={16}/></button>)}</section>}{proposal && proposalStatus !== 'superseded' ? <ProposalBusinessSummary proposal={proposal} workspace={workspace}/> : <Fields value={{...Object.fromEntries(Object.entries(guideSnapshot).filter(([key])=>!key.startsWith("_") && key!=="draft_save_state")), action: t(actionNames[String(guideSnapshot.action)] ?? String(guideSnapshot.action ?? ""))}}/>}
 
 </div>{tab === 'data' && queryData !== null ? <div className="workspace-scroll" role="tabpanel" aria-label={t("查詢結果")}><div className="section-heading"><div><h2>{t("查詢結果")}</h2><p>{t("查詢不會寫入；實際異動請核對作業單。")}</p></div><button className="secondary" onClick={() => setQueryData(null)}>{t("瀏覽其他工單")}</button></div><DataView data={queryData}/></div> : tab === 'data' ? <div className="workspace-scroll" role="tabpanel" aria-label={t("作業資料")}><div className="section-heading"><div><h2>{t("目前作業資料")}</h2><p>{t("選擇一筆資料，帶入新的作業對話。")}</p></div><button className="secondary" disabled={busy} onClick={() => void refreshData().catch(() => {})}><RefreshCw size={16}/>{t("重新整理")}</button></div>{module === 'report' && <p className="data-note">{t("人工報工與 IoT 推算數量各自呈現；未有 IoT 資料不代表產量為零。")}</p>}<DataFilters filters={filters} setFilters={setFilters} pageSize={pageSize} setPageSize={setPageSize} workspace={workspace} busy={busy} load={page => void refreshData(page).catch(() => {})}/><div className="record-grid">{workspace.records.map((record, i) => <article className="workspace-record" key={i}><div className="record-title"><Factory size={18}/><strong>{display(record.EQP_NO ?? record.WO ?? t("第 {0} 筆", {0: i + 1}))}</strong><span className="mode-chip">{record.COMPLETED === 'Y' ? t("已完工") : t("作業資料")}</span></div><Fields value={record}/><button className="secondary" disabled={busy || lockedTarget} onClick={() => void chooseRecord(record)}>{t("以此筆資料開始")}<ArrowRight size={16}/></button></article>)}</div>{!workspace.records.length && <div className="empty-state"><ClipboardList size={28}/><h3>{t("尚無作業資料")}</h3><p>{t("請重新整理，或從對話建立需要的作業。")}</p></div>}<details className="catalogs"><summary>{t("查看設備、工單與模具選項")}</summary><DataView data={workspace.catalogs} title={t("作業選項")}/></details></div> : tab === 'audit' ? <div className="workspace-scroll" role="tabpanel" aria-label={t("操作紀錄")}><div className="section-heading"><div><h2>{t("每次變更，都有紀錄。")}</h2><p>{t("核對操作時間、執行人員與資料前後差異。")}</p></div><button className="secondary" disabled={busy} onClick={() => void showAudit()}><RefreshCw size={16}/>{t("重新整理")}</button></div><DataView data={audit} title={t("操作紀錄")}/></div> : null}</aside></div>
       </>}

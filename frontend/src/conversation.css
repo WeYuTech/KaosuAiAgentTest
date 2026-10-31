@@ -182,3 +182,14 @@
   }
 
 }
+
+/* 原操作查核只讀取結果，不切換或覆蓋目前尚未保存的 Guide。 */
+.external-recovery {
+  flex-shrink: 0;
+  max-height: 35%;
+  overflow: auto;
+  padding: 0 16px;
+  background: var(--card);
+  border-bottom: 1px solid var(--border);
+  overflow-wrap: anywhere;
+}

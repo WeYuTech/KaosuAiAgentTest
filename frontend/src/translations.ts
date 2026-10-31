@@ -433,5 +433,7 @@ MES 登入無法驗證；請重新登入或洽管理員。|MES sign-in could not
 來源不在允許清單|Origin is not allowed|ต้นทางไม่ได้รับอนุญาต
 上一則訊息仍在處理|The previous message is still processing|ข้อความก่อนหน้ายังอยู่ระหว่างดำเนินการ
 找不到此對話|Conversation not found|ไม่พบการสนทนานี้
+保留本頁，只查核原操作|Keep this draft and check the original operation|เก็บฉบับร่างนี้และตรวจสอบงานเดิม
+原操作查核結果|Original operation result|ผลการตรวจสอบงานเดิม
 確認卡已過期|Confirmation card expired|บัตรยืนยันหมดอายุ
 ` .trim().split('\n').map(line => { const [key, en, th] = line.split('|'); return [key, [en, th]]; }));
