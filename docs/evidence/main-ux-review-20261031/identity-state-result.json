@@ -1,0 +1,43 @@
+{
+  "sources": [
+    "frontend/src/main.tsx",
+    "frontend/src/FeedbackReview.tsx"
+  ],
+  "boundary": "擷取原函式＋合成狀態與回覆；非完整 UI 測試、非正式回歸通過、非後端越權證明。",
+  "interpretation": "下列斷言確認本輪缺陷觀察仍可重現；修正後需改用驗證正確行為的正式測試。",
+  "results": [
+    {
+      "case": "清除 session 後仍保留前一身分的合成畫面資料",
+      "auditRetained": true,
+      "feedbackDraftRetained": true,
+      "helpRemainsOpen": true,
+      "otherStateStillPresent": [
+        "guideSnapshot",
+        "sheetContext",
+        "budget"
+      ],
+      "limit": "其他狀態僅記錄是否仍存在；不據此判定其授權範圍或完整 UI 可見性。"
+    },
+    {
+      "case": "新身分讀取操作紀錄期間及失敗後仍保留原資料列",
+      "previousActorRowStillPresent": true,
+      "queryError": "合成的操作紀錄讀取失敗"
+    },
+    {
+      "case": "清除 session 後晚到的讀取回覆重新填回 workspace",
+      "stateRepopulatedAfterClear": true,
+      "stage": "identity"
+    },
+    {
+      "case": "換身分後舊 receive 閉包仍採用前一情境的 proposal",
+      "currentActor": "operator",
+      "acceptedProposal": "late-actor-a-proposal",
+      "limit": "函式級合成閉包診斷，尚不等於完整瀏覽器跨登入重現。"
+    },
+    {
+      "case": "身分失效後回饋重新讀取 401，原合成資料列仍保留",
+      "previousRowsStillPresent": true,
+      "error": "合成的 session 失效"
+    }
+  ]
+}

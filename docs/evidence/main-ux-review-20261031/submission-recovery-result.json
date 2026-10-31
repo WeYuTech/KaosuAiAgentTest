@@ -1,0 +1,62 @@
+{
+  "commit": "3e1c7c002177f4bb16255cf3d26b840b82d7b4c7",
+  "interpretation": "重現成立≠產品通過：此診斷確認基準版本仍存在所列缺陷，不能當作產品驗收通過。",
+  "scope": "實際前端函式＋隔離HTTP/Storage替身；沒有真實網路或業務寫入，非瀏覽器或正式MES驗收",
+  "findings": [
+    {
+      "case": "C13：明確409 → 唯一驗證GET失敗 → 網路恢復後GET pending",
+      "initialRequests": [
+        {
+          "path": "/api/proposals/explicit-rejected-operation/confirm",
+          "method": "POST"
+        },
+        {
+          "path": "/api/proposals/explicit-rejected-operation",
+          "method": "GET"
+        }
+      ],
+      "storedMarker": {
+        "conversation": "conversation-A",
+        "proposal": "explicit-rejected-operation"
+      },
+      "restoredStatus": "unknown",
+      "localRejection": false,
+      "reconciledStatus": "unknown",
+      "ui": {
+        "label": "結果待核對",
+        "canConfirm": false,
+        "canCancel": false,
+        "canReconcile": true
+      },
+      "laterConfirmAndCancelNetworkCalls": 0,
+      "blocked": [
+        "已有送出紀錄，請先查核原操作。",
+        "已有送出紀錄，請先查核原操作。"
+      ],
+      "reproduced": "本次已明確拒絕，但成功讀回 pending 後仍被當成送達未知；現有查核流程無法回到重新核對或取消路徑。"
+    },
+    {
+      "case": "D04：另一分頁已有未決A操作，當前分頁仍顯示不同的B卡",
+      "realPendingOperation": {
+        "conversation": "conversation-A",
+        "proposal": "original-unresolved-A"
+      },
+      "displayedProposal": {
+        "id": "already-open-B",
+        "status": "pending"
+      },
+      "ui": {
+        "label": "待確認",
+        "canConfirm": true,
+        "canCancel": true,
+        "canReconcile": false
+      },
+      "tabBConfirmAndCancelNetworkCalls": 0,
+      "errors": [
+        "已有送出紀錄，請先查核原操作。",
+        "已有送出紀錄，請先查核原操作。"
+      ],
+      "reproduced": "B的確認與取消都被A marker攔下，但仍呈現B pending且沒有查核入口；只有重載才會在start()轉回A。"
+    }
+  ]
+}
