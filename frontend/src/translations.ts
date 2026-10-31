@@ -1,5 +1,22 @@
 /* 固定介面詞彙：中文原文為鍵，不翻譯 MES 主檔名稱或歷史訊息。 */
 export const translations: Record<string, [string, string]> = Object.fromEntries(`
+草稿保存狀態|Draft save status|สถานะการบันทึกฉบับร่าง
+本次提交已拒絕，請返回修改後重新核對。|This submission was rejected. Go back, update the details and review again.|การส่งครั้งนี้ถูกปฏิเสธ โปรดย้อนกลับ แก้ไขข้อมูลและตรวจสอบอีกครั้ง
+登入或權限已失效，請重新核對MES身分。|Login or permission expired. Verify your MES identity again.|การเข้าสู่ระบบหรือสิทธิ์หมดอายุ โปรดยืนยันตัวตน MES อีกครั้ง
+正在讀取資料…|Loading data…|กำลังโหลดข้อมูล…
+以此工單報工|Report for this order|รายงานผลผลิตสำหรับใบสั่งนี้
+無法讀取恢復資訊，請先確認瀏覽器儲存。|Recovery information cannot be read. Check browser storage.|อ่านข้อมูลกู้คืนไม่ได้ โปรดตรวจสอบพื้นที่จัดเก็บเบราว์เซอร์
+查看資料|View data|ดูข้อมูล
+切換工單前，請先送出或清除尚未送出的文字。|Send or clear the unsent text before changing orders.|โปรดส่งหรือล้างข้อความที่ยังไม่ได้ส่งก่อนเปลี่ยนใบสั่งผลิต
+本次作業摘要|Task summary|สรุปงานครั้งนี้
+收起附屬面板|Close panel|ปิดแผง
+直接描述需求，或使用下方操作卡；只需補齊缺少的資料。|Describe your task or use the cards below. Add only missing details.|บอกสิ่งที่ต้องการหรือใช้การ์ดด้านล่าง เติมเฉพาะข้อมูลที่ขาด
+AI 尚未設定，可用下方操作卡完成作業。|AI is not configured. Use the cards below.|ยังไม่ได้ตั้งค่า AI ใช้การ์ดด้านล่างได้
+AI 已設定|AI configured|ตั้งค่า AI แล้ว
+先說需求，再選擇作業範圍|Describe the task, then choose the module|บอกสิ่งที่ต้องการ แล้วเลือกโมดูล
+已有送出紀錄，請先查核原操作。|A submission exists. Check the original operation.|มีประวัติส่งแล้ว โปรดตรวจสอบรายการเดิม
+無法保存恢復資訊，尚未送出。請確認瀏覽器儲存可用。|Recovery information could not be saved. Nothing was submitted. Check browser storage.|บันทึกข้อมูลกู้คืนไม่ได้ ยังไม่ได้ส่ง โปรดตรวจสอบพื้นที่จัดเก็บเบราว์เซอร์
+作業已完成，清單更新失敗；請重新查詢。|Operation completed; list refresh failed. Query again.|ดำเนินการเสร็จแล้ว แต่รีเฟรชรายการไม่ได้ โปรดค้นหาใหม่
 查詢不會寫入；實際異動請核對作業單。|Queries do not save changes. Review the operation sheet before writing.|การค้นหาไม่บันทึกการเปลี่ยนแปลง โปรดตรวจสอบใบงานก่อนบันทึก
 瀏覽其他工單|Browse other orders|ดูใบสั่งผลิตอื่น
 開始上模並進站|Start mounting and check in|เริ่มติดตั้งแม่พิมพ์และเข้างาน

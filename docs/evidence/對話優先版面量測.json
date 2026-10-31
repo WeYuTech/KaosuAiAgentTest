@@ -1,0 +1,258 @@
+{
+  "pending": [
+    {
+      "button": {
+        "bottom": 454.9500122070313,
+        "left": 919.6000366210938,
+        "right": 1033.2000350952148,
+        "top": 414.9500122070313
+      },
+      "context": "MC37 · WO-A · MOLD-A · 2026-10-30 08:10:00 · 生產中",
+      "height": 768,
+      "locale": "zh-TW",
+      "scroll": 1366,
+      "width": 1366
+    },
+    {
+      "button": {
+        "bottom": 766.9500122070312,
+        "left": 1196.4000244140625,
+        "right": 1310.0000228881836,
+        "top": 726.9500122070312
+      },
+      "context": "MC37 · WO-A · MOLD-A · 2026-10-30 08:10:00 · 生產中",
+      "height": 1080,
+      "locale": "zh-TW",
+      "scroll": 1920,
+      "width": 1920
+    },
+    {
+      "button": {
+        "bottom": 796.5499877929688,
+        "left": 599.2000122070312,
+        "right": 712.8000106811523,
+        "top": 752.5499877929688
+      },
+      "context": "MC37 · WO-A · MOLD-A · 2026-10-30 08:10:00 · 生產中",
+      "height": 1024,
+      "locale": "zh-TW",
+      "scroll": 768,
+      "width": 768
+    },
+    {
+      "button": {
+        "bottom": 632.6000366210938,
+        "left": 221.6000061035156,
+        "right": 335.2000045776367,
+        "top": 588.6000366210938
+      },
+      "context": "MC37 · WO-A · MOLD-A · 2026-10-30 08:10:00 · 生產中",
+      "height": 844,
+      "locale": "zh-TW",
+      "scroll": 390,
+      "width": 390
+    },
+    {
+      "button": {
+        "bottom": 552.6000366210938,
+        "left": 872.8500366210938,
+        "right": 1033.2000427246094,
+        "top": 512.6000366210938
+      },
+      "context": "MC37 · WO-A · MOLD-A · 2026-10-30 08:10:00 · In production",
+      "height": 768,
+      "locale": "en",
+      "scroll": 1366,
+      "width": 1366
+    },
+    {
+      "button": {
+        "bottom": 766.9500122070312,
+        "left": 1149.6500244140625,
+        "right": 1310.000030517578,
+        "top": 726.9500122070312
+      },
+      "context": "MC37 · WO-A · MOLD-A · 2026-10-30 08:10:00 · In production",
+      "height": 1080,
+      "locale": "en",
+      "scroll": 1920,
+      "width": 1920
+    },
+    {
+      "button": {
+        "bottom": 796.5499877929688,
+        "left": 552.4500122070312,
+        "right": 712.8000183105469,
+        "top": 752.5499877929688
+      },
+      "context": "MC37 · WO-A · MOLD-A · 2026-10-30 08:10:00 · In production",
+      "height": 1024,
+      "locale": "en",
+      "scroll": 768,
+      "width": 768
+    },
+    {
+      "button": {
+        "bottom": 632.6000366210938,
+        "left": 174.85000610351562,
+        "right": 335.20001220703125,
+        "top": 588.6000366210938
+      },
+      "context": "MC37 · WO-A · MOLD-A · 2026-10-30 08:10:00 · In production",
+      "height": 844,
+      "locale": "en",
+      "scroll": 390,
+      "width": 390
+    },
+    {
+      "button": {
+        "bottom": 550.1000022888184,
+        "left": 899.5875244140625,
+        "right": 1033.2000274658203,
+        "top": 509.75
+      },
+      "context": "MC37 · WO-A · MOLD-A · 2026-10-30 08:10:00 · กำลังผลิต",
+      "height": 768,
+      "locale": "th",
+      "scroll": 1366,
+      "width": 1366
+    },
+    {
+      "button": {
+        "bottom": 777.5500144958496,
+        "left": 1176.3875732421875,
+        "right": 1310.0000762939453,
+        "top": 737.2000122070312
+      },
+      "context": "MC37 · WO-A · MOLD-A · 2026-10-30 08:10:00 · กำลังผลิต",
+      "height": 1080,
+      "locale": "th",
+      "scroll": 1920,
+      "width": 1920
+    },
+    {
+      "button": {
+        "bottom": 806.7999877929688,
+        "left": 579.1875,
+        "right": 712.8000030517578,
+        "top": 762.7999877929688
+      },
+      "context": "MC37 · WO-A · MOLD-A · 2026-10-30 08:10:00 · กำลังผลิต",
+      "height": 1024,
+      "locale": "th",
+      "scroll": 768,
+      "width": 768
+    },
+    {
+      "button": {
+        "bottom": 630.1000366210938,
+        "left": 201.58750915527344,
+        "right": 335.20001220703125,
+        "top": 586.1000366210938
+      },
+      "context": "MC37 · WO-A · MOLD-A · 2026-10-30 08:10:00 · กำลังผลิต",
+      "height": 844,
+      "locale": "th",
+      "scroll": 390,
+      "width": 390
+    }
+  ],
+  "result": [
+    {
+      "confirm": 0,
+      "height": 768,
+      "locale": "zh-TW",
+      "result": "已完成",
+      "scroll": 1366,
+      "width": 1366
+    },
+    {
+      "confirm": 0,
+      "height": 1080,
+      "locale": "zh-TW",
+      "result": "已完成",
+      "scroll": 1920,
+      "width": 1920
+    },
+    {
+      "confirm": 0,
+      "height": 1024,
+      "locale": "zh-TW",
+      "result": "已完成",
+      "scroll": 768,
+      "width": 768
+    },
+    {
+      "confirm": 0,
+      "height": 844,
+      "locale": "zh-TW",
+      "result": "已完成",
+      "scroll": 390,
+      "width": 390
+    },
+    {
+      "confirm": 0,
+      "height": 768,
+      "locale": "en",
+      "result": "Succeeded",
+      "scroll": 1366,
+      "width": 1366
+    },
+    {
+      "confirm": 0,
+      "height": 1080,
+      "locale": "en",
+      "result": "Succeeded",
+      "scroll": 1920,
+      "width": 1920
+    },
+    {
+      "confirm": 0,
+      "height": 1024,
+      "locale": "en",
+      "result": "Succeeded",
+      "scroll": 768,
+      "width": 768
+    },
+    {
+      "confirm": 0,
+      "height": 844,
+      "locale": "en",
+      "result": "Succeeded",
+      "scroll": 390,
+      "width": 390
+    },
+    {
+      "confirm": 0,
+      "height": 768,
+      "locale": "th",
+      "result": "สำเร็จแล้ว",
+      "scroll": 1366,
+      "width": 1366
+    },
+    {
+      "confirm": 0,
+      "height": 1080,
+      "locale": "th",
+      "result": "สำเร็จแล้ว",
+      "scroll": 1920,
+      "width": 1920
+    },
+    {
+      "confirm": 0,
+      "height": 1024,
+      "locale": "th",
+      "result": "สำเร็จแล้ว",
+      "scroll": 768,
+      "width": 768
+    },
+    {
+      "confirm": 0,
+      "height": 844,
+      "locale": "th",
+      "result": "สำเร็จแล้ว",
+      "scroll": 390,
+      "width": 390
+    }
+  ]
+}
