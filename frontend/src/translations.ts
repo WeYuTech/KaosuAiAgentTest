@@ -1,5 +1,7 @@
 /* 固定介面詞彙：中文原文為鍵，不翻譯 MES 主檔名稱或歷史訊息。 */
 export const translations: Record<string, [string, string]> = Object.fromEntries(`
+草稿保存狀態|Draft save status|สถานะการบันทึกฉบับร่าง
+本次提交已拒絕，請返回修改後重新核對。|This submission was rejected. Go back, update the details and review again.|การส่งครั้งนี้ถูกปฏิเสธ โปรดย้อนกลับ แก้ไขข้อมูลและตรวจสอบอีกครั้ง
 登入或權限已失效，請重新核對MES身分。|Login or permission expired. Verify your MES identity again.|การเข้าสู่ระบบหรือสิทธิ์หมดอายุ โปรดยืนยันตัวตน MES อีกครั้ง
 正在讀取資料…|Loading data…|กำลังโหลดข้อมูล…
 以此工單報工|Report for this order|รายงานผลผลิตสำหรับใบสั่งนี้

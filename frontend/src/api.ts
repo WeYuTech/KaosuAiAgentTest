@@ -5,9 +5,9 @@ export type Row = Record<string, unknown>;
 export interface Session { actor: { id: string; name: string; roles: string[] }; mode: string }
 export interface Message { role: string; content: string; proposal?: Proposal | null }
 export interface Change { table: string; key: unknown; field: string; before: unknown; after: unknown }
-export interface Proposal { id: string; digest: string; summary: string; changes: Change[]; expires_at: string; action: string; args: Row; status?: string; independent_confirmation?: boolean; writes_enabled?: boolean; business_timezone?: string; time_policy?: string; new_id_policy?: string; preview?: { time_policy?: string; new_id_policy?: string }; target?: { equipment?: string; work_order?: string; schedule_id?: string; execution_id?: string; report_id?: string; affected_orders?: unknown[]; schedule_details?: Row[] } }
+export interface Proposal { local_rejection?: boolean; id: string; digest: string; summary: string; changes: Change[]; expires_at: string; action: string; args: Row; status?: string; independent_confirmation?: boolean; writes_enabled?: boolean; business_timezone?: string; time_policy?: string; new_id_policy?: string; preview?: { time_policy?: string; new_id_policy?: string }; target?: { equipment?: string; work_order?: string; schedule_id?: string; execution_id?: string; report_id?: string; affected_orders?: unknown[]; schedule_details?: Row[] } }
 export interface Conversation { id: string; module: Module; messages: Message[]; locale?: string; actor_id?: string }
-export interface Reply { messages?: Message[]; proposal?: Proposal; data?: unknown; message?: string }
+export interface Reply { messages?: Message[]; proposal?: Proposal | null; data?: unknown; message?: string }
 export interface Workspace { records: Row[]; catalogs: Record<string, unknown>; total?: number; page?: number; page_size?: number }
 export interface Schema { type?: string | string[]; title?: string; description?: string; module?: string; properties?: Record<string, Schema>; required?: string[]; enum?: unknown[]; default?: unknown; items?: Schema; minimum?: number; maximum?: number; format?: string; parameters?: Schema; input_schema?: Schema }
 
@@ -41,6 +41,7 @@ export async function api<T>(path: string, body?: unknown): Promise<T> {
 }
 
 export const labels: Record<string, string> = {
+  draft_save_state: '草稿保存狀態',
   EQP_NO: '設備', WO: '工單', WO_NO: '工單', PART_NO: '料號', SPEC: '規格', MOLD_NO: '模具',
   PART_SPEC: '規格', EQP_NAME: '設備名稱', TOL_DETALS_NAME: '模具明細名稱', TOL_DETALS_NO: '模具明細編號',
   SHIFT_DAY: '班日', SCHEDULE_DATE: '排程日期', OPERATION: '製程', COMPLETED: '完工狀態',

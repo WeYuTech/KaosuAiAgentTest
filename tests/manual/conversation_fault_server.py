@@ -26,9 +26,17 @@ def create_preview():
     async def fault(request, call_next):
         mode = flag.read_text(encoding="utf-8-sig").strip() if flag.exists() else ""
         guide = request.url.path.endswith("/guide")
+        workspace = request.url.path == "/api/workspace"
+        if workspace and mode == "workspace-fail":
+            return JSONResponse({"message": "HTTP清單讀取故障替身"}, status_code=503)
+        if request.url.path.endswith("/reconcile") and mode == "reconcile-fail":
+            return JSONResponse({"message": "HTTP查核故障替身"}, status_code=503)
         if guide and request.method == "POST" and mode == "save-fail":
             return JSONResponse({"message": "HTTP保存故障替身"}, status_code=503)
         response = await call_next(request)
+        if workspace and mode == "hold-workspace" and request.query_params.get("module") == "report" and request.query_params.get("equipment") == "MC37":
+            while flag.exists():
+                await asyncio.sleep(0.05)
         if mode == "pending" and request.url.path.endswith("/confirm"):
             return JSONResponse({"message": "HTTP提交回應遺失替身"}, status_code=503)
         if mode == "pending" and request.method == "GET" and (guide or "/proposals/" in request.url.path):

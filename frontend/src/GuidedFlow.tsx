@@ -29,22 +29,40 @@ export function GuidedFlow({ ref, onBusyChange, onWorkChange, onContextChange, o
 }) {
   const { locale } = useLocale();
   const L = (zh: string, en: string, th: string) => locale === 'en' ? en : locale === 'th' ? th : zh;
+  function missingText(key: string) {
+    if (key === 'ok') return L('人工良品','Good units','ชิ้นงานดี');
+    if (key === 'defects') return L('請回答有無不良品','Specify whether there are defects','ระบุว่ามีของเสียหรือไม่');
+    if (['execution_id','schedule_id','report_id'].includes(key)) return L('選擇作業對象','Choose the target','เลือกเป้าหมายงาน');
+    const defect=/^defects\[(\d+)\]\.(code|quantity)$/.exec(key);
+    if (defect) return `${defect[2] === 'code' ? L('不良原因','Defect reason','สาเหตุของเสีย') : L('不良數量','Defect quantity','จำนวนชิ้นงานเสีย')} ${Number(defect[1])+1}`;
+    const detail = /^details\[(\d+)\]\.(part_no|wo|cavities|mold_detail_id)$/.exec(key);
+    if (detail) return `${L('工單與模穴','Order and cavities','ใบสั่งผลิตและจำนวนโพรง')} ${Number(detail[1])+1} · ${detail[2] === 'cavities' ? L('模穴數','Cavities','จำนวนโพรง') : detail[2] === 'wo' ? L('工單','Work order','ใบสั่งผลิต') : L('模具明細／品號','Mold detail / Part','รายละเอียดแม่พิมพ์ / รหัสชิ้นงาน')}`;
+    return label(key);
+  }
   const [guide, setGuide] = useState<Guide | null>(null);
   const [args, setArgs] = useState<Row>({});
+  const latestArgs = useRef(args);
+  const serverArgs = useRef<Row>({});
+  const obsoleteValidation = useRef(new WeakSet<object>());
+  useEffect(() => { latestArgs.current = args; }, [args]);
   const [step, setStep] = useState('action');
   const [action, setAction] = useState('');
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState('');
   const [reload, setReload] = useState(0);
-  const [saveState, setSaveStateValue] = useState<'saved'|'saving'|'failed'|'conflict'>('saved');
+  const [saveState, setSaveStateValue] = useState<'saved'|'saving'|'failed'|'conflict'|'invalid'>('saved');
   const saveStateRef = useRef(saveState);
   const setSaveState = (value: typeof saveState) => { saveStateRef.current = value; setSaveStateValue(value); };
+  useEffect(() => { if (saveStateRef.current === 'invalid') { setSaveState('saved'); setError(''); } }, [args]);
   const [conflict, setConflict] = useState<Guide | null>(null);
   const readGeneration = useRef(0);
   const editorRef = useRef<HTMLElement>(null);
+  const focusedStep = useRef('action');
   useEffect(() => {
+    const enteredDetails = step === 'details' && focusedStep.current !== step;
+    focusedStep.current = step;
     if (error) editorRef.current?.querySelector<HTMLElement>('[aria-invalid="true"], :invalid')?.focus();
-    else if (step === 'details') editorRef.current?.querySelector<HTMLElement>('input, select')?.focus();
+    else if (enteredDetails) editorRef.current?.querySelector<HTMLElement>('input, select')?.focus();
   }, [step, error]);
   const [records, setRecords] = useState<Row[]>(workspace.records);
   const [catalogs, setCatalogs] = useState<Row>(workspace.catalogs);
@@ -63,8 +81,8 @@ export function GuidedFlow({ ref, onBusyChange, onWorkChange, onContextChange, o
   const queueRef = useRef(Promise.resolve());
   const locked = disabled || busy || ['unknown'].includes(status);
   const dirty = Boolean(guide && step === 'details' && action && comparable(args) !== comparable(guide.args));
-  useEffect(() => { onSnapshot?.({ ...args, action, status: saveState === 'failed' || saveState === 'conflict' ? L('儲存失敗','Save failed','บันทึกไม่สำเร็จ') : dirty ? L('尚未同步','Not synced','ยังไม่ซิงค์') : L('已保存','Saved','บันทึกแล้ว') }); }, [args, action, saveState, dirty, locale, onSnapshot]);
-  useEffect(() => { onBusyChange?.(busy || dirty || (!guide && !error)); }, [busy, dirty, guide, error, onBusyChange]);
+  useEffect(() => { onSnapshot?.({ ...args, action, draft_save_state: saveState === 'saving' ? L('正在儲存草稿…','Saving draft…','กำลังบันทึกฉบับร่าง…') : saveState === 'invalid' ? L('資料需修正，輸入仍保留','Correct the details; input retained','โปรดแก้ไขข้อมูล เก็บข้อมูลที่กรอกไว้แล้ว') : saveState === 'failed' || saveState === 'conflict' ? L('儲存失敗','Save failed','บันทึกไม่สำเร็จ') : dirty ? L('尚未同步','Not synced','ยังไม่ซิงค์') : L('已保存','Saved','บันทึกแล้ว') }); }, [args, action, saveState, dirty, locale, onSnapshot]);
+  useEffect(() => { onBusyChange?.(busy || dirty || saveState === 'saving' || (!guide && !error)); }, [busy, dirty, saveState, guide, error, onBusyChange]);
   useEffect(() => () => { onWorkChange?.(false); }, [onWorkChange]);
   useEffect(() => () => { onBusyChange?.(false); }, [onBusyChange]);
   useImperativeHandle(ref, () => ({ beginReport: async record => {
@@ -79,7 +97,7 @@ export function GuidedFlow({ ref, onBusyChange, onWorkChange, onContextChange, o
     if (saveState === 'failed' || saveState === 'conflict') throw new Error(L('請先核對儲存失敗的內容。','Review the save failure first.','โปรดตรวจสอบข้อผิดพลาดการบันทึกก่อน'));
     await queueRef.current;
     if (['failed','conflict'].includes(saveStateRef.current)) throw new Error(L('請先核對儲存失敗的內容。','Review the save failure first.','โปรดตรวจสอบข้อผิดพลาดการบันทึกก่อน'));
-    if (dirty) await save('details', args, action, true);
+    if (step === 'details' && action && comparable(latestArgs.current) !== comparable(serverArgs.current)) await save('details', latestArgs.current, action, true);
   } }));
   const actionName = (value: string) => ({
     'query': L('查詢資料', 'Find records', 'ค้นหาข้อมูล'),
@@ -114,18 +132,20 @@ export function GuidedFlow({ ref, onBusyChange, onWorkChange, onContextChange, o
 
   function adopt(value: Guide) {
     versionRef.current = value.version;
+    serverArgs.current = value.args ?? {};
     setGuide(value); setArgs(value.args ?? {}); setStep(value.step || 'action'); setAction(value.action || '');
     setNewSchedule(value.intent === 'create' || (value.intent == null && value.step !== 'target' && !value.args?.schedule_id));
     setQuery(!value.action && value.step !== 'action');
-    if (Array.isArray(value.args?.defects)) setDefectChoice(value.args.defects.length ? 'some' : 'none');
+    setDefectChoice(Array.isArray(value.args?.defects) ? value.args.defects.length ? 'some' : 'none' : '');
     if (value.proposal && (!proposal || proposal.id !== value.proposal.id || (status || proposal.status) !== value.proposal.status)) onReply({ proposal: value.proposal });
+    else if (!value.proposal && proposal && status !== 'unknown') onReply({ proposal: null });
   }
   useEffect(() => {
-    if (((disabled || busy || dirty) && guide) || saveState === 'failed' || saveState === 'conflict') return;
+    if (((disabled || busy || dirty || saveState === 'saving') && guide) || saveState === 'failed' || saveState === 'conflict') return;
     let live = true;
-    api<Guide>(`/api/conversations/${conversation.id}/guide`).then(value => { if (live) adopt(value); }).catch(e => { if (live) setError(String(e.message)); });
+    api<Guide>(`/api/conversations/${conversation.id}/guide`).then(value => { if (live) adopt(value); }).catch(e => { if (live) { if(e instanceof ApiError && [401,403].includes(e.status)) onAccessDenied?.(); else setError(String(e.message)); } });
     return () => { live = false; };
-  }, [conversation.id, signal, status, disabled, busy, dirty, reload]);
+  }, [conversation.id, signal, status, disabled, busy, dirty, saveState, reload]);
   useEffect(() => { setRecords(workspace.records); setCatalogs(workspace.catalogs); setTotal(workspace.total ?? workspace.records.length); }, [workspace]);
   useEffect(() => { setTarget(selected); }, [selected]);
 
@@ -143,9 +163,16 @@ export function GuidedFlow({ ref, onBusyChange, onWorkChange, onContextChange, o
       setSaveState('saving');
       let value: Guide;
       try { value = await api<Guide>(`/api/conversations/${conversation.id}/guide`, { version: versionRef.current, action: chosen, args: patch, step: next, intent: chosen === 'schedule.save' ? intent : null }); }
-      catch (e) { setSaveState(e instanceof ApiError && e.status === 409 ? 'conflict' : 'failed'); if(e instanceof ApiError && [401,403].includes(e.status)) onAccessDenied?.(); throw e; }
+      catch (e) {
+        if (quiet && e instanceof ApiError && e.status === 422 && comparable(patch) !== comparable(latestArgs.current)) {
+          obsoleteValidation.current.add(e); setSaveState('saved'); throw e;
+        }
+        setSaveState(e instanceof ApiError && e.status === 422 ? 'invalid' : e instanceof ApiError && e.status === 409 ? 'conflict' : 'failed');
+        if(e instanceof ApiError && [401,403].includes(e.status)) onAccessDenied?.(); throw e;
+      }
       versionRef.current = value.version;
-      setSaveState('saved');
+      serverArgs.current = value.args ?? {};
+      setSaveState('saved'); setError('');
       if (quiet) setGuide(value); else adopt(value);
       return value;
     });
@@ -153,8 +180,8 @@ export function GuidedFlow({ ref, onBusyChange, onWorkChange, onContextChange, o
     return job;
   }
   useEffect(() => {
-    if (!guide || step !== 'details' || !action || busy || disabled || saveState === 'saving' || saveState === 'failed' || saveState === 'conflict' || comparable(args) === comparable(guide.args)) return;
-    const timer = setTimeout(() => { void save('details', args, action, true).catch(e => setError(String(e.message))); }, 650);
+    if (!guide || step !== 'details' || !action || busy || disabled || saveState === 'invalid' || saveState === 'saving' || saveState === 'failed' || saveState === 'conflict' || comparable(args) === comparable(guide.args)) return;
+    const timer = setTimeout(() => { void save('details', args, action, true).catch(e => { if (!obsoleteValidation.current.has(e)) setError(String(e.message)); }); }, 650);
     return () => clearTimeout(timer);
   }, [args, guide, step, action, busy, disabled, saveState]);
   useEffect(() => {
@@ -176,7 +203,7 @@ export function GuidedFlow({ ref, onBusyChange, onWorkChange, onContextChange, o
   async function chooseAction(value: string) {
     await work(async () => {
       const kept = retainTarget ? target : selected;
-      setTarget(kept); setQuery(value === 'query'); setLoadedQuery(false); setDefectChoice('');
+      setTarget(kept); setPendingTarget(null); setQuery(value === 'query'); setLoadedQuery(false); setDefectChoice('');
       const chosen = value === 'schedule.new' ? 'schedule.save' : value;
       setNewSchedule(value === 'schedule.new');
       if (module === 'mold' && value !== 'query') {
@@ -242,7 +269,7 @@ export function GuidedFlow({ ref, onBusyChange, onWorkChange, onContextChange, o
       onChange={e => setArgs(v => ({ ...v, [key]: type === 'number' ? (e.target.value === '' ? null : Number(e.target.value)) : e.target.value }))}/></label>;
   }
   function select(key: string, text: string, options: { value: string; name: string }[], change?: (value: string) => void) {
-    return <label className="guide-field">{text}<select required value={string(args[key])} onChange={e => change ? change(e.target.value) : setArgs(v => ({ ...v, [key]: e.target.value }))}>
+    return <label className="guide-field">{text}<select id={fieldId(key)} required value={string(args[key])} onChange={e => change ? change(e.target.value) : setArgs(v => ({ ...v, [key]: e.target.value }))}>
       <option value="">{L('請選擇', 'Please select', 'โปรดเลือก')}</option>{options.map(o => <option key={o.value} value={o.value}>{o.name}</option>)}
     </select></label>;
   }
@@ -265,14 +292,14 @@ export function GuidedFlow({ ref, onBusyChange, onWorkChange, onContextChange, o
       <p>{L('選擇模具的各組模穴，再分配工單與穴數。', 'Choose each mold detail, then assign an order and cavities.', 'เลือกแต่ละชุดโพรงแม่พิมพ์ แล้วกำหนดใบสั่งผลิตและจำนวนโพรง')}</p>
       {details.map((d, i) => <fieldset className="guide-detail" key={i}>
         <legend>{L('工單與模穴', 'Order and cavities', 'ใบสั่งผลิตและจำนวนโพรง')} {i + 1}</legend>
-        <label className="guide-field">{L('模具明細／品號', 'Mold detail / Part', 'รายละเอียดแม่พิมพ์ / รหัสชิ้นงาน')}<select required value={string(d.mold_detail_id)} onChange={e => {
+        <label className="guide-field">{L('模具明細／品號', 'Mold detail / Part', 'รายละเอียดแม่พิมพ์ / รหัสชิ้นงาน')}<select id={fieldId(`details[${i}].mold_detail_id`)} aria-describedby="missing-fields" required value={string(d.mold_detail_id)} onChange={e => {
           const chosen = moldDetails.find(m => string(m.TOL_DETALS_SID) === e.target.value);
           setArgs(v => ({ ...v, part_no: i === 0 ? chosen?.PART_NO : v.part_no, details: details.map((r, j) => i === j ? { ...r, mold_detail_id: e.target.value, part_no: chosen?.PART_NO, wo: '', cavities: null } : r) }));
         }}><option value="">{L('請選擇', 'Please select', 'โปรดเลือก')}</option>{moldDetails.map(m => <option key={string(m.TOL_DETALS_SID)} value={string(m.TOL_DETALS_SID)}>{[m.TOL_DETALS_NO, m.TOL_DETALS_NAME, m.PART_NO].filter(Boolean).join(' · ')}</option>)}</select></label>
-        <label className="guide-field">{L('工單', 'Work order', 'ใบสั่งผลิต')}<select value={string(d.wo)} onChange={e => setArgs(v => ({ ...v, details: details.map((r, j) => j === i ? { ...r, wo: e.target.value } : r) }))}>
+        <label className="guide-field">{L('工單', 'Work order', 'ใบสั่งผลิต')}<select id={fieldId(`details[${i}].wo`)} aria-describedby="missing-fields" value={string(d.wo)} onChange={e => setArgs(v => ({ ...v, details: details.map((r, j) => j === i ? { ...r, wo: e.target.value } : r) }))}>
           <option value="">{L('未分配工單（僅限0穴）', 'Unassigned (zero cavities only)', 'ไม่กำหนดใบสั่งผลิต (เฉพาะ 0 โพรง)')}</option>
           {catalog('work_orders').filter(w => w.PART_NO === d.part_no).map(w => <option key={string(w.WO_SID ?? w.WO)} value={string(w.WO)}>{string(w.WO)}</option>)}</select></label>
-        <label className="guide-field">{L('模穴數', 'Cavities', 'จำนวนโพรง')}<input type="number" required min={0} step={1} value={string(d.cavities)} onChange={e => setArgs(v => ({ ...v, details: details.map((r, j) => j === i ? { ...r, cavities: e.target.value === '' ? null : Number(e.target.value) } : r) }))}/></label>
+        <label className="guide-field">{L('模穴數', 'Cavities', 'จำนวนโพรง')}<input id={fieldId(`details[${i}].cavities`)} aria-describedby="missing-fields" type="number" required min={0} max={2147483647} step={1} value={string(d.cavities)} onChange={e => setArgs(v => ({ ...v, details: details.map((r, j) => j === i ? { ...r, cavities: e.target.value === '' ? null : Number(e.target.value) } : r) }))}/></label>
         <button type="button" className="secondary" onClick={() => setArgs(v => ({ ...v, details: details.filter((_, j) => j !== i) }))}>{L('移除此列', 'Remove row', 'ลบรายการนี้')}</button>
       </fieldset>)}
       <button type="button" className="secondary" disabled={!args.mold_no} onClick={() => setArgs(v => ({ ...v, details: [...details, {}] }))}>+ {L('加入工單／模穴', 'Add order / cavities', 'เพิ่มใบสั่งผลิต / โพรง')}</button>
@@ -285,7 +312,7 @@ export function GuidedFlow({ ref, onBusyChange, onWorkChange, onContextChange, o
     </>;
     if (action === 'report.add' || action === 'report.update') return <>
       {field('ok', L('這一筆人工良品數量', 'Good units in this record', 'จำนวนชิ้นงานดีในรายการนี้'), 'number')}
-      <fieldset><legend>{L('有不良品嗎？', 'Any defects?', 'มีชิ้นงานเสียหรือไม่?')}</legend><div className="guide-options">
+      <fieldset id="guide-defects" tabIndex={-1}><legend>{L('有不良品嗎？', 'Any defects?', 'มีชิ้นงานเสียหรือไม่?')}</legend><div className="guide-options">
         <button type="button" aria-pressed={defectChoice === 'none'} className="secondary" onClick={() => { setDefectChoice('none'); setArgs(v => ({ ...v, defects: [] })); }}>{L('沒有不良品', 'No defects', 'ไม่มีชิ้นงานเสีย')}</button>
         <button type="button" aria-pressed={defectChoice === 'some'} className="secondary" onClick={() => { setDefectChoice('some'); if (!defects.length) setArgs(v => ({ ...v, defects: [{}] })); }}>{L('有，選原因與數量', 'Yes, add reason and quantity', 'มี ระบุสาเหตุและจำนวน')}</button>
       </div></fieldset>
@@ -304,15 +331,15 @@ export function GuidedFlow({ ref, onBusyChange, onWorkChange, onContextChange, o
   const completed = ['succeeded', 'cancelled'].includes(status);
   const at = completed && step === 'review' ? 4 : proposal && ['pending','unknown'].includes(status || 'pending') ? 3 : Math.max(0, steps.indexOf(step));
   return <section ref={editorRef} className="guided-flow" aria-label={L('作業單', 'Operation sheet', 'ใบงาน')}>
-    <div className="operation-sheet-status" role="status">{['failed','conflict'].includes(saveState) ? L('儲存失敗，輸入仍保留','Save failed; input retained','บันทึกไม่สำเร็จ เก็บข้อมูลที่กรอกไว้แล้ว') : saveState === 'saving' || busy ? L('正在儲存草稿…','Saving draft…','กำลังบันทึกฉบับร่าง…') : dirty ? L('尚未同步','Not synced','ยังไม่ซิงค์') : at === 3 ? L('待核對','Ready for review','รอตรวจสอบ') : at === 4 ? L('作業結果','Result','ผลลัพธ์') : L('草稿 · 尚未送出','Draft · not submitted','ฉบับร่าง · ยังไม่ส่ง')}</div>
+    <div className="operation-sheet-status" role="status">{saveState === 'invalid' ? L('資料需修正，輸入仍保留','Correct the details; input retained','โปรดแก้ไขข้อมูล เก็บข้อมูลที่กรอกไว้แล้ว') : ['failed','conflict'].includes(saveState) ? L('儲存失敗，輸入仍保留','Save failed; input retained','บันทึกไม่สำเร็จ เก็บข้อมูลที่กรอกไว้แล้ว') : saveState === 'saving' || busy ? L('正在儲存草稿…','Saving draft…','กำลังบันทึกฉบับร่าง…') : dirty ? L('尚未同步','Not synced','ยังไม่ซิงค์') : at === 3 ? L('待核對','Ready for review','รอตรวจสอบ') : at === 4 ? L('作業結果','Result','ผลลัพธ์') : L('草稿 · 尚未送出','Draft · not submitted','ฉบับร่าง · ยังไม่ส่ง')}</div>
     {!onContextChange && <div className="guide-context"><strong>{L('目前作業','Current task','งานปัจจุบัน')}</strong><span>{contextTitle}</span></div>}
     {error && <div className="error-banner" role="alert"><span>{error}</span>{!guide && <button className="secondary" onClick={() => { setError(''); setReload(v => v + 1); }}>{L('重新載入作業單','Reload operation sheet','โหลดใบงานใหม่')}</button>}</div>}
-    {at === 2 && Boolean(guide?.missing.length) && <div id="missing-fields" role="status"><strong>{L('尚需補充','Still needed','ข้อมูลที่ยังขาด')}</strong><ul>{guide?.missing.map(key => <li key={key}><button type="button" className="text-button" onClick={() => document.getElementById(fieldId(key))?.focus()}>{key === 'ok' ? L('人工良品','Good units','ชิ้นงานดี') : key.startsWith('defects') ? `${L('不良原因與數量','Defect reason and quantity','สาเหตุและจำนวนของเสีย')} ${key.match(/\d+/)?.[0] ? Number(key.match(/\d+/)![0])+1 : ''}` : label(key)}</button></li>)}</ul></div>}
+    {at === 2 && Boolean(guide?.missing.length) && <div id="missing-fields" role="status"><strong>{L('尚需補充','Still needed','ข้อมูลที่ยังขาด')}</strong><ul>{guide?.missing.map(key => <li key={key}><button type="button" className="text-button" onClick={() => document.getElementById(fieldId(key.replace(/^(details\[\d+\])\.part_no$/, '$1.mold_detail_id')))?.focus()}>{missingText(key)}</button></li>)}</ul></div>}
     {['failed','conflict'].includes(saveState) && <div role="alert"><button className="secondary" onClick={() => void work(async () => {
       const value = await api<Guide>(`/api/conversations/${conversation.id}/guide`);
       if (comparable(value.args) === comparable(args) && value.action === action) { adopt(value); setSaveState('saved'); }
       else setConflict(value);
-    })}>{L('讀取伺服器版本核對','Read server version','อ่านเวอร์ชันเซิร์ฟเวอร์')}</button>{conflict && <><Fields value={conflict.args}/><button className="secondary" disabled={!['execution_id','report_id','schedule_id'].every(key => String(conflict.args[key] ?? '') === String(args[key] ?? ''))} onClick={() => { versionRef.current = conflict.version; setGuide(conflict); setConflict(null); setSaveState('saved'); setError(''); }}>{L('核對後重新套用目前輸入','Reapply my input after review','ใช้ข้อมูลที่กรอกหลังตรวจสอบ')}</button><button className="secondary" onClick={() => {adopt(conflict);setConflict(null);setSaveState('saved');setError('');}}>{L('採用伺服器內容','Use server values','ใช้ข้อมูลเซิร์ฟเวอร์')}</button></>}</div>}
+    })}>{L('讀取伺服器版本核對','Read server version','อ่านเวอร์ชันเซิร์ฟเวอร์')}</button>{conflict && <><Fields value={conflict.args}/><button className="secondary" disabled={!['execution_id','report_id','schedule_id'].every(key => String(conflict.args[key] ?? '') === String(args[key] ?? ''))} onClick={() => { versionRef.current = conflict.version; serverArgs.current = conflict.args; setGuide(conflict); setConflict(null); setSaveState('saved'); setError(''); }}>{L('核對後重新套用目前輸入','Reapply my input after review','ใช้ข้อมูลที่กรอกหลังตรวจสอบ')}</button><button className="secondary" onClick={() => {adopt(conflict);setConflict(null);setSaveState('saved');setError('');}}>{L('採用伺服器內容','Use server values','ใช้ข้อมูลเซิร์ฟเวอร์')}</button></>}</div>}
     <fieldset className="guide-body" disabled={locked}>
     {at === 0 && <>{module === 'report' ? <><button className="primary" disabled={locked || !guide} onClick={() => void chooseAction('report.add')}>{actionName('report.add')}<ArrowRight size={18}/></button><details><summary>{L('更多操作','More operations','งานเพิ่มเติม')}</summary><div className="guide-action-grid">{['query','report.update','report.delete','report.cavities','report.complete'].map(value => <button key={value} className="secondary" disabled={locked || !guide} onClick={() => void chooseAction(value)}>{actionName(value)}</button>)}</div></details></> : <div className="guide-action-grid">{(module === 'schedule' ? ['query','schedule.new','schedule.save'] : ['query','mold.mount_start','mold.mount_finish','mold.unmount_start','mold.unmount_finish','mold.clear']).map(value => <button key={value} className="secondary" disabled={locked || !guide} onClick={() => void chooseAction(value)}>{actionName(value)}<ArrowRight size={18}/></button>)}</div>}</>}    {at === 1 && <><h2>{query ? L('查詢作業資料','Find operation records','ค้นหาข้อมูลการทำงาน') : L('選擇這次要操作的對象','Choose the record to work on','เลือกรายการที่จะดำเนินการ')}</h2>
       {action === 'schedule.save' && newSchedule ? <p>{L('新增排程，下一步選設備、模具與工單。','Create a new schedule. Choose the machine, mold and order next.','เพิ่มแผนใหม่ ขั้นตอนถัดไปเลือกเครื่องจักร แม่พิมพ์ และใบสั่งผลิต')}</p> : <>
