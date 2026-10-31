@@ -1,0 +1,176 @@
+{
+  "日期_Asia_Taipei": "2026-11-01",
+  "來源版本": "9855a89c7138178e7426c23d65bed1cb5b956103",
+  "發行檔": "kaosu-weyu-pr18-9855a89-20261101.zip",
+  "發行_SHA256": "b303fc234e28e5b40f9ee5f57f8832cacdc47f7c0022f946b6737d28afb105b8",
+  "部署": {
+    "private_settings_unchanged": true,
+    "health": {
+      "status": "ok",
+      "mode": "live",
+      "model_configured": true,
+      "model": "gpt-6.1-sol",
+      "business_timezone": "UTC+07:00",
+      "business_date": "2026-10-31",
+      "server_time": "2026-10-31T23:28:55.553477+07:00"
+    },
+    "state_unchanged": {
+      ".local\\model-budget.db": true,
+      ".local\\operations.db": true
+    },
+    "service_not_restarted": true,
+    "release": "kaosu-weyu-pr18-9855a89-20261101",
+    "verified": 89,
+    "backup": "C:\\Services\\KaosuAiAgent\\backups\\code-before-kaosu-weyu-pr18-9855a89-20261101"
+  },
+  "入口安裝": {
+    "status": "already_installed",
+    "changed": 0,
+    "manifest": null
+  },
+  "公開_HTTP": {
+    "version": "9855a89c7138178e7426c23d65bed1cb5b956103",
+    "pages": [
+      {
+        "page": "MES-WIP/WIP-menu.html",
+        "status": 200,
+        "loader_count": 1
+      },
+      {
+        "page": "MES-WIP/setup/wip-query_schedule_plan_new.html",
+        "status": 200,
+        "loader_count": 1
+      },
+      {
+        "page": "MES-WIP/setup/wip-query_schedule_detail_new.html",
+        "status": 200,
+        "loader_count": 1
+      },
+      {
+        "page": "MES-WIP/OPI/schedule_report/wip-opi_schedule_uping.html",
+        "status": 200,
+        "loader_count": 1
+      },
+      {
+        "page": "MES-WIP/OPI/schedule_report/wip-query_schedule.html",
+        "status": 200,
+        "loader_count": 1
+      },
+      {
+        "page": "MES-WIP/OPI/schedule_report/wo-schedule.html",
+        "status": 200,
+        "loader_count": 1
+      },
+      {
+        "page": "MES-WIP/OPI/mold/wip-opi_schedule_mold_eqp.html",
+        "status": 200,
+        "loader_count": 1
+      },
+      {
+        "page": "MES-WIP/OPI/mold/wip-query_schedule_clear.html",
+        "status": 200,
+        "loader_count": 1
+      },
+      {
+        "page": "index.html",
+        "status": 200,
+        "loader_count": 1
+      }
+    ],
+    "assets": [
+      {
+        "path": "index.html",
+        "sha256": "17c022dd12107e79ed941a36416a88650e7d7254cde48db1b3bf1337a8755492",
+        "matches_build": true
+      },
+      {
+        "path": "widget-loader.js",
+        "sha256": "c53ad338cbd7eba8ae40e6f25532c5b91664d60c69729076ed694ed9cc865b03",
+        "matches_build": true
+      },
+      {
+        "path": "weyu-logo.png",
+        "sha256": "e49779a956aebfffbfce4a792c596b3b52c2088efc9dc252d776fd8803fc8573",
+        "matches_build": true
+      },
+      {
+        "path": "/assets/index-sdqkw7qC.js",
+        "matches_build": true
+      },
+      {
+        "path": "/assets/index-BQPhb4cQ.css",
+        "matches_build": true
+      }
+    ],
+    "health": {
+      "status": "ok",
+      "mode": "live",
+      "model_configured": true,
+      "model": "gpt-6.1-sol",
+      "business_timezone": "UTC+07:00",
+      "business_date": "2026-10-31",
+      "server_time": "2026-10-31T23:29:35.878295+07:00"
+    },
+    "unauthenticated_status": 401,
+    "private_paths": {
+      ".env": 404,
+      ".local/model-budget.db": 404,
+      "app/main.py": 404
+    },
+    "demo_login_status": 403,
+    "session": {
+      "mode": "live",
+      "trusted": "mes_session",
+      "modules": [
+        "schedule",
+        "report",
+        "mold"
+      ]
+    },
+    "modules": {
+      "report": {
+        "status": 200,
+        "total": 1
+      },
+      "schedule": {
+        "status": 200,
+        "total": 1,
+        "returned": 1
+      },
+      "mold": {
+        "status": 200,
+        "total": 75,
+        "returned": 20
+      }
+    },
+    "preview": {
+      "proposal_id": "1ccc4a45-9177-4524-b8e4-7691d9fa8b3a",
+      "status": "pending",
+      "change_count": 1,
+      "locales_preserve_content": true
+    },
+    "cancelled": true,
+    "business_fields_unchanged": [
+      "OPI_CAV",
+      "MANUAL_OK",
+      "MANUAL_NG",
+      "REPORTS",
+      "COMPLETED"
+    ],
+    "business_write_confirmations_sent": 0,
+    "model_calls": 0
+  },
+  "未執行": [
+    "V08–V16 瀏覽器畫面驗收",
+    "R06 首次原句重載恢復",
+    "正式 MES 業務測試寫入",
+    "真實模型呼叫"
+  ],
+  "部署後預算唯讀核對": {
+    "limit_usd": 20.0,
+    "spent_usd": 1.199426,
+    "reserved_usd": 0,
+    "calls": 182,
+    "unknown_calls": 0
+  }
+}

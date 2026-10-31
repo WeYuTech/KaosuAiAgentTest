@@ -1,5 +1,33 @@
 # IIS 部署與維護
 
+## 2026-11-01：依後續指示部署 WeYu 正式介面
+
+使用者於本輪明確要求部署正式 MES，因此部署 [PR #18](https://github.com/WeYuTech/KaosuAiAgentTest/pull/18) 的產品版本 `9855a89c7138178e7426c23d65bed1cb5b956103`。PR 仍為草稿，沒有合併 main，也沒有關閉 Issue #13。日期採使用者端 Asia/Taipei；MES 業務時區維持 UTC+07:00。
+
+| 項目 | 實際結果 |
+|---|---|
+| 發行檔 | `kaosu-weyu-pr18-9855a89-20261101.zip` |
+| ZIP SHA256 | `b303fc234e28e5b40f9ee5f57f8832cacdc47f7c0022f946b6737d28afb105b8` |
+| 程式位置 | `C:\Services\KaosuAiAgent\current` |
+| 回復備份 | `C:\Services\KaosuAiAgent\backups\code-before-kaosu-weyu-pr18-9855a89-20261101`，包含異動前檔案、原清單與 `deployment.json` |
+| 校驗 | 發行 ZIP 及部署後 89 個逐檔 SHA256 全部吻合 |
+| 前端入口 | `index-sdqkw7qC.js`、`index-BQPhb4cQ.css`；入口 HTML、loader、Logo 及兩項雜湊資產的公開 HTTP 內容與本機建置完全相同 |
+| 服務 | 維持 LOCAL SERVICE、127.0.0.1:8765；後端未改、服務未重啟；IIS 健康檢查 `ok/live` |
+| 設定與資料 | 更新前後 `.env`、`operations.db`、`model-budget.db` 雜湊相同；隨後驗證僅新增助理對話、預覽與取消紀錄，未重設資料或帳本 |
+| 九頁入口 | 首頁與原八頁 HTTP 200、各一份 loader；安裝器回 `already_installed`、`changed=0`，未改原頁，保留歷史八頁及首頁備份 |
+
+本輪只更新前端及文件：先校驗並備份，放入新資產，再原子替換 loader 及 HTML 入口；保留舊雜湊資產供已開啟的頁面使用。沒有停止整台 IIS、修改 DB schema 或重新安裝依賴。
+
+公開 HTTP 驗證沿用既有可信 MES 登入，排程／報工／模具查詢均為 200。對原已指定報工對象建立「模穴調整」預覽，確認中英泰切換保留 args／digest，最後以 `approved=false` 取消；回傳 `cancelled` 且 changes 為空。取消前後 `OPI_CAV`、`MANUAL_OK`、`MANUAL_NG`、`REPORTS`、`COMPLETED` 相同。本輪 `approved=true` 次數及模型呼叫次數皆為 0。部署後預算唯讀核對仍為 182 次、US$1.199426，預留與未知皆為 0，原 US$20 上限保持不變。
+
+未登入 session 回 401，正式站模擬登入回 403；公開 `.env`、`.local/model-budget.db`、`app/main.py` 均為 404。結構化證據見 [部署與 HTTP 核對](evidence/weyu-deploy-20261101.json)。
+
+**部署成功不等於完整 UI 驗收通過。** V08–V16 瀏覽器畫面驗收仍未執行，R06「首次原句重載恢復」仍未完成，沿用 [本輪驗收界線](WeYu介面實作與驗收-20261031.md)。可由 [MES 首頁](http://192.168.2.123/KSS_MES/wwwroot/index.html) 重新整理後開啟右下助理；已開舊版的人員先完成或查核原操作，再重新整理，不能為更新強制重送。
+
+需回復時，依上述備份的 `deployment.json` 恢復所有 `existed=true` 的異動檔及原 `SHA256SUMS.txt`，最後恢復 HTML／loader；保留目前 `.env`、`.local` 及新舊雜湊資產。不得用備份資料庫覆蓋部署後的操作與預算。這次沒有重寫九頁入口，不需還原原 MES 頁面或整台 IIS。
+
+以下為歷史部署紀錄。
+
 部署日期：2026-10-30。目標為使用者指定的 `192.168.2.123`，以已授權 SSH 管理連線部署。原 MES 位於 `C:\inetpub\wwwroot\KSS_MES`，助理入口為 `http://192.168.2.123/KSS_MES/ai-agent/`。來源庫仍預設模擬模式；伺服器環境設定採正式模式。
 
 ## 實際配置
