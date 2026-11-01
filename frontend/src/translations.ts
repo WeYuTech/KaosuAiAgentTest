@@ -15,7 +15,7 @@ export const translations: Record<string, [string, string]> = Object.fromEntries
 報告條件|Report conditions|เงื่อนไขรายงาน
 例如：每天 08:00 產生 MC37 的報工報告|For example: Every day at 08:00 generate a production report for MC37|ตัวอย่าง: ทุกวัน 08:00 สร้างรายงานผลผลิต MC37
 依所選頻率，於 MES 時間產生前一排程日的唯讀報告；不自動報工，不使用模型費用。|At the selected frequency and MES time, generate a read-only report for the previous schedule date. No automatic production reporting or model cost.|สร้างรายงานอ่านอย่างเดียวของวันกำหนดการก่อนหน้าตามความถี่ที่เลือกและเวลา MES ไม่รายงานการผลิตอัตโนมัติและไม่มีค่าใช้จ่ายโมเดล
-報告清單讀取失敗，請重新讀取。|Failed to load reports. Please reload.|โหลดรายการรายงานไม่สำเร็จ กรุณาโหลดใหม่
+報告清單讀取失敗，請關閉後重新開啟。|Failed to load reports. Close and reopen this panel.|โหลดรายการรายงานไม่สำเร็จ กรุณาปิดแล้วเปิดหน้าต่างนี้อีกครั้ง
 待處理 · 尚未取得回覆|Pending · No response received yet|รอดำเนินการ · ยังไม่ได้รับคำตอบ
 請求已拒絕，未重新送出|Request rejected. Not resent.|คำขอถูกปฏิเสธ ยังไม่ได้ส่งซ้ำ
 送達結果未知，未重新送出|Delivery unknown. Not resent.|ไม่ทราบผลการส่ง ยังไม่ได้ส่งซ้ำ

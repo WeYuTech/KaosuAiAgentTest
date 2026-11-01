@@ -79,7 +79,6 @@ export function ConversationHistory({ actor, current, overlay, locked, busy, ref
     </div>
     <ThreadListPrimitive.Root className="history-list" aria-busy={loading}>
       {!actor?<p className="muted history-empty">{t('還沒有歷史聊天')}</p>:loading?<ThreadListSkeleton/>:error?null:<>
-        <p className="sidebar-caption" hidden={!data.total}>{t(scope==='archived'?'封存聊天室':scope==='deleted'?'已刪除聊天':'聊天紀錄')} · {data.total}</p>
         {!data.records.length&&<p className="muted history-empty">{t(search?'找不到符合的聊天':scope==='archived'?'尚無封存聊天':scope==='deleted'?'目前沒有已刪除的聊天':'還沒有歷史聊天')}</p>}
         {<ThreadListPrimitive.Items>{({threadListItem})=>{const projected=threadListItem.custom?.mesConversation as ChatEntry|undefined;const entry=data.records.find(item=>item.id===projected?.id);if(!entry)return null;const group=historyGroup(entry);const first=data.records.find(v=>historyGroup(v)===group)?.id===entry.id;return <Fragment key={entry.id}>{first&&<div data-slot="aui_thread-list-group-label" className="text-muted-foreground px-2.5 pt-3 pb-1 text-xs font-medium">{t(group)}</div>}<ThreadListItemPrimitive.Root data-slot="aui_thread-list-item" className={`history-row ${current?.id===entry.id?'selected':''}`}>
           <ThreadListItemPrimitive.Trigger asChild><button className="history-select" disabled={locked||busy||saving||entry.is_deleted} aria-current={current?.id===entry.id?'page':undefined} title={entry.title}>
@@ -96,9 +95,9 @@ export function ConversationHistory({ actor, current, overlay, locked, busy, ref
         </ThreadListItemPrimitive.Root></Fragment>;}}</ThreadListPrimitive.Items>}
       </>}
       {error&&<p role="alert">{error}</p>}
-      {actor&&<div className="history-pagination">
+      {actor&&(error||settled&&data.total>data.page_size)&&<div className="history-pagination">
         {settled&&data.total>data.page_size&&<><button className="icon-button" disabled={page<=1||loading} onClick={()=>setPage(v=>v-1)} aria-label={t('上一頁')}><ChevronLeft size={16}/></button><span>{data.page} / {Math.ceil(data.total/data.page_size)}</span><button className="icon-button" disabled={page*data.page_size>=data.total||loading} onClick={()=>setPage(v=>v+1)} aria-label={t('下一頁')}><ChevronRight size={16}/></button></>}
-        <button className="text-button" disabled={loading} onClick={()=>setNonce(v=>v+1)}>{t(error?'重試':'重新讀取')}</button>
+        {error&&<button className="text-button" disabled={loading} onClick={()=>setNonce(v=>v+1)}>{t('重試')}</button>}
       </div>}
     </ThreadListPrimitive.Root>
     <div className="history-footer"><button className="sidebar-budget" onClick={usage} disabled={!actor} aria-label={t('用量與使用統計')}><span><strong>{t('用量額度')}</strong><span>{!actor ? t('尚未登入') : budget ? `US$${Number(budget.spent_usd||0).toFixed(2)} / ${Number(budget.limit_usd).toFixed(2)}` : t('尚未取得用量')}</span></span><span className="budget-track"><span style={{width:budget?`${Math.min(100,Math.max(0,Number(budget.limit_usd)>0?(Number(budget.spent_usd||0)+Number(budget.reserved_usd||0))/Number(budget.limit_usd)*100:100))}%`:'0%'}}/></span></button>{locked&&<p role="status">{t('請先完成、取消或查核原操作，再切換聊天。')}</p>}</div>
@@ -107,7 +106,7 @@ export function ConversationHistory({ actor, current, overlay, locked, busy, ref
       <form onSubmit={e=>{e.preventDefault();if(!saving&&!composing.current)void mutate(dialog.entry,dialog.kind==='rename'?{title:title.trim()}:{is_deleted:true});}}>
         {dialog.kind==='rename'?<label>{t('聊天室名稱')}<input maxLength={100} value={title} disabled={saving} onChange={e=>setTitle(e.target.value)} onCompositionStart={()=>{composing.current=true;}} onCompositionEnd={()=>{composing.current=false;}} onKeyDown={e=>{if(e.key==='Enter'&&(e.nativeEvent.isComposing||e.nativeEvent.keyCode===229||composing.current))e.preventDefault();}}/></label>:<strong>{dialog.entry.title}</strong>}
         {dialogError&&<p role="alert">{dialogError}</p>}
-        <div className="history-dialog-actions">{dialogError&&<button type="button" onClick={()=>{const latest=data.records.find(v=>v.id===dialog.entry.id);if(latest){setDialog({...dialog,entry:latest});setDialogError('');}else closeDialog();}}>{t('重新讀取')}</button>}<button type="button" disabled={saving} onClick={closeDialog}>{t('取消')}</button><button className="primary" disabled={saving||!!dialogError||dialog.kind==='rename'&&!title.trim()}>{t(dialog.kind==='rename'?'儲存名稱':'刪除聊天室')}</button></div>
+        <div className="history-dialog-actions"><button type="button" disabled={saving} onClick={closeDialog}>{t('取消')}</button><button className="primary" disabled={saving||!!dialogError||dialog.kind==='rename'&&!title.trim()}>{t(dialog.kind==='rename'?'儲存名稱':'刪除聊天室')}</button></div>
       </form>
     </div></OperationDialog>}
   </aside>;
