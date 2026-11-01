@@ -72,3 +72,6 @@
   .workspace-bar h1,.workspace-bar .module-switcher { display:none; }
   .workspace-bar .connection { width:auto; }
 }
+
+/* 標題只承接開窗焦點與朗讀，不是操作控制項；按鈕的鍵盤焦點仍保留。 */
+#mes-ai-chat-root #assistant-dialog-title:focus { outline:none; }
