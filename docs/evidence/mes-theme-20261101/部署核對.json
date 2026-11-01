@@ -1,0 +1,47 @@
+{
+  "private_settings_unchanged": true,
+  "health": {
+    "status": "ok",
+    "mode": "live",
+    "model_configured": true,
+    "model": "gpt-6.1-sol",
+    "business_timezone": "UTC+07:00",
+    "business_date": "2026-11-01",
+    "server_time": "2026-11-01T14:05:13.271139+07:00"
+  },
+  "state_unchanged": {
+    ".local\\model-budget.db": true,
+    ".local\\operations.db": true
+  },
+  "service_not_restarted": true,
+  "release": "kaosu-mes-theme-20261101",
+  "verified": 102,
+  "backup": "C:\\Services\\KaosuAiAgent\\backups\\code-before-kaosu-mes-theme-20261101",
+  "commit": "54d3f3e",
+  "zip_sha256": "cca8f993f44111559c570f3b436ebec3d939f68c79a3aac3677346bb60fc9777",
+  "public_assets": {
+    "index.html": {
+      "status": 200,
+      "same": true
+    },
+    "widget-loader.js": {
+      "status": 200,
+      "same": true
+    },
+    "./assets/index-Dlmdr5Lg.js": {
+      "status": 200,
+      "same": true
+    },
+    "./assets/index-BiyWb6aR.css": {
+      "status": 200,
+      "same": true
+    }
+  },
+  "tests": {
+    "frontend_passed": 77,
+    "build": "passed",
+    "backend": "本輪未修改，沿用前輪214通過／10跳過"
+  },
+  "business_test_writes": 0,
+  "model_calls": 0
+}

@@ -1,5 +1,17 @@
 # IIS 部署與維護
 
+## 2026-11-01：新增 MES 藍色主題
+
+正式前端更新至 **`54d3f3e`**。「更多功能 → 介面外觀 → MES 藍色」採 MES 首頁原色，原有四個選項保留。102 個檔案校驗通過，公開 HTML／loader／JS／CSS 與本機建置相同；前端 77 項與建置通過，後端無異動。先備份、放入雜湊資產，再原子替換 HTML／loader，服務不重啟，九頁入口未重複安裝。
+
+發行檔 `kaosu-mes-theme-20261101.zip`；SHA256 `cca8f993f44111559c570f3b436ebec3d939f68c79a3aac3677346bb60fc9777`。回復備份 `C:\Services\KaosuAiAgent\backups\code-before-kaosu-mes-theme-20261101`，依 `deployment.json` 還原已存在的舊檔與清單，入口最後替換，保留現行私密設定與狀態庫。
+
+更新前後 `.env` 與兩個 SQLite 雜湊相同，服務 PID 相同、健康 ok/live；沒有模型呼叫或正式業務測試寫入。正式首頁已實際選取 MES 藍色，ADMINV2 驗證與版權正常；隔離頁已驗切換時保留輸入、重新整理記住主題。原有整體 UX 待辦不變，未合併 main。
+
+[主題說明](MES藍色主題.md) · [部署核對](evidence/mes-theme-20261101/部署核對.json)
+
+![正式 MES 藍色](evidence/mes-theme-20261101/正式MES藍色.jpg)
+
 ## 2026-11-01：原版介面、聊天紀錄與管理功能正式更新
 
 依使用者本輪「部署正式 MES」指示，部署 PR #18 產品版本 **`df16459`**。未合併 main，PR 仍為草稿；正式部署與尚未完成的完整 UX 驗收分別記錄。
