@@ -70,15 +70,15 @@ test('浮窗鍵盤調整、重新掛載恢復與重設不重建 iframe', () => {
   launcher.listeners.click();
   const original = frame.src;
   resize.listeners.keydown({key:'ArrowLeft',shiftKey:true,preventDefault(){}});
-  assert.equal(frame.style.width,'514px');
+  assert.equal(frame.style.width,'628px');
   assert.equal(frame.src,original);
-  assert.equal(mount(storage).frame.style.width,'514px');
+  assert.equal(mount(storage).frame.style.width,'628px');
   message('kaosu-assistant:resize',{expanded:true});
   assert.equal(resize.style.display,'none');
   message('kaosu-assistant:resize',{expanded:false});
   assert.equal(resize.style.display,'block');
   resize.listeners.keydown({key:'Enter',preventDefault(){}});
-  assert.equal(frame.style.width,'450px');
+  assert.equal(frame.style.width,'564px');
   assert.equal(storage.has('kaosu-assistant:size'),false);
   message('kaosu-assistant:preferences',{locale:'en',theme:'navy',resolvedTheme:'navy'});
   assert.equal(frame.style.background,'#10182d');

@@ -1,18 +1,18 @@
 /* 依 4173 的 assistant-ui 外框：圓形入口、精簡標頭、展開後左側導覽。 */
 .assistant-overlay { position:fixed; inset:0; pointer-events:none; z-index:2147482999; }
 .assistant-panel {
-  position:fixed; right:1rem; bottom:4.75rem;
-  width:min(var(--floating-width,28.125rem),calc(100vw - 2rem)); height:min(var(--floating-height,35.15625rem),calc(100dvh - 6rem));
+  position:fixed; right:18px; bottom:83.5px;
+  width:min(var(--floating-width,35.25rem),calc(100vw - 2rem)); height:min(var(--floating-height,45.8125rem),calc(100dvh - 6rem));
   display:flex; flex-direction:column; min-width:0; overflow:hidden; pointer-events:auto;
-  border:1px solid var(--border); border-radius:calc(var(--radius) + 2px);
-  background:var(--background); color:var(--foreground); box-shadow:var(--panel-shadow);
+  border:0; border-radius:12px;
+  background:var(--background); color:var(--foreground); box-shadow:0 0 0 1px var(--border),var(--panel-shadow);
   container:mes-chat-shell / inline-size;
 }
 .assistant-panel.expanded { inset:0; width:100vw; height:100dvh; border:0; border-radius:0; }
 .embedded .assistant-panel { inset:0; width:100%; height:100dvh; border:0; border-radius:0; box-shadow:none; }
 .assistant-header {
-  display:flex; align-items:center; gap:.5625rem; min-height:var(--aui-header-height);
-  padding:.5rem .5625rem .5rem .984375rem; background:var(--background);
+  display:flex; align-items:center; gap:.5625rem; height:var(--aui-header-height); min-height:var(--aui-header-height);
+  padding:0 .5625rem 0 .984375rem; background:var(--background);
   border-bottom:1px solid var(--border); flex-shrink:0;
 }
 .aui-modal-brand { height:var(--aui-brand-logo-height); width:auto; max-width:8rem; object-fit:contain; flex-shrink:0; filter:var(--aui-brand-logo-filter); }
@@ -21,11 +21,20 @@
 .header-preferences { position:relative; }
 #mes-ai-chat-root .header-preferences>summary { display:grid; place-items:center; width:var(--aui-control-min-size); height:var(--aui-control-min-size); min-height:var(--aui-control-min-size); padding:0; border-radius:.375rem; color:var(--muted-foreground); }
 .header-preferences>summary:hover { background:var(--muted); }
-.preferences-menu { position:absolute; top:100%; right:0; z-index:40; min-width:13rem; padding:.84375rem; display:grid; gap:.84375rem; background:var(--popover); border:1px solid var(--border); border-radius:var(--radius); box-shadow:var(--panel-shadow); }
-.preferences-menu select { width:100%; }
+.preferences-menu { position:absolute; top:calc(100% + 4px); right:0; z-index:110; width:max-content; min-width:160px; max-width:calc(100vw - 36px); max-height:min(610px,calc(100dvh - 140px)); overflow:auto; padding:4.5px; background:var(--popover); border:1px solid var(--border); border-radius:8px; box-shadow:0 4px 6px -1px rgb(0 0 0 / .1),0 2px 4px -2px rgb(0 0 0 / .1); }
+#mes-ai-chat-root .preferences-menu button { width:100%; display:flex; align-items:center; gap:9px; border:0; border-radius:6px; background:transparent; color:inherit; min-height:36px; padding:6.75px 9px; font-size:15px; font-weight:400; text-align:left; line-height:22.5px; }
+.preferences-menu button:hover:not(:disabled),.preferences-menu button:focus-visible { background:var(--accent); }
+.preferences-menu button svg { color:var(--muted-foreground); }
+.preferences-menu hr { margin:4.5px -4.5px; border:0; border-top:1px solid var(--border); }
+#mes-ai-chat-root .preferences-caption { margin:0; padding:6.75px 9px; font-size:15px; line-height:22.5px; font-weight:500; }
+#mes-ai-chat-root .preferences-menu .theme-choice { position:relative; padding-left:36px; }
+.theme-check { position:absolute; left:9px; width:16px; text-align:center; }
+.preferences-language { padding:6.75px 9px; display:flex; align-items:center; gap:9px; font-size:15px; }
+.preferences-language select { min-width:0; max-width:140px; font-size:15px; }
 .brand { display:flex; align-items:center; gap:.84375rem; min-width:0; }
 .brand-copy { display:grid; }
 .brand-title { font-size:var(--mes-text-sm); font-weight:500; }
+.assistant-session-status { flex-shrink:0; padding:9px 18px; font-size:15px; line-height:22.5px; color:var(--muted-foreground); border-bottom:1px solid var(--border); }
 .assistant-body { display:flex; flex:1; min-height:0; min-width:0; }
 .assistant-main { container:mes-workspace / inline-size; display:flex; flex-direction:column; flex:1; min-height:0; min-width:0; }
 .operation-sidebar { display:none; width:18rem; flex:0 0 18rem; flex-direction:column; min-height:0; border-right:1px solid var(--border); background:color-mix(in srgb,var(--muted) 30%,var(--background)); }

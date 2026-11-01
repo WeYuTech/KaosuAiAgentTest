@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { Archive, ArrowLeft, ChevronLeft, ChevronRight, MessageSquare, MoreHorizontal, Pin, Plus, Search, Trash2, X } from 'lucide-react';
-import { ApiError, type Conversation, type Module } from './api';
+import { ApiError, type Conversation, type Module, type Row } from './api';
 import { t } from './i18n';
 
 export interface ChatEntry {
@@ -8,8 +8,8 @@ export interface ChatEntry {
   metadata_version: number; created_at: string; updated_at: string; message_count: number;
 }
 interface Page { records: ChatEntry[]; total: number; page: number; page_size: number }
-export function ConversationHistory({ actor, current, overlay, locked, busy, refresh, request, close, select, create, beforeChange, changed, usage, onWorkChange }: {
-  actor?: string; current: Conversation | null; overlay: boolean; locked: boolean; busy: boolean; refresh: number;
+export function ConversationHistory({ actor, current, overlay, locked, busy, refresh, request, close, select, create, beforeChange, changed, usage, onWorkChange, budget }: {
+  budget: Row | null; actor?: string; current: Conversation | null; overlay: boolean; locked: boolean; busy: boolean; refresh: number;
   request: <T>(path: string, body?: unknown) => Promise<T>; close: () => void; select: (entry: ChatEntry) => Promise<void>;
   create: () => Promise<void>; beforeChange: (id: string) => Promise<void>; changed: (entry: ChatEntry) => void; usage: () => void;
   onWorkChange: (value:boolean)=>void;
@@ -46,12 +46,12 @@ export function ConversationHistory({ actor, current, overlay, locked, busy, ref
   const moduleLabel=(module:Module)=>t({report:'生產報工',schedule:'生產排程',mold:'模具上下模'}[module]);
   return <aside className={`conversation-history ${overlay?'history-overlay':''}`} aria-label={t('聊天紀錄')}>
     <div className="history-top"><button className="text-button" disabled={locked||busy||saving} onClick={()=>void create()}><Plus size={18}/>{t('新聊天')}</button><button className="icon-button history-close" onClick={close} aria-label={t('返回聊天')}><X size={18}/></button></div>
-    <label className="history-search"><Search size={16}/><input ref={searchRef} value={search} maxLength={200} placeholder={t('搜尋聊天')} aria-label={t('搜尋聊天')} onChange={e=>{setSearch(e.target.value);setPage(1);}}/></label>
-    <div className="history-navigation"><button className="text-button" onClick={()=>{setScope(scope==='archived'?'active':'archived');setPage(1);}}>{scope==='archived'?<ArrowLeft size={16}/>:<Archive size={16}/>} {t(scope==='archived'?'返回聊天':'封存聊天室')}</button><button className="text-button" onClick={()=>{setScope(scope==='deleted'?'active':'deleted');setPage(1);}}><Trash2 size={16}/>{t(scope==='deleted'?'返回聊天':'已刪除聊天')}</button></div>
+    <label className="history-search" hidden={!actor || !data.total && !search && scope==='active'}><Search size={16}/><input ref={searchRef} value={search} maxLength={200} placeholder={t('搜尋聊天')} aria-label={t('搜尋聊天')} onChange={e=>{setSearch(e.target.value);setPage(1);}}/></label>
+    <div className="history-navigation"><button className="text-button" disabled={!actor} onClick={()=>{setScope(scope==='archived'?'active':'archived');setPage(1);}}>{scope==='archived'?<ArrowLeft size={16}/>:<Archive size={16}/>} {t(scope==='archived'?'返回聊天':'封存聊天室')}</button><button className="text-button" hidden={!actor} onClick={()=>{setScope(scope==='deleted'?'active':'deleted');setPage(1);}}><Trash2 size={16}/>{t(scope==='deleted'?'返回聊天':'已刪除聊天')}</button></div>
     <div className="history-list" aria-busy={loading}>
-      {!actor?<p>{t('請先選擇作業身分。')}</p>:loading?<p role="status">{t('正在讀取資料…')}</p>:<>
-        <p className="sidebar-caption">{t(scope==='archived'?'封存聊天室':scope==='deleted'?'已刪除聊天':'聊天紀錄')} · {data.total}</p>
-        {!data.records.length&&<p className="muted">{t(search?'找不到符合的聊天':'還沒有歷史聊天')}</p>}
+      {!actor?<p className="muted history-empty">{t('還沒有歷史聊天')}</p>:loading?<p role="status">{t('正在讀取資料…')}</p>:<>
+        <p className="sidebar-caption" hidden={!data.total && scope==='active'}>{t(scope==='archived'?'封存聊天室':scope==='deleted'?'已刪除聊天':'聊天紀錄')} · {data.total}</p>
+        {!data.records.length&&<p className="muted history-empty">{t(search?'找不到符合的聊天':'還沒有歷史聊天')}</p>}
         {data.records.map(entry=><div key={entry.id} className={`history-row ${current?.id===entry.id?'selected':''}`}>
           <button className="history-select" disabled={locked||busy||saving||entry.is_deleted} aria-current={current?.id===entry.id?'page':undefined} onClick={()=>void select(entry)} title={entry.title}>
             {entry.is_pinned?<Pin size={16}/>:<MessageSquare size={16}/>}<span><strong>{entry.title}</strong><small>{moduleLabel(entry.module)} · {new Date(entry.updated_at).toLocaleDateString('en-CA',{timeZone:'Asia/Bangkok'})}</small></span>
@@ -67,9 +67,9 @@ export function ConversationHistory({ actor, current, overlay, locked, busy, ref
         </div>)}
       </>}
       {error&&<p role="alert">{error}</p>}
-      <div className="history-pagination"><button className="icon-button" disabled={page<=1||loading} onClick={()=>setPage(v=>v-1)} aria-label={t('上一頁')}><ChevronLeft size={16}/></button><span>{page} / {Math.max(1,Math.ceil(data.total/30))}</span><button className="icon-button" disabled={page*30>=data.total||loading} onClick={()=>setPage(v=>v+1)} aria-label={t('下一頁')}><ChevronRight size={16}/></button><button className="text-button" disabled={loading} onClick={()=>setNonce(v=>v+1)}>{t('重新讀取')}</button></div>
+      <div className="history-pagination" hidden={!actor || !data.total && !search && scope==='active'}><button className="icon-button" disabled={page<=1||loading} onClick={()=>setPage(v=>v-1)} aria-label={t('上一頁')}><ChevronLeft size={16}/></button><span>{page} / {Math.max(1,Math.ceil(data.total/30))}</span><button className="icon-button" disabled={page*30>=data.total||loading} onClick={()=>setPage(v=>v+1)} aria-label={t('下一頁')}><ChevronRight size={16}/></button><button className="text-button" disabled={loading} onClick={()=>setNonce(v=>v+1)}>{t('重新讀取')}</button></div>
     </div>
-    <div className="history-footer"><button className="text-button" onClick={usage}>{t('用量與使用統計')}</button>{locked&&<p role="status">{t('請先完成、取消或查核原操作，再切換聊天。')}</p>}</div>
+    <div className="history-footer"><button className="sidebar-budget" onClick={usage} disabled={!actor} aria-label={t('用量與使用統計')}><span><strong>{t('用量額度')}</strong><span>{!actor ? t('尚未登入') : budget ? `US$${Number(budget.spent_usd||0).toFixed(2)} / ${Number(budget.limit_usd).toFixed(2)}` : t('尚未取得用量')}</span></span><span className="budget-track"><span style={{width:budget?`${Math.min(100,Math.max(0,Number(budget.limit_usd)>0?(Number(budget.spent_usd||0)+Number(budget.reserved_usd||0))/Number(budget.limit_usd)*100:100))}%`:'0%'}}/></span></button>{locked&&<p role="status">{t('請先完成、取消或查核原操作，再切換聊天。')}</p>}</div>
     {dialog&&<div className="history-dialog-backdrop"><div ref={dialogRef} role="dialog" aria-modal="true" aria-label={t(dialog.kind==='rename'?'重新命名聊天室':'刪除聊天室？')} className="history-dialog" tabIndex={-1} onKeyDown={e=>{
       e.stopPropagation();if(e.key==='Escape'&&!saving)closeDialog();
       if(e.key==='Tab'){const nodes=Array.from(e.currentTarget.querySelectorAll<HTMLElement>('input:not(:disabled),button:not(:disabled)'));const first=nodes[0],last=nodes.at(-1);if(e.shiftKey&&(document.activeElement===first||document.activeElement===dialogRef.current)){e.preventDefault();last?.focus();}else if(!e.shiftKey&&document.activeElement===last){e.preventDefault();first?.focus();}}

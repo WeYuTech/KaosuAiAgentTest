@@ -488,6 +488,21 @@ MES 登入無法驗證；請重新登入或洽管理員。|MES sign-in could not
 返回修改|Back to edit|กลับไปแก้ไข
 刪除定時報告|Delete scheduled report|ลบรายงานตามเวลา
 刪除|Delete|ลบ
+今天想查什麼？|What would you like to know today?|วันนี้อยากทราบอะไร?
+輸入生產問題…|Enter a production question…|พิมพ์คำถามเกี่ยวกับการผลิต…
+隔離模擬環境，正式 MES 資料不會變更|Isolated simulation. Live MES data will not change.|สภาพแวดล้อมจำลองแยก ข้อมูล MES จริงจะไม่เปลี่ยนแปลง
+登入已逾時，請重新登入 MES 後再使用|Your session expired. Sign in to MES again.|เซสชันหมดอายุ โปรดเข้าสู่ระบบ MES อีกครั้ง
+MES 登入已驗證|MES sign-in verified|ยืนยันการเข้าสู่ระบบ MES แล้ว
+用量額度|Usage limit|วงเงินการใช้งาน
+尚未登入|Not signed in|ยังไม่ได้เข้าสู่ระบบ
+尚未取得用量|Usage unavailable|ยังไม่ทราบการใช้งาน
+Agent API 設定|Agent API settings|การตั้งค่า Agent API
+排程報告|Scheduled reports|รายงานตามเวลา
+介面外觀|Appearance|รูปลักษณ์
+明亮模式|Light mode|โหมดสว่าง
+黑暗模式|Dark mode|โหมดมืด
+使用統計|Usage statistics|สถิติการใช้งาน
+收合聊天室|Collapse chat|ย่อแชต
 API 設定|API settings|การตั้งค่า API
 Agent 設定|Agent settings|การตั้งค่า Agent
 調整用量額度|Adjust usage limit|ปรับวงเงินการใช้งาน
