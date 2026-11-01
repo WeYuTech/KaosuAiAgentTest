@@ -1,5 +1,34 @@
 # IIS 部署與維護
 
+## 2026-11-01：正式黑白介面更新
+
+依使用者「部署正式 MES」指示，從 PR #18 分支部署產品版本 `8a7dfe8`；沒有合併 main，也沒有關閉整體需求。正式入口為 [MES 首頁](http://192.168.2.123/KSS_MES/wwwroot/index.html)，重新整理後開啟右下助理。
+
+| 項目 | 實際結果 |
+|---|---|
+| 最終封裝 | `kaosu-blackwhite-final-20261101.zip` |
+| SHA256 | `6796d1596b654962961aade580290bb6a6a273c9e0123ab375be41e509a6ebce` |
+| 校驗 | 92 檔 SHA256 全部吻合；公開 HTML、loader、品牌圖、JS 與 CSS 與本機建置一致 |
+| 服務 | `C:\Services\KaosuAiAgent\current`，維持 loopback 8765 與原服務程序，未重啟；健康狀態 `ok/live` |
+| 狀態保存 | 兩次原子更新前後 `.env`、`operations.db`、`model-budget.db` 均相同，未清空設定、對話、稽核或預算 |
+| 九頁入口 | HTTP 200、各一份 loader；安裝器 `already_installed`、`changed=0`，原八頁與首頁歷史備份保留 |
+| 正式瀏覽器 | 首頁登入成功、沿用 ADMINV2、黑白浮窗及展開正常，舊對話與已取消紀錄保留；MC37／2026-10-30 唯讀查詢回傳 4 筆 |
+| 權限界線 | 未登入 session 401；私密環境檔、資料庫與後端原始碼的公開路徑 404 |
+| 寫入與模型 | 本輪沒有建立新確認卡、送出同意確認或呼叫模型；畫面中的取消卡是原有歷史紀錄 |
+
+先部署 `6e6ed26`，現場發現查詢側欄的輸入控制項最小寬度導致橫向捲動。已在 `8a7dfe8` 修正篩選欄位寬度，隔離及正式瀏覽器均量測到側欄 `clientWidth=scrollWidth=345`。修正後前端 76 項測試及正式建置通過；後端無異動，沿用前次 200 通過／10 跳過證據。本輪未重跑所有業務寫入或完整視覺矩陣，未把部署成功當成整體驗收完成。
+
+兩次部署皆先校驗、備份，再放入新資產並原子替換入口；保留舊雜湊資產供已開啟頁面使用。回復備份：
+
+- 更新至黑白介面前的 `9855a89`：`C:\Services\KaosuAiAgent\backups\code-before-kaosu-blackwhite-6e6ed26-20261101`。
+- 側欄修正前的 `6e6ed26`：`C:\Services\KaosuAiAgent\backups\code-before-kaosu-blackwhite-final-20261101`。
+
+需要回復時，依目標備份 `deployment.json` 還原 `existed=true` 的異動檔與原 `SHA256SUMS.txt`，最後還原 HTML／loader；保留現行 `.env`、`.local` 及雜湊資產，不能以舊資料庫覆蓋操作或帳本。兩次更新都未修改 MES 頁面，不需回復九頁入口。
+
+[結構化部署證據](evidence/blackwhite-deploy-20261101.json) · [完整隔離驗收與剩餘項目](4173瀏覽器驗收補充-20261101.md)
+
+![正式 MES 首頁的黑白助理入口](evidence/4173-ui-20261101/正式MES-黑白入口.jpg)
+
 ## 2026-11-01：依後續指示部署 WeYu 正式介面
 
 使用者於本輪明確要求部署正式 MES，因此部署 [PR #18](https://github.com/WeYuTech/KaosuAiAgentTest/pull/18) 的產品版本 `9855a89c7138178e7426c23d65bed1cb5b956103`。PR 仍為草稿，沒有合併 main，也沒有關閉 Issue #13。日期採使用者端 Asia/Taipei；MES 業務時區維持 UTC+07:00。
