@@ -1,6 +1,6 @@
 # 高塑 MES 對話操作助理
 
-本分支承接 PR #20 處理 [Issue #21](https://github.com/WeYuTech/KaosuAiAgentTest/issues/21)：修正聊天空態、報告分組與焦點、受控轉場、待處理訊息與閱讀捲動。本輪前端96項、後端220項通過／10跳過；完整動畫、指定尺寸與無障礙驗收仍未完成，未部署。詳見 [逐項實作與驗收](docs/Issue21-轉場與回饋實作驗收.md)。
+本分支承接 PR #20 處理 [Issue #21](https://github.com/WeYuTech/KaosuAiAgentTest/issues/21)：修正聊天空態、報告分組與焦點、受控轉場、待處理訊息與閱讀捲動。本輪前端96項、後端220項通過／10跳過；完整動畫、指定尺寸與無障礙驗收仍未完成。依使用者後續授權，PR #22 版本 `7896694` 已部署正式 MES，登入、歷史、報告介面與 MC37 唯讀查詢通過；PR 仍為草稿、尚未合併。詳見 [逐項實作與驗收](docs/Issue21-轉場與回饋實作驗收.md) 與 [部署紀錄](docs/IIS部署.md)。
 
 本分支正在處理 [Issue #19](https://github.com/WeYuTech/KaosuAiAgentTest/issues/19)：正式 React 已接入固定來源 `294bc02d` 的 assistant-ui、Radix、Tailwind 4 與受控 runtime；保留原 MES Guide、唯一人工確認與交易 API。來源／必要適配／逐項通過和未完成範圍見 [本輪元件移植與驗收](docs/Issue19-元件移植與驗收.md)，套件與授權見 [依賴盤點](docs/Issue19-前端依賴與授權.md)。
 

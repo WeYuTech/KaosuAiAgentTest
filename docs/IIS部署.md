@@ -1,5 +1,30 @@
 # IIS 部署與維護
 
+## 2026-11-01：Issue #21 聊天回饋與轉場版本正式部署
+
+依使用者後續「部署正式 MES」授權，部署草稿 PR #22 的 `78966948f51960d183a46105b6b37ba1de2fc54b`（產品程式 `72248cf`）。未合併 main，不關閉 #21／#19／#13；尚缺的錄影、效能、尺寸與無障礙驗收仍依原表追蹤。
+
+| 項目 | 實際結果 |
+|---|---|
+| 發行包 | `kaosu-motion-7896694-20261101.zip` |
+| SHA256 | `7696b5a1d26505fd132bba48bdfddad0651350e94ebd8aa9d29bfcce5123a4e4` |
+| 核對 | 106 個封裝檔在伺服器校驗通過；17 個公開資產與本機建置相同，含 motion-tokens.css |
+| 服務與設定 | 健康 ok/live、loopback 8765、程序未重啟；更新前後 .env、operations.db、model-budget.db 雜湊相同 |
+| 九頁入口 | HTTP 200、loader 各1份；安裝器 already_installed、changed=0，保留歷史備份 |
+| 正式瀏覽器 | 重新登入首頁、助理浮窗、15筆聊天、已刪除空態、恢復已取消報工作業、MC37／2026-10-30 查詢4筆、報告三區及關閉後返回通過 |
+| 存取邊界 | 未登入 session 401；公開 .env、兩個資料庫及 app/main.py 均404 |
+| 資料與費用 | 未建立確認卡、定時委託或執行正式業務測試寫入；無付費模型呼叫，既有US$20上限保留 |
+
+部署前重新建置與型別檢查通過，沿用同一產品版本先前96項前端、220項後端通過／10跳過結果；未為文件變更重跑全套測試。伺服器預檢逐檔確認沒有後端異動，僅更新靜態產物與文件／測試，HTML最後原子替換，舊雜湊資產保留。
+
+既有分頁登入後曾發生瀏覽器控制 Page.getFrameTree 逾時，另開同站首頁後登入狀態與新版助理正常。宿主仍有既存 navbar／GetLang 錯誤；未宣稱首次載入效能已解決。正式站只讀取報告清單，沒有解析／建立測試報告，也未以正式寫入測試動效。
+
+回復備份：`C:\Services\KaosuAiAgent\backups\code-before-kaosu-motion-7896694-20261101`。依其 `deployment.json` 還原 existed=true 的檔案及 SHA256SUMS.txt，HTML最後替換；保留現行 .env、.local 與前端新舊雜湊資產，不用舊資料庫覆蓋部署後作業與預算。
+
+[部署核對](evidence/issue21-deploy/部署核對.json) · [公開入口核對](evidence/issue21-deploy/公開入口核對.json) · [正式唯讀查詢](evidence/issue21-deploy/正式唯讀查詢.jpg) · [正式空清單](evidence/issue21-deploy/正式空清單.jpg)
+
+![正式報告介面](evidence/issue21-deploy/正式報告介面.jpg)
+
 ## 2026-11-01：Issue #19 來源元件版本正式部署
 
 依使用者後續「部署正式 MES」指示，部署 PR #20 產品版本 **`678a903`**。PR 仍是草稿，沒有合併 main 或關閉 #19／#13；部署不代表完整視覺、無障礙與恢復矩陣已驗收。

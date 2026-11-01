@@ -1,0 +1,81 @@
+{
+  "private_settings_unchanged": true,
+  "health": {
+    "status": "ok",
+    "mode": "live",
+    "model_configured": true,
+    "model": "gpt-6.1-sol",
+    "business_timezone": "UTC+07:00",
+    "business_date": "2026-11-01",
+    "server_time": "2026-11-01T19:59:36.142133+07:00"
+  },
+  "state_unchanged": {
+    ".local\\model-budget.db": true,
+    ".local\\operations.db": true
+  },
+  "service_not_restarted": true,
+  "release": "kaosu-motion-7896694-20261101",
+  "verified": 106,
+  "backup": "C:\\Services\\KaosuAiAgent\\backups\\code-before-kaosu-motion-7896694-20261101",
+  "widget": {
+    "status": "already_installed",
+    "changed": 0,
+    "manifest": null
+  },
+  "release_commit": "78966948f51960d183a46105b6b37ba1de2fc54b",
+  "product_commit": "72248cf180e1261594b34dc217cebf74dada4373",
+  "release_sha256": "7696b5a1d26505fd132bba48bdfddad0651350e94ebd8aa9d29bfcce5123a4e4",
+  "read_only_state": {
+    "counts": {
+      "CONVERSATION": 15,
+      "PROPOSAL": 4,
+      "LOG": 4
+    },
+    "proposal_statuses": {
+      "cancelled": 4
+    },
+    "budget": {
+      "limit_usd": 20.0,
+      "remaining_usd": 18.788758,
+      "warning_percent": 80,
+      "near_limit": false,
+      "reached": false,
+      "spent_usd": 1.211242,
+      "reserved_usd": 0,
+      "calls": 184,
+      "unknown_calls": 0
+    }
+  },
+  "after_ui": {
+    "counts": {
+      "CONVERSATION": 15,
+      "PROPOSAL": 4,
+      "LOG": 4
+    },
+    "proposal_statuses": {
+      "cancelled": 4
+    },
+    "budget": {
+      "limit_usd": 20.0,
+      "remaining_usd": 18.788758,
+      "warning_percent": 80,
+      "near_limit": false,
+      "reached": false,
+      "spent_usd": 1.211242,
+      "reserved_usd": 0,
+      "calls": 184,
+      "unknown_calls": 0
+    }
+  },
+  "ui_counts_and_budget_unchanged": true,
+  "browser": {
+    "homepage": "登入、浮窗與新版助理載入通過",
+    "history": "15筆；已刪除空集合不顯示搜尋或單頁分頁",
+    "restored": "既有已取消報工作業",
+    "query": "MC37／2026-10-30，4筆",
+    "reports": "三區載入及關閉返回通過，未建立委託",
+    "production_business_test_writes": 0,
+    "paid_model_calls": 0,
+    "limitation": "舊分頁瀏覽器控制逾時，另開首頁正常；完整動效與無障礙矩陣仍待驗收"
+  }
+}

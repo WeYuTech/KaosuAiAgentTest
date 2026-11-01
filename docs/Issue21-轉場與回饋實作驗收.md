@@ -2,6 +2,8 @@
 
 日期：2026-11-01。追蹤 [#21](https://github.com/WeYuTech/KaosuAiAgentTest/issues/21)，承接 [#20](https://github.com/WeYuTech/KaosuAiAgentTest/pull/20)、[#19](https://github.com/WeYuTech/KaosuAiAgentTest/issues/19)、[#13](https://github.com/WeYuTech/KaosuAiAgentTest/issues/13)。
 
+後續部署更新：使用者另行指示「部署正式 MES」後，已部署 PR #22 發行版本 `7896694`（產品程式 `72248cf`），紀錄見 [IIS 部署](IIS部署.md)。下文「未部署」描述原開發驗收階段；此次部署不代表 M01–M11 全部通過，草稿 PR 與未驗收需求保持開啟。
+
 ## 基準與交付界線
 
 本輪產品實作及驗收建置對應 `72248cf180e1261594b34dc217cebf74dada4373`；後續補記 SHA 的提交只更新文件與證據索引，不改產品。正式部署未隨本輪更新。
