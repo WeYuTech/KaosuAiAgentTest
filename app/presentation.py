@@ -2,6 +2,9 @@
 import re
 
 MESSAGES = {
+    "conversation_metadata_stale": ("聊天紀錄已更新，請重新讀取後再操作。", "This chat changed. Reload it before continuing.", "แชตนี้มีการเปลี่ยนแปลง โปรดโหลดใหม่ก่อนดำเนินการ"),
+    "conversation_unresolved": ("請先完成、取消或查核原操作，再封存或刪除聊天。", "Complete, cancel or reconcile the original operation before archiving or deleting this chat.", "โปรดทำงานเดิมให้เสร็จ ยกเลิก หรือตรวจสอบผลก่อนเก็บถาวรหรือลบแชต"),
+    "conversation_readonly": ("封存聊天為唯讀，取消封存後可接續操作。", "Archived chats are read-only. Unarchive this chat to continue.", "แชตที่เก็บถาวรอ่านได้อย่างเดียว ยกเลิกการเก็บถาวรเพื่อดำเนินการต่อ"),
     "guide_stale": ("草稿已更新，請重新讀取後再試。", "The draft changed. Reload it before continuing.", "ฉบับร่างมีการเปลี่ยนแปลง โปรดโหลดใหม่ก่อนดำเนินการ"),
     "conversation_busy": ("上一則訊息仍在處理，請稍後再試。", "The previous message is still processing. Please wait.", "ข้อความก่อนหน้ายังประมวลผลอยู่ โปรดรอสักครู่"),
     "outcome_unknown": ("結果待核對，請查核執行結果；不得重送。", "The result is unknown. Reconcile the operation; do not resubmit it.", "ยังไม่ทราบผล โปรดตรวจสอบผลการดำเนินการ ห้ามส่งซ้ำ"),

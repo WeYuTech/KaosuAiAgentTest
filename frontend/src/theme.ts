@@ -1,6 +1,6 @@
 import { useEffect, useSyncExternalStore } from 'react';
-export type Theme = 'light' | 'dark' | 'system';
-export const isTheme = (value: unknown): value is Theme => ['light', 'dark', 'system'].includes(value as string);
+export type Theme = 'light' | 'dark' | 'navy' | 'mes' | 'system';
+export const isTheme = (value: unknown): value is Theme => ['light', 'dark', 'navy', 'mes', 'system'].includes(value as string);
 let theme: Theme = 'system';
 try { const saved = globalThis.localStorage?.getItem('kaosu-assistant:theme'); if (isTheme(saved)) theme = saved; } catch { /* 預設跟隨系統。 */ }
 const listeners = new Set<() => void>();
@@ -12,7 +12,7 @@ export function setTheme(next: Theme) {
   try { globalThis.localStorage?.setItem('kaosu-assistant:theme', next); } catch { /* 偏好儲存失敗不阻擋操作。 */ }
   notify();
 }
-export function resolveTheme(value: Theme, systemDark = false): 'light' | 'dark' { return value === 'system' ? systemDark ? 'dark' : 'light' : value; }
+export function resolveTheme(value: Theme, systemDark = false): 'light' | 'dark' | 'navy' | 'mes' { return value === 'system' ? systemDark ? 'dark' : 'light' : value; }
 const getResolved = () => resolveTheme(theme, typeof matchMedia === 'function' && matchMedia('(prefers-color-scheme: dark)').matches);
 const subscribe = (listener: () => void) => {
   listeners.add(listener);
@@ -25,9 +25,9 @@ export function useTheme() {
   const resolvedTheme = useSyncExternalStore(subscribe, getResolved, () => 'light' as const);
   useEffect(() => {
     const root = document.getElementById('mes-ai-chat-root');
-    root?.classList.toggle('dark', resolvedTheme === 'dark');
+    root?.classList.toggle('dark', resolvedTheme !== 'light');
     if (root) root.dataset.theme = resolvedTheme;
-    document.documentElement.style.colorScheme = resolvedTheme;
+    document.documentElement.style.colorScheme = resolvedTheme === 'light' ? 'light' : 'dark';
   }, [resolvedTheme]);
   return { theme: value, setTheme, resolvedTheme };
 }

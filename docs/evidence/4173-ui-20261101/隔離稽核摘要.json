@@ -1,0 +1,43 @@
+{
+  "環境": "本機隔離模擬，非正式 MES",
+  "操作識別": "1e4b4e3e-9875-4062-b790-fa72ea8899d2",
+  "報工確認卡": [
+    {
+      "id": "1e4b4e3e-9875-4062-b790-fa72ea8899d2",
+      "status": "succeeded",
+      "ok": 120,
+      "defects": [
+        {
+          "code": "NG01",
+          "quantity": 2
+        }
+      ]
+    },
+    {
+      "id": "79b59a3e-de8f-4daa-996f-0d28e190bdb8",
+      "status": "superseded",
+      "ok": 121,
+      "defects": []
+    },
+    {
+      "id": "b27753be-a456-4052-84b9-9a5247d26c18",
+      "status": "cancelled",
+      "ok": 122,
+      "defects": []
+    }
+  ],
+  "稽核結果": [
+    {
+      "id": "1e4b4e3e-9875-4062-b790-fa72ea8899d2",
+      "action": "report.add",
+      "status": "succeeded",
+      "變動欄位數": 18
+    },
+    {
+      "id": "b27753be-a456-4052-84b9-9a5247d26c18",
+      "action": "report.add",
+      "status": "cancelled",
+      "變動欄位數": 0
+    }
+  ]
+}

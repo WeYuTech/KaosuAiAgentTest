@@ -1,5 +1,118 @@
 # IIS 部署與維護
 
+## 2026-11-01：隱藏提示文字與修正開窗標題外框
+
+正式前端版本 **`9fedc92`**：隱藏登入成功列（ADMINV2 · MES 登入已驗證）、底部 MES 時間與回報問題入口，以及確認卡同一段固定 UTC+07:00 提示。保留版權、登入失效／隔離環境提示及實際作業時間；可信身分、權限與後端時區規則不變。
+
+淺藍框來自開窗時標題 `tabIndex=-1` 取得焦點，套用通用 `[tabindex]:focus-visible` 外框。僅將 `#assistant-dialog-title:focus` 的 outline 移除，保留開窗朗讀與焦點管理。實測標題 outline 為 none，Tab 移到聊天紀錄按鈕仍有約 3px 焦點框。
+
+前端77項與建置通過；正式首頁及既有報工取消紀錄實測三處文字不可見、頁尾 display:none、版權可見。沒有新確認卡、模型呼叫或正式業務寫入。後端未改，未重跑前輪214項／10跳過。
+
+發行 `kaosu-clean-chrome-final-20261101.zip`，SHA256 `a246543af2471f1826b9d8ca6aeaaa9f645a4ad32392f7d3991490c09ade5f29`。102檔與公開入口／JS／CSS／loader吻合，服務未重啟、健康 ok/live，.env與兩個SQLite更新前後雜湊相同，九頁入口 changed=0。
+
+本輪先部署 `f36bbc7`，核對報工畫面時發現確認卡也有固定時區文字，補上隱藏後更新為 `9fedc92`。兩次皆保留回復備份：`C:\Services\KaosuAiAgent\backups\code-before-kaosu-clean-chrome-20261101`（還原至 MES 藍色版本）與 `C:\Services\KaosuAiAgent\backups\code-before-kaosu-clean-chrome-final-20261101`（還原至本輪第一次修正）。依各自 deployment.json 還原程式及清單，HTML／loader最後替換，不還原或清空.env與.local。
+
+[部署核對](evidence/clean-chrome-20261101/部署核對.json) · [開窗畫面](evidence/clean-chrome-20261101/正式開窗修正.jpg) · [報工頁尾](evidence/clean-chrome-20261101/正式報工頁尾修正.jpg)
+
+## 2026-11-01：新增 MES 藍色主題
+
+正式前端更新至 **`54d3f3e`**。「更多功能 → 介面外觀 → MES 藍色」採 MES 首頁原色，原有四個選項保留。102 個檔案校驗通過，公開 HTML／loader／JS／CSS 與本機建置相同；前端 77 項與建置通過，後端無異動。先備份、放入雜湊資產，再原子替換 HTML／loader，服務不重啟，九頁入口未重複安裝。
+
+發行檔 `kaosu-mes-theme-20261101.zip`；SHA256 `cca8f993f44111559c570f3b436ebec3d939f68c79a3aac3677346bb60fc9777`。回復備份 `C:\Services\KaosuAiAgent\backups\code-before-kaosu-mes-theme-20261101`，依 `deployment.json` 還原已存在的舊檔與清單，入口最後替換，保留現行私密設定與狀態庫。
+
+更新前後 `.env` 與兩個 SQLite 雜湊相同，服務 PID 相同、健康 ok/live；沒有模型呼叫或正式業務測試寫入。正式首頁已實際選取 MES 藍色，ADMINV2 驗證與版權正常；隔離頁已驗切換時保留輸入、重新整理記住主題。原有整體 UX 待辦不變，未合併 main。
+
+[主題說明](MES藍色主題.md) · [部署核對](evidence/mes-theme-20261101/部署核對.json)
+
+![正式 MES 藍色](evidence/mes-theme-20261101/正式MES藍色.jpg)
+
+## 2026-11-01：原版介面、聊天紀錄與管理功能正式更新
+
+依使用者本輪「部署正式 MES」指示，部署 PR #18 產品版本 **`df16459`**。未合併 main，PR 仍為草稿；正式部署與尚未完成的完整 UX 驗收分別記錄。
+
+| 項目 | 實際結果 |
+|---|---|
+| 發行包 | `kaosu-exact-df16459-20261101.zip` |
+| ZIP SHA256 | `84aaf251a8a635a6757236133ce8efb6abdadf95a70a433461f6ae779012ab38` |
+| 檔案校驗 | 101 個逐檔雜湊全部吻合；公開 HTML／loader／JS／CSS 與建置內容相同 |
+| 前置檢查 | 後端 214 通過／10 跳過，前端 77 通過，TypeScript／Vite 通過 |
+| 執行位置 | `C:\Services\KaosuAiAgent\current`；LOCAL SERVICE、127.0.0.1:8765；IIS 代理沿用 |
+| 重啟 | 僅停止並啟動 KaosuAiAgent 專屬工作；後端與前端一併更新，健康檢查 ok/live |
+| 設定與資料 | 停機備份後、更新前後 `.env`、`operations.db`、`model-budget.db` 雜湊一致；沒有以本機預覽庫覆蓋正式庫 |
+| 聊天與稽核 | 更新前後 14 筆聊天、4 筆已取消確認卡、4 筆 LOG 保留；正式瀏覽器讀得到舊對話 |
+| 費用帳本 | 182 次已結清、US$1.199426，維持 US$20；本輪模型呼叫 0 |
+| 入口 | 九頁 HTTP 200、loader 各 1 份；安裝器 already_installed／changed=0，歷史備份保留 |
+| 瀏覽器 | 首頁沿用 ADMINV2，浮窗／展開／歷史與版權正常；MC37／2026-10-30 唯讀查詢回傳 4 筆 |
+| 管理功能 | 正式定時報告列表可讀、目前為空；未建立正式測試委託、未修改管理設定 |
+| 存取邊界 | 未登入 session 401；公開 `.env`、資料庫及後端原始碼路徑 404 |
+
+更新前確認沒有執行中確認卡，只有四筆歷史取消紀錄。新套件與 DB Schema 均未變更，未重啟整台 IIS，未寫入正式 MES 業務資料。新背景唯讀報告工作沿用預設設定，目前沒有已建立委託，所以本輪未驗收正式定時執行。R06、實體 IME、200% 縮放及完整矩陣仍按 PR 待辦追蹤。
+
+回復備份：`C:\Services\KaosuAiAgent\backups\code-before-kaosu-exact-df16459-20261101`。程式依 `deployment.json` 保存異動前內容，私密設定與兩個資料庫另存 `private`，備份目錄限制系統與管理員讀取。回復時停止專屬服務、還原舊程式與 SHA256SUMS、再啟動；保留現行 `.env`、`.local` 與新舊前端雜湊資產，不以舊庫覆蓋更新後的對話、報告或費用。
+
+首次首頁 iframe 短暫空白，直接入口可正常載入；重新整理首頁後嵌入版正常，已實際完成登入、查詢及歷史讀取。HTTP 檢查腳本最初未正規化 `./assets` 路徑而遇到 403，改為標準 URL 後 JS／CSS 均 200 且雜湊吻合，沒有放寬伺服器安全設定。
+
+[部署核對數據](evidence/exact-deploy-20261101/部署核對.json) · [正式唯讀查詢畫面](evidence/exact-deploy-20261101/正式唯讀查詢.jpg)
+
+![正式首頁新版浮窗](evidence/exact-deploy-20261101/正式首頁浮窗.jpg)
+
+## 2026-11-01：正式黑白介面更新
+
+依使用者「部署正式 MES」指示，從 PR #18 分支部署產品版本 `8a7dfe8`；沒有合併 main，也沒有關閉整體需求。正式入口為 [MES 首頁](http://192.168.2.123/KSS_MES/wwwroot/index.html)，重新整理後開啟右下助理。
+
+| 項目 | 實際結果 |
+|---|---|
+| 最終封裝 | `kaosu-blackwhite-final-20261101.zip` |
+| SHA256 | `6796d1596b654962961aade580290bb6a6a273c9e0123ab375be41e509a6ebce` |
+| 校驗 | 92 檔 SHA256 全部吻合；公開 HTML、loader、品牌圖、JS 與 CSS 與本機建置一致 |
+| 服務 | `C:\Services\KaosuAiAgent\current`，維持 loopback 8765 與原服務程序，未重啟；健康狀態 `ok/live` |
+| 狀態保存 | 兩次原子更新前後 `.env`、`operations.db`、`model-budget.db` 均相同，未清空設定、對話、稽核或預算 |
+| 九頁入口 | HTTP 200、各一份 loader；安裝器 `already_installed`、`changed=0`，原八頁與首頁歷史備份保留 |
+| 正式瀏覽器 | 首頁登入成功、沿用 ADMINV2、黑白浮窗及展開正常，舊對話與已取消紀錄保留；MC37／2026-10-30 唯讀查詢回傳 4 筆 |
+| 權限界線 | 未登入 session 401；私密環境檔、資料庫與後端原始碼的公開路徑 404 |
+| 寫入與模型 | 本輪沒有建立新確認卡、送出同意確認或呼叫模型；畫面中的取消卡是原有歷史紀錄 |
+
+先部署 `6e6ed26`，現場發現查詢側欄的輸入控制項最小寬度導致橫向捲動。已在 `8a7dfe8` 修正篩選欄位寬度，隔離及正式瀏覽器均量測到側欄 `clientWidth=scrollWidth=345`。修正後前端 76 項測試及正式建置通過；後端無異動，沿用前次 200 通過／10 跳過證據。本輪未重跑所有業務寫入或完整視覺矩陣，未把部署成功當成整體驗收完成。
+
+兩次部署皆先校驗、備份，再放入新資產並原子替換入口；保留舊雜湊資產供已開啟頁面使用。回復備份：
+
+- 更新至黑白介面前的 `9855a89`：`C:\Services\KaosuAiAgent\backups\code-before-kaosu-blackwhite-6e6ed26-20261101`。
+- 側欄修正前的 `6e6ed26`：`C:\Services\KaosuAiAgent\backups\code-before-kaosu-blackwhite-final-20261101`。
+
+需要回復時，依目標備份 `deployment.json` 還原 `existed=true` 的異動檔與原 `SHA256SUMS.txt`，最後還原 HTML／loader；保留現行 `.env`、`.local` 及雜湊資產，不能以舊資料庫覆蓋操作或帳本。兩次更新都未修改 MES 頁面，不需回復九頁入口。
+
+[結構化部署證據](evidence/blackwhite-deploy-20261101.json) · [完整隔離驗收與剩餘項目](4173瀏覽器驗收補充-20261101.md)
+
+![正式 MES 首頁的黑白助理入口](evidence/4173-ui-20261101/正式MES-黑白入口.jpg)
+
+## 2026-11-01：依後續指示部署 WeYu 正式介面
+
+使用者於本輪明確要求部署正式 MES，因此部署 [PR #18](https://github.com/WeYuTech/KaosuAiAgentTest/pull/18) 的產品版本 `9855a89c7138178e7426c23d65bed1cb5b956103`。PR 仍為草稿，沒有合併 main，也沒有關閉 Issue #13。日期採使用者端 Asia/Taipei；MES 業務時區維持 UTC+07:00。
+
+| 項目 | 實際結果 |
+|---|---|
+| 發行檔 | `kaosu-weyu-pr18-9855a89-20261101.zip` |
+| ZIP SHA256 | `b303fc234e28e5b40f9ee5f57f8832cacdc47f7c0022f946b6737d28afb105b8` |
+| 程式位置 | `C:\Services\KaosuAiAgent\current` |
+| 回復備份 | `C:\Services\KaosuAiAgent\backups\code-before-kaosu-weyu-pr18-9855a89-20261101`，包含異動前檔案、原清單與 `deployment.json` |
+| 校驗 | 發行 ZIP 及部署後 89 個逐檔 SHA256 全部吻合 |
+| 前端入口 | `index-sdqkw7qC.js`、`index-BQPhb4cQ.css`；入口 HTML、loader、Logo 及兩項雜湊資產的公開 HTTP 內容與本機建置完全相同 |
+| 服務 | 維持 LOCAL SERVICE、127.0.0.1:8765；後端未改、服務未重啟；IIS 健康檢查 `ok/live` |
+| 設定與資料 | 更新前後 `.env`、`operations.db`、`model-budget.db` 雜湊相同；隨後驗證僅新增助理對話、預覽與取消紀錄，未重設資料或帳本 |
+| 九頁入口 | 首頁與原八頁 HTTP 200、各一份 loader；安裝器回 `already_installed`、`changed=0`，未改原頁，保留歷史八頁及首頁備份 |
+
+本輪只更新前端及文件：先校驗並備份，放入新資產，再原子替換 loader 及 HTML 入口；保留舊雜湊資產供已開啟的頁面使用。沒有停止整台 IIS、修改 DB schema 或重新安裝依賴。
+
+公開 HTTP 驗證沿用既有可信 MES 登入，排程／報工／模具查詢均為 200。對原已指定報工對象建立「模穴調整」預覽，確認中英泰切換保留 args／digest，最後以 `approved=false` 取消；回傳 `cancelled` 且 changes 為空。取消前後 `OPI_CAV`、`MANUAL_OK`、`MANUAL_NG`、`REPORTS`、`COMPLETED` 相同。本輪 `approved=true` 次數及模型呼叫次數皆為 0。部署後預算唯讀核對仍為 182 次、US$1.199426，預留與未知皆為 0，原 US$20 上限保持不變。
+
+未登入 session 回 401，正式站模擬登入回 403；公開 `.env`、`.local/model-budget.db`、`app/main.py` 均為 404。結構化證據見 [部署與 HTTP 核對](evidence/weyu-deploy-20261101.json)。
+
+**部署成功不等於完整 UI 驗收通過。** V08–V16 瀏覽器畫面驗收仍未執行，R06「首次原句重載恢復」仍未完成，沿用 [本輪驗收界線](WeYu介面實作與驗收-20261031.md)。可由 [MES 首頁](http://192.168.2.123/KSS_MES/wwwroot/index.html) 重新整理後開啟右下助理；已開舊版的人員先完成或查核原操作，再重新整理，不能為更新強制重送。
+
+需回復時，依上述備份的 `deployment.json` 恢復所有 `existed=true` 的異動檔及原 `SHA256SUMS.txt`，最後恢復 HTML／loader；保留目前 `.env`、`.local` 及新舊雜湊資產。不得用備份資料庫覆蓋部署後的操作與預算。這次沒有重寫九頁入口，不需還原原 MES 頁面或整台 IIS。
+
+以下為歷史部署紀錄。
+
 部署日期：2026-10-30。目標為使用者指定的 `192.168.2.123`，以已授權 SSH 管理連線部署。原 MES 位於 `C:\inetpub\wwwroot\KSS_MES`，助理入口為 `http://192.168.2.123/KSS_MES/ai-agent/`。來源庫仍預設模擬模式；伺服器環境設定採正式模式。
 
 ## 實際配置
@@ -83,3 +196,15 @@ IIS 主機原設定備份名稱為 `KaosuAiAgent-before-20261030`；原 MES web.
 ## 三語引導最終發行
 
 已完成最後更新，發行檔 kaosu-guide-final-20261030.zip 的 SHA256 為 `be35c640e138b64f1549a601e8d3ed36112eb92ee423fff831d0df0032e0315f`，82個封裝檔在伺服器逐檔校驗全部吻合。後端仍為LOCAL SERVICE／loopback8765，健康檢查live。最終前端包含三入口56px卡片，小窗三個按鈕皆完整可見；繁中深色、泰文淺色及英文平板畫面已核對。程式變更見PR #10，部署沒有對正式MES業務執行測試寫入。此段為發行後補登紀錄，發行ZIP中的先前候選驗收文件保留原當時狀態。
+
+## 2026-11-01 管理設定與定時報告更新注意（部署前作法）
+
+此增量仍在 PR #18；已依本輪後續指示部署，實際結果見本文最上方 df16459 紀錄。下列保留部署前更新作法。沿用本文件既有建置、封裝、SSH／SCP、SHA256 校驗與回復步驟，同時替換後端與 `frontend/dist`，不能僅更新靜態檔。
+
+1. 停止專屬助理服務後備份目前發行檔、`.env`、作業 SQLite 與 `.local/model-budget.db`（以目前實際設定路徑為準）。模型／額度設定新增在費用帳本既有 STATE，定時定義／結果在作業庫既有 STATE；兩庫、稽核與對話皆須保存，不用預覽資料覆蓋。
+2. 程式仍放於 `C:\Services\KaosuAiAgent`，對外 `/KSS_MES/ai-agent/`，後端 loopback `8765`、LOCAL SERVICE、IIS／ARR／Rewrite 沿用。無新套件、無 Schema migration、無額外 Windows 排程工作。
+3. 服務啟動預設啟用 `AI_REPORT_WORKER=1`，每 15 秒檢查已核准的唯讀定時報告；設定為 `0` 可停用背景執行。不得變更原 US$20 限制或清除累計帳本。維護逾 15 分鐘錯過的執行不補跑，已領取的同次執行不自動重送。
+4. 更新後查健康、可信登入、主管／一般帳號設定權限、聊天列表、只讀報告列表及九頁入口；正式站不建立測試定時委託、不試寫 MES 業務。IIS 真實背景執行仍需另列現場驗收證據。
+5. 回復舊程式前先停服務，保留新版資料庫備份，再還原前一個程式包並重啟。舊版忽略新增 JSON 狀態，不刪除對話、稽核、報告及費用記錄。原八頁及首頁入口的歷史備份繼續保存。
+
+API／Agent 設定只影響新聊天；費用額度立即生效。伺服器金鑰與連線資訊仍由私密環境設定提供，前端不提供金鑰編輯或回讀。

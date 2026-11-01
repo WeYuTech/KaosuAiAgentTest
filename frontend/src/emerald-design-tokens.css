@@ -1,6 +1,6 @@
-/* 官方 assistant-ui Starter Zinc 主題；僅在助理與預覽 root 生效。
- * 上游來源與 SHA 見 src/components/assistant-ui/來源清單.json。
- * 官方主題以外的自訂視覺值只在此檔定義。 */
+/* 移植 4173 參考頁的 assistant-ui Starter Zinc 主題。
+ * 實際來源、雜湊與 Kaosu 適配見 docs/4173介面對齊與驗收-20261101.md。
+ * 僅作用於助理 root；不改變原 MES 宿主配色。 */
 :where(#mes-ai-chat-root, #mes-ai-preview-root) {
   --radius: 0.625rem;
   --background: oklch(1 0 0);
@@ -52,7 +52,7 @@
   --aui-header-gap: 0.5rem;
   --aui-assistant-action-reserve: calc(var(--aui-control-min-size) + var(--mes-space-unit) * 1.5);
   /* 本機字型與宿主整合值。 */
-  --font-inter: "Inter Variable", "Microsoft JhengHei", "PingFang TC", "Noto Sans TC", ui-sans-serif, system-ui, sans-serif;
+  --font-inter: "Inter Variable", "Microsoft JhengHei", "PingFang TC", "Noto Sans TC", "Noto Sans Thai", ui-sans-serif, system-ui, sans-serif;
   --font-ibm-plex-mono: "IBM Plex Mono", "Microsoft JhengHei", "PingFang TC", "Noto Sans TC", ui-monospace, monospace;
   --aui-widget-layer: 2147483000;
   --aui-portal-overlay-layer: 2147483001;
@@ -133,7 +133,26 @@
   --sidebar-ring: oklch(0.552 0.016 285.938);
 }
 
-/* 深藍以官方 dark 變數契約延伸；不改寫元件的排版與樣式類別。 */
+
+/* Kaosu 業務卡使用同一語意，保留必要錯誤與控制邊界對比。 */
+:where(#mes-ai-chat-root, #mes-ai-preview-root) {
+  --brand: var(--foreground);
+  --brand-hover: var(--foreground);
+  --selected-border: var(--ring);
+  --user-border: var(--border);
+  --error-surface: color-mix(in srgb, var(--destructive) 7%, var(--background));
+  --panel-shadow: 0 16px 48px -24px rgb(0 0 0 / .25);
+  --card-shadow: none;
+  --input: #71717a;
+  --ring: #71717a;
+}
+:where(#mes-ai-chat-root, #mes-ai-preview-root).dark {
+  --input: #a1a1aa;
+  --ring: #a1a1aa;
+  --panel-shadow: 0 16px 48px -24px rgb(0 0 0 / .6);
+}
+
+/* 來源相同的深藍外觀，不改變業務狀態。 */
 #mes-ai-chat-root.dark[data-theme="navy"] {
   --background: #10182d;
   --foreground: #f4f7fc;
@@ -160,4 +179,39 @@
   --sidebar-accent-foreground: #f4f7fc;
   --sidebar-border: #3c4c6d;
   --sidebar-ring: #9bbcff;
+}
+
+/* MES 首頁原色：#162a58、#1a3677、#196eae；青藍操作色延伸機台圖示。 */
+#mes-ai-chat-root.dark[data-theme="mes"] {
+  --background: #162a58;
+  --foreground: #f4f9ff;
+  --card: #203e70;
+  --card-foreground: #f4f9ff;
+  --popover: #18325f;
+  --popover-foreground: #f4f9ff;
+  --primary: #40dde7;
+  --primary-foreground: #10264c;
+  --secondary: #254d7d;
+  --secondary-foreground: #f4f9ff;
+  --muted: #254d7d;
+  --muted-foreground: #e1edf9;
+  --accent: #285b8e;
+  --accent-foreground: #f4f9ff;
+  --border: #6099c2;
+  --input: #88b8db;
+  --ring: #67e8f9;
+  --sidebar: #162a58;
+  --sidebar-foreground: #f4f9ff;
+  --sidebar-primary: #40dde7;
+  --sidebar-primary-foreground: #10264c;
+  --sidebar-accent: #285b8e;
+  --sidebar-accent-foreground: #f4f9ff;
+  --sidebar-border: #6099c2;
+  --sidebar-ring: #67e8f9;
+}
+#mes-ai-chat-root[data-theme="mes"] .assistant-panel {
+  background: radial-gradient(circle at 70% 40%, #196eae, #1a3677, #162a58);
+}
+#mes-ai-chat-root[data-theme="mes"] .conversation-history {
+  background: var(--sidebar);
 }

@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import { test } from 'node:test';
-import { restoreSubmission, submitRecoverably, pendingSubmission } from '../src/submission-recovery.ts';
+import { restoreSubmission, submitRecoverably, pendingSubmission, SubmissionBlocked } from '../src/submission-recovery.ts';
 import { ApiError } from '../src/api.ts';
 const card = {id:'original',status:'pending',digest:'hash'};
 const storage = () => {const data=new Map();return {get length(){return data.size;},key:i=>[...data.keys()][i]??null,getItem:k=>data.get(k)??null,setItem:(k,v)=>data.set(k,v),removeItem:k=>data.delete(k)};};
@@ -45,5 +45,31 @@ test('晚到guide的pending也必須再次合併恢復標記',async()=>{
   const db=storage();
   await submitRecoverably('actor','chat',card,false,db,async()=>{throw TypeError('中斷');});
   for(let i=0;i<3;i++) assert.equal(restoreSubmission('actor','chat',{...card},db).status,'unknown');
+});
+
+test('明確409後立即讀取失敗，權威讀回才開放修改及取消',async()=>{
+  const db=storage();let submissions=0;
+  await assert.rejects(submitRecoverably('actor','chat',card,true,db,async(path,body)=>{
+    if(body){submissions++;throw new ApiError('拒絕',409);}throw TypeError('讀取失敗');
+  }));
+  assert.equal(pendingSubmission('actor',db).outcome,'rejected-unverified');
+  assert.equal(restoreSubmission('actor','chat',card,db,false).status,'unknown');
+  const restored=restoreSubmission('actor','chat',card,db);
+  assert.equal(restored.status,'pending');assert.equal(restored.local_rejection,true);
+  await assert.rejects(submitRecoverably('actor','chat',card,true,db));
+  const result=await submitRecoverably('actor','chat',card,false,db,async(path,body)=>{
+    assert.equal(body.approved,false);submissions++;return {proposal:{...card,status:'cancelled'}};
+  });
+  assert.equal(result.status,'cancelled');assert.equal(submissions,2);
+});
+
+test('跨分頁阻擋包含原操作位置，B沒有送出且不能解除A',async()=>{
+  const db=storage();let calls=0;
+  await submitRecoverably('actor','A',card,true,db,async()=>{throw TypeError();});
+  await assert.rejects(submitRecoverably('actor','B',{...card,id:'B'},true,db,async()=>{calls++;}),e=>{
+    assert.ok(e instanceof SubmissionBlocked);assert.equal(e.marker.conversation,'A');assert.equal(e.marker.proposal,'original');return true;
+  });
+  restoreSubmission('actor','B',{...card,id:'B',status:'succeeded'},db);
+  assert.equal(calls,0);assert.equal(pendingSubmission('actor',db).conversation,'A');
 });
 

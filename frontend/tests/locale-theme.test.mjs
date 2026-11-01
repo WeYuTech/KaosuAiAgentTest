@@ -49,6 +49,7 @@ for (const [locale, languageLabel, themeLabel, moduleLabel] of [
     assert.ok(html.includes(moduleLabel));
     assert.ok(html.includes('繁體中文') && html.includes('English') && html.includes('ไทย'));
     assert.ok(html.includes('header-preferences'));
+    assert.ok(html.includes(t('MES 藍色')));
     if (locale !== 'zh-TW') assert.ok(!html.includes('今天，想完成什麼作業？'));
   });
 }
@@ -87,11 +88,20 @@ test('語言及主題偏好可保存，系統深色跟隨OS且無效值被拒絕
   setLocale('en'); setTheme('dark');
   assert.equal(storage.get('kaosu-assistant:locale'), 'en');
   assert.equal(storage.get('kaosu-assistant:theme'), 'dark');
-  setLocale('invalid'); setTheme('navy');
+  setLocale('invalid'); setTheme('invalid');
   assert.equal(getLocale(), 'en'); assert.equal(getTheme(), 'dark');
   assert.equal(resolveTheme('system', true), 'dark');
   assert.equal(resolveTheme('system', false), 'light');
   assert.equal(resolveTheme('light', true), 'light');
+  setTheme('navy');
+  assert.equal(getTheme(), 'navy');
+  assert.equal(storage.get('kaosu-assistant:theme'), 'navy');
+  assert.equal(resolveTheme('navy', false), 'navy');
+  setTheme('mes');
+  assert.equal(getTheme(), 'mes');
+  assert.equal(storage.get('kaosu-assistant:theme'), 'mes');
+  assert.equal(resolveTheme('mes', true), 'mes');
+  assert.equal(resolveTheme('mes', false), 'mes');
 });
 
 test('主要錯誤優先使用後端本地化message，原始detail不覆蓋且保留code', async () => {

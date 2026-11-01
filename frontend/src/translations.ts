@@ -1,5 +1,59 @@
 /* 固定介面詞彙：中文原文為鍵，不翻譯 MES 主檔名稱或歷史訊息。 */
 export const translations: Record<string, [string, string]> = Object.fromEntries(`
+聊天紀錄|Chat history|ประวัติแชต
+新聊天|New chat|แชตใหม่
+搜尋聊天|Search chats|ค้นหาแชต
+返回聊天|Back to chat|กลับไปที่แชต
+封存聊天室|Archived chats|แชตที่เก็บถาวร
+已刪除聊天|Deleted chats|แชตที่ลบแล้ว
+找不到符合的聊天|No matching chats|ไม่พบแชตที่ตรงกัน
+還沒有歷史聊天|No chat history yet|ยังไม่มีประวัติแชต
+聊天室選單：{0}|Chat menu: {0}|เมนูแชต: {0}
+還原聊天|Restore chat|กู้คืนแชต
+重新命名|Rename|เปลี่ยนชื่อ
+取消釘選|Unpin|เลิกปักหมุด
+釘選|Pin|ปักหมุด
+取消封存|Unarchive|ยกเลิกการเก็บถาวร
+封存|Archive|เก็บถาวร
+刪除聊天室|Delete chat|ลบแชต
+重新讀取|Reload|โหลดใหม่
+用量與使用統計|Usage and statistics|การใช้งานและสถิติ
+請先完成、取消或查核原操作，再切換聊天。|Complete, cancel or verify the current operation before switching chats.|โปรดดำเนินการให้เสร็จ ยกเลิก หรือตรวจสอบงานเดิมก่อนเปลี่ยนแชต
+重新命名聊天室|Rename chat|เปลี่ยนชื่อแชต
+刪除聊天室？|Delete this chat?|ลบแชตนี้หรือไม่
+修改名稱，聊天內容保持不變。|Change the name and keep the chat content.|เปลี่ยนชื่อโดยเก็บเนื้อหาแชตไว้
+只移出聊天清單，保留 MES 業務與稽核紀錄。可從已刪除聊天還原。|Remove from the chat list only. MES data and audit records remain. Restore from deleted chats.|นำออกจากรายการแชตเท่านั้น ข้อมูล MES และบันทึกตรวจสอบยังอยู่ กู้คืนได้จากแชตที่ลบแล้ว
+聊天室名稱|Chat name|ชื่อแชต
+儲存名稱|Save name|บันทึกชื่อ
+更多功能|More options|ตัวเลือกเพิ่มเติม
+深藍模式|Navy mode|โหมดสีน้ำเงินเข้ม
+MES 藍色|MES blue|สีน้ำเงิน MES
+調整聊天室大小|Resize chat|ปรับขนาดแชต
+拖曳調整大小，方向鍵微調，Enter 還原|Drag to resize, use arrows to adjust, Enter to reset|ลากเพื่อปรับขนาด ใช้ลูกศรปรับ กด Enter เพื่อคืนค่า
+封存聊天為唯讀，取消封存後可接續操作。|Archived chats are read-only. Unarchive to continue.|แชตที่เก็บถาวรเป็นแบบอ่านอย่างเดียว ยกเลิกการเก็บถาวรเพื่อดำเนินการต่อ
+統計只包含目前登入者可存取的聊天與操作。模型費用沿用既有累計帳本。|Statistics cover chats and operations accessible to this user. Model costs use the existing cumulative ledger.|สถิติครอบคลุมแชตและงานที่ผู้ใช้ปัจจุบันเข้าถึงได้ ค่าโมเดลใช้บัญชีสะสมเดิม
+聊天紀錄已更新，請重新讀取後再操作。|Chat history changed. Reload before making changes.|ประวัติแชตเปลี่ยนแล้ว โปรดโหลดใหม่ก่อนดำเนินการ
+請先完成、取消或查核原操作，再封存或刪除聊天。|Complete, cancel or verify the operation before archiving or deleting the chat.|โปรดทำให้เสร็จ ยกเลิก หรือตรวจสอบงานก่อนเก็บถาวรหรือลบแชต
+聊天室名稱不可空白|Chat name cannot be blank|ชื่อแชตต้องไม่ว่าง
+請先還原聊天室，再繼續操作。|Restore the chat before continuing.|โปรดกู้คืนแชตก่อนดำเนินการต่อ
+聊天總數|Total chats|จำนวนแชตทั้งหมด
+訊息總數|Total messages|จำนวนข้อความทั้งหมด
+封存數量|Archived chats|จำนวนแชตที่เก็บถาวร
+操作總數|Total operations|จำนวนงานทั้งหมด
+成功操作|Successful operations|งานที่สำเร็จ
+結果待核對數量|Results to verify|จำนวนผลที่รอตรวจสอบ
+設定|Settings|การตั้งค่า
+語言與外觀|Language and appearance|ภาษาและรูปลักษณ์
+目前階段|Current stage|ขั้นตอนปัจจุบัน
+尚需補充|Still needed|ข้อมูลที่ยังขาด
+清除文字，繼續人工操作|Clear text and continue manually|ล้างข้อความและดำเนินการด้วยตนเอง
+AI 尚未設定，文字可保留或清除，請從操作卡填寫資料。|AI is not configured. Keep or clear your text and enter details using the operation card.|ยังไม่ได้ตั้งค่า AI เก็บหรือล้างข้อความและกรอกข้อมูลในบัตรงาน
+選好作業範圍後，將接續送出這段需求。|After you choose a task, this request will be sent once.|เมื่อเลือกงานแล้ว ระบบจะส่งคำขอนี้หนึ่งครั้ง
+另一分頁的操作仍待核對，請先查看原操作。|An operation in another tab needs verification. Open the original operation first.|งานในแท็บอื่นยังรอตรวจสอบ โปรดเปิดงานเดิมก่อน
+恢復並查核原操作|Restore and verify original operation|กู้คืนและตรวจสอบงานเดิม
+返回先前作業|Return to previous task|กลับไปยังงานก่อนหน้า
+已查回原操作結果。|The original operation result has been retrieved.|อ่านผลการดำเนินงานเดิมแล้ว
+作業情境已切換|The task context has changed|บริบทงานเปลี่ยนแล้ว
 草稿保存狀態|Draft save status|สถานะการบันทึกฉบับร่าง
 本次提交已拒絕，請返回修改後重新核對。|This submission was rejected. Go back, update the details and review again.|การส่งครั้งนี้ถูกปฏิเสธ โปรดย้อนกลับ แก้ไขข้อมูลและตรวจสอบอีกครั้ง
 登入或權限已失效，請重新核對MES身分。|Login or permission expired. Verify your MES identity again.|การเข้าสู่ระบบหรือสิทธิ์หมดอายุ โปรดยืนยันตัวตน MES อีกครั้ง
@@ -421,5 +475,96 @@ MES 登入無法驗證；請重新登入或洽管理員。|MES sign-in could not
 來源不在允許清單|Origin is not allowed|ต้นทางไม่ได้รับอนุญาต
 上一則訊息仍在處理|The previous message is still processing|ข้อความก่อนหน้ายังอยู่ระหว่างดำเนินการ
 找不到此對話|Conversation not found|ไม่พบการสนทนานี้
+保留本頁，只查核原操作|Keep this draft and check the original operation|เก็บฉบับร่างนี้และตรวจสอบงานเดิม
+原操作查核結果|Original operation result|ผลการตรวจสอบงานเดิม
+作業導覽|Operation navigation|การนำทางงาน
+作業範圍|Operation scope|ขอบเขตงาน
+查看最新內容|View latest content|ดูเนื้อหาล่าสุด
 確認卡已過期|Confirmation card expired|บัตรยืนยันหมดอายุ
+關閉|Close|ปิด
+低|Low|ต่ำ
+中|Medium|ปานกลาง
+高|High|สูง
+處理中|Processing|กำลังดำเนินการ
+返回修改|Back to edit|กลับไปแก้ไข
+刪除定時報告|Delete scheduled report|ลบรายงานตามเวลา
+刪除|Delete|ลบ
+今天想查什麼？|What would you like to know today?|วันนี้อยากทราบอะไร?
+輸入生產問題…|Enter a production question…|พิมพ์คำถามเกี่ยวกับการผลิต…
+隔離模擬環境，正式 MES 資料不會變更|Isolated simulation. Live MES data will not change.|สภาพแวดล้อมจำลองแยก ข้อมูล MES จริงจะไม่เปลี่ยนแปลง
+登入已逾時，請重新登入 MES 後再使用|Your session expired. Sign in to MES again.|เซสชันหมดอายุ โปรดเข้าสู่ระบบ MES อีกครั้ง
+MES 登入已驗證|MES sign-in verified|ยืนยันการเข้าสู่ระบบ MES แล้ว
+用量額度|Usage limit|วงเงินการใช้งาน
+尚未登入|Not signed in|ยังไม่ได้เข้าสู่ระบบ
+尚未取得用量|Usage unavailable|ยังไม่ทราบการใช้งาน
+Agent API 設定|Agent API settings|การตั้งค่า Agent API
+排程報告|Scheduled reports|รายงานตามเวลา
+介面外觀|Appearance|รูปลักษณ์
+明亮模式|Light mode|โหมดสว่าง
+黑暗模式|Dark mode|โหมดมืด
+使用統計|Usage statistics|สถิติการใช้งาน
+收合聊天室|Collapse chat|ย่อแชต
+API 設定|API settings|การตั้งค่า API
+Agent 設定|Agent settings|การตั้งค่า Agent
+調整用量額度|Adjust usage limit|ปรับวงเงินการใช้งาน
+定時產生報告|Scheduled reports|รายงานตามเวลา
+設定已保存。|Settings saved.|บันทึกการตั้งค่าแล้ว
+請先完成、取消或查核原操作，再修改管理設定。|Complete, cancel or reconcile the original operation before changing settings.|โปรดดำเนินงานเดิมให้เสร็จ ยกเลิก หรือตรวจสอบผลก่อนแก้ไขการตั้งค่า
+核對管理設定|Review settings|ตรวจสอบการตั้งค่า
+這不會寫入 MES 業務資料。|This does not write MES business data.|การดำเนินการนี้ไม่บันทึกข้อมูลธุรกิจ MES
+同意並儲存|Confirm and save|ยืนยันและบันทึก
+僅供查看；設定由既有主管權限調整。|Read-only. Existing supervisor permissions are required to change settings.|อ่านได้อย่างเดียว ต้องมีสิทธิ์หัวหน้างานเดิมเพื่อแก้ไข
+額度調整立即生效，不會重設既有用量。|Limit changes apply immediately and never reset existing usage.|การเปลี่ยนวงเงินมีผลทันทีและไม่ล้างยอดใช้งานเดิม
+服務未於原訂時間執行，未補跑。|The service missed the scheduled time. No catch-up run was performed.|บริการพลาดเวลาที่กำหนดและไม่ได้ทำงานย้อนหลัง
+查詢或權限驗證未完成；沒有可確認的報告，不會自動重送。|Query or permission verification failed. No confirmed report is available; this run will not retry automatically.|การสอบถามหรือการตรวจสอบสิทธิ์ไม่สำเร็จ ไม่มีรายงานที่ยืนยันได้และจะไม่ลองซ้ำอัตโนมัติ
+服務中斷，報告未完成；未自動重送。|The service was interrupted. The report is incomplete and was not retried.|บริการหยุดชะงัก รายงานไม่สมบูรณ์และไม่ได้ลองซ้ำ
+設定於新聊天生效；既有作業不變。|Settings apply to new chats; existing tasks remain unchanged.|การตั้งค่าใช้กับแชตใหม่ งานเดิมไม่เปลี่ยนแปลง
+API 來源|API provider|ผู้ให้บริการ API
+後端金鑰已設定，不回傳秘密。|Backend key configured. Secrets are never returned.|ตั้งค่าคีย์ในเซิร์ฟเวอร์แล้ว ไม่ส่งข้อมูลลับกลับ
+後端金鑰尚未設定。|Backend key is not configured.|ยังไม่ได้ตั้งค่าคีย์ในเซิร์ฟเวอร์
+推理強度|Reasoning effort|ระดับการให้เหตุผล
+僅提供已配置費率的模型，金鑰由伺服器管理。|Only models with configured rates are available. Keys are managed on the server.|มีเฉพาะโมเดลที่กำหนดอัตราค่าบริการแล้ว คีย์จัดการบนเซิร์ฟเวอร์
+MES 受限工具助理|MES constrained-tool agent|ผู้ช่วย MES ที่จำกัดเครื่องมือ
+只可查詢、補充草稿與準備確認卡；不能批准或執行寫入。|May query, update drafts and prepare confirmation cards. Cannot approve or execute writes.|สอบถาม แก้ไขฉบับร่าง และเตรียมบัตรยืนยันได้ ไม่สามารถอนุมัติหรือบันทึกเอง
+每輪最多模型呼叫次數|Maximum model calls per turn|จำนวนครั้งเรียกโมเดลสูงสุดต่อรอบ
+每次呼叫都保留費用，最多五次；未完成時會補問，不自動提交。|Each call reserves cost, up to five calls. Incomplete tasks ask for details; they are never submitted automatically.|สำรองค่าใช้จ่ายทุกครั้ง สูงสุดห้าครั้ง งานที่ข้อมูลไม่ครบจะถามเพิ่ม ไม่ส่งอัตโนมัติ
+累計費用上限（美元）|Cumulative cost limit (USD)|วงเงินค่าใช้จ่ายสะสม (USD)
+用量提醒比例|Usage warning percentage|เปอร์เซ็นต์แจ้งเตือนการใช้งาน
+上限不可超過 US$20 與部署限制；已使用及未知用量不會清零。|The limit cannot exceed US$20 or the deployment limit. Used and unknown usage are never reset.|วงเงินต้องไม่เกิน US$20 และข้อจำกัดการติดตั้ง ไม่ล้างยอดใช้แล้วหรือยอดที่ยังไม่ทราบ
+核對設定|Review settings|ตรวจสอบการตั้งค่า
+返回定時報告|Back to scheduled reports|กลับสู่รายงานตามเวลา
+尚未產生報告|No reports generated yet|ยังไม่มีรายงาน
+報告狀態|Report status|สถานะรายงาน
+資料日期|Data date|วันที่ข้อมูล
+尚未取得完整報告，不代表零產出。|No complete report is available. This does not mean zero output.|ยังไม่มีรายงานครบถ้วน ไม่ได้หมายความว่าผลผลิตเป็นศูนย์
+依 MES 時間每天產生前一排程日的唯讀快照；不自動報工，不使用模型費用。|Generate a read-only snapshot of the previous schedule date in MES time. No automatic reporting writes or model cost.|สร้างภาพข้อมูลแบบอ่านอย่างเดียวของวันตารางผลิตก่อนหน้าตามเวลา MES ไม่บันทึกผลผลิตอัตโนมัติและไม่มีค่าโมเดล
+描述定時報告|Describe the scheduled report|อธิบายรายงานตามเวลา
+例如：每天 08:00 報工 MC37|Example: daily 08:00 report MC37|ตัวอย่าง: ทุกวัน 08:00 ผลผลิต MC37
+解析並填入|Parse and fill|แปลความและกรอกข้อมูล
+報告名稱|Report name|ชื่อรายงาน
+作業模組|Operation module|โมดูลงาน
+設備（留空為全部）|Equipment (blank for all)|เครื่องจักร (ว่างหมายถึงทั้งหมด)
+頻率|Frequency|ความถี่
+每天|Daily|ทุกวัน
+週一至週五|Weekdays|วันจันทร์ถึงศุกร์
+執行時間|Run time|เวลาทำงาน
+核對並建立|Review and create|ตรวจสอบและสร้าง
+我的定時報告|My scheduled reports|รายงานตามเวลาของฉัน
+尚未建立定時報告|No scheduled reports yet|ยังไม่มีการตั้งเวลารายงาน
+下次執行|Next run|รอบถัดไป
+查看報告|View reports|ดูรายงาน
+暫停|Pause|หยุดชั่วคราว
+恢復|Resume|ดำเนินการต่อ
+已暫停|Paused|หยุดชั่วคราวแล้ว
+錯過原訂時間|Scheduled time missed|พลาดเวลาที่กำหนด
+執行中斷|Interrupted|การทำงานถูกขัดจังหวะ
+額度已達上限|Usage limit reached|ถึงวงเงินการใช้งานแล้ว
+用量已達提醒門檻|Usage warning threshold reached|ถึงระดับแจ้งเตือนการใช้งานแล้ว
+模型|Model|โมเดล
+剩餘額度（美元）|Remaining limit (USD)|วงเงินคงเหลือ (USD)
+用量提醒|Usage warning|แจ้งเตือนการใช้งาน
+已達上限|Limit reached|ถึงวงเงินแล้ว
+查詢未完成|Query incomplete|การสอบถามไม่เสร็จ
+執行中|Active|ทำงานอยู่
+已刪除|Deleted|ลบแล้ว
 ` .trim().split('\n').map(line => { const [key, en, th] = line.split('|'); return [key, [en, th]]; }));

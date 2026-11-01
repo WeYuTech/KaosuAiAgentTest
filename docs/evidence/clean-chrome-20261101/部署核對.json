@@ -1,0 +1,51 @@
+{
+  "private_settings_unchanged": true,
+  "health": {
+    "status": "ok",
+    "mode": "live",
+    "model_configured": true,
+    "model": "gpt-6.1-sol",
+    "business_timezone": "UTC+07:00",
+    "business_date": "2026-11-01",
+    "server_time": "2026-11-01T14:11:40.344491+07:00"
+  },
+  "state_unchanged": {
+    ".local\\model-budget.db": true,
+    ".local\\operations.db": true
+  },
+  "service_not_restarted": true,
+  "release": "kaosu-clean-chrome-final-20261101",
+  "verified": 102,
+  "backup": "C:\\Services\\KaosuAiAgent\\backups\\code-before-kaosu-clean-chrome-final-20261101",
+  "commit": "9fedc92",
+  "zip_sha256": "a246543af2471f1826b9d8ca6aeaaa9f645a4ad32392f7d3991490c09ade5f29",
+  "public_assets": {
+    "index.html": {
+      "status": 200,
+      "same": true
+    },
+    "widget-loader.js": {
+      "status": 200,
+      "same": true
+    },
+    "./assets/index-t9on2G5N.js": {
+      "status": 200,
+      "same": true
+    },
+    "./assets/index-DuvHDXGr.css": {
+      "status": 200,
+      "same": true
+    }
+  },
+  "frontend_tests_passed": 77,
+  "build": "通過",
+  "browser": {
+    "login_success_visible": false,
+    "fixed_timezone_visible": false,
+    "feedback_visible": false,
+    "footer_display": "none",
+    "title_outline": "none",
+    "copyright_visible": true,
+    "keyboard_button_focus_preserved": true
+  }
+}
