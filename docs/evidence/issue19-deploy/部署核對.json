@@ -1,0 +1,78 @@
+{
+  "private_settings_unchanged": true,
+  "health": {
+    "status": "ok",
+    "mode": "live",
+    "model_configured": true,
+    "model": "gpt-6.1-sol",
+    "business_timezone": "UTC+07:00",
+    "business_date": "2026-11-01",
+    "server_time": "2026-11-01T18:46:01.986131+07:00"
+  },
+  "state_unchanged": {
+    ".local\\model-budget.db": true,
+    ".local\\operations.db": true
+  },
+  "service_not_restarted": true,
+  "release": "kaosu-source-ui-678a903-20261101",
+  "verified": 104,
+  "backup": "C:\\Services\\KaosuAiAgent\\backups\\code-before-kaosu-source-ui-678a903-20261101",
+  "product_commit": "678a903c37164e40c0a171d4f293928b34409b04",
+  "release_sha256": "144c64c2c46b2647b55995835dfec3c4f4c22485ef842f998822e44745b05204",
+  "widget": {
+    "status": "already_installed",
+    "changed": 0,
+    "manifest": null
+  },
+  "after_ui": {
+    "counts": {
+      "CONVERSATION": 15,
+      "PROPOSAL": 4,
+      "LOG": 4
+    },
+    "proposal_statuses": {
+      "cancelled": 4
+    },
+    "budget": {
+      "limit_usd": 20.0,
+      "remaining_usd": 18.788758,
+      "warning_percent": 80,
+      "near_limit": false,
+      "reached": false,
+      "spent_usd": 1.211242,
+      "reserved_usd": 0,
+      "calls": 184,
+      "unknown_calls": 0
+    }
+  },
+  "before_ui": {
+    "counts": {
+      "CONVERSATION": 15,
+      "PROPOSAL": 4,
+      "LOG": 4
+    },
+    "proposal_statuses": {
+      "cancelled": 4
+    },
+    "budget": {
+      "limit_usd": 20.0,
+      "remaining_usd": 18.788758,
+      "warning_percent": 80,
+      "near_limit": false,
+      "reached": false,
+      "spent_usd": 1.211242,
+      "reserved_usd": 0,
+      "calls": 184,
+      "unknown_calls": 0
+    }
+  },
+  "browser": {
+    "homepage": "通過：實際 iframe 載入新版 index-Cid9Vji9.js",
+    "history": "15 筆，恢復既有已取消報工作業",
+    "query": "MC37／2026-10-30，4 筆；唯讀操作",
+    "menu": "管理入口、五主題及三語可見，未修改管理設定",
+    "initial_load": "曾出現空白載入；新分頁最後正常顯示。根因與精確效能未定，保留追蹤。",
+    "production_business_writes": 0,
+    "paid_model_calls": 0
+  }
+}

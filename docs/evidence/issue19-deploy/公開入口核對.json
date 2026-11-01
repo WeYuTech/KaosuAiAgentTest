@@ -1,0 +1,133 @@
+{
+  "commit": "678a903c37164e40c0a171d4f293928b34409b04",
+  "assets": [
+    {
+      "path": "index.html",
+      "sha256": "b0b80066b1cd001c5a23cb458b4a8e5d106da6fd3e8a5ada6b408b1c4a986a2f",
+      "matches_build": true
+    },
+    {
+      "path": "weyu-brand.svg",
+      "sha256": "9d1f3d89f58f5f78afab0128669b79f01416d95e24edf391ffbfe86c0becfa8c",
+      "matches_build": true
+    },
+    {
+      "path": "weyu-logo.png",
+      "sha256": "e49779a956aebfffbfce4a792c596b3b52c2088efc9dc252d776fd8803fc8573",
+      "matches_build": true
+    },
+    {
+      "path": "widget-loader.js",
+      "sha256": "959dc6483c4b7bbd0d93fa37d2cddfb2eec8499172d6aabe303a0b780e39b9a3",
+      "matches_build": true
+    },
+    {
+      "path": "assets/ibm-plex-mono-latin-400-normal-DMJ8VG8y.woff2",
+      "sha256": "08949f728dc52d528e69b1667d15c89a5686a4ee9a296ff90983985f99c380f7",
+      "matches_build": true
+    },
+    {
+      "path": "assets/ibm-plex-mono-latin-500-normal-DSY6xOcd.woff2",
+      "sha256": "01d285447409c8a588692162439a038b8cbd7871309ee20267b0d2d91c6e8e22",
+      "matches_build": true
+    },
+    {
+      "path": "assets/ibm-plex-mono-latin-600-normal-BgSNZQsw.woff2",
+      "sha256": "0d1f0b8d0722224e32e9f28261bdc86c79115be73444ae5eceb73976a1bcdf83",
+      "matches_build": true
+    },
+    {
+      "path": "assets/index-Cc9eStCi.css",
+      "sha256": "5a5be9e11dca17bf8c19c497492bcced640e7c0ded9dfb89c5fdb03e04e25127",
+      "matches_build": true
+    },
+    {
+      "path": "assets/index-Cid9Vji9.js",
+      "sha256": "42776c0b24e106a48412f3c7e472e62264caeec49e141521da05ad2e0ba815ba",
+      "matches_build": true
+    },
+    {
+      "path": "assets/inter-latin-wght-normal-Dx4kXJAl.woff2",
+      "sha256": "3100e775e8616cd2611beecfa23a4263d7037586789b43f035236a2e6fbd4c62",
+      "matches_build": true
+    },
+    {
+      "path": "assets/ManagementPanel-Q674jNAQ.js",
+      "sha256": "88388b5621ac14ef1a82633e114aa587c220bca64ff705c84936a259398033ba",
+      "matches_build": true
+    },
+    {
+      "path": "fonts/noto-sans-thai-thai-400-normal.woff2",
+      "sha256": "57776453076ebf0fa935080e63c0ae656f1f1ecd5172112d59d3b259e0dd8796",
+      "matches_build": true
+    },
+    {
+      "path": "fonts/noto-sans-thai-thai-600-normal.woff2",
+      "sha256": "8690b63cc8c7090492cce68f57a421be92fee4f682dff7ee06912132ebd2a8fc",
+      "matches_build": true
+    }
+  ],
+  "pages": [
+    {
+      "path": "MES-WIP/WIP-menu.html",
+      "status": 200,
+      "loader_count": 1
+    },
+    {
+      "path": "MES-WIP/setup/wip-query_schedule_plan_new.html",
+      "status": 200,
+      "loader_count": 1
+    },
+    {
+      "path": "MES-WIP/setup/wip-query_schedule_detail_new.html",
+      "status": 200,
+      "loader_count": 1
+    },
+    {
+      "path": "MES-WIP/OPI/schedule_report/wip-opi_schedule_uping.html",
+      "status": 200,
+      "loader_count": 1
+    },
+    {
+      "path": "MES-WIP/OPI/schedule_report/wip-query_schedule.html",
+      "status": 200,
+      "loader_count": 1
+    },
+    {
+      "path": "MES-WIP/OPI/schedule_report/wo-schedule.html",
+      "status": 200,
+      "loader_count": 1
+    },
+    {
+      "path": "MES-WIP/OPI/mold/wip-opi_schedule_mold_eqp.html",
+      "status": 200,
+      "loader_count": 1
+    },
+    {
+      "path": "MES-WIP/OPI/mold/wip-query_schedule_clear.html",
+      "status": 200,
+      "loader_count": 1
+    },
+    {
+      "path": "index.html",
+      "status": 200,
+      "loader_count": 1
+    }
+  ],
+  "health": {
+    "status": "ok",
+    "mode": "live",
+    "model_configured": true,
+    "model": "gpt-6.1-sol",
+    "business_timezone": "UTC+07:00",
+    "business_date": "2026-11-01",
+    "server_time": "2026-11-01T18:46:17.983138+07:00"
+  },
+  "unauthenticated_session": 401,
+  "private_paths": {
+    ".env": 404,
+    ".local/operations.db": 404,
+    ".local/model-budget.db": 404,
+    "app/main.py": 404
+  }
+}
