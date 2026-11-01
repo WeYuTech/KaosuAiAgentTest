@@ -41,6 +41,7 @@ export async function api<T>(path: string, body?: unknown): Promise<T> {
 }
 
 export const labels: Record<string, string> = {
+  model:'模型',reasoning_effort:'推理強度',max_tool_rounds:'每輪最多模型呼叫次數',warning_percent:'用量提醒比例',remaining_usd:'剩餘額度（美元）',near_limit:'用量提醒',reached:'已達上限',frequency:'頻率',title:'報告名稱',
   conversations:'聊天總數',messages:'訊息總數',archived:'封存數量',operations:'操作總數',succeeded:'成功操作',unknown:'結果待核對數量',
   draft_save_state: '草稿保存狀態',
   EQP_NO: '設備', WO: '工單', WO_NO: '工單', PART_NO: '料號', SPEC: '規格', MOLD_NO: '模具',
@@ -64,7 +65,7 @@ export const labels: Record<string, string> = {
   TOL_NO: '模具', NEXT_ACTION: '下一階段', ZZ_MODLE_UPLOAD_START: '開始上模時間', ZZ_MODLE_UPLOAD_END: '完成上模時間',
   ZZ_MODLE_REMOVE_START: '開始下模時間', ZZ_MODLE_REMOVE_END: '完成下模時間',
   time: '操作時間', event_time: '事件時間', changes: '欄位變更明細', mode: '環境',
-  limit_usd: '使用額度（美元）', spent_usd: '已使用（美元）', reserved_usd: '處理中預留（美元）', calls: 'API 呼叫次數',
+  limit_usd: '累計費用上限（美元）', spent_usd: '已使用（美元）', reserved_usd: '處理中預留（美元）', calls: 'API 呼叫次數',
 };
 export const label = (key: string) => t(labels[key] ?? key);
 export const display = (value: unknown): string => value === null || value === undefined ? '—' : typeof value === 'object' ? JSON.stringify(value, null, 2) : String(value);

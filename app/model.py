@@ -10,6 +10,7 @@ from fastapi import HTTPException
 from openai import OpenAI, OpenAIError
 from app.knowledge import retrieve
 from app.store import Store, dumps
+from app.management import effective_cap, budget_config
 
 ROOT = Path(__file__).resolve().parent.parent
 PRICES = {"gpt-6.1-sol": (2.0, 10.0)}
@@ -58,7 +59,12 @@ def budget_summary():
     store = budget_store()
     with store.transaction() as db:
         rows = store.all(db, "BUDGET")
-    return {"limit_usd": min(20.0, float(os.getenv("AI_TEST_BUDGET_USD", "20"))),
+        cap = effective_cap(db, store)
+        warning = budget_config(db, store)["warning_percent"]
+    committed = sum(r.get("actual_usd", r["reserved_usd"]) if r["status"] == "settled" else r["reserved_usd"] for r in rows)
+    return {"limit_usd": cap,
+            "remaining_usd": max(0, cap - committed), "warning_percent": warning,
+            "near_limit": committed >= cap * warning / 100, "reached": committed >= cap,
             "spent_usd": sum(r.get("actual_usd", 0) for r in rows),
             "reserved_usd": sum(r["reserved_usd"] for r in rows if r["status"] != "settled"),
             "calls": len(rows), "unknown_calls": sum(r["status"] == "unknown" for r in rows)}
@@ -73,8 +79,8 @@ def invoke(payload):
     reservation = (len(dumps(payload).encode()) + 8192) * rates[0] / 1_000_000 + MAX_OUTPUT * rates[1] / 1_000_000
     store = budget_store()
     call_id = secrets.token_urlsafe(18)
-    cap = min(20.0, float(os.getenv("AI_TEST_BUDGET_USD", "20")))
     with store.transaction() as db:
+        cap = effective_cap(db, store)
         rows = store.all(db, "BUDGET")
         used = sum(r.get("actual_usd", r["reserved_usd"]) if r["status"] == "settled" else r["reserved_usd"] for r in rows)
         if used + reservation > cap:
@@ -164,10 +170,12 @@ def respond(conversation, state, store, query_fn=None, prepare_fn=None, draft_fn
                 content += "\n系統草稿狀態：" + dumps({k: current[k] for k in ("action", "args", "status")})
         inputs.append({"role": message["role"], "content": content})
     data = None
-    for _ in range(5):
-        response = invoke({"model": os.getenv("OPENAI_MODEL", "gpt-6.1-sol"), "instructions": instructions,
+    # 舊版對話沒有設定快照，保留升級前的預設；不能被管理視窗的新設定追溯改寫。
+    config = conversation.get("model_settings") or {"model": os.getenv("OPENAI_MODEL", "gpt-6.1-sol"), "reasoning_effort": "low", "max_tool_rounds": 5}
+    for _ in range(config["max_tool_rounds"]):
+        response = invoke({"model": config["model"], "instructions": instructions,
                            "input": inputs, "tools": tools, "parallel_tool_calls": False,
-                           "max_output_tokens": MAX_OUTPUT, "reasoning": {"effort": "low"}, "store": False})
+                           "max_output_tokens": MAX_OUTPUT, "reasoning": {"effort": config["reasoning_effort"]}, "store": False})
         calls = [item for item in response.output if item.type == "function_call"]
         if not calls:
             return {"content": response.output_text or empty_text, "data": data, "knowledge": knowledge}

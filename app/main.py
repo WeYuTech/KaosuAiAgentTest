@@ -215,6 +215,9 @@ def create_app(db_path=None, model=None):
             raise HTTPException(401, "請先登入並核對操作身分")
         return session["actor"]
 
+    from app.management import install as install_management
+    install_management(app, actor_for)
+
     def allowed(actor, module):
         if module not in actor["roles"]:
             raise HTTPException(403, "目前身分沒有此模組的操作權限")
@@ -233,6 +236,19 @@ def create_app(db_path=None, model=None):
             return fn(*args)
         except BusinessError as exc:
             raise HTTPException(422, {"code": getattr(exc, "code", "validation"), "message": str(exc), "params": getattr(exc, "params", {})}) from exc
+
+    def scheduled_query(job, filters):
+        if mode != "simulation":
+            return mes_bridge().scheduled_snapshot(job["actor_id"], job["actor_user_sid"], job["module"], filters)
+        actor = next((a for a in IDENTITIES.values() if a["id"] == job["actor_id"]), None)
+        if not actor or job["module"] not in actor["roles"]:
+            raise HTTPException(403, "報告模組授權已撤銷。")
+        from app.domain import query
+        with store.transaction() as db:
+            return call_domain(query, state_for(db), job["module"], filters)
+
+    from app.reports import install as install_reports
+    install_reports(app, store, actor_for, scheduled_query)
 
     def check_conversation_edit(db, convo, intent_token=None, version=None):
         from app.guide import initial, reject
@@ -590,7 +606,11 @@ def create_app(db_path=None, model=None):
     def new_conversation(body: Conversation, request: Request):
         actor = actor_for(request)
         allowed(actor, body.module)
-        convo = {"id": secrets.token_urlsafe(18), "module": body.module, "context": body.context,
+        from app.model import budget_store
+        from app.management import settings
+        ledger = budget_store()
+        with ledger.transaction() as db: config = settings(db, ledger)
+        convo = {"model_settings": config, "id": secrets.token_urlsafe(18), "module": body.module, "context": body.context,
                  "actor_id": actor["id"], "locale": body.locale, "messages": [], "created_at": now().isoformat()}
         with store.transaction() as db:
             store.put(db, "CONVERSATION", convo["id"], convo)

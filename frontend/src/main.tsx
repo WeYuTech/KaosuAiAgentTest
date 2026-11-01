@@ -2,6 +2,7 @@ import { t, useLocale, getLocale, isLocale, type Locale } from './i18n';
 import { useTheme, isTheme } from './theme';
 import { AssistantHeader } from './AssistantChrome';
 import { ConversationHistory, type ChatEntry } from './ConversationHistory';
+import {ManagementPanel,type ManagementSection} from './ManagementPanel';
 import { FloatingResize, useFloatingSize } from './FloatingResize';
 import { ConversationComposer } from './ConversationComposer';
 import { GuidedFlow, type GuideHandle } from './GuidedFlow';
@@ -53,6 +54,9 @@ export function App({ initialOpen = false }: { initialOpen?: boolean } = {}) {
   const [localeBusy, setLocaleBusy] = useState(false);
   const [open, setOpen] = useState(embedded || initialOpen);
   const [expanded, setExpanded] = useState(false);
+  const [management,setManagement]=useState<ManagementSection|null>(null);
+  const managementTrigger=useRef<HTMLElement|null>(null);
+  function closeManagement(){setManagement(null);requestAnimationFrame(()=>managementTrigger.current?.closest('details')?.querySelector('summary')?.focus());}
   const [historyOpen,setHistoryOpen]=useState(false);
   const [historyBusy,setHistoryBusy]=useState(false);
   const [historyRevision,setHistoryRevision]=useState(0);
@@ -307,7 +311,7 @@ export function App({ initialOpen = false }: { initialOpen?: boolean } = {}) {
     else if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first?.focus(); }
   }
   function clearSession() {
-    contextEpoch.current++; queryGeneration.current++;
+    setManagement(null);contextEpoch.current++; queryGeneration.current++;
     working.current = false; setBusy(false); setQueryBusy(false); setGuideBusy(false); setGuideWorking(false);
     setAudit([]); setFeedback(''); setFeedbackSent(false); setBudget(null); setHelpOpen(false);setHistoryOpen(false);setUsageOpen(false);setUsageStats(null);forceNew.current=false;
     setGuideSnapshot({}); setSheetContext(''); setSummaryOpen(false); setTab('chat');
@@ -487,7 +491,7 @@ export function App({ initialOpen = false }: { initialOpen?: boolean } = {}) {
     if (draft.trim()) { setError(t('切換工單前，請先送出或清除尚未送出的文字。')); return; }
     if (lockedTarget) { setError(unresolved ? t("此操作結果待核對，請先查核執行結果。") : t("目前有待確認的草稿。請先確認或取消，再切換作業資料。")); return; }
     if(working.current)return;
-    contextEpoch.current++; queryGeneration.current++;
+    setManagement(null);contextEpoch.current++; queryGeneration.current++;
     await guarded(async () => {
       if (conversation) draftMemory.current.set(conversation.id, draft);
       const chat = await request<Conversation>('/api/conversations', { module, context: { ...contextFromUrl(), ...record }, locale: getLocale() });
@@ -516,12 +520,12 @@ export function App({ initialOpen = false }: { initialOpen?: boolean } = {}) {
       <AssistantHeader titleRef={titleRef} title={showHistoryOverlay ? t('聊天紀錄') : stage === 'chat' ? (conversation?.title || t(active.title)) : t('生產情報助理')}>
         <button className="icon-button header-history" aria-label={t('聊天紀錄')} title={t('聊天紀錄')} aria-pressed={historyOpen} onClick={event=>{historyTrigger.current=event.currentTarget;setHistoryOpen(v=>!v);setHistoryRevision(v=>v+1);}}><History size={16}/></button><button className="icon-button header-new-chat" aria-label={t('新聊天')} title={t('新聊天')} disabled={busy||historyBusy||pending||unresolved||!!recoveryTarget} onClick={()=>void newChat()}><Plus size={16}/></button>
         <button className="icon-button" title={expanded ? t('縮小聊天室') : t('放大聊天室')} aria-label={expanded ? t('縮小聊天室') : t('放大聊天室')} onClick={toggleExpanded}>{expanded ? <Minimize2 size={18}/> : <Expand size={18}/>}</button>
-        <details className="header-preferences"><summary aria-label={t("更多功能")}><MoreHorizontal size={18}/><span className="sr-only">{t("設定")}</span></summary><div className="preferences-menu"><button className="text-button" disabled={!session} onClick={()=>void showBudget()}>{t("用量與使用統計")}</button><label><span className="sr-only">{t('語言')}</span><select aria-label={t('語言')} value={locale} disabled={localeBusy || busy} onChange={event => void changeLanguage(event.target.value as Locale)}><option value="zh-TW">繁體中文</option><option value="en">English</option><option value="th">ไทย</option></select></label><label><span className="sr-only">{t('主題')}</span><select aria-label={t('主題')} value={theme} onChange={event => { if (isTheme(event.target.value)) setTheme(event.target.value); }}><option value="system">{t('跟隨系統')}</option><option value="light">{t('淺色')}</option><option value="dark">{t('深色')}</option><option value="navy">{t('深藍模式')}</option></select></label></div></details>
+        <details className="header-preferences"><summary aria-label={t("更多功能")}><MoreHorizontal size={18}/><span className="sr-only">{t("設定")}</span></summary><div className="preferences-menu">{(["api","agent","budget","reports"] as ManagementSection[]).map(section=><button key={section} className="text-button" disabled={!session} onClick={event=>{managementTrigger.current=event.currentTarget;setManagement(section);event.currentTarget.closest("details")?.removeAttribute("open");}}>{t({api:"API 設定",agent:"Agent 設定",budget:"調整用量額度",reports:"定時產生報告"}[section])}</button>)}<button className="text-button" disabled={!session} onClick={()=>void showBudget()}>{t("用量與使用統計")}</button><label><span className="sr-only">{t('語言')}</span><select aria-label={t('語言')} value={locale} disabled={localeBusy || busy} onChange={event => void changeLanguage(event.target.value as Locale)}><option value="zh-TW">繁體中文</option><option value="en">English</option><option value="th">ไทย</option></select></label><label><span className="sr-only">{t('主題')}</span><select aria-label={t('主題')} value={theme} onChange={event => { if (isTheme(event.target.value)) setTheme(event.target.value); }}><option value="system">{t('跟隨系統')}</option><option value="light">{t('淺色')}</option><option value="dark">{t('深色')}</option><option value="navy">{t('深藍模式')}</option></select></label></div></details>
         <button className="icon-button" aria-label={t('縮小助理')} title={t('縮小助理（Esc）')} onClick={minimize}><X size={18}/></button>
       </AssistantHeader>
       <div className="assistant-body">
       <ConversationHistory key={session?.actor.id||'signed-out'} actor={session?.actor.id} current={conversation} overlay={historyOpen} locked={pending||unresolved||!!recoveryTarget} busy={busy||guideWorking} refresh={historyRevision+messages.length} request={scopedRequest} close={closeHistory} select={selectChat} create={newChat} beforeChange={async id=>{if(id===conversation?.id)await guideRef.current?.flush();}} changed={historyChanged} onWorkChange={setHistoryBusy} usage={()=>void showBudget()}/>
-      <div className="assistant-main" inert={showHistoryOverlay||usageOpen ? true : undefined}>
+      <div className="assistant-main" inert={showHistoryOverlay||usageOpen||!!management ? true : undefined}>
 
       {stage !== 'chat' ? <div className={`onboarding ${stage}`}>
         <div className="onboarding-top"><span className="step-label">{stage === 'modules' ? t("01 / 選擇作業") : t("02 / 確認身分")}</span>{stage === 'identity' && <button className="text-button" onClick={() => setStage('modules')} disabled={busy}><ArrowLeft size={16}/>{t("返回選擇")}</button>}</div>
@@ -570,6 +574,8 @@ export function App({ initialOpen = false }: { initialOpen?: boolean } = {}) {
       {helpOpen && session && <aside className="help-panel" aria-label={t("回報問題與用量")}><div className="section-heading"><div><h2>{t("讓作業經驗留下來")}</h2><p>{t("錯誤回報先送審核，再經候選案例回歸後發布，不會自動改變卡控。")}</p></div><button className="icon-button" aria-label={t("關閉問題回報")} onClick={() => setHelpOpen(false)}><X size={18}/></button></div><form onSubmit={e => { e.preventDefault(); void guarded(async () => { await request('/api/feedback', { module, message: feedback, ...(conversation ? { conversation_id: conversation.id } : {}) }); setFeedback(''); setFeedbackSent(true); }); }}><label className="form-field">{t("遇到什麼問題？")}<textarea rows={3} required value={feedback} onChange={e => { setFeedback(e.target.value); setFeedbackSent(false); }} placeholder={t("描述你預期的結果、實際發生的情況，或需要補充的操作知識。")} maxLength={4000}/></label><button className="primary" disabled={busy || !feedback.trim()} type="submit">{t("送出問題回報")}</button>{feedbackSent && <p className="feedback-success" role="status">{t("已收到，將由主管審查後處理。")}</p>}</form><FeedbackReview apiRequest={scopedRequest} key={session.actor.id} session={session} refreshToken={feedbackSent} onAccessDenied={() => {if(renderEpoch===contextEpoch.current) clearSession();}}/><details><summary>{t("來源版本與 API 用量")}</summary><p className="muted">{t("作業盤點版本：979d2c6 · 2026-10-30")}</p>{budget ? <Fields value={budget}/> : <p className="muted">{t("目前無法取得用量資訊。")}</p>}</details></aside>}
       <footer className="assistant-footer"><span>WEYU AI</span><span>{t("MES 時間")}{proposalTimezone}</span>{stage === 'chat' ? <button className="footer-help" onClick={() => void showHelp()}><CircleHelp size={13}/>{t("回報問題與來源")}</button> : <span>{t("高塑 · 生產作業助理")}</span>}</footer>
       </div></div>
+      {management&&session&&<ManagementPanel key={`${session.actor.id}:${management}`} section={management} request={scopedRequest} close={closeManagement} roles={session.actor.roles} locked={busy||pending||unresolved||!!recoveryTarget}/> }
+      <p className="assistant-copyright">Corp. 2026 WeYu Technology Co., Ltd. All Rights Reserved.</p>
       {usageOpen&&<aside className="help-panel usage-panel" role="dialog" aria-modal="true" aria-label={t('用量與使用統計')}><div className="section-heading"><h2>{t('用量與使用統計')}</h2><button className="icon-button" onClick={()=>setUsageOpen(false)} aria-label={t('關閉')}><X size={18}/></button></div><p>{t('統計只包含目前登入者可存取的聊天與操作。模型費用沿用既有累計帳本。')}</p>{usageError?<p role="alert">{usageError}</p>:!usageStats?<p role="status">{t('正在讀取資料…')}</p>:<><Fields value={usageStats}/>{budget&&<Fields value={budget}/>}</>}<button className="secondary" onClick={()=>void showBudget()}>{t('重新讀取')}</button></aside>}
     </section></div>}
   </>;

@@ -197,6 +197,22 @@ class MesBridge:
     def _sign(self, actor):
         return hmac.new(self._signing_key, dumps({k: v for k, v in actor.items() if k != "_proof"}).encode(), hashlib.sha256).hexdigest()
 
+    def scheduled_snapshot(self, account, user_sid, module, filters):
+        """只供已由可信登入建立的定時報告；每次重查帳號及部署權限，不產生寫入身分。"""
+        modules = list(self.config.module_allowlist.get(account, []))
+        if module not in modules:
+            raise MesError("定時報告模組授權已撤銷。", "forbidden")
+        with self._db() as db:
+            cursor = db.cursor()
+            cursor.execute("SELECT USER_SID,ACCOUNT_NO,USER_NAME FROM dbo.SEC_USER WHERE ACCOUNT_NO=? AND USER_SID=? AND ENABLE_FLAG=?", account, user_sid, "Y")
+            rows = cursor.fetchmany(2)
+        if len(rows) != 1:
+            raise MesError("定時報告建立者已停用或不存在。", "unauthorized")
+        actor = {"id": account, "user_sid": str(rows[0][0]), "name": str(rows[0][2]), "modules": modules,
+                 "roles": modules, "source": "scheduled_read", "_expires": self._clock().timestamp() + 60}
+        actor["_proof"] = self._sign(actor)
+        return self.snapshot(actor, module, filters)
+
     def _authorize(self, actor, module):
         if not isinstance(actor, dict) or not hmac.compare_digest(str(actor.get("_proof", "")), self._sign(actor)) or actor.get("_expires", 0) <= self._clock().timestamp():
             raise MesError("可信登入已過期，請重新驗證。", "unauthorized")
