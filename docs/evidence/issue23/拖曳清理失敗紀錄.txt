@@ -116,9 +116,9 @@
 test at tests\sidebar-layout.test.mjs:34:1
 ✖ 拖曳單一RAF，放開後lostcapture不回滾；取消、Escape、blur與卸載清理 (4.0571ms)
   AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
-  
+
   1 !== null
-  
+
       at TestContext.<anonymous> (file:///C:/Users/rdpuser/Documents/ChatGPT/KaosuAgentDemo/frontend/tests/sidebar-layout.test.mjs:42:139)
       at async Test.run (node:internal/test_runner/test:1332:7)
       at async Test.processPendingSubtests (node:internal/test_runner/test:911:7) {

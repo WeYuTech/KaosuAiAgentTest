@@ -121,9 +121,9 @@ test at tests\motion-feedback.test.mjs:23:1
 test at tests\motion-feedback.test.mjs:36:1
 ✖ 搜尋聚焦及組字清空不隱藏欄位；伺服器 page_size 控制多頁 (45.677ms)
   AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:
-  
+
     assert.ok(input.closest('[hidden]'))
-  
+
       at TestContext.<anonymous> (file:///C:/Users/rdpuser/Documents/ChatGPT/KaosuAgentDemo/frontend/tests/motion-feedback.test.mjs:43:93)
       at async Test.run (node:internal/test_runner/test:1332:7)
       at async Test.processPendingSubtests (node:internal/test_runner/test:911:7) {
@@ -138,9 +138,9 @@ test at tests\motion-feedback.test.mjs:36:1
 test at tests\motion-feedback.test.mjs:47:1
 ✖ 定時報告初載不顯示假空態；解析成功不搶焦點，核對返回保留值 (39.8351ms)
   AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:
-  
+
     assert.ok(host.textContent.includes('正在載入報告…'))
-  
+
       at TestContext.<anonymous> (file:///C:/Users/rdpuser/Documents/ChatGPT/KaosuAgentDemo/frontend/tests/motion-feedback.test.mjs:50:9)
       at async Test.run (node:internal/test_runner/test:1332:7)
       at async Test.processPendingSubtests (node:internal/test_runner/test:911:7) {
@@ -155,9 +155,9 @@ test at tests\motion-feedback.test.mjs:47:1
 test at tests\motion-feedback.test.mjs:61:1
 ✖ 受控 Dialog 關閉移除可互動內容；五次重開無殘留遮罩 (7.8409ms)
   AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
-  
+
   0 !== 1
-  
+
       at TestContext.<anonymous> (file:///C:/Users/rdpuser/Documents/ChatGPT/KaosuAgentDemo/frontend/tests/motion-feedback.test.mjs:64:144)
       at async Test.run (node:internal/test_runner/test:1332:7)
       at async Test.processPendingSubtests (node:internal/test_runner/test:911:7) {
