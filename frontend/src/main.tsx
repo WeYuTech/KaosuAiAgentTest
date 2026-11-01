@@ -50,6 +50,14 @@ export function App({ initialOpen = false }: { initialOpen?: boolean } = {}) {
   const [localeBusy, setLocaleBusy] = useState(false);
   const [open, setOpen] = useState(embedded || initialOpen);
   const [expanded, setExpanded] = useState(false);
+  const [compactViewport, setCompactViewport] = useState(false);
+  const fullScreen = expanded || compactViewport;
+  useEffect(() => {
+    const media = window.matchMedia('(max-width:640px)');
+    const sync = () => setCompactViewport(media.matches);
+    sync(); media.addEventListener('change', sync);
+    return () => media.removeEventListener('change', sync);
+  }, []);
   const [narrowPanel,setNarrowPanel]=useState(false);
   useEffect(()=>{if(!open || !panelRef.current)return;const observer=new ResizeObserver(entries=>setNarrowPanel(entries[0].contentRect.width<=850));observer.observe(panelRef.current.querySelector('.assistant-main') ?? panelRef.current);return()=>observer.disconnect();},[open]);
   const [stage, setStage] = useState<'modules' | 'identity' | 'chat'>('modules');
@@ -272,7 +280,7 @@ export function App({ initialOpen = false }: { initialOpen?: boolean } = {}) {
   }
   function keyDialog(event: React.KeyboardEvent) {
     if (event.key === 'Escape') { event.preventDefault(); if(helpOpen){setHelpOpen(false);return;} if (summaryOpen || tab !== 'chat') { setSummaryOpen(false); setTab('chat'); } else minimize(); }
-    if (!expanded && !embedded && !helpOpen && !(narrowPanel && (summaryOpen || tab !== 'chat'))) return;
+    if (!fullScreen && !embedded && !helpOpen && !(narrowPanel && (summaryOpen || tab !== 'chat'))) return;
     if (event.key !== 'Tab') return;
     const focusRoot=helpOpen ? panelRef.current?.querySelector('.help-panel') : narrowPanel && (summaryOpen || tab!=='chat') ? panelRef.current?.querySelector('.operation-pane') : panelRef.current;
     const focusable = focusRoot?.querySelectorAll<HTMLElement>('button:not(:disabled), input:not(:disabled), select:not(:disabled), textarea:not(:disabled), summary, [tabindex="0"]');
@@ -450,13 +458,13 @@ export function App({ initialOpen = false }: { initialOpen?: boolean } = {}) {
 
 
   return <>
-    {!embedded && <main className="demo-page" aria-hidden={open && expanded ? true : undefined} inert={open && expanded ? true : undefined}>
+    {!embedded && <main className="demo-page" aria-hidden={open && fullScreen ? true : undefined} inert={open && fullScreen ? true : undefined}>
       <header className="demo-nav"><Brand small/></header>
       <div className="demo-content"><h1>{simulation ? t("MES 作業測試") : t("MES 生產作業")}</h1><p>{t("排程、報工與模具上下模。")}</p><p className="muted">{simulation ? t("目前使用隔離模擬資料。") : mode ? t("沿用目前 MES 登入身分。") : t("正在確認作業環境。")}{t("點選右下角助理開始操作。")}</p><button className="secondary" onClick={() => { setOpen(true); }}>{t("開啟生產情報助理")}</button></div>
     </main>}
-    {!embedded && (!open || !expanded) && <button ref={launcherRef} className="launcher" onClick={() => { if (open) minimize(); else { setOpen(true); } }} aria-label={open ? t("收合生產情報助理") : t("開啟生產情報助理")} title={t("生產情報助理")}>{open ? <ChevronDown size={20}/> : <Bot size={20}/>}<span>{t("生產情報助理")}</span></button>}
-    {<div hidden={!open} className={`assistant-overlay ${embedded ? 'embedded' : ''}`}><section ref={panelRef} role="dialog" aria-modal={expanded || embedded || undefined} aria-labelledby="assistant-dialog-title" className={`assistant-panel ${expanded ? 'expanded' : ''}`} onKeyDown={keyDialog}>
-      <AssistantHeader title={stage === 'chat' ? t(active.title) : t('生產情報助理')}>
+    {!embedded && (!open || !fullScreen) && <button ref={launcherRef} className="launcher" onClick={() => { if (open) minimize(); else { setOpen(true); } }} aria-label={open ? t("收合生產情報助理") : t("開啟生產情報助理")} title={t("生產情報助理")}>{open ? <ChevronDown size={20}/> : <Bot size={20}/>}<span>{t("生產情報助理")}</span></button>}
+    {<div hidden={!open} className={`assistant-overlay ${embedded ? 'embedded' : ''}`}><section ref={panelRef} role="dialog" aria-modal={fullScreen || embedded || undefined} aria-labelledby="assistant-dialog-title" className={`assistant-panel ${expanded ? 'expanded' : ''}`} onKeyDown={keyDialog}>
+      <AssistantHeader titleRef={titleRef} title={stage === 'chat' ? t(active.title) : t('生產情報助理')}>
         {stage === 'chat' && <button className="icon-button" aria-label={t('操作紀錄')} title={t('操作紀錄')} onClick={()=>void showAudit()}><History size={18}/></button>}
         <button className="icon-button" title={expanded ? t('縮小聊天室') : t('放大聊天室')} aria-label={expanded ? t('縮小聊天室') : t('放大聊天室')} onClick={toggleExpanded}>{expanded ? <Minimize2 size={18}/> : <Expand size={18}/>}</button>
         <details className="header-preferences"><summary aria-label={t("語言與外觀")}><MoreHorizontal size={18}/><span className="sr-only">{t("設定")}</span></summary><div className="preferences-menu"><label><span className="sr-only">{t('語言')}</span><select aria-label={t('語言')} value={locale} disabled={localeBusy || busy} onChange={event => void changeLanguage(event.target.value as Locale)}><option value="zh-TW">繁體中文</option><option value="en">English</option><option value="th">ไทย</option></select></label><label><span className="sr-only">{t('主題')}</span><select aria-label={t('主題')} value={theme} onChange={event => { if (isTheme(event.target.value)) setTheme(event.target.value); }}><option value="system">{t('跟隨系統')}</option><option value="light">{t('淺色')}</option><option value="dark">{t('深色')}</option></select></label></div></details>
@@ -468,7 +476,7 @@ export function App({ initialOpen = false }: { initialOpen?: boolean } = {}) {
 
       {stage !== 'chat' ? <div className={`onboarding ${stage}`}>
         <div className="onboarding-top"><span className="step-label">{stage === 'modules' ? t("01 / 選擇作業") : t("02 / 確認身分")}</span>{stage === 'identity' && <button className="text-button" onClick={() => setStage('modules')} disabled={busy}><ArrowLeft size={16}/>{t("返回選擇")}</button>}</div>
-        <div className="welcome-card"><h1 id="assistant-title" ref={titleRef} tabIndex={-1}>{stage === 'modules' ? t("今天，想完成什麼作業？") : (simulation ? t("開始{0}前，選擇你的身分", {0:t(active.short)}) : t("開始{0}前，確認登入身分", {0:t(active.short)}))}</h1><p className="welcome-description">{stage === 'modules' ? t("選擇一個入口，我會陪你確認資料，完成現場作業。") : t("身分決定可執行的功能；每次寫入都會留下操作紀錄。")}</p></div>
+        <div className="welcome-card"><h1 id="assistant-title">{stage === 'modules' ? t("今天，想完成什麼作業？") : (simulation ? t("開始{0}前，選擇你的身分", {0:t(active.short)}) : t("開始{0}前，確認登入身分", {0:t(active.short)}))}</h1><p className="welcome-description">{stage === 'modules' ? t("選擇一個入口，我會陪你確認資料，完成現場作業。") : t("身分決定可執行的功能；每次寫入都會留下操作紀錄。")}</p></div>
         {stage === 'modules' && <div className="entry-composer"><ConversationComposer id="entry-input" value={draft} onChange={setDraft} disabled={busy} sendDisabled={!draft.trim()} placeholder={t('先說需求，再選擇作業範圍')} hint={t('確認後才會寫入')} onSend={()=>panelRef.current?.querySelector<HTMLButtonElement>('.entry-card:not(:disabled)')?.focus()}/><p className="muted">{modelConfigured === false ? t('AI 尚未設定，文字可保留或清除，請從操作卡填寫資料。') : t('選好作業範圍後，將接續送出這段需求。')}</p></div>}
         {stage === 'modules' ? <div className="entry-grid">{Object.entries(modules).map(([key, item]) => <button className="entry-card" key={key} disabled={busy || mode === null || (!simulation && !session?.actor.roles.includes(key))} title={!simulation && !session?.actor.roles.includes(key) ? t("目前登入身分無此模組權限") : undefined} onClick={() => { initialIntent.current = !conversation && draft.trim() ? draft : null; if (session?.actor.roles.includes(key)) void start(undefined, key as Module); else { setModule(key as Module); setStage('identity'); setError(''); } }}><span className="entry-icon" aria-hidden="true">&gt;</span><strong>{t(item.title)}</strong><p>{t(item.description)}</p></button>)}</div> : <>
           <div className="identity-notice"><ShieldCheck size={18}/><span>{simulation ? t("目前為模擬驗證環境。此處身分切換僅供測試，正式 MES 將沿用已登入身分與伺服器權限。") : t("沿用目前 MES 已登入身分與伺服器授予的模組權限。確認身分後即可開始，不需再次輸入帳號密碼。")}</span></div>
@@ -480,7 +488,7 @@ export function App({ initialOpen = false }: { initialOpen?: boolean } = {}) {
 
         <div className="onboarding-footer"><span><MessageSquare size={16}/>{t("自然語言操作")}</span><span><CheckCheck size={16}/>{t("確認後寫入")}</span><span><History size={16}/>{t("完整作業紀錄")}</span></div>
       </div> : <>
-        <div className="workspace-bar"><button className="icon-button" aria-label={t("返回模組入口")} disabled={busy || lockedTarget} title={unresolved ? t("請先查核執行結果") : pending ? t("請先確認或取消草稿") : t("返回模組入口")} onClick={() => setStage('modules')}><ArrowLeft size={18}/></button><span className="module-badge"><ModuleIcon size={18}/></span><div><h1 id="assistant-title" ref={titleRef} tabIndex={-1}>{t(active.title)}</h1><p>{session?.actor.name} <span>·</span>{t("EPS 成型")}</p></div><nav className="module-switcher" aria-label={t("切換作業模組")}>{Object.entries(modules).map(([key, item]) => <button key={key} className="text-button" aria-current={module === key ? 'page' : undefined} disabled={busy || lockedTarget || !session?.actor.roles.includes(key)} onClick={() => { if (key !== module) void start(undefined, key as Module); }}><item.icon size={16}/>{t(item.short)}</button>)}</nav><span className={`connection ${modelConfigured ? 'ready' : ''}`}><span/>{modelConfigured === true ? t("AI 已設定") : modelConfigured === false ? t("AI 尚未設定") : t("檢查連線中")}</span></div>
+        <div className="workspace-bar"><button className="icon-button" aria-label={t("返回模組入口")} disabled={busy || lockedTarget} title={unresolved ? t("請先查核執行結果") : pending ? t("請先確認或取消草稿") : t("返回模組入口")} onClick={() => setStage('modules')}><ArrowLeft size={18}/></button><span className="module-badge"><ModuleIcon size={18}/></span><div><h1 id="assistant-title">{t(active.title)}</h1><p>{session?.actor.name} <span>·</span>{t("EPS 成型")}</p></div><nav className="module-switcher" aria-label={t("切換作業模組")}>{Object.entries(modules).map(([key, item]) => <button key={key} className="text-button" aria-current={module === key ? 'page' : undefined} disabled={busy || lockedTarget || !session?.actor.roles.includes(key)} onClick={() => { if (key !== module) void start(undefined, key as Module); }}><item.icon size={16}/>{t(item.short)}</button>)}</nav><span className={`connection ${modelConfigured ? 'ready' : ''}`}><span/>{modelConfigured === true ? t("AI 已設定") : modelConfigured === false ? t("AI 尚未設定") : t("檢查連線中")}</span></div>
 
         {recoveryTarget && <div className="notice-banner" role="status"><span>{t('另一分頁的操作仍待核對，請先查看原操作。')}</span><button className="secondary" disabled={busy || guideWorking} onClick={()=>void recoverOriginal()}>{t('恢復並查核原操作')}</button><button className="secondary" disabled={busy} onClick={()=>void checkOriginal()}>{t('保留本頁，只查核原操作')}</button></div>}
         {externalRecovery && <details className="external-recovery"><summary>{t('原操作查核結果')}：{externalRecovery.proposal.local_rejection ? t('本次提交已拒絕，請返回修改後重新核對。') : confirmationView(externalRecovery.status).label}</summary><p>{externalRecovery.message}</p><ProposalBusinessSummary proposal={externalRecovery.proposal} workspace={workspace}/><p>{t('操作識別碼：')}<code>{externalRecovery.proposal.id}</code></p></details>}

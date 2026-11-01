@@ -59,4 +59,7 @@
 }
 @media(max-width:640px) {
   .assistant-panel { inset:0; width:100vw; height:100dvh; border:0; border-radius:0; }
+  /* 標頭已顯示目前模組，窄版透過返回入口切換，讓填寫與核對保有閱讀空間。 */
+  .workspace-bar h1,.workspace-bar .module-switcher { display:none; }
+  .workspace-bar .connection { width:auto; }
 }
