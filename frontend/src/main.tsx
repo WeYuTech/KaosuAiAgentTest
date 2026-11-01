@@ -1,11 +1,13 @@
 import { t, useLocale, getLocale, isLocale, type Locale } from './i18n';
 import { useTheme, isTheme } from './theme';
-import { AssistantHeader, OperationSidebar } from './AssistantChrome';
+import { AssistantHeader } from './AssistantChrome';
+import { ConversationHistory, type ChatEntry } from './ConversationHistory';
+import { FloatingResize, useFloatingSize } from './FloatingResize';
 import { ConversationComposer } from './ConversationComposer';
 import { GuidedFlow, type GuideHandle } from './GuidedFlow';
 import React, { useEffect, useRef, useState } from 'react';
 import { createRoot } from 'react-dom/client';
-import { ArrowLeft, ArrowRight, ArrowDown, MoreHorizontal, Bot, CalendarDays, Check, CheckCheck, ChevronDown, ChevronRight, CircleHelp, ClipboardList, Clock3, Expand, Factory, History, LoaderCircle, MessageSquare, Minimize2, RefreshCw, ShieldCheck, Sparkles, UserRound, Wrench, X } from 'lucide-react';
+import { ArrowLeft, ArrowRight, ArrowDown, Plus, MoreHorizontal, Bot, CalendarDays, Check, CheckCheck, ChevronDown, ChevronRight, CircleHelp, ClipboardList, Clock3, Expand, Factory, History, LoaderCircle, MessageSquare, Minimize2, RefreshCw, ShieldCheck, Sparkles, UserRound, Wrench, X } from 'lucide-react';
 import { api, ApiError, display, label, type Conversation, type Identity, type Message, type Module, type Proposal, type Reply, type Row, type Session, type Workspace } from './api';
 import { DataView, Fields } from './DataView';
 import { MessageContent } from './MessageContent';
@@ -15,6 +17,7 @@ import { FeedbackReview } from './FeedbackReview';
 import './styles.css';
 import './desktop.css';
 import './conversation.css';
+import './history.css';
 import { ObsoleteContext, requestInContext, resultInContext } from './context-request';
 import { restoreSubmission, submitRecoverably, hasSubmission, pendingSubmission, SubmissionBlocked, type Marker } from './submission-recovery';
 
@@ -50,13 +53,22 @@ export function App({ initialOpen = false }: { initialOpen?: boolean } = {}) {
   const [localeBusy, setLocaleBusy] = useState(false);
   const [open, setOpen] = useState(embedded || initialOpen);
   const [expanded, setExpanded] = useState(false);
+  const [historyOpen,setHistoryOpen]=useState(false);
+  const [historyBusy,setHistoryBusy]=useState(false);
+  const [historyRevision,setHistoryRevision]=useState(0);
+  const forceNew=useRef(false);
+  const historyTrigger=useRef<HTMLElement|null>(null);
   const [compactViewport, setCompactViewport] = useState(false);
+  const [wideWindow,setWideWindow]=useState(false);
+  const showHistoryOverlay=historyOpen&&(!expanded||!wideWindow);
   const fullScreen = expanded || compactViewport;
+  const floating=useFloatingSize();
   useEffect(() => {
     const media = window.matchMedia('(max-width:640px)');
-    const sync = () => setCompactViewport(media.matches);
-    sync(); media.addEventListener('change', sync);
-    return () => media.removeEventListener('change', sync);
+    const wide=window.matchMedia('(min-width:900px)');
+    const sync = () => {setCompactViewport(media.matches);setWideWindow(wide.matches);};
+    sync(); media.addEventListener('change', sync);wide.addEventListener('change',sync);
+    return () => {media.removeEventListener('change', sync);wide.removeEventListener('change',sync);};
   }, []);
   const [narrowPanel,setNarrowPanel]=useState(false);
   useEffect(()=>{if(!open || !panelRef.current)return;const observer=new ResizeObserver(entries=>setNarrowPanel(entries[0].contentRect.width<=850));observer.observe(panelRef.current.querySelector('.assistant-main') ?? panelRef.current);return()=>observer.disconnect();},[open]);
@@ -117,6 +129,9 @@ export function App({ initialOpen = false }: { initialOpen?: boolean } = {}) {
   const [feedback, setFeedback] = useState('');
   const [feedbackSent, setFeedbackSent] = useState(false);
   const [budget, setBudget] = useState<Row | null>(null);
+  const [usageOpen,setUsageOpen]=useState(false);
+  const [usageStats,setUsageStats]=useState<Row|null>(null);
+  const [usageError,setUsageError]=useState('');
   const [filters, setFilters] = useState({ equipment: '', date: '', wo: '' });
   const [contextFilter, setContextFilter] = useState<Record<string, string>>({});
   const [pageSize, setPageSize] = useState(20);
@@ -132,6 +147,7 @@ export function App({ initialOpen = false }: { initialOpen?: boolean } = {}) {
   const proposalView = confirmationView(proposalStatus || 'pending');
   const pending = Boolean(proposal && proposalView.canConfirm);
   const unresolved = Boolean(proposal && proposalView.canReconcile);
+  const chatReadOnly=Boolean(conversation?.is_archived);
   const lockedTarget = pending || unresolved || guideBusy || Boolean(recoveryTarget);
   const expires = proposal ? new Date(proposal.expires_at).getTime() : Infinity;
   const expired = pending && Number.isFinite(expires) && now >= expires;
@@ -279,10 +295,10 @@ export function App({ initialOpen = false }: { initialOpen?: boolean } = {}) {
     if (embedded) { try { parent.postMessage({ type: 'kaosu-assistant:resize', expanded: next }, new URL(document.referrer).origin); } catch { /* 無宿主時由頁面自行展開。 */ } }
   }
   function keyDialog(event: React.KeyboardEvent) {
-    if (event.key === 'Escape') { event.preventDefault(); if(helpOpen){setHelpOpen(false);return;} if (summaryOpen || tab !== 'chat') { setSummaryOpen(false); setTab('chat'); } else minimize(); }
-    if (!fullScreen && !embedded && !helpOpen && !(narrowPanel && (summaryOpen || tab !== 'chat'))) return;
+    if (event.key === 'Escape') { event.preventDefault(); if(usageOpen){setUsageOpen(false);return;} if(historyOpen){closeHistory();return;} if(helpOpen){setHelpOpen(false);return;} if (summaryOpen || tab !== 'chat') { setSummaryOpen(false); setTab('chat'); } else minimize(); }
+    if (!fullScreen && !embedded && !helpOpen && !showHistoryOverlay && !usageOpen && !(narrowPanel && (summaryOpen || tab !== 'chat'))) return;
     if (event.key !== 'Tab') return;
-    const focusRoot=helpOpen ? panelRef.current?.querySelector('.help-panel') : narrowPanel && (summaryOpen || tab!=='chat') ? panelRef.current?.querySelector('.operation-pane') : panelRef.current;
+    const focusRoot=usageOpen ? panelRef.current?.querySelector('.usage-panel') : showHistoryOverlay ? panelRef.current?.querySelector('.conversation-history') : helpOpen ? panelRef.current?.querySelector('.help-panel') : narrowPanel && (summaryOpen || tab!=='chat') ? panelRef.current?.querySelector('.operation-pane') : panelRef.current;
     const focusable = focusRoot?.querySelectorAll<HTMLElement>('button:not(:disabled), input:not(:disabled), select:not(:disabled), textarea:not(:disabled), summary, [tabindex="0"]');
     const visible = Array.from(focusable ?? []).filter(el => el.getClientRects().length > 0);
     const first = visible[0], last = visible.at(-1);
@@ -293,7 +309,7 @@ export function App({ initialOpen = false }: { initialOpen?: boolean } = {}) {
   function clearSession() {
     contextEpoch.current++; queryGeneration.current++;
     working.current = false; setBusy(false); setQueryBusy(false); setGuideBusy(false); setGuideWorking(false);
-    setAudit([]); setFeedback(''); setFeedbackSent(false); setBudget(null); setHelpOpen(false);
+    setAudit([]); setFeedback(''); setFeedbackSent(false); setBudget(null); setHelpOpen(false);setHistoryOpen(false);setUsageOpen(false);setUsageStats(null);forceNew.current=false;
     setGuideSnapshot({}); setSheetContext(''); setSummaryOpen(false); setTab('chat');
     setNotice(''); setQueryError(''); setIndependentApproval(false); setContextFilter({});
     setFilters({equipment:'',date:'',wo:''}); setRecoveryTarget(null); setExternalRecovery(null); setReturnChat(null);
@@ -326,7 +342,11 @@ export function App({ initialOpen = false }: { initialOpen?: boolean } = {}) {
       if (identity && !simulation) throw new Error(t("正式 MES 必須沿用目前登入身分。"));
       const current = identity ? await request<Session>('/api/session/demo', { identity }) : session;
       if (!current) throw new Error(t("請先選擇作業身分。"));
-      try { currentModule = (['report','schedule','mold'] as Module[]).find(item => hasSubmission(memoryKey(current.actor.id, item))) ?? currentModule; }
+      try {
+        currentModule = (['report','schedule','mold'] as Module[]).find(item => hasSubmission(memoryKey(current.actor.id, item))) ?? currentModule;
+        // 另一分頁尚未決的提交必須回到原對話，不能只切換模組而沿用點選的聊天。
+        resumeId = pendingSubmission(memoryKey(current.actor.id, currentModule))?.conversation ?? resumeId;
+      }
       catch { /* 禁用儲存仍可查詢；提交會在恢復標記寫入前阻擋。 */ }
       checkedActor.current = current.actor.id;
       if (session && session.actor.id !== current.actor.id) { setAudit([]); setFeedback(''); setFeedbackSent(false); setHelpOpen(false); setBudget(null); draftMemory.current.clear(); }
@@ -352,9 +372,9 @@ export function App({ initialOpen = false }: { initialOpen?: boolean } = {}) {
         catch (error) { if (error instanceof ObsoleteContext || error instanceof ApiError && [401,403].includes(error.status)) throw error; return { data: { records: [], catalogs: {} }, error: error instanceof Error ? error.message : t("初次資料查詢未完成") }; }
       };
       const [work, chat] = await Promise.all([
-        loadWorkspace(), resumeId ? request<Conversation>(`/api/conversations/${resumeId}`) : resumeConversation(current.actor.id, hostContext, currentModule),
+        loadWorkspace(), resumeId ? request<Conversation>(`/api/conversations/${resumeId}`) : forceNew.current ? request<Conversation>('/api/conversations',{module:currentModule,context:hostContext,locale:getLocale()}) : resumeConversation(current.actor.id, hostContext, currentModule),
       ]);
-      const restoredGuide = await request<{ version: number; proposal?: Proposal | null }>(`/api/conversations/${chat.id}/guide`);
+      const restoredGuide = await request<{ version: number; proposal?: Proposal | null; args?: Row; action?: string }>(`/api/conversations/${chat.id}/guide`);
       // 有引導版本時以引導為準，不能把歷史已完成卡帶入下一筆作業。
       const legacyProposal = restoredGuide.version === 0 ? [...(chat.messages ?? [])].reverse().find(message => message.proposal)?.proposal : null;
       const recovery = pendingSubmission(memoryKey(current.actor.id, currentModule));
@@ -364,6 +384,7 @@ export function App({ initialOpen = false }: { initialOpen?: boolean } = {}) {
         const result = await request<{ proposal: Proposal }>(`/api/proposals/${lastProposal.id}`);
         authoritative = restoreSubmission(memoryKey(current.actor.id, currentModule), chat.id, result.proposal);
       }
+      setGuideSnapshot({...restoredGuide.args,action:restoredGuide.action});forceNew.current=false;rememberConversation(chat,current.actor.id);setHistoryRevision(v=>v+1);
       setModule(currentModule); setWorkspace(work.data); setConversation(chat); setMessages(chat.messages ?? []);
       setFilters(initialFilters); setContextFilter(initialContextFilter); setPageSize(20);
       setSelected(null); setProposal(authoritative); setProposalStatus(authoritative?.status === 'pending' ? '' : authoritative?.status ?? ''); setIndependentApproval(false); setQueryData(null); setDraft(value => draftMemory.current.get(chat.id) ?? (conversation ? '' : value)); setTab('chat'); setStage('chat');
@@ -380,6 +401,33 @@ export function App({ initialOpen = false }: { initialOpen?: boolean } = {}) {
       if (work.error) setError(t("初次資料查詢未完成：{0}。你仍可在對話補充設備與日期，或到「作業資料」縮小查詢範圍。", {0: work.error}));
     });
   }
+  async function showBudget() {
+    setUsageOpen(true);setUsageError('');setBudget(null);setUsageStats(null);
+    try {const [value,stats]=await Promise.all([request<Row>('/api/budget'),request<Row>('/api/conversations/statistics')]);setBudget(value);setUsageStats(stats);}
+    catch(e){setUsageError(e instanceof Error?e.message:String(e));}
+  }
+  useEffect(()=>{if(usageOpen)panelRef.current?.querySelector<HTMLElement>('.usage-panel button')?.focus();},[usageOpen]);
+  function closeHistory() {setHistoryOpen(false);requestAnimationFrame(()=>historyTrigger.current?.focus());}
+  async function prepareChatChange() {
+    if(busy||historyBusy||pending||unresolved||recoveryTarget) throw new Error(t('請先完成、取消或查核原操作，再切換聊天。'));
+    await guideRef.current?.flush();
+    if(conversation)draftMemory.current.set(conversation.id,draft);
+  }
+  async function selectChat(entry:ChatEntry) {
+    try {await prepareChatChange();initialIntent.current=null;const ok=await start(undefined,entry.module,entry.id);if(ok)closeHistory();}
+    catch(e){setError(e instanceof Error?e.message:String(e));}
+  }
+  async function newChat() {
+    try {await prepareChatChange();contextEpoch.current++;forceNew.current=true;initialIntent.current=null;setConversation(null);setMessages([]);setProposal(null);setProposalStatus('');setDraft('');setStage('modules');setSummaryOpen(false);setTab('chat');setHistoryOpen(false);setError('');}
+    catch(e){setError(e instanceof Error?e.message:String(e));}
+  }
+  function historyChanged(entry:ChatEntry) {
+    if(renderEpoch!==contextEpoch.current)return;
+    setHistoryRevision(v=>v+1);
+    if(entry.id!==conversation?.id)return;
+    if(entry.is_deleted){forceNew.current=true;setConversation(null);setMessages([]);setProposal(null);setProposalStatus('');setDraft('');setStage('modules');}
+    else setConversation(value=>value?.id===entry.id?{...value,...entry}:value);
+  }
   function receive(reply: Reply) {
     if (renderEpoch !== contextEpoch.current) return;
     // 未決請求只接受原操作；其他分頁的新卡不能取代需要查核的識別。
@@ -393,7 +441,7 @@ export function App({ initialOpen = false }: { initialOpen?: boolean } = {}) {
     if (reply.data !== undefined) setQueryData(reply.data);
   }
   async function send(event?: React.FormEvent) {
-    event?.preventDefault(); const text = draft.trim(); if (!text || !conversation || busy || guideWorking || unresolved || recoveryTarget || modelConfigured !== true) return;
+    event?.preventDefault(); const text = draft.trim(); if (!text || !conversation || chatReadOnly || busy || guideWorking || unresolved || recoveryTarget || modelConfigured !== true) return;
     await guarded(async () => {
       await guideRef.current?.flush();
       const replacing = pending;
@@ -463,16 +511,17 @@ export function App({ initialOpen = false }: { initialOpen?: boolean } = {}) {
       <div className="demo-content"><h1>{simulation ? t("MES 作業測試") : t("MES 生產作業")}</h1><p>{t("排程、報工與模具上下模。")}</p><p className="muted">{simulation ? t("目前使用隔離模擬資料。") : mode ? t("沿用目前 MES 登入身分。") : t("正在確認作業環境。")}{t("點選右下角助理開始操作。")}</p><button className="secondary" onClick={() => { setOpen(true); }}>{t("開啟生產情報助理")}</button></div>
     </main>}
     {!embedded && (!open || !fullScreen) && <button ref={launcherRef} className="launcher" onClick={() => { if (open) minimize(); else { setOpen(true); } }} aria-label={open ? t("收合生產情報助理") : t("開啟生產情報助理")} title={t("生產情報助理")}>{open ? <ChevronDown size={20}/> : <Bot size={20}/>}<span>{t("生產情報助理")}</span></button>}
-    {<div hidden={!open} className={`assistant-overlay ${embedded ? 'embedded' : ''}`}><section ref={panelRef} role="dialog" aria-modal={fullScreen || embedded || undefined} aria-labelledby="assistant-dialog-title" className={`assistant-panel ${expanded ? 'expanded' : ''}`} onKeyDown={keyDialog}>
-      <AssistantHeader titleRef={titleRef} title={stage === 'chat' ? t(active.title) : t('生產情報助理')}>
-        {stage === 'chat' && <button className="icon-button" aria-label={t('操作紀錄')} title={t('操作紀錄')} onClick={()=>void showAudit()}><History size={18}/></button>}
+    {<div hidden={!open} className={`assistant-overlay ${embedded ? 'embedded' : ''}`}><section ref={panelRef} style={floating.style} role="dialog" aria-modal={fullScreen || embedded || undefined} aria-labelledby="assistant-dialog-title" className={`assistant-panel ${expanded ? 'expanded' : ''}`} onKeyDown={keyDialog}>
+      {!embedded&&!fullScreen&&<FloatingResize panel={panelRef} change={floating.change}/>}
+      <AssistantHeader titleRef={titleRef} title={showHistoryOverlay ? t('聊天紀錄') : stage === 'chat' ? (conversation?.title || t(active.title)) : t('生產情報助理')}>
+        <button className="icon-button header-history" aria-label={t('聊天紀錄')} title={t('聊天紀錄')} aria-pressed={historyOpen} onClick={event=>{historyTrigger.current=event.currentTarget;setHistoryOpen(v=>!v);setHistoryRevision(v=>v+1);}}><History size={16}/></button><button className="icon-button header-new-chat" aria-label={t('新聊天')} title={t('新聊天')} disabled={busy||historyBusy||pending||unresolved||!!recoveryTarget} onClick={()=>void newChat()}><Plus size={16}/></button>
         <button className="icon-button" title={expanded ? t('縮小聊天室') : t('放大聊天室')} aria-label={expanded ? t('縮小聊天室') : t('放大聊天室')} onClick={toggleExpanded}>{expanded ? <Minimize2 size={18}/> : <Expand size={18}/>}</button>
-        <details className="header-preferences"><summary aria-label={t("語言與外觀")}><MoreHorizontal size={18}/><span className="sr-only">{t("設定")}</span></summary><div className="preferences-menu"><label><span className="sr-only">{t('語言')}</span><select aria-label={t('語言')} value={locale} disabled={localeBusy || busy} onChange={event => void changeLanguage(event.target.value as Locale)}><option value="zh-TW">繁體中文</option><option value="en">English</option><option value="th">ไทย</option></select></label><label><span className="sr-only">{t('主題')}</span><select aria-label={t('主題')} value={theme} onChange={event => { if (isTheme(event.target.value)) setTheme(event.target.value); }}><option value="system">{t('跟隨系統')}</option><option value="light">{t('淺色')}</option><option value="dark">{t('深色')}</option></select></label></div></details>
+        <details className="header-preferences"><summary aria-label={t("更多功能")}><MoreHorizontal size={18}/><span className="sr-only">{t("設定")}</span></summary><div className="preferences-menu"><button className="text-button" disabled={!session} onClick={()=>void showBudget()}>{t("用量與使用統計")}</button><label><span className="sr-only">{t('語言')}</span><select aria-label={t('語言')} value={locale} disabled={localeBusy || busy} onChange={event => void changeLanguage(event.target.value as Locale)}><option value="zh-TW">繁體中文</option><option value="en">English</option><option value="th">ไทย</option></select></label><label><span className="sr-only">{t('主題')}</span><select aria-label={t('主題')} value={theme} onChange={event => { if (isTheme(event.target.value)) setTheme(event.target.value); }}><option value="system">{t('跟隨系統')}</option><option value="light">{t('淺色')}</option><option value="dark">{t('深色')}</option><option value="navy">{t('深藍模式')}</option></select></label></div></details>
         <button className="icon-button" aria-label={t('縮小助理')} title={t('縮小助理（Esc）')} onClick={minimize}><X size={18}/></button>
       </AssistantHeader>
       <div className="assistant-body">
-      {stage === 'chat' && <OperationSidebar module={module} session={session} disabled={busy || lockedTarget} inert={helpOpen} home={()=>setStage('modules')} select={key=>{if(key!==module)void start(undefined,key);}} audit={()=>void showAudit()}/>}
-      <div className="assistant-main">
+      <ConversationHistory key={session?.actor.id||'signed-out'} actor={session?.actor.id} current={conversation} overlay={historyOpen} locked={pending||unresolved||!!recoveryTarget} busy={busy||guideWorking} refresh={historyRevision+messages.length} request={scopedRequest} close={closeHistory} select={selectChat} create={newChat} beforeChange={async id=>{if(id===conversation?.id)await guideRef.current?.flush();}} changed={historyChanged} onWorkChange={setHistoryBusy} usage={()=>void showBudget()}/>
+      <div className="assistant-main" inert={showHistoryOverlay||usageOpen ? true : undefined}>
 
       {stage !== 'chat' ? <div className={`onboarding ${stage}`}>
         <div className="onboarding-top"><span className="step-label">{stage === 'modules' ? t("01 / 選擇作業") : t("02 / 確認身分")}</span>{stage === 'identity' && <button className="text-button" onClick={() => setStage('modules')} disabled={busy}><ArrowLeft size={16}/>{t("返回選擇")}</button>}</div>
@@ -488,7 +537,7 @@ export function App({ initialOpen = false }: { initialOpen?: boolean } = {}) {
 
         <div className="onboarding-footer"><span><MessageSquare size={16}/>{t("自然語言操作")}</span><span><CheckCheck size={16}/>{t("確認後寫入")}</span><span><History size={16}/>{t("完整作業紀錄")}</span></div>
       </div> : <>
-        <div className="workspace-bar"><button className="icon-button" aria-label={t("返回模組入口")} disabled={busy || lockedTarget} title={unresolved ? t("請先查核執行結果") : pending ? t("請先確認或取消草稿") : t("返回模組入口")} onClick={() => setStage('modules')}><ArrowLeft size={18}/></button><span className="module-badge"><ModuleIcon size={18}/></span><div><h1 id="assistant-title">{t(active.title)}</h1><p>{session?.actor.name} <span>·</span>{t("EPS 成型")}</p></div><nav className="module-switcher" aria-label={t("切換作業模組")}>{Object.entries(modules).map(([key, item]) => <button key={key} className="text-button" aria-current={module === key ? 'page' : undefined} disabled={busy || lockedTarget || !session?.actor.roles.includes(key)} onClick={() => { if (key !== module) void start(undefined, key as Module); }}><item.icon size={16}/>{t(item.short)}</button>)}</nav><span className={`connection ${modelConfigured ? 'ready' : ''}`}><span/>{modelConfigured === true ? t("AI 已設定") : modelConfigured === false ? t("AI 尚未設定") : t("檢查連線中")}</span></div>
+        {chatReadOnly&&<p className="notice-banner" role="status">{t("封存聊天為唯讀，取消封存後可接續操作。")}</p>}<div className="workspace-bar"><button className="icon-button" aria-label={t("返回模組入口")} disabled={busy || lockedTarget} title={unresolved ? t("請先查核執行結果") : pending ? t("請先確認或取消草稿") : t("返回模組入口")} onClick={() => setStage('modules')}><ArrowLeft size={18}/></button><span className="module-badge"><ModuleIcon size={18}/></span><div><h1 id="assistant-title">{t(active.title)}</h1><p>{session?.actor.name} <span>·</span>{t("EPS 成型")}</p></div><nav className="module-switcher" aria-label={t("切換作業模組")}>{Object.entries(modules).map(([key, item]) => <button key={key} className="text-button" aria-current={module === key ? 'page' : undefined} disabled={busy || lockedTarget || !session?.actor.roles.includes(key)} onClick={() => { if (key !== module) void start(undefined, key as Module); }}><item.icon size={16}/>{t(item.short)}</button>)}</nav><span className={`connection ${modelConfigured ? 'ready' : ''}`}><span/>{modelConfigured === true ? t("AI 已設定") : modelConfigured === false ? t("AI 尚未設定") : t("檢查連線中")}</span></div>
 
         {recoveryTarget && <div className="notice-banner" role="status"><span>{t('另一分頁的操作仍待核對，請先查看原操作。')}</span><button className="secondary" disabled={busy || guideWorking} onClick={()=>void recoverOriginal()}>{t('恢復並查核原操作')}</button><button className="secondary" disabled={busy} onClick={()=>void checkOriginal()}>{t('保留本頁，只查核原操作')}</button></div>}
         {externalRecovery && <details className="external-recovery"><summary>{t('原操作查核結果')}：{externalRecovery.proposal.local_rejection ? t('本次提交已拒絕，請返回修改後重新核對。') : confirmationView(externalRecovery.status).label}</summary><p>{externalRecovery.message}</p><ProposalBusinessSummary proposal={externalRecovery.proposal} workspace={workspace}/><p>{t('操作識別碼：')}<code>{externalRecovery.proposal.id}</code></p></details>}
@@ -501,7 +550,7 @@ export function App({ initialOpen = false }: { initialOpen?: boolean } = {}) {
           {messages.length === 0 && !guideSnapshot._started && <div className="chat-welcome"><h2>{t("說說你想完成的作業")}</h2><p>{t("直接描述需求，或使用下方操作卡；只需補齊缺少的資料。")}</p></div>}
           <div className="messages" aria-live="polite" aria-relevant="additions text">{messages.map((message, i) => <article key={i} className={`message ${message.role === 'user' ? 'user' : 'assistant'}`}><span className="message-avatar">{message.role === 'user' ? <UserRound size={16}/> : <Sparkles size={16}/>}</span><div><span className="message-author">{message.role === 'user' ? session?.actor.name ?? t("你") : 'WeYu AI'}</span><MessageContent role={message.role} content={message.content}/></div></article>)}</div>
 
-          {conversation && <GuidedFlow apiRequest={scopedRequest} key={conversation.id} ref={guideRef} onBusyChange={setGuideBusy} onWorkChange={setGuideWorking} onContextChange={setSheetContext} onSnapshot={setGuideSnapshot} onAccessDenied={() => {if(renderEpoch===contextEpoch.current) clearSession();}} beforeTargetChange={() => { if (!draft.trim()) return true; setError(t('切換工單前，請先送出或清除尚未送出的文字。')); return false; }} conversation={conversation} module={module} workspace={workspace} selected={selected} signal={messages.length} proposal={proposal} status={proposalStatus} disabled={busy || unresolved || Boolean(recoveryTarget)} date={businessDate} onReply={receive} onAudit={() => void showAudit()} onHome={() => { if (!lockedTarget) setStage('modules'); }}/>}          {proposal && proposalStatus !== 'superseded' && <section className={`proposal ${independent ? 'important' : ''}`} aria-label={t("操作確認卡")}><div className="proposal-heading"><span className="proposal-icon"><ShieldCheck size={21}/></span><div><small>{proposalStatus ? t("作業處理結果") : t("待你確認 · 尚未寫入")}</small><h2>{t(actionNames[proposal.action] ?? proposal.action)}</h2></div><span className="proposal-state">{expired ? t("已過期") : proposalView.label}</span></div><p className="proposal-summary">{t(proposal.summary)}</p>
+          {chatReadOnly&&<section className="guided-flow"><h2>{t("本次作業摘要")}</h2><Fields value={{...Object.fromEntries(Object.entries(guideSnapshot).filter(([key])=>!key.startsWith("_")&&key!=="draft_save_state")),action:t(actionNames[String(guideSnapshot.action)]??String(guideSnapshot.action??""))}}/></section>}{conversation && !chatReadOnly && <GuidedFlow apiRequest={scopedRequest} key={conversation.id} ref={guideRef} onBusyChange={setGuideBusy} onWorkChange={setGuideWorking} onContextChange={setSheetContext} onSnapshot={setGuideSnapshot} onAccessDenied={() => {if(renderEpoch===contextEpoch.current) clearSession();}} beforeTargetChange={() => { if (!draft.trim()) return true; setError(t('切換工單前，請先送出或清除尚未送出的文字。')); return false; }} conversation={conversation} module={module} workspace={workspace} selected={selected} signal={messages.length} proposal={proposal} status={proposalStatus} disabled={busy || unresolved || Boolean(recoveryTarget)} date={businessDate} onReply={receive} onAudit={() => void showAudit()} onHome={() => { if (!lockedTarget) setStage('modules'); }}/>}          {proposal && proposalStatus !== 'superseded' && <section className={`proposal ${independent ? 'important' : ''}`} aria-label={t("操作確認卡")}><div className="proposal-heading"><span className="proposal-icon"><ShieldCheck size={21}/></span><div><small>{proposalStatus ? t("作業處理結果") : t("待你確認 · 尚未寫入")}</small><h2>{t(actionNames[proposal.action] ?? proposal.action)}</h2></div><span className="proposal-state">{expired ? t("已過期") : proposalView.label}</span></div><p className="proposal-summary">{t(proposal.summary)}</p>
             <ProposalBusinessSummary proposal={proposal} workspace={workspace}/>
             {proposal.local_rejection && <p role="alert">{t('本次提交已拒絕，請返回修改後重新核對。')}</p>}
             <p className="business-note">{t("MES 時間")}{proposalTimezone}{t("；未指定時區的作業時間依 MES 顯示時間解讀。")}</p>
@@ -514,13 +563,14 @@ export function App({ initialOpen = false }: { initialOpen?: boolean } = {}) {
           </section>}{module === 'report' && queryData !== null && !lockedTarget && <div className="query-candidates">{((queryData as Workspace)?.records ?? []).filter(record => record.WIP_OPI_WDOEACICO_HIST_SID).map((record,i) => <button className="secondary guide-record" key={i} disabled={busy || guideWorking} onClick={() => void guideRef.current?.beginReport(record)}><strong>{[record.EQP_NO,record.WO ?? record.WO_NO,record.PART_NO].filter(Boolean).join(' · ')}</strong><span>{display(record.REAL_CHECK_IN_TIME ?? record.SHIFT_DAY)} · {t("以此工單報工")}</span></button>)}</div>}{queryData !== null && <details className="query-results"><summary>{t("查詢結果")}</summary><DataView data={queryData}/></details>}
           {busy && <div className="loading" role="status"><LoaderCircle className="spin" size={18}/>{t("正在核對資料與處理作業…")}</div>}
 <div ref={endRef}/>
-        </div>{awayFromLatest && <button className="latest-message icon-button" aria-label={t("查看最新內容")} title={t("查看最新內容")} onClick={()=>{followLatest.current=true;endRef.current?.scrollIntoView({behavior:"instant",block:"end"});setAwayFromLatest(false);}}><ArrowDown size={18}/></button>}<div className="composer-area">{modelConfigured === false && <div className="model-notice"><CircleHelp size={17}/><span>{t("AI 尚未設定，可用下方操作卡完成作業。")}</span></div>}{draft && modelConfigured === false && <button className="text-button" onClick={() => {setDraft('');initialIntent.current=null;inputRef.current?.focus();}}>{t('清除文字，繼續人工操作')}</button>}<ConversationComposer id="chat-input" inputRef={inputRef} value={draft} onChange={setDraft} onSend={()=>void send()} busy={busy} disabled={busy || guideWorking || unresolved || Boolean(recoveryTarget)} sendDisabled={!draft.trim() || modelConfigured !== true} placeholder={unresolved ? t('此操作結果待核對，請先按確認卡的「查核執行結果」') : pending ? t('可直接補充修改，例如：良品改成 25，請重新確認') : t('描述你的{0}需求，例如：{1}', {0:t(active.short),1:t(active.prompts[0])})} hint={t('確認後才會寫入')}/><div className="composer-footnote"><span><ShieldCheck size={13}/>{t("確認後才會寫入")}</span><span>{t("Enter 送出 · Shift + Enter 換行")}</span></div></div></section><aside className="operation-pane" hidden={!summaryOpen && tab === 'chat'} aria-label={t("本次作業")}><button className="text-button" onClick={() => {setSummaryOpen(false);setTab('chat');}}>{t("收起附屬面板")}</button><div className="pane-heading"><h2>{t("本次作業")}</h2><span>{t("確認後才會寫入")}</span></div>{queryBusy && <p role="status">{t("正在讀取資料…")}</p>}{queryError && <p role="alert">{queryError}</p>}{!(proposal && proposalStatus !== 'superseded') && <div className="sheet-context" aria-label={t("目前作業資料")}>{sheetContext || t("尚未選擇工單")}</div>}        <div className="tabs" role="tablist" aria-label={t("作業檢視")}><button role="tab" aria-selected={tab === 'chat'} onClick={() => setTab('chat')}><MessageSquare size={16}/>{t("作業單")}</button><button role="tab" aria-selected={tab === 'data'} onClick={() => setTab('data')}><ClipboardList size={16}/>{t("查詢資料")}<span className="count">{workspace.records.length}</span></button><button role="tab" aria-selected={tab === 'audit'} disabled={busy} onClick={() => void showAudit()}><History size={16}/>{t("操作紀錄")}</button></div><div className="operation-sheet" hidden={tab !== 'chat'}><p className="summary-stage">{t("目前階段")}：{String(guideSnapshot._stage_label ?? "")}</p><p role="status">{String(guideSnapshot.draft_save_state ?? "")}</p>{Array.isArray(guideSnapshot._missing) && guideSnapshot._missing.length>0 && <section className="summary-missing"><h3>{t("尚需補充")}</h3>{(guideSnapshot._missing as {key:string;text:string}[]).map(item=><button className="text-button" key={item.key} onClick={()=>{setSummaryOpen(false);setTab('chat');requestAnimationFrame(()=>guideRef.current?.focusField(item.key));}}>{item.text}<ArrowRight size={16}/></button>)}</section>}{proposal && proposalStatus !== 'superseded' ? <ProposalBusinessSummary proposal={proposal} workspace={workspace}/> : <Fields value={{...Object.fromEntries(Object.entries(guideSnapshot).filter(([key])=>!key.startsWith("_") && key!=="draft_save_state")), action: t(actionNames[String(guideSnapshot.action)] ?? String(guideSnapshot.action ?? ""))}}/>}
+        </div>{awayFromLatest && <button className="latest-message icon-button" aria-label={t("查看最新內容")} title={t("查看最新內容")} onClick={()=>{followLatest.current=true;endRef.current?.scrollIntoView({behavior:"instant",block:"end"});setAwayFromLatest(false);}}><ArrowDown size={18}/></button>}<div className="composer-area">{modelConfigured === false && <div className="model-notice"><CircleHelp size={17}/><span>{t("AI 尚未設定，可用下方操作卡完成作業。")}</span></div>}{draft && modelConfigured === false && <button className="text-button" onClick={() => {setDraft('');initialIntent.current=null;inputRef.current?.focus();}}>{t('清除文字，繼續人工操作')}</button>}<ConversationComposer id="chat-input" inputRef={inputRef} value={draft} onChange={setDraft} onSend={()=>void send()} busy={busy} disabled={chatReadOnly || busy || guideWorking || unresolved || Boolean(recoveryTarget)} sendDisabled={!draft.trim() || modelConfigured !== true} placeholder={unresolved ? t('此操作結果待核對，請先按確認卡的「查核執行結果」') : pending ? t('可直接補充修改，例如：良品改成 25，請重新確認') : t('描述你的{0}需求，例如：{1}', {0:t(active.short),1:t(active.prompts[0])})} hint={t('確認後才會寫入')}/><div className="composer-footnote"><span><ShieldCheck size={13}/>{t("確認後才會寫入")}</span><span>{t("Enter 送出 · Shift + Enter 換行")}</span></div></div></section><aside className="operation-pane" hidden={!summaryOpen && tab === 'chat'} aria-label={t("本次作業")}><button className="text-button" onClick={() => {setSummaryOpen(false);setTab('chat');}}>{t("收起附屬面板")}</button><div className="pane-heading"><h2>{t("本次作業")}</h2><span>{t("確認後才會寫入")}</span></div>{queryBusy && <p role="status">{t("正在讀取資料…")}</p>}{queryError && <p role="alert">{queryError}</p>}{!(proposal && proposalStatus !== 'superseded') && <div className="sheet-context" aria-label={t("目前作業資料")}>{sheetContext || t("尚未選擇工單")}</div>}        <div className="tabs" role="tablist" aria-label={t("作業檢視")}><button role="tab" aria-selected={tab === 'chat'} onClick={() => setTab('chat')}><MessageSquare size={16}/>{t("作業單")}</button><button role="tab" aria-selected={tab === 'data'} onClick={() => setTab('data')}><ClipboardList size={16}/>{t("查詢資料")}<span className="count">{workspace.records.length}</span></button><button role="tab" aria-selected={tab === 'audit'} disabled={busy} onClick={() => void showAudit()}><History size={16}/>{t("操作紀錄")}</button></div><div className="operation-sheet" hidden={tab !== 'chat'}><p className="summary-stage">{t("目前階段")}：{String(guideSnapshot._stage_label ?? "")}</p><p role="status">{String(guideSnapshot.draft_save_state ?? "")}</p>{Array.isArray(guideSnapshot._missing) && guideSnapshot._missing.length>0 && <section className="summary-missing"><h3>{t("尚需補充")}</h3>{(guideSnapshot._missing as {key:string;text:string}[]).map(item=><button className="text-button" key={item.key} onClick={()=>{setSummaryOpen(false);setTab('chat');requestAnimationFrame(()=>guideRef.current?.focusField(item.key));}}>{item.text}<ArrowRight size={16}/></button>)}</section>}{proposal && proposalStatus !== 'superseded' ? <ProposalBusinessSummary proposal={proposal} workspace={workspace}/> : <Fields value={{...Object.fromEntries(Object.entries(guideSnapshot).filter(([key])=>!key.startsWith("_") && key!=="draft_save_state")), action: t(actionNames[String(guideSnapshot.action)] ?? String(guideSnapshot.action ?? ""))}}/>}
 
 </div>{tab === 'data' && queryData !== null ? <div className="workspace-scroll" role="tabpanel" aria-label={t("查詢結果")}><div className="section-heading"><div><h2>{t("查詢結果")}</h2><p>{t("查詢不會寫入；實際異動請核對作業單。")}</p></div><button className="secondary" onClick={() => setQueryData(null)}>{t("瀏覽其他工單")}</button></div><DataView data={queryData}/></div> : tab === 'data' ? <div className="workspace-scroll" role="tabpanel" aria-label={t("作業資料")}><div className="section-heading"><div><h2>{t("目前作業資料")}</h2><p>{t("選擇一筆資料，帶入新的作業對話。")}</p></div><button className="secondary" disabled={busy} onClick={() => void refreshData().catch(() => {})}><RefreshCw size={16}/>{t("重新整理")}</button></div>{module === 'report' && <p className="data-note">{t("人工報工與 IoT 推算數量各自呈現；未有 IoT 資料不代表產量為零。")}</p>}<DataFilters filters={filters} setFilters={setFilters} pageSize={pageSize} setPageSize={setPageSize} workspace={workspace} busy={busy} load={page => void refreshData(page).catch(() => {})}/><div className="record-grid">{workspace.records.map((record, i) => <article className="workspace-record" key={i}><div className="record-title"><Factory size={18}/><strong>{display(record.EQP_NO ?? record.WO ?? t("第 {0} 筆", {0: i + 1}))}</strong><span className="mode-chip">{record.COMPLETED === 'Y' ? t("已完工") : t("作業資料")}</span></div><Fields value={record}/><button className="secondary" disabled={busy || lockedTarget} onClick={() => void chooseRecord(record)}>{t("以此筆資料開始")}<ArrowRight size={16}/></button></article>)}</div>{!workspace.records.length && <div className="empty-state"><ClipboardList size={28}/><h3>{t("尚無作業資料")}</h3><p>{t("請重新整理，或從對話建立需要的作業。")}</p></div>}<details className="catalogs"><summary>{t("查看設備、工單與模具選項")}</summary><DataView data={workspace.catalogs} title={t("作業選項")}/></details></div> : tab === 'audit' ? <div className="workspace-scroll" role="tabpanel" aria-label={t("操作紀錄")}><div className="section-heading"><div><h2>{t("每次變更，都有紀錄。")}</h2><p>{t("核對操作時間、執行人員與資料前後差異。")}</p></div><button className="secondary" disabled={busy} onClick={() => void showAudit()}><RefreshCw size={16}/>{t("重新整理")}</button></div><DataView data={audit} title={t("操作紀錄")}/></div> : null}</aside></div>
       </>}
       {helpOpen && session && <aside className="help-panel" aria-label={t("回報問題與用量")}><div className="section-heading"><div><h2>{t("讓作業經驗留下來")}</h2><p>{t("錯誤回報先送審核，再經候選案例回歸後發布，不會自動改變卡控。")}</p></div><button className="icon-button" aria-label={t("關閉問題回報")} onClick={() => setHelpOpen(false)}><X size={18}/></button></div><form onSubmit={e => { e.preventDefault(); void guarded(async () => { await request('/api/feedback', { module, message: feedback, ...(conversation ? { conversation_id: conversation.id } : {}) }); setFeedback(''); setFeedbackSent(true); }); }}><label className="form-field">{t("遇到什麼問題？")}<textarea rows={3} required value={feedback} onChange={e => { setFeedback(e.target.value); setFeedbackSent(false); }} placeholder={t("描述你預期的結果、實際發生的情況，或需要補充的操作知識。")} maxLength={4000}/></label><button className="primary" disabled={busy || !feedback.trim()} type="submit">{t("送出問題回報")}</button>{feedbackSent && <p className="feedback-success" role="status">{t("已收到，將由主管審查後處理。")}</p>}</form><FeedbackReview apiRequest={scopedRequest} key={session.actor.id} session={session} refreshToken={feedbackSent} onAccessDenied={() => {if(renderEpoch===contextEpoch.current) clearSession();}}/><details><summary>{t("來源版本與 API 用量")}</summary><p className="muted">{t("作業盤點版本：979d2c6 · 2026-10-30")}</p>{budget ? <Fields value={budget}/> : <p className="muted">{t("目前無法取得用量資訊。")}</p>}</details></aside>}
       <footer className="assistant-footer"><span>WEYU AI</span><span>{t("MES 時間")}{proposalTimezone}</span>{stage === 'chat' ? <button className="footer-help" onClick={() => void showHelp()}><CircleHelp size={13}/>{t("回報問題與來源")}</button> : <span>{t("高塑 · 生產作業助理")}</span>}</footer>
       </div></div>
+      {usageOpen&&<aside className="help-panel usage-panel" role="dialog" aria-modal="true" aria-label={t('用量與使用統計')}><div className="section-heading"><h2>{t('用量與使用統計')}</h2><button className="icon-button" onClick={()=>setUsageOpen(false)} aria-label={t('關閉')}><X size={18}/></button></div><p>{t('統計只包含目前登入者可存取的聊天與操作。模型費用沿用既有累計帳本。')}</p>{usageError?<p role="alert">{usageError}</p>:!usageStats?<p role="status">{t('正在讀取資料…')}</p>:<><Fields value={usageStats}/>{budget&&<Fields value={budget}/>}</>}<button className="secondary" onClick={()=>void showBudget()}>{t('重新讀取')}</button></aside>}
     </section></div>}
   </>;
 }

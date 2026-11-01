@@ -1,0 +1,54 @@
+.assistant-body { position:relative; }
+.conversation-history { display:none; flex:0 0 16rem; width:16rem; min-height:0; flex-direction:column; border-right:1px solid var(--border); background:color-mix(in srgb,var(--muted) 30%,var(--background)); }
+.history-top,.history-navigation,.history-pagination,.history-dialog-actions { display:flex; align-items:center; gap:6px; flex-wrap:wrap; }
+.history-top { padding:12px; justify-content:space-between; }
+.history-top>.text-button { display:flex; align-items:center; gap:10px; flex:1; text-align:left; }
+.history-top>.text-button,.history-navigation .text-button { justify-content:flex-start; }
+#mes-ai-chat-root .history-search input { border:0; box-shadow:none; border-radius:0; }
+.assistant-header h2:focus { outline:none; }
+.history-search { display:flex; align-items:center; gap:8px; margin:0 12px 8px; padding:0 10px; border:1px solid var(--border); border-radius:8px; }
+.history-search input { width:100%; min-width:0; border:0; background:transparent; padding:10px 0; }
+.history-navigation { padding:0 12px; }
+.history-navigation button { display:flex; align-items:center; gap:8px; width:100%; text-align:left; }
+.history-list { flex:1; min-height:0; overflow:auto; padding:0 12px 12px; }
+.history-list>p { font-size:var(--mes-text-sm); padding:8px; }
+.history-row { display:flex; position:relative; align-items:center; border-radius:8px; }
+.history-row:hover,.history-row.selected { background:var(--muted); }
+.history-select { min-width:0; flex:1; display:flex; align-items:center; gap:8px; border:0; background:transparent; color:inherit; padding:10px 8px; text-align:left; }
+.history-select>span { min-width:0; }
+.history-select strong { display:block; font-weight:400; white-space:nowrap; text-overflow:ellipsis; overflow:hidden; }
+.history-select small { display:block; color:var(--muted-foreground); font-size:var(--mes-text-xs); }
+.history-select svg { flex-shrink:0; }
+.history-actions { position:static; }
+.history-actions>summary { padding:8px; display:grid; place-items:center; border:0; }
+.history-menu { position:absolute; top:100%; right:0; width:160px; z-index:35; background:var(--popover); border:1px solid var(--border); box-shadow:var(--panel-shadow); padding:5px; border-radius:8px; }
+.history-menu button { display:block; width:100%; text-align:left; padding:10px; border:0; border-radius:6px; background:transparent; color:inherit; }
+.history-menu button:hover { background:var(--muted); }
+.history-footer { padding:12px; border-top:1px solid var(--border); font-size:var(--mes-text-xs); }
+.history-pagination { margin-top:16px; font-size:var(--mes-text-xs); }
+.history-dialog-backdrop { position:absolute; inset:0; z-index:70; background:rgb(0 0 0 / .35); display:grid; place-items:center; padding:16px; }
+.history-dialog { width:min(420px,100%); max-height:100%; overflow:auto; padding:24px; background:var(--background); border:1px solid var(--border); border-radius:12px; }
+.history-dialog label { display:grid; gap:8px; }
+.history-dialog input { min-width:0; width:100%; }
+.history-dialog-actions { margin-top:20px; justify-content:flex-end; }
+.history-dialog-actions button { padding:8px 12px; }
+.history-overlay { display:flex; position:absolute; inset:0; width:100%; z-index:50; border:0; background:var(--background); }
+.history-overlay .history-close { display:block; }
+.floating-resize { position:absolute; left:0; top:0; width:18px; height:18px; min-height:18px; padding:0; border:0; background:transparent; color:var(--muted-foreground); cursor:nwse-resize; touch-action:none; z-index:60; font-size:12px; }
+.assistant-panel:has(.floating-resize) .assistant-header { padding-left:20px; }
+.history-dialog-backdrop~* { pointer-events:none; }
+.usage-panel { inset:50% auto auto 50%; transform:translate(-50%,-50%); width:min(640px,calc(100% - 32px)); max-height:calc(100% - 32px); border:1px solid var(--border); border-radius:12px; box-shadow:0 0 0 100vmax rgb(0 0 0 / .35); z-index:80; }
+@container mes-chat-shell (min-width:900px) {
+  .expanded .header-history,.expanded .header-new-chat { display:none; }
+  .expanded .conversation-history { display:flex; }
+  .expanded .history-overlay { position:static; width:16rem; border-right:1px solid var(--border); }
+  .expanded .history-close { display:none; }
+}
+/* 參考版標頭維持一列，工具保持可點選；聊天室內容仍沿用引導操作。 */
+@container mes-chat-shell (max-width:560px) {
+  .assistant-header { display:flex; gap:5px; padding:8px; }
+  .assistant-header .aui-modal-brand { max-width:78px; }
+  .assistant-header h2 { font-size:12px; }
+  .header-tools { gap:0; }
+  #mes-ai-chat-root .assistant-header .icon-button,#mes-ai-chat-root .header-preferences>summary { min-width:28px; width:28px; height:32px; min-height:32px; }
+}

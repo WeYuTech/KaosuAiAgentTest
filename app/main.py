@@ -109,6 +109,14 @@ class LocaleUpdate(Input):
     locale: Literal["zh-TW", "en", "th"]
 
 
+class ConversationMetadata(Input):
+    version: int = Field(ge=0, strict=True)
+    title: str | None = Field(default=None, min_length=1, max_length=100)
+    is_pinned: bool | None = None
+    is_archived: bool | None = None
+    is_deleted: bool | None = None
+
+
 class Message(Input):
     text: str = Field(min_length=1, max_length=8000)
 
@@ -228,6 +236,8 @@ def create_app(db_path=None, model=None):
 
     def check_conversation_edit(db, convo, intent_token=None, version=None):
         from app.guide import initial, reject
+        if convo.get("is_archived") or convo.get("is_deleted"):
+            reject("conversation_readonly", "請先還原聊天室，再繼續操作。")
         processing = convo.get("processing") or {}
         if intent_token:
             if processing.get("token") != intent_token or processing.get("expires_at", "") < now().isoformat():
@@ -258,6 +268,7 @@ def create_app(db_path=None, model=None):
             allowed(actor, convo["module"])
             check_conversation_edit(db, convo, intent_token, version)
             convo["guide"] = merge(convo.get("guide"), convo["module"], patch)
+            convo["updated_at"] = now().isoformat()
             if not intent_token:
                 convo["revision"] = convo.get("revision", 0) + 1
             for old in store.all(db, "PROPOSAL"):
@@ -536,6 +547,45 @@ def create_app(db_path=None, model=None):
             store.put(db, "FEEDBACK", fid, entry)
         return entry
 
+    @app.get("/api/conversations/statistics")
+    def conversation_statistics(request: Request):
+        actor = actor_for(request)
+        with store.transaction() as db:
+            chats = [c for c in store.all(db, "CONVERSATION") if c["actor_id"] == actor["id"] and c["module"] in actor["roles"]]
+            logs = [r for r in store.all(db, "LOG") if r["actor"] == actor["id"] and r["module"] in actor["roles"]]
+        return {"conversations": len(chats), "messages": sum(len(c.get("messages", [])) for c in chats),
+                "archived": sum(bool(c.get("is_archived")) and not c.get("is_deleted") for c in chats),
+                "operations": len(logs), "succeeded": sum(r["status"] == "succeeded" for r in logs),
+                "unknown": sum(r["status"] == "unknown" for r in logs)}
+
+    @app.get("/api/conversations")
+    def list_conversations(request: Request, q: str = "", scope: Literal["active", "archived", "deleted"] = "active",
+                           page: int = 1, page_size: int = 30):
+        from app.conversations import metadata
+        actor = actor_for(request)
+        if page < 1 or not 1 <= page_size <= 100 or len(q) > 200:
+            raise HTTPException(422, "聊天查詢條件不合法")
+        with store.transaction() as db:
+            rows = [c for c in store.all(db, "CONVERSATION") if c["actor_id"] == actor["id"] and c["module"] in actor["roles"]]
+        rows = [c for c in rows if (bool(c.get("is_deleted")) if scope == "deleted" else
+                not c.get("is_deleted") and bool(c.get("is_archived")) == (scope == "archived"))]
+        query = q.strip().casefold()
+        rows = [metadata(c) for c in rows if not query or query in metadata(c)["title"].casefold()
+                or any(query in str(m.get("content", "")).casefold() for m in c.get("messages", []))]
+        rows.sort(key=lambda c: (c["is_pinned"], c["updated_at"], c["id"]), reverse=True)
+        return {"records": rows[(page-1)*page_size:page*page_size], "total": len(rows), "page": page, "page_size": page_size}
+
+    @app.post("/api/conversations/{cid}/metadata")
+    def edit_conversation_metadata(cid: str, body: ConversationMetadata, request: Request):
+        from app.conversations import owned, update_metadata
+        actor = actor_for(request)
+        patch = body.model_dump(exclude_none=True, exclude={"version"})
+        if not patch:
+            raise HTTPException(422, "請提供要修改的聊天設定")
+        with store.transaction() as db:
+            convo = owned(store.get(db, "CONVERSATION", cid), actor)
+            return update_metadata(db, store, convo, patch, body.version, now().isoformat())
+
     @app.post("/api/conversations")
     def new_conversation(body: Conversation, request: Request):
         actor = actor_for(request)
@@ -553,10 +603,12 @@ def create_app(db_path=None, model=None):
                 for message in convo["messages"]:
                     if message.get("proposal"):
                         message["proposal"] = store.get(db, "PROPOSAL", message["proposal"]["id"])
-        if not convo or convo["actor_id"] != actor["id"]:
+        if not convo or convo["actor_id"] != actor["id"] or convo.get("is_deleted"):
             raise HTTPException(404, "找不到此對話")
         allowed(actor, convo["module"])
         convo.pop("processing", None)
+        from app.conversations import metadata
+        convo.update(metadata(convo))
         return convo
 
     @app.get("/api/conversations/{cid}")
@@ -606,6 +658,7 @@ def create_app(db_path=None, model=None):
             convo["revision"] = convo.get("revision", 0) + 1
             convo["processing"] = {"token": intent_token, "expires_at": (now() + timedelta(minutes=10)).isoformat()}
             convo["messages"].append({"role": "user", "content": body.text})
+            convo["updated_at"] = now().isoformat()
             store.put(db, "CONVERSATION", cid, convo)
             state = state_for(db) if mode == "simulation" else None
             for old in store.all(db, "PROPOSAL"):
@@ -644,6 +697,7 @@ def create_app(db_path=None, model=None):
                 if (convo.get("processing") or {}).get("token") != intent_token:
                     raise HTTPException(409, "這輪對話已被新的需求取代")
                 convo["messages"].append({"role": "assistant", "content": result["content"], "proposal": proposal, "data": result.get("data"), "knowledge": result.get("knowledge", [])})
+                convo["updated_at"] = now().isoformat()
                 convo.pop("processing", None)
                 store.put(db, "CONVERSATION", cid, convo)
                 guide = guide_view(db, convo)

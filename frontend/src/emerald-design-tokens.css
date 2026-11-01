@@ -151,3 +151,32 @@
   --ring: #a1a1aa;
   --panel-shadow: 0 16px 48px -24px rgb(0 0 0 / .6);
 }
+
+/* 來源相同的深藍外觀，不改變業務狀態。 */
+#mes-ai-chat-root.dark[data-theme="navy"] {
+  --background: #10182d;
+  --foreground: #f4f7fc;
+  --card: #162139;
+  --card-foreground: #f4f7fc;
+  --popover: #1b2946;
+  --popover-foreground: #f4f7fc;
+  --primary: #c4d5ff;
+  --primary-foreground: #10182d;
+  --secondary: #23314e;
+  --secondary-foreground: #f4f7fc;
+  --muted: #23314e;
+  --muted-foreground: #a9b8d3;
+  --accent: #2b3d63;
+  --accent-foreground: #f4f7fc;
+  --border: #3c4c6d;
+  --input: #455577;
+  --ring: #9bbcff;
+  --sidebar: #0d1528;
+  --sidebar-foreground: #f4f7fc;
+  --sidebar-primary: #b8cdff;
+  --sidebar-primary-foreground: #10182d;
+  --sidebar-accent: #213352;
+  --sidebar-accent-foreground: #f4f7fc;
+  --sidebar-border: #3c4c6d;
+  --sidebar-ring: #9bbcff;
+}

@@ -24,15 +24,30 @@
   launcher.type = 'button'; launcher.innerHTML = bot + '<span>生產情報助理</span>'; launcher.setAttribute('aria-label', '開啟生產情報助理'); launcher.title = '生產情報助理';
   const frame = document.createElement('iframe');
   frame.title = 'WeYu AI 生產情報助理 · 作業'; frame.referrerPolicy = 'strict-origin-when-cross-origin';
+  const resizeHandle=document.createElement('button');
+  resizeHandle.type='button'; resizeHandle.className='kaosu-resize';resizeHandle.textContent='◩';resizeHandle.setAttribute('aria-label','調整聊天室大小');resizeHandle.style.display='none';
+  style.textContent+='button.kaosu-resize{width:18px;height:18px;min-height:18px;border:0;border-radius:0;background:transparent;color:#71717a;cursor:nwse-resize;touch-action:none;z-index:2147483002;font-size:12px}iframe[data-expanded=true]{width:100vw!important;height:100dvh!important}@media(max-width:640px){iframe{width:100vw!important;height:100dvh!important}button.kaosu-resize{display:none!important}}';
+  let customSize=null, resizeDrag=null;
+  const fitSize=value=>({width:Math.max(320,Math.min(value.width,(window.innerWidth||1024)-32)),height:Math.max(400,Math.min(value.height,(window.innerHeight||768)-96))});
+  const paintSize=()=>{const size=fitSize(customSize||{width:450,height:562.5});frame.style.width=size.width+'px';frame.style.height=size.height+'px';resizeHandle.style.right=(16+size.width-18)+'px';resizeHandle.style.bottom=(76+size.height-18)+'px';};
+  const saveSize=value=>{customSize=value;paintSize();try{if(value)localStorage.setItem('kaosu-assistant:size',JSON.stringify(value));else localStorage.removeItem('kaosu-assistant:size');}catch{}};
+  try{const value=JSON.parse(localStorage.getItem('kaosu-assistant:size')||'null');if(value&&Number.isFinite(value.width)&&Number.isFinite(value.height))customSize=value;}catch{}
+  paintSize();window.addEventListener('resize',paintSize);
+  resizeHandle.addEventListener('pointerdown',e=>{if(e.button!==0)return;const rect=frame.getBoundingClientRect();resizeDrag={x:e.clientX,y:e.clientY,width:rect.width,height:rect.height};resizeHandle.setPointerCapture(e.pointerId);e.preventDefault();});
+  resizeHandle.addEventListener('pointermove',e=>{if(resizeDrag)saveSize(fitSize({width:resizeDrag.width+resizeDrag.x-e.clientX,height:resizeDrag.height+resizeDrag.y-e.clientY}));});
+  for(const event of ['pointerup','pointercancel'])resizeHandle.addEventListener(event,()=>{resizeDrag=null;});
+  resizeHandle.addEventListener('dblclick',()=>saveSize(null));
+  resizeHandle.addEventListener('keydown',e=>{const step=e.shiftKey?64:16;const delta={ArrowLeft:[step,0],ArrowRight:[-step,0],ArrowUp:[0,step],ArrowDown:[0,-step]}[e.key];if(delta){const rect=frame.getBoundingClientRect();e.preventDefault();saveSize(fitSize({width:rect.width+delta[0],height:rect.height+delta[1]}));}else if(e.key==='Enter'||e.key===' '){e.preventDefault();saveSize(null);}});
   let loaded = false, opened = false;
   let locale = 'zh-TW';
   const captions = () => locale === 'en' ? ['Open production assistant', 'Close production assistant', 'Production assistant'] : locale === 'th' ? ['เปิดผู้ช่วยการผลิต', 'ปิดผู้ช่วยการผลิต', 'ผู้ช่วยการผลิต'] : ['開啟生產情報助理', '收合生產情報助理', '生產情報助理'];
   const paint = resolved => {
-    const dark = resolved === 'dark';
-    launcher.style.background = dark ? '#18181b' : '#ffffff';
+    const dark = resolved !== 'light';
+    resizeHandle.setAttribute('aria-label',locale==='en'?'Resize chat':locale==='th'?'ปรับขนาดแชต':'調整聊天室大小');
+    launcher.style.background = resolved === 'navy' ? '#10182d' : dark ? '#18181b' : '#ffffff';
     launcher.style.color = dark ? '#fafafa' : '#18181b';
     launcher.style.borderColor = dark ? '#3f3f46' : '#e4e4e7';
-    frame.style.background = dark ? '#18181b' : '#ffffff';
+    frame.style.background = resolved === 'navy' ? '#10182d' : dark ? '#18181b' : '#ffffff';
     frame.style.borderColor = dark ? '#3f3f46' : '#e4e4e7';
     launcher.setAttribute('aria-label', captions()[opened ? 1 : 0]);
     launcher.innerHTML = (opened ? down : bot) + '<span>' + captions()[2] + '</span>';
@@ -42,12 +57,13 @@
     const savedLocale = localStorage.getItem('kaosu-assistant:locale');
     if (['zh-TW', 'en', 'th'].includes(savedLocale)) locale = savedLocale;
     const savedTheme = localStorage.getItem('kaosu-assistant:theme');
-    paint(savedTheme === 'dark' || ((!savedTheme || savedTheme === 'system') && window.matchMedia?.('(prefers-color-scheme: dark)').matches) ? 'dark' : 'light');
+    paint(savedTheme === 'navy' ? 'navy' : savedTheme === 'dark' || ((!savedTheme || savedTheme === 'system') && window.matchMedia?.('(prefers-color-scheme: dark)').matches) ? 'dark' : 'light');
   } catch { /* 瀏覽器禁止偏好儲存時，仍可正常操作。 */ }
   const setOpen = next => {
     opened = next;
     if (next && !loaded) { frame.src = target.href; loaded = true; }
     frame.style.display = next ? 'block' : 'none';
+    resizeHandle.style.display=next&&frame.dataset.expanded!=='true'?'block':'none';
     launcher.style.display = next && frame.dataset.expanded === 'true' ? 'none' : '';
     launcher.innerHTML = (next ? down : bot) + '<span>' + captions()[2] + '</span>';
     launcher.setAttribute('aria-expanded', String(next));
@@ -59,7 +75,7 @@
   window.addEventListener('message', event => {
     if (event.source !== frame.contentWindow || event.origin !== target.origin) return;
     if (event.data?.type === 'kaosu-assistant:preferences') {
-      if (!['zh-TW', 'en', 'th'].includes(event.data.locale) || !['light', 'dark', 'system'].includes(event.data.theme) || !['light', 'dark'].includes(event.data.resolvedTheme)) return;
+      if (!['zh-TW', 'en', 'th'].includes(event.data.locale) || !['light', 'dark', 'navy', 'system'].includes(event.data.theme) || !['light', 'dark', 'navy'].includes(event.data.resolvedTheme)) return;
       locale = event.data.locale;
       paint(event.data.resolvedTheme);
     }
@@ -67,8 +83,9 @@
     if (event.data?.type === 'kaosu-assistant:resize') {
       const expanded = event.data.expanded === true;
       frame.dataset.expanded = String(expanded);
+      resizeHandle.style.display=opened&&!expanded?'block':'none';
       launcher.style.display = expanded && opened ? 'none' : '';
     }
   });
-  shadow.append(style, launcher, frame); document.body.append(host);
+  shadow.append(style, launcher, frame, resizeHandle); document.body.append(host);
 })();

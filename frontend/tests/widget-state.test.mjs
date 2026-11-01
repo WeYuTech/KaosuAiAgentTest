@@ -3,11 +3,12 @@ import { test } from 'node:test';
 import { readFileSync } from 'node:fs';
 import { runInNewContext } from 'node:vm';
 
-function mount() {
+function mount(storage = new Map()) {
   const elements = [], messages = [], listeners = {};
   const createElement = tag => {
     const element = {tag, dataset: {}, style: {}, attributes: {}, listeners: {},
       setAttribute(key, value) {this.attributes[key] = value;}, focus() {}, append() {},
+      getBoundingClientRect() {return {width:parseFloat(this.style.width),height:parseFloat(this.style.height)};},
       addEventListener(name, handler) {this.listeners[name] = handler;},
       attachShadow() {return {append() {}};},
       contentWindow: {postMessage(message, origin) {messages.push({message, origin});}},
@@ -17,7 +18,8 @@ function mount() {
   runInNewContext(readFileSync(new URL('../public/widget-loader.js', import.meta.url), 'utf8'), {
     document: {currentScript: {src: 'http://mes.local/KSS_MES/ai-agent/widget-loader.js', dataset: {}}, querySelector: () => null, createElement, body: {append() {}}},
     location: new URL('http://mes.local/KSS_MES/wwwroot/index.html'), URL, URLSearchParams,
-    window: {addEventListener(name, handler) {listeners[name] = handler;}},
+    localStorage: {getItem:key=>storage.get(key)??null,setItem:(key,value)=>storage.set(key,value),removeItem:key=>storage.delete(key)},
+    window: {innerWidth:1366,innerHeight:768,addEventListener(name, handler) {listeners[name] = handler;}},
   });
   const frame = elements.find(el => el.tag === 'iframe'), launcher = elements.find(el => el.tag === 'button');
   const message = (type, value = {}, source = frame.contentWindow, origin = 'http://mes.local') => listeners.message({source, origin, data: {type, ...value}});
@@ -59,4 +61,26 @@ test('宿主接收三語與深色偏好只更新外觀，不重建 iframe', () =
   assert.equal(launcher.attributes['aria-label'], 'ปิดผู้ช่วยการผลิต');
   assert.equal(frame.style.background, '#18181b');
   assert.equal(frame.src, original);
+});
+
+test('浮窗鍵盤調整、重新掛載恢復與重設不重建 iframe', () => {
+  const storage = new Map();
+  const {elements, frame, launcher, message} = mount(storage);
+  const resize = elements.find(el=>el.className==='kaosu-resize');
+  launcher.listeners.click();
+  const original = frame.src;
+  resize.listeners.keydown({key:'ArrowLeft',shiftKey:true,preventDefault(){}});
+  assert.equal(frame.style.width,'514px');
+  assert.equal(frame.src,original);
+  assert.equal(mount(storage).frame.style.width,'514px');
+  message('kaosu-assistant:resize',{expanded:true});
+  assert.equal(resize.style.display,'none');
+  message('kaosu-assistant:resize',{expanded:false});
+  assert.equal(resize.style.display,'block');
+  resize.listeners.keydown({key:'Enter',preventDefault(){}});
+  assert.equal(frame.style.width,'450px');
+  assert.equal(storage.has('kaosu-assistant:size'),false);
+  message('kaosu-assistant:preferences',{locale:'en',theme:'navy',resolvedTheme:'navy'});
+  assert.equal(frame.style.background,'#10182d');
+  assert.equal(frame.src,original);
 });

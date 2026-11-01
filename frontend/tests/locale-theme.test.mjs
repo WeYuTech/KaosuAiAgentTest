@@ -87,11 +87,15 @@ test('語言及主題偏好可保存，系統深色跟隨OS且無效值被拒絕
   setLocale('en'); setTheme('dark');
   assert.equal(storage.get('kaosu-assistant:locale'), 'en');
   assert.equal(storage.get('kaosu-assistant:theme'), 'dark');
-  setLocale('invalid'); setTheme('navy');
+  setLocale('invalid'); setTheme('invalid');
   assert.equal(getLocale(), 'en'); assert.equal(getTheme(), 'dark');
   assert.equal(resolveTheme('system', true), 'dark');
   assert.equal(resolveTheme('system', false), 'light');
   assert.equal(resolveTheme('light', true), 'light');
+  setTheme('navy');
+  assert.equal(getTheme(), 'navy');
+  assert.equal(storage.get('kaosu-assistant:theme'), 'navy');
+  assert.equal(resolveTheme('navy', false), 'navy');
 });
 
 test('主要錯誤優先使用後端本地化message，原始detail不覆蓋且保留code', async () => {

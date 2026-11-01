@@ -1,5 +1,46 @@
 /* 固定介面詞彙：中文原文為鍵，不翻譯 MES 主檔名稱或歷史訊息。 */
 export const translations: Record<string, [string, string]> = Object.fromEntries(`
+聊天紀錄|Chat history|ประวัติแชต
+新聊天|New chat|แชตใหม่
+搜尋聊天|Search chats|ค้นหาแชต
+返回聊天|Back to chat|กลับไปที่แชต
+封存聊天室|Archived chats|แชตที่เก็บถาวร
+已刪除聊天|Deleted chats|แชตที่ลบแล้ว
+找不到符合的聊天|No matching chats|ไม่พบแชตที่ตรงกัน
+還沒有歷史聊天|No chat history yet|ยังไม่มีประวัติแชต
+聊天室選單：{0}|Chat menu: {0}|เมนูแชต: {0}
+還原聊天|Restore chat|กู้คืนแชต
+重新命名|Rename|เปลี่ยนชื่อ
+取消釘選|Unpin|เลิกปักหมุด
+釘選|Pin|ปักหมุด
+取消封存|Unarchive|ยกเลิกการเก็บถาวร
+封存|Archive|เก็บถาวร
+刪除聊天室|Delete chat|ลบแชต
+重新讀取|Reload|โหลดใหม่
+用量與使用統計|Usage and statistics|การใช้งานและสถิติ
+請先完成、取消或查核原操作，再切換聊天。|Complete, cancel or verify the current operation before switching chats.|โปรดดำเนินการให้เสร็จ ยกเลิก หรือตรวจสอบงานเดิมก่อนเปลี่ยนแชต
+重新命名聊天室|Rename chat|เปลี่ยนชื่อแชต
+刪除聊天室？|Delete this chat?|ลบแชตนี้หรือไม่
+修改名稱，聊天內容保持不變。|Change the name and keep the chat content.|เปลี่ยนชื่อโดยเก็บเนื้อหาแชตไว้
+只移出聊天清單，保留 MES 業務與稽核紀錄。可從已刪除聊天還原。|Remove from the chat list only. MES data and audit records remain. Restore from deleted chats.|นำออกจากรายการแชตเท่านั้น ข้อมูล MES และบันทึกตรวจสอบยังอยู่ กู้คืนได้จากแชตที่ลบแล้ว
+聊天室名稱|Chat name|ชื่อแชต
+儲存名稱|Save name|บันทึกชื่อ
+更多功能|More options|ตัวเลือกเพิ่มเติม
+深藍模式|Navy mode|โหมดสีน้ำเงินเข้ม
+調整聊天室大小|Resize chat|ปรับขนาดแชต
+拖曳調整大小，方向鍵微調，Enter 還原|Drag to resize, use arrows to adjust, Enter to reset|ลากเพื่อปรับขนาด ใช้ลูกศรปรับ กด Enter เพื่อคืนค่า
+封存聊天為唯讀，取消封存後可接續操作。|Archived chats are read-only. Unarchive to continue.|แชตที่เก็บถาวรเป็นแบบอ่านอย่างเดียว ยกเลิกการเก็บถาวรเพื่อดำเนินการต่อ
+統計只包含目前登入者可存取的聊天與操作。模型費用沿用既有累計帳本。|Statistics cover chats and operations accessible to this user. Model costs use the existing cumulative ledger.|สถิติครอบคลุมแชตและงานที่ผู้ใช้ปัจจุบันเข้าถึงได้ ค่าโมเดลใช้บัญชีสะสมเดิม
+聊天紀錄已更新，請重新讀取後再操作。|Chat history changed. Reload before making changes.|ประวัติแชตเปลี่ยนแล้ว โปรดโหลดใหม่ก่อนดำเนินการ
+請先完成、取消或查核原操作，再封存或刪除聊天。|Complete, cancel or verify the operation before archiving or deleting the chat.|โปรดทำให้เสร็จ ยกเลิก หรือตรวจสอบงานก่อนเก็บถาวรหรือลบแชต
+聊天室名稱不可空白|Chat name cannot be blank|ชื่อแชตต้องไม่ว่าง
+請先還原聊天室，再繼續操作。|Restore the chat before continuing.|โปรดกู้คืนแชตก่อนดำเนินการต่อ
+聊天總數|Total chats|จำนวนแชตทั้งหมด
+訊息總數|Total messages|จำนวนข้อความทั้งหมด
+封存數量|Archived chats|จำนวนแชตที่เก็บถาวร
+操作總數|Total operations|จำนวนงานทั้งหมด
+成功操作|Successful operations|งานที่สำเร็จ
+結果待核對數量|Results to verify|จำนวนผลที่รอตรวจสอบ
 設定|Settings|การตั้งค่า
 語言與外觀|Language and appearance|ภาษาและรูปลักษณ์
 目前階段|Current stage|ขั้นตอนปัจจุบัน
