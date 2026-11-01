@@ -1,6 +1,7 @@
 import { useEffect, useRef, type ReactNode } from 'react';
 import { AssistantRuntimeProvider, useExternalStoreRuntime, type ExternalStoreAdapter, type ThreadMessageLike, type AppendMessage } from '@assistant-ui/react';
 import type { ChatEntry } from '../ConversationHistory';
+import type {PresentedMessage} from './message-presentation';
 import type { Message } from '../api';
 
 /** 來源 294bc02d 的 external-store adapter；MES 狀態與請求仍由 App 持有。 */
@@ -15,9 +16,9 @@ export interface AssistantProjection {
   sendDisabled: boolean;
   onSend: (text: string) => Promise<void> | void;
 }
-export function convertMessage(message: Message, index: number, conversationId: string | null): ThreadMessageLike {
+export function convertMessage(message: PresentedMessage, index: number, conversationId: string | null): ThreadMessageLike {
   const role = message.role === 'user' ? 'user' : 'assistant';
-  return { id: `${conversationId ?? 'new'}:${index}:${role}`, role,
+  return { id: message.uiId ?? `${conversationId ?? 'new'}:${index}:${role}`, role,
     content: [{type: 'text', text: message.content}],
     ...(role === 'assistant' ? {status: {type: 'complete' as const, reason: 'stop' as const}} : {}),
     metadata: {custom: {mesMessage: message, conversationId}},

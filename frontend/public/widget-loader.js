@@ -18,6 +18,8 @@
   const shadow = host.attachShadow({ mode: 'open' });
   const style = document.createElement('style');
   style.textContent = ':host{all:initial}button{position:fixed;right:18px;bottom:18px;z-index:2147483000;min-height:49.5px;width:49.5px;height:49.5px;padding:0;display:grid;place-items:center;border:1px solid #e4e4e7;border-radius:50%;background:#fff;color:#18181b;cursor:pointer}button:hover{border-color:#71717a}button:focus-visible{outline:2px solid #71717a;outline-offset:2px}button span{display:none}svg{width:20px;height:20px}iframe{position:fixed;right:18px;bottom:83.5px;width:min(564px,calc(100vw - 32px));height:min(733px,calc(100dvh - 96px));border:1px solid #e4e4e7;border-radius:12px;background:white;box-shadow:0 16px 48px -24px rgb(0 0 0 / .25);z-index:2147483001;display:none}iframe[data-expanded=true]{inset:0;width:100vw;height:100dvh;border:0;border-radius:0}@media(max-width:640px){iframe{inset:0;width:100vw;height:100dvh;border:0;border-radius:0}}';
+  const motionTokens=document.createElement('link');motionTokens.rel='stylesheet';motionTokens.href=new URL('motion-tokens.css',script.src).href;shadow.append(motionTokens);
+  style.textContent+='iframe{opacity:1;translate:0 0;transition:opacity var(--motion-panel,220ms) var(--motion-ease,ease-out),translate var(--motion-panel,220ms) var(--motion-ease,ease-out),width var(--motion-panel,220ms) var(--motion-ease,ease-out),height var(--motion-panel,220ms) var(--motion-ease,ease-out),display var(--motion-panel,220ms) allow-discrete}iframe[aria-hidden=true]{opacity:0;translate:0 6px;pointer-events:none}@starting-style{iframe{opacity:0;translate:0 6px}}@media(prefers-reduced-motion:reduce){iframe{transition:none!important;translate:none!important}}';
   const bot = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 8V4H8"/><rect width="16" height="12" x="4" y="8" rx="2"/><path d="M2 14h2m16 0h2M9 13v2m6-2v2"/></svg>';
   const down = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>';
   const launcher = document.createElement('button');
@@ -62,6 +64,7 @@
   const setOpen = next => {
     opened = next;
     if (next && !loaded) { frame.src = target.href; loaded = true; }
+    frame.inert=!next;frame.setAttribute('aria-hidden',String(!next));
     frame.style.display = next ? 'block' : 'none';
     resizeHandle.style.display=next&&frame.dataset.expanded!=='true'?'block':'none';
     launcher.style.display = next && frame.dataset.expanded === 'true' ? 'none' : '';

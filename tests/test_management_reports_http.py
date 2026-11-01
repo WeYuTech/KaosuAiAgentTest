@@ -197,3 +197,21 @@ def test_併發模型預留不能突破調整後額度(setup,monkeypatch):
         finally: release.set()
         first.result()
     assert model.budget_summary()['calls']==1
+
+
+@pytest.mark.parametrize("text,frequency", [
+    ("每天 08:00 產生 MC37 的報工報告", "daily"),
+    ("For example: Every day at 08:00 generate a production report for MC37", "daily"),
+    ("ตัวอย่าง: ทุกวัน 08:00 สร้างรายงานผลผลิต MC37", "daily"),
+    ("週一至週五 08:00 產生 MC37 的報工報告", "weekdays"),
+    ("Weekdays at 08:00 generate a production report for MC37", "weekdays"),
+    ("วันจันทร์ถึงศุกร์ 08:00 สร้างรายงานผลผลิต MC37", "weekdays"),
+])
+def test_新版報告提示三語經公開預覽介面解析(setup,text,frequency):
+    c,_,_=setup
+    c.post('/api/session/demo',json={'identity':'supervisor'})
+    result=c.post('/api/report-schedules/preview',json={'text':text})
+    assert result.status_code==200
+    spec=result.json()
+    assert (spec['module'],spec['equipment'],spec['hour'],spec['minute'],spec['frequency'])==('report','MC37',8,0,frequency)
+    assert c.get('/api/report-schedules').json()['records']==[]

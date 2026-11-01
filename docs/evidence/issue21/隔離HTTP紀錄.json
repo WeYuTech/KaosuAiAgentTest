@@ -1,0 +1,379 @@
+{
+  "說明": "8023 本機替身驗收，只記方法、路徑、回應碼。沒有模型或正式 MES 呼叫。前四次為成功、成功、拒絕、回應遺失；刷新未新增 POST，之後第五次為明確手動送出的捲動驗收。",
+  "訊息請求": [
+    {
+      "time": 1793536137.5020633,
+      "path": "/api/conversations/UP2nQfmJp4kbh077YbPnpgc1/messages",
+      "method": "POST",
+      "status": 200
+    },
+    {
+      "time": 1793536168.998493,
+      "path": "/api/conversations/UP2nQfmJp4kbh077YbPnpgc1/messages",
+      "method": "POST",
+      "status": 200
+    },
+    {
+      "time": 1793536230.7024965,
+      "path": "/api/conversations/UP2nQfmJp4kbh077YbPnpgc1/messages",
+      "method": "POST",
+      "status": 422
+    },
+    {
+      "time": 1793536256.059343,
+      "path": "/api/conversations/UP2nQfmJp4kbh077YbPnpgc1/messages",
+      "method": "POST",
+      "status": 503
+    },
+    {
+      "time": 1793536676.0093963,
+      "path": "/api/conversations/UP2nQfmJp4kbh077YbPnpgc1/messages",
+      "method": "POST",
+      "status": 200
+    }
+  ],
+  "總方法路徑紀錄": [
+    {
+      "time": 1793536122.7005916,
+      "path": "/api/health",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "time": 1793536122.7045186,
+      "path": "/api/session",
+      "method": "GET",
+      "status": 401
+    },
+    {
+      "time": 1793536133.2886868,
+      "path": "/api/session/demo",
+      "method": "POST",
+      "status": 200
+    },
+    {
+      "time": 1793536133.3010457,
+      "path": "/api/conversations",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "time": 1793536133.314729,
+      "path": "/api/workspace",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "time": 1793536133.3217275,
+      "path": "/api/budget",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "time": 1793536133.331799,
+      "path": "/api/conversations",
+      "method": "POST",
+      "status": 200
+    },
+    {
+      "time": 1793536133.3394709,
+      "path": "/api/conversations/UP2nQfmJp4kbh077YbPnpgc1/guide",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "time": 1793536133.366646,
+      "path": "/api/conversations/UP2nQfmJp4kbh077YbPnpgc1/guide",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "time": 1793536133.3691673,
+      "path": "/api/conversations",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "time": 1793536137.5020633,
+      "path": "/api/conversations/UP2nQfmJp4kbh077YbPnpgc1/messages",
+      "method": "POST",
+      "status": 200
+    },
+    {
+      "time": 1793536137.5164099,
+      "path": "/api/conversations/UP2nQfmJp4kbh077YbPnpgc1/guide",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "time": 1793536137.5309372,
+      "path": "/api/conversations",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "time": 1793536168.998493,
+      "path": "/api/conversations/UP2nQfmJp4kbh077YbPnpgc1/messages",
+      "method": "POST",
+      "status": 200
+    },
+    {
+      "time": 1793536169.0177646,
+      "path": "/api/conversations",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "time": 1793536169.0333037,
+      "path": "/api/conversations/UP2nQfmJp4kbh077YbPnpgc1/guide",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "time": 1793536183.1330075,
+      "path": "/api/budget",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "time": 1793536183.230124,
+      "path": "/api/report-schedules",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "time": 1793536186.1399438,
+      "path": "/api/report-schedules",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "time": 1793536189.1531413,
+      "path": "/api/report-schedules",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "time": 1793536192.1760085,
+      "path": "/api/report-schedules",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "time": 1793536198.212762,
+      "path": "/api/report-schedules",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "time": 1793536221.8903463,
+      "path": "/api/health",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "time": 1793536221.891347,
+      "path": "/api/session",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "time": 1793536221.920005,
+      "path": "/api/conversations",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "time": 1793536222.810727,
+      "path": "/api/budget",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "time": 1793536222.8472795,
+      "path": "/api/conversations/UP2nQfmJp4kbh077YbPnpgc1",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "time": 1793536222.863982,
+      "path": "/api/workspace",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "time": 1793536222.9195373,
+      "path": "/api/conversations/UP2nQfmJp4kbh077YbPnpgc1/guide",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "time": 1793536222.9352105,
+      "path": "/api/conversations/UP2nQfmJp4kbh077YbPnpgc1/guide",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "time": 1793536222.94121,
+      "path": "/api/conversations",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "time": 1793536230.7024965,
+      "path": "/api/conversations/UP2nQfmJp4kbh077YbPnpgc1/messages",
+      "method": "POST",
+      "status": 422
+    },
+    {
+      "time": 1793536230.7196853,
+      "path": "/api/conversations/UP2nQfmJp4kbh077YbPnpgc1/guide",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "time": 1793536256.059343,
+      "path": "/api/conversations/UP2nQfmJp4kbh077YbPnpgc1/messages",
+      "method": "POST",
+      "status": 503
+    },
+    {
+      "time": 1793536256.0683668,
+      "path": "/api/conversations/UP2nQfmJp4kbh077YbPnpgc1/guide",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "time": 1793536256.3610666,
+      "path": "/api/health",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "time": 1793536256.3610666,
+      "path": "/api/session",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "time": 1793536256.3820822,
+      "path": "/api/conversations",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "time": 1793536263.9405131,
+      "path": "/api/budget",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "time": 1793536264.2042124,
+      "path": "/api/workspace",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "time": 1793536264.2135184,
+      "path": "/api/conversations/UP2nQfmJp4kbh077YbPnpgc1",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "time": 1793536264.2684429,
+      "path": "/api/conversations/UP2nQfmJp4kbh077YbPnpgc1/guide",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "time": 1793536264.280162,
+      "path": "/api/conversations",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "time": 1793536264.2926626,
+      "path": "/api/conversations/UP2nQfmJp4kbh077YbPnpgc1/guide",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "time": 1793536660.877812,
+      "path": "/api/health",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "time": 1793536660.8790486,
+      "path": "/api/session",
+      "method": "GET",
+      "status": 401
+    },
+    {
+      "time": 1793536670.775755,
+      "path": "/api/session/demo",
+      "method": "POST",
+      "status": 200
+    },
+    {
+      "time": 1793536670.7842631,
+      "path": "/api/workspace",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "time": 1793536670.7877674,
+      "path": "/api/budget",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "time": 1793536670.7997973,
+      "path": "/api/conversations/UP2nQfmJp4kbh077YbPnpgc1",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "time": 1793536670.8043375,
+      "path": "/api/conversations/UP2nQfmJp4kbh077YbPnpgc1/guide",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "time": 1793536670.8138728,
+      "path": "/api/conversations",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "time": 1793536670.8215199,
+      "path": "/api/conversations/UP2nQfmJp4kbh077YbPnpgc1/guide",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "time": 1793536670.8295388,
+      "path": "/api/conversations",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "time": 1793536676.0093963,
+      "path": "/api/conversations/UP2nQfmJp4kbh077YbPnpgc1/messages",
+      "method": "POST",
+      "status": 200
+    },
+    {
+      "time": 1793536676.0275369,
+      "path": "/api/conversations/UP2nQfmJp4kbh077YbPnpgc1/guide",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "time": 1793536676.0325363,
+      "path": "/api/conversations",
+      "method": "GET",
+      "status": 200
+    }
+  ]
+}

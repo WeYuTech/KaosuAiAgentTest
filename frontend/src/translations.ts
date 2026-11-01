@@ -1,5 +1,25 @@
 /* 固定介面詞彙：中文原文為鍵，不翻譯 MES 主檔名稱或歷史訊息。 */
 export const translations: Record<string, [string, string]> = Object.fromEntries(`
+訊息尚未送出，請先處理資料保存錯誤。|Message not sent. Resolve the draft save error first.|ยังไม่ได้ส่งข้อความ กรุณาแก้ไขข้อผิดพลาดในการบันทึกก่อน
+聊天範圍|Chat scope|หมวดแชต
+聊天|Chats|แชต
+尚無封存聊天|No archived chats yet|ยังไม่มีแชตที่เก็บถาวร
+目前沒有已刪除的聊天|There are no deleted chats|ไม่มีแชตที่ลบในขณะนี้
+清除搜尋|Clear search|ล้างการค้นหา
+重試|Try again|ลองอีกครั้ง
+正在載入報告…|Loading reports…|กำลังโหลดรายงาน…
+正在解析條件…|Interpreting conditions…|กำลังแปลเงื่อนไข…
+正在儲存設定…|Saving settings…|กำลังบันทึกการตั้งค่า…
+已填入，請核對|Filled in. Please review.|กรอกแล้ว กรุณาตรวจสอบ
+描述快速填入（選用）|Quick fill from description (optional)|กรอกเร็วจากคำอธิบาย (ไม่บังคับ)
+報告條件|Report conditions|เงื่อนไขรายงาน
+例如：每天 08:00 產生 MC37 的報工報告|For example: Every day at 08:00 generate a production report for MC37|ตัวอย่าง: ทุกวัน 08:00 สร้างรายงานผลผลิต MC37
+依所選頻率，於 MES 時間產生前一排程日的唯讀報告；不自動報工，不使用模型費用。|At the selected frequency and MES time, generate a read-only report for the previous schedule date. No automatic production reporting or model cost.|สร้างรายงานอ่านอย่างเดียวของวันกำหนดการก่อนหน้าตามความถี่ที่เลือกและเวลา MES ไม่รายงานการผลิตอัตโนมัติและไม่มีค่าใช้จ่ายโมเดล
+報告清單讀取失敗，請重新讀取。|Failed to load reports. Please reload.|โหลดรายการรายงานไม่สำเร็จ กรุณาโหลดใหม่
+待處理 · 尚未取得回覆|Pending · No response received yet|รอดำเนินการ · ยังไม่ได้รับคำตอบ
+請求已拒絕，未重新送出|Request rejected. Not resent.|คำขอถูกปฏิเสธ ยังไม่ได้ส่งซ้ำ
+送達結果未知，未重新送出|Delivery unknown. Not resent.|ไม่ทราบผลการส่ง ยังไม่ได้ส่งซ้ำ
+正在處理你的需求…|Processing your request…|กำลังดำเนินการตามคำขอ…
 管理介面載入失敗|Management panel failed to load|โหลดหน้าจอจัดการไม่สำเร็จ
 管理介面載入失敗。原作業已保留，請關閉此視窗；完成或取消目前作業後，再重新整理頁面。|The management panel failed to load. Your work is preserved. Close this window, then finish or cancel the current operation before refreshing the page.|โหลดหน้าจอจัดการไม่สำเร็จ งานเดิมยังอยู่ กรุณาปิดหน้าต่างนี้ แล้วทำงานให้เสร็จหรือยกเลิกก่อนรีเฟรชหน้า
 複製訊息|Copy message|คัดลอกข้อความ
