@@ -11,7 +11,7 @@ export function HeaderMenu({signedIn,locale,theme,localeBusy,onLocale,onTheme,on
  onManage:(section:ManagementSection,trigger:HTMLButtonElement)=>void;onUsage:()=>void;onMinimize:()=>void;
 }) {
  const trigger=useRef<HTMLButtonElement>(null);
- const sections=[['api','API 設定',Settings2],['agent','Agent API 設定',Bot],['budget','用量額度',Gauge],['reports','排程報告',CalendarClock]] as const;
+ const sections=[['api','API 設定',Settings2],['agent','Agent 設定',Bot],['budget','用量額度',Gauge],['reports','定時報告',CalendarClock]] as const;
  const themes=[['light','明亮模式',Sun],['dark','黑暗模式',Moon],['navy','深藍模式',Palette],['mes','MES 藍色',Factory],['system','跟隨系統',Monitor]] as const;
  return <DropdownMenu modal={false}>
   <DropdownMenuTrigger asChild><TooltipIconButton ref={trigger} tooltip={t('更多功能')} aria-label={t('更多功能')} className="size-7 rounded-md p-0 text-muted-foreground hover:text-foreground"><MoreHorizontal className="size-3.5"/></TooltipIconButton></DropdownMenuTrigger>

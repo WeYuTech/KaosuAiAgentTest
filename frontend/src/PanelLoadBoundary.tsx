@@ -10,8 +10,7 @@ export class PanelLoadBoundary extends Component<{open?:boolean;children:ReactNo
   render(){
     if(!this.state.failed)return this.props.children;
     return <OperationDialog open={this.props.open} title={t('管理介面載入失敗')} close={this.props.close}>
-      <p role="alert">{t('管理介面載入失敗。原作業已保留，請關閉此視窗；完成或取消目前作業後，再重新整理頁面。')}</p>
-      <Button onClick={this.props.close}>{t('關閉')}</Button>
+      <p role="alert">{t('原作業已保留。先關閉視窗；完成或取消作業後，再重新整理。')}</p>
     </OperationDialog>;
   }
 }

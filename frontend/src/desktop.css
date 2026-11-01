@@ -73,6 +73,6 @@
 /* Radix Button 的 inline-flex 屬 utility layer，展開時仍須遵守來源側欄入口規則。 */
 @layer utilities {
   @media (min-width:900px) {
-    .expanded .header-history,.expanded .header-new-chat {display:none;}
+
   }
 }

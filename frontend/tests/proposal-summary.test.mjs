@@ -36,7 +36,7 @@ function render(details, records = [], extra = {}) {
   return renderToStaticMarkup(createElement(ProposalBusinessSummary, { proposal, workspace: { records, catalogs: { molds } } }));
 }
 function assertAllocation(html, title, cavities) {
-  assert.ok(html.includes(`<span>${title}</span><strong>${cavities}<small>穴</small></strong>`), `確認卡應讓人員核對 ${title} 的 ${cavities} 穴`);
+  assert.ok(html.includes(`<span>${title}</span><strong><span class="business-after">${cavities}<small>穴</small></span></strong>`), `確認卡應讓人員核對 ${title} 的 ${cavities} 穴`);
 }
 
 test('同品號同工單的兩個模具明細，確認卡分別顯示名稱、編號與模穴', () => {

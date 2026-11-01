@@ -1,0 +1,250 @@
+
+> kaosu-operation-assistant@0.1.0 test
+> node --test tests/*.test.mjs
+
+✔ 舊聊天、停用與忙碌 adapter 均不能發送；不提供 MES 重試入口 (0.5674ms)
+✔ 正式 Composer 按鈕重複點擊只發一次；中文組字與換行不送出 (46.0135ms)
+✔ 管理區塊載入失敗只隔離面板，原作業仍可見且不刷新 (16.0841ms)
+✔ HTTP 或剪貼簿權限拒絕時採來源相容複製；失敗不回報成功 (0.8186ms)
+✔ 換帳號立刻撤下舊聊天列，晚到清單不可重現前人資料 (509.1433ms)
+✔ 一般 Enter 送出一次，Shift+Enter 留在輸入框換行 (0.8584ms)
+✔ 輸入法組字與候選確認不誤送出需求 (0.1009ms)
+✔ 鎖定或未設定模型時，Enter 不繞過送出按鈕限制 (0.0756ms)
+✔ 確認斷線後先查伺服器，已成功不再次寫入 (1.5365ms)
+✔ 確認與查詢均斷線時保持未知，只有查核按鈕 (0.306ms)
+✔ 斷線後伺服器仍pending不能當成尚未送出而開啟寫入 (0.1659ms)
+✔ 重複查核只讀取結果，不重新送出確認 (0.3001ms)
+✔ 狀態與確認按鈕一致，不把unknown顯示待確認或取消 (0.1357ms)
+✔ 明確的權限或版本拒絕保留錯誤，不冒充已取消或成功 (0.3226ms)
+✔ 取消回應遺失時以伺服器已取消狀態回復 (0.142ms)
+✔ 登入拒絕 401 清理情境且保留拒絕證據 (0.8749ms)
+✔ 登入拒絕 403 清理情境且保留拒絕證據 (0.0995ms)
+✔ 跨身分 404 重新查核登入，不能留下前一位作業內容 (0.5166ms)
+✔ 同身分 404 保留一般錯誤，不誤登出 (0.1443ms)
+✔ 切換身分後晚到的成功不影響新情境 (0.1462ms)
+✔ 切換身分後晚到的拒絕不影響新情境 (0.0662ms)
+✔ 實際確認恢復層吞成 unknown 時仍拒絕跨身分套用，原標記保留 (2.7457ms)
+✔ 實際查核層回傳 unknown 仍不能回填過期作業情境 (0.2551ms)
+✔ 登入 API 保留部署目錄：/ (18.6457ms)
+✔ 登入 API 保留部署目錄：/KSS_MES/ai-agent/ (0.4717ms)
+✔ 登入 API 保留部署目錄：/KSS_MES/ai-agent/index.html (0.2524ms)
+✔ 作業 API 不接受跨站位置 (0.4578ms)
+✔ 嵌入載入器拒絕跨站目標 (1.5651ms)
+✔ 排程編輯頁的SID只在對應宿主映射目前排程，且不接受URL身分 (1.757ms)
+✔ 排程SID拒絕空值及不合法或歧義值：SID= (1.253ms)
+✔ 排程SID拒絕空值及不合法或歧義值：SID=abc (1.2994ms)
+✔ 排程SID拒絕空值及不合法或歧義值：SID=-1 (1.1164ms)
+✔ 排程SID拒絕空值及不合法或歧義值：SID=1.5 (1.4758ms)
+✔ 排程SID拒絕空值及不合法或歧義值：SID=1&SID=2 (1.0235ms)
+✔ 排程SID拒絕空值及不合法或歧義值：SID=1234567890123456789 (1.4098ms)
+✔ 其他宿主的SID不得推定為排程，既有明確排程識別不被別名覆蓋 (3.2451ms)
+✔ 模具宿主只帶入三個既有廠別：fac1 (1.0647ms)
+✔ 模具宿主只帶入三個既有廠別：fac2 (1.0833ms)
+✔ 模具宿主只帶入三個既有廠別：fac3 (1.0542ms)
+✔ 模具宿主只帶入三個既有廠別：fac4 (1.0129ms)
+✔ 模具宿主只帶入三個既有廠別：admin (1.111ms)
+✔ 模具宿主只帶入三個既有廠別：空值 (1.0072ms)
+✔ 刷新只恢復原句與送達狀態，不建立重試：unsent (0.8429ms)
+✔ 刷新只恢復原句與送達狀態，不建立重試：rejected (0.0959ms)
+✔ 刷新只恢復原句與送達狀態，不建立重試：unknown (0.1041ms)
+✔ 登出清除指定帳號；消耗入口原句不清除原聊天 (0.1758ms)
+✔ 過期、損壞、超長或不可用儲存不恢復內容 (0.2193ms)
+✔ 修改來源報工時保留原原因代碼與多筆不良數量，刪除只指定該筆 (0.777ms)
+✔ 模具查詢能查看進行中與歷史，執行選擇只允許對應下一階段 (0.0923ms)
+✔ 閒置看板明確選候選排程，不能將無識別的設備或生產中排程當待上模 (0.1335ms)
+✔ 預設繁中與系統主題，三語固定詞彙皆有完整翻譯 (1.5293ms)
+✔ 三語入口與固定頁首控件：zh-TW (34.3183ms)
+✔ 三語入口與固定頁首控件：en (11.9675ms)
+✔ 三語入口與固定頁首控件：th (12.8671ms)
+✔ 確認摘要與欄位切換語言保留MES名稱、數量與草稿原始內容：en (8.9904ms)
+✔ 確認摘要與欄位切換語言保留MES名稱、數量與草稿原始內容：th (2.5852ms)
+✔ API以目前語言送header，切換對話語言不送新的訊息或digest (1.9189ms)
+✔ 語言及主題偏好可保存，系統深色跟隨OS且無效值被拒絕 (0.1272ms)
+✔ 主要錯誤優先使用後端本地化message，原始detail不覆蓋且保留code (0.6863ms)
+✔ 連線失敗顯示目前語言且保留未知結果的網路錯誤分類 (0.2751ms)
+✔ 一般資料不呈現JSON；SID與技術欄僅在未展開的詳細資料內 (1.0451ms)
+✔ 離線泰文字型與授權隨包提供，不需外部字型請求 (1.2673ms)
+✔ 助理真正渲染工單粗體、表格與普通換行 (16.8329ms)
+✔ 原始HTML不成為可執行元素，程式碼區仍可安全閱讀 (7.0509ms)
+✔ Markdown圖片不產生任何圖片或預載請求，只顯示替代文字 (6.0363ms)
+✔ 連結拒絕不安全scheme，正常網址保留並隔離opener及referrer (3.8149ms)
+✔ 人員訊息維持純文字及原始換行，不把Markdown或HTML變成元素 (0.2333ms)
+✖ 歷史初載與錯誤不冒充空集合；切範圍立即請求且空頁無分頁 (50.0859ms)
+✖ 搜尋聚焦及組字清空不隱藏欄位；伺服器 page_size 控制多頁 (45.677ms)
+✖ 定時報告初載不顯示假空態；解析成功不搶焦點，核對返回保留值 (39.8351ms)
+✖ 受控 Dialog 關閉移除可互動內容；五次重開無殘留遮罩 (7.8409ms)
+✔ 待處理投影用原嘗試及回覆序號調和，相同文字不去重且舊訊息識別穩定 (0.6158ms)
+✔ 聊天捲動只控制容器，向上接管；動態減少動畫立即完成定位 (1.8483ms)
+✔ 排程核對直接呈現後端生產日與結束時間，以及各模穴目標件數 (8.5258ms)
+✔ 清除換模核對卡包含進出站與完工取消，不僅四個上下模時間 (1.7907ms)
+✖ 同品號同工單的兩個模具明細，確認卡分別顯示名稱、編號與模穴 (1.4581ms)
+✖ 修改省略模具明細識別並調換列順序，確認卡仍依原排程明細顯示正確左右模穴 (1.0556ms)
+✖ 新增唯一品號明細可省略識別，確認卡仍顯示後端採用的模具明細 (1.0494ms)
+✖ 離頁修改採用確認卡內後端已解析摘要，不受目前頁面與過時選項影響 (0.94ms)
+✔ 真實 Radix 選單三語、主題、鍵盤與 Portal 範圍：zh-TW (91.0956ms)
+✔ 真實 Radix 選單三語、主題、鍵盤與 Portal 範圍：en (49.664ms)
+✔ 真實 Radix 選單三語、主題、鍵盤與 Portal 範圍：th (47.6797ms)
+✔ 恢復資訊寫不入時零提交 (2.5957ms)
+✔ 確認回應遺失，刷新即使pending仍鎖原操作；終態才解除 (1.0226ms)
+✔ 本次明確拒絕並讀回原卡後不留下假unknown (0.42ms)
+✔ 另一分頁留下未知嘗試時，本次4xx不能刪掉它 (0.2654ms)
+✔ 晚到guide的pending也必須再次合併恢復標記 (0.2237ms)
+✔ 明確409後立即讀取失敗，權威讀回才開放修改及取消 (0.3675ms)
+✔ 跨分頁阻擋包含原操作位置，B沒有送出且不能解除A (0.3911ms)
+✔ 宿主收合再開啟保留同一 iframe，放大時隱藏入口且重新開啟可恢復尺寸 (3.2067ms)
+✔ 其他視窗或跨站訊息不能控制助理外框 (1.2694ms)
+✔ 宿主接收三語與深色偏好只更新外觀，不重建 iframe (1.2178ms)
+✔ 浮窗鍵盤調整、重新掛載恢復與重設不重建 iframe (3.6049ms)
+✔ 正式執行列只顯示人工與IoT正確摘要，未知不得顯示成零 (6.9517ms)
+✔ 執行列的人工報工歷史保留單筆人工良品，IoT推算負值照實顯示 (1.809ms)
+✔ 未帶執行摘要的人工報工紀錄保留原本欄位名稱與數值 (0.3524ms)
+ℹ tests 96
+ℹ suites 0
+ℹ pass 88
+ℹ fail 8
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 2447.2047
+
+✖ failing tests:
+
+test at tests\motion-feedback.test.mjs:23:1
+✖ 歷史初載與錯誤不冒充空集合；切範圍立即請求且空頁無分頁 (50.0859ms)
+  TypeError: Cannot read properties of undefined (reading 'click')
+      at file:///C:/Users/rdpuser/Documents/ChatGPT/KaosuAgentDemo/frontend/tests/motion-feedback.test.mjs:29:41
+      at process.env.NODE_ENV.exports.act (C:\Users\rdpuser\Documents\ChatGPT\KaosuAgentDemo\frontend\node_modules\react\cjs\react.development.js:890:22)
+      at TestContext.<anonymous> (file:///C:/Users/rdpuser/Documents/ChatGPT/KaosuAgentDemo/frontend/tests/motion-feedback.test.mjs:29:8)
+      at async Test.run (node:internal/test_runner/test:1332:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:385:3)
+
+test at tests\motion-feedback.test.mjs:36:1
+✖ 搜尋聚焦及組字清空不隱藏欄位；伺服器 page_size 控制多頁 (45.677ms)
+  AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:
+  
+    assert.ok(input.closest('[hidden]'))
+  
+      at TestContext.<anonymous> (file:///C:/Users/rdpuser/Documents/ChatGPT/KaosuAgentDemo/frontend/tests/motion-feedback.test.mjs:43:93)
+      at async Test.run (node:internal/test_runner/test:1332:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: null,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at tests\motion-feedback.test.mjs:47:1
+✖ 定時報告初載不顯示假空態；解析成功不搶焦點，核對返回保留值 (39.8351ms)
+  AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:
+  
+    assert.ok(host.textContent.includes('正在載入報告…'))
+  
+      at TestContext.<anonymous> (file:///C:/Users/rdpuser/Documents/ChatGPT/KaosuAgentDemo/frontend/tests/motion-feedback.test.mjs:50:9)
+      at async Test.run (node:internal/test_runner/test:1332:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at tests\motion-feedback.test.mjs:61:1
+✖ 受控 Dialog 關閉移除可互動內容；五次重開無殘留遮罩 (7.8409ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  0 !== 1
+  
+      at TestContext.<anonymous> (file:///C:/Users/rdpuser/Documents/ChatGPT/KaosuAgentDemo/frontend/tests/motion-feedback.test.mjs:64:144)
+      at async Test.run (node:internal/test_runner/test:1332:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 0,
+    expected: 1,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests\proposal-summary.test.mjs:42:1
+✖ 同品號同工單的兩個模具明細，確認卡分別顯示名稱、編號與模穴 (1.4581ms)
+  AssertionError [ERR_ASSERTION]: 確認卡應讓人員核對 WO-A · 同品號左模穴（MOLD-SPLIT-L） 的 3 穴
+      at assertAllocation (file:///C:/Users/rdpuser/Documents/ChatGPT/KaosuAgentDemo/frontend/tests/proposal-summary.test.mjs:39:10)
+      at TestContext.<anonymous> (file:///C:/Users/rdpuser/Documents/ChatGPT/KaosuAgentDemo/frontend/tests/proposal-summary.test.mjs:47:3)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1325:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+      at Test.postRun (node:internal/test_runner/test:1465:19)
+      at Test.run (node:internal/test_runner/test:1390:12)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at tests\proposal-summary.test.mjs:51:1
+✖ 修改省略模具明細識別並調換列順序，確認卡仍依原排程明細顯示正確左右模穴 (1.0556ms)
+  AssertionError [ERR_ASSERTION]: 確認卡應讓人員核對 WO-A · 同品號右模穴（MOLD-SPLIT-R） 的 4 穴
+      at assertAllocation (file:///C:/Users/rdpuser/Documents/ChatGPT/KaosuAgentDemo/frontend/tests/proposal-summary.test.mjs:39:10)
+      at TestContext.<anonymous> (file:///C:/Users/rdpuser/Documents/ChatGPT/KaosuAgentDemo/frontend/tests/proposal-summary.test.mjs:59:3)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1325:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+      at Test.postRun (node:internal/test_runner/test:1465:19)
+      at Test.run (node:internal/test_runner/test:1390:12)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at tests\proposal-summary.test.mjs:63:1
+✖ 新增唯一品號明細可省略識別，確認卡仍顯示後端採用的模具明細 (1.0494ms)
+  AssertionError [ERR_ASSERTION]: 確認卡應讓人員核對 EPS-A · 單一模穴（MOLD-ONE-L） 的 0 穴
+      at assertAllocation (file:///C:/Users/rdpuser/Documents/ChatGPT/KaosuAgentDemo/frontend/tests/proposal-summary.test.mjs:39:10)
+      at TestContext.<anonymous> (file:///C:/Users/rdpuser/Documents/ChatGPT/KaosuAgentDemo/frontend/tests/proposal-summary.test.mjs:65:3)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1325:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+      at Test.postRun (node:internal/test_runner/test:1465:19)
+      at Test.run (node:internal/test_runner/test:1390:12)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at tests\proposal-summary.test.mjs:68:1
+✖ 離頁修改採用確認卡內後端已解析摘要，不受目前頁面與過時選項影響 (0.94ms)
+  AssertionError [ERR_ASSERTION]: 確認卡應讓人員核對 WO-A · 同品號右模穴（MOLD-SPLIT-R） 的 4 穴
+      at assertAllocation (file:///C:/Users/rdpuser/Documents/ChatGPT/KaosuAgentDemo/frontend/tests/proposal-summary.test.mjs:39:10)
+      at TestContext.<anonymous> (file:///C:/Users/rdpuser/Documents/ChatGPT/KaosuAgentDemo/frontend/tests/proposal-summary.test.mjs:77:3)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1325:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+      at Test.postRun (node:internal/test_runner/test:1465:19)
+      at Test.run (node:internal/test_runner/test:1390:12)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }

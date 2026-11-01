@@ -33,7 +33,7 @@ export function ProposalBusinessSummary({ proposal, workspace }: { proposal: Pro
     const identity = name && number ? `${display(name)}（${display(number)}）` : display(name ?? number ?? t("模具明細待核對"));
     return `${display(item.wo || item.part_no)} · ${identity}`;
   };
-  const businessRow = (title: string, after: unknown, before?: unknown, unit = '') => <div className="business-value"><span>{title}</span><strong>{before !== undefined && before !== null && <><span className="business-before">{display(before)}</span><ArrowRight size={14}/></>}{display(after)}{unit && <small>{unit}</small>}</strong></div>;
+  const businessRow = (title: string, after: unknown, before?: unknown, unit = '') => <div className="business-value"><span>{title}</span><strong>{before !== undefined && before !== null && <><span className="business-before">{display(before)}</span><ArrowRight size={14}/></>}<span className="business-after">{display(after)}{unit && <small>{unit}</small>}</span></strong></div>;
 
   return <div className="business-summary">
     <div className="business-target">

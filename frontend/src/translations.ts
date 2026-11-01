@@ -1,5 +1,57 @@
 /* 固定介面詞彙：中文原文為鍵，不翻譯 MES 主檔名稱或歷史訊息。 */
 export const translations: Record<string, [string, string]> = Object.fromEntries(`
+此處可切換模擬身分；正式 MES 沿用登入權限。|Switch simulation roles here. Production MES uses your signed-in permissions.|สลับบทบาทจำลองได้ที่นี่ ระบบ MES จริงใช้สิทธิ์ของผู้เข้าสู่ระบบ
+沿用 MES 登入權限，請確認本次作業人員。|MES sign-in permissions apply. Confirm the operator.|ใช้สิทธิ์การเข้าสู่ระบบ MES กรุณายืนยันผู้ปฏิบัติงาน
+定時報告|Scheduled reports|รายงานตามกำหนด
+聊天側欄寬度|Chat sidebar width|ความกว้างแถบแชต
+{0} 像素|{0} pixels|{0} พิกเซล
+收合側欄|Collapse sidebar|ย่อแถบด้านข้าง
+關閉搜尋|Close search|ปิดการค้นหา
+封存聊天|Archived chats|แชตที่เก็บถาวร
+縮窄側欄|Narrow sidebar|ลดความกว้างแถบ
+加寬側欄|Widen sidebar|เพิ่มความกว้างแถบ
+重設寬度|Reset width|คืนค่าความกว้าง
+刪除聊天|Delete chat|ลบแชต
+刪除聊天？|Delete chat?|ลบแชตหรือไม่?
+可在「已刪除」還原；MES 業務與稽核紀錄保留。|Restore it from Deleted. MES operations and audit records are retained.|กู้คืนได้จากรายการที่ลบ ข้อมูลงาน MES และบันทึกตรวจสอบยังคงอยู่
+名稱|Name|ชื่อ
+請取消後重新開啟此操作。|Cancel and reopen this action.|ยกเลิกแล้วเปิดการดำเนินการนี้อีกครั้ง
+儲存設定？|Save settings?|บันทึกการตั้งค่าหรือไม่?
+調整額度？|Change budget?|ปรับวงเงินหรือไม่?
+建立定時報告？|Create scheduled report?|สร้างรายงานตามกำหนดหรือไม่?
+暫停定時報告？|Pause scheduled report?|หยุดรายงานตามกำหนดชั่วคราวหรือไม่?
+恢復定時報告？|Resume scheduled report?|เปิดรายงานตามกำหนดต่อหรือไม่?
+刪除定時報告？|Delete scheduled report?|ลบรายงานตามกำหนดหรือไม่?
+停止後續執行；已開始的查詢可完成。|Stops future runs. Queries already started may finish.|หยุดการทำงานครั้งต่อไป การค้นหาที่เริ่มแล้วอาจทำจนเสร็จ
+建立|Create|สร้าง
+儲存|Save|บันทึก
+次|calls|ครั้ง
+金鑰已設定|Key configured|ตั้งค่าคีย์แล้ว
+金鑰尚未設定|Key not configured|ยังไม่ได้ตั้งค่าคีย์
+可查詢與準備草稿；寫入仍需人工確認。|Can query and prepare drafts. Writes require human confirmation.|ค้นหาและเตรียมฉบับร่างได้ การบันทึกต้องได้รับการยืนยันจากคน
+每輪呼叫上限（次）|Call limit per turn|จำนวนครั้งสูงสุดต่อรอบ
+快速填入（選用）|Quick fill (optional)|กรอกอย่างรวดเร็ว (ไม่บังคับ)
+執行條件|Run conditions|เงื่อนไขการทำงาน
+產生前一排程日的唯讀報告，不自動報工。|Read-only report for the previous schedule date. No automatic production entry.|รายงานแบบอ่านอย่างเดียวของวันแผนก่อนหน้า ไม่บันทึกผลผลิตอัตโนมัติ
+執行說明|Execution details|รายละเอียดการทำงาน
+依頻率於 MES 時間執行，不使用模型費用。|Runs at MES time at the selected frequency, without model costs.|ทำงานตามความถี่และเวลา MES ที่เลือก โดยไม่มีค่าใช้จ่ายโมเดล
+報告操作|Report actions|การดำเนินการรายงาน
+額度設定|Budget settings|การตั้งค่าวงเงิน
+用量提醒比例（%）|Usage warning (%)|แจ้งเตือนการใช้งาน (%)
+累計模型費用|Cumulative model cost|ค่าใช้จ่ายโมเดลสะสม
+已使用|Spent|ใช้แล้ว
+已預留|Reserved|สำรองแล้ว
+累計上限|Cumulative limit|วงเงินสะสม
+剩餘額度|Remaining budget|วงเงินคงเหลือ
+費用明細|Cost details|รายละเอียดค่าใช้จ่าย
+模型呼叫次數|Model calls|จำนวนการเรียกโมเดล
+未知用量呼叫次數|Calls with unknown usage|จำนวนการเรียกที่ไม่ทราบการใช้งาน
+累計帳本包含全部模型用量；未知用量保留預留，不重複加總。|The cumulative ledger includes all model usage. Unknown usage remains reserved and is not counted twice.|บัญชีสะสมรวมการใช้งานโมเดลทั้งหมด การใช้งานที่ไม่ทราบยังคงสำรองไว้และไม่นับซ้ำ
+原作業已保留。先關閉視窗；完成或取消作業後，再重新整理。|Your task is retained. Close this window, complete or cancel the task, then refresh.|เก็บงานเดิมไว้แล้ว ปิดหน้าต่างนี้ ทำงานให้เสร็จหรือยกเลิก แล้วจึงรีเฟรช
+摘要|Summary|สรุป
+資料|Data|ข้อมูล
+紀錄|Records|บันทึก
+作業|Task|งาน
 訊息尚未送出，請先處理資料保存錯誤。|Message not sent. Resolve the draft save error first.|ยังไม่ได้ส่งข้อความ กรุณาแก้ไขข้อผิดพลาดในการบันทึกก่อน
 聊天範圍|Chat scope|หมวดแชต
 聊天|Chats|แชต

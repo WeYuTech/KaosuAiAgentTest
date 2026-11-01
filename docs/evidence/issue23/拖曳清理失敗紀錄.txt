@@ -1,0 +1,142 @@
+
+> kaosu-operation-assistant@0.1.0 test
+> node --test tests/*.test.mjs
+
+✔ 舊聊天、停用與忙碌 adapter 均不能發送；不提供 MES 重試入口 (0.5916ms)
+✔ 正式 Composer 按鈕重複點擊只發一次；中文組字與換行不送出 (46.8024ms)
+✔ 管理區塊載入失敗只隔離面板，原作業仍可見且不刷新 (16.5686ms)
+✔ HTTP 或剪貼簿權限拒絕時採來源相容複製；失敗不回報成功 (0.7681ms)
+✔ 換帳號立刻撤下舊聊天列，晚到清單不可重現前人資料 (507.3905ms)
+✔ 一般 Enter 送出一次，Shift+Enter 留在輸入框換行 (1.3786ms)
+✔ 輸入法組字與候選確認不誤送出需求 (0.1921ms)
+✔ 鎖定或未設定模型時，Enter 不繞過送出按鈕限制 (0.3509ms)
+✔ 確認斷線後先查伺服器，已成功不再次寫入 (1.088ms)
+✔ 確認與查詢均斷線時保持未知，只有查核按鈕 (0.1514ms)
+✔ 斷線後伺服器仍pending不能當成尚未送出而開啟寫入 (0.0941ms)
+✔ 重複查核只讀取結果，不重新送出確認 (0.1654ms)
+✔ 狀態與確認按鈕一致，不把unknown顯示待確認或取消 (0.0969ms)
+✔ 明確的權限或版本拒絕保留錯誤，不冒充已取消或成功 (0.3061ms)
+✔ 取消回應遺失時以伺服器已取消狀態回復 (0.1284ms)
+✔ 登入拒絕 401 清理情境且保留拒絕證據 (0.8506ms)
+✔ 登入拒絕 403 清理情境且保留拒絕證據 (0.1065ms)
+✔ 跨身分 404 重新查核登入，不能留下前一位作業內容 (0.9059ms)
+✔ 同身分 404 保留一般錯誤，不誤登出 (0.2922ms)
+✔ 切換身分後晚到的成功不影響新情境 (0.2207ms)
+✔ 切換身分後晚到的拒絕不影響新情境 (0.1001ms)
+✔ 實際確認恢復層吞成 unknown 時仍拒絕跨身分套用，原標記保留 (3.4122ms)
+✔ 實際查核層回傳 unknown 仍不能回填過期作業情境 (0.3048ms)
+✔ 登入 API 保留部署目錄：/ (18.1268ms)
+✔ 登入 API 保留部署目錄：/KSS_MES/ai-agent/ (0.323ms)
+✔ 登入 API 保留部署目錄：/KSS_MES/ai-agent/index.html (0.2117ms)
+✔ 作業 API 不接受跨站位置 (0.47ms)
+✔ 嵌入載入器拒絕跨站目標 (1.5949ms)
+✔ 排程編輯頁的SID只在對應宿主映射目前排程，且不接受URL身分 (1.6597ms)
+✔ 排程SID拒絕空值及不合法或歧義值：SID= (1.6838ms)
+✔ 排程SID拒絕空值及不合法或歧義值：SID=abc (1.0888ms)
+✔ 排程SID拒絕空值及不合法或歧義值：SID=-1 (1.0828ms)
+✔ 排程SID拒絕空值及不合法或歧義值：SID=1.5 (1.3412ms)
+✔ 排程SID拒絕空值及不合法或歧義值：SID=1&SID=2 (1.1963ms)
+✔ 排程SID拒絕空值及不合法或歧義值：SID=1234567890123456789 (1.3859ms)
+✔ 其他宿主的SID不得推定為排程，既有明確排程識別不被別名覆蓋 (3.1364ms)
+✔ 模具宿主只帶入三個既有廠別：fac1 (1.3812ms)
+✔ 模具宿主只帶入三個既有廠別：fac2 (1.2466ms)
+✔ 模具宿主只帶入三個既有廠別：fac3 (1.249ms)
+✔ 模具宿主只帶入三個既有廠別：fac4 (1.1148ms)
+✔ 模具宿主只帶入三個既有廠別：admin (1.0309ms)
+✔ 模具宿主只帶入三個既有廠別：空值 (1.2509ms)
+✔ 刷新只恢復原句與送達狀態，不建立重試：unsent (0.8182ms)
+✔ 刷新只恢復原句與送達狀態，不建立重試：rejected (0.1015ms)
+✔ 刷新只恢復原句與送達狀態，不建立重試：unknown (0.0744ms)
+✔ 登出清除指定帳號；消耗入口原句不清除原聊天 (0.1734ms)
+✔ 過期、損壞、超長或不可用儲存不恢復內容 (0.2112ms)
+✔ 修改來源報工時保留原原因代碼與多筆不良數量，刪除只指定該筆 (0.7976ms)
+✔ 模具查詢能查看進行中與歷史，執行選擇只允許對應下一階段 (0.0881ms)
+✔ 閒置看板明確選候選排程，不能將無識別的設備或生產中排程當待上模 (0.1371ms)
+✔ 預設繁中與系統主題，三語固定詞彙皆有完整翻譯 (1.3066ms)
+✔ 三語入口與固定頁首控件：zh-TW (31.8635ms)
+✔ 三語入口與固定頁首控件：en (12.1757ms)
+✔ 三語入口與固定頁首控件：th (12.7176ms)
+✔ 確認摘要與欄位切換語言保留MES名稱、數量與草稿原始內容：en (8.268ms)
+✔ 確認摘要與欄位切換語言保留MES名稱、數量與草稿原始內容：th (2.3698ms)
+✔ API以目前語言送header，切換對話語言不送新的訊息或digest (1.8443ms)
+✔ 語言及主題偏好可保存，系統深色跟隨OS且無效值被拒絕 (0.1207ms)
+✔ 主要錯誤優先使用後端本地化message，原始detail不覆蓋且保留code (0.5338ms)
+✔ 連線失敗顯示目前語言且保留未知結果的網路錯誤分類 (0.1997ms)
+✔ 一般資料不呈現JSON；SID與技術欄僅在未展開的詳細資料內 (0.947ms)
+✔ 離線泰文字型與授權隨包提供，不需外部字型請求 (1.2374ms)
+✔ 助理真正渲染工單粗體、表格與普通換行 (21.7544ms)
+✔ 原始HTML不成為可執行元素，程式碼區仍可安全閱讀 (8.5397ms)
+✔ Markdown圖片不產生任何圖片或預載請求，只顯示替代文字 (3.0288ms)
+✔ 連結拒絕不安全scheme，正常網址保留並隔離opener及referrer (2.632ms)
+✔ 人員訊息維持純文字及原始換行，不把Markdown或HTML變成元素 (0.2375ms)
+✔ 歷史初載與錯誤不冒充空集合；切範圍立即請求且空頁無分頁 (137.7371ms)
+✔ 搜尋聚焦及組字清空不隱藏欄位；伺服器 page_size 控制多頁 (44.4454ms)
+✔ 定時報告初載不顯示假空態；解析成功不搶焦點，核對返回保留值 (84.8329ms)
+✔ 受控 Dialog 關閉移除可互動內容；五次重開無殘留遮罩 (34.2734ms)
+✔ 待處理投影用原嘗試及回覆序號調和，相同文字不去重且舊訊息識別穩定 (0.5802ms)
+✔ 聊天捲動只控制容器，向上接管；動態減少動畫立即完成定位 (1.7131ms)
+✔ 排程核對直接呈現後端生產日與結束時間，以及各模穴目標件數 (6.0395ms)
+✔ 清除換模核對卡包含進出站與完工取消，不僅四個上下模時間 (1.4687ms)
+✔ 同品號同工單的兩個模具明細，確認卡分別顯示名稱、編號與模穴 (1.1032ms)
+✔ 修改省略模具明細識別並調換列順序，確認卡仍依原排程明細顯示正確左右模穴 (0.9747ms)
+✔ 新增唯一品號明細可省略識別，確認卡仍顯示後端採用的模具明細 (0.9848ms)
+✔ 離頁修改採用確認卡內後端已解析摘要，不受目前頁面與過時選項影響 (0.9875ms)
+✔ 真實 Radix 選單三語、主題、鍵盤與 Portal 範圍：zh-TW (89.2595ms)
+✔ 真實 Radix 選單三語、主題、鍵盤與 Portal 範圍：en (49.7433ms)
+✔ 真實 Radix 選單三語、主題、鍵盤與 Portal 範圍：th (47.2279ms)
+✔ 分隔線動態上限保留主區480與命中區24，偏好只接受合理數值 (0.5296ms)
+✔ 鍵盤調整、收合ARIA與同一輸入/子樹保持；內外偏好隔離 (24.4773ms)
+✖ 拖曳單一RAF，放開後lostcapture不回滾；取消、Escape、blur與卸載清理 (4.0571ms)
+✖ 偏好storage被阻擋時仍可調寬，窄容器不覆寫寬版偏好 (0.6903ms)
+✔ 恢復資訊寫不入時零提交 (3.2693ms)
+✔ 確認回應遺失，刷新即使pending仍鎖原操作；終態才解除 (1.3305ms)
+✔ 本次明確拒絕並讀回原卡後不留下假unknown (0.353ms)
+✔ 另一分頁留下未知嘗試時，本次4xx不能刪掉它 (0.4416ms)
+✔ 晚到guide的pending也必須再次合併恢復標記 (0.3119ms)
+✔ 明確409後立即讀取失敗，權威讀回才開放修改及取消 (0.466ms)
+✔ 跨分頁阻擋包含原操作位置，B沒有送出且不能解除A (0.3753ms)
+✔ 宿主收合再開啟保留同一 iframe，放大時隱藏入口且重新開啟可恢復尺寸 (3.7404ms)
+✔ 其他視窗或跨站訊息不能控制助理外框 (1.2767ms)
+✔ 宿主接收三語與深色偏好只更新外觀，不重建 iframe (1.2449ms)
+✔ 浮窗鍵盤調整、重新掛載恢復與重設不重建 iframe (4.9821ms)
+✔ 正式執行列只顯示人工與IoT正確摘要，未知不得顯示成零 (6.4643ms)
+✔ 執行列的人工報工歷史保留單筆人工良品，IoT推算負值照實顯示 (1.9402ms)
+✔ 未帶執行摘要的人工報工紀錄保留原本欄位名稱與數值 (0.3648ms)
+ℹ tests 100
+ℹ suites 0
+ℹ pass 98
+ℹ fail 2
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 2484.5927
+
+✖ failing tests:
+
+test at tests\sidebar-layout.test.mjs:34:1
+✖ 拖曳單一RAF，放開後lostcapture不回滾；取消、Escape、blur與卸載清理 (4.0571ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  1 !== null
+  
+      at TestContext.<anonymous> (file:///C:/Users/rdpuser/Documents/ChatGPT/KaosuAgentDemo/frontend/tests/sidebar-layout.test.mjs:42:139)
+      at async Test.run (node:internal/test_runner/test:1332:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 1,
+    expected: null,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests\sidebar-layout.test.mjs:44:1
+✖ 偏好storage被阻擋時仍可調寬，窄容器不覆寫寬版偏好 (0.6903ms)
+  TypeError: Cannot assign to read only property 'ResizeObserver' of object '#<Object>'
+      at TestContext.<anonymous> (file:///C:/Users/rdpuser/Documents/ChatGPT/KaosuAgentDemo/frontend/tests/sidebar-layout.test.mjs:46:27)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1325:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+      at Test.postRun (node:internal/test_runner/test:1465:19)
+      at Test.run (node:internal/test_runner/test:1390:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7)
