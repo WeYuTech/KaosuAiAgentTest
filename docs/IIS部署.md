@@ -1,5 +1,16 @@
 # IIS 部署與維護
 
+## 2026-11-01：移除重新讀取與聊天筆數標題
+
+依使用者要求移除助理內全部「重新讀取」按鈕，以及聊天／封存／已刪除清單的筆數標題；保留自動載入、搜尋、日期分組、多頁導覽與讀取失敗時的「重試」。報告讀取失敗提示改為關閉後重新開啟。既有業務「重新整理」與 unknown 查核不變。
+
+正式版本 `387dcf0185fdea7c8c39fded84199c6f410e2d1a`，前端96項、型別與建置通過。發行 `kaosu-clean-reload-20261101.zip`，SHA256 `065cc56a7de9262d511729896cda5527eb200bdd5624f12d0eb01dd5b3de5135`。106檔校驗、17個公開資產與九頁入口通過；服務健康且未重啟，.env與兩個SQLite雜湊不變，未寫正式業務資料。
+
+正式助理直接入口已實測聊天列表無重讀按鈕與筆數標題；首頁iframe首次載入仍有延遲，未宣稱已修復。回復備份為 `C:\Services\KaosuAiAgent\backups\code-before-kaosu-clean-reload-20261101`，依 deployment.json 還原原有檔案及SHA256SUMS，HTML最後替換，保留.env、.local及新舊雜湊資產。
+
+[部署核對](evidence/clean-reload-deploy/部署核對.json) · [公開核對](evidence/clean-reload-deploy/公開入口核對.json) · [正式畫面](evidence/clean-reload-deploy/正式聊天清單.jpg)
+
+
 ## 2026-11-01：Issue #21 聊天回饋與轉場版本正式部署
 
 依使用者後續「部署正式 MES」授權，部署草稿 PR #22 的 `78966948f51960d183a46105b6b37ba1de2fc54b`（產品程式 `72248cf`）。未合併 main，不關閉 #21／#19／#13；尚缺的錄影、效能、尺寸與無障礙驗收仍依原表追蹤。

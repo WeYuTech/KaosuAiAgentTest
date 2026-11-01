@@ -1,0 +1,28 @@
+{
+  "private_settings_unchanged": true,
+  "health": {
+    "status": "ok",
+    "mode": "live",
+    "model_configured": true,
+    "model": "gpt-6.1-sol",
+    "business_timezone": "UTC+07:00",
+    "business_date": "2026-11-01",
+    "server_time": "2026-11-01T20:45:07.615457+07:00"
+  },
+  "state_unchanged": {
+    ".local\\model-budget.db": true,
+    ".local\\operations.db": true
+  },
+  "service_not_restarted": true,
+  "release": "kaosu-clean-reload-20261101",
+  "verified": 106,
+  "backup": "C:\\Services\\KaosuAiAgent\\backups\\code-before-kaosu-clean-reload-20261101",
+  "widget": {
+    "status": "already_installed",
+    "changed": 0,
+    "manifest": null
+  },
+  "commit": "387dcf0185fdea7c8c39fded84199c6f410e2d1a",
+  "sha256": "065cc56a7de9262d511729896cda5527eb200bdd5624f12d0eb01dd5b3de5135",
+  "browser": "正式直接入口聊天清單載入，無重新讀取及筆數標題；首頁iframe首次載入仍有延遲，既有問題持續追蹤"
+}
