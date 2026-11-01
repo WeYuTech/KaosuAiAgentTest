@@ -1,6 +1,6 @@
 /* Guide 元件只維持一套尺度，與主題及作業卡共用 tokens。 */
 .guided-flow {
-  font-size:16px;
+  font-size:var(--mes-text-base);
   line-height:1.6;
   min-width:0;
   margin:16px 0;
@@ -12,7 +12,7 @@
 }
 
 .guided-flow h2 {
-  font-size:20px;
+  font-size:var(--mes-text-xl);
   margin:20px 0 12px
 }
 
@@ -28,7 +28,7 @@
 }
 
 .guide-phase>span,.operation-sheet-status {
-  font-size:14px;
+  font-size:var(--mes-text-sm);
   color:var(--muted-foreground)
 }
 
@@ -86,7 +86,7 @@
 .guide-field input,.guide-field select {
   width:100%;
   min-width:0;
-  font-size:16px
+  font-size:var(--mes-text-base)
 }
 
 .guided-flow fieldset:not(.guide-body) {
@@ -144,7 +144,7 @@
 }
 
 .guide-record span {
-  font-size:14px;
+  font-size:var(--mes-text-sm);
   color:var(--muted-foreground)
 }
 
@@ -198,3 +198,9 @@
   }
 
 }
+
+.guide-action-grid .secondary { background:transparent; border:0; box-shadow:none; border-radius:.375rem; justify-content:flex-start; font-weight:400; }
+.guide-action-grid .secondary::before { content:'>'; font-family:var(--font-ibm-plex-mono); color:var(--muted-foreground); }
+.guide-action-grid .secondary:hover { background:var(--muted); }
+.guided-flow:has(.guide-action-grid) { border:0; box-shadow:none; padding:0; }
+.guided-flow:has(.guide-action-grid)>.guide-phase,.guided-flow:has(.guide-action-grid)>.operation-sheet-status { display:none; }

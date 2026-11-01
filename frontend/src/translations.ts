@@ -435,5 +435,8 @@ MES 登入無法驗證；請重新登入或洽管理員。|MES sign-in could not
 找不到此對話|Conversation not found|ไม่พบการสนทนานี้
 保留本頁，只查核原操作|Keep this draft and check the original operation|เก็บฉบับร่างนี้และตรวจสอบงานเดิม
 原操作查核結果|Original operation result|ผลการตรวจสอบงานเดิม
+作業導覽|Operation navigation|การนำทางงาน
+作業範圍|Operation scope|ขอบเขตงาน
+查看最新內容|View latest content|ดูเนื้อหาล่าสุด
 確認卡已過期|Confirmation card expired|บัตรยืนยันหมดอายุ
 ` .trim().split('\n').map(line => { const [key, en, th] = line.split('|'); return [key, [en, th]]; }));
