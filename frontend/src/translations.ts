@@ -27,6 +27,7 @@ export const translations: Record<string, [string, string]> = Object.fromEntries
 儲存名稱|Save name|บันทึกชื่อ
 更多功能|More options|ตัวเลือกเพิ่มเติม
 深藍模式|Navy mode|โหมดสีน้ำเงินเข้ม
+MES 藍色|MES blue|สีน้ำเงิน MES
 調整聊天室大小|Resize chat|ปรับขนาดแชต
 拖曳調整大小，方向鍵微調，Enter 還原|Drag to resize, use arrows to adjust, Enter to reset|ลากเพื่อปรับขนาด ใช้ลูกศรปรับ กด Enter เพื่อคืนค่า
 封存聊天為唯讀，取消封存後可接續操作。|Archived chats are read-only. Unarchive to continue.|แชตที่เก็บถาวรเป็นแบบอ่านอย่างเดียว ยกเลิกการเก็บถาวรเพื่อดำเนินการต่อ

@@ -1,5 +1,5 @@
 import {useEffect,useRef} from 'react';
-import {MoreHorizontal,Settings2,Bot,Gauge,CalendarClock,Sun,Moon,Palette,Monitor,ChartNoAxesCombined,X} from 'lucide-react';
+import {MoreHorizontal,Settings2,Bot,Gauge,CalendarClock,Sun,Moon,Palette,Factory,Monitor,ChartNoAxesCombined,X} from 'lucide-react';
 import {t,type Locale} from './i18n';
 import {type Theme} from './theme';
 import {type ManagementSection} from './ManagementPanel';
@@ -13,7 +13,7 @@ export function HeaderMenu({signedIn,locale,theme,localeBusy,onLocale,onTheme,on
  const close=()=>{ref.current?.removeAttribute('open');ref.current?.querySelector('summary')?.focus();};
  useEffect(()=>{const outside=(e:PointerEvent)=>{if(e.target instanceof Node&&!ref.current?.contains(e.target))ref.current?.removeAttribute('open');};document.addEventListener('pointerdown',outside);return()=>document.removeEventListener('pointerdown',outside);},[]);
  const sections=[['api','API 設定',Settings2],['agent','Agent API 設定',Bot],['budget','用量額度',Gauge],['reports','排程報告',CalendarClock]] as const;
- const themes=[['light','明亮模式',Sun],['dark','黑暗模式',Moon],['navy','深藍模式',Palette],['system','跟隨系統',Monitor]] as const;
+ const themes=[['light','明亮模式',Sun],['dark','黑暗模式',Moon],['navy','深藍模式',Palette],['mes','MES 藍色',Factory],['system','跟隨系統',Monitor]] as const;
  return <details ref={ref} className="header-preferences" onKeyDown={e=>{
   if(e.key==='Escape'&&ref.current?.open){e.preventDefault();e.stopPropagation();close();}
   if(e.target instanceof HTMLSelectElement)return;

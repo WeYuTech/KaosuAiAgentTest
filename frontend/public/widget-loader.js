@@ -44,11 +44,11 @@
   const paint = resolved => {
     const dark = resolved !== 'light';
     resizeHandle.setAttribute('aria-label',locale==='en'?'Resize chat':locale==='th'?'ปรับขนาดแชต':'調整聊天室大小');
-    launcher.style.background = resolved === 'navy' ? '#10182d' : dark ? '#18181b' : '#ffffff';
+    launcher.style.background = resolved === 'mes' ? '#162a58' : resolved === 'navy' ? '#10182d' : dark ? '#18181b' : '#ffffff';
     launcher.style.color = dark ? '#fafafa' : '#18181b';
-    launcher.style.borderColor = dark ? '#3f3f46' : '#e4e4e7';
-    frame.style.background = resolved === 'navy' ? '#10182d' : dark ? '#18181b' : '#ffffff';
-    frame.style.borderColor = dark ? '#3f3f46' : '#e4e4e7';
+    launcher.style.borderColor = resolved === 'mes' ? '#6099c2' : dark ? '#3f3f46' : '#e4e4e7';
+    frame.style.background = resolved === 'mes' ? '#162a58' : resolved === 'navy' ? '#10182d' : dark ? '#18181b' : '#ffffff';
+    frame.style.borderColor = resolved === 'mes' ? '#6099c2' : dark ? '#3f3f46' : '#e4e4e7';
     launcher.setAttribute('aria-label', captions()[opened ? 1 : 0]);
     launcher.innerHTML = (opened ? down : bot) + '<span>' + captions()[2] + '</span>';
     launcher.title = captions()[2]; frame.title = `WeYu AI · ${captions()[2]}`;
@@ -57,7 +57,7 @@
     const savedLocale = localStorage.getItem('kaosu-assistant:locale');
     if (['zh-TW', 'en', 'th'].includes(savedLocale)) locale = savedLocale;
     const savedTheme = localStorage.getItem('kaosu-assistant:theme');
-    paint(savedTheme === 'navy' ? 'navy' : savedTheme === 'dark' || ((!savedTheme || savedTheme === 'system') && window.matchMedia?.('(prefers-color-scheme: dark)').matches) ? 'dark' : 'light');
+    paint(savedTheme === 'mes' ? 'mes' : savedTheme === 'navy' ? 'navy' : savedTheme === 'dark' || ((!savedTheme || savedTheme === 'system') && window.matchMedia?.('(prefers-color-scheme: dark)').matches) ? 'dark' : 'light');
   } catch { /* 瀏覽器禁止偏好儲存時，仍可正常操作。 */ }
   const setOpen = next => {
     opened = next;
@@ -75,7 +75,7 @@
   window.addEventListener('message', event => {
     if (event.source !== frame.contentWindow || event.origin !== target.origin) return;
     if (event.data?.type === 'kaosu-assistant:preferences') {
-      if (!['zh-TW', 'en', 'th'].includes(event.data.locale) || !['light', 'dark', 'navy', 'system'].includes(event.data.theme) || !['light', 'dark', 'navy'].includes(event.data.resolvedTheme)) return;
+      if (!['zh-TW', 'en', 'th'].includes(event.data.locale) || !['light', 'dark', 'navy', 'mes', 'system'].includes(event.data.theme) || !['light', 'dark', 'navy', 'mes'].includes(event.data.resolvedTheme)) return;
       locale = event.data.locale;
       paint(event.data.resolvedTheme);
     }

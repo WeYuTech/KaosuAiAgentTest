@@ -1,6 +1,6 @@
 import { useEffect, useSyncExternalStore } from 'react';
-export type Theme = 'light' | 'dark' | 'navy' | 'system';
-export const isTheme = (value: unknown): value is Theme => ['light', 'dark', 'navy', 'system'].includes(value as string);
+export type Theme = 'light' | 'dark' | 'navy' | 'mes' | 'system';
+export const isTheme = (value: unknown): value is Theme => ['light', 'dark', 'navy', 'mes', 'system'].includes(value as string);
 let theme: Theme = 'system';
 try { const saved = globalThis.localStorage?.getItem('kaosu-assistant:theme'); if (isTheme(saved)) theme = saved; } catch { /* 預設跟隨系統。 */ }
 const listeners = new Set<() => void>();
@@ -12,7 +12,7 @@ export function setTheme(next: Theme) {
   try { globalThis.localStorage?.setItem('kaosu-assistant:theme', next); } catch { /* 偏好儲存失敗不阻擋操作。 */ }
   notify();
 }
-export function resolveTheme(value: Theme, systemDark = false): 'light' | 'dark' | 'navy' { return value === 'system' ? systemDark ? 'dark' : 'light' : value; }
+export function resolveTheme(value: Theme, systemDark = false): 'light' | 'dark' | 'navy' | 'mes' { return value === 'system' ? systemDark ? 'dark' : 'light' : value; }
 const getResolved = () => resolveTheme(theme, typeof matchMedia === 'function' && matchMedia('(prefers-color-scheme: dark)').matches);
 const subscribe = (listener: () => void) => {
   listeners.add(listener);

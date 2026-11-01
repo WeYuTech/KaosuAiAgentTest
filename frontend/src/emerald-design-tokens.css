@@ -180,3 +180,38 @@
   --sidebar-border: #3c4c6d;
   --sidebar-ring: #9bbcff;
 }
+
+/* MES 首頁原色：#162a58、#1a3677、#196eae；青藍操作色延伸機台圖示。 */
+#mes-ai-chat-root.dark[data-theme="mes"] {
+  --background: #162a58;
+  --foreground: #f4f9ff;
+  --card: #203e70;
+  --card-foreground: #f4f9ff;
+  --popover: #18325f;
+  --popover-foreground: #f4f9ff;
+  --primary: #40dde7;
+  --primary-foreground: #10264c;
+  --secondary: #254d7d;
+  --secondary-foreground: #f4f9ff;
+  --muted: #254d7d;
+  --muted-foreground: #e1edf9;
+  --accent: #285b8e;
+  --accent-foreground: #f4f9ff;
+  --border: #6099c2;
+  --input: #88b8db;
+  --ring: #67e8f9;
+  --sidebar: #162a58;
+  --sidebar-foreground: #f4f9ff;
+  --sidebar-primary: #40dde7;
+  --sidebar-primary-foreground: #10264c;
+  --sidebar-accent: #285b8e;
+  --sidebar-accent-foreground: #f4f9ff;
+  --sidebar-border: #6099c2;
+  --sidebar-ring: #67e8f9;
+}
+#mes-ai-chat-root[data-theme="mes"] .assistant-panel {
+  background: radial-gradient(circle at 70% 40%, #196eae, #1a3677, #162a58);
+}
+#mes-ai-chat-root[data-theme="mes"] .conversation-history {
+  background: var(--sidebar);
+}

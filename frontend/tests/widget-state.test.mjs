@@ -82,5 +82,11 @@ test('浮窗鍵盤調整、重新掛載恢復與重設不重建 iframe', () => {
   assert.equal(storage.has('kaosu-assistant:size'),false);
   message('kaosu-assistant:preferences',{locale:'en',theme:'navy',resolvedTheme:'navy'});
   assert.equal(frame.style.background,'#10182d');
+  message('kaosu-assistant:preferences',{locale:'zh-TW',theme:'mes',resolvedTheme:'mes'});
+  assert.equal(frame.style.background,'#162a58');
+  assert.equal(launcher.style.background,'#162a58');
+  // 偏好由同源 React useTheme 保存；宿主只讀取與投影。
+  storage.set('kaosu-assistant:theme','mes');
+  assert.equal(mount(storage).frame.style.background,'#162a58');
   assert.equal(frame.src,original);
 });
