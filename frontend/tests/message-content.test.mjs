@@ -15,7 +15,7 @@ const render = (content, role = 'assistant') => renderToStaticMarkup(createEleme
 
 test('助理真正渲染工單粗體、表格與普通換行', () => {
   const html = render('**工單** WO-A\n請確認以下數量\n\n| 項目 | 數量 |\n| --- | ---: |\n| 人工良品 | 0 |\n| IoT產量 | 未知 |');
-  assert.ok(html.includes('<strong>工單</strong>'));
+  assert.match(html, /<strong(?: class="[^"]*")?>工單<\/strong>/);
   assert.match(html, /WO-A<br\/>\s*請確認以下數量/);
   assert.ok(html.includes('<table>') && html.includes('<thead>') && html.includes('<tbody>'));
   assert.ok(html.includes('<th>項目</th>') && html.includes('<td>人工良品</td>'));
@@ -27,7 +27,7 @@ test('原始HTML不成為可執行元素，程式碼區仍可安全閱讀', () =
   const html = render('<script>alert(1)</script>\n\n<img src="https://tracking.invalid/raw.png" onerror="alert(1)">\n\n<iframe src="https://tracking.invalid/frame"></iframe>\n\n安全的 **提醒**\n\n```html\n<script>範例</script>\n```');
   assert.ok(!/<script|<iframe|<img|onerror=/.test(html));
   assert.ok(!html.includes('tracking.invalid'));
-  assert.ok(html.includes('<strong>提醒</strong>'));
+  assert.match(html, /<strong(?: class="[^"]*")?>提醒<\/strong>/);
   assert.ok(html.includes('&lt;script&gt;範例&lt;/script&gt;'));
 });
 

@@ -1,0 +1,200 @@
+{
+  "chat": {
+    "id": "VPO67eFi0ZJe3SE-nHmudHbN",
+    "module": "report",
+    "title": "生產報工",
+    "is_pinned": false,
+    "is_archived": false,
+    "is_deleted": false,
+    "metadata_version": 0,
+    "created_at": "2026-11-01T08:16:24.848091+00:00",
+    "updated_at": "2026-11-01T08:17:28.142681+00:00",
+    "message_count": 0
+  },
+  "guide": {
+    "action": "report.add",
+    "args": {
+      "defects": [
+        {
+          "code": "NG01",
+          "quantity": 2
+        }
+      ],
+      "execution_id": "2001",
+      "ok": 120
+    },
+    "intent": null,
+    "missing": [],
+    "ready": true,
+    "step": "review",
+    "version": 5,
+    "proposal": {
+      "action": "report.add",
+      "actor_id": "DEMO_SUPERVISOR",
+      "args": {
+        "defects": [
+          {
+            "code": "NG01",
+            "quantity": 2
+          }
+        ],
+        "execution_id": "2001",
+        "ok": 120
+      },
+      "business_timezone": "UTC+07:00",
+      "changes": [
+        {
+          "after": "2026-11-01 15:17:28",
+          "before": null,
+          "field": "CREATE_TIME",
+          "key": "9002",
+          "table": "WIP_OPI_WDOEACICONG_HIST_DETAIL"
+        },
+        {
+          "after": "DEMO_SUPERVISOR",
+          "before": null,
+          "field": "CREATE_USER",
+          "key": "9002",
+          "table": "WIP_OPI_WDOEACICONG_HIST_DETAIL"
+        },
+        {
+          "after": "2026-11-01 15:17:28",
+          "before": null,
+          "field": "EDIT_TIME",
+          "key": "9002",
+          "table": "WIP_OPI_WDOEACICONG_HIST_DETAIL"
+        },
+        {
+          "after": "DEMO_SUPERVISOR",
+          "before": null,
+          "field": "EDIT_USER",
+          "key": "9002",
+          "table": "WIP_OPI_WDOEACICONG_HIST_DETAIL"
+        },
+        {
+          "after": "NG01",
+          "before": null,
+          "field": "NG_CODE",
+          "key": "9002",
+          "table": "WIP_OPI_WDOEACICONG_HIST_DETAIL"
+        },
+        {
+          "after": 2,
+          "before": null,
+          "field": "NG_CODE_QTY",
+          "key": "9002",
+          "table": "WIP_OPI_WDOEACICONG_HIST_DETAIL"
+        },
+        {
+          "after": "9002",
+          "before": null,
+          "field": "WDOEACICONG_NG_HIST_DETAIL_SID",
+          "key": "9002",
+          "table": "WIP_OPI_WDOEACICONG_HIST_DETAIL"
+        },
+        {
+          "after": "9001",
+          "before": null,
+          "field": "WIP_OPI_WDOEACICOOUTPUT_HIST_SID",
+          "key": "9002",
+          "table": "WIP_OPI_WDOEACICONG_HIST_DETAIL"
+        },
+        {
+          "after": "",
+          "before": null,
+          "field": "COMMENT",
+          "key": "9001",
+          "table": "WIP_OPI_WDOEACICOOUTPUT_HIST"
+        },
+        {
+          "after": "2026-11-01 15:17:28",
+          "before": null,
+          "field": "CREATE_TIME",
+          "key": "9001",
+          "table": "WIP_OPI_WDOEACICOOUTPUT_HIST"
+        },
+        {
+          "after": "DEMO_SUPERVISOR",
+          "before": null,
+          "field": "CREATE_USER",
+          "key": "9001",
+          "table": "WIP_OPI_WDOEACICOOUTPUT_HIST"
+        },
+        {
+          "after": "2026-11-01 15:17:28",
+          "before": null,
+          "field": "EDIT_TIME",
+          "key": "9001",
+          "table": "WIP_OPI_WDOEACICOOUTPUT_HIST"
+        },
+        {
+          "after": "DEMO_SUPERVISOR",
+          "before": null,
+          "field": "EDIT_USER",
+          "key": "9001",
+          "table": "WIP_OPI_WDOEACICOOUTPUT_HIST"
+        },
+        {
+          "after": "Y",
+          "before": null,
+          "field": "ENABLE_FLAG",
+          "key": "9001",
+          "table": "WIP_OPI_WDOEACICOOUTPUT_HIST"
+        },
+        {
+          "after": 2,
+          "before": null,
+          "field": "NG_QTY",
+          "key": "9001",
+          "table": "WIP_OPI_WDOEACICOOUTPUT_HIST"
+        },
+        {
+          "after": 120,
+          "before": null,
+          "field": "OK_QTY",
+          "key": "9001",
+          "table": "WIP_OPI_WDOEACICOOUTPUT_HIST"
+        },
+        {
+          "after": "9001",
+          "before": null,
+          "field": "WIP_OPI_WDOEACICOOUTPUT_HIST_SID",
+          "key": "9001",
+          "table": "WIP_OPI_WDOEACICOOUTPUT_HIST"
+        },
+        {
+          "after": "2001",
+          "before": null,
+          "field": "WIP_OPI_WDOEACICO_HIST_SID",
+          "key": "9001",
+          "table": "WIP_OPI_WDOEACICOOUTPUT_HIST"
+        }
+      ],
+      "conversation_id": "VPO67eFi0ZJe3SE-nHmudHbN",
+      "created_at": "2026-11-01T08:17:28.151192+00:00",
+      "digest": "f80abdac4f0a6200c49948979df42a4d4c3fffb01f3ba5044dd9cb0706007ee3",
+      "event_time": "2026-11-01T08:17:28.151192+00:00",
+      "expires_at": "2026-11-01T08:27:28.151192+00:00",
+      "id": "930dc00c-792d-4b1e-a8dd-1e5cf02bb30a",
+      "independent_confirmation": false,
+      "intent_revision": 5,
+      "mode": "simulation",
+      "module": "report",
+      "state_digest": "3e369c897ce0b146b32f6e5b93905155e617b29bbf3950cb89ac40af94951425",
+      "status": "pending",
+      "summary": "新增人工報工",
+      "target": {
+        "affected_orders": [
+          "WO-A",
+          "WO-B"
+        ],
+        "equipment": "MC37",
+        "execution_id": "2001",
+        "report_id": null,
+        "schedule_id": "1001",
+        "work_order": "WO-A"
+      },
+      "writes_enabled": true
+    }
+  }
+}

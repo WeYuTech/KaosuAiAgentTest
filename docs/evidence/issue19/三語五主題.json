@@ -1,0 +1,137 @@
+[
+  {
+    "locale": "en",
+    "choice": "Light mode",
+    "height": 844,
+    "overflow": false,
+    "text": "送達未知時保留這句，不自動重送",
+    "theme": "light",
+    "width": 390
+  },
+  {
+    "locale": "en",
+    "choice": "Dark mode",
+    "height": 844,
+    "overflow": false,
+    "text": "送達未知時保留這句，不自動重送",
+    "theme": "dark",
+    "width": 390
+  },
+  {
+    "locale": "en",
+    "choice": "Navy mode",
+    "height": 844,
+    "overflow": false,
+    "text": "送達未知時保留這句，不自動重送",
+    "theme": "navy",
+    "width": 390
+  },
+  {
+    "locale": "en",
+    "choice": "MES blue",
+    "height": 844,
+    "overflow": false,
+    "text": "送達未知時保留這句，不自動重送",
+    "theme": "mes",
+    "width": 390
+  },
+  {
+    "locale": "en",
+    "choice": "System",
+    "height": 844,
+    "overflow": false,
+    "text": "送達未知時保留這句，不自動重送",
+    "theme": "light",
+    "width": 390
+  },
+  {
+    "locale": "th",
+    "choice": "โหมดสว่าง",
+    "height": 844,
+    "overflow": false,
+    "text": "送達未知時保留這句，不自動重送",
+    "theme": "light",
+    "width": 390
+  },
+  {
+    "locale": "th",
+    "choice": "โหมดมืด",
+    "height": 844,
+    "overflow": false,
+    "text": "送達未知時保留這句，不自動重送",
+    "theme": "dark",
+    "width": 390
+  },
+  {
+    "locale": "th",
+    "choice": "โหมดสีน้ำเงินเข้ม",
+    "height": 844,
+    "overflow": false,
+    "text": "送達未知時保留這句，不自動重送",
+    "theme": "navy",
+    "width": 390
+  },
+  {
+    "locale": "th",
+    "choice": "สีน้ำเงิน MES",
+    "height": 844,
+    "overflow": false,
+    "text": "送達未知時保留這句，不自動重送",
+    "theme": "mes",
+    "width": 390
+  },
+  {
+    "locale": "th",
+    "choice": "ตามระบบ",
+    "height": 844,
+    "overflow": false,
+    "text": "送達未知時保留這句，不自動重送",
+    "theme": "light",
+    "width": 390
+  },
+  {
+    "locale": "zh-TW",
+    "choice": "明亮模式",
+    "height": 844,
+    "overflow": false,
+    "text": "送達未知時保留這句，不自動重送",
+    "theme": "light",
+    "width": 390
+  },
+  {
+    "locale": "zh-TW",
+    "choice": "黑暗模式",
+    "height": 844,
+    "overflow": false,
+    "text": "送達未知時保留這句，不自動重送",
+    "theme": "dark",
+    "width": 390
+  },
+  {
+    "locale": "zh-TW",
+    "choice": "深藍模式",
+    "height": 844,
+    "overflow": false,
+    "text": "送達未知時保留這句，不自動重送",
+    "theme": "navy",
+    "width": 390
+  },
+  {
+    "locale": "zh-TW",
+    "choice": "MES 藍色",
+    "height": 844,
+    "overflow": false,
+    "text": "送達未知時保留這句，不自動重送",
+    "theme": "mes",
+    "width": 390
+  },
+  {
+    "locale": "zh-TW",
+    "choice": "跟隨系統",
+    "height": 844,
+    "overflow": false,
+    "text": "送達未知時保留這句，不自動重送",
+    "theme": "light",
+    "width": 390
+  }
+]

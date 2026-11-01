@@ -1,3 +1,4 @@
+@layer components {
 .assistant-body { position:relative; }
 #mes-ai-chat-root .assistant-copyright { flex-shrink:0; margin:0; padding:9px 13.5px calc(8px + env(safe-area-inset-bottom,0px)); text-align:center; font-size:13px; line-height:19.5px; color:var(--muted-foreground); background:var(--background); }
 .conversation-history { display:none; flex:0 0 18rem; width:18rem; min-height:0; flex-direction:column; border-right:1px solid var(--border); background:color-mix(in srgb,var(--muted) 30%,var(--background)); }
@@ -5,29 +6,20 @@
 .history-top { padding:13.5px 13.5px 2.25px; justify-content:space-between; }
 .history-top>.text-button { display:flex; align-items:center; gap:10px; flex:1; text-align:left; }
 .history-top>.text-button,.history-navigation .text-button { justify-content:flex-start; }
-#mes-ai-chat-root .history-search input { border:0; box-shadow:none; border-radius:0; }
 .assistant-header h2:focus { outline:none; }
-.history-search { display:flex; align-items:center; gap:8px; margin:0 12px 8px; padding:0 10px; border:1px solid var(--border); border-radius:8px; }
-.history-search input { width:100%; min-width:0; border:0; background:transparent; padding:10px 0; }
 .history-navigation { padding:0 13.5px 2.25px; }
 .history-navigation button { display:flex; align-items:center; gap:8px; width:100%; text-align:left; }
 .history-list { flex:1; min-height:0; overflow:auto; padding:0 13.5px 13.5px; }
+.history-search-slot {padding:0 13.5px 2.25px;}
 .history-list>p { font-size:var(--mes-text-sm); padding:8px; }
 .history-row { display:flex; position:relative; align-items:center; border-radius:8px; }
 .history-row:hover,.history-row.selected { background:var(--muted); }
-.history-select { min-width:0; flex:1; display:flex; align-items:center; gap:8px; border:0; background:transparent; color:inherit; padding:10px 8px; text-align:left; }
+.history-select { min-width:0; flex:1; display:flex; align-items:center; gap:8px; border:0; background:transparent; color:inherit; padding:4.5px 11.25px; height:36px; text-align:left; }
 .history-select>span { min-width:0; }
 .history-select strong { display:block; font-weight:400; white-space:nowrap; text-overflow:ellipsis; overflow:hidden; }
-.history-select small { display:block; color:var(--muted-foreground); font-size:var(--mes-text-xs); }
 .history-select svg { flex-shrink:0; }
-.history-actions { position:static; }
-.history-actions>summary { padding:8px; display:grid; place-items:center; border:0; }
-.history-menu { position:absolute; top:100%; right:0; width:160px; z-index:35; background:var(--popover); border:1px solid var(--border); box-shadow:var(--panel-shadow); padding:5px; border-radius:8px; }
-.history-menu button { display:block; width:100%; text-align:left; padding:10px; border:0; border-radius:6px; background:transparent; color:inherit; }
-.history-menu button:hover { background:var(--muted); }
 .history-footer { padding:9px 13.5px; border-top:1px solid var(--border); font-size:13px; }
 .history-pagination { margin-top:16px; font-size:var(--mes-text-xs); }
-.history-dialog-backdrop { position:absolute; inset:0; z-index:70; background:rgb(0 0 0 / .35); display:grid; place-items:center; padding:16px; }
 .history-dialog { width:min(420px,100%); max-height:100%; overflow:auto; padding:24px; background:var(--background); border:1px solid var(--border); border-radius:12px; }
 .history-dialog label { display:grid; gap:8px; }
 .history-dialog input { min-width:0; width:100%; }
@@ -37,7 +29,6 @@
 .history-overlay .history-close { display:block; }
 .floating-resize { position:absolute; left:0; top:0; width:24px; height:24px; min-height:24px; padding:0; border:0; border-top:2px solid transparent; border-left:2px solid transparent; border-top-left-radius:12px; background:transparent; color:var(--muted-foreground); cursor:nwse-resize; touch-action:none; z-index:60; font-size:12px; }
 
-.history-dialog-backdrop~* { pointer-events:none; }
 .usage-panel { inset:50% auto auto 50%; transform:translate(-50%,-50%); width:min(640px,calc(100% - 32px)); max-height:calc(100% - 32px); border:1px solid var(--border); border-radius:12px; box-shadow:0 0 0 100vmax rgb(0 0 0 / .35); z-index:80; }
 @container mes-chat-shell (min-width:900px) {
   .expanded .header-history,.expanded .header-new-chat { display:none; }
@@ -45,7 +36,6 @@
   .expanded .history-overlay { position:static; width:18rem; border-right:1px solid var(--border); }
   .expanded .history-close { display:none; }
 }
-.management-backdrop { position:absolute; inset:0; z-index:100; background:rgb(0 0 0 / .35); display:grid; place-items:center; padding:16px; }
 .management-panel { background:var(--background); color:var(--foreground); border:1px solid var(--border); border-radius:12px; padding:20px; width:min(680px,100%); max-height:100%; overflow:auto; min-width:0; }
 .management-panel header,.management-panel h2,.management-panel h3,.management-actions { display:flex; align-items:center; gap:10px; }
 .management-panel header { justify-content:space-between; }
@@ -59,7 +49,7 @@
 .management-job { padding:16px 0; border-bottom:1px solid var(--border); }
 .management-run { display:block; width:100%; margin:10px 0; text-align:left; }
 .management-confirm { padding:12px; border:1px solid var(--border); border-radius:8px; margin-top:16px; }
-@container mes-chat-shell (max-width:560px) { .management-backdrop { padding:8px; } .management-panel { padding:16px; } .management-grid { grid-template-columns:1fr; gap:0; } }
+@container mes-chat-shell (max-width:560px) { .management-panel { padding:16px; } .management-grid { grid-template-columns:1fr; gap:0; } }
 
 .management-summary>div { display:grid; grid-template-columns:minmax(100px,1fr) 2fr; padding:12px 0; gap:12px; border-bottom:1px solid var(--border); }
 .management-summary dd { margin:0; overflow-wrap:anywhere; }
@@ -77,3 +67,9 @@
 
 #mes-ai-chat-root .sidebar-budget:disabled { opacity:1; }
 .sidebar-budget:disabled>span:first-child>span { color:var(--destructive); }
+
+}
+
+#mes-ai-chat-root .mes-operation-dialog {max-height:calc(100dvh - 2rem);overflow:auto;}
+#mes-ai-chat-root .management-dialog {width:min(48rem,calc(100vw - 2rem));max-width:48rem;padding:0;}
+#mes-ai-chat-root .management-dialog .management-panel {position:static;inset:auto;transform:none;width:100%;max-height:none;max-width:none;border:0;box-shadow:none;}

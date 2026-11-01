@@ -1,0 +1,28 @@
+
+> kaosu-operation-assistant@0.1.0 build
+> npm run typecheck && vite build
+
+
+> kaosu-operation-assistant@0.1.0 typecheck
+> tsc --noEmit
+
+vite v8.3.3 building client environment for production...
+transforming...
+✓ 2977 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/index.html                                                0.45 kB │ gzip:   0.34 kB
+dist/assets/ibm-plex-mono-latin-400-normal-DMJ8VG8y.woff2     14.70 kB
+dist/assets/ibm-plex-mono-latin-500-normal-DSY6xOcd.woff2     14.88 kB
+dist/assets/ibm-plex-mono-latin-600-normal-BgSNZQsw.woff2     15.62 kB
+dist/assets/inter-latin-wght-normal-Dx4kXJAl.woff2            48.25 kB
+dist/assets/index-Cc9eStCi.css                               124.84 kB │ gzip:  17.77 kB
+dist/assets/ManagementPanel-Q674jNAQ.js                       34.09 kB │ gzip:  11.74 kB
+dist/assets/index-Cid9Vji9.js                              1,131.40 kB │ gzip: 348.16 kB
+
+[plugin builtin:vite-reporter]
+(!) Some chunks are larger than 500 kB after minification. Consider:
+- Using dynamic import() to code-split the application
+- Use build.rolldownOptions.output.codeSplitting to improve chunking: https://rolldown.rs/reference/OutputOptions.codeSplitting
+- Adjust chunk size limit for this warning via build.chunkSizeWarningLimit.
+✓ built in 652ms

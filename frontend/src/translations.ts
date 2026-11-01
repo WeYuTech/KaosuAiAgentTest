@@ -1,5 +1,17 @@
 /* 固定介面詞彙：中文原文為鍵，不翻譯 MES 主檔名稱或歷史訊息。 */
 export const translations: Record<string, [string, string]> = Object.fromEntries(`
+管理介面載入失敗|Management panel failed to load|โหลดหน้าจอจัดการไม่สำเร็จ
+管理介面載入失敗。原作業已保留，請關閉此視窗；完成或取消目前作業後，再重新整理頁面。|The management panel failed to load. Your work is preserved. Close this window, then finish or cancel the current operation before refreshing the page.|โหลดหน้าจอจัดการไม่สำเร็จ งานเดิมยังอยู่ กรุณาปิดหน้าต่างนี้ แล้วทำงานให้เสร็จหรือยกเลิกก่อนรีเฟรชหน้า
+複製訊息|Copy message|คัดลอกข้อความ
+複製未完成，請選取文字後手動複製。|Copy failed. Select the text and copy it manually.|คัดลอกไม่สำเร็จ กรุณาเลือกข้อความแล้วคัดลอกด้วยตนเอง
+複製回答|Copy answer|คัดลอกคำตอบ
+今天|Today|วันนี้
+昨天|Yesterday|เมื่อวาน
+更早|Earlier|ก่อนหน้านี้
+已釘選|Pinned|ปักหมุดแล้ว
+複製程式碼|Copy code|คัดลอกโค้ด
+原句已恢復，先前送達結果未知；系統不會自動重送。|Your text was restored. The earlier delivery is unknown; it will not be sent again automatically.|กู้คืนข้อความแล้ว ยังไม่ทราบผลการส่งครั้งก่อน ระบบจะไม่ส่งซ้ำอัตโนมัติ
+原句已恢復，先前請求已拒絕；尚未再次送出。|Your text was restored. The earlier request was rejected; it has not been sent again.|กู้คืนข้อความแล้ว คำขอก่อนหน้าถูกปฏิเสธ ยังไม่ได้ส่งซ้ำ
 聊天紀錄|Chat history|ประวัติแชต
 新聊天|New chat|แชตใหม่
 搜尋聊天|Search chats|ค้นหาแชต

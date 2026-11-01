@@ -1,0 +1,1239 @@
+{
+  "direct": [
+    {
+      "name": "@assistant-ui/react",
+      "before": null,
+      "source": "0.15.25",
+      "adopted": "0.15.25",
+      "license": "MIT"
+    },
+    {
+      "name": "@assistant-ui/react-markdown",
+      "before": null,
+      "source": "0.14.19",
+      "adopted": "0.14.19",
+      "license": "MIT"
+    },
+    {
+      "name": "@fontsource-variable/inter",
+      "before": null,
+      "source": "5.3.0",
+      "adopted": "5.3.0",
+      "license": "OFL-1.1"
+    },
+    {
+      "name": "@fontsource/ibm-plex-mono",
+      "before": null,
+      "source": "5.3.0",
+      "adopted": "5.3.0",
+      "license": "OFL-1.1"
+    },
+    {
+      "name": "@fontsource/noto-sans-thai",
+      "before": "5.3.0",
+      "source": null,
+      "adopted": "5.3.0",
+      "license": "OFL-1.1"
+    },
+    {
+      "name": "@tailwindcss/postcss",
+      "before": null,
+      "source": "4.3.3",
+      "adopted": "4.3.3",
+      "license": "MIT"
+    },
+    {
+      "name": "@types/node",
+      "before": null,
+      "source": "24.19.1",
+      "adopted": "24.19.1",
+      "license": "MIT"
+    },
+    {
+      "name": "@types/react",
+      "before": "19.3.0",
+      "source": "19.3.0",
+      "adopted": "19.3.0",
+      "license": "MIT"
+    },
+    {
+      "name": "@types/react-dom",
+      "before": "19.3.0",
+      "source": "19.3.0",
+      "adopted": "19.3.0",
+      "license": "MIT"
+    },
+    {
+      "name": "@vitejs/plugin-react",
+      "before": null,
+      "source": "6.1.2",
+      "adopted": "6.1.2",
+      "license": "MIT"
+    },
+    {
+      "name": "class-variance-authority",
+      "before": null,
+      "source": "0.7.1",
+      "adopted": "0.7.1",
+      "license": "Apache-2.0"
+    },
+    {
+      "name": "clsx",
+      "before": null,
+      "source": "2.1.1",
+      "adopted": "2.1.1",
+      "license": "MIT"
+    },
+    {
+      "name": "cn",
+      "before": null,
+      "source": "0.4.0",
+      "adopted": "0.4.0",
+      "license": "MIT"
+    },
+    {
+      "name": "happy-dom",
+      "before": null,
+      "source": null,
+      "adopted": "21.0.4",
+      "license": "MIT"
+    },
+    {
+      "name": "lucide-react",
+      "before": "1.52.0",
+      "source": "1.52.0",
+      "adopted": "1.52.0",
+      "license": "ISC"
+    },
+    {
+      "name": "postcss",
+      "before": null,
+      "source": "8.5.29",
+      "adopted": "8.5.29",
+      "license": "MIT"
+    },
+    {
+      "name": "postcss-prefix-selector",
+      "before": null,
+      "source": "2.2.1",
+      "adopted": "2.2.1",
+      "license": "MIT"
+    },
+    {
+      "name": "postcss-value-parser",
+      "before": null,
+      "source": "4.2.0",
+      "adopted": null,
+      "license": null
+    },
+    {
+      "name": "radix-ui",
+      "before": null,
+      "source": "1.7.0",
+      "adopted": "1.7.0",
+      "license": "MIT"
+    },
+    {
+      "name": "react",
+      "before": "19.3.0",
+      "source": "19.3.0",
+      "adopted": "19.3.0",
+      "license": "MIT"
+    },
+    {
+      "name": "react-dom",
+      "before": "19.3.0",
+      "source": "19.3.0",
+      "adopted": "19.3.0",
+      "license": "MIT"
+    },
+    {
+      "name": "react-markdown",
+      "before": "10.1.0",
+      "source": "10.1.0",
+      "adopted": "10.1.0",
+      "license": "MIT"
+    },
+    {
+      "name": "recharts",
+      "before": null,
+      "source": "3.8.0",
+      "adopted": null,
+      "license": null
+    },
+    {
+      "name": "remark-breaks",
+      "before": "4.0.0",
+      "source": null,
+      "adopted": "4.0.0",
+      "license": "MIT"
+    },
+    {
+      "name": "remark-gfm",
+      "before": "4.0.1",
+      "source": "4.0.1",
+      "adopted": "4.0.1",
+      "license": "MIT"
+    },
+    {
+      "name": "tailwind-merge",
+      "before": null,
+      "source": "3.7.0",
+      "adopted": "3.7.0",
+      "license": "MIT"
+    },
+    {
+      "name": "tailwindcss",
+      "before": null,
+      "source": "4.3.3",
+      "adopted": "4.3.3",
+      "license": "MIT"
+    },
+    {
+      "name": "tsx",
+      "before": null,
+      "source": "4.23.15",
+      "adopted": null,
+      "license": null
+    },
+    {
+      "name": "tw-animate-css",
+      "before": null,
+      "source": "1.4.0",
+      "adopted": "1.4.0",
+      "license": "MIT"
+    },
+    {
+      "name": "tw-shimmer",
+      "before": null,
+      "source": "0.4.13",
+      "adopted": null,
+      "license": null
+    },
+    {
+      "name": "typescript",
+      "before": "7.0.2",
+      "source": "7.0.2",
+      "adopted": "7.0.2",
+      "license": "Apache-2.0"
+    },
+    {
+      "name": "vite",
+      "before": "8.3.3",
+      "source": "8.3.3",
+      "adopted": "8.3.3",
+      "license": "MIT"
+    },
+    {
+      "name": "zustand",
+      "before": null,
+      "source": "5.0.15",
+      "adopted": null,
+      "license": "MIT"
+    }
+  ],
+  "transitive": [
+    {
+      "path": "node_modules/@alloc/quick-lru",
+      "before": null,
+      "adopted": "5.3.0",
+      "license": "MIT"
+    },
+    {
+      "path": "node_modules/@assistant-ui/core",
+      "before": null,
+      "adopted": "0.3.32",
+      "license": "MIT"
+    },
+    {
+      "path": "node_modules/@assistant-ui/core/node_modules/nanoid",
+      "before": null,
+      "adopted": "6.0.2",
+      "license": "MIT"
+    },
+    {
+      "path": "node_modules/@assistant-ui/react",
+      "before": null,
+      "adopted": "0.15.25",
+      "license": "MIT"
+    },
+    {
+      "path": "node_modules/@assistant-ui/react-markdown",
+      "before": null,
+      "adopted": "0.14.19",
+      "license": "MIT"
+    },
+    {
+      "path": "node_modules/@assistant-ui/react-markdown/node_modules/@radix-ui/react-primitive",
+      "before": null,
+      "adopted": "2.2.0",
+      "license": "MIT"
+    },
+    {
+      "path": "node_modules/@assistant-ui/react-markdown/node_modules/@radix-ui/react-slot",
+      "before": null,
+      "adopted": "1.5.0",
+      "license": "MIT"
+    },
+    {
+      "path": "node_modules/@assistant-ui/store",
+      "before": null,
+      "adopted": "0.3.22",
+      "license": "MIT"
+    },
+    {
+      "path": "node_modules/@assistant-ui/tap",
+      "before": null,
+      "adopted": "0.9.24",
+      "license": "MIT"
+    },
+    {
+      "path": "node_modules/@babel/runtime",
+      "before": null,
+      "adopted": "7.29.10",
+      "license": "MIT"
+    },
+    {
+      "path": "node_modules/@floating-ui/core",
+      "before": null,
+      "adopted": "1.8.0",
+      "license": "MIT"
+    },
+    {
+      "path": "node_modules/@floating-ui/dom",
+      "before": null,
+      "adopted": "1.8.0",
+      "license": "MIT"
+    },
+    {
+      "path": "node_modules/@floating-ui/react-dom",
+      "before": null,
+      "adopted": "2.1.9",
+      "license": "MIT"
+    },
+    {
+      "path": "node_modules/@floating-ui/utils",
+      "before": null,
+      "adopted": "0.2.12",
+      "license": "MIT"
+    },
+    {
+      "path": "node_modules/@fontsource-variable/inter",
+      "before": null,
+      "adopted": "5.3.0",
+      "license": "OFL-1.1"
+    },
+    {
+      "path": "node_modules/@fontsource/ibm-plex-mono",
+      "before": null,
+      "adopted": "5.3.0",
+      "license": "OFL-1.1"
+    },
+    {
+      "path": "node_modules/@jridgewell/gen-mapping",
+      "before": null,
+      "adopted": "0.3.13",
+      "license": "MIT"
+    },
+    {
+      "path": "node_modules/@jridgewell/remapping",
+      "before": null,
+      "adopted": "2.3.5",
+      "license": "MIT"
+    },
+    {
+      "path": "node_modules/@jridgewell/resolve-uri",
+      "before": null,
+      "adopted": "3.1.2",
+      "license": "MIT"
+    },
+    {
+      "path": "node_modules/@jridgewell/sourcemap-codec",
+      "before": null,
+      "adopted": "1.6.0",
+      "license": "MIT"
+    },
+    {
+      "path": "node_modules/@jridgewell/trace-mapping",
+      "before": null,
+      "adopted": "0.3.31",
+      "license": "MIT"
+    },
+    {
+      "path": "node_modules/@radix-ui/number",
+      "before": null,
+      "adopted": "1.1.3",
+      "license": "MIT"
+    },
+    {
+      "path": "node_modules/@radix-ui/primitive",
+      "before": null,
+      "adopted": "1.1.7",
+      "license": "MIT"
+    },
+    {
+      "path": "node_modules/@radix-ui/react-accessible-icon",
+      "before": null,
+      "adopted": "1.1.16",
+      "license": "MIT"
+    },
+    {
+      "path": "node_modules/@radix-ui/react-accordion",
+      "before": null,
+      "adopted": "1.2.21",
+      "license": "MIT"
+    },
+    {
+      "path": "node_modules/@radix-ui/react-alert-dialog",
+      "before": null,
+      "adopted": "1.1.24",
+      "license": "MIT"
+    },
+    {
+      "path": "node_modules/@radix-ui/react-arrow",
+      "before": null,
+      "adopted": "1.1.16",
+      "license": "MIT"
+    },
+    {
+      "path": "node_modules/@radix-ui/react-aspect-ratio",
+      "before": null,
+      "adopted": "1.1.16",
+      "license": "MIT"
+    },
+    {
+      "path": "node_modules/@radix-ui/react-avatar",
+      "before": null,
+      "adopted": "1.2.7",
+      "license": "MIT"
+    },
+    {
+      "path": "node_modules/@radix-ui/react-avatar/node_modules/@radix-ui/react-use-callback-ref",
+      "before": null,
+      "adopted": "1.1.4",
+      "license": "MIT"
+    },
+    {
+      "path": "node_modules/@radix-ui/react-checkbox",
+      "before": null,
+      "adopted": "1.3.12",
+      "license": "MIT"
+    },
+    {
+      "path": "node_modules/@radix-ui/react-collapsible",
+      "before": null,
+      "adopted": "1.1.21",
+      "license": "MIT"
+    },
+    {
+      "path": "node_modules/@radix-ui/react-collection",
+      "before": null,
+      "adopted": "1.1.16",
+      "license": "MIT"
+    },
+    {
+      "path": "node_modules/@radix-ui/react-compose-refs",
+      "before": null,
+      "adopted": "1.1.5",
+      "license": "MIT"
+    },
+    {
+      "path": "node_modules/@radix-ui/react-context",
+      "before": null,
+      "adopted": "1.2.2",
+      "license": "MIT"
+    },
+    {
+      "path": "node_modules/@radix-ui/react-context-menu",
+      "before": null,
+      "adopted": "2.3.8",
+      "license": "MIT"
+    },
+    {
+      "path": "node_modules/@radix-ui/react-dialog",
+      "before": null,
+      "adopted": "1.2.0",
+      "license": "MIT"
+    },
+    {
+      "path": "node_modules/@radix-ui/react-direction",
+      "before": null,
+      "adopted": "1.1.5",
+      "license": "MIT"
+    },
+    {
+      "path": "node_modules/@radix-ui/react-dismissable-layer",
+      "before": null,
+      "adopted": "1.1.20",
+      "license": "MIT"
+    },
+    {
+      "path": "node_modules/@radix-ui/react-dismissable-layer/node_modules/@radix-ui/react-use-callback-ref",
+      "before": null,
+      "adopted": "1.1.4",
+      "license": "MIT"
+    },
+    {
+      "path": "node_modules/@radix-ui/react-dropdown-menu",
+      "before": null,
+      "adopted": "2.1.25",
+      "license": "MIT"
+    },
+    {
+      "path": "node_modules/@radix-ui/react-focus-guards",
+      "before": null,
+      "adopted": "1.1.6",
+      "license": "MIT"
+    },
+    {
+      "path": "node_modules/@radix-ui/react-focus-scope",
+      "before": null,
+      "adopted": "1.2.0",
+      "license": "MIT"
+    },
+    {
+      "path": "node_modules/@radix-ui/react-focus-scope/node_modules/@radix-ui/react-use-callback-ref",
+      "before": null,
+      "adopted": "1.1.4",
+      "license": "MIT"
+    },
+    {
+      "path": "node_modules/@radix-ui/react-form",
+      "before": null,
+      "adopted": "0.2.0",
+      "license": "MIT"
+    },
+    {
+      "path": "node_modules/@radix-ui/react-hover-card",
+      "before": null,
+      "adopted": "1.1.24",
+      "license": "MIT"
+    },
+    {
+      "path": "node_modules/@radix-ui/react-id",
+      "before": null,
+      "adopted": "1.1.4",
+      "license": "MIT"
+    },
+    {
+      "path": "node_modules/@radix-ui/react-label",
+      "before": null,
+      "adopted": "2.1.16",
+      "license": "MIT"
+    },
+    {
+      "path": "node_modules/@radix-ui/react-menu",
+      "before": null,
+      "adopted": "2.1.25",
+      "license": "MIT"
+    },
+    {
+      "path": "node_modules/@radix-ui/react-menu/node_modules/@radix-ui/react-use-callback-ref",
+      "before": null,
+      "adopted": "1.1.4",
+      "license": "MIT"
+    },
+    {
+      "path": "node_modules/@radix-ui/react-menubar",
+      "before": null,
+      "adopted": "1.1.25",
+      "license": "MIT"
+    },
+    {
+      "path": "node_modules/@radix-ui/react-navigation-menu",
+      "before": null,
+      "adopted": "1.3.0",
+      "license": "MIT"
+    },
+    {
+      "path": "node_modules/@radix-ui/react-navigation-menu/node_modules/@radix-ui/react-use-callback-ref",
+      "before": null,
+      "adopted": "1.1.4",
+      "license": "MIT"
+    },
+    {
+      "path": "node_modules/@radix-ui/react-one-time-password-field",
+      "before": null,
+      "adopted": "0.1.17",
+      "license": "MIT"
+    },
+    {
+      "path": "node_modules/@radix-ui/react-password-toggle-field",
+      "before": null,
+      "adopted": "0.1.12",
+      "license": "MIT"
+    },
+    {
+      "path": "node_modules/@radix-ui/react-popover",
+      "before": null,
+      "adopted": "1.2.0",
+      "license": "MIT"
+    },
+    {
+      "path": "node_modules/@radix-ui/react-popper",
+      "before": null,
+      "adopted": "1.3.8",
+      "license": "MIT"
+    },
+    {
+      "path": "node_modules/@radix-ui/react-popper/node_modules/@radix-ui/react-use-callback-ref",
+      "before": null,
+      "adopted": "1.1.4",
+      "license": "MIT"
+    },
+    {
+      "path": "node_modules/@radix-ui/react-portal",
+      "before": null,
+      "adopted": "1.1.18",
+      "license": "MIT"
+    },
+    {
+      "path": "node_modules/@radix-ui/react-presence",
+      "before": null,
+      "adopted": "1.1.11",
+      "license": "MIT"
+    },
+    {
+      "path": "node_modules/@radix-ui/react-primitive",
+      "before": null,
+      "adopted": "2.1.11",
+      "license": "MIT"
+    },
+    {
+      "path": "node_modules/@radix-ui/react-progress",
+      "before": null,
+      "adopted": "1.1.17",
+      "license": "MIT"
+    },
+    {
+      "path": "node_modules/@radix-ui/react-radio-group",
+      "before": null,
+      "adopted": "1.4.8",
+      "license": "MIT"
+    },
+    {
+      "path": "node_modules/@radix-ui/react-roving-focus",
+      "before": null,
+      "adopted": "1.1.20",
+      "license": "MIT"
+    },
+    {
+      "path": "node_modules/@radix-ui/react-roving-focus/node_modules/@radix-ui/react-use-callback-ref",
+      "before": null,
+      "adopted": "1.1.4",
+      "license": "MIT"
+    },
+    {
+      "path": "node_modules/@radix-ui/react-scroll-area",
+      "before": null,
+      "adopted": "1.3.0",
+      "license": "MIT"
+    },
+    {
+      "path": "node_modules/@radix-ui/react-scroll-area/node_modules/@radix-ui/react-use-callback-ref",
+      "before": null,
+      "adopted": "1.1.4",
+      "license": "MIT"
+    },
+    {
+      "path": "node_modules/@radix-ui/react-select",
+      "before": null,
+      "adopted": "2.3.8",
+      "license": "MIT"
+    },
+    {
+      "path": "node_modules/@radix-ui/react-select/node_modules/@radix-ui/react-use-callback-ref",
+      "before": null,
+      "adopted": "1.1.4",
+      "license": "MIT"
+    },
+    {
+      "path": "node_modules/@radix-ui/react-separator",
+      "before": null,
+      "adopted": "1.1.16",
+      "license": "MIT"
+    },
+    {
+      "path": "node_modules/@radix-ui/react-slider",
+      "before": null,
+      "adopted": "1.5.0",
+      "license": "MIT"
+    },
+    {
+      "path": "node_modules/@radix-ui/react-slot",
+      "before": null,
+      "adopted": "1.4.0",
+      "license": "MIT"
+    },
+    {
+      "path": "node_modules/@radix-ui/react-switch",
+      "before": null,
+      "adopted": "1.3.8",
+      "license": "MIT"
+    },
+    {
+      "path": "node_modules/@radix-ui/react-tabs",
+      "before": null,
+      "adopted": "1.1.22",
+      "license": "MIT"
+    },
+    {
+      "path": "node_modules/@radix-ui/react-toast",
+      "before": null,
+      "adopted": "1.2.24",
+      "license": "MIT"
+    },
+    {
+      "path": "node_modules/@radix-ui/react-toast/node_modules/@radix-ui/react-use-callback-ref",
+      "before": null,
+      "adopted": "1.1.4",
+      "license": "MIT"
+    },
+    {
+      "path": "node_modules/@radix-ui/react-toggle",
+      "before": null,
+      "adopted": "1.1.19",
+      "license": "MIT"
+    },
+    {
+      "path": "node_modules/@radix-ui/react-toggle-group",
+      "before": null,
+      "adopted": "1.1.20",
+      "license": "MIT"
+    },
+    {
+      "path": "node_modules/@radix-ui/react-toolbar",
+      "before": null,
+      "adopted": "1.1.20",
+      "license": "MIT"
+    },
+    {
+      "path": "node_modules/@radix-ui/react-tooltip",
+      "before": null,
+      "adopted": "1.3.0",
+      "license": "MIT"
+    },
+    {
+      "path": "node_modules/@radix-ui/react-use-callback-ref",
+      "before": null,
+      "adopted": "1.1.5",
+      "license": "MIT"
+    },
+    {
+      "path": "node_modules/@radix-ui/react-use-controllable-state",
+      "before": null,
+      "adopted": "1.2.6",
+      "license": "MIT"
+    },
+    {
+      "path": "node_modules/@radix-ui/react-use-effect-event",
+      "before": null,
+      "adopted": "0.0.5",
+      "license": "MIT"
+    },
+    {
+      "path": "node_modules/@radix-ui/react-use-escape-keydown",
+      "before": null,
+      "adopted": "1.1.5",
+      "license": "MIT"
+    },
+    {
+      "path": "node_modules/@radix-ui/react-use-escape-keydown/node_modules/@radix-ui/react-use-callback-ref",
+      "before": null,
+      "adopted": "1.1.4",
+      "license": "MIT"
+    },
+    {
+      "path": "node_modules/@radix-ui/react-use-is-hydrated",
+      "before": null,
+      "adopted": "0.1.3",
+      "license": "MIT"
+    },
+    {
+      "path": "node_modules/@radix-ui/react-use-layout-effect",
+      "before": null,
+      "adopted": "1.1.4",
+      "license": "MIT"
+    },
+    {
+      "path": "node_modules/@radix-ui/react-use-previous",
+      "before": null,
+      "adopted": "1.1.4",
+      "license": "MIT"
+    },
+    {
+      "path": "node_modules/@radix-ui/react-use-rect",
+      "before": null,
+      "adopted": "1.1.4",
+      "license": "MIT"
+    },
+    {
+      "path": "node_modules/@radix-ui/react-use-size",
+      "before": null,
+      "adopted": "1.1.5",
+      "license": "MIT"
+    },
+    {
+      "path": "node_modules/@radix-ui/react-visually-hidden",
+      "before": null,
+      "adopted": "1.2.12",
+      "license": "MIT"
+    },
+    {
+      "path": "node_modules/@radix-ui/rect",
+      "before": null,
+      "adopted": "1.1.3",
+      "license": "MIT"
+    },
+    {
+      "path": "node_modules/@standard-schema/spec",
+      "before": null,
+      "adopted": "1.1.0",
+      "license": "MIT"
+    },
+    {
+      "path": "node_modules/@tailwindcss/node",
+      "before": null,
+      "adopted": "4.3.3",
+      "license": "MIT"
+    },
+    {
+      "path": "node_modules/@tailwindcss/node/node_modules/lightningcss",
+      "before": null,
+      "adopted": "1.32.0",
+      "license": "MPL-2.0"
+    },
+    {
+      "path": "node_modules/@tailwindcss/node/node_modules/lightningcss-android-arm64",
+      "before": null,
+      "adopted": "1.32.0",
+      "license": "MPL-2.0"
+    },
+    {
+      "path": "node_modules/@tailwindcss/node/node_modules/lightningcss-darwin-arm64",
+      "before": null,
+      "adopted": "1.32.0",
+      "license": "MPL-2.0"
+    },
+    {
+      "path": "node_modules/@tailwindcss/node/node_modules/lightningcss-darwin-x64",
+      "before": null,
+      "adopted": "1.32.0",
+      "license": "MPL-2.0"
+    },
+    {
+      "path": "node_modules/@tailwindcss/node/node_modules/lightningcss-freebsd-x64",
+      "before": null,
+      "adopted": "1.32.0",
+      "license": "MPL-2.0"
+    },
+    {
+      "path": "node_modules/@tailwindcss/node/node_modules/lightningcss-linux-arm-gnueabihf",
+      "before": null,
+      "adopted": "1.32.0",
+      "license": "MPL-2.0"
+    },
+    {
+      "path": "node_modules/@tailwindcss/node/node_modules/lightningcss-linux-arm64-gnu",
+      "before": null,
+      "adopted": "1.32.0",
+      "license": "MPL-2.0"
+    },
+    {
+      "path": "node_modules/@tailwindcss/node/node_modules/lightningcss-linux-arm64-musl",
+      "before": null,
+      "adopted": "1.32.0",
+      "license": "MPL-2.0"
+    },
+    {
+      "path": "node_modules/@tailwindcss/node/node_modules/lightningcss-linux-x64-gnu",
+      "before": null,
+      "adopted": "1.32.0",
+      "license": "MPL-2.0"
+    },
+    {
+      "path": "node_modules/@tailwindcss/node/node_modules/lightningcss-linux-x64-musl",
+      "before": null,
+      "adopted": "1.32.0",
+      "license": "MPL-2.0"
+    },
+    {
+      "path": "node_modules/@tailwindcss/node/node_modules/lightningcss-win32-arm64-msvc",
+      "before": null,
+      "adopted": "1.32.0",
+      "license": "MPL-2.0"
+    },
+    {
+      "path": "node_modules/@tailwindcss/node/node_modules/lightningcss-win32-x64-msvc",
+      "before": null,
+      "adopted": "1.32.0",
+      "license": "MPL-2.0"
+    },
+    {
+      "path": "node_modules/@tailwindcss/oxide",
+      "before": null,
+      "adopted": "4.3.3",
+      "license": "MIT"
+    },
+    {
+      "path": "node_modules/@tailwindcss/oxide-android-arm64",
+      "before": null,
+      "adopted": "4.3.3",
+      "license": "MIT"
+    },
+    {
+      "path": "node_modules/@tailwindcss/oxide-darwin-arm64",
+      "before": null,
+      "adopted": "4.3.3",
+      "license": "MIT"
+    },
+    {
+      "path": "node_modules/@tailwindcss/oxide-darwin-x64",
+      "before": null,
+      "adopted": "4.3.3",
+      "license": "MIT"
+    },
+    {
+      "path": "node_modules/@tailwindcss/oxide-freebsd-x64",
+      "before": null,
+      "adopted": "4.3.3",
+      "license": "MIT"
+    },
+    {
+      "path": "node_modules/@tailwindcss/oxide-linux-arm-gnueabihf",
+      "before": null,
+      "adopted": "4.3.3",
+      "license": "MIT"
+    },
+    {
+      "path": "node_modules/@tailwindcss/oxide-linux-arm64-gnu",
+      "before": null,
+      "adopted": "4.3.3",
+      "license": "MIT"
+    },
+    {
+      "path": "node_modules/@tailwindcss/oxide-linux-arm64-musl",
+      "before": null,
+      "adopted": "4.3.3",
+      "license": "MIT"
+    },
+    {
+      "path": "node_modules/@tailwindcss/oxide-linux-x64-gnu",
+      "before": null,
+      "adopted": "4.3.3",
+      "license": "MIT"
+    },
+    {
+      "path": "node_modules/@tailwindcss/oxide-linux-x64-musl",
+      "before": null,
+      "adopted": "4.3.3",
+      "license": "MIT"
+    },
+    {
+      "path": "node_modules/@tailwindcss/oxide-wasm32-wasi",
+      "before": null,
+      "adopted": "4.3.3",
+      "license": "MIT"
+    },
+    {
+      "path": "node_modules/@tailwindcss/oxide-win32-arm64-msvc",
+      "before": null,
+      "adopted": "4.3.3",
+      "license": "MIT"
+    },
+    {
+      "path": "node_modules/@tailwindcss/oxide-win32-x64-msvc",
+      "before": null,
+      "adopted": "4.3.3",
+      "license": "MIT"
+    },
+    {
+      "path": "node_modules/@tailwindcss/postcss",
+      "before": null,
+      "adopted": "4.3.3",
+      "license": "MIT"
+    },
+    {
+      "path": "node_modules/@types/json-schema",
+      "before": null,
+      "adopted": "7.0.15",
+      "license": "MIT"
+    },
+    {
+      "path": "node_modules/@types/node",
+      "before": null,
+      "adopted": "24.19.1",
+      "license": "MIT"
+    },
+    {
+      "path": "node_modules/@types/whatwg-mimetype",
+      "before": null,
+      "adopted": "3.0.2",
+      "license": "MIT"
+    },
+    {
+      "path": "node_modules/@types/ws",
+      "before": null,
+      "adopted": "8.18.2",
+      "license": "MIT"
+    },
+    {
+      "path": "node_modules/@vitejs/plugin-react",
+      "before": null,
+      "adopted": "6.1.2",
+      "license": "MIT"
+    },
+    {
+      "path": "node_modules/aria-hidden",
+      "before": null,
+      "adopted": "1.2.6",
+      "license": "MIT"
+    },
+    {
+      "path": "node_modules/assistant-cloud",
+      "before": null,
+      "adopted": "0.2.9",
+      "license": "MIT"
+    },
+    {
+      "path": "node_modules/assistant-stream",
+      "before": null,
+      "adopted": "0.3.55",
+      "license": "MIT"
+    },
+    {
+      "path": "node_modules/assistant-stream/node_modules/nanoid",
+      "before": null,
+      "adopted": "6.0.2",
+      "license": "MIT"
+    },
+    {
+      "path": "node_modules/buffer-image-size",
+      "before": null,
+      "adopted": "0.6.4",
+      "license": "MIT"
+    },
+    {
+      "path": "node_modules/class-variance-authority",
+      "before": null,
+      "adopted": "0.7.1",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "node_modules/classnames",
+      "before": null,
+      "adopted": "2.5.1",
+      "license": "MIT"
+    },
+    {
+      "path": "node_modules/clsx",
+      "before": null,
+      "adopted": "2.1.1",
+      "license": "MIT"
+    },
+    {
+      "path": "node_modules/cn",
+      "before": null,
+      "adopted": "0.4.0",
+      "license": "MIT"
+    },
+    {
+      "path": "node_modules/detect-node-es",
+      "before": null,
+      "adopted": "1.1.0",
+      "license": "MIT"
+    },
+    {
+      "path": "node_modules/enhanced-resolve",
+      "before": null,
+      "adopted": "5.26.0",
+      "license": "MIT"
+    },
+    {
+      "path": "node_modules/entities",
+      "before": null,
+      "adopted": "7.0.1",
+      "license": "BSD-2-Clause"
+    },
+    {
+      "path": "node_modules/get-nonce",
+      "before": null,
+      "adopted": "1.0.1",
+      "license": "MIT"
+    },
+    {
+      "path": "node_modules/graceful-fs",
+      "before": null,
+      "adopted": "4.2.11",
+      "license": "ISC"
+    },
+    {
+      "path": "node_modules/happy-dom",
+      "before": null,
+      "adopted": "21.0.4",
+      "license": "MIT"
+    },
+    {
+      "path": "node_modules/jiti",
+      "before": null,
+      "adopted": "2.7.0",
+      "license": "MIT"
+    },
+    {
+      "path": "node_modules/magic-string",
+      "before": null,
+      "adopted": "0.30.21",
+      "license": "MIT"
+    },
+    {
+      "path": "node_modules/postcss",
+      "before": "8.5.32",
+      "adopted": "8.5.29",
+      "license": "MIT"
+    },
+    {
+      "path": "node_modules/postcss-prefix-selector",
+      "before": null,
+      "adopted": "2.2.1",
+      "license": "MIT"
+    },
+    {
+      "path": "node_modules/radix-ui",
+      "before": null,
+      "adopted": "1.7.0",
+      "license": "MIT"
+    },
+    {
+      "path": "node_modules/radix-ui/node_modules/@radix-ui/react-use-callback-ref",
+      "before": null,
+      "adopted": "1.1.4",
+      "license": "MIT"
+    },
+    {
+      "path": "node_modules/react-remove-scroll",
+      "before": null,
+      "adopted": "2.7.2",
+      "license": "MIT"
+    },
+    {
+      "path": "node_modules/react-remove-scroll-bar",
+      "before": null,
+      "adopted": "2.3.8",
+      "license": "MIT"
+    },
+    {
+      "path": "node_modules/react-style-singleton",
+      "before": null,
+      "adopted": "2.2.3",
+      "license": "MIT"
+    },
+    {
+      "path": "node_modules/react-textarea-autosize",
+      "before": null,
+      "adopted": "8.5.9",
+      "license": "MIT"
+    },
+    {
+      "path": "node_modules/safe-content-frame",
+      "before": null,
+      "adopted": "0.0.33",
+      "license": "MIT"
+    },
+    {
+      "path": "node_modules/secure-json-parse",
+      "before": null,
+      "adopted": "4.1.1",
+      "license": "BSD-3-Clause"
+    },
+    {
+      "path": "node_modules/tailwind-merge",
+      "before": null,
+      "adopted": "3.7.0",
+      "license": "MIT"
+    },
+    {
+      "path": "node_modules/tailwindcss",
+      "before": null,
+      "adopted": "4.3.3",
+      "license": "MIT"
+    },
+    {
+      "path": "node_modules/tapable",
+      "before": null,
+      "adopted": "2.3.3",
+      "license": "MIT"
+    },
+    {
+      "path": "node_modules/tslib",
+      "before": null,
+      "adopted": "2.9.1",
+      "license": "0BSD"
+    },
+    {
+      "path": "node_modules/tw-animate-css",
+      "before": null,
+      "adopted": "1.4.0",
+      "license": "MIT"
+    },
+    {
+      "path": "node_modules/undici-types",
+      "before": null,
+      "adopted": "7.24.6",
+      "license": "MIT"
+    },
+    {
+      "path": "node_modules/use-callback-ref",
+      "before": null,
+      "adopted": "1.3.3",
+      "license": "MIT"
+    },
+    {
+      "path": "node_modules/use-composed-ref",
+      "before": null,
+      "adopted": "1.4.0",
+      "license": "MIT"
+    },
+    {
+      "path": "node_modules/use-isomorphic-layout-effect",
+      "before": null,
+      "adopted": "1.2.1",
+      "license": "MIT"
+    },
+    {
+      "path": "node_modules/use-latest",
+      "before": null,
+      "adopted": "1.3.0",
+      "license": "MIT"
+    },
+    {
+      "path": "node_modules/use-sidecar",
+      "before": null,
+      "adopted": "1.1.3",
+      "license": "MIT"
+    },
+    {
+      "path": "node_modules/whatwg-mimetype",
+      "before": null,
+      "adopted": "3.0.0",
+      "license": "MIT"
+    },
+    {
+      "path": "node_modules/ws",
+      "before": null,
+      "adopted": "8.22.1",
+      "license": "MIT"
+    },
+    {
+      "path": "node_modules/zod",
+      "before": null,
+      "adopted": "4.6.7",
+      "license": "MIT"
+    },
+    {
+      "path": "node_modules/zustand",
+      "before": null,
+      "adopted": "5.0.15",
+      "license": "MIT"
+    }
+  ]
+}

@@ -1,9 +1,20 @@
+import {PanelLoadBoundary} from './PanelLoadBoundary';
+import {draftStorageKey,readTextDraft,saveTextDraft,clearTextDrafts,type DraftDelivery} from './draft-recovery';
+import { AssistantModal, AssistantModalContent, AssistantModalTrigger } from './components/assistant-ui/elements/assistant-modal.aui';
+import {TooltipIconButton} from './components/assistant-ui/elements/tooltip-icon-button';
+import { MesAssistantProvider, type HistoryProjection } from './chat/assistant-runtime';
+import { ThreadPrimitive } from '@assistant-ui/react';
+import { ThreadMessages } from './components/assistant-ui/elements/thread.aui';
+import './source-styles.css';
+import './emerald-design-tokens.css';
 import { t, useLocale, getLocale, isLocale, type Locale } from './i18n';
 import { useTheme, isTheme } from './theme';
 import {HeaderMenu} from './HeaderMenu';
 import { AssistantHeader } from './AssistantChrome';
 import { ConversationHistory, type ChatEntry } from './ConversationHistory';
-import {ManagementPanel,type ManagementSection} from './ManagementPanel';
+import type {ManagementSection} from './ManagementPanel';
+import {OperationDialog} from './OperationDialog';
+const ManagementPanel=React.lazy(()=>import('./ManagementPanel').then(module=>({default:module.ManagementPanel})));
 import { FloatingResize, useFloatingSize } from './FloatingResize';
 import { ConversationComposer } from './ConversationComposer';
 import { GuidedFlow, type GuideHandle } from './GuidedFlow';
@@ -12,7 +23,6 @@ import { createRoot } from 'react-dom/client';
 import { ArrowLeft, ArrowRight, ArrowDown, Plus, MoreHorizontal, Bot, CalendarDays, Check, CheckCheck, ChevronDown, ChevronRight, CircleHelp, ClipboardList, Clock3, Maximize2, Factory, History, LoaderCircle, MessageSquare, Minimize2, RefreshCw, ShieldCheck, Sparkles, UserRound, Wrench, X } from 'lucide-react';
 import { api, ApiError, display, label, type Conversation, type Identity, type Message, type Module, type Proposal, type Reply, type Row, type Session, type Workspace } from './api';
 import { DataView, Fields } from './DataView';
-import { MessageContent } from './MessageContent';
 import { ProposalBusinessSummary } from './ProposalBusinessSummary';
 import { confirmationView, reconcileProposal, type ConfirmationResult } from './confirmation';
 import { FeedbackReview } from './FeedbackReview';
@@ -57,10 +67,11 @@ export function App({ initialOpen = false }: { initialOpen?: boolean } = {}) {
   const [expanded, setExpanded] = useState(false);
   const [management,setManagement]=useState<ManagementSection|null>(null);
   const managementTrigger=useRef<HTMLElement|null>(null);
-  function closeManagement(){setManagement(null);requestAnimationFrame(()=>managementTrigger.current?.closest('details')?.querySelector('summary')?.focus());}
+  function closeManagement(){setManagement(null);requestAnimationFrame(()=>managementTrigger.current?.focus());}
   const [historyOpen,setHistoryOpen]=useState(false);
   const [historyBusy,setHistoryBusy]=useState(false);
   const [historyRevision,setHistoryRevision]=useState(0);
+  const [historyProjection,setHistoryProjection]=useState<HistoryProjection>();
   const forceNew=useRef(false);
   const historyTrigger=useRef<HTMLElement|null>(null);
   const [compactViewport, setCompactViewport] = useState(false);
@@ -106,6 +117,22 @@ export function App({ initialOpen = false }: { initialOpen?: boolean } = {}) {
   const [conversation, setConversation] = useState<Conversation | null>(null);
   const [messages, setMessages] = useState<Message[]>([]);
   const [draft, setDraft] = useState('');
+  const [draftDelivery,setDraftDelivery]=useState<DraftDelivery>('unsent');
+  const draftScope=useRef('');
+  const draftScopeActor=useRef('');
+  useEffect(()=>{
+    if(!session?.actor.id)return;
+    const key=draftStorageKey(session.actor.id,memoryKey(session.actor.id),conversation?.id??null);
+    if(draftScope.current!==key){
+      if(draftScopeActor.current&&draftScopeActor.current!==session.actor.id)clearTextDrafts(sessionStorage,draftScopeActor.current);
+      draftScope.current=key;draftScopeActor.current=session.actor.id;
+      const saved=readTextDraft(sessionStorage,key);
+      if(saved){setDraft(saved.text);setDraftDelivery(saved.delivery);initialIntent.current=null;return;}
+    }
+    saveTextDraft(sessionStorage,key,draft,draftDelivery);
+  },[session?.actor.id,conversation?.id,draft,draftDelivery,module]);
+  function editDraft(text:string){setDraft(text);setDraftDelivery('unsent');}
+
   const [queryBusy, setQueryBusy] = useState(false);
   const [queryError, setQueryError] = useState('');
   const queryGeneration = useRef(0);
@@ -319,6 +346,7 @@ export function App({ initialOpen = false }: { initialOpen?: boolean } = {}) {
     else if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first?.focus(); }
   }
   function clearSession() {
+    clearTextDrafts(sessionStorage);draftScope.current="";draftScopeActor.current="";setDraftDelivery("unsent");
     setManagement(null);contextEpoch.current++; queryGeneration.current++;
     working.current = false; setBusy(false); setQueryBusy(false); setGuideBusy(false); setGuideWorking(false);
     setAudit([]); setFeedback(''); setFeedbackSent(false); setBudget(null); setHelpOpen(false);setHistoryOpen(false);setUsageOpen(false);setUsageStats(null);forceNew.current=false;
@@ -349,6 +377,7 @@ export function App({ initialOpen = false }: { initialOpen?: boolean } = {}) {
   }  async function start(identity?: Identity, currentModule = module, resumeId?: string) {
     if (working.current) return;
     contextEpoch.current++;
+    const startEpoch=contextEpoch.current;
     return await guarded(async () => {
       queryGeneration.current++; setQueryBusy(false); setQueryError('');
       if (identity && !simulation) throw new Error(t("正式 MES 必須沿用目前登入身分。"));
@@ -396,19 +425,35 @@ export function App({ initialOpen = false }: { initialOpen?: boolean } = {}) {
         const result = await request<{ proposal: Proposal }>(`/api/proposals/${lastProposal.id}`);
         authoritative = restoreSubmission(memoryKey(current.actor.id, currentModule), chat.id, result.proposal);
       }
+      // 先恢復原聊天原句，再決定是否接續首次需求；恢復文字本身不授權重送。
+      const textKey=draftStorageKey(current.actor.id,memoryKey(current.actor.id,currentModule),chat.id);
+      const restoredText=readTextDraft(sessionStorage,textKey);
+      if(restoredText)initialIntent.current=null;
+      if(!conversation&&draftScope.current)saveTextDraft(sessionStorage,draftScope.current,'','unsent');
       setGuideSnapshot({...restoredGuide.args,action:restoredGuide.action});forceNew.current=false;rememberConversation(chat,current.actor.id);setHistoryRevision(v=>v+1);
       setModule(currentModule); setWorkspace(work.data); setConversation(chat); setMessages(chat.messages ?? []);
       setFilters(initialFilters); setContextFilter(initialContextFilter); setPageSize(20);
-      setSelected(null); setProposal(authoritative); setProposalStatus(authoritative?.status === 'pending' ? '' : authoritative?.status ?? ''); setIndependentApproval(false); setQueryData(null); setDraft(value => draftMemory.current.get(chat.id) ?? (conversation ? '' : value)); setTab('chat'); setStage('chat');
+      setSelected(null); setProposal(authoritative); setProposalStatus(authoritative?.status === 'pending' ? '' : authoritative?.status ?? ''); setIndependentApproval(false); setQueryData(null); setDraft(value => restoredText?.text ?? draftMemory.current.get(chat.id) ?? (conversation ? '' : value)); setDraftDelivery(restoredText?.delivery??'unsent'); setTab('chat'); setStage('chat');
       setRecoveryTarget(null); setExternalRecovery(null);
       if (initialIntent.current !== null && modelConfigured === true && !authoritative && !recovery) {
         const text=initialIntent.current; initialIntent.current=null;
         setMessages(previous=>[...previous,{role:'user',content:text}]);
+        setDraftDelivery('unknown');
+        const initialKey=draftStorageKey(current.actor.id,memoryKey(current.actor.id,currentModule),chat.id);
+        saveTextDraft(sessionStorage,initialKey,text,'unknown');
+        try {
         const reply=await request<Reply>(`/api/conversations/${chat.id}/messages`,{text});
         if(reply.messages) setMessages(reply.messages);
         if(reply.proposal) {setProposal(reply.proposal);setProposalStatus(reply.proposal.status==='pending'?'':reply.proposal.status??'');}
         if(reply.data!==undefined) setQueryData(reply.data);
         setDraft('');
+          setDraftDelivery('unsent');saveTextDraft(sessionStorage,initialKey,'','unsent');
+        }catch(error){
+          const delivery=error instanceof ApiError && error.status>=400 && error.status<500?'rejected':'unknown';
+          if(startEpoch===contextEpoch.current){setDraftDelivery(delivery);saveTextDraft(sessionStorage,initialKey,text,delivery);}
+          throw error;
+        }
+
       }
       if (work.error) setError(t("初次資料查詢未完成：{0}。你仍可在對話補充設備與日期，或到「作業資料」縮小查詢範圍。", {0: work.error}));
     });
@@ -452,15 +497,23 @@ export function App({ initialOpen = false }: { initialOpen?: boolean } = {}) {
     else if ('proposal' in reply && !unresolved) { setProposal(null); setProposalStatus(''); setIndependentApproval(false); }
     if (reply.data !== undefined) setQueryData(reply.data);
   }
-  async function send(event?: React.FormEvent) {
-    event?.preventDefault(); const text = draft.trim(); if (!text || !conversation || chatReadOnly || busy || guideWorking || unresolved || recoveryTarget || modelConfigured !== true) return;
+  async function send(textOverride?: string) {
+    const text = (textOverride ?? draft).trim(); if (!text || !conversation || chatReadOnly || busy || guideWorking || unresolved || recoveryTarget || modelConfigured !== true) return;
     await guarded(async () => {
       await guideRef.current?.flush();
       const replacing = pending;
       if (replacing) { setProposalStatus('superseded'); setIndependentApproval(false); }
-      const reply = await request<Reply>(`/api/conversations/${conversation.id}/messages`, { text });
-      receive(reply); setDraft('');
-      if (replacing) setNotice(reply.proposal ? t("已依補充需求取代前一張草稿，請核對新的確認卡。") : t("前一張草稿已停止確認。補齊資料後會建立新的確認卡。"));
+      setDraftDelivery('unknown');
+      if(session)saveTextDraft(sessionStorage,draftStorageKey(session.actor.id,memoryKey(session.actor.id),conversation.id),text,'unknown');
+      try {
+        const reply = await request<Reply>(`/api/conversations/${conversation.id}/messages`, { text });
+        receive(reply); setDraft('');setDraftDelivery('unsent');
+        if (replacing) setNotice(reply.proposal ? t("已依補充需求取代前一張草稿，請核對新的確認卡。") : t("前一張草稿已停止確認。補齊資料後會建立新的確認卡。"));
+      } catch(error) {
+        if(renderEpoch===contextEpoch.current)setDraftDelivery(error instanceof ApiError && error.status>=400 && error.status<500 ? 'rejected':'unknown');
+        throw error;
+      }
+
     });
     inputRef.current?.focus();
   }
@@ -517,30 +570,34 @@ export function App({ initialOpen = false }: { initialOpen?: boolean } = {}) {
   }  async function showHelp() { helpTrigger.current = document.activeElement as HTMLElement; setHelpOpen(v => !v); if (!budget) { try { setBudget(await request<Row>('/api/budget')); } catch { /* 用量服務失敗不影響回報問題。 */ } } }
 
 
-  return <>
+  return <MesAssistantProvider state={{history:historyProjection?.actor===session?.actor.id?historyProjection:undefined,conversationId: conversation?.id ?? null, messages, draft, busy,
+    disabled: stage === 'chat' ? chatReadOnly || busy || guideWorking || unresolved || Boolean(recoveryTarget) : busy,
+    sendDisabled: !draft.trim() || (stage === 'chat' && modelConfigured !== true),
+    onSend: text => stage === 'chat' ? send(text) : panelRef.current?.querySelector<HTMLButtonElement>('.entry-card:not(:disabled)')?.focus(),
+  }}><AssistantModal open={open} onOpenChange={value=>{if(value)setOpen(true);else minimize();}}>
     {!embedded && <main className="demo-page" aria-hidden={open && fullScreen ? true : undefined} inert={open && fullScreen ? true : undefined}>
       <header className="demo-nav"><Brand small/></header>
       <div className="demo-content"><h1>{simulation ? t("MES 作業測試") : t("MES 生產作業")}</h1><p>{t("排程、報工與模具上下模。")}</p><p className="muted">{simulation ? t("目前使用隔離模擬資料。") : mode ? t("沿用目前 MES 登入身分。") : t("正在確認作業環境。")}{t("點選右下角助理開始操作。")}</p><button className="secondary" onClick={() => { setOpen(true); }}>{t("開啟生產情報助理")}</button></div>
     </main>}
-    {!embedded && (!open || !fullScreen) && <button ref={launcherRef} className="launcher" onClick={() => { if (open) minimize(); else { setOpen(true); } }} aria-label={open ? t("收合生產情報助理") : t("開啟生產情報助理")} title={t("生產情報助理")}>{open ? <ChevronDown size={20}/> : <Bot size={20}/>}<span>{t("生產情報助理")}</span></button>}
-    {<div hidden={!open} className={`assistant-overlay ${embedded ? 'embedded' : ''}`}><section ref={panelRef} style={floating.style} role="dialog" aria-modal={fullScreen || embedded || undefined} aria-labelledby="assistant-dialog-title" className={`assistant-panel ${expanded ? 'expanded' : ''}`} onKeyDown={keyDialog}>
+    {!embedded && (!open || !fullScreen) && <AssistantModalTrigger asChild><button ref={launcherRef} className="launcher" aria-label={open ? t("收合生產情報助理") : t("開啟生產情報助理")} title={t("生產情報助理")}>{open ? <ChevronDown size={20}/> : <Bot size={20}/>}<span>{t("生產情報助理")}</span></button></AssistantModalTrigger>}
+    {<AssistantModalContent><section hidden={!open} data-embedded={embedded||undefined} ref={panelRef} style={floating.style} role="dialog" aria-modal={fullScreen || embedded || undefined} aria-labelledby="assistant-dialog-title" className={`assistant-panel ${expanded ? 'expanded' : ''}`} onKeyDown={keyDialog}>
       {!embedded&&!fullScreen&&<FloatingResize panel={panelRef} change={floating.change}/>}
       <AssistantHeader titleRef={titleRef} title={t('生產情報助理')}>
-        <button className="icon-button header-history" aria-label={t('聊天紀錄')} title={t('聊天紀錄')} aria-pressed={historyOpen} onClick={event=>{historyTrigger.current=event.currentTarget;setHistoryOpen(v=>!v);setHistoryRevision(v=>v+1);}}><History size={16}/></button><button className="icon-button header-new-chat" aria-label={t('新聊天')} title={t('新聊天')} disabled={busy||historyBusy||pending||unresolved||!!recoveryTarget} onClick={()=>void newChat()}><Plus size={16}/></button>
-        <button className="icon-button" title={expanded ? t('縮小聊天室') : t('放大聊天室')} aria-label={expanded ? t('縮小聊天室') : t('放大聊天室')} onClick={toggleExpanded}>{expanded ? <Minimize2 size={18}/> : <Maximize2 size={18}/>}</button>
+        <TooltipIconButton tooltip={t('聊天紀錄')} className="aui-modal-tool text-muted-foreground hover:text-foreground size-7 rounded-md p-0 header-history" aria-label={t('聊天紀錄')} title={t('聊天紀錄')} aria-pressed={historyOpen} onClick={event=>{historyTrigger.current=event.currentTarget;setHistoryOpen(v=>!v);setHistoryRevision(v=>v+1);}}><History size={16}/></TooltipIconButton><TooltipIconButton tooltip={t('新聊天')} className="aui-modal-tool text-muted-foreground hover:text-foreground size-7 rounded-md p-0 header-new-chat" aria-label={t('新聊天')} title={t('新聊天')} disabled={busy||historyBusy||pending||unresolved||!!recoveryTarget} onClick={()=>void newChat()}><Plus size={16}/></TooltipIconButton>
+        <TooltipIconButton tooltip={expanded ? t('縮小聊天室') : t('放大聊天室')} className="aui-modal-tool text-muted-foreground hover:text-foreground size-7 rounded-md p-0" title={expanded ? t('縮小聊天室') : t('放大聊天室')} aria-label={expanded ? t('縮小聊天室') : t('放大聊天室')} onClick={toggleExpanded}>{expanded ? <Minimize2 size={18}/> : <Maximize2 size={18}/>}</TooltipIconButton>
         <HeaderMenu signedIn={!!session} locale={locale} theme={theme} localeBusy={localeBusy||busy} onLocale={value=>void changeLanguage(value)} onTheme={setTheme} onManage={(section,trigger)=>{managementTrigger.current=trigger;setManagement(section);}} onUsage={()=>void showBudget()} onMinimize={minimize}/>
-        <button className="icon-button" aria-label={t('縮小助理')} title={t('縮小助理（Esc）')} onClick={minimize}><X size={18}/></button>
+        <TooltipIconButton tooltip={t('縮小助理')} className="aui-modal-tool text-muted-foreground hover:text-foreground size-7 rounded-md p-0" aria-label={t('縮小助理')} title={t('縮小助理（Esc）')} onClick={minimize}><X size={18}/></TooltipIconButton>
       </AssistantHeader>
       {(mode === null || simulation || !session) && <div className="assistant-session-status" role="status">{mode === null ? t('檢查連線中') : simulation ? t('隔離模擬環境，正式 MES 資料不會變更') : t('登入已逾時，請重新登入 MES 後再使用')}</div>}
       <div className="assistant-body">
-      <ConversationHistory key={session?.actor.id||'signed-out'} actor={session?.actor.id} current={conversation} overlay={historyOpen} locked={pending||unresolved||!!recoveryTarget} busy={busy||guideWorking} refresh={historyRevision+messages.length} request={scopedRequest} close={closeHistory} select={selectChat} create={newChat} beforeChange={async id=>{if(id===conversation?.id)await guideRef.current?.flush();}} changed={historyChanged} onWorkChange={setHistoryBusy} usage={()=>void showBudget()} budget={budget}/>
+      <ConversationHistory onProjection={setHistoryProjection} key={session?.actor.id||'signed-out'} actor={session?.actor.id} current={conversation} overlay={historyOpen} locked={pending||unresolved||!!recoveryTarget} busy={busy||guideWorking} refresh={historyRevision+messages.length} request={scopedRequest} close={closeHistory} select={selectChat} create={newChat} beforeChange={async id=>{if(id===conversation?.id)await guideRef.current?.flush();}} changed={historyChanged} onWorkChange={setHistoryBusy} usage={()=>void showBudget()} budget={budget}/>
       <div className="assistant-main" inert={showHistoryOverlay||usageOpen||!!management ? true : undefined}>
 
       {stage !== 'chat' ? <div className={`onboarding ${stage}`}><div className="onboarding-content">
         <div className="onboarding-top"><span className="step-label">{stage === 'modules' ? t("01 / 選擇作業") : t("02 / 確認身分")}</span>{stage === 'identity' && <button className="text-button" onClick={() => setStage('modules')} disabled={busy}><ArrowLeft size={16}/>{t("返回選擇")}</button>}</div>
         <div className="welcome-card"><h1 id="assistant-title">{stage === 'modules' ? t("今天想查什麼？") : (simulation ? t("開始{0}前，選擇你的身分", {0:t(active.short)}) : t("開始{0}前，確認登入身分", {0:t(active.short)}))}</h1><p className="welcome-description">{stage === 'modules' ? t("選擇一個入口，我會陪你確認資料，完成現場作業。") : t("身分決定可執行的功能；每次寫入都會留下操作紀錄。")}</p></div>
-        {stage === 'modules' && <div className="entry-composer"><ConversationComposer id="entry-input" value={draft} onChange={setDraft} disabled={busy} sendDisabled={!draft.trim()} placeholder={t('輸入生產問題…')} onSend={()=>panelRef.current?.querySelector<HTMLButtonElement>('.entry-card:not(:disabled)')?.focus()}/></div>}
-        {stage === 'modules' ? <div className="entry-grid">{Object.entries(modules).map(([key, item]) => <button className="entry-card" key={key} disabled={busy || mode === null || (!simulation && !session?.actor.roles.includes(key))} title={!simulation && !session?.actor.roles.includes(key) ? t("目前登入身分無此模組權限") : undefined} onClick={() => { initialIntent.current = !conversation && draft.trim() ? draft : null; if (session?.actor.roles.includes(key)) void start(undefined, key as Module); else { setModule(key as Module); setStage('identity'); setError(''); } }}><span className="entry-icon" aria-hidden="true">&gt;</span><strong>{t(item.title)}</strong><p>{t(item.description)}</p></button>)}</div> : <>
+        {stage === 'modules' && <div className="entry-composer"><ConversationComposer id="entry-input" value={draft} onChange={editDraft} disabled={busy} sendDisabled={!draft.trim()} placeholder={t('輸入生產問題…')} onSend={()=>panelRef.current?.querySelector<HTMLButtonElement>('.entry-card:not(:disabled)')?.focus()}/></div>}
+        {stage === 'modules' ? <div className="entry-grid">{Object.entries(modules).map(([key, item]) => <button className="entry-card" key={key} disabled={busy || mode === null || (!simulation && !session?.actor.roles.includes(key))} title={!simulation && !session?.actor.roles.includes(key) ? t("目前登入身分無此模組權限") : undefined} onClick={() => { initialIntent.current = !conversation && draft.trim() && draftDelivery === 'unsent' ? draft : null; if (session?.actor.roles.includes(key)) void start(undefined, key as Module); else { setModule(key as Module); setStage('identity'); setError(''); } }}><span className="entry-icon" aria-hidden="true">&gt;</span><strong>{t(item.title)}</strong><p>{t(item.description)}</p></button>)}</div> : <>
           <div className="identity-notice"><ShieldCheck size={18}/><span>{simulation ? t("目前為模擬驗證環境。此處身分切換僅供測試，正式 MES 將沿用已登入身分與伺服器權限。") : t("沿用目前 MES 已登入身分與伺服器授予的模組權限。確認身分後即可開始，不需再次輸入帳號密碼。")}</span></div>
           {session && <button className="session-button" disabled={busy || !session.actor.roles.includes(module)} onClick={() => void start()}><UserRound size={18}/><span>{t("沿用目前身分：")}{session.actor.name}{!session.actor.roles.includes(module) ? t("（此入口無權限）") : ''}</span><ArrowRight size={18}/></button>}
           {simulation && <div className="identity-grid">{identities.map(item => <button key={item.id} className="identity-card" disabled={busy || !(item.id === 'supervisor' || item.id === ({ schedule: 'planner', report: 'operator', mold: 'technician' }[module]))} onClick={() => void start(item.id)}><UserRound size={21}/><span><strong>{t(item.title)}</strong><small>{t(item.description)}</small></span><ChevronRight size={17}/></button>)}</div>}
@@ -556,12 +613,13 @@ export function App({ initialOpen = false }: { initialOpen?: boolean } = {}) {
         {externalRecovery && <details className="external-recovery"><summary>{t('原操作查核結果')}：{externalRecovery.proposal.local_rejection ? t('本次提交已拒絕，請返回修改後重新核對。') : confirmationView(externalRecovery.status).label}</summary><p>{externalRecovery.message}</p><ProposalBusinessSummary proposal={externalRecovery.proposal} workspace={workspace}/><p>{t('操作識別碼：')}<code>{externalRecovery.proposal.id}</code></p></details>}
         {returnChat && !unresolved && !pending && <button className="secondary" disabled={busy} onClick={()=>{const chat=returnChat;setReturnChat(null);void start(undefined,chat.module,chat.id);}}>{t('返回先前作業')}</button>}
         {error && <div className="error-banner" role="alert"><span>{t(error)}</span><button className="icon-button" aria-label={t("關閉錯誤訊息")} onClick={() => setError('')}><X size={17}/></button></div>}{notice && <div className="notice-banner" role="status"><Check size={17}/><span>{t(notice)}</span></div>}
-        <div className={`desktop-workbench conversation-first ${summaryOpen || tab !== 'chat' ? 'with-summary' : ''}`}><section className="chat-layout" inert={helpOpen || narrowPanel && (summaryOpen || tab!=='chat') ? true : undefined} aria-label={t("與助理對話")}><div className="pane-heading"><div className="context-tools"><button className="text-button" aria-expanded={summaryOpen} onClick={event => { panelTrigger.current = event.currentTarget; setSummaryOpen(v => !v); }}>{t("本次作業摘要")}</button><button className="text-button" onClick={event => { panelTrigger.current = event.currentTarget; setTab(tab === 'data' ? 'chat' : 'data'); }}>{t("查看資料")}</button><button className="text-button" onClick={() => void showAudit()}>{t("操作紀錄")}</button></div></div>{Boolean(guideSnapshot._started) && <div className="task-context">{sheetContext}</div>}<div className="conversation-scroll" onScroll={event=>{const view=event.currentTarget;followLatest.current=view.scrollHeight-view.scrollTop-view.clientHeight<64;setAwayFromLatest(!followLatest.current);}} role="tabpanel" aria-label={t("對話作業")}>
+        <div className={`desktop-workbench conversation-first ${summaryOpen || tab !== 'chat' ? 'with-summary' : ''}`}><ThreadPrimitive.Root className="chat-layout" inert={helpOpen || narrowPanel && (summaryOpen || tab!=='chat') ? true : undefined} aria-label={t("與助理對話")}><div className="pane-heading"><div className="context-tools"><button className="text-button" aria-expanded={summaryOpen} onClick={event => { panelTrigger.current = event.currentTarget; setSummaryOpen(v => !v); }}>{t("本次作業摘要")}</button><button className="text-button" onClick={event => { panelTrigger.current = event.currentTarget; setTab(tab === 'data' ? 'chat' : 'data'); }}>{t("查看資料")}</button><button className="text-button" onClick={() => void showAudit()}>{t("操作紀錄")}</button></div></div>{Boolean(guideSnapshot._started) && <div className="task-context">{sheetContext}</div>}<ThreadPrimitive.Viewport autoScroll={false} scrollToBottomOnRunStart={false} scrollToBottomOnInitialize={false} scrollToBottomOnThreadSwitch={false} className="conversation-scroll" onScroll={event=>{const view=event.currentTarget;followLatest.current=view.scrollHeight-view.scrollTop-view.clientHeight<64;setAwayFromLatest(!followLatest.current);}} role="tabpanel" aria-label={t("對話作業")}>
           {selected && <div className="context-card"><span><ClipboardList size={15}/>{t("目前作業資料")}</span><strong>{display(selected.WO ?? selected.WO_NO ?? selected.EQP_NO ?? selected.ZZ_KAOSU_PROD_SCHEDULE_SID)}</strong><button className="text-button" onClick={() => setTab('data')}>{t("查看")}<ChevronRight size={15}/></button></div>}
 
 
           {messages.length === 0 && !guideSnapshot._started && <div className="chat-welcome"><h2>{t("說說你想完成的作業")}</h2><p>{t("直接描述需求，或使用下方操作卡；只需補齊缺少的資料。")}</p></div>}
-          <div className="messages" aria-live="polite" aria-relevant="additions text">{messages.map((message, i) => <article key={i} className={`message ${message.role === 'user' ? 'user' : 'assistant'}`}><span className="message-avatar">{message.role === 'user' ? <UserRound size={16}/> : <Sparkles size={16}/>}</span><div><span className="message-author">{message.role === 'user' ? session?.actor.name ?? t("你") : 'WeYu AI'}</span><MessageContent role={message.role} content={message.content}/></div></article>)}</div>
+          <ThreadMessages/>
+
 
           {chatReadOnly&&<section className="guided-flow"><h2>{t("本次作業摘要")}</h2><Fields value={{...Object.fromEntries(Object.entries(guideSnapshot).filter(([key])=>!key.startsWith("_")&&key!=="draft_save_state")),action:t(actionNames[String(guideSnapshot.action)]??String(guideSnapshot.action??""))}}/></section>}{conversation && !chatReadOnly && <GuidedFlow apiRequest={scopedRequest} key={conversation.id} ref={guideRef} onBusyChange={setGuideBusy} onWorkChange={setGuideWorking} onContextChange={setSheetContext} onSnapshot={setGuideSnapshot} onAccessDenied={() => {if(renderEpoch===contextEpoch.current) clearSession();}} beforeTargetChange={() => { if (!draft.trim()) return true; setError(t('切換工單前，請先送出或清除尚未送出的文字。')); return false; }} conversation={conversation} module={module} workspace={workspace} selected={selected} signal={messages.length} proposal={proposal} status={proposalStatus} disabled={busy || unresolved || Boolean(recoveryTarget)} date={businessDate} onReply={receive} onAudit={() => void showAudit()} onHome={() => { if (!lockedTarget) setStage('modules'); }}/>}          {proposal && proposalStatus !== 'superseded' && <section className={`proposal ${independent ? 'important' : ''}`} aria-label={t("操作確認卡")}><div className="proposal-heading"><span className="proposal-icon"><ShieldCheck size={21}/></span><div><small>{proposalStatus ? t("作業處理結果") : t("待你確認 · 尚未寫入")}</small><h2>{t(actionNames[proposal.action] ?? proposal.action)}</h2></div><span className="proposal-state">{expired ? t("已過期") : proposalView.label}</span></div><p className="proposal-summary">{t(proposal.summary)}</p>
             <ProposalBusinessSummary proposal={proposal} workspace={workspace}/>
@@ -576,7 +634,7 @@ export function App({ initialOpen = false }: { initialOpen?: boolean } = {}) {
           </section>}{module === 'report' && queryData !== null && !lockedTarget && <div className="query-candidates">{((queryData as Workspace)?.records ?? []).filter(record => record.WIP_OPI_WDOEACICO_HIST_SID).map((record,i) => <button className="secondary guide-record" key={i} disabled={busy || guideWorking} onClick={() => void guideRef.current?.beginReport(record)}><strong>{[record.EQP_NO,record.WO ?? record.WO_NO,record.PART_NO].filter(Boolean).join(' · ')}</strong><span>{display(record.REAL_CHECK_IN_TIME ?? record.SHIFT_DAY)} · {t("以此工單報工")}</span></button>)}</div>}{queryData !== null && <details className="query-results"><summary>{t("查詢結果")}</summary><DataView data={queryData}/></details>}
           {busy && <div className="loading" role="status"><LoaderCircle className="spin" size={18}/>{t("正在核對資料與處理作業…")}</div>}
 <div ref={endRef}/>
-        </div>{awayFromLatest && <button className="latest-message icon-button" aria-label={t("查看最新內容")} title={t("查看最新內容")} onClick={()=>{followLatest.current=true;endRef.current?.scrollIntoView({behavior:"instant",block:"end"});setAwayFromLatest(false);}}><ArrowDown size={18}/></button>}<div className="composer-area">{modelConfigured === false && <div className="model-notice"><CircleHelp size={17}/><span>{t("AI 尚未設定，可用下方操作卡完成作業。")}</span></div>}{draft && modelConfigured === false && <button className="text-button" onClick={() => {setDraft('');initialIntent.current=null;inputRef.current?.focus();}}>{t('清除文字，繼續人工操作')}</button>}<ConversationComposer id="chat-input" inputRef={inputRef} value={draft} onChange={setDraft} onSend={()=>void send()} busy={busy} disabled={chatReadOnly || busy || guideWorking || unresolved || Boolean(recoveryTarget)} sendDisabled={!draft.trim() || modelConfigured !== true} placeholder={unresolved ? t('此操作結果待核對，請先按確認卡的「查核執行結果」') : pending ? t('可直接補充修改，例如：良品改成 25，請重新確認') : t('描述你的{0}需求，例如：{1}', {0:t(active.short),1:t(active.prompts[0])})} hint={t('確認後才會寫入')}/><div className="composer-footnote"><span><ShieldCheck size={13}/>{t("確認後才會寫入")}</span><span>{t("Enter 送出 · Shift + Enter 換行")}</span></div></div></section><aside className="operation-pane" hidden={!summaryOpen && tab === 'chat'} aria-label={t("本次作業")}><button className="text-button" onClick={() => {setSummaryOpen(false);setTab('chat');}}>{t("收起附屬面板")}</button><div className="pane-heading"><h2>{t("本次作業")}</h2><span>{t("確認後才會寫入")}</span></div>{queryBusy && <p role="status">{t("正在讀取資料…")}</p>}{queryError && <p role="alert">{queryError}</p>}{!(proposal && proposalStatus !== 'superseded') && <div className="sheet-context" aria-label={t("目前作業資料")}>{sheetContext || t("尚未選擇工單")}</div>}        <div className="tabs" role="tablist" aria-label={t("作業檢視")}><button role="tab" aria-selected={tab === 'chat'} onClick={() => setTab('chat')}><MessageSquare size={16}/>{t("作業單")}</button><button role="tab" aria-selected={tab === 'data'} onClick={() => setTab('data')}><ClipboardList size={16}/>{t("查詢資料")}<span className="count">{workspace.records.length}</span></button><button role="tab" aria-selected={tab === 'audit'} disabled={busy} onClick={() => void showAudit()}><History size={16}/>{t("操作紀錄")}</button></div><div className="operation-sheet" hidden={tab !== 'chat'}><p className="summary-stage">{t("目前階段")}：{String(guideSnapshot._stage_label ?? "")}</p><p role="status">{String(guideSnapshot.draft_save_state ?? "")}</p>{Array.isArray(guideSnapshot._missing) && guideSnapshot._missing.length>0 && <section className="summary-missing"><h3>{t("尚需補充")}</h3>{(guideSnapshot._missing as {key:string;text:string}[]).map(item=><button className="text-button" key={item.key} onClick={()=>{setSummaryOpen(false);setTab('chat');requestAnimationFrame(()=>guideRef.current?.focusField(item.key));}}>{item.text}<ArrowRight size={16}/></button>)}</section>}{proposal && proposalStatus !== 'superseded' ? <ProposalBusinessSummary proposal={proposal} workspace={workspace}/> : <Fields value={{...Object.fromEntries(Object.entries(guideSnapshot).filter(([key])=>!key.startsWith("_") && key!=="draft_save_state")), action: t(actionNames[String(guideSnapshot.action)] ?? String(guideSnapshot.action ?? ""))}}/>}
+        </ThreadPrimitive.Viewport>{awayFromLatest && <button className="latest-message icon-button" aria-label={t("查看最新內容")} title={t("查看最新內容")} onClick={()=>{followLatest.current=true;endRef.current?.scrollIntoView({behavior:"instant",block:"end"});setAwayFromLatest(false);}}><ArrowDown size={18}/></button>}<div className="composer-area">{draft && draftDelivery!=='unsent' && <p role="status">{t(draftDelivery==='unknown'?'原句已恢復，先前送達結果未知；系統不會自動重送。':'原句已恢復，先前請求已拒絕；尚未再次送出。')}</p>}{modelConfigured === false && <div className="model-notice"><CircleHelp size={17}/><span>{t("AI 尚未設定，可用下方操作卡完成作業。")}</span></div>}{draft && modelConfigured === false && <button className="text-button" onClick={() => {setDraft('');initialIntent.current=null;inputRef.current?.focus();}}>{t('清除文字，繼續人工操作')}</button>}<ConversationComposer id="chat-input" inputRef={inputRef} value={draft} onChange={editDraft} onSend={()=>void send()} busy={busy} disabled={chatReadOnly || busy || guideWorking || unresolved || Boolean(recoveryTarget)} sendDisabled={!draft.trim() || modelConfigured !== true} placeholder={unresolved ? t('此操作結果待核對，請先按確認卡的「查核執行結果」') : pending ? t('可直接補充修改，例如：良品改成 25，請重新確認') : t('描述你的{0}需求，例如：{1}', {0:t(active.short),1:t(active.prompts[0])})} hint={t('確認後才會寫入')}/><div className="composer-footnote"><span><ShieldCheck size={13}/>{t("確認後才會寫入")}</span><span>{t("Enter 送出 · Shift + Enter 換行")}</span></div></div></ThreadPrimitive.Root><aside className="operation-pane" hidden={!summaryOpen && tab === 'chat'} aria-label={t("本次作業")}><button className="text-button" onClick={() => {setSummaryOpen(false);setTab('chat');}}>{t("收起附屬面板")}</button><div className="pane-heading"><h2>{t("本次作業")}</h2><span>{t("確認後才會寫入")}</span></div>{queryBusy && <p role="status">{t("正在讀取資料…")}</p>}{queryError && <p role="alert">{queryError}</p>}{!(proposal && proposalStatus !== 'superseded') && <div className="sheet-context" aria-label={t("目前作業資料")}>{sheetContext || t("尚未選擇工單")}</div>}        <div className="tabs" role="tablist" aria-label={t("作業檢視")}><button role="tab" aria-selected={tab === 'chat'} onClick={() => setTab('chat')}><MessageSquare size={16}/>{t("作業單")}</button><button role="tab" aria-selected={tab === 'data'} onClick={() => setTab('data')}><ClipboardList size={16}/>{t("查詢資料")}<span className="count">{workspace.records.length}</span></button><button role="tab" aria-selected={tab === 'audit'} disabled={busy} onClick={() => void showAudit()}><History size={16}/>{t("操作紀錄")}</button></div><div className="operation-sheet" hidden={tab !== 'chat'}><p className="summary-stage">{t("目前階段")}：{String(guideSnapshot._stage_label ?? "")}</p><p role="status">{String(guideSnapshot.draft_save_state ?? "")}</p>{Array.isArray(guideSnapshot._missing) && guideSnapshot._missing.length>0 && <section className="summary-missing"><h3>{t("尚需補充")}</h3>{(guideSnapshot._missing as {key:string;text:string}[]).map(item=><button className="text-button" key={item.key} onClick={()=>{setSummaryOpen(false);setTab('chat');requestAnimationFrame(()=>guideRef.current?.focusField(item.key));}}>{item.text}<ArrowRight size={16}/></button>)}</section>}{proposal && proposalStatus !== 'superseded' ? <ProposalBusinessSummary proposal={proposal} workspace={workspace}/> : <Fields value={{...Object.fromEntries(Object.entries(guideSnapshot).filter(([key])=>!key.startsWith("_") && key!=="draft_save_state")), action: t(actionNames[String(guideSnapshot.action)] ?? String(guideSnapshot.action ?? ""))}}/>}
 
 </div>{tab === 'data' && queryData !== null ? <div className="workspace-scroll" role="tabpanel" aria-label={t("查詢結果")}><div className="section-heading"><div><h2>{t("查詢結果")}</h2><p>{t("查詢不會寫入；實際異動請核對作業單。")}</p></div><button className="secondary" onClick={() => setQueryData(null)}>{t("瀏覽其他工單")}</button></div><DataView data={queryData}/></div> : tab === 'data' ? <div className="workspace-scroll" role="tabpanel" aria-label={t("作業資料")}><div className="section-heading"><div><h2>{t("目前作業資料")}</h2><p>{t("選擇一筆資料，帶入新的作業對話。")}</p></div><button className="secondary" disabled={busy} onClick={() => void refreshData().catch(() => {})}><RefreshCw size={16}/>{t("重新整理")}</button></div>{module === 'report' && <p className="data-note">{t("人工報工與 IoT 推算數量各自呈現；未有 IoT 資料不代表產量為零。")}</p>}<DataFilters filters={filters} setFilters={setFilters} pageSize={pageSize} setPageSize={setPageSize} workspace={workspace} busy={busy} load={page => void refreshData(page).catch(() => {})}/><div className="record-grid">{workspace.records.map((record, i) => <article className="workspace-record" key={i}><div className="record-title"><Factory size={18}/><strong>{display(record.EQP_NO ?? record.WO ?? t("第 {0} 筆", {0: i + 1}))}</strong><span className="mode-chip">{record.COMPLETED === 'Y' ? t("已完工") : t("作業資料")}</span></div><Fields value={record}/><button className="secondary" disabled={busy || lockedTarget} onClick={() => void chooseRecord(record)}>{t("以此筆資料開始")}<ArrowRight size={16}/></button></article>)}</div>{!workspace.records.length && <div className="empty-state"><ClipboardList size={28}/><h3>{t("尚無作業資料")}</h3><p>{t("請重新整理，或從對話建立需要的作業。")}</p></div>}<details className="catalogs"><summary>{t("查看設備、工單與模具選項")}</summary><DataView data={workspace.catalogs} title={t("作業選項")}/></details></div> : tab === 'audit' ? <div className="workspace-scroll" role="tabpanel" aria-label={t("操作紀錄")}><div className="section-heading"><div><h2>{t("每次變更，都有紀錄。")}</h2><p>{t("核對操作時間、執行人員與資料前後差異。")}</p></div><button className="secondary" disabled={busy} onClick={() => void showAudit()}><RefreshCw size={16}/>{t("重新整理")}</button></div><DataView data={audit} title={t("操作紀錄")}/></div> : null}</aside></div>
       </>}
@@ -584,10 +642,10 @@ export function App({ initialOpen = false }: { initialOpen?: boolean } = {}) {
       <footer className="assistant-footer" hidden><span>WEYU AI</span><span>{t("MES 時間")}{proposalTimezone}</span>{stage === 'chat' ? <button className="footer-help" onClick={() => void showHelp()}><CircleHelp size={13}/>{t("回報問題與來源")}</button> : <span>{t("高塑 · 生產作業助理")}</span>}</footer>
       <p className="assistant-copyright">Corp. 2026 WeYu Technology Co., Ltd. All Rights Reserved.</p>
       </div></div>
-      {management&&session&&<ManagementPanel key={`${session.actor.id}:${management}`} section={management} request={scopedRequest} close={closeManagement} roles={session.actor.roles} locked={busy||pending||unresolved||!!recoveryTarget}/> }
-      {usageOpen&&<aside className="help-panel usage-panel" role="dialog" aria-modal="true" aria-label={t('用量與使用統計')}><div className="section-heading"><h2>{t('用量與使用統計')}</h2><button className="icon-button" onClick={()=>setUsageOpen(false)} aria-label={t('關閉')}><X size={18}/></button></div><p>{t('統計只包含目前登入者可存取的聊天與操作。模型費用沿用既有累計帳本。')}</p>{usageError?<p role="alert">{usageError}</p>:!usageStats?<p role="status">{t('正在讀取資料…')}</p>:<><Fields value={usageStats}/>{budget&&<Fields value={budget}/>}</>}<button className="secondary" onClick={()=>void showBudget()}>{t('重新讀取')}</button></aside>}
-    </section></div>}
-  </>;
+      {management&&session&&<PanelLoadBoundary key={`${session.actor.id}:${management}`} close={closeManagement}><React.Suspense fallback={<p role="status">{t("正在讀取資料…")}</p>}><ManagementPanel key={`${session.actor.id}:${management}`} section={management} request={scopedRequest} close={closeManagement} roles={session.actor.roles} locked={busy||pending||unresolved||!!recoveryTarget}/></React.Suspense></PanelLoadBoundary> }
+      {usageOpen&&<OperationDialog title={t('用量與使用統計')} close={()=>setUsageOpen(false)}><div className="usage-content"><div className="section-heading"><h2>{t('用量與使用統計')}</h2><button className="icon-button" onClick={()=>setUsageOpen(false)} aria-label={t('關閉')}><X size={18}/></button></div><p>{t('統計只包含目前登入者可存取的聊天與操作。模型費用沿用既有累計帳本。')}</p>{usageError?<p role="alert">{usageError}</p>:!usageStats?<p role="status">{t('正在讀取資料…')}</p>:<><Fields value={usageStats}/>{budget&&<Fields value={budget}/>}</>}<button className="secondary" onClick={()=>void showBudget()}>{t('重新讀取')}</button></div></OperationDialog>}
+    </section></AssistantModalContent>}
+  </AssistantModal></MesAssistantProvider>;
 }
 
 function DataFilters({ filters, setFilters, pageSize, setPageSize, workspace, busy, load }: {

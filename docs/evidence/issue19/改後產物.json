@@ -1,0 +1,52 @@
+{
+  "widget-loader.js": {
+    "bytes": 9539,
+    "gzip": 3542,
+    "sha256": "959dc6483c4b7bbd0d93fa37d2cddfb2eec8499172d6aabe303a0b780e39b9a3"
+  },
+  "assets/ibm-plex-mono-latin-400-normal-DMJ8VG8y.woff2": {
+    "bytes": 14708,
+    "gzip": 14731,
+    "sha256": "08949f728dc52d528e69b1667d15c89a5686a4ee9a296ff90983985f99c380f7"
+  },
+  "assets/ibm-plex-mono-latin-500-normal-DSY6xOcd.woff2": {
+    "bytes": 14888,
+    "gzip": 14911,
+    "sha256": "01d285447409c8a588692162439a038b8cbd7871309ee20267b0d2d91c6e8e22"
+  },
+  "assets/ibm-plex-mono-latin-600-normal-BgSNZQsw.woff2": {
+    "bytes": 15620,
+    "gzip": 15643,
+    "sha256": "0d1f0b8d0722224e32e9f28261bdc86c79115be73444ae5eceb73976a1bcdf83"
+  },
+  "assets/index-Cc9eStCi.css": {
+    "bytes": 124847,
+    "gzip": 17642,
+    "sha256": "5a5be9e11dca17bf8c19c497492bcced640e7c0ded9dfb89c5fdb03e04e25127"
+  },
+  "assets/index-Cid9Vji9.js": {
+    "bytes": 1131400,
+    "gzip": 342558,
+    "sha256": "42776c0b24e106a48412f3c7e472e62264caeec49e141521da05ad2e0ba815ba"
+  },
+  "assets/inter-latin-wght-normal-Dx4kXJAl.woff2": {
+    "bytes": 48256,
+    "gzip": 48249,
+    "sha256": "3100e775e8616cd2611beecfa23a4263d7037586789b43f035236a2e6fbd4c62"
+  },
+  "assets/ManagementPanel-Q674jNAQ.js": {
+    "bytes": 34091,
+    "gzip": 11623,
+    "sha256": "88388b5621ac14ef1a82633e114aa587c220bca64ff705c84936a259398033ba"
+  },
+  "fonts/noto-sans-thai-thai-400-normal.woff2": {
+    "bytes": 9112,
+    "gzip": 9135,
+    "sha256": "57776453076ebf0fa935080e63c0ae656f1f1ecd5172112d59d3b259e0dd8796"
+  },
+  "fonts/noto-sans-thai-thai-600-normal.woff2": {
+    "bytes": 9220,
+    "gzip": 9243,
+    "sha256": "8690b63cc8c7090492cce68f57a421be92fee4f682dff7ee06912132ebd2a8fc"
+  }
+}
