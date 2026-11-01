@@ -1,0 +1,144 @@
+{
+  "deployment": {
+    "release": "kaosu-exact-df16459-20261101",
+    "private_settings_and_databases_preserved": true,
+    "service_restarted": true,
+    "verified": 101,
+    "backup": "C:\\Services\\KaosuAiAgent\\backups\\code-before-kaosu-exact-df16459-20261101",
+    "health": {
+      "status": "ok",
+      "mode": "live",
+      "model_configured": true,
+      "model": "gpt-6.1-sol",
+      "business_timezone": "UTC+07:00",
+      "business_date": "2026-11-01",
+      "server_time": "2026-11-01T13:58:25.905083+07:00"
+    },
+    "listen": "127.0.0.1",
+    "commit": "df16459"
+  },
+  "public_http": {
+    "assets": {
+      "index.html": {
+        "status": 200,
+        "same": true
+      },
+      "widget-loader.js": {
+        "status": 200,
+        "same": true
+      },
+      "./assets/index-BHNISxc7.js": {
+        "status": 200,
+        "same": true
+      },
+      "./assets/index-BHUHyoW7.css": {
+        "status": 200,
+        "same": true
+      }
+    },
+    "pages": {
+      "MES-WIP/WIP-menu.html": {
+        "status": 200,
+        "loader_count": 1
+      },
+      "MES-WIP/setup/wip-query_schedule_plan_new.html": {
+        "status": 200,
+        "loader_count": 1
+      },
+      "MES-WIP/setup/wip-query_schedule_detail_new.html": {
+        "status": 200,
+        "loader_count": 1
+      },
+      "MES-WIP/OPI/schedule_report/wip-opi_schedule_uping.html": {
+        "status": 200,
+        "loader_count": 1
+      },
+      "MES-WIP/OPI/schedule_report/wip-query_schedule.html": {
+        "status": 200,
+        "loader_count": 1
+      },
+      "MES-WIP/OPI/schedule_report/wo-schedule.html": {
+        "status": 200,
+        "loader_count": 1
+      },
+      "MES-WIP/OPI/mold/wip-opi_schedule_mold_eqp.html": {
+        "status": 200,
+        "loader_count": 1
+      },
+      "MES-WIP/OPI/mold/wip-query_schedule_clear.html": {
+        "status": 200,
+        "loader_count": 1
+      },
+      "index.html": {
+        "status": 200,
+        "loader_count": 1
+      }
+    },
+    "private": {
+      ".env": 404,
+      ".local/model-budget.db": 404,
+      "app/main.py": 404,
+      "api/session": 401
+    }
+  },
+  "state_after": {
+    "operations": {
+      "CONVERSATION": {
+        "count": 14
+      },
+      "PROPOSAL": {
+        "count": 4,
+        "statuses": {
+          "cancelled": 4
+        }
+      },
+      "LOG": {
+        "count": 4
+      },
+      "BUDGET": {
+        "count": 0,
+        "statuses": {},
+        "cost_usd": 0
+      },
+      "STATE": {
+        "count": 0,
+        "report_jobs": 0
+      }
+    },
+    "model-budget": {
+      "CONVERSATION": {
+        "count": 0
+      },
+      "PROPOSAL": {
+        "count": 0,
+        "statuses": {}
+      },
+      "LOG": {
+        "count": 0
+      },
+      "BUDGET": {
+        "count": 182,
+        "statuses": {
+          "settled": 182
+        },
+        "cost_usd": 1.199426
+      },
+      "STATE": {
+        "count": 0,
+        "report_jobs": 0
+      }
+    }
+  },
+  "zip_sha256": "84aaf251a8a635a6757236133ce8efb6abdadf95a70a433461f6ae779012ab38",
+  "verification": {
+    "backend_passed": 214,
+    "backend_skipped": 10,
+    "frontend_passed": 77,
+    "build": "passed",
+    "browser_identity": "ADMINV2",
+    "browser_readonly_query_count": 4,
+    "approved_writes": 0,
+    "model_calls": 0,
+    "report_schedules_created": 0
+  }
+}
