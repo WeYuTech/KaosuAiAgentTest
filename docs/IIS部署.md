@@ -1,5 +1,19 @@
 # IIS 部署與維護
 
+## 2026-11-01：隱藏提示文字與修正開窗標題外框
+
+正式前端版本 **`9fedc92`**：隱藏登入成功列（ADMINV2 · MES 登入已驗證）、底部 MES 時間與回報問題入口，以及確認卡同一段固定 UTC+07:00 提示。保留版權、登入失效／隔離環境提示及實際作業時間；可信身分、權限與後端時區規則不變。
+
+淺藍框來自開窗時標題 `tabIndex=-1` 取得焦點，套用通用 `[tabindex]:focus-visible` 外框。僅將 `#assistant-dialog-title:focus` 的 outline 移除，保留開窗朗讀與焦點管理。實測標題 outline 為 none，Tab 移到聊天紀錄按鈕仍有約 3px 焦點框。
+
+前端77項與建置通過；正式首頁及既有報工取消紀錄實測三處文字不可見、頁尾 display:none、版權可見。沒有新確認卡、模型呼叫或正式業務寫入。後端未改，未重跑前輪214項／10跳過。
+
+發行 `kaosu-clean-chrome-final-20261101.zip`，SHA256 `a246543af2471f1826b9d8ca6aeaaa9f645a4ad32392f7d3991490c09ade5f29`。102檔與公開入口／JS／CSS／loader吻合，服務未重啟、健康 ok/live，.env與兩個SQLite更新前後雜湊相同，九頁入口 changed=0。
+
+本輪先部署 `f36bbc7`，核對報工畫面時發現確認卡也有固定時區文字，補上隱藏後更新為 `9fedc92`。兩次皆保留回復備份：`C:\Services\KaosuAiAgent\backups\code-before-kaosu-clean-chrome-20261101`（還原至 MES 藍色版本）與 `C:\Services\KaosuAiAgent\backups\code-before-kaosu-clean-chrome-final-20261101`（還原至本輪第一次修正）。依各自 deployment.json 還原程式及清單，HTML／loader最後替換，不還原或清空.env與.local。
+
+[部署核對](evidence/clean-chrome-20261101/部署核對.json) · [開窗畫面](evidence/clean-chrome-20261101/正式開窗修正.jpg) · [報工頁尾](evidence/clean-chrome-20261101/正式報工頁尾修正.jpg)
+
 ## 2026-11-01：新增 MES 藍色主題
 
 正式前端更新至 **`54d3f3e`**。「更多功能 → 介面外觀 → MES 藍色」採 MES 首頁原色，原有四個選項保留。102 個檔案校驗通過，公開 HTML／loader／JS／CSS 與本機建置相同；前端 77 項與建置通過，後端無異動。先備份、放入雜湊資產，再原子替換 HTML／loader，服務不重啟，九頁入口未重複安裝。
