@@ -25,6 +25,12 @@ test('報工快照在查詢離頁後保留時間、原量及被移除原因歸�
  for(const text of ['2026-11-02 14:00','破損','business-before">2</span>','business-after">0<small>件','business-before">125</span>'])assert.ok(html.includes(text),text);
 });
 
+test('排程修改呈現模次、模穴與取消工單的前後值',()=>{
+ const proposal={action:'schedule.save',args:{target_shots:12,cycle_seconds:60},changes:[{field:'TARGET_SHOT',before:11,after:12}],target:{schedule_details:[{wo:'',part_no:'B',cavities:0,mold_detail_no:'R',previous:{wo:'WO-B',cavities:1,target_pcs:11}}]}};
+ const html=renderToStaticMarkup(createElement(ProposalBusinessSummary,{proposal,workspace:{records:[],catalogs:{}}}));
+ for(const value of ['工單分配','未分配工單','business-before">WO-B','business-before">1</span>','business-before">11</span>'])assert.ok(html.includes(value),value);
+});
+
 test('未變動數量不畫刪除線，離頁核對仍呈現後端執行時間與品號', () => {
   const proposal={action:'report.update',args:{report_id:'3001',ok:125,defects:[]},changes:[{field:'OK_QTY',before:125,after:125}],target:{equipment:'MC37',work_order:'WO-261102-0382',part_no:'P-102',part_spec:'外殼',execution_time:'2026-11-02 08:10:00'}};
   const html=renderToStaticMarkup(createElement(ProposalBusinessSummary,{proposal,workspace:{records:[],catalogs:{}}}));

@@ -108,6 +108,7 @@ def test_排程確認卡包含後端解析明細且不依賴目前查詢頁面(t
         changed = client.post("/api/proposals", json={"module": "schedule", "action": "schedule.save", "args": args}).json()["proposal"]
         resolved = changed["target"]["schedule_details"]
         assert [(d["mold_detail_no"], d["cavities"]) for d in resolved] == [("MOLD-SPLIT-R", 4), ("MOLD-SPLIT-L", 3)]
+        assert [d['previous']['cavities'] for d in resolved] == [3, 2]
         assert digest({k: v for k, v in changed.items() if k != "digest"}) == changed["digest"]
         changed["target"]["schedule_details"][0]["mold_detail_no"] = "偽造模穴"
         assert digest({k: v for k, v in changed.items() if k != "digest"}) != changed["digest"]

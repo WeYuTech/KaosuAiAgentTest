@@ -112,6 +112,10 @@ def schedule_confirmation_target(before, after, args):
         details.append({"detail_id": row["ZZ_KAOSU_PROD_SCHEDULE_DETAIL_SID"], "mold_detail_id": row["TOL_DETALS_SID"],
                         "mold_detail_no": detail.get("TOL_DETALS_NO"), "mold_detail_name": detail.get("TOL_DETALS_NAME"),
                         "part_no": row["PART_NO"], "wo": wo, "cavities": row["SCHEDULE_CUR_CAV"]})
+        original = before["tables"][DETAIL].get(row["ZZ_KAOSU_PROD_SCHEDULE_DETAIL_SID"])
+        if original:
+            details[-1]["previous"] = {"wo": next((w["WO"] for w in before["catalogs"]["work_orders"] if w["WO_SID"] == original["WO_SID"]), ""),
+                                       "cavities": original["SCHEDULE_CUR_CAV"], "target_pcs": original.get("TARGET_PCS")}
     return {"schedule_id": sid, "equipment": tables["EQP_MASTER"][schedule["EQP_SID"]]["EQP_NO"],
             "mold_no": mold["TOL_NO"], "schedule_details": details, "affected_orders": sorted({d["wo"] for d in details if d["wo"]})}
 
