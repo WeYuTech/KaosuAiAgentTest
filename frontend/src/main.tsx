@@ -3,7 +3,7 @@ import {createPortal} from 'react-dom';
 import {RequestProgress} from './RequestProgress';
 import {ChatQueryResults} from './ChatQueryResults';
 import {restoreQueryWorkspace} from './query-context';
-import {rememberOperationFocus,operationFocusTarget,type OperationFocus} from './operation-focus';
+import {rememberOperationFocus,operationFocusTarget,ownsPanelKeyboard,type OperationFocus} from './operation-focus';
 import {WorkspaceChoices} from './WorkspaceChoices';
 import {useEntry} from './use-entry';
 import {useOperationMode} from './operation-mode';
@@ -49,6 +49,7 @@ import './history.css';
 import './management.css';
 import './operation-layout.css';
 import './dual-flow.css';
+import './environment.css';
 import { ObsoleteContext, requestInContext, resultInContext } from './context-request';
 import { restoreSubmission, submitRecoverably, hasSubmission, pendingSubmission, SubmissionBlocked, type Marker } from './submission-recovery';
 
@@ -384,6 +385,7 @@ export function App({ initialOpen = false }: { initialOpen?: boolean } = {}) {
     if (embedded) { try { parent.postMessage({ type: 'kaosu-assistant:resize', expanded: next }, new URL(document.referrer).origin); } catch { /* 無宿主時由頁面自行展開。 */ } }
   }
   function keyDialog(event: React.KeyboardEvent) {
+    if (!ownsPanelKeyboard(panelRef.current,event.target)) return;
     if (event.nativeEvent.isComposing || event.nativeEvent.keyCode===229) return;
     if (event.key === 'Escape') { event.preventDefault(); if(usageOpen){setUsageOpen(false);return;} if(showHistoryOverlay){closeHistory();return;} if(helpOpen){setHelpOpen(false);return;} if (summaryOpen || tab !== 'chat') { setSummaryOpen(false); setTab('chat'); } else minimize(); }
     if (!fullScreen && !embedded && !helpOpen && !showHistoryOverlay && !usageOpen && !(narrowPanel && (summaryOpen || tab !== 'chat'))) return;

@@ -1,0 +1,50 @@
+/* 環境驗收：讓窄版及瀏覽器放大後的內容區保有可讀空間。 */
+#mes-ai-chat-root :is(.operation-primary,.operation-dialog-body) {scroll-padding-block:24px 100px;}
+#mes-ai-chat-root :is(input,select,textarea,button):focus-visible {scroll-margin-block:24px 100px;}
+#mes-ai-chat-root .guide-navigation {box-shadow:0 24px 0 var(--background);}
+#mes-ai-chat-root :is(.settings-row,.operation-mode-option)>* {min-width:0;}
+#mes-ai-chat-root .operation-dialog-header {flex-shrink:0;}
+#mes-ai-chat-root .operation-dialog-header .icon-button {min-width:32px;min-height:32px;flex-shrink:0;}
+#mes-ai-chat-root :is(.sheet-target,.business-value,.business-target,.management-job-title) {overflow-wrap:anywhere;}
+@container field-group (max-width:400px) {
+ #mes-ai-chat-root .dual-flow .guide-defect {grid-template-columns:minmax(0,1fr) 80px;}
+ #mes-ai-chat-root .dual-flow .guide-defect>button {grid-column:2;justify-self:end;}
+ #mes-ai-chat-root .dual-flow .guide-defect .guide-field:first-child {grid-column:1 / -1;}
+ #mes-ai-chat-root .dual-flow .guide-defect .guide-field:nth-child(2) {grid-column:1;}
+}
+@media(max-width:420px),(max-height:520px) {
+ /* 長獨立確認文字留在內容捲動區，只有操作按鈕固定，不遮住核對內容。 */
+ #mes-ai-chat-root .dual-flow .proposal-confirmation {display:contents;}
+ #mes-ai-chat-root .dual-flow .proposal-actions {position:sticky;bottom:-12px;z-index:3;background:var(--background);padding:8px 0 12px;box-shadow:0 24px 0 var(--background);}
+ #mes-ai-chat-root .assistant-copyright {font-size:10px;line-height:1.4;padding-block:4px;}
+ #mes-ai-chat-root .dual-flow:not(.chat-only) .conversation-scroll {max-height:48px;}
+ #mes-ai-chat-root .dual-flow:not(.chat-only) .composer-area {padding-block:4px;}
+ #mes-ai-chat-root .dual-flow:not(.chat-only) .aui-composer-input {min-height:32px;}
+}
+@media(max-height:520px) {
+ #mes-ai-chat-root .dual-flow:not(.chat-only)>.chat-layout {max-height:68px;}
+ #mes-ai-chat-root .dual-flow:not(.chat-only) .conversation-scroll {max-height:0;}
+ #mes-ai-chat-root .assistant-header {padding-block:4px;min-height:40px;}
+ #mes-ai-chat-root .workspace-bar {padding-block:3px;}
+ #mes-ai-chat-root .operation-steps {margin-bottom:8px;}
+}
+
+#mes-ai-chat-root .header-tools button {min-width:32px;min-height:32px;}
+/* 600–760px（含 200% 縮放）也使用上下分區，避免舊 max-content 列與輸入區重疊。 */
+@container dual-workspace (max-width:760px) {
+ #mes-ai-chat-root .dual-flow:not(.chat-only) {grid-template-columns:minmax(0,1fr);grid-template-rows:minmax(0,1fr) auto;overflow:hidden;}
+ #mes-ai-chat-root .dual-flow:not(.chat-only)>.operation-primary {grid-row:1;min-height:0;overflow:auto;border-left:0;}
+ #mes-ai-chat-root .dual-flow:not(.chat-only)>.chat-layout {grid-row:2;min-height:0;max-height:130px;border-top:1px solid var(--border);}
+ #mes-ai-chat-root .dual-flow:not(.chat-only) .pane-heading {display:none;}
+ #mes-ai-chat-root .dual-flow:not(.chat-only) .composer-area {padding:6px 12px;margin:0;}
+ #mes-ai-chat-root .dual-flow:not(.chat-only) [data-slot=aui_composer-shell] {flex-direction:row;align-items:flex-end;}
+ #mes-ai-chat-root .dual-flow:not(.chat-only) .aui-composer-input {flex:1;min-width:0;min-height:32px;max-height:48px;}
+ #mes-ai-chat-root .dual-flow:not(.chat-only) .aui-composer-action-wrapper {flex:none;}
+ #mes-ai-chat-root .dual-flow:not(.chat-only) .composer-footnote {display:none;}
+}
+@media(max-height:520px) {
+ #mes-ai-chat-root .dual-flow:not(.chat-only)>.chat-layout {height:60px;max-height:60px;overflow:hidden;}
+ #mes-ai-chat-root .dual-flow:not(.chat-only) .conversation-scroll {display:none;}
+ #mes-ai-chat-root .workspace-bar .module-switcher,#mes-ai-chat-root .workspace-bar p {display:none;}
+ #mes-ai-chat-root .workspace-bar {min-height:32px;}
+}
