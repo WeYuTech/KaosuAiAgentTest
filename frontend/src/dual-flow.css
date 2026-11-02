@@ -68,11 +68,13 @@
 .operation-mode-option span {display:grid;gap:6px;}
 .operation-mode-option small {font-size:14px;color:var(--muted-foreground);}
 @container dual-workspace (max-width:760px) {
-  .dual-flow {grid-template-columns:minmax(0,1fr);grid-template-rows:auto auto;overflow:auto;}
-  .dual-flow>.chat-layout {min-height:120px;max-height:240px;}
-  .dual-flow>.operation-primary {overflow:visible;border-left:0;border-top:1px solid var(--border);padding:16px;}
-  .dual-flow.step-wizard {grid-template-rows:auto auto;}
+  .dual-flow {grid-template-columns:minmax(0,1fr);grid-template-rows:max-content max-content;overflow:auto;scroll-padding-block:16px;}
+  .dual-flow>.chat-layout {min-height:0;max-height:none;}
+  .dual-flow .conversation-scroll {max-height:160px;}
+  .dual-flow>.operation-primary {min-height:min-content;overflow:visible;border-left:0;border-top:1px solid var(--border);padding:16px;}
+  .dual-flow.step-wizard {grid-template-rows:max-content max-content;}
   .dual-flow.step-wizard>.operation-primary {padding:16px;}
+  .dual-flow .guide-navigation,.dual-flow .proposal-confirmation {position:static;}
 }
 .dual-flow #missing-fields {background:transparent;border:0;padding:0;margin:8px 0 16px;font-size:13px;color:var(--muted-foreground);}
 .dual-flow #missing-fields ul {display:flex;flex-wrap:wrap;gap:4px 12px;margin:4px 0;}
@@ -140,6 +142,6 @@
  .dual-flow.step-wizard.selection-ai-open .conversation-scroll {max-height:180px;}
  @container dual-workspace (max-width:760px){
   .dual-flow.chat-sheet.selection-ai-open:has(.guide-choosing){grid-template-columns:minmax(0,1fr);}
-  .dual-flow.selection-ai-open>.chat-layout{max-height:240px;}
+  .dual-flow.selection-ai-open>.chat-layout{max-height:none;}
  }
 }
