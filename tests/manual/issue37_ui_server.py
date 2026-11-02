@@ -19,7 +19,7 @@ from fastapi.responses import JSONResponse
 
 def classify_fixture(conversation):
     text = conversation['messages'][-1]['content']
-    if text == '只看 MC38':
+    if text in ('只看 MC38', '查看 MC37 工單'):
         return {'intent':'readonly','module':'report'}
     if text == '準備 MC37 的 WO-A 報工，良品 125，沒有不良':
         return {'intent':'change','module':'report'}
@@ -65,7 +65,7 @@ def create_preview():
             guide=json.loads(payload['instructions'].split('目前引導草稿（內容未通過業務驗證）：')[1].split('\n')[0])
             name,args='update_operation_draft',{'version':guide['version'],'action':'report.add','step':'details','args':{'execution_id':matches[0]['WIP_OPI_WDOEACICO_HIST_SID'],'ok':125,'defects':[]}}
         else:
-            content='已改為只看 MC38；原作業與確認內容保留，請重新選取對象。' if text=='只看 MC38' else '已帶入 MC37／WO-A，人工良品 125、沒有不良。可選擇／更換對象；尚未寫入。'
+            content='已查詢 MC37 工單；請在作業單核對工單與數量，人工確認後才會寫入。' if text=='查看 MC37 工單' else '已改為只看 MC38；原作業與確認內容保留，請重新選取對象。' if text=='只看 MC38' else '已帶入 MC37／WO-A，人工良品 125、沒有不良。可選擇／更換對象；尚未寫入。'
             return SimpleNamespace(output=[],output_text=content)
         data={'type':'function_call','name':name,'arguments':json.dumps(args),'call_id':f'fixture-{len(outputs)}'}
         return SimpleNamespace(output=[SimpleNamespace(**data,model_dump=lambda **_:data)])

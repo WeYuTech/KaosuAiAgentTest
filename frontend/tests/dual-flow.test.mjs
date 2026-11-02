@@ -276,6 +276,12 @@ test('審查：主選取讀取與失敗不宣稱完整結果，重試後才呈�
  await act(async()=>[...dialog().querySelectorAll('button')].find(b=>b.textContent==='重新查詢').click());
  await act(async()=>resolve({records:[],catalogs:{},total:0}));
  assert.ok(dialog().textContent.includes('沒有符合資料'));assert.equal(dialog().querySelector('.picker-pagination'),null);assert.ok(!dialog().textContent.includes('請重新選取'));
+ await act(async()=>dialog().querySelector('form').dispatchEvent(new Event('submit',{bubbles:true,cancelable:true})));
+ await act(async()=>reject(new Error('隔離查詢失敗')));
+ assert.equal(host.querySelector('.error-banner'),null);
+ await act(async()=>[...dialog().querySelectorAll('button')].find(b=>b.textContent==='取消選取').click());
+ assert.equal(dialog(),null);assert.ok(!host.textContent.includes('隔離查詢失敗'));assert.ok(!host.textContent.includes('請重新選取'));
+
  await act(async()=>root.unmount());host.remove();
 });
 
