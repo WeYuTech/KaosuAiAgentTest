@@ -70,7 +70,7 @@ def create_preview():
         data={'type':'function_call','name':name,'arguments':json.dumps(args),'call_id':f'fixture-{len(outputs)}'}
         return SimpleNamespace(output=[SimpleNamespace(**data,model_dump=lambda **_:data)])
     model.invoke=response
-    app=create_app(ROOT/'.local/issue33-preview.db',intent_classifier=classify_fixture)
+    app=create_app(Path(os.environ.get('ISSUE33_FIXTURE_DB',str(ROOT/'.local/issue33-preview.db'))),intent_classifier=classify_fixture)
     with app.state.store.transaction() as db:
         if not app.state.store.get(db,'STATE','simulation'):
             app.state.store.put(db,'STATE','simulation',fixture_state())
@@ -89,4 +89,4 @@ def create_preview():
 
 if __name__=='__main__':
     import uvicorn
-    uvicorn.run(create_preview(),host='127.0.0.1',port=8037,access_log=False)
+    uvicorn.run(create_preview(),host='127.0.0.1',port=int(os.environ.get('ISSUE33_PORT','8037')),access_log=False)

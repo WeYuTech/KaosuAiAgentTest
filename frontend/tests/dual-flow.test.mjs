@@ -279,7 +279,7 @@ test('審查：主選取讀取與失敗不宣稱完整結果，重試後才呈�
 
 test('審查：開啟選取預帶設備日期但不修改 Guide，子層有工單脈絡',async()=>{
  const {host,root}=mount();const queries=[],writes=[];
- const record={WIP_OPI_WDOEACICO_HIST_SID:'2001',EQP_NO:'MC37',WO:'WO-A',SCHEDULE_START_TIME:'2026-11-02 08:00:00',REPORTS:[{WIP_OPI_WDOEACICOOUTPUT_HIST_SID:'3001',OK_QTY:10}]};
+ const record={WIP_OPI_WDOEACICO_HIST_SID:'2001',EQP_NO:'MC37',WO:'WO-A',REAL_CHECK_IN_TIME:'2026-11-02 08:00:00',REPORTS:[{WIP_OPI_WDOEACICOOUTPUT_HIST_SID:'3001',OK_QTY:10}]};
  const guide={version:1,action:'report.update',args:{report_id:'3001',ok:125,defects:[]},step:'details',missing:[],ready:true};
  const workspace={records:[record],catalogs:{},total:1};
  await act(async()=>root.render(h(GuidedFlow,{apiRequest:async(path,body)=>{if(body)writes.push(body);return guide;},onQuery:async f=>{queries.push(f);return workspace;},conversation:{id:'context',module:'report',messages:[]},module:'report',workspace,selected:record,signal:0,proposal:null,status:'',disabled:false,date:null,onReply:noop,onAudit:noop,onHome:noop})));
@@ -300,6 +300,6 @@ test('審查：排程只有一列開始時間，模具完工狀態採業務文�
  await act(async()=>root.render(h(ProposalBusinessSummary,{workspace,proposal:{action:'mold.unmount_finish',args:{},changes:[{field:'COMPLETED',before:'N',after:'Y'}]}})));
  assert.ok(host.textContent.includes('未完工'));assert.ok(host.textContent.includes('已完工'));
  const {translations}=await import('../src/translations.ts');const t=(key,_,language)=>translations[key]?.[language==='en'?0:1]??key;
- for(const language of ['en','th'])for(const key of ['目前可執行','尚未完成前一階段','清除換模紀錄','核對時間與連動影響','補充條件，或詢問這些資料…','補充模具或階段需求，修改後請重新核對'])assert.notEqual(t(key,{},language),key);
+ for(const language of ['en','th'])for(const key of ['尚未選擇設備與排程','新增排程','修改排程','目前可執行','尚未完成前一階段','清除換模紀錄','核對時間與連動影響','補充條件，或詢問這些資料…','補充模具或階段需求，修改後請重新核對'])assert.notEqual(t(key,{},language),key);
  await act(async()=>root.unmount());host.remove();
 });

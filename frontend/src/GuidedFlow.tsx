@@ -409,7 +409,7 @@ export function GuidedFlow({ presentation='chat-sheet', reviewActionsExternal=fa
     pickerTrigger.current=document.activeElement as HTMLElement;
     setSelectionNotice('');setPicker(true);
     const equipment=string(target?.EQP_NO??args.equipment??selected?.EQP_NO);
-    const contextDate=string(target?.SCHEDULE_DATE??target?.SCHEDULE_START_TIME??args.start_time??date).slice(0,10);
+    const contextDate=string(target?.SCHEDULE_DATE??target?.SCHEDULE_START_TIME??target?.SHIFT_DAY??target?.REAL_CHECK_IN_TIME??target?.CHECK_IN_TIME??args.start_time??date).slice(0,10);
     if((equipment&&equipment!==filters.equipment)||(contextDate&&(contextDate!==filters.date||endDate))){const next={...filters,...(equipment?{equipment}:{}),...(contextDate?{date:contextDate}:{})};setFilters(next);if(contextDate)setEndDate('');void load(1,next).catch(()=>{});}
   }
   function returnOrders(){setPendingTarget(null);setReportCandidate(null);requestAnimationFrame(()=>{if(pickerTable.current)pickerTable.current.scrollTop=parentScroll.current;});}

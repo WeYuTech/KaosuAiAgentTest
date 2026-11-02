@@ -1,5 +1,8 @@
 /* 固定介面詞彙：中文原文為鍵，不翻譯 MES 主檔名稱或歷史訊息。 */
 export const translations: Record<string, [string, string]> = Object.fromEntries(`
+尚未選擇設備與排程|No machine or schedule selected|ยังไม่ได้เลือกเครื่องจักรและแผนการผลิต
+新增排程|New schedule|เพิ่มแผนการผลิต
+修改排程|Edit schedule|แก้ไขแผนการผลิต
 請先選擇設備與排程|Choose a machine and schedule first|โปรดเลือกเครื่องจักรและแผนการผลิตก่อน
 沒有上模紀錄可清除|No mounting history to clear|ไม่มีประวัติติดตั้งแม่พิมพ์ให้ล้าง
 排程沒有執行紀錄，請重新查詢|This schedule has no execution records. Search again.|แผนนี้ไม่มีบันทึกการดำเนินการ โปรดค้นหาอีกครั้ง
