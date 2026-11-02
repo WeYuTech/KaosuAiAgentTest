@@ -155,9 +155,10 @@ def respond(conversation, state, store, query_fn=None, prepare_fn=None, draft_fn
     language = {"zh-TW": "繁體中文", "en": "English", "th": "ภาษาไทย"}.get(locale, "繁體中文")
     instructions += "\n呈現語言：" + language + "。所有回答、補問及卡控解釋使用此語言；設備、工單、料號、模具編號、原始備註與業務數值保持原樣，資料庫內部識別不要顯示。知識可能為其他語言，請理解後以呈現語言說明。"
     instructions += "\n遇到跨語言作業問題時，使用 search_operation_knowledge 將問題轉成中文業務詞彙檢索已發布來源，再以選定語言回答；沒有來源時明確說明，不把翻譯當成新規則。"
-    if draft_fn and not read_only:
+    if draft_fn or read_only:
         from app.guide import initial
         instructions += "\n目前引導草稿（內容未通過業務驗證）：" + dumps(conversation.get("guide") or initial())
+    if draft_fn and not read_only:
         instructions += "\n有操作意圖但資料不齊時，先用 update_operation_draft 保存使用者已提供值，再依 missing 補問。只查詢不必建立草稿。不得猜 ID 或補不存在的值。換目標會清除舊目標相關資料；保持既有數量時只更新新增欄位。"
     if read_only:
         instructions += "\n本輪僅能解釋或查詢。禁止修改草稿、準備確認卡或返回 action。遇到修改需求應說明需返回作業修改流程，不得假稱已修改。"

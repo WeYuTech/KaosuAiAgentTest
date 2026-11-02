@@ -274,7 +274,7 @@ export function GuidedFlow({ presentation='chat-sheet', onPresentationBusyChange
           details: rows(source.DETAILS).map(d => ({ detail_id: d.ZZ_KAOSU_PROD_SCHEDULE_DETAIL_SID, mold_detail_id: d.TOL_DETALS_SID,
             part_no: d.PART_NO, wo: d.WO ?? orders.find(w => string(w.WO_SID) === string(d.WO_SID))?.WO ?? '', cavities: d.SCHEDULE_CUR_CAV })) };
       } else if (['report.update', 'report.delete'].includes(chosen)) {
-        setPendingTarget(record); return;
+        setPendingTarget(record); setPicker(true); return;
       } else if (chosen === 'report.add' || chosen === 'report.cavities') {
         next = { execution_id: record[EID] };
         if (chosen === 'report.cavities') next.cavities = record.OPI_CAV;

@@ -53,3 +53,15 @@ test('pending 返回修改只是呈現，切換模式不重新準備確認卡',a
  await act(async()=>root.unmount());host.remove();
 });
 
+test('已選執行紀錄的修改動作立即顯示單次報工，不藏在空白編輯表單',async()=>{
+ const {host,root}=mount();let guide={version:0,action:'',args:{},step:'action',missing:[],ready:false};
+ const record={WIP_OPI_WDOEACICO_HIST_SID:'2001',EQP_NO:'MC37',WO:'WO-A',REPORTS:[{WIP_OPI_WDOEACICOOUTPUT_HIST_SID:'3001',CREATE_TIME:'2026-10-30 09:00',OK_QTY:125,NG_QTY:2}]};
+ const request=async(path,body)=>{if(body)guide={...guide,...body,version:guide.version+1};return structuredClone(guide);};
+ const props={apiRequest:request,conversation:{id:'second',messages:[],module:'report'},module:'report',workspace:{records:[record],catalogs:{}},selected:record,signal:0,proposal:null,status:'',disabled:false,date:null,onReply:noop,onAudit:noop,onHome:noop};
+ await act(async()=>root.render(h(GuidedFlow,{...props,presentation:'chat-sheet'})));
+ await act(async()=>[...host.querySelectorAll('button')].find(b=>b.textContent.includes('修改報工')).click());
+ assert.ok(host.querySelector('.report-record-picker'));assert.ok(host.querySelector('.report-record-picker').textContent.includes('125'));assert.equal(host.querySelector('#guide-ok'),null);
+ await act(async()=>root.render(h(GuidedFlow,{...props,presentation:'step-wizard'})));assert.ok(host.querySelector('.report-record-picker'));
+ await act(async()=>root.unmount());host.remove();
+});
+
