@@ -171,8 +171,8 @@ test('主檔暫選跨頁保留，改查詢需重選，確認帶入才更新值',
 test('邏輯焦點恢復重建欄位與游標，隱藏欄位改落搜尋入口',()=>{
  const host=document.createElement('section');host.innerHTML='<div class="guided-flow"><input id="guide-ok" value="125"></div>';document.body.append(host);
  const input=host.querySelector('input');input.setSelectionRange(1,2);const memory=rememberOperationFocus(input);
- input.remove();host.querySelector('div').innerHTML='<input id="guide-ok" value="125"><div class="guide-choosing"><input id="guide-search-equipment"></div>';
- for(const field of host.querySelectorAll('input')){field.getClientRects=()=>[{}];field.scrollIntoView=()=>{};}
+ input.remove();host.querySelector('div').innerHTML='<input id="guide-ok" value="125"><div class="guide-choosing"><fieldset class="guide-body"><button>取消選取</button><input id="guide-search-equipment"></fieldset></div>';
+ for(const field of host.querySelectorAll('input,button')){field.getClientRects=()=>[{}];field.scrollIntoView=()=>{};}
  assert.equal(operationFocusTarget(host,memory).id,'guide-ok');assert.equal(host.querySelector('#guide-ok').selectionStart,1);assert.equal(host.querySelector('#guide-ok').selectionEnd,2);
  host.querySelector('#guide-ok').hidden=true;assert.equal(operationFocusTarget(host,memory).id,'guide-search-equipment');host.remove();
 });
