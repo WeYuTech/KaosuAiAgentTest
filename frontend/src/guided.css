@@ -207,3 +207,16 @@
 .guided-flow:has(.guide-action-grid)>.guide-phase,.guided-flow:has(.guide-action-grid)>.operation-sheet-status { display:none; }
 
 }
+
+/* 版本比較維持兩欄，窄畫面依閱讀順序排列。 */
+.draft-comparison { display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;margin:16px 0; }
+.draft-comparison section {min-width:0;border:1px solid var(--border);border-radius:12px;padding:12px;overflow-wrap:anywhere;}
+.field-error {color:var(--danger,#e88888);font-size:13px;}
+.draft-recovery {padding:16px;border:1px solid var(--border);border-radius:12px;}
+.draft-recovery button {margin:6px 6px 0 0;}
+@media(max-width:600px){.draft-comparison{grid-template-columns:1fr;}}
+
+.audit-record {border:1px solid var(--border);border-radius:12px;padding:16px;margin:12px 0;overflow-wrap:anywhere;}
+.audit-record header,.audit-changes li {display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;}
+.audit-changes {list-style:none;padding:0;}.audit-changes li {padding:8px 0;}
+.operation-id code {overflow-wrap:anywhere;}

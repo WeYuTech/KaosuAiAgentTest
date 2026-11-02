@@ -1,5 +1,31 @@
 /* 固定介面詞彙：中文原文為鍵，不翻譯 MES 主檔名稱或歷史訊息。 */
 export const translations: Record<string, [string, string]> = Object.fromEntries(`
+權限不足，無法繼續此操作。|Permission denied. This operation cannot continue.|ไม่มีสิทธิ์ดำเนินการนี้
+登入已逾時，請重新登入 MES。未送出的文字與草稿已保留，重新驗證原身分後可接續。|Session expired. Sign in to MES again with the same identity to resume your retained text and draft.|เซสชันหมดอายุ เข้าสู่ระบบ MES ด้วยบัญชีเดิมเพื่อทำต่อ ข้อความและฉบับร่างยังคงอยู่
+已讀取伺服器聊天紀錄；原訊息仍保留，未重新送出。若紀錄尚未更新，可稍後再查核。|Server history loaded. Your original message is retained and has not been resent. Check again later if needed.|โหลดประวัติจากเซิร์ฟเวอร์แล้ว เก็บข้อความเดิมและไม่ได้ส่งซ้ำ ตรวจสอบอีกครั้งได้
+送達結果未知，未重新送出。原訊息已保留，請查核聊天紀錄。|Delivery unknown. Not resent. Original message retained; check history.|ไม่ทราบผลการส่ง ไม่ได้ส่งซ้ำ เก็บข้อความเดิม โปรดตรวจสอบประวัติ
+查核原訊息|Check original message|ตรวจสอบข้อความเดิม
+返回原作業|Return to original operation|กลับสู่งานเดิม
+先留在這裡|Stay here for now|อยู่หน้านี้ก่อน
+已保留本頁；原操作仍待查核，完成查核前不會開放其他寫入。|This page is retained. The original operation must be checked before further writes.|เก็บหน้านี้ไว้ ต้องตรวจสอบงานเดิมก่อนเขียนข้อมูลอื่น
+個人使用統計|Personal usage statistics|สถิติการใช้งานส่วนตัว
+共用模型費用|Shared model costs|ค่าใช้จ่ายโมเดลร่วม
+尚未取得費用資料|Cost data unavailable|ยังไม่มีข้อมูลค่าใช้จ่าย
+模擬環境：此結果未寫入正式 MES。|Simulation: this result was not written to production MES.|สภาพแวดล้อมจำลอง ไม่ได้เขียนผลนี้ใน MES จริง
+核對已過期|Review expired|การตรวจสอบหมดอายุ
+本次提交已拒絕|Submission rejected|ปฏิเสธการส่งครั้งนี้
+確認已過期，原資料仍保留。請重新核對最新狀態。|Confirmation expired. Data retained; review the latest state again.|การยืนยันหมดอายุ เก็บข้อมูลเดิมไว้ โปรดตรวจสอบสถานะล่าสุด
+重新核對|Review again|ตรวจสอบอีกครั้ง
+正在送出，請勿重複操作|Submitting. Do not repeat.|กำลังส่ง โปรดอย่าทำซ้ำ
+預計異動，尚未寫入|Planned changes, not written|การเปลี่ยนแปลงที่วางแผน ยังไม่ได้เขียน
+已證明的欄位異動|Verified field changes|การเปลี่ยนแปลงฟิลด์ที่ยืนยันแล้ว
+原作業已保留，請重試載入此面板。|Your operation is retained. Retry loading this panel.|เก็บงานเดิมไว้แล้ว โปรดลองโหลดแผงนี้อีกครั้ง
+重試載入|Retry loading|ลองโหลดอีกครั้ง
+目前沒有可查看的操作紀錄。|No accessible operation records.|ไม่มีบันทึกการดำเนินงานที่ดูได้
+紀錄未提供|Not provided in record|ไม่มีข้อมูลในบันทึก
+模擬環境|Simulation|สภาพแวดล้อมจำลอง
+未變更|Unchanged|ไม่มีการเปลี่ยนแปลง
+尚無可證明的欄位異動|No verified field changes available|ยังไม่มีการเปลี่ยนแปลงฟิลด์ที่ยืนยันได้
 此聊天沒有訊息|This chat has no messages|แชทนี้ยังไม่มีข้อความ
 已建立定時報告「{0}」|Created scheduled report “{0}”|สร้างรายงานตามกำหนด “{0}” แล้ว
 已暫停定時報告「{0}」|Paused scheduled report “{0}”|หยุดรายงานตามกำหนด “{0}” ชั่วคราวแล้ว

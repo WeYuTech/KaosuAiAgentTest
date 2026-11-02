@@ -1,3 +1,4 @@
+import {reapplyDraft,sameDraftTarget} from './draft-merge';
 import {mesDate,productionStatus} from './presentation';
 import {OperationDialog} from './OperationDialog';
 import {MoldStages,moldStageAvailability} from './MoldStages';
@@ -14,7 +15,7 @@ import './guided.css';
 import type {OperationMode} from './operation-mode';
 
 export interface Guide { version: number; action: string; intent?: 'create' | 'update' | null; args: Row; step: string; missing: string[]; ready: boolean; proposal?: Proposal | null }
-export interface GuideHandle { backToEdit: () => void; flush: () => Promise<void>; focusField: (key: string) => void; beginReport: (record: Row) => Promise<void>; selectTarget: (record:Row) => Promise<void> }
+export interface GuideHandle { backToEdit: () => void; reviewAgain: () => Promise<void>; flush: () => Promise<void>; focusField: (key: string) => void; beginReport: (record: Row) => Promise<void>; selectTarget: (record:Row) => Promise<void> }
 const SID = 'ZZ_KAOSU_PROD_SCHEDULE_SID';
 const EID = 'WIP_OPI_WDOEACICO_HIST_SID';
 const RID = 'WIP_OPI_WDOEACICOOUTPUT_HIST_SID';
@@ -71,12 +72,15 @@ export function GuidedFlow({ presentation='chat-sheet', reviewActionsExternal=fa
   const [action, setAction] = useState('');
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState('');
+  const [validationAttempted,setValidationAttempted]=useState(false);
   const [reload, setReload] = useState(0);
   const [saveState, setSaveStateValue] = useState<'saved'|'saving'|'failed'|'conflict'|'invalid'>('saved');
   const saveStateRef = useRef(saveState);
   const setSaveState = (value: typeof saveState) => { saveStateRef.current = value; setSaveStateValue(value); };
   useEffect(() => { if (saveStateRef.current === 'invalid') { setSaveState('saved'); setError(''); } }, [args]);
   const [conflict, setConflict] = useState<Guide | null>(null);
+  const recoveryKey=`kaosu-guide-input:${conversation.actor_id??''}:${conversation.id}`;
+  const recoveryRead=useRef(false);
   const readGeneration = useRef(0);
   const editorRef = useRef<HTMLElement>(null);
   const focusedStep = useRef('action');
@@ -116,12 +120,17 @@ export function GuidedFlow({ presentation='chat-sheet', reviewActionsExternal=fa
   const queueRef = useRef(Promise.resolve());
   const locked = disabled || busy || ['unknown'].includes(status);
   const dirty = Boolean(guide && ['details','target'].includes(step) && action && comparable(args) !== comparable(guide.args));
+  useEffect(()=>{
+    if(!recoveryRead.current||!guide)return;
+    try{if(dirty||['failed','conflict','invalid'].includes(saveState))sessionStorage.setItem(recoveryKey,JSON.stringify({action,args,base:serverArgs.current,version:versionRef.current,at:Date.now()}));else sessionStorage.removeItem(recoveryKey);}catch{/* 儲存不可用時仍維持目前畫面。 */}
+  },[args,guide,dirty,saveState,recoveryKey]);
+
   useEffect(() => { onSnapshot?.({ ...args, action, _view_step:step, _started:step!=='action' || query, _stage_label:status==='unknown'?L('結果待核對','Verify result','ตรวจสอบผลลัพธ์'):status==='succeeded'?L('已完成','Completed','เสร็จแล้ว'):status==='cancelled'?L('已取消','Cancelled','ยกเลิกแล้ว'):[L('選作業','Choose task','เลือกงาน'),L('選擇對象','Choose target','เลือกเป้าหมาย'),L('填寫資料','Enter details','กรอกข้อมูล'),L('核對與確認','Review and confirm','ตรวจสอบและยืนยัน'),L('查看結果','View result','ดูผลลัพธ์')][Math.max(0,steps.indexOf(step))], _missing:(guide?.missing??[]).map(key=>({key,text:missingText(key)})), draft_save_state: saveState === 'saving' ? L('正在儲存草稿…','Saving draft…','กำลังบันทึกฉบับร่าง…') : saveState === 'invalid' ? L('資料需修正，輸入仍保留','Correct the details; input retained','โปรดแก้ไขข้อมูล เก็บข้อมูลที่กรอกไว้แล้ว') : saveState === 'failed' || saveState === 'conflict' ? L('儲存失敗','Save failed','บันทึกไม่สำเร็จ') : dirty ? L('尚未同步','Not synced','ยังไม่ซิงค์') : L('已保存','Saved','บันทึกแล้ว') }); }, [args, action, saveState, dirty, locale, onSnapshot, guide, step, query, status]);
   useEffect(()=>{onPresentationBusyChange?.(busy||candidateBusy||lookupBusy||saveState==='saving'||!guide&&!error);},[busy,candidateBusy,lookupBusy,saveState,guide,error,onPresentationBusyChange]);
   useEffect(() => { onBusyChange?.(busy || dirty || saveState === 'saving' || (!guide && !error)); }, [busy, dirty, saveState, guide, error, onBusyChange]);
   useEffect(() => () => { onWorkChange?.(false); }, [onWorkChange]);
   useEffect(() => () => { onBusyChange?.(false); }, [onBusyChange]);
-  useImperativeHandle(ref, () => ({ backToEdit: () => {if(!locked)setStep(hasEditableFields(action)?'details':'target');}, selectTarget: async record=>{if(locked)return;await work(async()=>{if(action){await applyTarget(record,action);}else{setTarget(record);setRetainTarget(true);setPicker(false);}});}, focusField: key => { const field=editorRef.current?.querySelector<HTMLElement>(`#${fieldId(key.replace(/^(details\[\d+\])\.part_no$/, '$1.mold_detail_id'))}`); (field ?? editorRef.current?.querySelector<HTMLElement>('input, select, button'))?.focus(); }, beginReport: async record => {
+  useImperativeHandle(ref, () => ({ reviewAgain: async()=>{if(!locked&&guide)await work(()=>preview(guide));}, backToEdit: () => {if(!locked)setStep(hasEditableFields(action)?'details':'target');}, selectTarget: async record=>{if(locked)return;await work(async()=>{if(action){await applyTarget(record,action);}else{setTarget(record);setRetainTarget(true);setPicker(false);}});}, focusField: key => { const field=editorRef.current?.querySelector<HTMLElement>(`#${fieldId(key.replace(/^(details\[\d+\])\.part_no$/, '$1.mold_detail_id'))}`); (field ?? editorRef.current?.querySelector<HTMLElement>('input, select, button'))?.focus(); }, beginReport: async record => {
     if (locked || beforeTargetChange && !beforeTargetChange()) return;
     await work(async () => {
       await save('target', {execution_id: null, report_id: null, schedule_id: null}, 'report.add');
@@ -182,7 +191,14 @@ export function GuidedFlow({ presentation='chat-sheet', reviewActionsExternal=fa
   useEffect(() => {
     if (((disabled || busy || dirty || saveState === 'saving') && guide) || saveState === 'failed' || saveState === 'conflict') return;
     let live = true;
-    request<Guide>(`/api/conversations/${conversation.id}/guide`).then(value => { if (live && (!guide || value.version !== versionRef.current)) adopt(value); }).catch(e => { if (live) { if(e instanceof ApiError && [401,403].includes(e.status)) onAccessDenied?.(); else setError(String(e.message)); } });
+    request<Guide>(`/api/conversations/${conversation.id}/guide`).then(value => { if (live && (!guide || value.version !== versionRef.current)) {
+      adopt(value);
+      if(!recoveryRead.current){recoveryRead.current=true;try{const raw=sessionStorage.getItem(recoveryKey);const saved=raw?JSON.parse(raw):null;
+        if(saved&&Date.now()-saved.at<86400000&&saved.action===value.action&&saved.args&&typeof saved.args==='object'&&comparable(saved.args)!==comparable(value.args)&&value.proposal?.status!=='unknown'){
+          setArgs(saved.args);serverArgs.current=saved.base??value.args;setConflict(value);setSaveState('conflict');setStep('details');setError(L('已保留上次未儲存的輸入，請與最新內容核對。','Unsaved input retained. Compare it with the latest values.','เก็บข้อมูลที่ยังไม่บันทึกไว้ โปรดเทียบกับข้อมูลล่าสุด'));
+        }
+      }catch{/* 無效的本機副本不取代可信草稿。 */}}
+    } }).catch(e => { if (live) { if(e instanceof ApiError && [401,403].includes(e.status)) onAccessDenied?.(); else setError(String(e.message)); } });
     return () => { live = false; };
   }, [conversation.id, signal, status, disabled, busy, dirty, saveState, reload]);
   useEffect(() => {
@@ -338,11 +354,15 @@ export function GuidedFlow({ presentation='chat-sheet', reviewActionsExternal=fa
     });
   }
   function field(key: string, text: string, type = 'text', minimum = 0) {
-    return <label className="guide-field">{text}<input id={`guide-${key}`} aria-invalid={Boolean(error && guide?.missing.includes(key))} required={!['comment','priority'].includes(key)} type={type==='number'?'text':type} inputMode={type==='number'?'decimal':undefined} min={type === 'number' ? minimum : undefined} step={type === 'number' ? '1' : undefined}
-      max={type === 'number' ? 2147483647 : undefined} aria-describedby={guide?.missing.includes(key) ? 'missing-fields' : undefined}
-      value={type === 'datetime-local' ? string(args[key]).replace(' ', 'T').slice(0, 16) : string(args[key])}
+    const value=string(args[key]);
+    const required=!['comment','priority'].includes(key);
+    const invalid=validationAttempted && ((required&&!value.trim()) || (type==='number'&&value!==''&&(!/^\d+$/.test(value)||!Number.isSafeInteger(Number(value))||Number(value)<minimum||Number(value)>2147483647)));
+    const hint=invalid ? type==='number'?L(`請填入 ${minimum}～2147483647 的整數。`,`Enter an integer from ${minimum} to 2147483647.`,`กรอกจำนวนเต็ม ${minimum} ถึง 2147483647`):L('請填寫此欄位。','Complete this field.','กรอกข้อมูลนี้') : '';
+    return <label className="guide-field">{text}<input id={`guide-${key}`} aria-invalid={invalid||Boolean(error && guide?.missing.includes(key))} required={required} type={type==='number'?'text':type} inputMode={type==='number'?'decimal':undefined} data-minimum={type==='number'?minimum:undefined}
+      aria-describedby={hint?`guide-${key}-error`:guide?.missing.includes(key)?'missing-fields':undefined}
+      value={type === 'datetime-local' ? value.replace(' ', 'T').slice(0, 16) : value}
       onInput={type === 'datetime-local' ? e => { const value = e.currentTarget.value; setArgs(v => ({ ...v, [key]: value })); } : undefined}
-      onChange={e => setArgs(v => ({ ...v, [key]: e.target.value }))}/></label>;
+      onChange={e => setArgs(v => ({ ...v, [key]: e.target.value }))}/>{hint&&<small className="field-error" id={`guide-${key}-error`}>{hint}</small>}</label>;
   }
   function select(key: string, text: string, options: { value: string; name: string }[], change?: (value: string) => void) {
     return <label className="guide-field">{text}<select id={fieldId(key)} required value={string(args[key])} onChange={e => change ? change(e.target.value) : setArgs(v => ({ ...v, [key]: e.target.value }))}>
@@ -422,15 +442,19 @@ export function GuidedFlow({ presentation='chat-sheet', reviewActionsExternal=fa
   return <section ref={editorRef} className={`guided-flow ${presentation} ${at===3?'guide-review':''} ${choosing?'guide-choosing':''}`} aria-label={L('作業單', 'Operation sheet', 'ใบงาน')}>
     {presentation==='step-wizard'&&at>0&&<nav className="operation-steps" aria-label={L('作業步驟','Operation steps','ขั้นตอนการทำงาน')}>{phases.map((phase,index)=><button type="button" key={phase.step} aria-current={(choosing?'target':step)===phase.step?'step':undefined} disabled={locked||completed||steps.indexOf(phase.step)>at} onClick={()=>{setPicker(phase.step==='target');setStep(phase.step);}}><b>{steps.indexOf(phase.step)<at?'✓':index+1}</b><span>{phase.text}</span></button>)}</nav>}
     {at!==3&&at!==4&&<div className="guide-phase"><h2>{at===0?L('選擇作業','Choose operation','เลือกงาน'):actionName(action==='schedule.save'&&newSchedule?'schedule.new':action)}</h2></div>}
-    {at<3&&<p className="operation-sheet-status" role="status">{saveState==='saving'?L('保存中…','Saving…','กำลังบันทึก…'):dirty?L('尚未同步','Not synced','ยังไม่ซิงค์'):L('草稿 · 尚未送出','Draft · not submitted','ฉบับร่าง · ยังไม่ส่ง')}</p>}
+    {at<3&&<p className="operation-sheet-status" role="status">{saveState==='failed'||saveState==='conflict'?L('儲存未完成','Not saved','ยังไม่บันทึก'):saveState==='invalid'?L('資料需修正','Needs correction','ต้องแก้ไขข้อมูล'):saveState==='saving'?L('保存中…','Saving…','กำลังบันทึก…'):dirty?L('尚未同步','Not synced','ยังไม่ซิงค์'):L('草稿 · 尚未送出','Draft · not submitted','ฉบับร่าง · ยังไม่ส่ง')}</p>}
     
     {error && <div className="error-banner" role="alert"><span>{error}</span>{!guide && <button className="secondary" onClick={() => { setError(''); setReload(v => v + 1); }}>{L('重新載入作業單','Reload operation sheet','โหลดใบงานใหม่')}</button>}</div>}
     {editing && Boolean(guide?.missing.length) && <div id="missing-fields" role="status"><strong>{L('尚需補充','Still needed','ข้อมูลที่ยังขาด')}</strong><ul>{guide?.missing.map(key => <li key={key}><button type="button" className="text-button" onClick={() => {if(['execution_id','schedule_id','report_id'].includes(key)){setPicker(true);return;}document.getElementById(fieldId(key.replace(/^(details\[\d+\])\.part_no$/, '$1.mold_detail_id')))?.focus();}}>{missingText(key)}</button></li>)}</ul></div>}
-    {['failed','conflict'].includes(saveState) && <div role="alert"><button className="secondary" onClick={() => void work(async () => {
+    {['failed','conflict'].includes(saveState) && <div className="draft-recovery" role="alert"><p>{saveState==='conflict'?L('資料已由另一個操作更新，請先比較版本。','Another operation changed this draft. Compare versions first.','ข้อมูลถูกแก้ไข โปรดเปรียบเทียบเวอร์ชัน'):L('儲存未完成，輸入仍保留。重試前會先核對最新版本。','Save did not complete. Your input is retained; retry checks the latest version.','บันทึกไม่สำเร็จ เก็บข้อมูลไว้แล้ว ตรวจสอบเวอร์ชันก่อนลองใหม่')}</p><button className="secondary" disabled={busy||disabled} onClick={() => void work(async () => {
       const value = await request<Guide>(`/api/conversations/${conversation.id}/guide`);
       if (comparable(value.args) === comparable(args) && value.action === action) { adopt(value); setSaveState('saved'); }
       else setConflict(value);
-    })}>{L('讀取伺服器版本核對','Read server version','อ่านเวอร์ชันเซิร์ฟเวอร์')}</button>{conflict && <><Fields value={conflict.args}/><button className="secondary" disabled={!['execution_id','report_id','schedule_id'].every(key => String(conflict.args[key] ?? '') === String(args[key] ?? ''))} onClick={() => { versionRef.current = conflict.version; serverArgs.current = conflict.args; setGuide(conflict); setConflict(null); setSaveState('saved'); setError(''); }}>{L('核對後重新套用目前輸入','Reapply my input after review','ใช้ข้อมูลที่กรอกหลังตรวจสอบ')}</button><button className="secondary" onClick={() => {adopt(conflict);setConflict(null);setSaveState('saved');setError('');}}>{L('採用伺服器內容','Use server values','ใช้ข้อมูลเซิร์ฟเวอร์')}</button></>}</div>}
+    })}>{L('讀取伺服器版本核對','Read server version','อ่านเวอร์ชันเซิร์ฟเวอร์')}</button>{conflict && <><div className="draft-comparison"><section><h3>{L('你的修改','Your edits','การแก้ไขของคุณ')}</h3><Fields value={args}/></section><section><h3>{L('最新內容','Latest values','ข้อมูลล่าสุด')}</h3><Fields value={conflict.args}/></section></div><button className="secondary" disabled={busy||disabled||!sameDraftTarget(action,conflict.action,args,conflict.args)} onClick={() => {
+      const next=reapplyDraft(serverArgs.current,args,conflict.args);
+      versionRef.current=conflict.version;serverArgs.current=conflict.args;serverGuide.current=conflict;
+      setGuide(conflict);setArgs(next);setConflict(null);setSaveState('saved');setError('');setStep('details');onReply({proposal:null});
+    }}>{L('在最新內容重套我的修改，再核對','Reapply my edits on latest and review','ใช้การแก้ไขกับข้อมูลล่าสุดแล้วตรวจสอบ')}</button><button className="secondary" disabled={busy||disabled} onClick={() => {adopt(conflict);setConflict(null);setSaveState('saved');setError('');}}>{L('採用伺服器內容','Use server values','ใช้ข้อมูลเซิร์ฟเวอร์')}</button></>}</div>}
     <fieldset className={`guide-body ${stepEntering?'dual-enter':''}`} onAnimationEnd={event=>{if(event.target===event.currentTarget)setStepEntering(false);}} disabled={locked}>
     {at === 0 && <>{module === 'report' ? <><button className="primary" disabled={locked || !guide} onClick={() => void chooseAction('report.add')}>{actionName('report.add')}<ArrowRight size={18}/></button><details><summary>{L('更多操作','More operations','งานเพิ่มเติม')}</summary><div className="guide-action-grid">{['query','report.update','report.delete','report.cavities','report.complete'].map(value => <button key={value} className="secondary" disabled={locked || !guide} onClick={() => void chooseAction(value)}>{actionName(value)}</button>)}</div></details></> : module==='mold'?<><MoldStages record={target} disabled={locked||!guide} choose={value=>void chooseAction(value)} select={openPicker}/><button type="button" className="text-button" onClick={()=>void chooseAction('query')}>{L('查詢歷史','View history','ดูประวัติ')}</button></> : <div className="guide-action-grid">{(module === 'schedule' ? ['query','schedule.new','schedule.save'] : ['query','mold.mount_start','mold.mount_finish','mold.unmount_start','mold.unmount_finish','mold.clear']).map(value => <button key={value} className="secondary" disabled={locked || !guide} onClick={() => void chooseAction(value)}>{actionName(value)}<ArrowRight size={18}/></button>)}</div>}</>}{choosing&&action==='schedule.save'&&newSchedule&&<><div className="new-schedule-target">{detailsForm(true)}</div><div className="guide-navigation"><button type="button" onClick={closePicker}>{L('取消選取','Cancel selection','ยกเลิกการเลือก')}</button><button type="button" className="primary" disabled={locked} onClick={()=>void work(async()=>{const value=await save('target',{...args,status:args.status??'DO',priority:args.priority??0});if(value.missing.some(key=>['equipment','part_no','mold_no','details'].some(prefix=>key.startsWith(prefix))))throw new Error(L('請先補齊設備、模具與工單分配。','Complete target details.','กรอกข้อมูลเป้าหมาย'));setPicker(false);setStep('details');})}>{L('下一步','Next','ถัดไป')}</button></div></>}
     {modalPicker&&<OperationDialog title={pendingTarget?L('選擇單筆人工報工','Choose one production record','เลือกบันทึกผลผลิตหนึ่งรายการ'):L('選擇作業對象','Choose target','เลือกเป้าหมาย')} className="target-picker-dialog" close={closePicker} returnFocus={()=>pickerTrigger.current} footer={<>
@@ -460,7 +484,9 @@ export function GuidedFlow({ presentation='chat-sheet', reviewActionsExternal=fa
         <RecordChoices columns={[L('報工時間／數量','Report time / quantities','เวลา / จำนวนผลผลิต'),L('工單','Work order','ใบสั่งผลิต')]} records={selectedReport} value={reportCandidate} onSelect={row=>{setReportCandidate(row);setSelectionNotice('');}} identify={r=>string(r[RID])} disabled={locked} describe={r=>({primary:string(r.CREATE_TIME),secondary:`${L('良品','Good','ชิ้นงานดี')} ${r.OK_QTY} · ${L('不良','Defects','ของเสีย')} ${r.NG_QTY??0}`,context:string(pendingTarget.WO)})}/>
         {!selectedReport.length&&<p>{L('這筆工單沒有人工報工紀錄。','This order has no manual production records.','ใบสั่งผลิตนี้ยังไม่มีบันทึกผลผลิต')}</p>}</fieldset>}
     </OperationDialog>}
-    {editing && <form onSubmit={e => { e.preventDefault(); void work(async () => {
+    {editing && <form noValidate onSubmit={e => { e.preventDefault();setValidationAttempted(true);
+      const invalid=Array.from(e.currentTarget.querySelectorAll<HTMLInputElement>('input')).find(input=>!input.checkValidity() || input.dataset.minimum!==undefined && input.value!=='' && (!/^\d+$/.test(input.value)||!Number.isSafeInteger(Number(input.value))||Number(input.value)<Number(input.dataset.minimum)||Number(input.value)>2147483647));
+      if(invalid){invalid.focus();return;} void work(async () => {
       if (!hasTarget) throw new Error(L('請先選擇工單。','Choose an order first.','โปรดเลือกใบสั่งผลิตก่อน'));
       if (['report.add','report.update'].includes(action) && (!defectChoice || (defectChoice === 'some' && !defects.length))) throw new Error(L('請明確選擇有無不良並填入明細。','Specify whether there are defects and enter the details.','โปรดระบุว่ามีของเสียหรือไม่และกรอกรายละเอียด'));
       const value = await save('details');

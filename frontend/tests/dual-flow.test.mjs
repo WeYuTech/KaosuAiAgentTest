@@ -17,6 +17,7 @@ const {ApiError}=await server.ssrLoadModule('/src/api.ts');
 const {useEntry}=await server.ssrLoadModule('/src/use-entry.ts');
 const {rememberOperationFocus,operationFocusTarget}=await server.ssrLoadModule('/src/operation-focus.ts');
 await server.close();after(()=>window.happyDOM.abort());
+afterEach(()=>sessionStorage.clear());
 const noop=()=>{};
 function mount(){const host=document.createElement('div');host.id='mes-ai-chat-root';document.body.append(host);return {host,root:createRoot(host)};}
 const tick=()=>new Promise(r=>setTimeout(r,720));
@@ -346,5 +347,36 @@ for(const presentation of ['chat-sheet','step-wizard'])for(const action of ['rep
  await act(async()=>dialog().querySelector('input[type=radio]').click());
  if(action==='report.delete'){await click('選擇報工紀錄');await act(async()=>dialog().querySelector('.report-record-picker input[type=radio]').click());await click('帶入這筆報工');}else await click('帶入作業單');
  assert.ok(replies.length,host.textContent);assert.equal(replies.at(-1).proposal.action,action);assert.equal(dialog(),null);assert.equal(host.querySelector('.guide-operation-note'),null);assert.ok(!host.textContent.includes('填寫內容'));
+ await act(async()=>root.unmount());host.remove();
+});
+
+
+test('W01 空值就地提示並聚焦，修正後保留其他欄位且清除錯誤',async()=>{
+ const {host,root}=mount();let guide={version:1,action:'report.add',args:{execution_id:'2001',defects:[]},step:'details',missing:['ok'],ready:false};const writes=[];
+ const request=async(path,body)=>{if(body){writes.push(body);guide={...guide,...body,version:guide.version+1};}return structuredClone(guide);};
+ const props={apiRequest:request,conversation:{id:'w01',actor_id:'operator',module:'report'},module:'report',workspace:{records:[],catalogs:{}},selected:null,signal:0,proposal:null,status:'',disabled:false,date:null,onReply:noop,onAudit:noop,onHome:noop};
+ await act(async()=>root.render(h(GuidedFlow,props)));
+ await act(async()=>host.querySelector('form').dispatchEvent(new Event('submit',{bubbles:true,cancelable:true})));
+ assert.equal(document.activeElement.id,'guide-ok');assert.equal(host.querySelector('#guide-ok').getAttribute('aria-invalid'),'true');assert.equal(writes.length,0);
+ await act(async()=>inputValue(host.querySelector('#guide-ok'),'0'));assert.equal(host.querySelector('#guide-ok').getAttribute('aria-invalid'),'false');assert.equal(host.querySelector('.field-error'),null);
+ await act(async()=>root.unmount());host.remove();
+});
+
+test('W04 比較本機與最新版本，只重套改過欄位且使用最新版本保存',async()=>{
+ const {host,root}=mount();let guide={version:1,action:'report.add',args:{execution_id:'2001',ok:100,defects:[],comment:'原備註'},step:'details',missing:[],ready:true};const writes=[];let conflict=true;
+ const request=async(path,body)=>{if(body){writes.push(body);if(conflict){guide={...guide,version:2,args:{...guide.args,comment:'同事新備註'}};throw new ApiError('版本已更新',409);}assert.equal(body.version,2);guide={...guide,...body,version:3};}return structuredClone(guide);};
+ const props={apiRequest:request,conversation:{id:'w04',actor_id:'operator',module:'report'},module:'report',workspace:{records:[],catalogs:{}},selected:null,signal:0,proposal:null,status:'',disabled:false,date:null,onReply:noop,onAudit:noop,onHome:noop};
+ await act(async()=>root.render(h(GuidedFlow,props)));await act(async()=>inputValue(host.querySelector('#guide-ok'),'120'));await act(tick);
+ await act(async()=>[...host.querySelectorAll('button')].find(b=>b.textContent==='讀取伺服器版本核對').click());assert.equal(host.querySelectorAll('.draft-comparison section').length,2);assert.match(host.textContent,/同事新備註/);conflict=false;
+ await act(async()=>[...host.querySelectorAll('button')].find(b=>b.textContent==='在最新內容重套我的修改，再核對').click());await act(tick);
+ assert.equal(guide.args.ok,120);assert.equal(guide.args.comment,'同事新備註');assert.equal(writes.length,2);
+ await act(async()=>root.unmount());host.remove();
+});
+
+test('X01 未保存草稿在重新載入後先比較，不自動覆寫伺服器',async()=>{
+ const {host,root}=mount();const guide={version:2,action:'report.add',args:{execution_id:'2001',ok:100,defects:[]},step:'details',missing:[],ready:true};const writes=[];
+ sessionStorage.setItem('kaosu-guide-input:operator:resume',JSON.stringify({action:'report.add',args:{...guide.args,ok:'125'},base:guide.args,version:2,at:Date.now()}));
+ const props={apiRequest:async(path,body)=>{if(body)writes.push(body);return structuredClone(guide);},conversation:{id:'resume',actor_id:'operator',module:'report'},module:'report',workspace:{records:[],catalogs:{}},selected:null,signal:0,proposal:null,status:'',disabled:false,date:null,onReply:noop,onAudit:noop,onHome:noop};
+ await act(async()=>root.render(h(GuidedFlow,props)));await act(tick);assert.equal(host.querySelector('#guide-ok').value,'125');assert.ok(host.querySelector('.draft-comparison'));assert.equal(writes.length,0);
  await act(async()=>root.unmount());host.remove();
 });
