@@ -18,6 +18,7 @@
 .history-search-slot[hidden] {display:none;}
 #mes-ai-chat-root .history-search-close {position:absolute;right:4px;top:0;width:32px;height:39px;min-height:39px;min-width:0;padding:7px;}
 .history-search-field {position:relative;flex:1;min-width:0;}
+.history-search-field input::-webkit-search-cancel-button {appearance:none;-webkit-appearance:none;}
 .history-search-field>svg {position:absolute;left:10px;top:50%;transform:translateY(-50%);pointer-events:none;color:var(--history-muted);}
 .history-list {flex:1;min-height:0;overflow:auto;overscroll-behavior:contain;scrollbar-width:thin;scrollbar-color:var(--history-line) transparent;padding:0 10px 16px;}
 .history-list>p {font-size:13px;margin:8px 12px 16px;color:var(--history-muted);}
