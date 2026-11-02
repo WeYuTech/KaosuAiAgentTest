@@ -1,0 +1,529 @@
+{
+  "說明": "實際產品截圖；各筆 SHA 代表該次載入的前端來源，較早無記錄的截圖不計尺寸驗收。",
+  "records": [
+    {
+      "file": "精靈-模具核對-1366.jpg",
+      "sha": "e63269c",
+      "form": {
+        "bottom": 489.25,
+        "height": 378,
+        "left": 312,
+        "right": 1351,
+        "top": 111.25,
+        "width": 1039,
+        "x": 312,
+        "y": 111.25
+      },
+      "guides": 1,
+      "language": "zh-TW",
+      "mode": "desktop-workbench dual-flow step-wizard ",
+      "overflow": false,
+      "theme": null,
+      "viewport": {
+        "dpr": 1,
+        "height": 768,
+        "width": 1366
+      },
+      "work": {
+        "bottom": 729.25,
+        "height": 618,
+        "left": 312,
+        "right": 1366,
+        "top": 111.25,
+        "width": 1054,
+        "x": 312,
+        "y": 111.25
+      }
+    },
+    {
+      "file": "精靈-模具核對-1366-修正.jpg",
+      "sha": "64057ddf55b8a0907d29c1d6c0292dbf64dc2ed4",
+      "form": {
+        "bottom": 845.890625,
+        "height": 734.640625,
+        "left": 312,
+        "right": 1351,
+        "top": 111.25,
+        "width": 1039,
+        "x": 312,
+        "y": 111.25
+      },
+      "guides": 1,
+      "language": "zh-TW",
+      "mode": "desktop-workbench dual-flow step-wizard ",
+      "overflow": false,
+      "rootClass": "",
+      "theme": "light",
+      "viewport": {
+        "dpr": 1,
+        "height": 768,
+        "width": 1366
+      },
+      "work": {
+        "bottom": 729.25,
+        "height": 618,
+        "left": 312,
+        "right": 1366,
+        "top": 111.25,
+        "width": 1054,
+        "x": 312,
+        "y": 111.25
+      }
+    },
+    {
+      "file": "精靈-模具核對-390.jpg",
+      "sha": "64057ddf55b8a0907d29c1d6c0292dbf64dc2ed4",
+      "form": {
+        "bottom": 966.25,
+        "height": 813.25,
+        "left": 0,
+        "right": 375,
+        "top": 153,
+        "width": 375,
+        "x": 0,
+        "y": 153
+      },
+      "guides": 1,
+      "language": "zh-TW",
+      "mode": "desktop-workbench dual-flow step-wizard ",
+      "overflow": false,
+      "rootClass": "",
+      "theme": "light",
+      "viewport": {
+        "dpr": 1,
+        "height": 844,
+        "width": 390
+      },
+      "work": {
+        "bottom": 805.25,
+        "height": 652.25,
+        "left": 0,
+        "right": 390,
+        "top": 153,
+        "width": 390,
+        "x": 0,
+        "y": 153
+      }
+    },
+    {
+      "file": "精靈-模具核對按鈕-320.jpg",
+      "sha": "64057ddf55b8a0907d29c1d6c0292dbf64dc2ed4",
+      "form": {
+        "bottom": 587.75,
+        "height": 944.75,
+        "left": 0,
+        "right": 305,
+        "top": -357,
+        "width": 305,
+        "x": 0,
+        "y": -357
+      },
+      "guides": 1,
+      "language": "zh-TW",
+      "mode": "desktop-workbench dual-flow step-wizard ",
+      "overflow": false,
+      "rootClass": "",
+      "theme": "light",
+      "viewport": {
+        "dpr": 1,
+        "height": 700,
+        "width": 320
+      },
+      "work": {
+        "bottom": 638.5,
+        "height": 485.5,
+        "left": 0,
+        "right": 320,
+        "top": 153,
+        "width": 320,
+        "x": 0,
+        "y": 153
+      }
+    },
+    {
+      "file": "精靈-英文黑暗-1920.jpg",
+      "sha": "64057ddf55b8a0907d29c1d6c0292dbf64dc2ed4",
+      "form": {
+        "bottom": 712.28125,
+        "height": 638.03125,
+        "left": 312,
+        "right": 1905,
+        "top": 74.25,
+        "width": 1593,
+        "x": 312,
+        "y": 74.25
+      },
+      "guides": 1,
+      "language": "en",
+      "mode": "desktop-workbench dual-flow step-wizard ",
+      "overflow": false,
+      "rootClass": "dark",
+      "theme": "dark",
+      "viewport": {
+        "dpr": 1,
+        "height": 1080,
+        "width": 1920
+      },
+      "work": {
+        "bottom": 1041.25,
+        "height": 930,
+        "left": 312,
+        "right": 1920,
+        "top": 111.25,
+        "width": 1608,
+        "x": 312,
+        "y": 111.25
+      }
+    },
+    {
+      "file": "精靈-泰文深藍-768.jpg",
+      "sha": "64057ddf55b8a0907d29c1d6c0292dbf64dc2ed4",
+      "form": {
+        "bottom": 656.28125,
+        "height": 638.03125,
+        "left": 0,
+        "right": 753,
+        "top": 18.25,
+        "width": 753,
+        "x": 0,
+        "y": 18.25
+      },
+      "guides": 1,
+      "language": "th",
+      "mode": "desktop-workbench dual-flow step-wizard ",
+      "overflow": false,
+      "rootClass": "dark",
+      "theme": "navy",
+      "viewport": {
+        "dpr": 1,
+        "height": 1024,
+        "width": 768
+      },
+      "work": {
+        "bottom": 985.25,
+        "height": 874,
+        "left": 0,
+        "right": 768,
+        "top": 111.25,
+        "width": 768,
+        "x": 0,
+        "y": 111.25
+      }
+    },
+    {
+      "file": "作業單-泰文深藍-768.jpg",
+      "sha": "64057ddf55b8a0907d29c1d6c0292dbf64dc2ed4",
+      "form": {
+        "bottom": 985.25,
+        "height": 874,
+        "left": 384,
+        "right": 768,
+        "top": 111.25,
+        "width": 384,
+        "x": 384,
+        "y": 111.25
+      },
+      "guides": 1,
+      "language": "th",
+      "mode": "desktop-workbench dual-flow chat-sheet ",
+      "overflow": false,
+      "rootClass": "dark",
+      "theme": "navy",
+      "viewport": {
+        "dpr": 1,
+        "height": 1024,
+        "width": 768
+      },
+      "work": {
+        "bottom": 985.25,
+        "height": 874,
+        "left": 0,
+        "right": 768,
+        "top": 111.25,
+        "width": 768,
+        "x": 0,
+        "y": 111.25
+      }
+    },
+    {
+      "file": "作業單-泰文深藍-390.jpg",
+      "sha": "64057ddf55b8a0907d29c1d6c0292dbf64dc2ed4",
+      "form": {
+        "bottom": 805.25,
+        "height": 352.25,
+        "left": 0,
+        "right": 375,
+        "top": 453,
+        "width": 375,
+        "x": 0,
+        "y": 453
+      },
+      "guides": 1,
+      "language": "th",
+      "mode": "desktop-workbench dual-flow chat-sheet ",
+      "overflow": false,
+      "rootClass": "dark",
+      "theme": "navy",
+      "viewport": {
+        "dpr": 1,
+        "height": 844,
+        "width": 390
+      },
+      "work": {
+        "bottom": 805.25,
+        "height": 652.25,
+        "left": 0,
+        "right": 390,
+        "top": 153,
+        "width": 390,
+        "x": 0,
+        "y": 153
+      }
+    },
+    {
+      "file": "作業單-泰文MES藍-390.jpg",
+      "sha": "64057ddf55b8a0907d29c1d6c0292dbf64dc2ed4",
+      "form": {
+        "bottom": 805.25,
+        "height": 352.25,
+        "left": 0,
+        "right": 375,
+        "top": 453,
+        "width": 375,
+        "x": 0,
+        "y": 453
+      },
+      "guides": 1,
+      "language": "th",
+      "mode": "desktop-workbench dual-flow chat-sheet ",
+      "overflow": false,
+      "rootClass": "dark",
+      "theme": "mes",
+      "viewport": {
+        "dpr": 1,
+        "height": 844,
+        "width": 390
+      },
+      "work": {
+        "bottom": 805.25,
+        "height": 652.25,
+        "left": 0,
+        "right": 390,
+        "top": 153,
+        "width": 390,
+        "x": 0,
+        "y": 153
+      }
+    },
+    {
+      "file": "作業單-報工結果-1366.jpg",
+      "sha": "64057ddf55b8a0907d29c1d6c0292dbf64dc2ed4",
+      "form": {
+        "bottom": 729.25,
+        "height": 618,
+        "left": 839,
+        "right": 1366,
+        "top": 111.25,
+        "width": 527,
+        "x": 839,
+        "y": 111.25
+      },
+      "guides": 1,
+      "language": "zh-TW",
+      "mode": "desktop-workbench dual-flow chat-sheet ",
+      "overflow": false,
+      "rootClass": "",
+      "theme": "light",
+      "viewport": {
+        "dpr": 1,
+        "height": 768,
+        "width": 1366
+      },
+      "work": {
+        "bottom": 729.25,
+        "height": 618,
+        "left": 312,
+        "right": 1366,
+        "top": 111.25,
+        "width": 1054,
+        "x": 312,
+        "y": 111.25
+      }
+    },
+    {
+      "file": "報工-第二層選取-1366.jpg",
+      "sha": "135f101",
+      "form": {
+        "bottom": 729.25,
+        "height": 618,
+        "left": 312,
+        "right": 1366,
+        "top": 111.25,
+        "width": 1054,
+        "x": 312,
+        "y": 111.25
+      },
+      "guides": 1,
+      "language": "zh-TW",
+      "mode": "desktop-workbench dual-flow chat-sheet ",
+      "overflow": false,
+      "rootClass": "",
+      "theme": "light",
+      "viewport": {
+        "dpr": 1,
+        "height": 768,
+        "width": 1366
+      },
+      "work": {
+        "bottom": 729.25,
+        "height": 618,
+        "left": 312,
+        "right": 1366,
+        "top": 111.25,
+        "width": 1054,
+        "x": 312,
+        "y": 111.25
+      }
+    },
+    {
+      "file": "作業單-報工編輯-1366.jpg",
+      "sha": "135f101",
+      "form": {
+        "bottom": 729.25,
+        "height": 618,
+        "left": 839,
+        "right": 1366,
+        "top": 111.25,
+        "width": 527,
+        "x": 839,
+        "y": 111.25
+      },
+      "guides": 1,
+      "language": "zh-TW",
+      "mode": "desktop-workbench dual-flow chat-sheet ",
+      "overflow": false,
+      "rootClass": "",
+      "theme": "light",
+      "viewport": {
+        "dpr": 1,
+        "height": 768,
+        "width": 1366
+      },
+      "work": {
+        "bottom": 729.25,
+        "height": 618,
+        "left": 312,
+        "right": 1366,
+        "top": 111.25,
+        "width": 1054,
+        "x": 312,
+        "y": 111.25
+      }
+    },
+    {
+      "file": "設定入口-1366.jpg",
+      "sha": "135f101",
+      "form": {
+        "bottom": 729.25,
+        "height": 618,
+        "left": 839,
+        "right": 1366,
+        "top": 111.25,
+        "width": 527,
+        "x": 839,
+        "y": 111.25
+      },
+      "guides": 1,
+      "language": "zh-TW",
+      "mode": "desktop-workbench dual-flow chat-sheet ",
+      "overflow": false,
+      "rootClass": "",
+      "theme": "light",
+      "viewport": {
+        "dpr": 1,
+        "height": 768,
+        "width": 1366
+      },
+      "work": {
+        "bottom": 729.25,
+        "height": 618,
+        "left": 312,
+        "right": 1366,
+        "top": 111.25,
+        "width": 1054,
+        "x": 312,
+        "y": 111.25
+      }
+    },
+    {
+      "file": "精靈-報工編輯-1366.jpg",
+      "sha": "135f101",
+      "form": {
+        "bottom": 1049.578125,
+        "height": 938.328125,
+        "left": 312,
+        "right": 1351,
+        "top": 111.25,
+        "width": 1039,
+        "x": 312,
+        "y": 111.25
+      },
+      "guides": 1,
+      "language": "zh-TW",
+      "mode": "desktop-workbench dual-flow step-wizard ",
+      "overflow": false,
+      "rootClass": "",
+      "theme": "light",
+      "viewport": {
+        "dpr": 1,
+        "height": 768,
+        "width": 1366
+      },
+      "work": {
+        "bottom": 729.25,
+        "height": 618,
+        "left": 312,
+        "right": 1366,
+        "top": 111.25,
+        "width": 1054,
+        "x": 312,
+        "y": 111.25
+      }
+    },
+    {
+      "file": "精靈-修改報工核對-1366.jpg",
+      "sha": "135f101",
+      "form": {
+        "bottom": 1034.140625,
+        "height": 922.890625,
+        "left": 312,
+        "right": 1351,
+        "top": 111.25,
+        "width": 1039,
+        "x": 312,
+        "y": 111.25
+      },
+      "guides": 1,
+      "language": "zh-TW",
+      "mode": "desktop-workbench dual-flow step-wizard ",
+      "overflow": false,
+      "rootClass": "",
+      "theme": "light",
+      "viewport": {
+        "dpr": 1,
+        "height": 768,
+        "width": 1366
+      },
+      "work": {
+        "bottom": 729.25,
+        "height": 618,
+        "left": 312,
+        "right": 1366,
+        "top": 111.25,
+        "width": 1054,
+        "x": 312,
+        "y": 111.25
+      }
+    }
+  ]
+}

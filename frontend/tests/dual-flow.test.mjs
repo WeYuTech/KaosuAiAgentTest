@@ -7,6 +7,7 @@ globalThis.IS_REACT_ACT_ENVIRONMENT=true;
 const {createElement:h,act,useState,useRef}=await import('react');const {createRoot}=await import('react-dom/client');
 const {createServer}=await import('vite');const server=await createServer({server:{middlewareMode:true,hmr:false,ws:false},appType:'custom'});
 const {GuidedFlow}=await server.ssrLoadModule('/src/GuidedFlow.tsx');
+const {CandidateSelect}=await server.ssrLoadModule('/src/CandidateSelect.tsx');
 const {useOperationMode,readOperationMode,operationModeKey}=await server.ssrLoadModule('/src/operation-mode.ts');
 const {ApiError}=await server.ssrLoadModule('/src/api.ts');
 await server.close();after(()=>window.happyDOM.abort());
@@ -14,6 +15,17 @@ const noop=()=>{};
 function mount(){const host=document.createElement('div');host.id='mes-ai-chat-root';document.body.append(host);return {host,root:createRoot(host)};}
 const tick=()=>new Promise(r=>setTimeout(r,720));
 const inputValue=(input,text)=>{Object.getOwnPropertyDescriptor(window.HTMLInputElement.prototype,'value').set.call(input,text);input.dispatchEvent(new Event('input',{bubbles:true}));};
+
+test('彈窗搜尋的提交不冒泡為父層作業預覽',async()=>{
+ const {host,root}=mount();let outer=0,queries=0;
+ const request=async()=>{queries++;return {records:[],page:1,has_more:false,filters:{search:'',part_no:''}};};
+ await act(async()=>root.render(h('form',{onSubmit:e=>{e.preventDefault();outer++;}},h(CandidateSelect,{kind:'parts',value:'',title:'品號',id:'part',choose:noop,request}))));
+ await act(async()=>host.querySelector('button').click());
+ const search=document.querySelector('.candidate-search');assert.ok(search);
+ const before=queries;await act(async()=>search.dispatchEvent(new Event('submit',{bubbles:true,cancelable:true})));
+ assert.equal(queries,before+1);assert.equal(outer,0);
+ await act(async()=>root.unmount());host.remove();
+});
 
 test('一般偏好依可信身分及環境隔離，忙碌採最後選擇且其他分頁不強制切換',async()=>{
  const {host,root}=mount();let mode;function Harness({actor='甲',env='simulation',busy=false,epoch='a'}){mode=useOperationMode(actor,env,epoch,busy);return h('input',{defaultValue:'原輸入'});}
