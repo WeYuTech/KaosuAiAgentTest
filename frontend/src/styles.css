@@ -924,3 +924,6 @@ body {
 #mes-ai-chat-root .modules .entry-card:disabled { opacity:1; }
 
 }
+
+/* 管理表單使用完整欄寬，與一般輸入欄位維持一致。 */
+.management-field > [role="combobox"] { width:100%; justify-content:space-between; }
