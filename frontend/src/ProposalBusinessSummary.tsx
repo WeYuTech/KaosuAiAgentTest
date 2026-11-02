@@ -76,7 +76,7 @@ export function ProposalBusinessSummary({ proposal, workspace }: { proposal: Pro
     </>}
     {(action === 'report.complete' || action === 'report.delete' || action === 'mold.clear' || action === 'mold.unmount_finish') && <div className="business-impact"><strong>{t("影響工單")}</strong>{affected.length ? <ul>{affected.map(order => <li key={order}>{order}</li>)}</ul> : workOrder ? <p>{display(workOrder)}</p> : <p>{t("請核對上方作業對象與摘要。")}</p>}{action === 'report.complete' && <p>{t("同一排程的所有工單會一併完工。")}</p>}{action === 'mold.clear' && <p>{t("會清除這張排程的上下模時間，請確認現場狀態。")}</p>}</div>}
     {nextTimes.length > 0 && <div className="business-impact"><strong>{t("連動作業")}</strong><p>{t("下一張排程的實際開始時間會一併更新為：")}{display(nextTimes[0].after)}</p></div>}
-    {action === 'mold.clear' && ['CHECK_IN_TIME','CHECK_OUT_TIME','COMPLETED'].map(field => {
+    {['mold.clear','mold.unmount_finish'].includes(action) && ['CHECK_IN_TIME','CHECK_OUT_TIME','COMPLETED'].map(field => {
       const change = findChange(field); if (!change) return null;
       return <div key={field}>{businessRow(t(field === 'CHECK_IN_TIME' ? '進站時間' : field === 'CHECK_OUT_TIME' ? '出站時間' : '完工狀態'), change.after === null ? t('清除時間') : change.after, change.before)}</div>;
     })}
