@@ -1,5 +1,10 @@
 /* 固定介面詞彙：中文原文為鍵，不翻譯 MES 主檔名稱或歷史訊息。 */
 export const translations: Record<string, [string, string]> = Object.fromEntries(`
+此聊天沒有訊息|This chat has no messages|แชทนี้ยังไม่มีข้อความ
+已建立定時報告「{0}」|Created scheduled report “{0}”|สร้างรายงานตามกำหนด “{0}” แล้ว
+已暫停定時報告「{0}」|Paused scheduled report “{0}”|หยุดรายงานตามกำหนด “{0}” ชั่วคราวแล้ว
+已恢復定時報告「{0}」|Resumed scheduled report “{0}”|เปิดรายงานตามกำหนด “{0}” ต่อแล้ว
+已刪除定時報告「{0}」|Deleted scheduled report “{0}”|ลบรายงานตามกำหนด “{0}” แล้ว
 核對變更|Review changes|ตรวจสอบการเปลี่ยนแปลง
 核對設定變更|Review settings changes|ตรวจสอบการเปลี่ยนแปลงการตั้งค่า
 金鑰來源：伺服器私密設定；不提供金鑰內容或更新時間。|Key source: private server configuration. Key contents and update time are not available.|แหล่งคีย์: การตั้งค่าส่วนตัวของเซิร์ฟเวอร์ ไม่แสดงคีย์หรือเวลาอัปเดต

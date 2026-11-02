@@ -72,3 +72,5 @@
  #mes-ai-chat-root .management-job-title {align-items:flex-start;}
 }
 @media(prefers-reduced-motion:reduce){#mes-ai-chat-root .new-report-highlight {animation:none;outline:1px solid var(--primary);}}
+
+#mes-ai-chat-root .status-chip.status-warning {border-color:var(--destructive);color:var(--destructive);background:var(--error-surface);}

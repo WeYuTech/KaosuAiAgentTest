@@ -61,8 +61,10 @@ test('定時報告初載不顯示假空態；解析成功不搶焦點，核對�
  await act(async()=>{const setter=Object.getOwnPropertyDescriptor(window.HTMLTextAreaElement.prototype,'value').set;setter.call(input,'每天 08:00 產生 MC37 的報工報告');input.dispatchEvent(new Event('input',{bubbles:true}));});
  const parse=button(host,'解析並填入');await act(async()=>{parse.focus();parse.click();});assert.ok(host.textContent.includes('正在解析條件…'));
  await act(async()=>requests.shift().resolve({title:'早班報告',module:'report',equipment:'MC37',frequency:'weekdays',hour:8,minute:0}));assert.equal(document.activeElement,parse);assert.ok(host.textContent.includes('已填入，請核對'));
- await act(async()=>host.querySelector('form').dispatchEvent(new Event('submit',{bubbles:true,cancelable:true})));assert.ok(requests[0].path.endsWith('/preview'));
- await act(async()=>requests.shift().resolve({title:'解析條件',module:'report',equipment:'MC37',frequency:'weekdays',hour:8,minute:0}));assert.ok(host.textContent.includes('建立定時報告？'));assert.equal(document.activeElement.tagName,'H2');assert.equal(document.activeElement.textContent,'建立定時報告？');
+ await act(async()=>{const field=[...host.querySelectorAll('input')].find(x=>x.value==='MC37');Object.getOwnPropertyDescriptor(window.HTMLInputElement.prototype,'value').set.call(field,'EQ-01');field.dispatchEvent(new Event('input',{bubbles:true}));});
+ await act(async()=>host.querySelector('form').dispatchEvent(new Event('submit',{bubbles:true,cancelable:true})));assert.equal(requests.length,0,'結構化表單核對不可再呼叫文字解析');
+ assert.ok(host.textContent.includes('建立定時報告？'));assert.equal(document.activeElement.tagName,'H2');assert.equal(document.activeElement.textContent,'建立定時報告？');
+ await act(async()=>button(host,'建立').click());const attempt=requests.shift();assert.equal(attempt.path,'/api/report-schedules');assert.equal(attempt.body.equipment,'EQ-01');await act(async()=>attempt.reject(Error('模擬權限不足')));assert.ok(host.textContent.includes('模擬權限不足'));await act(async()=>button(host,'建立').click());const retry=requests.shift();assert.deepEqual(retry.body,attempt.body);await act(async()=>retry.reject(Error('模擬權限不足')));
  await act(async()=>button(host,'返回修改').click());assert.equal([...host.querySelectorAll('input')].some(x=>x.value==='早班報告'),true);
  await act(async()=>root.unmount());host.remove();
 });
@@ -219,6 +221,29 @@ test('設定讀取失敗可重試，錯誤不冒充空設定',async()=>{
  const {host,root}=mount();let reject,resolve;const request=()=>new Promise((r,j)=>{resolve=r;reject=j;});
  try{await act(async()=>root.render(h(ManagementPanel,{section:'budget',request,close:noop,roles:['review'],locked:false})));assert.ok(host.textContent.includes('正在讀取資料'));assert.equal(host.querySelector('input'),null);
  await act(async()=>reject(Error('讀取失敗')));assert.ok(host.textContent.includes('讀取失敗'));await act(async()=>button(host,'重試').click());assert.ok(host.textContent.includes('正在讀取資料'));assert.ok(!host.textContent.includes('讀取失敗'));
- await act(async()=>resolve({settings:{version:0},budget_config:{version:0,limit_usd:20,warning_percent:80},budget:{spent_usd:3,reserved_usd:4,unknown_calls:2},write_allowed:false}));assert.ok(host.textContent.includes('3 USD'));assert.ok(host.textContent.includes('4 USD'));assert.equal(host.querySelector('input'),null);
+ await act(async()=>resolve({settings:{version:0},budget_config:{version:0,limit_usd:20,warning_percent:80},budget:{spent_usd:3,reserved_usd:4,unknown_calls:2},write_allowed:false}));assert.ok(host.textContent.includes('US$3.00'));assert.ok(host.textContent.includes('US$4.00'));assert.equal(host.querySelector('input'),null);
+ }finally{await act(async()=>root.unmount());host.remove();}
+});
+
+
+test('同一身分還原聊天並返回清單：延遲讀取期間不出現假的空態',async()=>{
+ const {host,root}=mount(),requests=[];let controller;
+ const row={id:'restored',module:'report',title:'還原的聊天',is_pinned:true,is_archived:false,is_deleted:true,metadata_version:1};
+ const request=(path,body)=>new Promise((resolve,reject)=>requests.push({path,body,resolve,reject}));
+ function Harness(){const [history,onProjection]=useState();const ref=useRef();controller=ref;return h(MesAssistantProvider,{state:{...base,history}},h(ConversationHistory,{ref,actor:'甲',current:null,overlay:false,locked:false,busy:false,refresh:0,request,close:noop,select:noop,create:noop,beforeChange:noop,changed:noop,usage:noop,onWorkChange:noop,budget:null,onProjection}));}
+ try{
+  await act(async()=>root.render(h(Harness)));assert.equal(host.querySelector('.history-empty'),null);
+  await act(async()=>requests.at(-1).resolve({records:[{...row,id:'other',title:'既有聊天',is_deleted:false}],total:1,page:1,page_size:30}));
+  await act(async()=>controller.current.showScope('deleted'));assert.equal(host.querySelector('.history-empty'),null);
+  await act(async()=>requests.at(-1).resolve({records:[row],total:1,page:1,page_size:30}));
+  await act(async()=>host.querySelector('[aria-label="聊天室選單：還原的聊天"]').dispatchEvent(new KeyboardEvent('keydown',{key:'Enter',bubbles:true})));
+  await act(async()=>[...host.querySelectorAll('[role=menuitem]')].find(x=>x.textContent==='還原聊天').click());
+  assert.equal(requests.at(-1).body.is_deleted,false);await act(async()=>requests.at(-1).resolve({...row,is_deleted:false,metadata_version:2}));
+  const deletedRead=requests.at(-1);
+  await act(async()=>button(host,'返回聊天').click());const activeRead=requests.at(-1);
+  assert.equal(host.querySelector('.history-empty'),null);assert.equal(host.querySelector('.history-list').getAttribute('aria-busy'),'true');
+  await act(async()=>deletedRead.resolve({records:[],total:0,page:1,page_size:30}));assert.equal(host.querySelector('.history-empty'),null);
+  await act(async()=>activeRead.resolve({records:[{...row,is_deleted:false}, {...row,id:'other',title:'既有聊天',is_deleted:false,is_pinned:false}],total:2,page:1,page_size:30}));
+  assert.equal(host.querySelectorAll('.history-row').length,2);assert.equal(host.querySelector('.history-empty'),null);
  }finally{await act(async()=>root.unmount());host.remove();}
 });

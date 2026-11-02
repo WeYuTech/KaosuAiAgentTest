@@ -1,5 +1,5 @@
 import {useEffect,useRef,useState} from 'react';
-import {MessageCircle,LoaderCircle,X,ChevronLeft,ChevronRight} from 'lucide-react';
+import {Search,MessageCircle,LoaderCircle,X,ChevronLeft,ChevronRight} from 'lucide-react';
 import {Dialog,DialogContent,DialogTitle} from './components/ui/dialog';
 import type {ChatEntry,HistoryScope} from './ConversationHistory';
 import {t} from './i18n';
@@ -42,11 +42,11 @@ export function HistorySearchDialog({open,actor,scope,request,locked,close,retur
       onOpenAutoFocus={event=>{event.preventDefault();input.current?.focus();}}
       onCloseAutoFocus={event=>{event.preventDefault();if(document.querySelector('[data-slot="dialog-content"][data-state="open"]'))return;const target=returnFocus();if(target?.isConnected&&!target.closest('[hidden],[inert]'))target.focus({preventScroll:true});}}
       onEscapeKeyDown={event=>{event.stopPropagation();if(event.isComposing||event.keyCode===229||composing||selecting)event.preventDefault();}}>
-      <DialogTitle className="sr-only">{t('搜尋聊天')}</DialogTitle>
+      <DialogTitle className="history-search-title">{t('搜尋聊天')}</DialogTitle>
       <div className="history-search-header">
-        <input data-slot="history-search-input" ref={input} type="search" maxLength={200} value={query} placeholder={t('搜尋聊天')} aria-label={t('搜尋聊天')} disabled={selecting}
+        <div className="history-search-field"><Search size={18} aria-hidden="true"/><input data-slot="history-search-input" ref={input} type="search" maxLength={200} value={query} placeholder={t('搜尋聊天')} aria-label={t('搜尋聊天')} disabled={selecting}
           onCompositionStart={()=>setComposing(true)} onCompositionEnd={()=>setComposing(false)}
-          onChange={event=>{setQuery(event.target.value);setPage(1);}}/>
+          onChange={event=>{setQuery(event.target.value);setPage(1);}}/></div>
         <button className="icon-button" aria-label={t('關閉搜尋')} disabled={composing||selecting} onClick={close}><X size={18}/></button>
       </div>
       <div className="history-search-results" aria-busy={!!actor&&!settled}>

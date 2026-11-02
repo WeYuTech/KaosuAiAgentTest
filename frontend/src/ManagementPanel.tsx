@@ -1,6 +1,6 @@
 ﻿import {useEffect,useRef,useState} from 'react';
 import {LoaderCircle,ArrowRight} from 'lucide-react';
-import {BudgetSummary} from './BudgetSummary';
+import {BudgetSummary,money} from './BudgetSummary';
 import {Input} from './components/ui/input';
 import {Button} from './components/ui/button';
 import {SettingSelect} from './SettingSelect';
@@ -14,7 +14,7 @@ type Budget={version:number;limit_usd:number;warning_percent:number};
 type Config={settings:Settings;budget_config:Budget;budget:Row;hard_limit_usd:number;write_allowed:boolean;api_key_configured:boolean;models:string[];provider:string;agent:string};
 export type ManagementProps={businessTimezone?:string;open?:boolean;returnFocus?:()=>HTMLElement|null;section:ManagementSection;request:<T>(path:string,body?:unknown)=>Promise<T>;close:()=>void;roles:string[];locked:boolean};
 const names={api:'API 設定',agent:'Agent 設定',budget:'用量額度',reports:'定時報告'};
-const human=(key:string,value:unknown)=>key==='reasoning_effort'?t(({low:'低',medium:'中',high:'高'} as Record<string,string>)[String(value)]??String(value)):String(value)+(key==='max_tool_rounds'?` ${t('次')}`:key==='warning_percent'?'%':key==='limit_usd'?' USD':'');
+const human=(key:string,value:unknown)=>key==='limit_usd'?money(value):key==='reasoning_effort'?t(({low:'低',medium:'中',high:'高'} as Record<string,string>)[String(value)]??String(value)):String(value)+(key==='max_tool_rounds'?` ${t('次')}`:key==='warning_percent'?'%':'');
 export function ManagementPanel(props:ManagementProps){return props.section==='reports'?<ReportSchedulesPanel {...props}/>:<SettingsPanel {...props}/>;}
 function SettingsPanel({section,request,close,locked,open=true,returnFocus}:ManagementProps){
  const [config,setConfig]=useState<Config|null>(null),[draft,setDraft]=useState<Row>({}),[state,setState]=useState<'loading'|'ready'|'error'>('loading');
