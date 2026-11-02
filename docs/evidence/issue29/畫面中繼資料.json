@@ -1,0 +1,515 @@
+[
+  {
+    "file": "作業單-初始-1366.jpg",
+    "sha": "0943a0b",
+    "locale": "zh-TW",
+    "theme": "light",
+    "controls": [
+      {
+        "id": "sheet-target",
+        "rect": {
+          "height": 62,
+          "width": 412.4375,
+          "x": 918.546875,
+          "y": 265.390625
+        }
+      },
+      {
+        "id": "guide-ok",
+        "rect": {
+          "height": 40.390625,
+          "width": 412.4375,
+          "x": 918.546875,
+          "y": 366.78125
+        }
+      },
+      {
+        "id": "guide-defects-0-code",
+        "rect": {
+          "height": 40,
+          "width": 241.671875,
+          "x": 918.546875,
+          "y": 518.734375
+        }
+      },
+      {
+        "id": "guide-defects-0-quantity",
+        "rect": {
+          "height": 40.390625,
+          "width": 108.75,
+          "x": 1168.21875,
+          "y": 518.34375
+        }
+      },
+      {
+        "id": "guide-navigation",
+        "rect": {
+          "height": 56.390625,
+          "width": 412.4375,
+          "x": 918.546875,
+          "y": 652.859375
+        }
+      }
+    ],
+    "editor": {
+      "height": 618,
+      "width": 468.4375,
+      "x": 897.546875,
+      "y": 111.25
+    },
+    "form": {
+      "height": 451.734375,
+      "width": 412.4375,
+      "x": 918.546875,
+      "y": 265.390625
+    },
+    "good": "120",
+    "mode": "desktop-workbench dual-flow chat-sheet ",
+    "viewport": {
+      "dpr": 1,
+      "height": 768,
+      "width": 1366
+    },
+    "workspace": {
+      "height": 618,
+      "width": 1054,
+      "x": 312,
+      "y": 111.25
+    }
+  },
+  {
+    "file": "精靈-初始-1366.jpg",
+    "sha": "0943a0b",
+    "locale": "zh-TW",
+    "theme": "light",
+    "controls": [
+      {
+        "id": "guide-navigation",
+        "rect": {
+          "height": 16,
+          "width": 991,
+          "x": 336,
+          "y": 697.25
+        }
+      }
+    ],
+    "editor": {
+      "height": 618,
+      "width": 1054,
+      "x": 312,
+      "y": 111.25
+    },
+    "form": {
+      "height": 118.171875,
+      "width": 991,
+      "x": 336,
+      "y": 306.375
+    },
+    "mode": "desktop-workbench dual-flow step-wizard ",
+    "viewport": {
+      "dpr": 1,
+      "height": 768,
+      "width": 1366
+    },
+    "workspace": {
+      "height": 618,
+      "width": 1054,
+      "x": 312,
+      "y": 111.25
+    }
+  },
+  {
+    "file": "精靈-選取-1366.jpg",
+    "sha": "0943a0b",
+    "locale": "zh-TW",
+    "theme": "light",
+    "controls": [
+      {
+        "id": "guide-navigation",
+        "rect": {
+          "height": 16,
+          "width": 991,
+          "x": 336,
+          "y": 697.25
+        }
+      }
+    ],
+    "editor": {
+      "height": 618,
+      "width": 1054,
+      "x": 312,
+      "y": 111.25
+    },
+    "form": {
+      "height": 118.171875,
+      "width": 991,
+      "x": 336,
+      "y": 199.375
+    },
+    "mode": "desktop-workbench dual-flow step-wizard ",
+    "viewport": {
+      "dpr": 1,
+      "height": 768,
+      "width": 1366
+    },
+    "workspace": {
+      "height": 618,
+      "width": 1054,
+      "x": 312,
+      "y": 111.25
+    }
+  },
+  {
+    "file": "作業單-選取-1366.jpg",
+    "sha": "0943a0b",
+    "locale": "zh-TW",
+    "theme": "light",
+    "controls": [
+      {
+        "id": "guide-navigation",
+        "rect": {
+          "height": 16,
+          "width": 997.984375,
+          "x": 333,
+          "y": 693.25
+        }
+      }
+    ],
+    "editor": {
+      "height": 618,
+      "width": 1053.984375,
+      "x": 312,
+      "y": 111.25
+    },
+    "form": {
+      "height": 118.171875,
+      "width": 997.984375,
+      "x": 333,
+      "y": 285.375
+    },
+    "mode": "desktop-workbench dual-flow chat-sheet ",
+    "viewport": {
+      "dpr": 1,
+      "height": 768,
+      "width": 1366
+    },
+    "workspace": {
+      "height": 618,
+      "width": 1054,
+      "x": 312,
+      "y": 111.25
+    }
+  },
+  {
+    "file": "作業單-編輯-1366.jpg",
+    "sha": "0943a0b",
+    "locale": "zh-TW",
+    "theme": "light",
+    "controls": [
+      {
+        "id": "sheet-target",
+        "rect": {
+          "height": 65.390625,
+          "width": 427.4375,
+          "x": 918.546875,
+          "y": 197.796875
+        }
+      },
+      {
+        "id": "guide-ok",
+        "rect": {
+          "height": 40.390625,
+          "width": 427.4375,
+          "x": 918.546875,
+          "y": 302.578125
+        }
+      },
+      {
+        "id": "guide-defects-0-code",
+        "rect": {
+          "height": 40,
+          "width": 252.015625,
+          "x": 918.546875,
+          "y": 454.53125
+        }
+      },
+      {
+        "id": "guide-defects-0-quantity",
+        "rect": {
+          "height": 40.390625,
+          "width": 113.40625,
+          "x": 1178.5625,
+          "y": 454.140625
+        }
+      },
+      {
+        "id": "guide-navigation",
+        "rect": {
+          "height": 56.390625,
+          "width": 427.4375,
+          "x": 918.546875,
+          "y": 596.53125
+        }
+      }
+    ],
+    "editor": {
+      "height": 618,
+      "width": 468.4375,
+      "x": 897.546875,
+      "y": 111.25
+    },
+    "form": {
+      "height": 455.125,
+      "width": 427.4375,
+      "x": 918.546875,
+      "y": 197.796875
+    },
+    "good": "125",
+    "mode": "desktop-workbench dual-flow chat-sheet ",
+    "viewport": {
+      "dpr": 1,
+      "height": 768,
+      "width": 1366
+    },
+    "workspace": {
+      "height": 618,
+      "width": 1054,
+      "x": 312,
+      "y": 111.25
+    }
+  },
+  {
+    "file": "精靈-編輯-1366.jpg",
+    "sha": "0943a0b",
+    "locale": "zh-TW",
+    "theme": "light",
+    "controls": [
+      {
+        "id": "sheet-target",
+        "rect": {
+          "height": 65.390625,
+          "width": 635,
+          "x": 514,
+          "y": 218.796875
+        }
+      },
+      {
+        "id": "guide-ok",
+        "rect": {
+          "height": 40.390625,
+          "width": 313.5,
+          "x": 514,
+          "y": 323.578125
+        }
+      },
+      {
+        "id": "guide-defects-0-code",
+        "rect": {
+          "height": 40,
+          "width": 395.171875,
+          "x": 514,
+          "y": 399.75
+        }
+      },
+      {
+        "id": "guide-defects-0-quantity",
+        "rect": {
+          "height": 40.390625,
+          "width": 177.8125,
+          "x": 917.171875,
+          "y": 399.359375
+        }
+      },
+      {
+        "id": "guide-navigation",
+        "rect": {
+          "height": 56.390625,
+          "width": 635,
+          "x": 514,
+          "y": 526.859375
+        }
+      }
+    ],
+    "editor": {
+      "height": 488,
+      "width": 1054,
+      "x": 312,
+      "y": 111.25
+    },
+    "form": {
+      "height": 379.34375,
+      "width": 635,
+      "x": 514,
+      "y": 218.796875
+    },
+    "good": "125",
+    "mode": "desktop-workbench dual-flow step-wizard ",
+    "viewport": {
+      "dpr": 1,
+      "height": 768,
+      "width": 1366
+    },
+    "workspace": {
+      "height": 618,
+      "width": 1054,
+      "x": 312,
+      "y": 111.25
+    }
+  },
+  {
+    "file": "精靈-核對-1366.jpg",
+    "sha": "0943a0b",
+    "locale": "zh-TW",
+    "theme": "light",
+    "controls": [],
+    "editor": {
+      "height": 488,
+      "width": 1054,
+      "x": 312,
+      "y": 99.25
+    },
+    "form": null,
+    "mode": "desktop-workbench dual-flow step-wizard ",
+    "viewport": {
+      "dpr": 1,
+      "height": 768,
+      "width": 1366
+    },
+    "workspace": {
+      "height": 618,
+      "width": 1054,
+      "x": 312,
+      "y": 111.25
+    }
+  },
+  {
+    "file": "作業單-核對-1366.jpg",
+    "sha": "0943a0b",
+    "locale": "zh-TW",
+    "theme": "light",
+    "controls": [],
+    "editor": {
+      "height": 618,
+      "width": 468.4375,
+      "x": 897.546875,
+      "y": 111.25
+    },
+    "form": null,
+    "mode": "desktop-workbench dual-flow chat-sheet ",
+    "viewport": {
+      "dpr": 1,
+      "height": 768,
+      "width": 1366
+    },
+    "workspace": {
+      "height": 618,
+      "width": 1054,
+      "x": 312,
+      "y": 111.25
+    }
+  },
+  {
+    "file": "作業單-結果-1366.jpg",
+    "sha": "0943a0b",
+    "locale": "zh-TW",
+    "theme": "light",
+    "controls": [],
+    "editor": {
+      "height": 564.8125,
+      "width": 468.4375,
+      "x": 897.546875,
+      "y": 164.4375
+    },
+    "form": null,
+    "mode": "desktop-workbench dual-flow chat-sheet ",
+    "viewport": {
+      "dpr": 1,
+      "height": 768,
+      "width": 1366
+    },
+    "workspace": {
+      "height": 564.8125,
+      "width": 1054,
+      "x": 312,
+      "y": 164.4375
+    }
+  },
+  {
+    "file": "精靈-結果-1366.jpg",
+    "sha": "0943a0b",
+    "locale": "zh-TW",
+    "theme": "light",
+    "controls": [],
+    "editor": {
+      "height": 434.8125,
+      "width": 1054,
+      "x": 312,
+      "y": 164.4375
+    },
+    "form": null,
+    "mode": "desktop-workbench dual-flow step-wizard ",
+    "viewport": {
+      "dpr": 1,
+      "height": 768,
+      "width": 1366
+    },
+    "workspace": {
+      "height": 564.8125,
+      "width": 1054,
+      "x": 312,
+      "y": 164.4375
+    }
+  },
+  {
+    "file": "精靈-核對-1366.jpg",
+    "sha": "d3bb97a",
+    "locale": "zh-TW",
+    "theme": "light",
+    "controls": [],
+    "editor": {
+      "height": 488,
+      "width": 1054,
+      "x": 312,
+      "y": 99.25
+    },
+    "form": null,
+    "mode": "desktop-workbench dual-flow step-wizard ",
+    "viewport": {
+      "dpr": 1,
+      "height": 768,
+      "width": 1366
+    },
+    "workspace": {
+      "height": 618,
+      "width": 1054,
+      "x": 312,
+      "y": 111.25
+    }
+  },
+  {
+    "file": "作業單-核對-1366.jpg",
+    "sha": "d3bb97a",
+    "locale": "zh-TW",
+    "theme": "light",
+    "controls": [],
+    "editor": {
+      "height": 618,
+      "width": 468.4375,
+      "x": 897.546875,
+      "y": 111.25
+    },
+    "form": null,
+    "mode": "desktop-workbench dual-flow chat-sheet ",
+    "viewport": {
+      "dpr": 1,
+      "height": 768,
+      "width": 1366
+    },
+    "workspace": {
+      "height": 618,
+      "width": 1054,
+      "x": 312,
+      "y": 111.25
+    }
+  }
+]
