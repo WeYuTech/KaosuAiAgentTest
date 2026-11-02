@@ -6,15 +6,15 @@
 #mes-ai-chat-root[data-theme="dark"] .conversation-history {--history-bg:#171717;--history-ink:#ececec;--history-muted:#a2a2a2;--history-line:#343434;--history-hover:#242424;--history-selected:#303030;}
 .conversation-history[hidden] {display:none;}
 .conversation-history svg {stroke-width:1.65;}
-.history-top {display:flex;align-items:center;justify-content:flex-end;gap:8px;height:66px;padding:0 16px 0 20px;flex-shrink:0;}
+.history-top {display:flex;align-items:center;justify-content:flex-end;gap:8px;min-height:48px;padding:8px 12px;flex-shrink:0;}
 #mes-ai-chat-root .history-top .icon-button {width:32px;height:32px;min-width:0;min-height:32px;flex-shrink:0;padding:7px;border-radius:8px;color:var(--history-muted);}
 #mes-ai-chat-root .history-top .icon-button:hover {background:var(--history-hover);color:var(--history-ink);}
-.history-create {padding:0 12px 17px;flex-shrink:0;}
-.history-subview {padding:0 22px 16px;flex-shrink:0;}
+.history-create {padding:0 12px 12px;flex-shrink:0;}
+.history-subview {padding:0 22px 12px;flex-shrink:0;}
 .history-subview button {display:flex;align-items:center;gap:8px;font-size:14px;min-height:40px;color:var(--history-muted);}
 .history-subview h3 {font-size:14px;font-weight:500;margin:8px 0 0;}
 .history-subview h3:focus {outline:none;}
-.history-search-slot {position:relative;margin:0 16px 16px;display:flex;gap:4px;align-items:center;flex-wrap:wrap;flex-shrink:0;}
+.history-search-slot {position:relative;margin:0 16px 12px;display:flex;gap:4px;align-items:center;flex-wrap:wrap;flex-shrink:0;}
 .history-search-slot[hidden] {display:none;}
 #mes-ai-chat-root .history-search-close {position:absolute;right:4px;top:0;width:32px;height:39px;min-height:39px;min-width:0;padding:7px;}
 .history-search-field {position:relative;flex:1;min-width:0;}
@@ -23,7 +23,7 @@
 .history-list {flex:1;min-height:0;overflow:auto;overscroll-behavior:contain;scrollbar-width:thin;scrollbar-color:var(--history-line) transparent;padding:0 10px 16px;}
 .history-list>p {font-size:13px;margin:8px 12px 16px;color:var(--history-muted);}
 .history-group h3 {margin:0 0 8px;padding:0 12px;color:var(--history-muted);font-size:12px;line-height:20px;font-weight:500;letter-spacing:.15px;}
-.history-group+.history-group {margin-top:27px;}
+.history-group+.history-group {margin-top:20px;}
 .history-rows {display:grid;gap:2px;}
 .history-row {display:flex;align-items:center;min-width:0;min-height:42px;border-radius:9px;}
 .history-row:hover,.history-row:focus-within {background:var(--history-hover);}
