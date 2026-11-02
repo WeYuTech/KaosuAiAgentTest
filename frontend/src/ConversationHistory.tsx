@@ -1,10 +1,11 @@
-import {ThreadListNew,ThreadListSearch,ThreadListSkeleton} from './components/assistant-ui/elements/thread-list.aui';
+import {ThreadListNew,ThreadListSkeleton} from './components/assistant-ui/elements/thread-list.aui';
+import {HistorySearchDialog} from './HistorySearchDialog';
 import type {HistoryProjection} from './chat/assistant-runtime';
 import {OperationDialog,OperationActions} from './OperationDialog';
 import {DropdownMenu,DropdownMenuTrigger,DropdownMenuContent,DropdownMenuItem} from './components/ui/dropdown-menu';
 import {ThreadListPrimitive,ThreadListItemPrimitive} from '@assistant-ui/react';
 import { useEffect, useImperativeHandle, useRef, useState, type Ref } from 'react';
-import { ArrowLeft, ChevronLeft, ChevronRight, MoreHorizontal, X, Search, PanelLeftClose } from 'lucide-react';
+import { ArrowLeft, ChevronLeft, ChevronRight, MoreHorizontal, Search, PanelLeftClose } from 'lucide-react';
 import { ApiError, type Conversation, type Module, type Row } from './api';
 import { t } from './i18n';
 
@@ -22,54 +23,46 @@ export function ConversationHistory({ actor, current, overlay, locked, busy, ref
   create: () => Promise<void>; beforeChange: (id: string) => Promise<void>; changed: (entry: ChatEntry) => void; usage: () => void;
   onWorkChange: (value:boolean)=>void;
 }) {
-  const [scope, setScope] = useState<HistoryScope>('active'), [search, setSearch] = useState(''), [page, setPage] = useState(1);
+  const [scope, setScope] = useState<HistoryScope>('active'), [page, setPage] = useState(1);
   const [failure,setFailure]=useState<{key:string;message:string}|null>(null), [saving,setSaving]=useState(false);
   const [nonce,setNonce] = useState(0), [dialog,setDialog] = useState<{kind:'rename'|'delete';entry:ChatEntry}|null>(null);
-  const requestKey=JSON.stringify([actor,scope,search,page,nonce,refresh]);
+  const requestKey=JSON.stringify([actor,scope,page,nonce,refresh]);
   function setError(message:string){setFailure(message?{key:requestKey,message}:null);}
   const error=failure?.key===requestKey?failure.message:'';
   const [searchOpen,setSearchOpen]=useState(false);const searchButton=useRef<HTMLButtonElement>(null);
-  const [searchComposing,setSearchComposing]=useState(false);
   const [dialogOpen,setDialogOpen]=useState(false);
   const [response,setResponse]=useState<{key:string;data:Page}|null>(null);
   // 查詢條件改變的同一次 render 即隱藏舊列，不能等到 effect 才撤下舊操作。
   const settled=response?.key===requestKey;
   const loading=Boolean(actor&&!settled&&!error);
   const data=settled?response.data:emptyPage;
-  const previousQuery=useRef<{actor?:string;scope:string;search:string;page:number;nonce:number;refresh:number}|null>(null);
   const [title,setTitle]=useState(''), [dialogError,setDialogError]=useState('');
-  const searchRef=useRef<HTMLInputElement>(null), dialogRef=useRef<HTMLDivElement>(null), trigger=useRef<HTMLElement|null>(null);
+  const dialogRef=useRef<HTMLDivElement>(null), trigger=useRef<HTMLElement|null>(null);
   const requestRef=useRef(request); requestRef.current=request;
   const composing=useRef(false), restoreFocus=useRef(false);
   const scopeHeading=useRef<HTMLHeadingElement>(null), focusScope=useRef(false);
   const [navigation,setNavigation]=useState(0);
   function showScope(next:HistoryScope){
-    setScope(next);setSearch('');setPage(1);setSearchOpen(false);setSearchComposing(false);
+    setScope(next);setPage(1);setSearchOpen(false);
     focusScope.current=true;setNavigation(value=>value+1);
   }
   useImperativeHandle(ref,()=>({showScope}),[]);
   // 選單關閉後才導頁；同一份清單保留掛載，焦點只交接一次。
   useEffect(()=>{if(visible&&focusScope.current){focusScope.current=false;restoreFocus.current=false;(scope==='active'?searchButton.current:scopeHeading.current)?.focus({preventScroll:true});}},[visible,navigation,scope]);
-  useEffect(()=>{if(!loading&&restoreFocus.current){restoreFocus.current=false;(searchOpen?searchRef.current:searchButton.current)?.focus();}},[loading]);
+  useEffect(()=>{if(!loading&&restoreFocus.current){restoreFocus.current=false;searchButton.current?.focus();}},[loading]);
   useEffect(()=>{onWorkChange(saving);return()=>onWorkChange(false);},[saving,onWorkChange]);
   useEffect(()=>{let valid=true;
-    const previous=previousQuery.current;
-    previousQuery.current={actor,scope,search,page,nonce,refresh};
     if(!actor)return;
-    const searchOnly=previous&&previous.actor===actor&&previous.scope===scope&&previous.nonce===nonce&&previous.refresh===refresh&&previous.search!==search;
-    const load=()=>void requestRef.current<Page>(`/api/conversations?${new URLSearchParams({q:search,scope,page:String(page)})}`)
+    const load=()=>void requestRef.current<Page>(`/api/conversations?${new URLSearchParams({q:'',scope,page:String(page)})}`)
       .then(value=>{if(valid){
         const lastPage=Math.max(1,Math.ceil(value.total/value.page_size));
         if(page>lastPage){setPage(lastPage);return;}
         setResponse({key:requestKey,data:value});setFailure(null);
       }})
       .catch(e=>{if(valid)setFailure({key:requestKey,message:e.message});});
-    const timer=searchOnly?setTimeout(load,180):undefined;
-    if(!searchOnly)load();
-    return()=>{valid=false;if(timer!==undefined)clearTimeout(timer);};
-  },[actor,search,scope,page,nonce,refresh,requestKey]);
-  useEffect(()=>{if(searchOpen)searchRef.current?.focus();},[searchOpen]);
-  function closeSearch(){if(searchComposing)return;setSearch('');setPage(1);setSearchOpen(false);searchButton.current?.focus();}
+    load();
+    return()=>{valid=false;};
+  },[actor,scope,page,nonce,refresh,requestKey]);
   useEffect(()=>{if(dialog){dialogRef.current?.querySelector<HTMLInputElement>('input')?.focus();if(dialog.kind==='delete')dialogRef.current?.focus();}},[dialog?.kind]);
   const closeDialog=()=>setDialogOpen(false);
   async function mutate(entry:ChatEntry,patch:Record<string,unknown>) {
@@ -82,13 +75,8 @@ export function ConversationHistory({ actor, current, overlay, locked, busy, ref
   const handlers=useRef({select,create,locked,busy,saving,data});handlers.current={select,create,locked,busy,saving,data};
   useEffect(()=>{onProjection({actor,records:data.records,loading,select:async id=>{const h=handlers.current;const entry=h.data.records.find(v=>v.id===id);if(entry&&!h.locked&&!h.busy&&!h.saving&&!entry.is_deleted)await h.select(entry);},create:async()=>{const h=handlers.current;if(!h.locked&&!h.busy&&!h.saving)await h.create();}});},[actor,data,loading,onProjection]);
   return <aside id="chat-history" hidden={!visible} inert={!visible?true:undefined} aria-hidden={!visible?true:undefined} className={`conversation-history ${overlay?'history-overlay':''}`} aria-label={t('聊天紀錄')}>
-    <div className="history-top"><div className="history-create"><ThreadListNew disabled={locked||busy||saving}/></div><button ref={searchButton} className="icon-button history-search-trigger" aria-label={t('搜尋聊天')} aria-expanded={searchOpen} onClick={()=>{setSearchOpen(true);searchRef.current?.focus();}}><Search size={18}/></button><button className="icon-button history-close" onClick={close} aria-label={t('收合側欄')}><PanelLeftClose size={18}/></button></div>
+    <div className="history-top"><div className="history-create"><ThreadListNew disabled={locked||busy||saving}/></div><button ref={searchButton} className="icon-button history-search-trigger" aria-label={t('搜尋聊天')} aria-haspopup="dialog" aria-expanded={searchOpen} onClick={()=>setSearchOpen(true)}><Search size={18}/></button><button className="icon-button history-close" onClick={close} aria-label={t('收合側欄')}><PanelLeftClose size={18}/></button></div>
     {scope!=='active'&&<div className="history-subview"><button className="text-button" onClick={()=>showScope('active')}><ArrowLeft size={18}/>{t('返回聊天')}</button><h3 ref={scopeHeading} tabIndex={-1}>{t(scope==='archived'?'封存聊天':'已刪除聊天')}</h3></div>}
-    <div className="history-search-slot" hidden={!searchOpen} onKeyDown={event=>{if(event.key==='Escape'){event.stopPropagation();if(!event.nativeEvent.isComposing&&!searchComposing){event.preventDefault();closeSearch();}}}}>
-      <ThreadListSearch ref={searchRef} value={search} maxLength={200} placeholder={t('搜尋聊天')} aria-label={t('搜尋聊天')}
-        onCompositionStart={()=>setSearchComposing(true)} onCompositionEnd={()=>setSearchComposing(false)} onChange={e=>{setSearch(e.target.value);setPage(1);}}/>
-      <button className="icon-button history-search-close" aria-label={t('關閉搜尋')} disabled={searchComposing} onClick={closeSearch}><X size={16}/></button>
-    </div>
     <ThreadListPrimitive.Root className="history-list" aria-busy={loading}>
       {(scope==='active'?['pinned','recent']:['management']).map(group=><section key={group} className="history-group" aria-label={t(group==='pinned'?'已釘選':group==='recent'?'近期':scope==='archived'?'封存聊天':'已刪除聊天')}>
         {scope==='active'&&<h3>{t(group==='pinned'?'已釘選':'近期')}</h3>}
@@ -111,7 +99,7 @@ export function ConversationHistory({ actor, current, overlay, locked, busy, ref
         </ThreadListItemPrimitive.Root>;
         }}</ThreadListPrimitive.Items></div>}
       </section>)}
-      {!actor?<p className="muted history-empty">{t('尚未登入')}</p>:loading?<ThreadListSkeleton/>:!error&&!data.records.length?<p className="muted history-empty">{t(search?'找不到符合的聊天':'尚無聊天')}</p>:null}
+      {!actor?<p className="muted history-empty">{t('尚未登入')}</p>:loading?<ThreadListSkeleton/>:!error&&!data.records.length?<p className="muted history-empty">{t('尚無聊天')}</p>:null}
       {error&&<p role="alert">{error}</p>}
       {actor&&(error||settled&&data.total>data.page_size)&&<div className="history-pagination">
         {settled&&data.total>data.page_size&&<><button className="icon-button" disabled={page<=1||loading} onClick={()=>setPage(v=>v-1)} aria-label={t('上一頁')}><ChevronLeft size={16}/></button><span>{data.page} / {Math.ceil(data.total/data.page_size)}</span><button className="icon-button" disabled={page*data.page_size>=data.total||loading} onClick={()=>setPage(v=>v+1)} aria-label={t('下一頁')}><ChevronRight size={16}/></button></>}
@@ -119,7 +107,8 @@ export function ConversationHistory({ actor, current, overlay, locked, busy, ref
       </div>}
     </ThreadListPrimitive.Root>
     <div className="history-footer"><button className="sidebar-budget" onClick={usage} disabled={!actor} aria-label={t('用量與使用統計')}><span><strong>{t('用量')}</strong><span>{!actor ? t('尚未登入') : budget ? `US$${Number(budget.spent_usd||0).toFixed(2)} / ${Number(budget.limit_usd).toFixed(2)}` : t('尚未取得用量')}</span></span><span className="budget-track"><span style={{width:budget?`${Math.min(100,Math.max(0,Number(budget.limit_usd)>0?(Number(budget.spent_usd||0)+Number(budget.reserved_usd||0))/Number(budget.limit_usd)*100:100))}%`:'0%'}}/></span></button>{locked&&<p role="status">{t('請先完成、取消或查核原操作，再切換聊天。')}</p>}</div>
-    {dialog&&<OperationDialog open={dialogOpen} returnFocus={()=>trigger.current?.isConnected?trigger.current:(searchOpen?searchRef.current:searchButton.current)} title={t(dialog.kind==='rename'?'重新命名':'刪除聊天？')} close={closeDialog} locked={saving} className="history-dialog"><div ref={dialogRef}>
+    <HistorySearchDialog open={searchOpen} key={`${actor}:${scope}`} actor={actor} scope={scope} request={request} locked={locked||busy||saving} close={()=>setSearchOpen(false)} returnFocus={()=>searchButton.current} select={select}/>
+    {dialog&&<OperationDialog open={dialogOpen} returnFocus={()=>trigger.current?.isConnected?trigger.current:searchButton.current} title={t(dialog.kind==='rename'?'重新命名':'刪除聊天？')} close={closeDialog} locked={saving} className="history-dialog"><div ref={dialogRef}>
       {dialog.kind==='delete'&&<p>{t('可至「更多功能 → 已刪除聊天」還原；MES 業務與稽核紀錄保留。')}</p>}
       <form onSubmit={e=>{e.preventDefault();if(!saving&&!composing.current)void mutate(dialog.entry,dialog.kind==='rename'?{title:title.trim()}:{is_deleted:true});}}>
         {dialog.kind==='rename'?<label>{t('名稱')}<input maxLength={100} value={title} disabled={saving} onChange={e=>setTitle(e.target.value)} onCompositionStart={()=>{composing.current=true;}} onCompositionEnd={()=>{composing.current=false;}} onKeyDown={e=>{if(e.key==='Enter'&&(e.nativeEvent.isComposing||e.nativeEvent.keyCode===229||composing.current))e.preventDefault();}}/></label>:<strong>{dialog.entry.title}</strong>}

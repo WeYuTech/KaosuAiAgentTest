@@ -1,4 +1,4 @@
-import {test,after} from 'node:test';
+import {test,after,afterEach} from 'node:test';
 import assert from 'node:assert/strict';
 import {Window} from 'happy-dom';
 const window=new Window({url:'http://localhost/'});
@@ -15,6 +15,8 @@ const {beginAttempt,acceptAttempt,projectMessages}=await server.ssrLoadModule('/
 const {useChatScroll}=await server.ssrLoadModule('/src/chat/use-chat-scroll.ts');
 await server.close();
 after(()=>window.happyDOM.abort());
+// Radix 焦點圍欄在卸載後的計時器釋放；先完成清理才掛下一個測試容器。
+afterEach(()=>new Promise(resolve=>setTimeout(resolve,30)));
 const base={conversationId:null,messages:[],draft:'',busy:false,disabled:false,sendDisabled:false,onSend:()=>{}};
 const noop=()=>{};
 function mount(){const host=document.createElement('div');host.id='mes-ai-chat-root';document.body.append(host);return {host,root:createRoot(host)};}
@@ -33,7 +35,7 @@ test('全域入口在清單未重掛下切範圍；延遲回覆隔離、焦點�
  await act(async()=>requests[1].resolve({records:[],total:0,page:1,page_size:30}));assert.equal(host.querySelectorAll('.history-empty').length,1);assert.equal(host.querySelector('.history-empty').textContent,'尚無聊天');assert.equal(host.querySelector('[aria-label="下一頁"]'),null);
  await open('封存聊天');assert.equal(host.querySelector('aside'),original);assert.equal(document.activeElement.textContent,'封存聊天');assert.equal(requests.length,3);
  await act(async()=>requests[2].reject(Error('連線失敗')));assert.ok(host.textContent.includes('連線失敗'));assert.equal(host.querySelector('.history-empty'),null);
- await act(async()=>button(host,'返回聊天').click());assert.ok(requests.at(-1).path.includes('scope=active'));assert.equal(document.activeElement,host.querySelector('button[aria-label="搜尋聊天"]'));
+ await act(async()=>button(host,'返回聊天').click());assert.ok(requests.at(-1).path.includes('scope=active'));assert.ok(document.activeElement===host.querySelector('button[aria-label="搜尋聊天"]'),'焦點應返回搜尋按鈕：'+document.activeElement?.tagName);
  assert.deepEqual([...host.querySelectorAll('.history-group h3')].map(x=>x.textContent),['已釘選','近期']);assert.ok(button(host,'新聊天').disabled,'未知／待確認鎖定未被管理導覽解除');
  } finally {await act(async()=>root.unmount());host.remove();}
 });
@@ -45,7 +47,7 @@ test('搜尋聚焦及組字清空不隱藏欄位；伺服器 page_size 控制多
  await act(async()=>host.querySelector('[aria-label="下一頁"]').click());assert.equal(requests.length,2);assert.ok(requests[1].path.includes('page=2'));
  await act(async()=>host.querySelector('button[aria-label="搜尋聊天"]').click());const input=host.querySelector('input[aria-label="搜尋聊天"]');await act(async()=>input.focus());await act(async()=>requests[1].resolve({records:[],total:21,page:2,page_size:10}));assert.equal(input.closest('[hidden]'),null);
  await act(async()=>input.dispatchEvent(new Event('compositionstart',{bubbles:true})));await act(async()=>input.blur());assert.equal(input.closest('[hidden]'),null);
- await act(async()=>input.dispatchEvent(new Event('compositionend',{bubbles:true})));assert.equal(input.closest('[hidden]'),null);await act(async()=>host.querySelector('[aria-label="關閉搜尋"]').click());assert.ok(input.closest('[hidden]'));assert.equal(document.activeElement,host.querySelector('button[aria-label="搜尋聊天"]'));
+ await act(async()=>input.dispatchEvent(new Event('compositionend',{bubbles:true})));assert.equal(input.closest('[hidden]'),null);await act(async()=>host.querySelector('[aria-label="關閉搜尋"]').click());await act(tick);assert.equal(input.isConnected,false);assert.ok(document.activeElement===host.querySelector('button[aria-label="搜尋聊天"]'),'焦點應返回搜尋按鈕：'+document.activeElement?.tagName);
  await act(async()=>root.unmount());host.remove();
 });
 
@@ -146,10 +148,10 @@ test('搜尋與管理返回均清空查詢回第一頁；搜尋關閉還焦點�
  await act(async()=>host.querySelector('button[aria-label="搜尋聊天"]').click());const input=host.querySelector('input');
  await act(async()=>{Object.getOwnPropertyDescriptor(window.HTMLInputElement.prototype,'value').set.call(input,'MC37');input.dispatchEvent(new Event('input',{bubbles:true}));});
  await act(tick);const old=requests.at(-1);assert.ok(old.path.includes('q=MC37'));
- await act(async()=>controller.current.showScope('archived'));assert.ok(requests.at(-1).path.includes('q=&scope=archived&page=1'));assert.ok(input.closest('[hidden]'));assert.equal(input.value,'');
+ await act(async()=>controller.current.showScope('archived'));assert.ok(requests.at(-1).path.includes('q=&scope=archived&page=1'));assert.equal(input.isConnected,false);assert.equal(host.querySelector('.history-search-dialog'),null);
  await act(async()=>old.resolve({records:[{id:'old',title:'不應出現'}],total:1,page:1,page_size:30}));assert.ok(!host.textContent.includes('不應出現'));
  await act(async()=>button(host,'返回聊天').click());assert.ok(requests.at(-1).path.includes('q=&scope=active&page=1'));
- await act(async()=>host.querySelector('button[aria-label="搜尋聊天"]').click());await act(async()=>input.dispatchEvent(new KeyboardEvent('keydown',{key:'Escape',bubbles:true})));assert.ok(input.closest('[hidden]'));assert.equal(document.activeElement,host.querySelector('button[aria-label="搜尋聊天"]'));
+ await act(async()=>host.querySelector('button[aria-label="搜尋聊天"]').click());const reopened=host.querySelector('input[aria-label="搜尋聊天"]');assert.equal(reopened.value,'');await act(async()=>reopened.dispatchEvent(new KeyboardEvent('keydown',{key:'Escape',bubbles:true})));await act(tick);assert.equal(reopened.isConnected,false);assert.ok(document.activeElement===host.querySelector('button[aria-label="搜尋聊天"]'),'焦點應返回搜尋按鈕：'+document.activeElement?.tagName);
  } finally {await act(async()=>root.unmount());host.remove();}
 });
 
@@ -163,5 +165,25 @@ test('可信身分替換重設清單範圍並隔離舊身分回覆',async()=>{
  await act(async()=>changeActor('乙'));assert.ok(requests.at(-1).path.includes('scope=active&page=1'));
  await act(async()=>old.resolve({records:[{id:'secret',title:'甲的聊天'}],total:1,page:1,page_size:30}));assert.ok(!host.textContent.includes('甲的聊天'));
  await act(async()=>requests.at(-1).resolve({records:[],total:0,page:1,page_size:30}));assert.equal(host.querySelector('.history-subview'),null);assert.equal(host.querySelectorAll('.history-empty').length,1);assert.equal(host.querySelector('.history-empty').textContent,'尚無聊天');
+ } finally {await act(async()=>root.unmount());host.remove();}
+});
+
+test('搜尋彈窗獨立查詢、淘汰過期結果、維持操作鎖定且選取後才切換聊天',async()=>{
+ const {host,root}=mount(),requests=[],selected=[];let setLocked,setVisible;
+ const row=(id)=>({id,module:'report',title:id,is_pinned:false,is_archived:false,is_deleted:false,metadata_version:1});
+ const request=path=>new Promise((resolve,reject)=>requests.push({path,resolve,reject}));
+ function Harness(){const [history,onProjection]=useState(),[locked,updateLocked]=useState(true),[visible,updateVisible]=useState(true);setLocked=updateLocked;setVisible=updateVisible;return h(MesAssistantProvider,{state:{...base,history}},h(ConversationHistory,{actor:'甲',current:null,visible,overlay:false,locked,busy:false,refresh:0,request,close:noop,select:async entry=>{selected.push(entry.id);},create:noop,beforeChange:noop,changed:noop,usage:noop,onWorkChange:noop,budget:null,onProjection}));}
+ try {
+  await act(async()=>root.render(h(Harness)));await act(async()=>requests[0].resolve({records:[row('原側欄')],total:1,page:1,page_size:30}));
+  await act(async()=>host.querySelector('button[aria-label="搜尋聊天"]').click());await act(tick);
+  const modal=host.querySelector('.history-search-dialog'),input=modal.querySelector('input');assert.ok(document.activeElement===input);
+  await act(async()=>requests.at(-1).resolve({records:[row('近期作業')],total:1,page:1,page_size:30}));
+  assert.ok(modal.querySelector('.history-search-result').disabled);await act(async()=>modal.querySelector('.history-search-result').click());assert.equal(selected.length,0);
+  const fill=async value=>{await act(async()=>{Object.getOwnPropertyDescriptor(window.HTMLInputElement.prototype,'value').set.call(input,value);input.dispatchEvent(new Event('input',{bubbles:true}));});await act(tick);};
+  await fill('MC37');const old=requests.at(-1);await fill('MC38');const latest=requests.at(-1);
+  await act(async()=>latest.resolve({records:[row('MC38 報工')],total:1,page:1,page_size:30}));await act(async()=>old.resolve({records:[row('過期 MC37')],total:1,page:1,page_size:30}));
+  await act(async()=>setVisible(false));assert.ok(modal.isConnected);assert.equal(input.value,'MC38');await act(async()=>setVisible(true));assert.ok(!modal.textContent.includes('過期'));assert.ok(host.querySelector('.history-list').textContent.includes('原側欄'));assert.equal(selected.length,0);
+  await act(async()=>setLocked(false));await act(async()=>modal.querySelector('.history-search-result').click());await act(tick);
+  assert.deepEqual(selected,['MC38 報工']);assert.equal(host.querySelector('.history-search-dialog'),null);
  } finally {await act(async()=>root.unmount());host.remove();}
 });

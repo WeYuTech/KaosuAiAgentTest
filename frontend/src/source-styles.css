@@ -167,7 +167,7 @@
 
 /* 只提供宿主定位、滿版與存取橋接，不另設 MES 聊天皮膚。 */
 #mes-ai-chat-root { position: relative; z-index: var(--aui-widget-layer); }
-:where(#mes-ai-chat-root, #mes-ai-preview-root) :focus-visible:not(.aui-composer-input):not(.aui-edit-composer-input) {
+:where(#mes-ai-chat-root, #mes-ai-preview-root) :focus-visible:not(.aui-composer-input):not(.aui-edit-composer-input):not([data-slot="history-search-input"]) {
   outline: var(--aui-focus-width) solid var(--ring);
   outline-offset: var(--aui-focus-offset);
 }
