@@ -19,6 +19,16 @@ const molds = [{ TOL_NO: 'MOLD-SPLIT', DETAILS: [
   { TOL_DETALS_SID: '61', PART_NO: 'EPS-A', TOL_DETALS_NO: 'MOLD-ONE-L', TOL_DETALS_NAME: '單一模穴' },
 ] }];
 
+test('未變動數量不畫刪除線，離頁核對仍呈現後端執行時間與品號', () => {
+  const proposal={action:'report.update',args:{report_id:'3001',ok:125,defects:[]},changes:[{field:'OK_QTY',before:125,after:125}],target:{equipment:'MC37',work_order:'WO-261102-0382',part_no:'P-102',part_spec:'外殼',execution_time:'2026-11-02 08:10:00'}};
+  const html=renderToStaticMarkup(createElement(ProposalBusinessSummary,{proposal,workspace:{records:[],catalogs:{}}}));
+  assert.ok(!html.includes('business-before'));
+  for(const value of ['P-102 · 外殼','2026-11-02 08:10:00','WO-261102-0382'])assert.ok(html.includes(value));
+  proposal.changes[0].before=120;
+  const changed=renderToStaticMarkup(createElement(ProposalBusinessSummary,{proposal,workspace:{records:[],catalogs:{}}}));
+  assert.ok(changed.includes('class="business-before">120</span>'));
+});
+
 test('排程核對直接呈現後端生產日與結束時間，以及各模穴目標件數', () => {
   const proposal = { action: 'schedule.save', args: { start_time: '2026-10-31 07:59', target_shots: 10, cycle_seconds: 60, details: [{ wo: 'WO-A', part_no: 'EPS-A', cavities: 2 }] },
     changes: [{ field: 'SCHEDULE_DATE', after: '2026-10-30' }, { field: 'SCHEDULE_END_TIME', after: '2026-10-31 08:09:00' }] };

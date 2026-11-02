@@ -17,6 +17,37 @@ function mount(){const host=document.createElement('div');host.id='mes-ai-chat-r
 const tick=()=>new Promise(r=>setTimeout(r,720));
 const inputValue=(input,text)=>{Object.getOwnPropertyDescriptor(window.HTMLInputElement.prototype,'value').set.call(input,text);input.dispatchEvent(new Event('input',{bubbles:true}));};
 
+test('首次及同目標套用保留數量，換執行紀錄才清除；查看明細不套用',async()=>{
+ const {host,root}=mount();let guide={version:1,action:'report.add',args:{ok:120,defects:[{code:'NG01',quantity:3}]},step:'details',missing:['execution_id'],ready:false};const calls=[];
+ const workspace={records:['2001','2002'].map((id,i)=>({WIP_OPI_WDOEACICO_HIST_SID:id,EQP_NO:'MC37',WO:'WO-'+i,ZZ_MODLE_UPLOAD_END:'2026-11-02'})),catalogs:{defect_reasons:[{NG_CODE_NO:'NG01',NG_CODE_NAME:'刮傷'}]}};
+ const request=async(path,body)=>{calls.push({path,body});if(path.includes('/workspace'))return workspace;if(body)guide={...guide,...body,version:guide.version+1,missing:[],ready:true};return structuredClone(guide);};
+ const props={apiRequest:request,conversation:{id:'first',messages:[],module:'report'},module:'report',workspace,selected:null,signal:0,proposal:null,status:'',disabled:false,date:null,onReply:noop,onAudit:noop,onHome:noop};
+ const click=async text=>act(async()=>[...host.querySelectorAll('button')].find(b=>b.textContent===text).click());
+ await act(async()=>root.render(h(GuidedFlow,props)));
+ await click('選擇／更換對象');await click('查看');assert.equal(calls.filter(c=>c.body).length,0);
+ await act(async()=>host.querySelectorAll('input[type=radio]')[0].click());assert.equal(calls.filter(c=>c.body).length,0);
+ await click('帶入作業單');assert.equal(guide.args.ok,120);assert.deepEqual(guide.args.defects,[{code:'NG01',quantity:3}]);
+ const saved=calls.filter(c=>c.body).length;
+ await click('選擇／更換對象');await act(async()=>host.querySelectorAll('input[type=radio]')[0].click());await click('帶入作業單');assert.equal(calls.filter(c=>c.body).length,saved);assert.equal(host.querySelector('#guide-ok').value,'120');
+ await click('選擇／更換對象');await act(async()=>host.querySelectorAll('input[type=radio]')[1].click());await click('帶入作業單');assert.equal(guide.args.execution_id,'2002');assert.equal(guide.args.ok,undefined);assert.equal(guide.args.defects,undefined);
+ await act(async()=>root.unmount());host.remove();
+});
+
+test('未改值返回核對沿用有效 proposal，實改值才保存並重新預覽',async()=>{
+ const {host,root}=mount();const calls=[];let card={id:'original',digest:'original-digest',action:'report.add',status:'pending',expires_at:new Date(Date.now()+600000).toISOString(),args:{execution_id:'2001',ok:120,defects:[]}};
+ let guide={version:3,action:'report.add',args:card.args,step:'review',missing:[],ready:true,proposal:card};
+ const request=async(path,body)=>{calls.push({path,body});if(path.endsWith('/proposals')){card={...card,id:'new',args:body.args};guide={...guide,proposal:card,step:'review'};return {proposal:card};}if(body)guide={...guide,...body,version:guide.version+1,proposal:null};return structuredClone(guide);};
+ const props={apiRequest:request,conversation:{id:'revisit',messages:[],module:'report'},module:'report',workspace:{records:[{WIP_OPI_WDOEACICO_HIST_SID:'2001',EQP_NO:'MC37',WO:'WO-A'}],catalogs:{}},selected:null,signal:0,status:'',disabled:false,date:null,onAudit:noop,onHome:noop};
+ function Harness(){const [proposal,setProposal]=useState(card);return h(GuidedFlow,{...props,proposal,onReply:r=>{if('proposal'in r)setProposal(r.proposal);}});}
+ await act(async()=>root.render(h(Harness)));
+ const back=()=>[...host.querySelectorAll('button')].find(b=>b.textContent.includes('修改資料'));
+ await act(async()=>back().click());await act(async()=>host.querySelector('form').dispatchEvent(new Event('submit',{bubbles:true,cancelable:true})));
+ assert.equal(calls.filter(c=>c.body).length,0);assert.equal(guide.proposal.id,'original');assert.equal(guide.version,3);
+ await act(async()=>back().click());await act(async()=>inputValue(host.querySelector('#guide-ok'),'125'));await act(async()=>host.querySelector('form').dispatchEvent(new Event('submit',{bubbles:true,cancelable:true})));
+ assert.equal(calls.filter(c=>c.body&&c.path.endsWith('/guide')).length,1);assert.equal(calls.filter(c=>c.path.endsWith('/proposals')).length,1);assert.equal(guide.args.ok,125);
+ await act(async()=>root.unmount());host.remove();
+});
+
 test('HTTP 缺少 randomUUID 仍可開啟入口，未知結果沿用原識別查核且不重送',async()=>{
  const original=Object.getOwnPropertyDescriptor(globalThis,'crypto');const nativeCrypto=globalThis.crypto;
  Object.defineProperty(globalThis,'crypto',{configurable:true,value:{getRandomValues:nativeCrypto.getRandomValues.bind(nativeCrypto)}});

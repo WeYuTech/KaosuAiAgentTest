@@ -12,6 +12,10 @@ export function ProposalBusinessSummary({ proposal, workspace }: { proposal: Pro
   const equipment = target.equipment ?? record?.EQP_NO ?? args.equipment;
   const workOrder = target.work_order ?? record?.WO;
   const scheduleTime = args.start_time ?? record?.SCHEDULE_START_TIME;
+  const executionTime = target.execution_time ?? record?.REAL_CHECK_IN_TIME ?? record?.CHECK_IN_TIME;
+  const partNo = target.part_no ?? record?.PART_NO;
+  const parts = Array.isArray(workspace.catalogs.parts) ? workspace.catalogs.parts as Row[] : [];
+  const part = [partNo,target.part_spec ?? record?.PART_SPEC ?? parts.find(row=>row.PART_NO===partNo)?.PART_SPEC].filter(Boolean).join(' · ');
   const report = Array.isArray(record?.REPORTS) ? (record.REPORTS as Row[]).find(r => String(r.WIP_OPI_WDOEACICOOUTPUT_HIST_SID) === String(args.report_id)) : undefined;
   const affected = [...new Set((target.affected_orders ?? []).map(order => typeof order === 'string' ? order : typeof order === 'object' && order ? display((order as Row).WO ?? (order as Row).work_order ?? (order as Row).wo ?? order) : display(order)))];
   const reasons = Array.isArray(workspace.catalogs.defect_reasons) ? workspace.catalogs.defect_reasons as Row[] : [];
@@ -33,12 +37,14 @@ export function ProposalBusinessSummary({ proposal, workspace }: { proposal: Pro
     const identity = name && number ? `${display(name)}（${display(number)}）` : display(name ?? number ?? t("模具明細待核對"));
     return `${display(item.wo || item.part_no)} · ${identity}`;
   };
-  const businessRow = (title: string, after: unknown, before?: unknown, unit = '') => <div className="business-value"><span>{title}</span><strong>{before !== undefined && before !== null && <><span className="business-before">{display(before)}</span><ArrowRight size={14}/></>}<span className="business-after">{display(after)}{unit && <small>{unit}</small>}</span></strong></div>;
+  const businessRow = (title: string, after: unknown, before?: unknown, unit = '') => <div className="business-value"><span>{title}</span><strong>{before !== undefined && before !== null && display(before)!==display(after) && <><span className="business-before">{display(before)}</span><ArrowRight size={14}/></>}<span className="business-after">{display(after)}{unit && <small>{unit}</small>}</span></strong></div>;
 
   return <div className="business-summary">
     <div className="business-target">
       {Boolean(equipment) && <span><Factory size={16}/><span><small>{t("設備")}</small><strong>{display(equipment)}</strong></span></span>}
       {Boolean(workOrder) && <span><ClipboardList size={16}/><span><small>{t("工單")}</small><strong>{display(workOrder)}</strong></span></span>}
+      {Boolean(part) && <span><span><small>{t("品號／規格")}</small><strong>{part}</strong></span></span>}
+      {Boolean(executionTime) && <span><span><small>{t("本次執行")}</small><strong>{display(executionTime)}</strong></span></span>}
       {Boolean(scheduleTime) && <span><CalendarDays size={16}/><span><small>{t("預計開始")}</small><strong>{display(scheduleTime)}</strong></span></span>}
     </div>
     {action === 'report.add' || action === 'report.update' ? <>

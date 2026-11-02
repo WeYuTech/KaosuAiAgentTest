@@ -19,6 +19,15 @@ def prepare(client):
     return cid, proposal
 
 
+def test_報工核對快照保留品號與本次執行時間(tmp_path):
+    with TestClient(create_app(tmp_path/'target.db')) as client:
+        _, proposal = prepare(client)
+        assert proposal['target']['part_no'] == 'EPS-A'
+        assert proposal['target']['part_spec'] == '模擬左側緩衝件'
+        assert proposal['target']['execution_time'] == '2026-10-30 08:10:00'
+        assert client.get('/api/audit').json()['records'] == []
+
+
 def test_說明保留原確認卡版本內容與期限(tmp_path):
     with TestClient(create_app(tmp_path/'read.db', model=lambda *_: {'content': '這是本次人工良品數量。'},
                                intent_classifier=lambda _: {'intent': 'readonly'})) as c:

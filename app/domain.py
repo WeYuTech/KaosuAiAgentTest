@@ -83,6 +83,15 @@ def seed_state():
     return state
 
 
+def execution_confirmation_target(state, execution):
+    """依已核對的執行／排程明細保存辨識資訊，離開候選分頁後仍可核對。"""
+    detail = state['tables'].get(DETAIL, {}).get(execution.get('ZZ_KAOSU_PROD_SCHEDULE_DETAIL_SID'), {})
+    part_no = execution.get('PART_NO') or detail.get('PART_NO')
+    part = next((p for p in state.get('catalogs', {}).get('parts', []) if p.get('PART_NO') == part_no), {})
+    return {'part_no': part_no, 'part_spec': execution.get('PART_SPEC') or detail.get('PART_SPEC') or part.get('PART_SPEC'),
+            'execution_time': execution.get('REAL_CHECK_IN_TIME') or execution.get('CHECK_IN_TIME')}
+
+
 def schedule_confirmation_target(before, after, args):
     """從已驗證的預覽結果取白名單摘要，避免確認畫面依賴目前查詢分頁。"""
     tables = after["tables"]

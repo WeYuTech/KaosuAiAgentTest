@@ -5,13 +5,13 @@ import { TooltipIconButton } from './components/assistant-ui/elements/tooltip-ic
 import { t } from './i18n';
 
 /** 移植 thread.aui.tsx 的 Composer；value 永遠來自同一份 App 草稿。 */
-export function ConversationComposer({ id, value, onChange, disabled, sendDisabled, busy, placeholder, inputRef, hint }: {
+export function ConversationComposer({ id, value, onChange, disabled, sendDisabled, busy, placeholder, inputRef, hint, compact=false }: {
   id: string; value: string; onChange: (text: string) => void; onSend?: () => void;
   disabled?: boolean; sendDisabled?: boolean; busy?: boolean; placeholder: string;
-  inputRef?: Ref<HTMLTextAreaElement>; hint?: string;
+  inputRef?: Ref<HTMLTextAreaElement>; hint?: string; compact?: boolean;
 }) {
   return <ComposerPrimitive.Root className="aui-composer-root relative flex w-full flex-col" style={{["--composer-bg" as string]:"color-mix(in oklab, var(--color-muted) 30%, transparent)",["--composer-radius" as string]:"1rem",["--composer-padding" as string]:"8px"}}>
-    <div data-slot="aui_composer-shell" className="border-foreground/10 focus-within:border-foreground/25 flex w-full cursor-text flex-col gap-2 rounded-(--composer-radius) border bg-(--composer-bg) p-(--composer-padding) transition-[border-color]">
+    <div data-slot="aui_composer-shell" className={`border-foreground/10 focus-within:border-foreground/25 flex w-full cursor-text ${compact?'flex-row items-end':'flex-col'} gap-2 rounded-(--composer-radius) border bg-(--composer-bg) p-(--composer-padding) transition-[border-color]`}>
       <ComposerPrimitive.Input id={id} ref={inputRef} value={value} rows={1} disabled={disabled} placeholder={placeholder} enterKeyHint="send"
         className="aui-composer-input caret-primary placeholder:text-muted-foreground/60 max-h-48 min-h-10 w-full resize-none bg-transparent px-2.5 py-1 text-base leading-6 outline-none"
         aria-label={t('描述作業需求')} onChange={event => onChange(event.currentTarget.value)} cancelOnEscape={false} addAttachmentOnPaste={false}

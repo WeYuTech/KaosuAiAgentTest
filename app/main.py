@@ -32,7 +32,7 @@ ACTION_LABELS = {"schedule.save": "儲存排程", "report.add": "新增人工報
 
 
 def proposal_target(state, args, after=None):
-    from app.domain import EXECUTION, OUTPUT, SCHEDULE, schedule_confirmation_target
+    from app.domain import EXECUTION, OUTPUT, SCHEDULE, schedule_confirmation_target, execution_confirmation_target
     tables = state["tables"]
     execution_id = args.get("execution_id")
     report_id = args.get("report_id")
@@ -46,6 +46,8 @@ def proposal_target(state, args, after=None):
                        if r.get("ZZ_KAOSU_PROD_SCHEDULE_SID") == schedule_id and r.get("WO")})
     target = {"equipment": equipment, "work_order": execution.get("WO"), "schedule_id": schedule_id,
               "execution_id": execution_id, "report_id": report_id, "affected_orders": affected or [d.get("wo") for d in args.get("details", []) if d.get("wo")]}
+    if execution:
+        target.update(execution_confirmation_target(state, execution))
     if after is not None and "details" in args:
         target.update(schedule_confirmation_target(state, after, args))
     return target
