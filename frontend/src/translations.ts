@@ -1,5 +1,18 @@
 /* 固定介面詞彙：中文原文為鍵，不翻譯 MES 主檔名稱或歷史訊息。 */
 export const translations: Record<string, [string, string]> = Object.fromEntries(`
+請向下捲動完成核對，並勾選獨立確認後送出。|Scroll down to review, then select the independent confirmation before submitting.|เลื่อนลงเพื่อตรวจสอบ แล้วทำเครื่องหมายยืนยันแยกก่อนส่ง
+整張排程完工|Complete schedule|จบแผนการผลิต
+取消|Cancel|ยกเลิก
+完成|Done|เสร็จสิ้น
+今天想完成什麼？|What would you like to accomplish today?|วันนี้ต้องการทำอะไรให้สำเร็จ?
+尚未選擇工單|No order selected|ยังไม่ได้เลือกใบสั่งผลิต
+選擇／更換對象|Choose / change target|เลือก / เปลี่ยนเป้าหมาย
+品號／規格|Part / specification|รหัสชิ้นงาน / ข้อกำหนด
+生產狀態|Production status|สถานะการผลิต
+優先序|Priority|ลำดับความสำคัญ
+未填寫|Not entered|ยังไม่ได้กรอก
+狀態|Status|สถานะ
+介面設定|Interface settings|การตั้งค่าอินเทอร์เฟซ
 尚無可證明的業務欄位異動|No verified business field changes|ยังไม่มีการเปลี่ยนแปลงข้อมูลธุรกิจที่ยืนยันได้
 正在連線至作業服務|Connecting to the operation service|กำลังเชื่อมต่อบริการปฏิบัติงาน
 正在確認連線與登入狀態，完成後才能開始操作。|Checking connection and sign-in. Wait before starting an operation.|กำลังตรวจสอบการเชื่อมต่อและเข้าสู่ระบบ โปรดรอก่อนเริ่มงาน

@@ -18,3 +18,10 @@ export function operationFocusTarget(root:HTMLElement|null,memory:OperationFocus
   target?.scrollIntoView({block:'nearest',inline:'nearest'});
   return target;
 }
+
+/** Portal 的彈窗／選單有自己的焦點圍欄，外層聊天室不能攔截它的 Tab 或 Esc。 */
+export function ownsPanelKeyboard(panel:HTMLElement|null,target:EventTarget|null):boolean {
+ if(!panel||!(target instanceof HTMLElement)||!panel.contains(target))return false;
+ const layer=target.closest('[role="dialog"], [role="menu"], [role="listbox"]');
+ return !layer||layer===panel;
+}

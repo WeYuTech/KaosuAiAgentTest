@@ -1,0 +1,1 @@
+﻿{"manifest_version":3,"name":"隔離環境真實縮放驗收","version":"1.0","permissions":["tabs"],"background":{"service_worker":"zoom.js"}}

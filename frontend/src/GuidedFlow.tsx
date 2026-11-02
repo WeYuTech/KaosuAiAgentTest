@@ -111,6 +111,7 @@ export function GuidedFlow({ presentation='chat-sheet', reviewActionsExternal=fa
   const parentScroll=useRef(0),pickerTrigger=useRef<HTMLElement|null>(null);
   const pickerTable=useRef<HTMLDivElement>(null);
   const [selectionNotice,setSelectionNotice]=useState('');
+  const [compactFiltersOpen,setCompactFiltersOpen]=useState(false);
   const [pendingTarget, setPendingTarget] = useState<Row | null>(null);
   const [reportCandidate,setReportCandidate]=useState<Row|null>(null);
   const candidateCriteria=useRef('');
@@ -465,7 +466,8 @@ export function GuidedFlow({ presentation='chat-sheet', reviewActionsExternal=fa
       <div className="picker-selection"><span>{pendingTarget?reportCandidate?`${pendingTarget.WO} · ${mesDate(reportCandidate.CREATE_TIME)}`:L('請選取一筆人工報工','Select one report','เลือกบันทึกหนึ่งรายการ'):candidate?title(candidate):L('尚未選擇資料','No selection','ยังไม่ได้เลือก')}</span>{selectionNotice&&!selectionAI&&<p role="status">{selectionNotice}</p>}</div>
       <div className="picker-actions">{onAskSelection&&!selectionAI&&<button type="button" id="guide-selection-ai" onClick={onAskSelection}>{L('詢問 AI／補充條件','Ask AI / refine search','ถาม AI / เพิ่มเงื่อนไข')}</button>}<button type="button" onClick={closePicker}>{L('取消選取','Cancel selection','ยกเลิกการเลือก')}</button><button type="button" className="primary" disabled={locked||lookupBusy||lookupDirty||!!lookupError||!(pendingTarget?reportCandidate:candidate)} onClick={()=>{if(pendingTarget&&reportCandidate)void chooseReport(reportCandidate);else if(candidate)void chooseTarget(candidate);}}>{pendingTarget?L('帶入這筆報工','Use this production record','ใช้บันทึกผลผลิตนี้'):!['report.update','report.delete'].includes(action)?L('帶入作業單','Use in operation sheet','ใช้ในใบงาน'):L('選擇報工紀錄','Choose production record','เลือกบันทึกผลผลิต')}</button></div>
     </>}>
-      <form hidden={!!pendingTarget||selectionAI} className="guide-fields" onSubmit={e => { e.preventDefault(); void load().catch(()=>{}); }}>
+      <button type="button" hidden={!!pendingTarget||selectionAI} className="compact-filter-toggle" aria-expanded={compactFiltersOpen} onClick={()=>setCompactFiltersOpen(v=>!v)}>{L('篩選條件','Search filters','ตัวกรองการค้นหา')} {compactFiltersOpen?'−':'+'}</button>
+      <form data-expanded={compactFiltersOpen} hidden={!!pendingTarget||selectionAI} className="guide-fields compact-picker-filters" onSubmit={e => { e.preventDefault(); void load().catch(()=>{}); }}>
         {(['equipment','date','wo'] as const).map((key,i) => <label className="guide-field" key={key}>{[L('設備','Machine','เครื่องจักร'),L('日期','Date','วันที่'),L('工單','Work order','ใบสั่งผลิต')][i]}<input id={`guide-search-${key}`} type={key === 'date' ? 'date' : 'text'} value={filters[key]} onInput={key === 'date' ? e => {const value=e.currentTarget.value;changeFilters(v=>({...v,[key]:value}));} : undefined} onChange={e => changeFilters(v => ({ ...v, [key]: e.target.value }))}/></label>)}
         <details className="guide-search-options"><summary>{L('更多查詢條件','More search options','ตัวเลือกการค้นหาเพิ่มเติม')}</summary>
         <label className="guide-field">{L('搜尋工單或品號','Search order or part','ค้นหาใบสั่งผลิตหรือชิ้นงาน')}<input value={filters.search} onChange={e=>changeFilters(v=>({...v,search:e.target.value}))}/></label>

@@ -15,7 +15,7 @@ const {ProposalBusinessSummary}=await server.ssrLoadModule('/src/ProposalBusines
 const {useOperationMode,readOperationMode,operationModeKey}=await server.ssrLoadModule('/src/operation-mode.ts');
 const {ApiError}=await server.ssrLoadModule('/src/api.ts');
 const {useEntry}=await server.ssrLoadModule('/src/use-entry.ts');
-const {rememberOperationFocus,operationFocusTarget}=await server.ssrLoadModule('/src/operation-focus.ts');
+const {rememberOperationFocus,operationFocusTarget,ownsPanelKeyboard}=await server.ssrLoadModule('/src/operation-focus.ts');
 const {budgetCaption,money}=await server.ssrLoadModule('/src/BudgetSummary.tsx');
 const {AuditRecords,auditBusinessChanges}=await server.ssrLoadModule('/src/AuditRecords.tsx');
 await server.close();after(()=>window.happyDOM.abort());
@@ -403,4 +403,13 @@ test('審查 A01 業務異動區分新增修改刪除，省略系統欄位與空
 test('審查 A02 側欄與費用明細共用未知值規則，不把 null 轉成零',()=>{
  for(const value of [null,undefined,NaN,'0']){assert.equal(money(value),'尚未取得用量');assert.equal(budgetCaption({spent_usd:value,limit_usd:20}),'尚未取得用量');}
  assert.equal(budgetCaption({spent_usd:0,limit_usd:20}),'US$0.00 / US$20.00');
+});
+
+test('外層聊天室不攔截 Portal 與巢狀彈窗的 Tab／Esc',()=>{
+ const panel=document.createElement('div');panel.setAttribute('role','dialog');const input=document.createElement('input');panel.append(input);document.body.append(panel);
+ const modal=document.createElement('div');modal.setAttribute('role','dialog');const nested=document.createElement('input');modal.append(nested);document.body.append(modal);
+ assert.equal(ownsPanelKeyboard(panel,input),true);assert.equal(ownsPanelKeyboard(panel,nested),false);
+ panel.append(modal);assert.equal(ownsPanelKeyboard(panel,nested),false);
+ const menu=document.createElement('div');menu.setAttribute('role','menu');menu.append(nested);panel.append(menu);assert.equal(ownsPanelKeyboard(panel,nested),false);
+ panel.remove();
 });
