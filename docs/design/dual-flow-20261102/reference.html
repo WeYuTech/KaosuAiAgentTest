@@ -1,0 +1,3921 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline'; img-src data:; font-src data:; connect-src 'none'; form-action 'none'; base-uri 'none'; object-src 'none'">
+<title>已選流程參考｜聊天＋作業單、分步作業精靈</title>
+<style>
+:root{color-scheme:light dark;background:light-dark(#fff,#17181b);color:light-dark(#25282c,#edefef);font-family:"Noto Sans TC","Segoe UI",Arial,sans-serif}
+body{margin:0;padding:16px}
+/* Only the inherited primitives that affect the approved demo rendering.
+   The original visualize host runtime and carousel are not included. */
+.reference-designs{-webkit-font-smoothing:antialiased}
+.reference-designs :is(h1,h2,h3,h4,h5,h6,p,li){font-family:-apple-system-body,ui-sans-serif,-apple-system,system-ui,"Segoe UI",Helvetica,"Apple Color Emoji",Arial,sans-serif,"Segoe UI Emoji","Segoe UI Symbol"}
+.reference-designs small{line-height:18px}
+.reference-designs svg.lucide{display:block;max-width:100%;width:16px!important;height:16px!important;flex:none;margin:0!important}
+.reference-controls{max-width:1024px;margin:0 auto 18px;display:flex;align-items:center;gap:12px;flex-wrap:wrap;font-size:13px;line-height:1.5}
+.reference-controls p{margin:0;flex:1;min-width:180px}
+.reference-controls button{font:inherit;min-height:38px;border:1px solid light-dark(#e3e6e9,#393b40);border-radius:8px;background:transparent;color:inherit;padding:8px 12px;cursor:pointer}
+.reference-controls button[aria-pressed=true]{background:light-dark(#25282c,#e8e9eb);color:light-dark(#fff,#202124)}
+.reference-designs{max-width:1024px;margin:0 auto}
+[hidden]{display:none!important}
+button.cursor-interaction{cursor:pointer}
+</style>
+<script>/*
+ISC License
+
+Copyright (c) 2026 Lucide Icons and Contributors
+
+Permission to use, copy, modify, and/or distribute this software for any
+purpose with or without fee is hereby granted, provided that the above
+copyright notice and this permission notice appear in all copies.
+
+THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
+WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
+MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR
+ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
+WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
+ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
+OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+
+---
+
+The following Lucide icons are derived from the Feather project:
+
+airplay, alert-circle, alert-octagon, alert-triangle, aperture, arrow-down-circle, arrow-down-left, arrow-down-right, arrow-down, arrow-left-circle, arrow-left, arrow-right-circle, arrow-right, arrow-up-circle, arrow-up-left, arrow-up-right, arrow-up, at-sign, calendar, cast, check, chevron-down, chevron-left, chevron-right, chevron-up, chevrons-down, chevrons-left, chevrons-right, chevrons-up, circle, clipboard, clock, code, columns, command, compass, corner-down-left, corner-down-right, corner-left-down, corner-left-up, corner-right-down, corner-right-up, corner-up-left, corner-up-right, crosshair, database, divide-circle, divide-square, dollar-sign, download, external-link, feather, frown, hash, headphones, help-circle, info, italic, key, layout, life-buoy, link-2, link, loader, lock, log-in, log-out, maximize, meh, minimize, minimize-2, minus-circle, minus-square, minus, monitor, moon, more-horizontal, more-vertical, move, music, navigation-2, navigation, octagon, pause-circle, percent, plus-circle, plus-square, plus, power, radio, rss, search, server, share, shopping-bag, sidebar, smartphone, smile, square, table-2, tablet, target, terminal, trash-2, trash, triangle, tv, type, upload, x-circle, x-octagon, x-square, x, zoom-in, zoom-out
+
+The MIT License (MIT) (for the icons listed above)
+
+Copyright (c) 2013-present Cole Bemis
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+*/
+(()=>{
+/**
+ * @license lucide v1.8.0 - ISC
+ *
+ * This source code is licensed under the ISC license.
+ * See the LICENSE file in the root directory of this source tree.
+ */
+
+const defaultAttributes = {
+  xmlns: "http://www.w3.org/2000/svg",
+  width: 24,
+  height: 24,
+  viewBox: "0 0 24 24",
+  fill: "none",
+  stroke: "currentColor",
+  "stroke-width": 2,
+  "stroke-linecap": "round",
+  "stroke-linejoin": "round"
+};
+
+
+
+
+/**
+ * @license lucide v1.8.0 - ISC
+ *
+ * This source code is licensed under the ISC license.
+ * See the LICENSE file in the root directory of this source tree.
+ */
+
+
+
+const createSVGElement = ([tag, attrs, children]) => {
+  const element = document.createElementNS("http://www.w3.org/2000/svg", tag);
+  Object.keys(attrs).forEach((name) => {
+    element.setAttribute(name, String(attrs[name]));
+  });
+  if (children?.length) {
+    children.forEach((child) => {
+      const childElement = createSVGElement(child);
+      element.appendChild(childElement);
+    });
+  }
+  return element;
+};
+const createElement = (iconNode, customAttrs = {}) => {
+  const tag = "svg";
+  const attrs = {
+    ...defaultAttributes,
+    ...customAttrs
+  };
+  return createSVGElement([tag, attrs, iconNode]);
+};
+
+
+
+
+/**
+ * @license lucide v1.8.0 - ISC
+ *
+ * This source code is licensed under the ISC license.
+ * See the LICENSE file in the root directory of this source tree.
+ */
+
+const hasA11yProp = (props) => {
+  for (const prop in props) {
+    if (prop.startsWith("aria-") || prop === "role" || prop === "title") {
+      return true;
+    }
+  }
+  return false;
+};
+
+
+
+
+/**
+ * @license lucide v1.8.0 - ISC
+ *
+ * This source code is licensed under the ISC license.
+ * See the LICENSE file in the root directory of this source tree.
+ */
+
+const mergeClasses = (...classes) => classes.filter((className, index, array) => {
+  return Boolean(className) && className.trim() !== "" && array.indexOf(className) === index;
+}).join(" ").trim();
+
+
+
+
+/**
+ * @license lucide v1.8.0 - ISC
+ *
+ * This source code is licensed under the ISC license.
+ * See the LICENSE file in the root directory of this source tree.
+ */
+
+const toCamelCase = (string) => string.replace(
+  /^([A-Z])|[\s-_]+(\w)/g,
+  (match, p1, p2) => p2 ? p2.toUpperCase() : p1.toLowerCase()
+);
+
+
+
+
+/**
+ * @license lucide v1.8.0 - ISC
+ *
+ * This source code is licensed under the ISC license.
+ * See the LICENSE file in the root directory of this source tree.
+ */
+
+
+
+const toPascalCase = (string) => {
+  const camelCase = toCamelCase(string);
+  return camelCase.charAt(0).toUpperCase() + camelCase.slice(1);
+};
+
+
+
+
+/**
+ * @license lucide v1.8.0 - ISC
+ *
+ * This source code is licensed under the ISC license.
+ * See the LICENSE file in the root directory of this source tree.
+ */
+
+
+
+
+
+
+
+const getAttrs = (element) => Array.from(element.attributes).reduce((attrs, attr) => {
+  attrs[attr.name] = attr.value;
+  return attrs;
+}, {});
+const getClassNames = (attrs) => {
+  if (typeof attrs === "string") return attrs;
+  if (!attrs || !attrs.class) return "";
+  if (attrs.class && typeof attrs.class === "string") {
+    return attrs.class.split(" ");
+  }
+  if (attrs.class && Array.isArray(attrs.class)) {
+    return attrs.class;
+  }
+  return "";
+};
+const replaceElement = (element, { nameAttr, icons, attrs }) => {
+  const iconName = element.getAttribute(nameAttr);
+  if (iconName == null) return;
+  const ComponentName = toPascalCase(iconName);
+  const iconNode = icons[ComponentName];
+  if (!iconNode) {
+    return console.warn(
+      `${element.outerHTML} icon name was not found in the provided icons object.`
+    );
+  }
+  const elementAttrs = getAttrs(element);
+  const ariaProps = hasA11yProp(elementAttrs) ? {} : { "aria-hidden": "true" };
+  const iconAttrs = {
+    ...defaultAttributes,
+    "data-lucide": iconName,
+    ...ariaProps,
+    ...attrs,
+    ...elementAttrs
+  };
+  const elementClassNames = getClassNames(elementAttrs);
+  const className = getClassNames(attrs);
+  const classNames = mergeClasses(
+    "lucide",
+    `lucide-${iconName}`,
+    ...elementClassNames,
+    ...className
+  );
+  if (classNames) {
+    Object.assign(iconAttrs, {
+      class: classNames
+    });
+  }
+  const svgElement = createElement(iconNode, iconAttrs);
+  return element.parentNode?.replaceChild(svgElement, element);
+};
+
+
+
+
+/**
+ * @license lucide v1.8.0 - ISC
+ *
+ * This source code is licensed under the ISC license.
+ * See the LICENSE file in the root directory of this source tree.
+ */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/**
+ * @license lucide v1.8.0 - ISC
+ *
+ * This source code is licensed under the ISC license.
+ * See the LICENSE file in the root directory of this source tree.
+ */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+const createIcons = ({
+  icons = {},
+  nameAttr = "data-lucide",
+  attrs = {},
+  root = document,
+  inTemplates
+} = {}) => {
+  if (!Object.values(icons).length) {
+    throw new Error(
+      "Please provide an icons object.\nIf you want to use all the icons you can import it like:\n `import { createIcons, icons } from 'lucide';\nlucide.createIcons({icons});`"
+    );
+  }
+  if (typeof root === "undefined") {
+    throw new Error("`createIcons()` only works in a browser environment.");
+  }
+  const elementsToReplace = Array.from(root.querySelectorAll(`[${nameAttr}]`));
+  elementsToReplace.forEach((element) => replaceElement(element, { nameAttr, icons, attrs }));
+  if (inTemplates) {
+    const templates = Array.from(root.querySelectorAll("template"));
+    templates.forEach(
+      (template) => createIcons({
+        icons,
+        nameAttr,
+        attrs,
+        root: template.content,
+        inTemplates
+      })
+    );
+  }
+  if (nameAttr === "data-lucide") {
+    const deprecatedElements = root.querySelectorAll("[icon-name]");
+    if (deprecatedElements.length > 0) {
+      console.warn(
+        "[Lucide] Some icons were found with the now deprecated icon-name attribute. These will still be replaced for backwards compatibility, but will no longer be supported in v1.0 and you should switch to data-lucide"
+      );
+      Array.from(deprecatedElements).forEach(
+        (element) => replaceElement(element, { nameAttr: "icon-name", icons, attrs })
+      );
+    }
+  }
+};
+
+
+
+
+const selectedIcons={"ArrowLeft":[["path",{"d":"m12 19-7-7 7-7"}],["path",{"d":"M19 12H5"}]],"ArrowRight":[["path",{"d":"M5 12h14"}],["path",{"d":"m12 5 7 7-7 7"}]],"ArrowUp":[["path",{"d":"m5 12 7-7 7 7"}],["path",{"d":"M12 19V5"}]],"ChevronLeft":[["path",{"d":"m15 18-6-6 6-6"}]],"ChevronRight":[["path",{"d":"m9 18 6-6-6-6"}]],"CircleCheck":[["circle",{"cx":"12","cy":"12","r":"10"}],["path",{"d":"m9 12 2 2 4-4"}]],"CircleHelp":[["circle",{"cx":"12","cy":"12","r":"10"}],["path",{"d":"M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"}],["path",{"d":"M12 17h.01"}]],"FileText":[["path",{"d":"M6 22a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h8a2.4 2.4 0 0 1 1.704.706l3.588 3.588A2.4 2.4 0 0 1 20 8v12a2 2 0 0 1-2 2z"}],["path",{"d":"M14 2v5a1 1 0 0 0 1 1h5"}],["path",{"d":"M10 9H8"}],["path",{"d":"M16 13H8"}],["path",{"d":"M16 17H8"}]],"Search":[["path",{"d":"m21 21-4.34-4.34"}],["circle",{"cx":"11","cy":"11","r":"8"}]],"Sparkles":[["path",{"d":"M11.017 2.814a1 1 0 0 1 1.966 0l1.051 5.558a2 2 0 0 0 1.594 1.594l5.558 1.051a1 1 0 0 1 0 1.966l-5.558 1.051a2 2 0 0 0-1.594 1.594l-1.051 5.558a1 1 0 0 1-1.966 0l-1.051-5.558a2 2 0 0 0-1.594-1.594l-5.558-1.051a1 1 0 0 1 0-1.966l5.558-1.051a2 2 0 0 0 1.594-1.594z"}],["path",{"d":"M20 2v4"}],["path",{"d":"M22 4h-4"}],["circle",{"cx":"4","cy":"20","r":"2"}]],"SquarePen":[["path",{"d":"M12 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"}],["path",{"d":"M18.375 2.625a1 1 0 0 1 3 3l-9.013 9.014a2 2 0 0 1-.853.505l-2.873.84a.5.5 0 0 1-.62-.62l.84-2.873a2 2 0 0 1 .506-.852z"}]]};
+globalThis.lucide={icons:selectedIcons,createIcons:options=>createIcons({...options,icons:selectedIcons})};
+})();</script>
+</head>
+<body>
+<nav class="reference-controls" aria-label="設計參考切換">
+  <p>已選定的兩種操作流程。此處切換僅供對照；正式產品的設定切換與共用作業狀態依 Issue 規格實作。</p>
+  <button type="button" data-reference-mode="split" aria-pressed="true">聊天＋作業單</button>
+  <button type="button" data-reference-mode="wizard" aria-pressed="false">分步作業精靈</button>
+</nav>
+<style>
+#mes-flow-choices{width:100%}
+#mes-flow-choices .mf-app{--mf-bg:light-dark(#ffffff,#202124);--mf-panel:light-dark(#f8f9fa,#191a1d);--mf-ink:light-dark(#25282c,#edefef);--mf-muted:light-dark(#697078,#a4a9b1);--mf-line:light-dark(#e3e6e9,#393b40);--mf-hover:light-dark(#eef0f2,#2d3035);--mf-action:light-dark(#25282c,#e8e9eb);--mf-on-action:light-dark(#ffffff,#202124);--mf-good:light-dark(#256d4d,#91caaa);--mf-warn:light-dark(#815411,#e0bd80);--mf-warn-bg:light-dark(#faf5ea,#343026);background:var(--mf-bg);color:var(--mf-ink);font:14px/1.55 "Noto Sans TC","Segoe UI",Arial,sans-serif;min-width:0;min-height:760px;border:1px solid var(--mf-line);border-radius:14px;overflow:hidden;box-sizing:border-box}
+#mes-flow-choices .mf-app *{box-sizing:border-box}
+#mes-flow-choices .mf-app [hidden]{display:none!important}
+#mes-flow-choices .mf-app h1,#mes-flow-choices .mf-app h2,#mes-flow-choices .mf-app h3,#mes-flow-choices .mf-app p{margin:0}
+#mes-flow-choices .mf-app h1{font-size:25px;font-weight:500;line-height:1.4}
+#mes-flow-choices .mf-app h2{font-size:19px;font-weight:500;line-height:1.45}
+#mes-flow-choices .mf-app h3{font-size:15px;font-weight:500;line-height:1.5}
+#mes-flow-choices .mf-app button,#mes-flow-choices .mf-app input,#mes-flow-choices .mf-app select,#mes-flow-choices .mf-app textarea{font:inherit;color:inherit}
+#mes-flow-choices .mf-app button{border:1px solid var(--mf-line);border-radius:9px;padding:8px 12px;min-height:38px;background:var(--mf-bg);display:inline-flex;align-items:center;justify-content:center;gap:7px;white-space:normal;text-align:center}
+#mes-flow-choices .mf-app button:hover:not(:disabled){background:var(--mf-hover)}
+#mes-flow-choices .mf-app button:disabled{opacity:.42;cursor:not-allowed}
+#mes-flow-choices .mf-app .mf-primary{background:var(--mf-action);color:var(--mf-on-action);border-color:var(--mf-action)}
+#mes-flow-choices .mf-app .mf-primary:hover:not(:disabled){background:var(--mf-action);filter:brightness(.92)}
+#mes-flow-choices .mf-app .mf-quiet{background:transparent;border-color:transparent;padding:7px 8px}
+#mes-flow-choices .mf-app .mf-wide{width:100%}
+#mes-flow-choices .mf-app input:not([type=radio]),#mes-flow-choices .mf-app select,#mes-flow-choices .mf-app textarea{min-width:0;width:100%;border:1px solid var(--mf-line);border-radius:8px;background:var(--mf-bg);padding:9px 10px;min-height:40px}
+#mes-flow-choices .mf-app input[type=radio]{width:17px;height:17px;accent-color:var(--mf-action);margin:0}
+#mes-flow-choices .mf-app label{display:grid;gap:6px;min-width:0}
+#mes-flow-choices .mf-app svg{width:17px;height:17px;flex:none;stroke-width:1.7}
+#mes-flow-choices .mf-app .mf-header{min-height:59px;padding:12px 20px;display:flex;align-items:center;gap:12px;border-bottom:1px solid var(--mf-line);background:var(--mf-panel);flex-wrap:wrap}
+#mes-flow-choices .mf-app .mf-brand{font-size:20px;font-weight:600;letter-spacing:-.6px}
+#mes-flow-choices .mf-app .mf-header-title{color:var(--mf-muted);font-size:13px}
+#mes-flow-choices .mf-app .mf-spacer{flex:1}
+#mes-flow-choices .mf-app .mf-demo{font-size:11px;color:var(--mf-muted);white-space:nowrap}
+#mes-flow-choices .mf-app .mf-screen{min-height:839px}
+#mes-flow-choices .mf-app .mf-pad{padding:26px 28px}
+#mes-flow-choices .mf-app .mf-muted{color:var(--mf-muted)}
+#mes-flow-choices .mf-app .mf-small{font-size:12px}
+#mes-flow-choices .mf-app .mf-eyebrow{font-size:12px;color:var(--mf-muted);margin-bottom:7px}
+#mes-flow-choices .mf-app .mf-heading{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:20px;flex-wrap:wrap}
+#mes-flow-choices .mf-app .mf-actions{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+#mes-flow-choices .mf-app .mf-foot{border-top:1px solid var(--mf-line);padding:16px 24px;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+#mes-flow-choices .mf-app .mf-chip{display:inline-flex;align-items:center;gap:5px;color:var(--mf-muted);font-size:12px;padding:3px 7px;border-radius:5px;background:var(--mf-hover)}
+#mes-flow-choices .mf-app .mf-home{max-width:680px;margin:0 auto;padding:90px 28px 40px}
+#mes-flow-choices .mf-app .mf-home h1{margin-bottom:24px}
+#mes-flow-choices .mf-app .mf-compose{padding:12px;border:1px solid var(--mf-line);border-radius:15px;background:var(--mf-panel)}
+#mes-flow-choices .mf-app .mf-compose textarea{border:0;background:transparent;resize:vertical;min-height:76px;padding:5px;outline-offset:3px}
+#mes-flow-choices .mf-app .mf-compose-foot{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:5px}
+#mes-flow-choices .mf-app .mf-examples{margin-top:20px;display:flex;gap:9px;flex-wrap:wrap}
+#mes-flow-choices .mf-app .mf-split{display:grid;grid-template-columns:minmax(0,1fr) 310px;min-height:839px}
+#mes-flow-choices .mf-app .mf-chat{padding:26px 30px;display:flex;flex-direction:column;min-width:0}
+#mes-flow-choices .mf-app .mf-user{background:var(--mf-hover);border-radius:16px 16px 3px 16px;padding:12px 15px;max-width:90%;align-self:flex-end;margin-bottom:28px}
+#mes-flow-choices .mf-app .mf-assistant{max-width:600px;margin-bottom:24px}
+#mes-flow-choices .mf-app .mf-assistant-label{font-size:12px;color:var(--mf-muted);margin-bottom:8px;display:flex;align-items:center;gap:6px}
+#mes-flow-choices .mf-app .mf-assistant .mf-actions{margin-top:15px}
+#mes-flow-choices .mf-app .mf-chat-grow{flex:1;min-height:100px}
+#mes-flow-choices .mf-app .mf-question{display:flex;gap:7px;margin-top:20px;padding:8px;border:1px solid var(--mf-line);border-radius:12px;background:var(--mf-bg)}
+#mes-flow-choices .mf-app .mf-question input{border:0;padding:7px;min-width:0;background:transparent}
+#mes-flow-choices .mf-app .mf-question button{flex:none}
+#mes-flow-choices .mf-app .mf-answer{font-size:13px;color:var(--mf-muted);margin-top:12px}
+#mes-flow-choices .mf-app .mf-sheet{border-left:1px solid var(--mf-line);background:var(--mf-panel);padding:24px 20px;min-width:0}
+#mes-flow-choices .mf-app .mf-sheet-title{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:22px}
+#mes-flow-choices .mf-app .mf-target{border:1px solid var(--mf-line);border-radius:10px;background:var(--mf-bg);padding:13px 14px;margin-bottom:22px}
+#mes-flow-choices .mf-app .mf-target-top{display:flex;align-items:center;gap:9px;justify-content:space-between}
+#mes-flow-choices .mf-app .mf-target p{margin-top:4px;overflow-wrap:anywhere}
+#mes-flow-choices .mf-app .mf-target strong{font-weight:500;font-variant-numeric:tabular-nums}
+#mes-flow-choices .mf-app .mf-fields{display:grid;gap:16px}
+#mes-flow-choices .mf-app .mf-pair{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+#mes-flow-choices .mf-app .mf-form-foot{margin-top:24px}
+#mes-flow-choices .mf-app .mf-form-foot p{margin-bottom:10px}
+#mes-flow-choices .mf-app .mf-alert{padding:12px 14px;color:var(--mf-warn);background:var(--mf-warn-bg);border-radius:9px;font-size:13px;display:flex;align-items:flex-start;gap:9px;margin-bottom:18px}
+#mes-flow-choices .mf-app .mf-error{color:var(--mf-warn);font-size:13px;margin-top:10px}
+#mes-flow-choices .mf-app .mf-review{max-width:620px;margin:0 auto}
+#mes-flow-choices .mf-app .mf-review-list{margin:20px 0 0;display:grid;gap:0}
+#mes-flow-choices .mf-app .mf-review-list div{display:flex;justify-content:space-between;gap:20px;padding:11px 0;border-bottom:1px solid var(--mf-line)}
+#mes-flow-choices .mf-app .mf-review-list dt{color:var(--mf-muted);flex:none}
+#mes-flow-choices .mf-app .mf-review-list dd{margin:0;text-align:right;overflow-wrap:anywhere;font-variant-numeric:tabular-nums}
+#mes-flow-choices .mf-app .mf-receipt{padding:58px 24px;max-width:580px;margin:0 auto;text-align:center}
+#mes-flow-choices .mf-app .mf-success-icon{display:inline-flex;color:var(--mf-good);margin-bottom:16px}
+#mes-flow-choices .mf-app .mf-success-icon svg{width:32px;height:32px}
+#mes-flow-choices .mf-app .mf-receipt .mf-actions{justify-content:center;margin-top:28px}
+#mes-flow-choices .mf-app .mf-receipt p{margin-top:12px}
+#mes-flow-choices .mf-app .mf-picker{padding:24px 28px;min-width:0}
+#mes-flow-choices .mf-app .mf-filters{display:grid;grid-template-columns:minmax(0,1fr) 140px;gap:12px;margin-bottom:16px}
+#mes-flow-choices .mf-app .mf-filters label span{font-size:12px;color:var(--mf-muted)}
+#mes-flow-choices .mf-app .mf-table{width:100%;border-collapse:collapse;font-size:13px;table-layout:fixed}
+#mes-flow-choices .mf-app .mf-table th{text-align:left;font-size:12px;font-weight:500;color:var(--mf-muted);background:var(--mf-panel);padding:10px 12px;border-bottom:1px solid var(--mf-line)}
+#mes-flow-choices .mf-app .mf-table td{padding:12px;border-bottom:1px solid var(--mf-line);vertical-align:middle;overflow-wrap:anywhere}
+#mes-flow-choices .mf-app .mf-table td:first-child,#mes-flow-choices .mf-app .mf-table th:first-child{width:52px;text-align:center;padding-left:8px;padding-right:8px}
+#mes-flow-choices .mf-app .mf-table td:last-child,#mes-flow-choices .mf-app .mf-table th:last-child{width:76px}
+#mes-flow-choices .mf-app .mf-table tr[data-chosen=true]{background:var(--mf-hover)}
+#mes-flow-choices .mf-app .mf-table td strong{font-weight:500;display:block;font-variant-numeric:tabular-nums}
+#mes-flow-choices .mf-app .mf-table td small{color:var(--mf-muted);display:block;font-size:12px;margin-top:3px}
+#mes-flow-choices .mf-app .mf-table .mf-quiet{font-size:12px;padding:5px;min-height:32px}
+#mes-flow-choices .mf-app .mf-row-detail{font-size:12px;color:var(--mf-muted);padding:12px!important;text-align:left!important;background:var(--mf-panel)}
+#mes-flow-choices .mf-app .mf-page{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:14px;flex-wrap:wrap;font-size:12px;color:var(--mf-muted)}
+#mes-flow-choices .mf-app .mf-selection{font-size:13px;overflow-wrap:anywhere}
+#mes-flow-choices .mf-app .mf-empty{padding:36px 16px;text-align:center;color:var(--mf-muted)}
+#mes-flow-choices .mf-app .mf-stepper{display:flex;align-items:center;gap:12px;padding:20px 28px;border-bottom:1px solid var(--mf-line);flex-wrap:wrap;background:var(--mf-panel)}
+#mes-flow-choices .mf-app .mf-step{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--mf-muted)}
+#mes-flow-choices .mf-app .mf-step b{width:24px;height:24px;border-radius:50%;display:grid;place-items:center;background:var(--mf-hover);font-size:12px;font-weight:500}
+#mes-flow-choices .mf-app .mf-step[data-current=true]{color:var(--mf-ink)}
+#mes-flow-choices .mf-app .mf-step[data-current=true] b{background:var(--mf-action);color:var(--mf-on-action)}
+#mes-flow-choices .mf-app .mf-step-line{height:1px;flex:1;background:var(--mf-line);max-width:60px;min-width:8px}
+#mes-flow-choices .mf-app .mf-step-content{max-width:650px;margin:0 auto;padding:30px 28px;min-height:500px}
+#mes-flow-choices .mf-app .mf-table-intent{padding:18px 28px;border-bottom:1px solid var(--mf-line);display:flex;align-items:center;gap:12px;flex-wrap:wrap;background:var(--mf-panel)}
+#mes-flow-choices .mf-app .mf-table-intent p{flex:1;min-width:140px}
+#mes-flow-choices .mf-app .mf-table-work{display:grid;grid-template-columns:minmax(0,1fr) 290px;min-width:0}
+#mes-flow-choices .mf-app .mf-table-work .mf-picker{padding:24px 20px}
+#mes-flow-choices .mf-app .mf-inline-thread{max-width:700px;margin:0 auto;padding:28px 28px 35px;display:flex;flex-direction:column}
+#mes-flow-choices .mf-app .mf-inline-card{border:1px solid var(--mf-line);border-radius:13px;padding:22px;background:var(--mf-panel)}
+#mes-flow-choices .mf-app .mf-candidate{display:flex;width:100%;justify-content:space-between;text-align:left;margin-top:9px;padding:13px!important;background:var(--mf-bg)!important}
+#mes-flow-choices .mf-app .mf-candidate strong{display:block;font-weight:500}
+#mes-flow-choices .mf-app .mf-candidate small{font-size:12px;display:block;color:var(--mf-muted);margin-top:3px}
+#mes-flow-choices .mf-app .mf-prefill{max-width:680px;margin:0 auto;padding:26px 28px 38px}
+#mes-flow-choices .mf-app .mf-request{border-bottom:1px solid var(--mf-line);padding-bottom:20px;margin-bottom:24px;color:var(--mf-muted)}
+#mes-flow-choices .mf-app .mf-prefill-card{padding:25px;border:1px solid var(--mf-line);border-radius:13px;background:var(--mf-panel)}
+#mes-flow-choices .mf-app .mf-verified{color:var(--mf-good);font-size:12px;display:inline-flex;align-items:center;gap:4px}
+#mes-flow-choices .mf-app .mf-inline-help{display:flex;align-items:center;gap:8px;margin-top:24px;padding-top:16px;border-top:1px solid var(--mf-line);color:var(--mf-muted);font-size:13px}
+#mes-flow-choices .mf-app .mf-fade{animation:mf-enter .17s ease-out}
+@keyframes mf-enter{from{opacity:.6;transform:translateY(3px)}to{opacity:1;transform:translateY(0)}}
+@media(prefers-reduced-motion:reduce){#mes-flow-choices .mf-app .mf-fade{animation:none}}
+@media(max-width:800px){#mes-flow-choices .mf-app .mf-split{grid-template-columns:minmax(0,1fr) 280px}#mes-flow-choices .mf-app .mf-chat{padding:23px 20px}#mes-flow-choices .mf-app .mf-table-work{grid-template-columns:1fr}#mes-flow-choices .mf-app .mf-table-work .mf-sheet{border-left:0;border-top:1px solid var(--mf-line)}}
+@media(max-width:620px){#mes-flow-choices .mf-app{min-height:930px;border-radius:10px}#mes-flow-choices .mf-app .mf-screen{min-height:866px}#mes-flow-choices .mf-app .mf-header{padding:12px;gap:8px}#mes-flow-choices .mf-app .mf-header-title{display:none}#mes-flow-choices .mf-app .mf-header button{font-size:12px;padding:7px}#mes-flow-choices .mf-app .mf-split{grid-template-columns:1fr}#mes-flow-choices .mf-app .mf-chat{padding:20px 16px}#mes-flow-choices .mf-app .mf-chat-grow{min-height:0}#mes-flow-choices .mf-app .mf-sheet{border-left:0;border-top:1px solid var(--mf-line);padding:22px 18px}#mes-flow-choices .mf-app .mf-home{padding:54px 18px 30px}#mes-flow-choices .mf-app .mf-pad,#mes-flow-choices .mf-app .mf-picker,#mes-flow-choices .mf-app .mf-prefill,#mes-flow-choices .mf-app .mf-inline-thread,#mes-flow-choices .mf-app .mf-step-content{padding:22px 16px}#mes-flow-choices .mf-app .mf-table-work .mf-picker{padding:20px 16px}#mes-flow-choices .mf-app .mf-prefill-card,#mes-flow-choices .mf-app .mf-inline-card{padding:18px 14px}#mes-flow-choices .mf-app .mf-filters{grid-template-columns:minmax(0,1fr) 100px;gap:8px}#mes-flow-choices .mf-app .mf-foot{padding:16px}#mes-flow-choices .mf-app .mf-stepper{padding:18px 16px;gap:8px}#mes-flow-choices .mf-app .mf-step{gap:5px;font-size:12px}#mes-flow-choices .mf-app .mf-table-intent{padding:15px 16px}#mes-flow-choices .mf-app .mf-table thead{display:none}#mes-flow-choices .mf-app .mf-table tbody{display:grid;gap:10px}#mes-flow-choices .mf-app .mf-table tr{display:grid;grid-template-columns:28px minmax(0,1fr) 53px;gap:5px 8px;padding:12px 0;border-bottom:1px solid var(--mf-line)}#mes-flow-choices .mf-app .mf-table td{padding:0;border:0;width:auto!important;text-align:left!important}#mes-flow-choices .mf-app .mf-table td:first-child{grid-row:1/3;align-self:center}#mes-flow-choices .mf-app .mf-table td:nth-child(2){grid-column:2;grid-row:1}#mes-flow-choices .mf-app .mf-table td:nth-child(3){grid-column:2;grid-row:2;font-size:12px;color:var(--mf-muted)}#mes-flow-choices .mf-app .mf-table td:nth-child(3) strong,#mes-flow-choices .mf-app .mf-table td:nth-child(3) small{display:inline;font-weight:400}#mes-flow-choices .mf-app .mf-table td:nth-child(3) small:before{content:' · '}#mes-flow-choices .mf-app .mf-table td:nth-child(4){grid-column:3;grid-row:1/3;align-self:center}#mes-flow-choices .mf-app .mf-table .mf-detail-row{display:block;background:var(--mf-panel)}#mes-flow-choices .mf-app .mf-user{max-width:100%}#mes-flow-choices .mf-app .mf-pair{gap:10px}}
+@media(pointer:coarse){#mes-flow-choices .mf-app button{min-height:44px}#mes-flow-choices .mf-app input:not([type=radio]),#mes-flow-choices .mf-app textarea,#mes-flow-choices .mf-app select{font-size:16px}#mes-flow-choices .mf-app .mf-table td:first-child label{min-height:44px;align-items:center;justify-content:center}}
+@media(max-width:620px){#mes-flow-choices .mf-app{min-height:1040px}#mes-flow-choices .mf-app .mf-screen,#mes-flow-choices .mf-app .mf-split{min-height:975px}}
+</style>
+<div id="mes-flow-choices" class="reference-designs" aria-label="已選定的兩種 MES 人機協作流程">
+  <section data-variant="聊天＋作業單" aria-label="聊天與右側作業單同步"><div class="mf-app" data-flow="split"><header class="mf-header"><span class="mf-brand">WeYu</span><span class="mf-header-title">生產情報助理</span><span class="mf-spacer"></span><span class="mf-demo">互動預覽 · 示意資料</span><button type="button" class="mf-quiet cursor-interaction" data-action="home"><i data-lucide="square-pen" aria-hidden="true"></i>聊天入口</button></header><div class="mf-screen"><div class="mf-pad">聊天＋作業單</div></div></div></section>
+  <section data-variant="分步作業精靈" aria-label="依對象內容核對逐步操作" hidden><div class="mf-app" data-flow="wizard"><header class="mf-header"><span class="mf-brand">WeYu</span><span class="mf-header-title">生產情報助理</span><span class="mf-spacer"></span><span class="mf-demo">互動預覽 · 示意資料</span><button type="button" class="mf-quiet cursor-interaction" data-action="home"><i data-lucide="square-pen" aria-hidden="true"></i>聊天入口</button></header><div class="mf-screen"><div class="mf-pad">分步作業精靈</div></div></div></section>
+</div>
+<script>
+(()=>{
+  const root=document.getElementById('mes-flow-choices');
+  if(!root)return;
+  const escapeHtml=value=>String(value??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  const icon=name=>`<i data-lucide="${name}" aria-hidden="true"></i>`;
+  const button=(action,text,primary=false,extra='')=>`<button type="button" class="${primary?'mf-primary':'mf-quiet'} cursor-interaction" data-action="${action}" ${extra}>${text}</button>`;
+  const records=Array.from({length:24},(_,index)=>({id:'execution-'+(index+1),wo:'WO-261102-'+String(382+index).padStart(4,'0'),machine:['MC37','MC38','MC41'][Math.floor(index/8)],part:['P-102 外殼','P-208 底座','P-331 支架'][index%3],time:String(8+index%8).padStart(2,'0')+':00',shift:'日班',done:10+index*7,status:index%7===6?'已完工':'生產中'}));
+  const initial=()=>({view:'work',step:'target',target:null,choice:null,picker:false,query:'',machine:'MC37',requestMachine:'MC37',page:1,detail:null,good:'120',bad:'3',reason:'刮傷',question:'幫 MC37 報工，良品 120、不良 3，原因刮傷。',answer:'',error:'',homeText:'幫 MC37 報工，良品 120、不良 3，原因刮傷。',lastView:'work'});
+  const states=new Map([...root.querySelectorAll('[data-flow]')].map(app=>[app,initial()]));
+  function findRecord(id){return records.find(r=>r.id===id);}
+  function icons(){if(globalThis.lucide)globalThis.lucide.createIcons({attrs:{width:17,height:17}});}
+  function chosen(s){return findRecord(s.target);}
+  function fields(s){return `<div class="mf-fields"><div class="mf-pair"><label><span>良品數量</span><input data-field="good" inputmode="numeric" type="number" min="0" step="1" value="${escapeHtml(s.good)}" aria-label="良品數量"></label><label><span>不良數量</span><input data-field="bad" inputmode="numeric" type="number" min="0" step="1" value="${escapeHtml(s.bad)}" aria-label="不良數量"></label></div><label><span>不良原因</span><select data-field="reason" aria-label="不良原因"><option value="" ${!s.reason?'selected':''}>請選擇</option><option ${s.reason==='刮傷'?'selected':''}>刮傷</option><option ${s.reason==='缺料'?'selected':''}>缺料</option><option ${s.reason==='其他'?'selected':''}>其他</option></select></label></div>`;}
+  function targetCard(s){const r=chosen(s);return r?`<div class="mf-target"><div class="mf-target-top"><strong>${r.wo}</strong>${button('picker','更換')}</div><p>${r.part}</p><p class="mf-small mf-muted">${r.machine} · 11/02 ${r.time} · ${r.shift}</p></div>`:`<div class="mf-target"><p class="mf-muted mf-small">需求機台 ${escapeHtml(s.requestMachine||'尚未指定')}</p><div class="mf-target-top"><strong>尚未選擇工單</strong>${button('picker','選擇')}</div></div>`;}
+  function editForm(s,quick=false){return `<div class="mf-sheet-title"><h2>${quick?'預填報工單':'本次報工'}</h2><span class="mf-chip">草稿</span></div>${quick&&!s.target?`<div class="mf-alert">${icon('circle-help')}<span>請確認這次的工單與執行紀錄。</span></div>`:''}${targetCard(s)}${fields(s)}<div class="mf-form-foot"><p class="mf-muted mf-small">${s.good!==''&&s.bad!==''?'數量依你的原句帶入；請確認本次內容。':'未提供的數量保留空白，請補齊後核對。'}</p><button type="button" class="mf-primary mf-wide cursor-interaction" data-action="review" ${!s.target?'disabled':''}>核對報工 ${icon('arrow-right')}</button><p class="mf-error" role="alert">${escapeHtml(s.error)}</p></div>`;}
+  function summary(s){const r=chosen(s);return `<dl class="mf-review-list"><div><dt>工單</dt><dd>${r?.wo||'尚未選擇'}</dd></div><div><dt>品號</dt><dd>${r?.part||'—'}</dd></div><div><dt>本次執行</dt><dd>${r?.machine||'MC37'} · 11/02 ${r?.time||'—'}</dd></div><div><dt>新增良品</dt><dd>${escapeHtml(s.good)} 件</dd></div><div><dt>新增不良</dt><dd>${escapeHtml(s.bad)} 件 · ${escapeHtml(s.reason)}</dd></div></dl>`;}
+  function review(s){return `<div class="mf-review mf-fade"><div class="mf-sheet-title"><h2>核對本次報工</h2><span class="mf-chip">尚未寫入</span></div>${summary(s)}<p class="mf-small mf-muted" style="margin-top:18px">本次新增數量；不代表整張工單完工。</p><div class="mf-actions" style="margin-top:24px">${button('edit','返回修改')}${button('confirm','確認報工',true)}</div></div>`;}
+  function receipt(s){const r=chosen(s);return `<div class="mf-receipt mf-fade"><span class="mf-success-icon">${icon('circle-check')}</span><h2>本次流程已完成</h2><p>${r?.wo||''} · ${r?.machine||'MC37'}</p><p>良品 ${escapeHtml(s.good)} 件，不良 ${escapeHtml(s.bad)} 件</p><p class="mf-muted mf-small">這是操作預覽，沒有寫入 MES。</p><div class="mf-actions">${button('again','再試一次',true)}${button('home','回聊天入口')}</div></div>`;}
+  function ask(s){return `<div class="mf-question" data-form="help"><input name="question" placeholder="${s.view==='info'?'描述你的需求…':'詢問欄位說明…'}" aria-label="詢問助理" value=""><button type="button" data-action="ask-send" class="cursor-interaction" aria-label="送出問題">${icon('arrow-up')}</button></div><p class="mf-answer" role="status">${escapeHtml(s.answer)}</p>`;}
+  function filtered(s){const q=s.query.trim().toUpperCase();return records.filter(r=>(!s.machine||r.machine===s.machine)&&(!q||[r.wo,r.part,r.machine].join(' ').toUpperCase().includes(q)));}
+  function rows(s,readOnly=false){const list=filtered(s),pages=Math.max(1,Math.ceil(list.length/4));s.page=Math.min(s.page,pages);const slice=list.slice((s.page-1)*4,s.page*4);return `<table class="mf-table"><thead><tr><th scope="col">${readOnly?'':'選取'}</th><th scope="col">工單 / 品號</th><th scope="col">機台 / 執行時間</th><th scope="col">明細</th></tr></thead><tbody>${slice.map(r=>`<tr data-chosen="${s.choice===r.id}"><td>${readOnly?icon('file-text'):`<label><input type="radio" name="${s.key}-candidate" value="${r.id}" ${s.choice===r.id?'checked':''} ${r.status==='已完工'?'disabled':''} aria-label="選取 ${r.wo}，${r.machine}，${r.time}，${r.status}"></label>`}</td><td><strong>${r.wo}</strong><small>${r.part}</small></td><td><strong>${r.machine}</strong><small>11/02 ${r.time} · ${r.status}</small></td><td>${button('detail','查看',false,`data-id="${r.id}" aria-expanded="${s.detail===r.id}"`)}</td></tr>${s.detail===r.id?`<tr class="mf-detail-row"><td colspan="4" class="mf-row-detail">${r.wo} · ${r.machine} · ${r.shift} ${r.time}　累計良品 ${r.done} 件；狀態：${r.status}。${readOnly?`<div class="mf-actions" style="margin-top:10px">${button('query-use','以此工單報工',true,`data-id="${r.id}" ${r.status==='已完工'?'disabled':''}`)}</div>`:''}</td></tr>`:''}`).join('')}</tbody></table>${!slice.length?'<p class="mf-empty">沒有符合的工單。可調整關鍵字或機台。</p>':''}<div class="mf-page"><span>${list.length} 筆示意資料${list.length?' · '+((s.page-1)*4+1)+'–'+Math.min(s.page*4,list.length):''}</span><div class="mf-actions">${button('prev',icon('chevron-left'),false,`aria-label="上一頁" ${s.page===1?'disabled':''}`)}<span>${s.page} / ${pages}</span>${button('next',icon('chevron-right'),false,`aria-label="下一頁" ${s.page===pages?'disabled':''}`)}</div></div>`;}
+  function selection(s,readOnly=false){const r=findRecord(s.choice);return readOnly?`<p class="mf-muted mf-small">查詢只讀取資料；選定工單後才建立報工作業。</p><button type="button" class="mf-primary cursor-interaction" data-action="query-to-work">開始報工 ${icon('arrow-right')}</button>`:`<p class="mf-selection">${r?'已選：'+r.wo+' · '+r.machine:'選擇本次要報工的執行紀錄'}</p><button type="button" class="mf-primary cursor-interaction" data-action="use" ${!r?'disabled':''}>${s.flow==='table'?'加入作業單':s.flow==='wizard'?'下一步':'帶入作業單'} ${icon('arrow-right')}</button>`;}
+  function table(s,readOnly=false){return `<div class="mf-picker"><div class="mf-heading"><div><div class="mf-eyebrow">生產報工 · ${readOnly?'唯讀查詢':'選擇對象'}</div><h2>${readOnly?'<span data-machine-label>'+escapeHtml(s.machine||'全部機台')+'</span> 生產資料':'選擇工單'}</h2></div><span class="mf-chip">2026/11/02 · 日班</span></div><div class="mf-filters"><label><span>搜尋工單 / 品號</span><input data-search value="${escapeHtml(s.query)}" placeholder="輸入編號或名稱…" aria-label="搜尋工單或品號"></label><label><span>機台</span><select data-machine aria-label="篩選機台"><option value="" ${s.machine===''?'selected':''}>全部機台</option>${s.machine&&!['MC37','MC38','MC41'].includes(s.machine)?`<option selected>${escapeHtml(s.machine)}</option>`:''}${['MC37','MC38','MC41'].map(m=>`<option ${s.machine===m?'selected':''}>${m}</option>`).join('')}</select></label></div><div data-table-content>${rows(s,readOnly)}</div></div><div class="mf-foot" data-selection>${selection(s,readOnly)}</div>`;}
+  function wizardSteps(s){const index={target:0,details:1,review:2,done:3}[s.step]??0;return `<div class="mf-stepper">${['選擇對象','填寫內容','核對送出'].map((x,i)=>`${i?'<span class="mf-step-line"></span>':''}<div class="mf-step" data-current="${i===index}" ${i===index?'aria-current="step"':''}><b>${i<index?'✓':i+1}</b>${x}</div>`).join('')}</div>`;}
+  function home(s){return `<div class="mf-home mf-fade"><h1>今天想完成什麼？</h1><div class="mf-compose" data-form="entry"><textarea name="message" aria-label="輸入問題">${escapeHtml(s.homeText)}</textarea><div class="mf-compose-foot"><span class="mf-muted mf-small">直接問問題，或描述作業。</span><button class="mf-primary cursor-interaction" type="button" data-action="entry-send" aria-label="送出問題">${icon('arrow-up')}</button></div></div><div class="mf-examples">${button('example-help','你能幫我做什麼？')}${button('example-query','查 MC37 資料')}${button('example-work','試用報工範例')}</div><div class="mf-answer" role="status">${escapeHtml(s.answer)}</div></div>`;}
+  function information(s){return `<div class="mf-inline-thread mf-fade"><div class="mf-user">${escapeHtml(s.homeText)}</div><div class="mf-assistant"><div class="mf-assistant-label">${icon('sparkles')} WeYu</div><p>我能協助生產排程、生產報工、模具上下模，也能先查詢資料。描述需求後，我會帶你選對資料並核對作業內容。</p><div class="mf-actions">${button('example-query','先查 MC37 資料')}${button('example-work','試做一筆報工',true)}</div></div><div class="mf-chat-grow"></div>${ask(s)}</div>`;}
+  function split(s){return `<div class="mf-split"><div class="mf-chat"><div class="mf-user">${escapeHtml(s.question)}</div><div class="mf-assistant"><div class="mf-assistant-label">${icon('sparkles')} WeYu <span class="mf-chip">生產報工</span></div><p>${s.step==='review'?'本次報工已整理到作業單，請核對對象與數量。':s.target?'已帶入選定工單。你可以直接修改作業單，或詢問欄位。':'請選這次的工單；已提供的內容會整理到作業單。'}</p>${!s.target?`<div class="mf-actions">${button('picker',icon('search')+' 選擇工單',true)}</div>`:''}</div><div class="mf-chat-grow"></div>${ask(s)}</div><aside class="mf-sheet" aria-label="本次報工作業單">${s.step==='review'?review(s):editForm(s)}</aside></div>`;}
+  function wizard(s){return `${wizardSteps(s)}${s.step==='target'?table(s):`<div class="mf-step-content mf-fade">${s.step==='review'?review(s):`<div class="mf-heading"><h2>填寫本次報工</h2><span class="mf-chip">數量已預填</span></div>${targetCard(s)}${fields(s)}<div class="mf-actions" style="margin-top:26px">${button('back-target','上一步')}${button('review','下一步：核對',true)}</div><p class="mf-error" role="alert">${escapeHtml(s.error)}</p>`}${ask(s)}</div>`}`;}
+  function render(app){const s=states.get(app);s.flow=app.dataset.flow;s.key=s.flow;const screen=app.querySelector('.mf-screen');let html='';if(s.view==='home')html=home(s);else if(s.view==='info')html=information(s);else if(s.view==='query')html=`<div class="mf-pad" style="padding-bottom:0">${button('home',icon('arrow-left')+' 返回聊天')}</div>${table(s,true)}`;else if(s.picker)html=`<div class="mf-pad" style="padding-bottom:0">${button('close-picker',icon('arrow-left')+' 返回作業')}</div>${table(s)}`;else if(s.step==='done')html=receipt(s);else html=({split,wizard}[s.flow])(s);screen.innerHTML=html;icons();}
+  function updateTable(app){const s=states.get(app),holder=app.querySelector('[data-table-content]');if(holder)holder.innerHTML=rows(s,s.view==='query');const footer=app.querySelector('[data-selection]');if(footer)footer.innerHTML=selection(s,s.view==='query');app.querySelectorAll('[data-machine-label]').forEach(el=>el.textContent=s.machine||'全部機台');icons();}
+  function route(app,text){const s=states.get(app);s.homeText=text;s.answer='';const machine=text.toUpperCase().match(/MC\d+/)?.[0]||'';if(/能.*做|功能|幫我什麼/.test(text)){s.view='info';}else if(/查|數據|資料/.test(text)&&!/報工/.test(text)){s.view='query';s.query='';s.machine=machine;s.requestMachine=machine;s.page=1;}else if(/報工/.test(text)){s.view='work';s.question=text;const good=text.match(/良品\s*([+\-\d.,]+)/)?.[1]?.replace(/,$/,'')||'';const bad=text.match(/不良\s*([+\-\d.,]+)/)?.[1]?.replace(/,$/,'')||'';s.good=/^\d+$/.test(good)?good:'';s.bad=/^\d+$/.test(bad)?bad:'';s.reason=['刮傷','缺料','其他'].find(x=>text.includes(x))??'';s.machine=machine;s.requestMachine=machine;s.target=null;s.choice=null;s.step='target';s.picker=false;}else{s.view='home';s.answer='你想先查資料，還是開始一筆報工？可以點下方範例。';}render(app);}
+  function submitLocal(app,group){const s=states.get(app);if(group.dataset.form==='entry'){const text=group.querySelector('textarea').value.trim();if(text)route(app,text);return;}const input=group.querySelector('input'),question=input.value.trim();if(!question)return;if(s.view==='info'){route(app,question);return;}if(/改成|改為|修改|改到|加到|減到/.test(question)){s.answer='請在作業單修改數量；核對中的內容可按「返回修改」。目前數值尚未改動。';}else{s.answer=/不良|原因/.test(question)?'不良數量是這次新增的數量；原因用來分類不良。現有作業單與核對內容已保留。':/良品|數量/.test(question)?'請填本次新增數量。修改數量後需要重新核對；詢問說明不會改動作業單。':'你可以詢問欄位說明。作業變更請直接在作業單填寫，完成後重新核對。';input.value='';}const answer=app.querySelector('.mf-answer');if(answer)answer.textContent=s.answer;}
+  root.addEventListener('input',event=>{const app=event.target.closest('[data-flow]');if(!app)return;const s=states.get(app);if(event.target.matches('[data-field]')){s[event.target.dataset.field]=event.target.value;s.error='';const error=app.querySelector('.mf-error');if(error)error.textContent='';}if(event.target.matches('[data-search]')){s.query=event.target.value;s.page=1;updateTable(app);}});
+  root.addEventListener('change',event=>{const app=event.target.closest('[data-flow]');if(!app)return;const s=states.get(app);if(event.target.matches('[data-field]'))s[event.target.dataset.field]=event.target.value;if(event.target.matches('[data-machine]')){s.machine=event.target.value;s.page=1;updateTable(app);}if(event.target.matches('input[type=radio]')){s.choice=event.target.value;app.querySelectorAll('.mf-table tr[data-chosen]').forEach(row=>{row.dataset.chosen=String(row.querySelector('input[type=radio]')?.value===s.choice);});const footer=app.querySelector('[data-selection]');if(footer)footer.innerHTML=selection(s);icons();}});
+  root.addEventListener('keydown',event=>{if(event.key!=='Enter'||event.shiftKey||event.isComposing)return;if(!event.target.matches('input[name="question"],textarea[name="message"]'))return;const group=event.target.closest('[data-form]');if(group){event.preventDefault();submitLocal(group.closest('[data-flow]'),group);}});
+  root.addEventListener('click',event=>{const control=event.target.closest('[data-action]');if(!control||control.disabled)return;const app=control.closest('[data-flow]');if(!app)return;const s=states.get(app),action=control.dataset.action;
+    if(action==='entry-send'||action==='ask-send'){submitLocal(app,control.closest('[data-form]'));return;}
+    else if(action==='home'){s.view='home';s.picker=false;s.answer='';}
+    else if(action==='example-help'){route(app,'你能幫我做什麼？');return;}
+    else if(action==='example-query'){route(app,'查 MC37 的生產資料');return;}
+    else if(action==='example-work'){route(app,'幫 MC37 報工，良品 120、不良 3，原因刮傷。');return;}
+    else if(action==='picker'){s.picker=true;s.choice=s.target;s.query='';s.machine=chosen(s)?.machine||s.requestMachine||'';s.page=1;}
+    else if(action==='close-picker'){s.picker=false;}
+    else if(action==='detail'){s.detail=s.detail===control.dataset.id?null:control.dataset.id;updateTable(app);return;}
+    else if(action==='prev'||action==='next'){s.page+=action==='prev'?-1:1;updateTable(app);return;}
+    else if(action==='use'){if(!s.choice)return;s.target=s.choice;s.picker=false;s.step='details';s.error='';}
+    else if(action==='inline-pick'){s.target=control.dataset.id;s.choice=s.target;s.step='details';}
+    else if(action==='review'){if(!s.target)return;if(!/^\d+$/.test(s.good)||!/^\d+$/.test(s.bad)){s.error='請填寫良品與不良數量，使用 0 或以上的整數。';}else if(Number(s.bad)>0&&!s.reason){s.error='請選擇不良原因。';}else{s.step='review';s.error='';}}
+    else if(action==='edit'){s.step='details';}
+    else if(action==='back-target'){s.step='target';s.choice=s.target;}
+    else if(action==='confirm'){if(s.step!=='review'||!s.target)return;s.step='done';}
+    else if(action==='again'){states.set(app,initial());}
+    else if(action==='query-to-work'){s.view='work';s.step='target';s.target=null;s.choice=null;s.good='';s.bad='';s.reason='';s.picker=false;s.question='針對剛才的查詢開始一筆報工。';}
+    else if(action==='query-use'){s.view='work';s.step='details';s.target=control.dataset.id;s.choice=s.target;s.good='';s.bad='';s.reason='';s.picker=false;s.requestMachine=chosen(s)?.machine||'';s.question='以 '+chosen(s).wo+' 的這次執行紀錄開始報工。';}
+    render(app);
+  });
+  for(const app of states.keys())render(app);
+})();
+</script>
+
+<script>
+(()=>{
+const buttons=[...document.querySelectorAll('[data-reference-mode]')];
+for(const button of buttons)button.addEventListener('click',()=>{
+const mode=button.dataset.referenceMode;
+for(const section of document.querySelectorAll('#mes-flow-choices > section'))section.hidden=section.querySelector('[data-flow]')?.dataset.flow!==mode;
+for(const candidate of buttons)candidate.setAttribute('aria-pressed',String(candidate===button));
+});
+})();
+</script>
+</body>
+</html>
