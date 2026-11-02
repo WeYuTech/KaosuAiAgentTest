@@ -152,3 +152,16 @@ test('搜尋與管理返回均清空查詢回第一頁；搜尋關閉還焦點�
  await act(async()=>host.querySelector('button[aria-label="搜尋聊天"]').click());await act(async()=>input.dispatchEvent(new KeyboardEvent('keydown',{key:'Escape',bubbles:true})));assert.ok(input.closest('[hidden]'));assert.equal(document.activeElement,host.querySelector('button[aria-label="搜尋聊天"]'));
  } finally {await act(async()=>root.unmount());host.remove();}
 });
+
+
+test('可信身分替換重設清單範圍並隔離舊身分回覆',async()=>{
+ const {host,root}=mount(),requests=[];let changeActor,controller;
+ const request=path=>new Promise(resolve=>requests.push({path,resolve}));
+ function Harness(){const [actor,setActor]=useState('甲'),[history,onProjection]=useState();changeActor=setActor;const ref=useRef();controller=ref;return h(MesAssistantProvider,{state:{...base,history}},h(ConversationHistory,{key:actor,ref,actor,current:null,overlay:false,locked:false,busy:false,refresh:0,request,close:noop,select:noop,create:noop,beforeChange:noop,changed:noop,usage:noop,onWorkChange:noop,budget:null,onProjection}));}
+ try {
+ await act(async()=>root.render(h(Harness)));await act(async()=>controller.current.showScope('deleted'));const old=requests.at(-1);
+ await act(async()=>changeActor('乙'));assert.ok(requests.at(-1).path.includes('scope=active&page=1'));
+ await act(async()=>old.resolve({records:[{id:'secret',title:'甲的聊天'}],total:1,page:1,page_size:30}));assert.ok(!host.textContent.includes('甲的聊天'));
+ await act(async()=>requests.at(-1).resolve({records:[],total:0,page:1,page_size:30}));assert.equal(host.querySelector('.history-subview'),null);assert.equal(host.querySelectorAll('.history-empty').length,1);assert.equal(host.querySelector('.history-empty').textContent,'尚無聊天');
+ } finally {await act(async()=>root.unmount());host.remove();}
+});
