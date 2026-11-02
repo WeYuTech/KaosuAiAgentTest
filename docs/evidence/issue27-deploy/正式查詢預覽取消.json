@@ -1,0 +1,132 @@
+{
+  "version": "1a3950e4533c2a7d057e7a8ec864774443356f23",
+  "pages": [
+    {
+      "page": "MES-WIP/WIP-menu.html",
+      "status": 200,
+      "loader_count": 1
+    },
+    {
+      "page": "MES-WIP/setup/wip-query_schedule_plan_new.html",
+      "status": 200,
+      "loader_count": 1
+    },
+    {
+      "page": "MES-WIP/setup/wip-query_schedule_detail_new.html",
+      "status": 200,
+      "loader_count": 1
+    },
+    {
+      "page": "MES-WIP/OPI/schedule_report/wip-opi_schedule_uping.html",
+      "status": 200,
+      "loader_count": 1
+    },
+    {
+      "page": "MES-WIP/OPI/schedule_report/wip-query_schedule.html",
+      "status": 200,
+      "loader_count": 1
+    },
+    {
+      "page": "MES-WIP/OPI/schedule_report/wo-schedule.html",
+      "status": 200,
+      "loader_count": 1
+    },
+    {
+      "page": "MES-WIP/OPI/mold/wip-opi_schedule_mold_eqp.html",
+      "status": 200,
+      "loader_count": 1
+    },
+    {
+      "page": "MES-WIP/OPI/mold/wip-query_schedule_clear.html",
+      "status": 200,
+      "loader_count": 1
+    },
+    {
+      "page": "index.html",
+      "status": 200,
+      "loader_count": 1
+    }
+  ],
+  "assets": [
+    {
+      "path": "index.html",
+      "sha256": "1dc236bb04804c86fa1e5dfe40a6af8f8336bc4ed27d15c977b1f9a2c9945292",
+      "matches_build": true
+    },
+    {
+      "path": "widget-loader.js",
+      "sha256": "3b7a0a2c3043398a60893ff783b395400bfe4d200f28dbe1bb70a8293f3b9640",
+      "matches_build": true
+    },
+    {
+      "path": "weyu-logo.png",
+      "sha256": "e49779a956aebfffbfce4a792c596b3b52c2088efc9dc252d776fd8803fc8573",
+      "matches_build": true
+    },
+    {
+      "path": "/assets/index-CnHiclGs.js",
+      "matches_build": true
+    },
+    {
+      "path": "/assets/index-BbDnaXxa.css",
+      "matches_build": true
+    }
+  ],
+  "health": {
+    "status": "ok",
+    "mode": "live",
+    "model_configured": true,
+    "model": "gpt-6.1-sol",
+    "business_timezone": "UTC+07:00",
+    "business_date": "2026-11-02",
+    "server_time": "2026-11-02T12:42:14.981076+07:00"
+  },
+  "unauthenticated_status": 401,
+  "private_paths": {
+    ".env": 404,
+    ".local/model-budget.db": 404,
+    "app/main.py": 404
+  },
+  "demo_login_status": 403,
+  "session": {
+    "mode": "live",
+    "trusted": "mes_session",
+    "modules": [
+      "schedule",
+      "report",
+      "mold"
+    ]
+  },
+  "modules": {
+    "report": {
+      "status": 200,
+      "total": 1
+    },
+    "schedule": {
+      "status": 200,
+      "total": 1,
+      "returned": 1
+    },
+    "mold": {
+      "status": 200,
+      "total": 75,
+      "returned": 20
+    }
+  },
+  "preview": {
+    "proposal_id": "7994902d-2091-4b89-86c1-f339d682668b",
+    "status": "pending",
+    "change_count": 1,
+    "locales_preserve_content": true
+  },
+  "cancelled": true,
+  "business_fields_unchanged": [
+    "OPI_CAV",
+    "MANUAL_OK",
+    "MANUAL_NG",
+    "REPORTS",
+    "COMPLETED"
+  ],
+  "business_write_confirmations_sent": 0,
+  "model_calls": 0
+}
