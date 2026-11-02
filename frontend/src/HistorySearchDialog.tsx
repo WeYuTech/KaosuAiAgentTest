@@ -1,5 +1,5 @@
 import {useEffect,useRef,useState} from 'react';
-import {MessageCircle,X,ChevronLeft,ChevronRight} from 'lucide-react';
+import {Search,MessageCircle,LoaderCircle,X,ChevronLeft,ChevronRight} from 'lucide-react';
 import {Dialog,DialogContent,DialogTitle} from './components/ui/dialog';
 import type {ChatEntry,HistoryScope} from './ConversationHistory';
 import {t} from './i18n';
@@ -42,16 +42,16 @@ export function HistorySearchDialog({open,actor,scope,request,locked,close,retur
       onOpenAutoFocus={event=>{event.preventDefault();input.current?.focus();}}
       onCloseAutoFocus={event=>{event.preventDefault();if(document.querySelector('[data-slot="dialog-content"][data-state="open"]'))return;const target=returnFocus();if(target?.isConnected&&!target.closest('[hidden],[inert]'))target.focus({preventScroll:true});}}
       onEscapeKeyDown={event=>{event.stopPropagation();if(event.isComposing||event.keyCode===229||composing||selecting)event.preventDefault();}}>
-      <DialogTitle className="sr-only">{t('搜尋聊天')}</DialogTitle>
+      <DialogTitle className="history-search-title">{t('搜尋聊天')}</DialogTitle>
       <div className="history-search-header">
-        <input data-slot="history-search-input" ref={input} type="search" maxLength={200} value={query} placeholder={t('搜尋聊天')} aria-label={t('搜尋聊天')} disabled={selecting}
+        <div className="history-search-field"><Search size={18} aria-hidden="true"/><input data-slot="history-search-input" ref={input} type="search" maxLength={200} value={query} placeholder={t('搜尋聊天')} aria-label={t('搜尋聊天')} disabled={selecting}
           onCompositionStart={()=>setComposing(true)} onCompositionEnd={()=>setComposing(false)}
-          onChange={event=>{setQuery(event.target.value);setPage(1);}}/>
+          onChange={event=>{setQuery(event.target.value);setPage(1);}}/></div>
         <button className="icon-button" aria-label={t('關閉搜尋')} disabled={composing||selecting} onClick={close}><X size={18}/></button>
       </div>
       <div className="history-search-results" aria-busy={!!actor&&!settled}>
         <h3>{t(query?'搜尋聊天':scope==='active'?'近期':scope==='archived'?'封存聊天':'已刪除聊天')}</h3>
-        {!actor?<p>{t('尚未登入')}</p>:!settled?<p role="status">{t('正在讀取資料…')}</p>:error?<div role="alert"><p>{error}</p><button className="text-button" onClick={()=>setRetry(v=>v+1)}>{t('重試')}</button></div>:<>
+        {!actor?<p>{t('尚未登入')}</p>:!settled?<p role="status"><LoaderCircle className="spin" size={18}/>{t('搜尋中…')}</p>:error?<div role="alert"><p>{error}</p><button className="secondary" onClick={()=>setRetry(v=>v+1)}>{t('重試')}</button></div>:<>
           {data?.records.map(entry=><button key={entry.id} className="history-search-result" disabled={locked||selecting||entry.is_deleted} title={entry.title} onClick={()=>void choose(entry)}><MessageCircle size={19}/><span>{entry.title}</span></button>)}
           {!data?.records.length&&<p>{t(query?'找不到符合的聊天':'尚無聊天')}</p>}
           {data&&data.total>data.page_size&&<div className="history-pagination"><button className="icon-button" disabled={page<=1||selecting} aria-label={t('上一頁')} onClick={()=>setPage(v=>v-1)}><ChevronLeft size={18}/></button><span>{data.page} / {Math.ceil(data.total/data.page_size)}</span><button className="icon-button" disabled={page*data.page_size>=data.total||selecting} aria-label={t('下一頁')} onClick={()=>setPage(v=>v+1)}><ChevronRight size={18}/></button></div>}

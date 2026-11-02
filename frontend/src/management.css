@@ -39,3 +39,38 @@
 @container management-content (max-width:580px) {.report-editor {grid-template-columns:minmax(0,1fr);gap:16px;}.management-summary>div {grid-template-columns:minmax(0,1fr);gap:4px;}}
 @media(max-height:500px){.operation-dialog-header {padding:8px 16px;}.operation-dialog-body {padding:12px 16px;}.operation-dialog-actions {margin-top:12px;}}
 }
+
+/* 第三段：管理視窗的表單、核對與固定操作列。 */
+#mes-ai-chat-root .settings-dialog,#mes-ai-chat-root .interface-settings {width:min(640px,calc(100% - 24px));}
+#mes-ai-chat-root .management-dialog .operation-dialog-footer {padding:12px 20px;border-top:1px solid var(--border);background:var(--background);flex:none;}
+#mes-ai-chat-root .operation-dialog-footer .operation-dialog-actions {margin:0;}
+#mes-ai-chat-root .management-panel [role=status] {display:flex;align-items:center;gap:8px;}
+#mes-ai-chat-root .management-panel [role=status] svg {flex:none;}
+#mes-ai-chat-root .management-error {border:1px solid var(--destructive);border-radius:8px;padding:10px 14px;margin-bottom:12px;}
+#mes-ai-chat-root .provider-summary,.management-list-heading {display:flex;align-items:center;justify-content:space-between;gap:12px;}
+#mes-ai-chat-root .provider-summary {padding-block:12px;border-bottom:1px solid var(--border);}
+#mes-ai-chat-root .status-chip {display:inline-block;flex:none;font-size:12px;border:1px solid var(--border);border-radius:6px;padding:4px 8px;}
+#mes-ai-chat-root .setting-diff {display:flex;align-items:center;gap:8px;flex-wrap:wrap;}
+#mes-ai-chat-root .setting-diff del {color:var(--muted-foreground);font:inherit;}
+#mes-ai-chat-root .management-actions {justify-content:flex-start;}
+#mes-ai-chat-root .management-empty {padding:24px 0;color:var(--muted-foreground);}
+#mes-ai-chat-root .management-run {display:flex;justify-content:space-between;gap:12px;height:auto;white-space:normal;}
+#mes-ai-chat-root .management-job p {margin:8px 0;font-size:14px;}
+#mes-ai-chat-root .new-report-highlight {animation:target-applied 1800ms ease-out;}
+#mes-ai-chat-root .interface-settings fieldset {display:grid;grid-template-columns:1fr 1fr;gap:12px;border:0;padding:0;}
+#mes-ai-chat-root .interface-settings legend {padding:0;margin-bottom:12px;}
+#mes-ai-chat-root .operation-mode-option {border:1px solid var(--border);border-radius:10px;padding:14px;}
+#mes-ai-chat-root .operation-mode-option:has(input:checked) {border-color:var(--primary);background:var(--accent);}
+#mes-ai-chat-root .operation-mode-option small {font-size:13px;}
+#mes-ai-chat-root .settings-row {display:flex;align-items:center;justify-content:space-between;gap:16px;padding:20px 0;border-bottom:1px solid var(--border);}
+#mes-ai-chat-root .settings-row [role=combobox] {width:160px;}
+@media(max-width:600px){
+ #mes-ai-chat-root .management-grid {grid-template-columns:1fr 1fr;gap:12px;}
+ #mes-ai-chat-root .management-field {margin:10px 0;font-size:13px;}
+ #mes-ai-chat-root .interface-settings fieldset {grid-template-columns:1fr;}
+ #mes-ai-chat-root .management-panel .management-summary>div {grid-template-columns:1fr;gap:4px;}
+ #mes-ai-chat-root .management-job-title {align-items:flex-start;}
+}
+@media(prefers-reduced-motion:reduce){#mes-ai-chat-root .new-report-highlight {animation:none;outline:1px solid var(--primary);}}
+
+#mes-ai-chat-root .status-chip.status-warning {border-color:var(--destructive);color:var(--destructive);background:var(--error-surface);}

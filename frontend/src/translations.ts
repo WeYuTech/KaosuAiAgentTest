@@ -1,5 +1,36 @@
 /* 固定介面詞彙：中文原文為鍵，不翻譯 MES 主檔名稱或歷史訊息。 */
 export const translations: Record<string, [string, string]> = Object.fromEntries(`
+此聊天沒有訊息|This chat has no messages|แชทนี้ยังไม่มีข้อความ
+已建立定時報告「{0}」|Created scheduled report “{0}”|สร้างรายงานตามกำหนด “{0}” แล้ว
+已暫停定時報告「{0}」|Paused scheduled report “{0}”|หยุดรายงานตามกำหนด “{0}” ชั่วคราวแล้ว
+已恢復定時報告「{0}」|Resumed scheduled report “{0}”|เปิดรายงานตามกำหนด “{0}” ต่อแล้ว
+已刪除定時報告「{0}」|Deleted scheduled report “{0}”|ลบรายงานตามกำหนด “{0}” แล้ว
+核對變更|Review changes|ตรวจสอบการเปลี่ยนแปลง
+核對設定變更|Review settings changes|ตรวจสอบการเปลี่ยนแปลงการตั้งค่า
+金鑰來源：伺服器私密設定；不提供金鑰內容或更新時間。|Key source: private server configuration. Key contents and update time are not available.|แหล่งคีย์: การตั้งค่าส่วนตัวของเซิร์ฟเวอร์ ไม่แสดงคีย์หรือเวลาอัปเดต
+資料範圍|Data scope|ขอบเขตข้อมูล
+前一排程日快照|Previous schedule-day snapshot|ภาพรวมวันจัดตารางก่อนหน้า
+既有快速解析不支援此設備條件，請使用 MC 編號或留空。|The existing parser does not support this machine filter. Use an MC number or leave blank.|ตัวแยกเงื่อนไขเดิมไม่รองรับเครื่องจักรนี้ โปรดใช้หมายเลข MC หรือเว้นว่าง
+刪除後不再執行，既有執行歷史仍保留；此清單將移除報告。已開始的查詢可完成。|Deletion stops future runs and removes this report from the list. Existing history is retained; queries already started may finish.|การลบจะหยุดการรันในอนาคตและนำรายงานออกจากรายการ ประวัติยังคงอยู่และงานที่เริ่มแล้วอาจเสร็จสิ้น
+用一句話快速填寫（選用）|Fill with one sentence (optional)|กรอกด้วยประโยคเดียว (ไม่บังคับ)
+執行時間（24 小時制）|Run time (24-hour)|เวลารัน (24 ชั่วโมง)
+MES 業務時區|MES business timezone|เขตเวลาธุรกิจ MES
+尚未取得時區|Timezone unavailable|ยังไม่ได้รับเขตเวลา
+這個資料範圍沒有快照紀錄，不代表零產出。|No snapshot records in this scope; this does not mean zero production.|ไม่มีบันทึกภาพรวมในขอบเขตนี้ ไม่ได้หมายถึงผลผลิตเป็นศูนย์
+沒有可確認的完整報告，不代表零產出。|No verified complete report is available; this does not mean zero production.|ยังไม่มีรายงานสมบูรณ์ที่ยืนยันได้ ไม่ได้หมายถึงผลผลิตเป็นศูนย์
+新增|Add|เพิ่ม
+新增一份唯讀報告，依指定時間整理前一排程日資料。|Add a read-only report to collect the previous schedule-day data at a specified time.|เพิ่มรายงานอ่านอย่างเดียวเพื่อรวบรวมข้อมูลวันจัดตารางก่อนหน้า ณ เวลาที่กำหนด
+執行歷史|Run history|ประวัติการรัน
+可至「更多功能 → 已刪除聊天」還原；不影響 MES 業務資料與稽核紀錄。|Restore via More → Deleted chats. MES business data and audit records are unaffected.|คืนค่าได้ที่เพิ่มเติม → แชทที่ลบ ไม่กระทบข้อมูลธุรกิจ MES หรือบันทึกตรวจสอบ
+左右鍵調整寬度；Home／End 到上下限；Backspace 重設|Use Left/Right to resize, Home/End for limits, Backspace to reset.|ใช้ลูกศรซ้าย/ขวาปรับขนาด Home/End ไปที่ขีดจำกัด Backspace รีเซ็ต
+聊天管理|Chat management|จัดการแชท
+服務設定|Service settings|การตั้งค่าบริการ
+搜尋中…|Searching…|กำลังค้นหา…
+尚無封存聊天|No archived chats|ยังไม่มีแชทที่เก็บถาวร
+尚無已刪除聊天|No deleted chats|ยังไม่มีแชทที่ลบ
+啟用中|Enabled|เปิดใช้งาน
+無法辨識的執行狀態|Unrecognized run status|ไม่รู้จักสถานะการรัน
+正在核對報告條件…|Reviewing report conditions…|กำลังตรวจสอบเงื่อนไขรายงาน…
 未知狀態|Unknown status|สถานะที่ไม่รู้จัก
 補充修改…|Describe changes…|ระบุสิ่งที่ต้องการแก้ไข…
 描述需求…|Describe your request…|ระบุความต้องการ…

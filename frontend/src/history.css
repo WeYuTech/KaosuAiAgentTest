@@ -67,3 +67,14 @@
 .assistant-header h2:focus {outline:none;}
 .header-new-chat[hidden] {display:none;}
 }
+
+#mes-ai-chat-root .history-select {justify-content:flex-start;}
+#mes-ai-chat-root .history-row>.icon-button {width:32px;min-height:32px;height:32px;}
+#mes-ai-chat-root [role=menuitem] {white-space:nowrap;min-height:32px;}
+#mes-ai-chat-root .history-empty {padding:8px 12px;text-align:left;}
+#mes-ai-chat-root .danger-action {border:1px solid var(--destructive);color:var(--destructive);background:var(--error-surface);border-radius:8px;padding:8px 12px;}
+
+#mes-ai-chat-root .history-search-title {font-size:18px;padding:20px 20px 0;margin:0;}
+#mes-ai-chat-root .history-search-field {display:flex;align-items:center;gap:10px;flex:1;min-width:0;border:1px solid var(--border);border-radius:8px;padding:6px 10px;background:var(--input-background,var(--background));}
+#mes-ai-chat-root .history-search-field:focus-within {outline:2px solid var(--ring);outline-offset:2px;}
+#mes-ai-chat-root .history-search-field svg {flex:none;color:var(--muted-foreground);}
