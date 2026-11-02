@@ -660,7 +660,10 @@ export function App({ initialOpen = false }: { initialOpen?: boolean } = {}) {
   async function showAudit() {
     panelTrigger.current = document.activeElement as HTMLElement;
     const generation=++queryGeneration.current;setQueryBusy(true);setQueryError('');setAudit([]);setTab('audit');
-    try { const value=await request<{records:Row[]}>('/api/audit');if(generation===queryGeneration.current)setAudit(value.records); }
+    try { const value=await request<{records:Row[]}>('/api/audit');const records=await Promise.all(value.records.map(async record=>{
+      if(record.actor!==session?.actor.id||!record.id||record.module==='confirmation')return record;
+      try{const result=await request<{proposal:Proposal}>(`/api/proposals/${record.id}`);return {...record,actor_name:session?.actor.name,equipment:result.proposal.target?.equipment??record.equipment};}catch{return record;}
+    }));if(generation===queryGeneration.current)setAudit(records); }
     catch(error){if(generation===queryGeneration.current){if(error instanceof ApiError && [401,403].includes(error.status))clearSession();else setQueryError(error instanceof Error?error.message:String(error));}}
     finally{if(generation===queryGeneration.current)setQueryBusy(false);}
   }  async function showHelp() { helpTrigger.current = document.activeElement as HTMLElement; setHelpOpen(v => !v); if (!budget) { try { setBudget(await request<Row>('/api/budget')); } catch { /* 用量服務失敗不影響回報問題。 */ } } }
