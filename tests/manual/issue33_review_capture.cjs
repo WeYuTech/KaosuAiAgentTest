@@ -1,6 +1,7 @@
 /** PR #38 第一輪證據：隔離 fixture／模擬分類；正常速度、無正式 MES 連線。 */
 process.env.PLAYWRIGHT_BROWSERS_PATH=require('node:path').join(process.cwd(),'.local/playwright-browsers');
-const {chromium}=require('C:/Users/rdpuser/Documents/ChatGPT/KaosuKssKpiDemo/web/node_modules/playwright-core');
+const corePath=process.env.PLAYWRIGHT_CORE_PATH||'C:/Users/rdpuser/Documents/ChatGPT/KaosuKssKpiDemo/web/node_modules/playwright-core';
+let chromium;try{({chromium}=require(corePath));}catch{throw new Error('找不到 Playwright，請設定 PLAYWRIGHT_CORE_PATH：'+corePath);}
 const {spawn}=require('node:child_process');const fs=require('node:fs/promises');const path=require('node:path');
 const root=process.cwd(),tag=process.argv[2]||'A',dir=path.join(root,'.local/issue33-round1',tag+'-'+Date.now()),shots=path.join(root,'.local/issue33-captures');
 (async()=>{await fs.mkdir(dir,{recursive:true});const port=8039;

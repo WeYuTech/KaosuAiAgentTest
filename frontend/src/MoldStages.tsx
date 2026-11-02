@@ -1,3 +1,4 @@
+import {mesDate} from './presentation';
 import type {Row} from './api';
 import {t} from './i18n';
 
@@ -15,8 +16,8 @@ export function moldStageAvailability(record:Row|null,action:string){
  return {allowed:false,reason:'尚未完成前一階段'};
 }
 export function MoldStages({record,disabled,choose,select}:{record:Row|null;disabled:boolean;choose:(action:string)=>void;select:()=>void}){
- return <div className="mold-stage-panel"><div className="sheet-target"><div><strong>{record?[record.EQP_NO,record.TOL_NO].filter(Boolean).join(' · '):t('尚未選擇設備與排程')}</strong><p>{String(record?.SCHEDULE_START_TIME??'')}</p></div><button type="button" disabled={disabled} onClick={select}>{t('選擇／更換對象')}</button></div>
- <ol className="mold-stages">{stages.map(([action,title,field],index)=>{const state=moldStageAvailability(record,action);return <li key={action}><b>{index+1}</b><div><strong>{t(title)}</strong><small>{record?.[field]?`${String(record[field])} · ${t(state.reason)}`:t(state.reason)}</small></div><button type="button" disabled={disabled||!state.allowed} onClick={()=>choose(action)}>{t(title)}</button></li>;})}</ol>
+ return <div className="mold-stage-panel"><div className="sheet-target"><div><strong>{record?[record.EQP_NO,record.TOL_NO].filter(Boolean).join(' · '):t('尚未選擇設備與排程')}</strong><p>{mesDate(record?.SCHEDULE_START_TIME)}</p></div><button type="button" disabled={disabled} onClick={select}>{t('選擇／更換對象')}</button></div>
+ <ol className="mold-stages">{stages.map(([action,title,field],index)=>{const state=moldStageAvailability(record,action);return <li key={action} className={state.allowed?'stage-current':state.reason==='此階段已完成'?'stage-completed':'stage-future'}><b>{state.reason==='此階段已完成'?'✓':index+1}</b><div><strong>{t(title)}</strong><small>{record?.[field]?`${mesDate(record[field])} · ${t(state.reason)}`:t(state.reason)}</small></div><button type="button" disabled={disabled||!state.allowed} onClick={()=>choose(action)}>{state.allowed?t('執行：{0}',{0:t(title)}):t(title)}</button></li>;})}</ol>
  <p className="business-note">{t('時間由伺服器預覽產生，核對後才執行；不需填寫數量。')}</p>
  <div className="mold-clear-action"><button type="button" disabled={disabled||!moldStageAvailability(record,'mold.clear').allowed} onClick={()=>choose('mold.clear')}>{t('清除換模紀錄')}</button>{!moldStageAvailability(record,'mold.clear').allowed&&<small>{t(moldStageAvailability(record,'mold.clear').reason)}</small>}</div></div>;
 }

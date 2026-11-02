@@ -7,6 +7,8 @@ globalThis.IS_REACT_ACT_ENVIRONMENT=true;
 const {createElement:h,act,useState,useRef}=await import('react');const {createRoot}=await import('react-dom/client');
 const {createServer}=await import('vite');const server=await createServer({server:{middlewareMode:true,hmr:false,ws:false},appType:'custom'});
 const {GuidedFlow}=await server.ssrLoadModule('/src/GuidedFlow.tsx');
+const {CandidateCombobox}=await server.ssrLoadModule('/src/CandidateCombobox.tsx');
+const {RecordChoices}=await server.ssrLoadModule('/src/RecordChoices.tsx');
 const {CandidateSelect}=await server.ssrLoadModule('/src/CandidateSelect.tsx');
 const {MoldStages,moldStageAvailability}=await server.ssrLoadModule('/src/MoldStages.tsx');
 const {ProposalBusinessSummary}=await server.ssrLoadModule('/src/ProposalBusinessSummary.tsx');
@@ -301,5 +303,42 @@ test('審查：排程只有一列開始時間，模具完工狀態採業務文�
  assert.ok(host.textContent.includes('未完工'));assert.ok(host.textContent.includes('已完工'));
  const {translations}=await import('../src/translations.ts');const t=(key,_,language)=>translations[key]?.[language==='en'?0:1]??key;
  for(const language of ['en','th'])for(const key of ['尚未選擇設備與排程','新增排程','修改排程','目前可執行','尚未完成前一階段','清除換模紀錄','核對時間與連動影響','補充條件，或詢問這些資料…','補充模具或階段需求，修改後請重新核對'])assert.notEqual(t(key,{},language),key);
+ await act(async()=>root.unmount());host.remove();
+});
+
+
+test('候選整列與方向鍵、空白鍵只暫選，查看明細不誤選',async()=>{
+ const {host,root}=mount();const selected=[];const records=[{id:'a',WO:'甲',COMPLETED:'N'},{id:'b',WO:'乙',COMPLETED:'Y'}];
+ await act(async()=>root.render(h(RecordChoices,{records,value:null,onSelect:r=>selected.push(r.id),identify:r=>r.id,describe:r=>({primary:r.WO,secondary:'',context:'MC37'})})));
+ const rows=host.querySelectorAll('tr[tabindex]');
+ await act(async()=>rows[0].click());assert.deepEqual(selected,['a']);
+ rows[0].focus();rows[0].dispatchEvent(new KeyboardEvent('keydown',{key:'ArrowDown',bubbles:true,cancelable:true}));assert.equal(document.activeElement,rows[1]);
+ await act(async()=>rows[1].dispatchEvent(new KeyboardEvent('keydown',{key:' ',bubbles:true,cancelable:true})));assert.deepEqual(selected,['a','b']);
+ await act(async()=>rows[1].querySelector('button').click());assert.deepEqual(selected,['a','b']);assert.ok(host.textContent.includes('已完工'));
+ await act(async()=>root.unmount());host.remove();
+});
+
+test('行內候選只套用伺服器結果，任意輸入與 IME Enter 不修改主檔值',async()=>{
+ const {host,root}=mount();const selected=[],calls=[];
+ await act(async()=>root.render(h(CandidateCombobox,{id:'inline',kind:'molds',part:'EPS-A',title:'模具',value:'',choose:r=>selected.push(r),request:async path=>{calls.push(path);return {records:[{TOL_NO:'MOLD-A'}],has_more:false};}})));
+ await act(async()=>host.querySelector('input').focus());await act(async()=>new Promise(r=>setTimeout(r,300)));
+ assert.ok(calls[0].includes('part_no=EPS-A'));assert.equal(selected.length,0);
+ await act(async()=>host.querySelector('input').dispatchEvent(new KeyboardEvent('keydown',{key:'ArrowDown',bubbles:true})));
+ await act(async()=>host.querySelector('input').dispatchEvent(new KeyboardEvent('keydown',{key:'Enter',isComposing:true,bubbles:true})));assert.equal(selected.length,0);
+ await act(async()=>host.querySelector('input').dispatchEvent(new KeyboardEvent('keydown',{key:'Enter',bubbles:true})));assert.equal(selected[0].TOL_NO,'MOLD-A');
+ await act(async()=>root.unmount());host.remove();
+});
+
+
+for(const presentation of ['chat-sheet','step-wizard'])for(const action of ['report.delete','report.complete'])test(`${presentation} ${action} 選取後直接核對，沒有空白填寫步驟`,async()=>{
+ const {host,root}=mount();let guide={version:1,action,args:{},step:'target',missing:['target'],ready:false};const replies=[];
+ const report={WIP_OPI_WDOEACICOOUTPUT_HIST_SID:'r',CREATE_TIME:'2026-11-02 10:00',OK_QTY:100,NG_QTY:2};
+ const record={WIP_OPI_WDOEACICO_HIST_SID:'e',ZZ_KAOSU_PROD_SCHEDULE_SID:'s',WO:'WO-A',EQP_NO:'MC37',COMPLETED:'N',REPORTS:[report]};
+ const request=async(path,body)=>{if(path.endsWith('/proposals'))return {proposal:{id:'p',action,args:body.args,status:'pending',changes:[]}};if(body)guide={...guide,...body,version:guide.version+1,missing:[],ready:true};return structuredClone(guide);};
+ await act(async()=>root.render(h(GuidedFlow,{presentation,apiRequest:request,onQuery:async()=>({records:[record],catalogs:{}}),conversation:{id:action+presentation,module:'report',messages:[]},module:'report',workspace:{records:[record],catalogs:{}},selected:null,signal:0,proposal:null,status:'',disabled:false,date:null,onReply:r=>replies.push(r),onAudit:noop,onHome:noop})));
+ const dialog=()=>document.querySelector('.target-picker-dialog');const click=async text=>act(async()=>[...document.querySelectorAll('button')].find(b=>b.textContent===text).click());
+ await act(async()=>dialog().querySelector('input[type=radio]').click());
+ if(action==='report.delete'){await click('選擇報工紀錄');await act(async()=>dialog().querySelector('.report-record-picker input[type=radio]').click());await click('帶入這筆報工');}else await click('帶入作業單');
+ assert.ok(replies.length,host.textContent);assert.equal(replies.at(-1).proposal.action,action);assert.equal(dialog(),null);assert.equal(host.querySelector('.guide-operation-note'),null);assert.ok(!host.textContent.includes('填寫內容'));
  await act(async()=>root.unmount());host.remove();
 });

@@ -99,3 +99,21 @@ test('離頁修改採用確認卡內後端已解析摘要，不受目前頁面�
   assertAllocation(html, 'WO-A · 同品號右模穴（MOLD-SPLIT-R）', 4);
   assertAllocation(html, 'WO-A · 同品號左模穴（MOLD-SPLIT-L）', 3);
 });
+
+
+test('完工不以空異動清單假定無下一張，明確 null 才顯示；模穴保留零與原值',()=>{
+ const workspace={records:[],catalogs:{}};
+ const render=target=>renderToStaticMarkup(createElement(ProposalBusinessSummary,{workspace,proposal:{action:'report.complete',args:{schedule_id:'s'},changes:[],target}}));
+ assert.ok(!render({}).includes('無下一張排程'));
+ assert.ok(render({next_schedule:null}).includes('無下一張排程'));
+ const next=render({next_schedule:{start_time:'2026-11-02T13:00',orders:['WO-NEXT-FULL']}});
+ assert.ok(next.includes('WO-NEXT-FULL'));assert.ok(next.includes('2026-11-02 13:00:00'));assert.ok(!next.includes('T13:00'));
+ const html=renderToStaticMarkup(createElement(ProposalBusinessSummary,{workspace,proposal:{action:'report.cavities',args:{cavities:0},changes:[],target:{cavities_before:2,mold_detail_name:'左模穴',mold_detail_no:'LEFT'}}}));
+ assert.ok(html.includes('左模穴'));assert.ok(html.includes('LEFT'));assert.ok(html.includes('business-before">2'));assert.ok(html.includes('business-after">0'));
+});
+
+
+test('新增排程的空狀態原值不冒充修改前狀態',()=>{
+ const html=renderToStaticMarkup(createElement(ProposalBusinessSummary,{workspace:{records:[],catalogs:{}},proposal:{action:'schedule.save',args:{status:'DO'},changes:[{field:'PRODUCTION_STATUS',before:null,after:'DO'}]}}));
+ assert.ok(html.includes('量產'));assert.ok(!html.includes('business-before'));assert.ok(!html.includes('未提供狀態'));
+});

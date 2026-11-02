@@ -1,5 +1,14 @@
 /* 固定介面詞彙：中文原文為鍵，不翻譯 MES 主檔名稱或歷史訊息。 */
 export const translations: Record<string, [string, string]> = Object.fromEntries(`
+無下一張排程|No next schedule|ไม่มีแผนการผลิตถัดไป
+基本資料|Basic information|ข้อมูลพื้นฐาน
+時間與產量|Time and output|เวลาและผลผลิต
+目標件數＝模次×穴數|Target units = shots × cavities|จำนวนเป้าหมาย = รอบ × โพรง
+試模|Mold trial|ทดลองแม่พิมพ์
+量產|Mass production|ผลิตจำนวนมาก
+執行中|Running|กำลังดำเนินการ
+未提供狀態|Status not provided|ไม่ได้ระบุสถานะ
+執行：{0}|Execute: {0}|ดำเนินการ: {0}
 尚未選擇設備與排程|No machine or schedule selected|ยังไม่ได้เลือกเครื่องจักรและแผนการผลิต
 新增排程|New schedule|เพิ่มแผนการผลิต
 修改排程|Edit schedule|แก้ไขแผนการผลิต
@@ -191,7 +200,6 @@ AI 已設定|AI configured|ตั้งค่า AI แล้ว
 瀏覽其他工單|Browse other orders|ดูใบสั่งผลิตอื่น
 開始上模並進站|Start mounting and check in|เริ่มติดตั้งแม่พิมพ์และเข้างาน
 完成下模、出站及完工|Finish removal, check out and complete production|ถอดแม่พิมพ์เสร็จ ออกจากงาน และจบการผลิต
-清除換模與進出站時間並取消完工|Clear mold and check-in/out times and undo completion|ล้างเวลาเปลี่ยนแม่พิมพ์และเข้าออกงาน และยกเลิกสถานะเสร็จ
 修改報工模穴|Change production cavities|แก้ไขจำนวนโพรงสำหรับผลผลิต
 與助理對話|Chat with assistant|สนทนากับผู้ช่วย
 本次作業|Current operation|งานครั้งนี้
@@ -257,7 +265,6 @@ MES伺服器當地日期時間 YYYY-MM-DD HH:mm:ss；帶明確 ISO 時區時依�
 刪除報工|Delete production report|ลบรายงานผลผลิต
 調整模穴數|Adjust cavities|ปรับจำนวนคาวิตี้
 排程完工|Complete schedule|จบตารางผลิต
-清空上下模|Clear mold operation times|ล้างเวลาขึ้นลงแม่พิมพ์
 開始上模|Start mounting|เริ่มขึ้นแม่พิมพ์
 完成上模|Finish mounting|ขึ้นแม่พิมพ์เสร็จ
 開始下模|Start removal|เริ่มลงแม่พิมพ์
