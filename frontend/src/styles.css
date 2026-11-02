@@ -638,7 +638,7 @@ body {
 }
 
 .business-before {
-  font-size:var(--mes-text-base);
+  font:inherit;
   color:var(--muted-foreground);
   text-decoration:line-through
 }

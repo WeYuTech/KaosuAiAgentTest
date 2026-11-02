@@ -2,7 +2,7 @@ import {mesDate,productionStatus} from './presentation';
 import { t } from './i18n';
 import { ChevronDown, Database } from 'lucide-react';
 import { display, label, labels, type Row } from './api';
-const operationNames:Record<string,string>={'schedule.save':'儲存排程','report.add':'新增報工','report.update':'修改報工','report.delete':'刪除報工','report.cavities':'修改模穴','report.complete':'整張排程完工','mold.clear':'清除換模紀錄','mold.mount_start':'開始上模','mold.mount_finish':'完成上模','mold.unmount_start':'開始下模','mold.unmount_finish':'完成下模'};
+const operationNames:Record<string,string>={'schedule.save':'儲存排程','report.add':'新增報工','report.update':'修改報工','report.delete':'刪除報工','report.cavities':'修改模穴','report.complete':'整張排程完工','mold.clear':'清除換模紀錄（含進出站時間、取消完工）','mold.mount_start':'開始上模','mold.mount_finish':'完成上模','mold.unmount_start':'開始下模','mold.unmount_finish':'完成下模'};
 
 /** 只用已存在的業務欄位做第一層摘要，完整原值仍留在明細。 */
 function recordTitle(value:unknown,fallback:string){if(!value||typeof value!=='object')return fallback;const row=value as Row;const values=[row.EQP_NO,row.WO??row.WO_NO,row.action?t(operationNames[String(row.action)]??String(row.action)):null,row.actor_name??row.operator,(row.CREATE_TIME??row.created_at??row.date)?mesDate(row.CREATE_TIME??row.created_at??row.date):null,row.status];return values.filter(v=>v!=null&&v!=='').map(display).join(' · ')||fallback;}

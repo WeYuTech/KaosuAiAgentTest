@@ -1,5 +1,12 @@
 /* 固定介面詞彙：中文原文為鍵，不翻譯 MES 主檔名稱或歷史訊息。 */
 export const translations: Record<string, [string, string]> = Object.fromEntries(`
+未知狀態|Unknown status|สถานะที่ไม่รู้จัก
+補充修改…|Describe changes…|ระบุสิ่งที่ต้องการแก้ไข…
+描述需求…|Describe your request…|ระบุความต้องการ…
+補充需求或修改…|Add details or changes…|เพิ่มรายละเอียดหรือแก้ไข…
+模具明細|Mold detail|รายละเอียดแม่พิมพ์
+清除換模紀錄（含進出站時間、取消完工）|Clear mold records (station times and completion reset)|ล้างบันทึกแม่พิมพ์ (รวมเวลาเข้าออกและยกเลิกการเสร็จงาน)
+會清除這張排程的上下模與進出站時間，並取消完工。請確認現場狀態。|This clears mold and station entry/exit times and cancels completion for this schedule. Verify the shop-floor state.|ล้างเวลาติดตั้ง/ถอดแม่พิมพ์และเวลาเข้าออกสถานี พร้อมยกเลิกการเสร็จงานของแผนนี้ โปรดตรวจสอบหน้างาน
 無下一張排程|No next schedule|ไม่มีแผนการผลิตถัดไป
 基本資料|Basic information|ข้อมูลพื้นฐาน
 時間與產量|Time and output|เวลาและผลผลิต

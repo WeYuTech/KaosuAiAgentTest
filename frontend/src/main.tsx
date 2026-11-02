@@ -1,3 +1,4 @@
+import {setBusinessTimezone as configureBusinessTimezone} from './presentation';
 import {createPortal} from 'react-dom';
 import {RequestProgress} from './RequestProgress';
 import {ChatQueryResults} from './ChatQueryResults';
@@ -136,6 +137,8 @@ export function App({ initialOpen = false }: { initialOpen?: boolean } = {}) {
   const entryIdentity=useRef(false);
   const [error, setError] = useState('');
   const [notice, setNotice] = useState('');
+  const [narrowChat,setNarrowChat]=useState(()=>typeof window!=='undefined'&&window.matchMedia('(max-width:600px)').matches);
+  useEffect(()=>{const media=window.matchMedia('(max-width:600px)');const update=()=>setNarrowChat(media.matches);media.addEventListener('change',update);return()=>media.removeEventListener('change',update);},[]);
   const [conversation, setConversation] = useState<Conversation | null>(null);
   const [messages, setMessages] = useState<Message[]>([]);
   const [presentation,setPresentation]=useState<Presentation|null>(null);
@@ -313,7 +316,7 @@ export function App({ initialOpen = false }: { initialOpen?: boolean } = {}) {
     const epoch = contextEpoch.current;
     void api<{ model_configured: boolean; mode: string; business_timezone?: string; business_date?: string; server_time?: string }>('/api/health').then(v => {
       if (!live) return;
-      setModelConfigured(v.model_configured); setMode(v.mode); setBusinessTimezone(v.business_timezone ?? 'UTC+07:00'); setBusinessDate(v.business_date ?? v.server_time?.slice(0, 10) ?? null);
+      setModelConfigured(v.model_configured); setMode(v.mode); configureBusinessTimezone(v.business_timezone); setBusinessTimezone(v.business_timezone ?? ''); setBusinessDate(v.business_date ?? v.server_time?.slice(0, 10) ?? null);
     }).catch(() => { if(live) setError(t("尚未連上作業服務，請確認後端已啟動。")); });
     void api<Session>('/api/session').then(value => {
       if(live && epoch === contextEpoch.current) {setSession(value);setMode(value.mode);}
@@ -656,7 +659,7 @@ export function App({ initialOpen = false }: { initialOpen?: boolean } = {}) {
   const [presentationBusy,setPresentationBusy]=useState(false);
   const interfaceFocus=useRef<OperationFocus|null>(null);
   const operationMode=useOperationMode(session?.actor.id,mode,conversation?.id??'entry',busy||presentationBusy||queryBusy||composingMode);
-  const chatComposer=<div className="composer-area">{selectionActive&&selectionAI&&<button type="button" className="text-button" onClick={closeSelectionAI}>{t('返回選取資料')}</button>}{draft && !messagePending && draftDelivery!=='unsent' && <p role="status">{t(draftDelivery==='unknown'?'原句已恢復，先前送達結果未知；系統不會自動重送。':'原句已恢復，先前請求已拒絕；尚未再次送出。')}</p>}{modelConfigured === false && <div className="model-notice"><CircleHelp size={17}/><span>{t("AI 尚未設定，可用下方操作卡完成作業。")}</span></div>}{draft && modelConfigured === false && <button className="text-button" onClick={() => {setDraft('');initialIntent.current=null;inputRef.current?.focus();}}>{t('清除文字，繼續人工操作')}</button>}<ConversationComposer compact={selectionAI||operationMode.mode==='step-wizard'} id="chat-input" inputRef={inputRef} value={draft} onChange={editDraft} onSend={()=>void send()} busy={!!messagePending} onStop={()=>setWaitingStopped(true)} stopped={waitingStopped} disabled={chatReadOnly || busy || guideWorking || Boolean(recoveryTarget)} sendDisabled={!draft.trim() || modelConfigured !== true} placeholder={selectionActive ? t('補充條件，或詢問這些資料…') : unresolved ? t('此操作結果待核對，請先按確認卡的「查核執行結果」') : pending ? module==='mold'?t('補充模具或階段需求，修改後請重新核對'):module==='schedule'?t('補充排程修改，例如：目標改為 150 模'):t('可直接補充修改，例如：良品改成 25，請重新確認') : t('描述你的{0}需求，例如：{1}', {0:t(active.short),1:t(active.prompts[0])})} hint={t('確認後才會寫入')}/><div className="composer-footnote"><span>{t("Enter 送出 · Shift + Enter 換行")}</span></div></div>;
+  const chatComposer=<div className="composer-area">{selectionActive&&selectionAI&&<button type="button" className="text-button" onClick={closeSelectionAI}>{t('返回選取資料')}</button>}{draft && !messagePending && draftDelivery!=='unsent' && <p role="status">{t(draftDelivery==='unknown'?'原句已恢復，先前送達結果未知；系統不會自動重送。':'原句已恢復，先前請求已拒絕；尚未再次送出。')}</p>}{modelConfigured === false && <div className="model-notice"><CircleHelp size={17}/><span>{t("AI 尚未設定，可用下方操作卡完成作業。")}</span></div>}{draft && modelConfigured === false && <button className="text-button" onClick={() => {setDraft('');initialIntent.current=null;inputRef.current?.focus();}}>{t('清除文字，繼續人工操作')}</button>}<ConversationComposer compact={selectionAI||operationMode.mode==='step-wizard'} id="chat-input" inputRef={inputRef} value={draft} onChange={editDraft} onSend={()=>void send()} busy={!!messagePending} onStop={()=>setWaitingStopped(true)} stopped={waitingStopped} disabled={chatReadOnly || busy || guideWorking || Boolean(recoveryTarget)} sendDisabled={!draft.trim() || modelConfigured !== true} placeholder={narrowChat ? t('補充需求或修改…') : selectionActive ? t('補充條件，或詢問這些資料…') : unresolved ? t('此操作結果待核對，請先按確認卡的「查核執行結果」') : pending ? module==='mold'?t('補充模具或階段需求，修改後請重新核對'):module==='schedule'?t('補充排程修改，例如：目標改為 150 模'):t('補充修改…') : t('描述需求…')} hint={t('確認後才會寫入')}/><div className="composer-footnote"><span>{t("Enter 送出 · Shift + Enter 換行")}</span></div></div>;
   return <MesAssistantProvider state={{history:historyProjection?.actor===session?.actor.id?historyProjection:undefined,conversationId: conversation?.id ?? null, messages:projectedMessages, draft, busy:busy||entry.busy,
     disabled: stage === 'chat' ? chatReadOnly || busy || guideWorking || Boolean(recoveryTarget) : busy||entry.busy||entry.blocked,
     sendDisabled: !draft.trim() || (stage === 'chat' && modelConfigured !== true),
@@ -705,8 +708,8 @@ export function App({ initialOpen = false }: { initialOpen?: boolean } = {}) {
 
 
 
-          {projectedMessages.length === 0 && module!=='mold' && !guideSnapshot._started && <div className="chat-welcome"><h2>{t("說說你想完成的作業")}</h2><p>{t("直接描述需求，或使用下方操作卡；只需補齊缺少的資料。")}</p></div>}
-          <ThreadMessages latestAssistantOnly={operationMode.mode==='step-wizard'&&!selectionAI&&Boolean(guideSnapshot.action||guideSnapshot._started||proposal)} onViewData={module==='report'?value=>void guarded(async()=>{if(value.query_context)await queryWorkspace(value.query_context.filters);setTab('data');}):undefined}/>
+          {projectedMessages.length === 0 && operationMode.mode!=='step-wizard' && module!=='mold' && !guideSnapshot._started && <div className="chat-welcome"><h2>{t("說說你想完成的作業")}</h2><p>{t("直接描述需求，或使用下方操作卡；只需補齊缺少的資料。")}</p></div>}
+          <ThreadMessages latestAssistantOnly={(operationMode.mode==='step-wizard'||narrowChat)&&!selectionAI&&Boolean(guideSnapshot.action||guideSnapshot._started||proposal)} onViewData={module==='report'?value=>void guarded(async()=>{if(value.query_context)await queryWorkspace(value.query_context.filters);setTab('data');}):undefined}/>
           {messagePending&&<RequestProgress stopped={waitingStopped}/>}
 
 

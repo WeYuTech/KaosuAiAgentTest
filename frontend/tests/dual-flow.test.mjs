@@ -275,7 +275,7 @@ test('審查：主選取讀取與失敗不宣稱完整結果，重試後才呈�
  assert.ok(dialog().textContent.includes('隔離查詢失敗'));assert.equal(dialog().querySelector('.picker-pagination'),null);assert.ok(!dialog().textContent.includes('沒有符合資料'));
  await act(async()=>[...dialog().querySelectorAll('button')].find(b=>b.textContent==='重新查詢').click());
  await act(async()=>resolve({records:[],catalogs:{},total:0}));
- assert.ok(dialog().textContent.includes('沒有符合資料'));assert.ok(dialog().textContent.includes('共 0 筆'));assert.ok(!dialog().textContent.includes('請重新選取'));
+ assert.ok(dialog().textContent.includes('沒有符合資料'));assert.equal(dialog().querySelector('.picker-pagination'),null);assert.ok(!dialog().textContent.includes('請重新選取'));
  await act(async()=>root.unmount());host.remove();
 });
 
