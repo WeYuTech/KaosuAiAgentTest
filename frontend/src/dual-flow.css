@@ -1,6 +1,6 @@
 @layer components {
 .assistant-main {container:dual-workspace / inline-size;}
-.dual-flow {display:grid!important;grid-template-columns:minmax(280px,1fr) minmax(360px,1fr);position:relative;min-height:0;overflow:auto;gap:0;}
+.dual-flow {display:grid!important;grid-template-columns:minmax(280px,1fr) minmax(360px,1fr);position:relative;min-height:0;overflow:hidden;gap:0;}
 .dual-flow>.chat-layout {min-width:0;min-height:0;}
 .dual-flow>.operation-primary {min-width:0;min-height:0;overflow:auto;border-left:1px solid var(--border);padding:20px;background:var(--background);font-size:14px;}
 .operation-primary>header {display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:8px;margin-bottom:16px;}
@@ -15,9 +15,9 @@
 .dual-flow .guide-record {padding:12px;border-radius:8px;}
 #mes-ai-chat-root .dual-flow .guide-field :is(input,select),#mes-ai-chat-root .dual-flow .guide-navigation button {min-height:40px;font-size:14px;}
 .dual-flow>.operation-pane {position:absolute;inset:0;background:var(--background);z-index:20;width:auto;max-width:none;}
-.dual-flow.step-wizard {grid-template-columns:minmax(0,1fr);grid-template-rows:minmax(180px,1fr) auto;}
-.dual-flow.step-wizard>.operation-primary {grid-row:1;max-width:100%;border-left:0;padding:24px clamp(16px,5%,64px);}
-.dual-flow.step-wizard>.chat-layout {grid-row:2;max-height:240px;border-top:1px solid var(--border);}
+.dual-flow.step-wizard {grid-template-columns:minmax(0,1fr);grid-template-rows:max-content max-content;overflow:auto;}
+.dual-flow.step-wizard>.operation-primary {grid-row:1;max-width:100%;overflow:visible;border-left:0;padding:24px clamp(16px,5%,64px);}
+.dual-flow.step-wizard>.chat-layout {grid-row:2;min-height:300px;max-height:380px;border-top:1px solid var(--border);}
 .dual-flow.step-wizard .conversation-scroll {max-height:100px;}
 .dual-flow .guide-phase,.dual-flow .guide-body {animation:dual-enter var(--aui-duration-normal,160ms) ease-out;}
 .operation-mode-option {display:flex;align-items:flex-start;gap:12px;padding:14px 0;cursor:pointer;}
