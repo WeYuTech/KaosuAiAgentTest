@@ -1,3 +1,4 @@
+import {restoreQueryWorkspace} from './query-context';
 import {rememberOperationFocus,operationFocusTarget,type OperationFocus} from './operation-focus';
 import {WorkspaceChoices} from './WorkspaceChoices';
 import {useEntry} from './use-entry';
@@ -488,10 +489,7 @@ export function App({ initialOpen = false }: { initialOpen?: boolean } = {}) {
       setGuideSnapshot({...restoredGuide.args,action:restoredGuide.action});forceNew.current=false;rememberConversation(chat,current.actor.id);setHistoryRevision(v=>v+1);
       setModule(currentModule); setWorkspace(work.data); setConversation(chat); setMessages(chat.messages ?? []);
       setFilters(initialFilters); setContextFilter(initialContextFilter); setPageSize(20);
-      try{const savedQuery=await request<Workspace>(`/api/conversations/${chat.id}/query`);
-      if(savedQuery.query_context?.version)acceptWorkspace(savedQuery);
-      else if(Object.values(initialFilters).some(Boolean)||Object.keys(initialContextFilter).length)acceptWorkspace(await request<Workspace>(`/api/conversations/${chat.id}/query`,{version:0,filters:{...initialContextFilter,...initialFilters}}));
-      else acceptWorkspace(savedQuery);
+      try{acceptWorkspace(await restoreQueryWorkspace(request,chat,{...initialContextFilter,...initialFilters}));
       }catch(error){if(error instanceof ObsoleteContext||error instanceof ApiError&&[401,403].includes(error.status))throw error;setQueryError(error instanceof Error?error.message:String(error));}
       setSelected(null); setProposal(authoritative); setProposalStatus(authoritative?.status === 'pending' ? '' : authoritative?.status ?? ''); setIndependentApproval(false); setQueryData([...(chat.messages??[])].reverse().find(message=>message.data!==undefined)?.data??null); setDraft(value => restoredText?.text ?? draftMemory.current.get(chat.id) ?? (conversation ? '' : value)); setDraftDelivery(restoredText?.delivery??'unsent'); setTab('chat'); setStage('chat');
       setRecoveryTarget(null); setExternalRecovery(null);
