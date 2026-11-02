@@ -1,0 +1,22 @@
+........................................................................ [ 32%]
+........................................................................ [ 64%]
+......................................sssssss.ss.......s................ [ 96%]
+........                                                                 [100%]
+============================== warnings summary ===============================
+.venv\Lib\site-packages\fastapi\testclient.py:1
+  C:\Users\rdpuser\Documents\ChatGPT\KaosuAgentDemo\.venv\Lib\site-packages\fastapi\testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+    from starlette.testclient import TestClient as TestClient  # noqa
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ===========================
+SKIPPED [1] tests\test_mes_http.py:272: 真實 SQL 驗收需明確設定 MES_SQL_ACCEPTANCE=1。
+SKIPPED [1] tests\test_mes_schedule_http.py:61: 真實 SQL 驗收需明確設定 MES_SQL_ACCEPTANCE=1。
+SKIPPED [1] tests\test_mes_schedule_http.py:81: 真實 SQL 驗收需明確設定 MES_SQL_ACCEPTANCE=1。
+SKIPPED [1] tests\test_mes_schedule_http.py:102: 真實 SQL 驗收需明確設定 MES_SQL_ACCEPTANCE=1。
+SKIPPED [1] tests\test_mes_schedule_http.py:122: 真實 SQL 驗收需明確設定 MES_SQL_ACCEPTANCE=1。
+SKIPPED [1] tests\test_mes_schedule_http.py:149: 真實 SQL 驗收需明確設定 MES_SQL_ACCEPTANCE=1。
+SKIPPED [1] tests\test_mes_schedule_http.py:176: 真實 SQL 驗收需明確設定 MES_SQL_ACCEPTANCE=1。
+SKIPPED [1] tests\test_operation_reconciliation.py:51: 真實 SQL 驗收需明確設定 MES_SQL_ACCEPTANCE=1。
+SKIPPED [1] tests\test_operation_reconciliation.py:79: 真實 SQL 驗收需明確設定 MES_SQL_ACCEPTANCE=1。
+SKIPPED [1] tests\test_package_release.py:80: 測試主機未提供建立符號連結權限
+214 passed, 10 skipped, 1 warning in 11.35s

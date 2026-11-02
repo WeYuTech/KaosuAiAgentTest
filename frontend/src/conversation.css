@@ -1,3 +1,4 @@
+@layer components {
 /* 同一 Guide 留在主流程；摘要只投影，窄版覆蓋不卸載編輯器。 */
 .desktop-workbench {
   display:flex;
@@ -203,3 +204,5 @@
 .help-panel { border:1px solid var(--border); }
 
 .latest-message { align-self:center; border:1px solid var(--border); background:var(--background); border-radius:50%; margin-top:-2.75rem; margin-bottom:.28125rem; z-index:2; }
+
+}

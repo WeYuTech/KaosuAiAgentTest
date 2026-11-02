@@ -12,10 +12,16 @@ export function ProposalBusinessSummary({ proposal, workspace }: { proposal: Pro
   const equipment = target.equipment ?? record?.EQP_NO ?? args.equipment;
   const workOrder = target.work_order ?? record?.WO;
   const scheduleTime = args.start_time ?? record?.SCHEDULE_START_TIME;
-  const report = Array.isArray(record?.REPORTS) ? (record.REPORTS as Row[]).find(r => String(r.WIP_OPI_WDOEACICOOUTPUT_HIST_SID) === String(args.report_id)) : undefined;
+  const executionTime = target.execution_time ?? record?.REAL_CHECK_IN_TIME ?? record?.CHECK_IN_TIME;
+  const partNo = target.part_no ?? record?.PART_NO;
+  const parts = Array.isArray(workspace.catalogs.parts) ? workspace.catalogs.parts as Row[] : [];
+  const part = [partNo,target.part_spec ?? record?.PART_SPEC ?? parts.find(row=>row.PART_NO===partNo)?.PART_SPEC].filter(Boolean).join(' · ');
+  const report = target.report_before ?? (Array.isArray(record?.REPORTS) ? (record.REPORTS as Row[]).find(r => String(r.WIP_OPI_WDOEACICOOUTPUT_HIST_SID) === String(args.report_id)) : undefined);
   const affected = [...new Set((target.affected_orders ?? []).map(order => typeof order === 'string' ? order : typeof order === 'object' && order ? display((order as Row).WO ?? (order as Row).work_order ?? (order as Row).wo ?? order) : display(order)))];
   const reasons = Array.isArray(workspace.catalogs.defect_reasons) ? workspace.catalogs.defect_reasons as Row[] : [];
   const defects = Array.isArray(args.defects) ? args.defects as { code: string; quantity: number }[] : [];
+  const previousDefects=Array.isArray(report?.DEFECTS)?report.DEFECTS as Row[]:[];
+  const visibleDefects=action==='report.update'?[...defects,...previousDefects.filter(row=>!defects.some(d=>d.code===row.NG_CODE)).map(row=>({code:String(row.NG_CODE),quantity:0}))]:defects;
   const findChange = (field: string) => changes.find(change => change.field === field);
   const nextTimes = changes.filter(change => change.field === 'REAL_CHECK_IN_TIME' && change.before !== change.after);
   const molds = Array.isArray(workspace.catalogs.molds) ? workspace.catalogs.molds as Row[] : [];
@@ -33,17 +39,20 @@ export function ProposalBusinessSummary({ proposal, workspace }: { proposal: Pro
     const identity = name && number ? `${display(name)}（${display(number)}）` : display(name ?? number ?? t("模具明細待核對"));
     return `${display(item.wo || item.part_no)} · ${identity}`;
   };
-  const businessRow = (title: string, after: unknown, before?: unknown, unit = '') => <div className="business-value"><span>{title}</span><strong>{before !== undefined && before !== null && <><span className="business-before">{display(before)}</span><ArrowRight size={14}/></>}{display(after)}{unit && <small>{unit}</small>}</strong></div>;
+  const businessRow = (title: string, after: unknown, before?: unknown, unit = '') => <div className="business-value"><span>{title}</span><strong>{before !== undefined && before !== null && display(before)!==display(after) && <><span className="business-before">{display(before)}</span><ArrowRight size={14}/></>}<span className="business-after">{display(after)}{unit && <small>{unit}</small>}</span></strong></div>;
 
-  return <div className="business-summary">
+  return <div className="business-summary" tabIndex={action.startsWith('mold.')?0:undefined} aria-label={action.startsWith('mold.')?t('核對時間與連動影響'):undefined}>
     <div className="business-target">
       {Boolean(equipment) && <span><Factory size={16}/><span><small>{t("設備")}</small><strong>{display(equipment)}</strong></span></span>}
       {Boolean(workOrder) && <span><ClipboardList size={16}/><span><small>{t("工單")}</small><strong>{display(workOrder)}</strong></span></span>}
-      {Boolean(scheduleTime) && <span><CalendarDays size={16}/><span><small>{t("預計開始")}</small><strong>{display(scheduleTime)}</strong></span></span>}
+      {Boolean(part) && <span><span><small>{t("品號／規格")}</small><strong>{part}</strong></span></span>}
+      {!action.startsWith('mold.') && Boolean(executionTime) && <span><span><small>{t("本次執行")}</small><strong>{display(executionTime)}</strong></span></span>}
+      {Boolean(report?.CREATE_TIME)&&<span><span><small>{t('報工時間')}</small><strong>{display(report?.CREATE_TIME)}</strong></span></span>}
+      {action!=='schedule.save' && Boolean(scheduleTime) && <span><CalendarDays size={16}/><span><small>{t("預計開始")}</small><strong>{display(scheduleTime)}</strong></span></span>}
     </div>
     {action === 'report.add' || action === 'report.update' ? <>
       <div className="business-quantities">{businessRow(t("人工良品"), args.ok, action === 'report.update' ? findChange('OK_QTY')?.before ?? report?.OK_QTY : undefined, t("件"))}{businessRow(t("不良合計"), defects.reduce((sum, item) => sum + Number(item.quantity), 0), action === 'report.update' ? findChange('NG_QTY')?.before ?? report?.NG_QTY : undefined, t("件"))}</div>
-      {defects.length > 0 && <div className="business-defects"><span className="business-caption">{t("不良原因")}</span>{defects.map((defect, index) => {
+      {visibleDefects.length > 0 && <div className="business-defects"><span className="business-caption">{t("不良原因")}</span>{visibleDefects.map((defect, index) => {
         const reason = reasons.find(reason => reason.NG_CODE_NO === defect.code);
         const name = reason?.NG_CODE_NAME ?? reason?.NAME ?? defect.code;
         const previous = Array.isArray(report?.DEFECTS) ? (report.DEFECTS as Row[]).find(item => item.NG_CODE === defect.code)?.NG_CODE_QTY : undefined;
@@ -59,18 +68,22 @@ export function ProposalBusinessSummary({ proposal, workspace }: { proposal: Pro
       return change ? <div key={field}>{businessRow(title, change.after === null ? t("清除時間") : change.after, change.before)}</div> : null;
     })}
     {action === 'schedule.save' && <>
-      {businessRow(t("排程日期"), findChange('SCHEDULE_DATE')?.after ?? record?.SCHEDULE_DATE)}
-      {businessRow(t("預計結束"), findChange('SCHEDULE_END_TIME')?.after ?? record?.SCHEDULE_END_TIME)}
-      {businessRow(t("模具"), args.mold_no)}
-      <div className="business-quantities">{businessRow(t("週期"), args.cycle_seconds, undefined, t("秒"))}{businessRow(t("目標模次"), args.target_shots, undefined, t("模"))}</div>
-      {allocations.length > 0 && <div className="business-defects"><span className="business-caption">{t("工單與模具明細分配")}</span>{allocations.map((item, index) => <div key={index}>{businessRow(allocationLabel(item), item.cavities, undefined, t("穴"))}{businessRow(t("目標件數"), Number(item.cavities) * Number(args.target_shots), undefined, t("件"))}</div>)}</div>}
+      {businessRow(t("排程日期"), findChange('SCHEDULE_DATE')?.after ?? record?.SCHEDULE_DATE,findChange('SCHEDULE_DATE')?.before)}
+      {businessRow(t("預計開始"),findChange('SCHEDULE_START_TIME')?.after??record?.SCHEDULE_START_TIME??args.start_time,findChange('SCHEDULE_START_TIME')?.before)}
+      {businessRow(t("預計結束"), findChange('SCHEDULE_END_TIME')?.after ?? record?.SCHEDULE_END_TIME,findChange('SCHEDULE_END_TIME')?.before)}
+      {record&&args.schedule_id&&args.equipment!==record.EQP_NO&&businessRow(t("設備"),args.equipment,record.EQP_NO)}
+      {businessRow(t("模具"), args.mold_no,args.schedule_id?record?.TOL_NO:undefined)}
+      <div className="business-quantities">{businessRow(t("週期"), args.cycle_seconds, findChange('SCHEDULE_CYCLE_TIME')?.before, t("秒"))}{businessRow(t("目標模次"), args.target_shots, findChange('TARGET_SHOT')?.before, t("模"))}</div>
+      {businessRow(t('生產狀態'),args.status,findChange('PRODUCTION_STATUS')?.before)}{businessRow(t('優先序'),args.priority,findChange('PRIORITY')?.before)}
+      {allocations.length > 0 && <div className="business-defects"><span className="business-caption">{t("工單與模具明細分配")}</span>{allocations.map((item, index) => {const previous=item.previous as Row|undefined;return <div key={index}>{previous&&previous.wo!==item.wo&&businessRow(t('工單分配'),item.wo||t('未分配工單'),previous.wo||t('未分配工單'))}{businessRow(allocationLabel(item), item.cavities, previous?.cavities, t("穴"))}{businessRow(t("目標件數"), Number(item.cavities) * Number(args.target_shots), previous?.target_pcs, t("件"))}</div>;})}</div>}
     </>}
+    {['mold.clear','mold.unmount_finish'].includes(action) && ['CHECK_IN_TIME','CHECK_OUT_TIME','COMPLETED_TIME','COMPLETED'].map(field => {
+      const change = findChange(field); if (!change) return null;
+      return <div key={field}>{businessRow(t(field === 'CHECK_IN_TIME' ? '進站時間' : field === 'CHECK_OUT_TIME' ? '出站時間' : field==='COMPLETED_TIME'?'完工時間':'完工狀態'), field==='COMPLETED'?t(change.after==='Y'?'已完工':'未完工'):change.after === null ? t('清除時間') : change.after, field==='COMPLETED'?t(change.before==='Y'?'已完工':'未完工'):change.before)}</div>;
+    })}
     {(action === 'report.complete' || action === 'report.delete' || action === 'mold.clear' || action === 'mold.unmount_finish') && <div className="business-impact"><strong>{t("影響工單")}</strong>{affected.length ? <ul>{affected.map(order => <li key={order}>{order}</li>)}</ul> : workOrder ? <p>{display(workOrder)}</p> : <p>{t("請核對上方作業對象與摘要。")}</p>}{action === 'report.complete' && <p>{t("同一排程的所有工單會一併完工。")}</p>}{action === 'mold.clear' && <p>{t("會清除這張排程的上下模時間，請確認現場狀態。")}</p>}</div>}
     {nextTimes.length > 0 && <div className="business-impact"><strong>{t("連動作業")}</strong><p>{t("下一張排程的實際開始時間會一併更新為：")}{display(nextTimes[0].after)}</p></div>}
-    {action === 'mold.clear' && ['CHECK_IN_TIME','CHECK_OUT_TIME','COMPLETED'].map(field => {
-      const change = findChange(field); if (!change) return null;
-      return <div key={field}>{businessRow(t(field === 'CHECK_IN_TIME' ? '進站時間' : field === 'CHECK_OUT_TIME' ? '出站時間' : '完工狀態'), change.after === null ? t('清除時間') : change.after, change.before)}</div>;
-    })}
-    {args.comment !== undefined && String(args.comment).trim() && businessRow(t("備註"), args.comment)}
+
+    {args.comment !== undefined && (String(args.comment).trim() || action==='schedule.save'&&findChange('COMMENT')) && businessRow(t("備註"), args.comment || t("未填寫"),action==='schedule.save'?findChange('COMMENT')?.before:undefined)}
   </div>;
 }

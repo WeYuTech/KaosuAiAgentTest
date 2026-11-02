@@ -44,12 +44,9 @@ for (const [locale, languageLabel, themeLabel, moduleLabel] of [
   test(`三語入口與固定頁首控件：${locale}`, () => {
     setLocale(locale);
     const html = renderToStaticMarkup(createElement(App, { initialOpen: true }));
-    assert.ok(html.includes(`aria-label="${languageLabel}"`));
-    assert.ok(html.includes(`aria-label="${themeLabel}"`));
+    // Radix Portal 開啟後才掛載；語言／主題選項改由 radix-menu.test.mjs 實際開選單驗證。
+    assert.ok(html.includes(`aria-label="${t('更多功能')}"`));
     assert.ok(html.includes(moduleLabel));
-    assert.ok(html.includes('繁體中文') && html.includes('English') && html.includes('ไทย'));
-    assert.ok(html.includes('header-preferences'));
-    assert.ok(html.includes(t('MES 藍色')));
     if (locale !== 'zh-TW') assert.ok(!html.includes('今天，想完成什麼作業？'));
   });
 }

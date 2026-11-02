@@ -1,0 +1,31 @@
+@import "../public/motion-tokens.css";
+@keyframes mes-enter {from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:translateY(0)}}
+/* translate 保留 Dialog 的 -50% 置中；動畫只使用獨立 transform。 */
+@keyframes mes-dialog-enter {from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+@keyframes mes-dialog-exit {from{opacity:1;transform:translateY(0)}to{opacity:0;transform:translateY(6px)}}
+@keyframes mes-fade-in {from{opacity:0}to{opacity:1}}
+@keyframes mes-fade-out {from{opacity:1}to{opacity:0}}
+#mes-ai-chat-root [data-enter=true] {animation:mes-enter var(--motion-enter) var(--motion-ease);}
+#mes-ai-chat-root [data-slot=dialog-content][data-state=open] {animation:mes-dialog-enter var(--motion-dialog) var(--motion-ease);}
+#mes-ai-chat-root [data-slot=dialog-content][data-state=closed] {animation:mes-dialog-exit var(--motion-exit) var(--motion-ease);pointer-events:none;}
+#mes-ai-chat-root [data-slot=dialog-overlay][data-state=open] {animation:mes-fade-in var(--motion-dialog) var(--motion-ease);}
+#mes-ai-chat-root [data-slot=dialog-overlay][data-state=closed] {animation:mes-fade-out var(--motion-exit) var(--motion-ease);pointer-events:none;}
+#mes-ai-chat-root .motion-stage {animation:mes-enter var(--motion-enter) var(--motion-ease);}
+#mes-ai-chat-root button {transition:color var(--motion-feedback),background-color var(--motion-feedback),border-color var(--motion-feedback);}
+#mes-ai-chat-root .assistant-panel,#mes-ai-chat-root .operation-pane {transition:opacity var(--motion-panel) var(--motion-ease),translate var(--motion-panel) var(--motion-ease),display var(--motion-panel) allow-discrete;opacity:1;translate:0 0;}
+#mes-ai-chat-root .assistant-panel[hidden],#mes-ai-chat-root .operation-pane[hidden] {opacity:0;translate:0 6px;pointer-events:none;}
+@starting-style {#mes-ai-chat-root .assistant-panel,#mes-ai-chat-root .operation-pane {opacity:0;translate:0 6px;}}
+@media(prefers-reduced-motion:reduce){
+ #mes-ai-chat-root *,#mes-ai-chat-root *::before,#mes-ai-chat-root *::after {animation:none!important;transition:none!important;scroll-behavior:auto!important;}
+}
+
+#mes-ai-chat-root .assistant-panel {transition:opacity var(--motion-panel) var(--motion-ease),translate var(--motion-panel) var(--motion-ease),width var(--motion-panel) var(--motion-ease),height var(--motion-panel) var(--motion-ease),display var(--motion-panel) allow-discrete;}
+#mes-ai-chat-root .conversation-history {opacity:1;transition:opacity var(--motion-panel) var(--motion-ease),display var(--motion-panel) allow-discrete;}
+#mes-ai-chat-root .history-overlay {opacity:1;}
+@starting-style{#mes-ai-chat-root .conversation-history{opacity:0;}}
+
+/* 活動圖示使用獨立 keyframes，避免 Tailwind 同名 spin 被覆寫。 */
+@keyframes mes-request-spin {to {transform:rotate(360deg)}}
+#mes-ai-chat-root .spin {animation:mes-request-spin .9s linear infinite;transform-origin:center;}
+#mes-ai-chat-root .dual-enter {animation:dual-enter .18s ease-out;}
+@media(prefers-reduced-motion:reduce){#mes-ai-chat-root .spin,#mes-ai-chat-root .dual-enter{animation:none!important;}}

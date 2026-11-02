@@ -1,0 +1,24 @@
+{
+  "equipment": {
+    "status": 200,
+    "count": 2,
+    "has_more": true
+  },
+  "parts": {
+    "status": 200,
+    "count": 2,
+    "has_more": true
+  },
+  "work_orders": {
+    "status": 200,
+    "count": 0,
+    "has_more": false
+  },
+  "molds": {
+    "status": 200,
+    "count": 2,
+    "has_more": true
+  },
+  "model_calls": 0,
+  "business_writes": 0
+}

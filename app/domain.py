@@ -83,6 +83,15 @@ def seed_state():
     return state
 
 
+def execution_confirmation_target(state, execution):
+    """依已核對的執行／排程明細保存辨識資訊，離開候選分頁後仍可核對。"""
+    detail = state['tables'].get(DETAIL, {}).get(execution.get('ZZ_KAOSU_PROD_SCHEDULE_DETAIL_SID'), {})
+    part_no = execution.get('PART_NO') or detail.get('PART_NO')
+    part = next((p for p in state.get('catalogs', {}).get('parts', []) if p.get('PART_NO') == part_no), {})
+    return {'part_no': part_no, 'part_spec': execution.get('PART_SPEC') or detail.get('PART_SPEC') or part.get('PART_SPEC'),
+            'execution_time': execution.get('REAL_CHECK_IN_TIME') or execution.get('CHECK_IN_TIME')}
+
+
 def schedule_confirmation_target(before, after, args):
     """從已驗證的預覽結果取白名單摘要，避免確認畫面依賴目前查詢分頁。"""
     tables = after["tables"]
@@ -103,8 +112,22 @@ def schedule_confirmation_target(before, after, args):
         details.append({"detail_id": row["ZZ_KAOSU_PROD_SCHEDULE_DETAIL_SID"], "mold_detail_id": row["TOL_DETALS_SID"],
                         "mold_detail_no": detail.get("TOL_DETALS_NO"), "mold_detail_name": detail.get("TOL_DETALS_NAME"),
                         "part_no": row["PART_NO"], "wo": wo, "cavities": row["SCHEDULE_CUR_CAV"]})
+        original = before["tables"][DETAIL].get(row["ZZ_KAOSU_PROD_SCHEDULE_DETAIL_SID"])
+        if original:
+            details[-1]["previous"] = {"wo": next((w["WO"] for w in before["catalogs"]["work_orders"] if w["WO_SID"] == original["WO_SID"]), ""),
+                                       "cavities": original["SCHEDULE_CUR_CAV"], "target_pcs": original.get("TARGET_PCS")}
     return {"schedule_id": sid, "equipment": tables["EQP_MASTER"][schedule["EQP_SID"]]["EQP_NO"],
             "mold_no": mold["TOL_NO"], "schedule_details": details, "affected_orders": sorted({d["wo"] for d in details if d["wo"]})}
+
+
+def report_confirmation_target(state, report_id):
+    report = state["tables"].get(OUTPUT, {}).get(report_id)
+    if not report:
+        return {}
+    return {"report_before": {**{key: report.get(key) for key in ("CREATE_TIME", "OK_QTY", "NG_QTY")},
+                              "DEFECTS": [{"NG_CODE": row["NG_CODE"], "NG_CODE_QTY": row["NG_CODE_QTY"]}
+                                          for row in state["tables"].get(DEFECT, {}).values()
+                                          if row.get("WIP_OPI_WDOEACICOOUTPUT_HIST_SID") == report_id]}}
 
 
 def _pick(rows, field, value, label):

@@ -1,0 +1,1954 @@
+[
+  {
+    "confirm_requests": 1,
+    "response": {
+      "proposal": {
+        "action": "report.add",
+        "actor_id": "DEMO_SUPERVISOR",
+        "args": {
+          "defects": [
+            {
+              "code": "NG01",
+              "quantity": 2
+            }
+          ],
+          "execution_id": "2001",
+          "ok": 120
+        },
+        "business_timezone": "UTC+07:00",
+        "changes": [
+          {
+            "after": "2026-11-01 15:17:28",
+            "before": null,
+            "field": "CREATE_TIME",
+            "key": "9002",
+            "table": "WIP_OPI_WDOEACICONG_HIST_DETAIL"
+          },
+          {
+            "after": "DEMO_SUPERVISOR",
+            "before": null,
+            "field": "CREATE_USER",
+            "key": "9002",
+            "table": "WIP_OPI_WDOEACICONG_HIST_DETAIL"
+          },
+          {
+            "after": "2026-11-01 15:17:28",
+            "before": null,
+            "field": "EDIT_TIME",
+            "key": "9002",
+            "table": "WIP_OPI_WDOEACICONG_HIST_DETAIL"
+          },
+          {
+            "after": "DEMO_SUPERVISOR",
+            "before": null,
+            "field": "EDIT_USER",
+            "key": "9002",
+            "table": "WIP_OPI_WDOEACICONG_HIST_DETAIL"
+          },
+          {
+            "after": "NG01",
+            "before": null,
+            "field": "NG_CODE",
+            "key": "9002",
+            "table": "WIP_OPI_WDOEACICONG_HIST_DETAIL"
+          },
+          {
+            "after": 2,
+            "before": null,
+            "field": "NG_CODE_QTY",
+            "key": "9002",
+            "table": "WIP_OPI_WDOEACICONG_HIST_DETAIL"
+          },
+          {
+            "after": "9002",
+            "before": null,
+            "field": "WDOEACICONG_NG_HIST_DETAIL_SID",
+            "key": "9002",
+            "table": "WIP_OPI_WDOEACICONG_HIST_DETAIL"
+          },
+          {
+            "after": "9001",
+            "before": null,
+            "field": "WIP_OPI_WDOEACICOOUTPUT_HIST_SID",
+            "key": "9002",
+            "table": "WIP_OPI_WDOEACICONG_HIST_DETAIL"
+          },
+          {
+            "after": "",
+            "before": null,
+            "field": "COMMENT",
+            "key": "9001",
+            "table": "WIP_OPI_WDOEACICOOUTPUT_HIST"
+          },
+          {
+            "after": "2026-11-01 15:17:28",
+            "before": null,
+            "field": "CREATE_TIME",
+            "key": "9001",
+            "table": "WIP_OPI_WDOEACICOOUTPUT_HIST"
+          },
+          {
+            "after": "DEMO_SUPERVISOR",
+            "before": null,
+            "field": "CREATE_USER",
+            "key": "9001",
+            "table": "WIP_OPI_WDOEACICOOUTPUT_HIST"
+          },
+          {
+            "after": "2026-11-01 15:17:28",
+            "before": null,
+            "field": "EDIT_TIME",
+            "key": "9001",
+            "table": "WIP_OPI_WDOEACICOOUTPUT_HIST"
+          },
+          {
+            "after": "DEMO_SUPERVISOR",
+            "before": null,
+            "field": "EDIT_USER",
+            "key": "9001",
+            "table": "WIP_OPI_WDOEACICOOUTPUT_HIST"
+          },
+          {
+            "after": "Y",
+            "before": null,
+            "field": "ENABLE_FLAG",
+            "key": "9001",
+            "table": "WIP_OPI_WDOEACICOOUTPUT_HIST"
+          },
+          {
+            "after": 2,
+            "before": null,
+            "field": "NG_QTY",
+            "key": "9001",
+            "table": "WIP_OPI_WDOEACICOOUTPUT_HIST"
+          },
+          {
+            "after": 120,
+            "before": null,
+            "field": "OK_QTY",
+            "key": "9001",
+            "table": "WIP_OPI_WDOEACICOOUTPUT_HIST"
+          },
+          {
+            "after": "9001",
+            "before": null,
+            "field": "WIP_OPI_WDOEACICOOUTPUT_HIST_SID",
+            "key": "9001",
+            "table": "WIP_OPI_WDOEACICOOUTPUT_HIST"
+          },
+          {
+            "after": "2001",
+            "before": null,
+            "field": "WIP_OPI_WDOEACICO_HIST_SID",
+            "key": "9001",
+            "table": "WIP_OPI_WDOEACICOOUTPUT_HIST"
+          }
+        ],
+        "confirmed_at": "2026-11-01T08:22:01.948906+00:00",
+        "conversation_id": "VPO67eFi0ZJe3SE-nHmudHbN",
+        "created_at": "2026-11-01T08:17:28.151192+00:00",
+        "digest": "f80abdac4f0a6200c49948979df42a4d4c3fffb01f3ba5044dd9cb0706007ee3",
+        "event_time": "2026-11-01T08:17:28.151192+00:00",
+        "expires_at": "2026-11-01T08:27:28.151192+00:00",
+        "id": "930dc00c-792d-4b1e-a8dd-1e5cf02bb30a",
+        "independent_confirmation": false,
+        "intent_revision": 5,
+        "mode": "simulation",
+        "module": "report",
+        "state_digest": "3e369c897ce0b146b32f6e5b93905155e617b29bbf3950cb89ac40af94951425",
+        "status": "succeeded",
+        "summary": "新增人工報工",
+        "target": {
+          "affected_orders": [
+            "WO-A",
+            "WO-B"
+          ],
+          "equipment": "MC37",
+          "execution_id": "2001",
+          "report_id": null,
+          "schedule_id": "1001",
+          "work_order": "WO-A"
+        },
+        "writes_enabled": true
+      }
+    }
+  },
+  {
+    "confirm_requests": 1,
+    "response": {
+      "proposal": {
+        "action": "report.update",
+        "actor_id": "DEMO_SUPERVISOR",
+        "args": {
+          "defects": [
+            {
+              "code": "NG01",
+              "quantity": 2
+            }
+          ],
+          "ok": 121,
+          "report_id": "9001"
+        },
+        "business_timezone": "UTC+07:00",
+        "changes": [
+          {
+            "after": null,
+            "before": "2026-11-01 15:17:28",
+            "field": "CREATE_TIME",
+            "key": "9002",
+            "table": "WIP_OPI_WDOEACICONG_HIST_DETAIL"
+          },
+          {
+            "after": null,
+            "before": "DEMO_SUPERVISOR",
+            "field": "CREATE_USER",
+            "key": "9002",
+            "table": "WIP_OPI_WDOEACICONG_HIST_DETAIL"
+          },
+          {
+            "after": null,
+            "before": "2026-11-01 15:17:28",
+            "field": "EDIT_TIME",
+            "key": "9002",
+            "table": "WIP_OPI_WDOEACICONG_HIST_DETAIL"
+          },
+          {
+            "after": null,
+            "before": "DEMO_SUPERVISOR",
+            "field": "EDIT_USER",
+            "key": "9002",
+            "table": "WIP_OPI_WDOEACICONG_HIST_DETAIL"
+          },
+          {
+            "after": null,
+            "before": "NG01",
+            "field": "NG_CODE",
+            "key": "9002",
+            "table": "WIP_OPI_WDOEACICONG_HIST_DETAIL"
+          },
+          {
+            "after": null,
+            "before": 2,
+            "field": "NG_CODE_QTY",
+            "key": "9002",
+            "table": "WIP_OPI_WDOEACICONG_HIST_DETAIL"
+          },
+          {
+            "after": null,
+            "before": "9002",
+            "field": "WDOEACICONG_NG_HIST_DETAIL_SID",
+            "key": "9002",
+            "table": "WIP_OPI_WDOEACICONG_HIST_DETAIL"
+          },
+          {
+            "after": null,
+            "before": "9001",
+            "field": "WIP_OPI_WDOEACICOOUTPUT_HIST_SID",
+            "key": "9002",
+            "table": "WIP_OPI_WDOEACICONG_HIST_DETAIL"
+          },
+          {
+            "after": "2026-11-01 15:52:31",
+            "before": null,
+            "field": "CREATE_TIME",
+            "key": "9003",
+            "table": "WIP_OPI_WDOEACICONG_HIST_DETAIL"
+          },
+          {
+            "after": "DEMO_SUPERVISOR",
+            "before": null,
+            "field": "CREATE_USER",
+            "key": "9003",
+            "table": "WIP_OPI_WDOEACICONG_HIST_DETAIL"
+          },
+          {
+            "after": "2026-11-01 15:52:31",
+            "before": null,
+            "field": "EDIT_TIME",
+            "key": "9003",
+            "table": "WIP_OPI_WDOEACICONG_HIST_DETAIL"
+          },
+          {
+            "after": "DEMO_SUPERVISOR",
+            "before": null,
+            "field": "EDIT_USER",
+            "key": "9003",
+            "table": "WIP_OPI_WDOEACICONG_HIST_DETAIL"
+          },
+          {
+            "after": "NG01",
+            "before": null,
+            "field": "NG_CODE",
+            "key": "9003",
+            "table": "WIP_OPI_WDOEACICONG_HIST_DETAIL"
+          },
+          {
+            "after": 2,
+            "before": null,
+            "field": "NG_CODE_QTY",
+            "key": "9003",
+            "table": "WIP_OPI_WDOEACICONG_HIST_DETAIL"
+          },
+          {
+            "after": "9003",
+            "before": null,
+            "field": "WDOEACICONG_NG_HIST_DETAIL_SID",
+            "key": "9003",
+            "table": "WIP_OPI_WDOEACICONG_HIST_DETAIL"
+          },
+          {
+            "after": "9001",
+            "before": null,
+            "field": "WIP_OPI_WDOEACICOOUTPUT_HIST_SID",
+            "key": "9003",
+            "table": "WIP_OPI_WDOEACICONG_HIST_DETAIL"
+          },
+          {
+            "after": "2026-11-01 15:52:31",
+            "before": "2026-11-01 15:17:28",
+            "field": "EDIT_TIME",
+            "key": "9001",
+            "table": "WIP_OPI_WDOEACICOOUTPUT_HIST"
+          },
+          {
+            "after": 121,
+            "before": 120,
+            "field": "OK_QTY",
+            "key": "9001",
+            "table": "WIP_OPI_WDOEACICOOUTPUT_HIST"
+          }
+        ],
+        "confirmed_at": "2026-11-01T08:52:36.959061+00:00",
+        "conversation_id": "G7QuabxqQ1EWrAXNwvIISvfz",
+        "created_at": "2026-11-01T08:52:31.888999+00:00",
+        "digest": "732e7da306556fd8890da2bf2e279540f49400ff9f1144c950a7e59ff9e74c9e",
+        "event_time": "2026-11-01T08:52:31.888999+00:00",
+        "expires_at": "2026-11-01T09:02:31.888999+00:00",
+        "id": "1ce52457-ec7f-4cba-bbac-f079cdb93e2c",
+        "independent_confirmation": false,
+        "intent_revision": 4,
+        "mode": "simulation",
+        "module": "report",
+        "state_digest": "88df804119683d0dd7ac70cfcd02bd28d7f1a327f9acd359e7caf95ef76a9345",
+        "status": "succeeded",
+        "summary": "修改人工報工",
+        "target": {
+          "affected_orders": [
+            "WO-A",
+            "WO-B"
+          ],
+          "equipment": "MC37",
+          "execution_id": "2001",
+          "report_id": "9001",
+          "schedule_id": "1001",
+          "work_order": "WO-A"
+        },
+        "writes_enabled": true
+      }
+    }
+  },
+  {
+    "confirm_requests": 1,
+    "response": {
+      "proposal": {
+        "action": "report.cavities",
+        "actor_id": "DEMO_SUPERVISOR",
+        "args": {
+          "cavities": 3,
+          "execution_id": "2001"
+        },
+        "business_timezone": "UTC+07:00",
+        "changes": [
+          {
+            "after": 3,
+            "before": 2,
+            "field": "OPI_CAV",
+            "key": "2001",
+            "table": "WIP_OPI_WDOEACICO_HIST"
+          }
+        ],
+        "confirmed_at": "2026-11-01T08:53:10.718090+00:00",
+        "conversation_id": "PPWVxOv3h7pXMthqJqsvm8n7",
+        "created_at": "2026-11-01T08:53:06.330166+00:00",
+        "digest": "41b1867b5ad9cce1daf16f7addb6ce6b205eafc9429a36ab4d9bee2c73d7c90f",
+        "event_time": "2026-11-01T08:53:06.330166+00:00",
+        "expires_at": "2026-11-01T09:03:06.330166+00:00",
+        "id": "13cd45ec-f787-4962-99dc-1de880fdb3af",
+        "independent_confirmation": false,
+        "intent_revision": 5,
+        "mode": "simulation",
+        "module": "report",
+        "state_digest": "c941ec62fcb3fb9ef94facaba522469d0954227a3e140967e37f5d74fc915de0",
+        "status": "succeeded",
+        "summary": "修改報工模穴",
+        "target": {
+          "affected_orders": [
+            "WO-A",
+            "WO-B"
+          ],
+          "equipment": "MC37",
+          "execution_id": "2001",
+          "report_id": null,
+          "schedule_id": "1001",
+          "work_order": "WO-A"
+        },
+        "writes_enabled": true
+      }
+    }
+  },
+  {
+    "confirm_requests": 1,
+    "response": {
+      "proposal": {
+        "action": "mold.mount_start",
+        "actor_id": "DEMO_SUPERVISOR",
+        "args": {
+          "schedule_id": "1003"
+        },
+        "business_timezone": "UTC+07:00",
+        "changes": [
+          {
+            "after": "2026-11-01 15:54:49",
+            "before": null,
+            "field": "CHECK_IN_TIME",
+            "key": "2004",
+            "table": "WIP_OPI_WDOEACICO_HIST"
+          },
+          {
+            "after": "2026-11-01 15:54:49",
+            "before": null,
+            "field": "EDIT_TIME",
+            "key": "2004",
+            "table": "WIP_OPI_WDOEACICO_HIST"
+          },
+          {
+            "after": "DEMO_SUPERVISOR",
+            "before": null,
+            "field": "EDIT_USER",
+            "key": "2004",
+            "table": "WIP_OPI_WDOEACICO_HIST"
+          },
+          {
+            "after": "2026-11-01 15:54:49",
+            "before": null,
+            "field": "ZZ_MODLE_UPLOAD_START",
+            "key": "2004",
+            "table": "WIP_OPI_WDOEACICO_HIST"
+          }
+        ],
+        "confirmed_at": "2026-11-01T08:54:59.621052+00:00",
+        "conversation_id": "e0mbz7D3c2HGHBtRsSeKYBP1",
+        "created_at": "2026-11-01T08:54:49.638819+00:00",
+        "digest": "8b1024d6607ebc04999038c668cd2166e99be8eb5791b7ef198b5eb1f1f43570",
+        "event_time": "2026-11-01T08:54:49.638819+00:00",
+        "expires_at": "2026-11-01T09:04:49.638819+00:00",
+        "id": "859bd653-ced6-4094-ba69-7e8b9083d7b2",
+        "independent_confirmation": false,
+        "intent_revision": 4,
+        "mode": "simulation",
+        "module": "mold",
+        "state_digest": "063af83f3b6788f1d02c896c45819e969ed8cada1f55fc395e9fc53a5eeb16ad",
+        "status": "succeeded",
+        "summary": "開始上模並進站",
+        "target": {
+          "affected_orders": [
+            "WO-A"
+          ],
+          "equipment": "MC36",
+          "execution_id": null,
+          "report_id": null,
+          "schedule_id": "1003",
+          "work_order": null
+        },
+        "writes_enabled": true
+      }
+    }
+  },
+  {
+    "confirm_requests": 1,
+    "response": {
+      "proposal": {
+        "action": "mold.mount_finish",
+        "actor_id": "DEMO_SUPERVISOR",
+        "args": {
+          "schedule_id": "1003"
+        },
+        "business_timezone": "UTC+07:00",
+        "changes": [
+          {
+            "after": "2026-11-01 15:55:34",
+            "before": "2026-11-01 15:54:49",
+            "field": "EDIT_TIME",
+            "key": "2004",
+            "table": "WIP_OPI_WDOEACICO_HIST"
+          },
+          {
+            "after": "2026-11-01 15:55:34",
+            "before": null,
+            "field": "ZZ_MODLE_UPLOAD_END",
+            "key": "2004",
+            "table": "WIP_OPI_WDOEACICO_HIST"
+          }
+        ],
+        "confirmed_at": "2026-11-01T08:55:40.082035+00:00",
+        "conversation_id": "1CwqqyBlGnMW5puFe8I4cSkT",
+        "created_at": "2026-11-01T08:55:34.987200+00:00",
+        "digest": "15a361c0035b0d7c49291bf626c5e643793aa15fab9b791416f78edc7773ef0f",
+        "event_time": "2026-11-01T08:55:34.987200+00:00",
+        "expires_at": "2026-11-01T09:05:34.987200+00:00",
+        "id": "f16f7b6d-c853-44ef-9437-7cef106c08b2",
+        "independent_confirmation": false,
+        "intent_revision": 4,
+        "mode": "simulation",
+        "module": "mold",
+        "state_digest": "829714363bc2a7ffad4b04be80657f43422601b2dabdfd8925233a05a83ed141",
+        "status": "succeeded",
+        "summary": "完成上模",
+        "target": {
+          "affected_orders": [
+            "WO-A"
+          ],
+          "equipment": "MC36",
+          "execution_id": null,
+          "report_id": null,
+          "schedule_id": "1003",
+          "work_order": null
+        },
+        "writes_enabled": true
+      }
+    }
+  },
+  {
+    "confirm_requests": 1,
+    "response": {
+      "proposal": {
+        "action": "mold.unmount_start",
+        "actor_id": "DEMO_SUPERVISOR",
+        "args": {
+          "schedule_id": "1003"
+        },
+        "business_timezone": "UTC+07:00",
+        "changes": [
+          {
+            "after": "2026-11-01 15:56:01",
+            "before": "2026-11-01 15:55:34",
+            "field": "EDIT_TIME",
+            "key": "2004",
+            "table": "WIP_OPI_WDOEACICO_HIST"
+          },
+          {
+            "after": "2026-11-01 15:56:01",
+            "before": null,
+            "field": "ZZ_MODLE_REMOVE_START",
+            "key": "2004",
+            "table": "WIP_OPI_WDOEACICO_HIST"
+          }
+        ],
+        "confirmed_at": "2026-11-01T08:56:07.589793+00:00",
+        "conversation_id": "pcnE3ESoRpehgv4JvC1o3mCP",
+        "created_at": "2026-11-01T08:56:01.367253+00:00",
+        "digest": "e62783e4cad2f88f2700dbab043a8488c470e715b25eed95c23c74dee807b80a",
+        "event_time": "2026-11-01T08:56:01.367253+00:00",
+        "expires_at": "2026-11-01T09:06:01.367253+00:00",
+        "id": "b3eb5674-5d62-4108-aac0-5835b04a8e5b",
+        "independent_confirmation": false,
+        "intent_revision": 4,
+        "mode": "simulation",
+        "module": "mold",
+        "state_digest": "53376dcaf5585affc70ac12698911c97dbd8b1c12cac26b3cf4fa694cf9e2e14",
+        "status": "succeeded",
+        "summary": "開始下模",
+        "target": {
+          "affected_orders": [
+            "WO-A"
+          ],
+          "equipment": "MC36",
+          "execution_id": null,
+          "report_id": null,
+          "schedule_id": "1003",
+          "work_order": null
+        },
+        "writes_enabled": true
+      }
+    }
+  },
+  {
+    "confirm_requests": 1,
+    "response": {
+      "proposal": {
+        "action": "mold.unmount_finish",
+        "actor_id": "DEMO_SUPERVISOR",
+        "args": {
+          "schedule_id": "1003"
+        },
+        "business_timezone": "UTC+07:00",
+        "changes": [
+          {
+            "after": "2026-11-01 15:56:33",
+            "before": null,
+            "field": "CHECK_OUT_TIME",
+            "key": "2004",
+            "table": "WIP_OPI_WDOEACICO_HIST"
+          },
+          {
+            "after": "Y",
+            "before": "N",
+            "field": "COMPLETED",
+            "key": "2004",
+            "table": "WIP_OPI_WDOEACICO_HIST"
+          },
+          {
+            "after": "2026-11-01 15:56:33",
+            "before": null,
+            "field": "COMPLETED_TIME",
+            "key": "2004",
+            "table": "WIP_OPI_WDOEACICO_HIST"
+          },
+          {
+            "after": "2026-11-01 15:56:33",
+            "before": "2026-11-01 15:56:01",
+            "field": "EDIT_TIME",
+            "key": "2004",
+            "table": "WIP_OPI_WDOEACICO_HIST"
+          },
+          {
+            "after": "2026-11-01 15:56:33",
+            "before": null,
+            "field": "ZZ_MODLE_REMOVE_END",
+            "key": "2004",
+            "table": "WIP_OPI_WDOEACICO_HIST"
+          }
+        ],
+        "confirmed_at": "2026-11-01T08:56:38.443159+00:00",
+        "conversation_id": "W5dYvrEmGxg-vhyv7G7TKnLf",
+        "created_at": "2026-11-01T08:56:33.301918+00:00",
+        "digest": "3d14f93e337beee07045fc8d1779b1de89b63291977ec2ec1fd0246baa76ca64",
+        "event_time": "2026-11-01T08:56:33.301918+00:00",
+        "expires_at": "2026-11-01T09:06:33.301918+00:00",
+        "id": "2c166010-9dc9-4936-b25c-7f0c49109963",
+        "independent_confirmation": true,
+        "intent_revision": 4,
+        "mode": "simulation",
+        "module": "mold",
+        "state_digest": "9bb389b05fe4eee1d75420b487c8f56a684aff85518cf95c366009e7d73c159c",
+        "status": "succeeded",
+        "summary": "完成下模、出站及完工",
+        "target": {
+          "affected_orders": [
+            "WO-A"
+          ],
+          "equipment": "MC36",
+          "execution_id": null,
+          "report_id": null,
+          "schedule_id": "1003",
+          "work_order": null
+        },
+        "writes_enabled": true
+      }
+    }
+  },
+  {
+    "confirm_requests": 1,
+    "response": {
+      "proposal": {
+        "action": "mold.clear",
+        "actor_id": "DEMO_SUPERVISOR",
+        "args": {
+          "schedule_id": "1003"
+        },
+        "business_timezone": "UTC+07:00",
+        "changes": [
+          {
+            "after": null,
+            "before": "2026-11-01 15:54:49",
+            "field": "CHECK_IN_TIME",
+            "key": "2004",
+            "table": "WIP_OPI_WDOEACICO_HIST"
+          },
+          {
+            "after": null,
+            "before": "2026-11-01 15:56:33",
+            "field": "CHECK_OUT_TIME",
+            "key": "2004",
+            "table": "WIP_OPI_WDOEACICO_HIST"
+          },
+          {
+            "after": "N",
+            "before": "Y",
+            "field": "COMPLETED",
+            "key": "2004",
+            "table": "WIP_OPI_WDOEACICO_HIST"
+          },
+          {
+            "after": null,
+            "before": "2026-11-01 15:56:33",
+            "field": "COMPLETED_TIME",
+            "key": "2004",
+            "table": "WIP_OPI_WDOEACICO_HIST"
+          },
+          {
+            "after": "2026-11-01 15:57:21",
+            "before": "2026-11-01 15:56:33",
+            "field": "EDIT_TIME",
+            "key": "2004",
+            "table": "WIP_OPI_WDOEACICO_HIST"
+          },
+          {
+            "after": null,
+            "before": "2026-11-01 15:56:33",
+            "field": "ZZ_MODLE_REMOVE_END",
+            "key": "2004",
+            "table": "WIP_OPI_WDOEACICO_HIST"
+          },
+          {
+            "after": null,
+            "before": "2026-11-01 15:56:01",
+            "field": "ZZ_MODLE_REMOVE_START",
+            "key": "2004",
+            "table": "WIP_OPI_WDOEACICO_HIST"
+          },
+          {
+            "after": null,
+            "before": "2026-11-01 15:55:34",
+            "field": "ZZ_MODLE_UPLOAD_END",
+            "key": "2004",
+            "table": "WIP_OPI_WDOEACICO_HIST"
+          },
+          {
+            "after": null,
+            "before": "2026-11-01 15:54:49",
+            "field": "ZZ_MODLE_UPLOAD_START",
+            "key": "2004",
+            "table": "WIP_OPI_WDOEACICO_HIST"
+          }
+        ],
+        "confirmed_at": "2026-11-01T08:57:27.067702+00:00",
+        "conversation_id": "jV-gnzyYYThMztVsmxVXB9x6",
+        "created_at": "2026-11-01T08:57:21.942188+00:00",
+        "digest": "901d2c50ca23e1c507d0acf1c8f9bbcc536fb5d2cedb4c3bc873864257d62cc1",
+        "event_time": "2026-11-01T08:57:21.942188+00:00",
+        "expires_at": "2026-11-01T09:07:21.942188+00:00",
+        "id": "7f2533af-4380-4227-8d8c-42cea181dd2a",
+        "independent_confirmation": true,
+        "intent_revision": 4,
+        "mode": "simulation",
+        "module": "mold",
+        "state_digest": "9100f8fcfca431eb2fc975b4a4cf577de7031871c768252997bb96d2542b59ec",
+        "status": "succeeded",
+        "summary": "清除換模與進出站時間並取消完工",
+        "target": {
+          "affected_orders": [
+            "WO-A"
+          ],
+          "equipment": "MC36",
+          "execution_id": null,
+          "report_id": null,
+          "schedule_id": "1003",
+          "work_order": null
+        },
+        "writes_enabled": true
+      }
+    }
+  },
+  {
+    "confirm_requests": 1,
+    "response": {
+      "proposal": {
+        "action": "report.delete",
+        "actor_id": "DEMO_SUPERVISOR",
+        "args": {
+          "report_id": "9001"
+        },
+        "business_timezone": "UTC+07:00",
+        "changes": [
+          {
+            "after": null,
+            "before": "2026-11-01 15:52:31",
+            "field": "CREATE_TIME",
+            "key": "9003",
+            "table": "WIP_OPI_WDOEACICONG_HIST_DETAIL"
+          },
+          {
+            "after": null,
+            "before": "DEMO_SUPERVISOR",
+            "field": "CREATE_USER",
+            "key": "9003",
+            "table": "WIP_OPI_WDOEACICONG_HIST_DETAIL"
+          },
+          {
+            "after": null,
+            "before": "2026-11-01 15:52:31",
+            "field": "EDIT_TIME",
+            "key": "9003",
+            "table": "WIP_OPI_WDOEACICONG_HIST_DETAIL"
+          },
+          {
+            "after": null,
+            "before": "DEMO_SUPERVISOR",
+            "field": "EDIT_USER",
+            "key": "9003",
+            "table": "WIP_OPI_WDOEACICONG_HIST_DETAIL"
+          },
+          {
+            "after": null,
+            "before": "NG01",
+            "field": "NG_CODE",
+            "key": "9003",
+            "table": "WIP_OPI_WDOEACICONG_HIST_DETAIL"
+          },
+          {
+            "after": null,
+            "before": 2,
+            "field": "NG_CODE_QTY",
+            "key": "9003",
+            "table": "WIP_OPI_WDOEACICONG_HIST_DETAIL"
+          },
+          {
+            "after": null,
+            "before": "9003",
+            "field": "WDOEACICONG_NG_HIST_DETAIL_SID",
+            "key": "9003",
+            "table": "WIP_OPI_WDOEACICONG_HIST_DETAIL"
+          },
+          {
+            "after": null,
+            "before": "9001",
+            "field": "WIP_OPI_WDOEACICOOUTPUT_HIST_SID",
+            "key": "9003",
+            "table": "WIP_OPI_WDOEACICONG_HIST_DETAIL"
+          },
+          {
+            "after": null,
+            "before": "",
+            "field": "COMMENT",
+            "key": "9001",
+            "table": "WIP_OPI_WDOEACICOOUTPUT_HIST"
+          },
+          {
+            "after": null,
+            "before": "2026-11-01 15:17:28",
+            "field": "CREATE_TIME",
+            "key": "9001",
+            "table": "WIP_OPI_WDOEACICOOUTPUT_HIST"
+          },
+          {
+            "after": null,
+            "before": "DEMO_SUPERVISOR",
+            "field": "CREATE_USER",
+            "key": "9001",
+            "table": "WIP_OPI_WDOEACICOOUTPUT_HIST"
+          },
+          {
+            "after": null,
+            "before": "2026-11-01 15:52:31",
+            "field": "EDIT_TIME",
+            "key": "9001",
+            "table": "WIP_OPI_WDOEACICOOUTPUT_HIST"
+          },
+          {
+            "after": null,
+            "before": "DEMO_SUPERVISOR",
+            "field": "EDIT_USER",
+            "key": "9001",
+            "table": "WIP_OPI_WDOEACICOOUTPUT_HIST"
+          },
+          {
+            "after": null,
+            "before": "Y",
+            "field": "ENABLE_FLAG",
+            "key": "9001",
+            "table": "WIP_OPI_WDOEACICOOUTPUT_HIST"
+          },
+          {
+            "after": null,
+            "before": 2,
+            "field": "NG_QTY",
+            "key": "9001",
+            "table": "WIP_OPI_WDOEACICOOUTPUT_HIST"
+          },
+          {
+            "after": null,
+            "before": 121,
+            "field": "OK_QTY",
+            "key": "9001",
+            "table": "WIP_OPI_WDOEACICOOUTPUT_HIST"
+          },
+          {
+            "after": null,
+            "before": "9001",
+            "field": "WIP_OPI_WDOEACICOOUTPUT_HIST_SID",
+            "key": "9001",
+            "table": "WIP_OPI_WDOEACICOOUTPUT_HIST"
+          },
+          {
+            "after": null,
+            "before": "2001",
+            "field": "WIP_OPI_WDOEACICO_HIST_SID",
+            "key": "9001",
+            "table": "WIP_OPI_WDOEACICOOUTPUT_HIST"
+          }
+        ],
+        "confirmed_at": "2026-11-01T08:58:15.395209+00:00",
+        "conversation_id": "2mAsb1IBy2kbR4BY6A0rbOpx",
+        "created_at": "2026-11-01T08:58:07.192094+00:00",
+        "digest": "1386e12078c22b7c33f8a3a685821687be6a4105b887036401cbd553ddce35ea",
+        "event_time": "2026-11-01T08:58:07.192094+00:00",
+        "expires_at": "2026-11-01T09:08:07.192094+00:00",
+        "id": "82608d8d-a623-46fa-b363-cee4aec8868c",
+        "independent_confirmation": true,
+        "intent_revision": 4,
+        "mode": "simulation",
+        "module": "report",
+        "state_digest": "cd71352c4ef3194eb63a969c5cbc49955508e695f20348ba9bc39d04f3d496e2",
+        "status": "succeeded",
+        "summary": "刪除人工報工",
+        "target": {
+          "affected_orders": [
+            "WO-A",
+            "WO-B"
+          ],
+          "equipment": "MC37",
+          "execution_id": "2001",
+          "report_id": "9001",
+          "schedule_id": "1001",
+          "work_order": "WO-A"
+        },
+        "writes_enabled": true
+      }
+    }
+  },
+  {
+    "confirm_requests": 1,
+    "response": {
+      "proposal": {
+        "action": "report.complete",
+        "actor_id": "DEMO_SUPERVISOR",
+        "args": {
+          "schedule_id": "1001"
+        },
+        "business_timezone": "UTC+07:00",
+        "changes": [
+          {
+            "after": "Y",
+            "before": "N",
+            "field": "COMPLETED",
+            "key": "2001",
+            "table": "WIP_OPI_WDOEACICO_HIST"
+          },
+          {
+            "after": "2026-11-01 15:59:49",
+            "before": null,
+            "field": "COMPLETED_TIME",
+            "key": "2001",
+            "table": "WIP_OPI_WDOEACICO_HIST"
+          },
+          {
+            "after": "DEMO_SUPERVISOR",
+            "before": null,
+            "field": "COMPLETED_USER",
+            "key": "2001",
+            "table": "WIP_OPI_WDOEACICO_HIST"
+          },
+          {
+            "after": "Y",
+            "before": "N",
+            "field": "COMPLETED",
+            "key": "2002",
+            "table": "WIP_OPI_WDOEACICO_HIST"
+          },
+          {
+            "after": "2026-11-01 15:59:49",
+            "before": null,
+            "field": "COMPLETED_TIME",
+            "key": "2002",
+            "table": "WIP_OPI_WDOEACICO_HIST"
+          },
+          {
+            "after": "DEMO_SUPERVISOR",
+            "before": null,
+            "field": "COMPLETED_USER",
+            "key": "2002",
+            "table": "WIP_OPI_WDOEACICO_HIST"
+          },
+          {
+            "after": "2026-11-01 15:59:49",
+            "before": null,
+            "field": "REAL_CHECK_IN_TIME",
+            "key": "2003",
+            "table": "WIP_OPI_WDOEACICO_HIST"
+          }
+        ],
+        "confirmed_at": "2026-11-01T09:00:01.246727+00:00",
+        "conversation_id": "9Y_Rx2VIukr3vun4_aL4L-Kq",
+        "created_at": "2026-11-01T08:59:49.139172+00:00",
+        "digest": "d65bfa8ad6d295e27f8e3ed37e90d5783afd8f0a675df384f589e64a0b5a604c",
+        "event_time": "2026-11-01T08:59:49.139172+00:00",
+        "expires_at": "2026-11-01T09:09:49.139172+00:00",
+        "id": "11c4e4c8-96fe-4406-9d4e-073daaef9fed",
+        "independent_confirmation": true,
+        "intent_revision": 4,
+        "mode": "simulation",
+        "module": "report",
+        "state_digest": "85a3797a87206547a807b3e07d8a8ccacafd04390325760a009a7c6aa455e37d",
+        "status": "succeeded",
+        "summary": "整張排程完工",
+        "target": {
+          "affected_orders": [
+            "WO-A",
+            "WO-B"
+          ],
+          "equipment": "MC37",
+          "execution_id": null,
+          "report_id": null,
+          "schedule_id": "1001",
+          "work_order": null
+        },
+        "writes_enabled": true
+      }
+    }
+  },
+  {
+    "confirm_requests": 1,
+    "response": {
+      "proposal": {
+        "action": "schedule.save",
+        "actor_id": "DEMO_SUPERVISOR",
+        "args": {
+          "cycle_seconds": 60,
+          "details": [
+            {
+              "cavities": 1,
+              "mold_detail_id": "63",
+              "part_no": "EPS-A",
+              "wo": "WO-A"
+            },
+            {
+              "cavities": 1,
+              "mold_detail_id": "64",
+              "part_no": "EPS-A",
+              "wo": "WO-A"
+            }
+          ],
+          "equipment": "MC36",
+          "mold_no": "MOLD-SPLIT",
+          "part_no": "EPS-A",
+          "priority": 0,
+          "start_time": "2026-11-02T08:00",
+          "status": "DO",
+          "target_shots": 100
+        },
+        "business_timezone": "UTC+07:00",
+        "changes": [
+          {
+            "after": "N",
+            "before": null,
+            "field": "COMPLETED",
+            "key": "9005",
+            "table": "WIP_OPI_WDOEACICO_HIST"
+          },
+          {
+            "after": "2026-11-01 16:01:06",
+            "before": null,
+            "field": "CREATE_TIME",
+            "key": "9005",
+            "table": "WIP_OPI_WDOEACICO_HIST"
+          },
+          {
+            "after": "SQLtrigger_user",
+            "before": null,
+            "field": "CREATE_USER",
+            "key": "9005",
+            "table": "WIP_OPI_WDOEACICO_HIST"
+          },
+          {
+            "after": "EPS-FORMING",
+            "before": null,
+            "field": "DEPT_NO",
+            "key": "9005",
+            "table": "WIP_OPI_WDOEACICO_HIST"
+          },
+          {
+            "after": "2026-11-01 16:01:06",
+            "before": null,
+            "field": "EDIT_TIME",
+            "key": "9005",
+            "table": "WIP_OPI_WDOEACICO_HIST"
+          },
+          {
+            "after": "SQLtrigger_user",
+            "before": null,
+            "field": "EDIT_USER",
+            "key": "9005",
+            "table": "WIP_OPI_WDOEACICO_HIST"
+          },
+          {
+            "after": "Y",
+            "before": null,
+            "field": "ENABLE_FLAG",
+            "key": "9005",
+            "table": "WIP_OPI_WDOEACICO_HIST"
+          },
+          {
+            "after": "MC36",
+            "before": null,
+            "field": "EQP_NO",
+            "key": "9005",
+            "table": "WIP_OPI_WDOEACICO_HIST"
+          },
+          {
+            "after": "EPS-FORMING",
+            "before": null,
+            "field": "OPERATION_CODE",
+            "key": "9005",
+            "table": "WIP_OPI_WDOEACICO_HIST"
+          },
+          {
+            "after": 1,
+            "before": null,
+            "field": "OPI_CAV",
+            "key": "9005",
+            "table": "WIP_OPI_WDOEACICO_HIST"
+          },
+          {
+            "after": 1,
+            "before": null,
+            "field": "SCHEDULE_CUR_CAV",
+            "key": "9005",
+            "table": "WIP_OPI_WDOEACICO_HIST"
+          },
+          {
+            "after": "2026-11-01 16:01:06",
+            "before": null,
+            "field": "SCHEDULE_EDIT_TIME",
+            "key": "9005",
+            "table": "WIP_OPI_WDOEACICO_HIST"
+          },
+          {
+            "after": "DEMO_SUPERVISOR",
+            "before": null,
+            "field": "SCHEDULE_EDIT_USER",
+            "key": "9005",
+            "table": "WIP_OPI_WDOEACICO_HIST"
+          },
+          {
+            "after": "日班",
+            "before": null,
+            "field": "SHIFT_CLASS_1",
+            "key": "9005",
+            "table": "WIP_OPI_WDOEACICO_HIST"
+          },
+          {
+            "after": "夜班",
+            "before": null,
+            "field": "SHIFT_CLASS_2",
+            "key": "9005",
+            "table": "WIP_OPI_WDOEACICO_HIST"
+          },
+          {
+            "after": "2026-11-02",
+            "before": null,
+            "field": "SHIFT_DAY",
+            "key": "9005",
+            "table": "WIP_OPI_WDOEACICO_HIST"
+          },
+          {
+            "after": "2026-11-02 20:00:00",
+            "before": null,
+            "field": "SHIFT_END_TIME_1",
+            "key": "9005",
+            "table": "WIP_OPI_WDOEACICO_HIST"
+          },
+          {
+            "after": "2026-11-03 08:00:00",
+            "before": null,
+            "field": "SHIFT_END_TIME_2",
+            "key": "9005",
+            "table": "WIP_OPI_WDOEACICO_HIST"
+          },
+          {
+            "after": "2026-11-02 08:00:00",
+            "before": null,
+            "field": "SHIFT_START_TIME_1",
+            "key": "9005",
+            "table": "WIP_OPI_WDOEACICO_HIST"
+          },
+          {
+            "after": "2026-11-02 20:00:00",
+            "before": null,
+            "field": "SHIFT_START_TIME_2",
+            "key": "9005",
+            "table": "WIP_OPI_WDOEACICO_HIST"
+          },
+          {
+            "after": "52",
+            "before": null,
+            "field": "TOL_SID",
+            "key": "9005",
+            "table": "WIP_OPI_WDOEACICO_HIST"
+          },
+          {
+            "after": "9005",
+            "before": null,
+            "field": "WIP_OPI_WDOEACICO_HIST_SID",
+            "key": "9005",
+            "table": "WIP_OPI_WDOEACICO_HIST"
+          },
+          {
+            "after": "WO-A",
+            "before": null,
+            "field": "WO",
+            "key": "9005",
+            "table": "WIP_OPI_WDOEACICO_HIST"
+          },
+          {
+            "after": "9005",
+            "before": null,
+            "field": "ZZ_KAOSU_PROD_SCHEDULE_DETAIL_SID",
+            "key": "9005",
+            "table": "WIP_OPI_WDOEACICO_HIST"
+          },
+          {
+            "after": "9004",
+            "before": null,
+            "field": "ZZ_KAOSU_PROD_SCHEDULE_SID",
+            "key": "9005",
+            "table": "WIP_OPI_WDOEACICO_HIST"
+          },
+          {
+            "after": "MOLD-SPLIT-L",
+            "before": null,
+            "field": "ZZ_TOL_DETALS_NO",
+            "key": "9005",
+            "table": "WIP_OPI_WDOEACICO_HIST"
+          },
+          {
+            "after": "N",
+            "before": null,
+            "field": "COMPLETED",
+            "key": "9006",
+            "table": "WIP_OPI_WDOEACICO_HIST"
+          },
+          {
+            "after": "2026-11-01 16:01:06",
+            "before": null,
+            "field": "CREATE_TIME",
+            "key": "9006",
+            "table": "WIP_OPI_WDOEACICO_HIST"
+          },
+          {
+            "after": "SQLtrigger_user",
+            "before": null,
+            "field": "CREATE_USER",
+            "key": "9006",
+            "table": "WIP_OPI_WDOEACICO_HIST"
+          },
+          {
+            "after": "EPS-FORMING",
+            "before": null,
+            "field": "DEPT_NO",
+            "key": "9006",
+            "table": "WIP_OPI_WDOEACICO_HIST"
+          },
+          {
+            "after": "2026-11-01 16:01:06",
+            "before": null,
+            "field": "EDIT_TIME",
+            "key": "9006",
+            "table": "WIP_OPI_WDOEACICO_HIST"
+          },
+          {
+            "after": "SQLtrigger_user",
+            "before": null,
+            "field": "EDIT_USER",
+            "key": "9006",
+            "table": "WIP_OPI_WDOEACICO_HIST"
+          },
+          {
+            "after": "Y",
+            "before": null,
+            "field": "ENABLE_FLAG",
+            "key": "9006",
+            "table": "WIP_OPI_WDOEACICO_HIST"
+          },
+          {
+            "after": "MC36",
+            "before": null,
+            "field": "EQP_NO",
+            "key": "9006",
+            "table": "WIP_OPI_WDOEACICO_HIST"
+          },
+          {
+            "after": "EPS-FORMING",
+            "before": null,
+            "field": "OPERATION_CODE",
+            "key": "9006",
+            "table": "WIP_OPI_WDOEACICO_HIST"
+          },
+          {
+            "after": 1,
+            "before": null,
+            "field": "OPI_CAV",
+            "key": "9006",
+            "table": "WIP_OPI_WDOEACICO_HIST"
+          },
+          {
+            "after": 1,
+            "before": null,
+            "field": "SCHEDULE_CUR_CAV",
+            "key": "9006",
+            "table": "WIP_OPI_WDOEACICO_HIST"
+          },
+          {
+            "after": "2026-11-01 16:01:06",
+            "before": null,
+            "field": "SCHEDULE_EDIT_TIME",
+            "key": "9006",
+            "table": "WIP_OPI_WDOEACICO_HIST"
+          },
+          {
+            "after": "DEMO_SUPERVISOR",
+            "before": null,
+            "field": "SCHEDULE_EDIT_USER",
+            "key": "9006",
+            "table": "WIP_OPI_WDOEACICO_HIST"
+          },
+          {
+            "after": "日班",
+            "before": null,
+            "field": "SHIFT_CLASS_1",
+            "key": "9006",
+            "table": "WIP_OPI_WDOEACICO_HIST"
+          },
+          {
+            "after": "夜班",
+            "before": null,
+            "field": "SHIFT_CLASS_2",
+            "key": "9006",
+            "table": "WIP_OPI_WDOEACICO_HIST"
+          },
+          {
+            "after": "2026-11-02",
+            "before": null,
+            "field": "SHIFT_DAY",
+            "key": "9006",
+            "table": "WIP_OPI_WDOEACICO_HIST"
+          },
+          {
+            "after": "2026-11-02 20:00:00",
+            "before": null,
+            "field": "SHIFT_END_TIME_1",
+            "key": "9006",
+            "table": "WIP_OPI_WDOEACICO_HIST"
+          },
+          {
+            "after": "2026-11-03 08:00:00",
+            "before": null,
+            "field": "SHIFT_END_TIME_2",
+            "key": "9006",
+            "table": "WIP_OPI_WDOEACICO_HIST"
+          },
+          {
+            "after": "2026-11-02 08:00:00",
+            "before": null,
+            "field": "SHIFT_START_TIME_1",
+            "key": "9006",
+            "table": "WIP_OPI_WDOEACICO_HIST"
+          },
+          {
+            "after": "2026-11-02 20:00:00",
+            "before": null,
+            "field": "SHIFT_START_TIME_2",
+            "key": "9006",
+            "table": "WIP_OPI_WDOEACICO_HIST"
+          },
+          {
+            "after": "52",
+            "before": null,
+            "field": "TOL_SID",
+            "key": "9006",
+            "table": "WIP_OPI_WDOEACICO_HIST"
+          },
+          {
+            "after": "9006",
+            "before": null,
+            "field": "WIP_OPI_WDOEACICO_HIST_SID",
+            "key": "9006",
+            "table": "WIP_OPI_WDOEACICO_HIST"
+          },
+          {
+            "after": "WO-A",
+            "before": null,
+            "field": "WO",
+            "key": "9006",
+            "table": "WIP_OPI_WDOEACICO_HIST"
+          },
+          {
+            "after": "9006",
+            "before": null,
+            "field": "ZZ_KAOSU_PROD_SCHEDULE_DETAIL_SID",
+            "key": "9006",
+            "table": "WIP_OPI_WDOEACICO_HIST"
+          },
+          {
+            "after": "9004",
+            "before": null,
+            "field": "ZZ_KAOSU_PROD_SCHEDULE_SID",
+            "key": "9006",
+            "table": "WIP_OPI_WDOEACICO_HIST"
+          },
+          {
+            "after": "MOLD-SPLIT-R",
+            "before": null,
+            "field": "ZZ_TOL_DETALS_NO",
+            "key": "9006",
+            "table": "WIP_OPI_WDOEACICO_HIST"
+          },
+          {
+            "after": "Y",
+            "before": null,
+            "field": "CHANGE_MOLD",
+            "key": "9004",
+            "table": "ZZ_KAOSU_PROD_SCHEDULE"
+          },
+          {
+            "after": "",
+            "before": null,
+            "field": "COMMENT",
+            "key": "9004",
+            "table": "ZZ_KAOSU_PROD_SCHEDULE"
+          },
+          {
+            "after": "2026-11-01 16:01:06",
+            "before": null,
+            "field": "CREATE_TIME",
+            "key": "9004",
+            "table": "ZZ_KAOSU_PROD_SCHEDULE"
+          },
+          {
+            "after": "DEMO_SUPERVISOR",
+            "before": null,
+            "field": "CREATE_USER",
+            "key": "9004",
+            "table": "ZZ_KAOSU_PROD_SCHEDULE"
+          },
+          {
+            "after": "2026-11-01 16:01:06",
+            "before": null,
+            "field": "EDIT_TIME",
+            "key": "9004",
+            "table": "ZZ_KAOSU_PROD_SCHEDULE"
+          },
+          {
+            "after": "DEMO_SUPERVISOR",
+            "before": null,
+            "field": "EDIT_USER",
+            "key": "9004",
+            "table": "ZZ_KAOSU_PROD_SCHEDULE"
+          },
+          {
+            "after": "36",
+            "before": null,
+            "field": "EQP_SID",
+            "key": "9004",
+            "table": "ZZ_KAOSU_PROD_SCHEDULE"
+          },
+          {
+            "after": "EPS-FORMING",
+            "before": null,
+            "field": "OPERATION_CODE",
+            "key": "9004",
+            "table": "ZZ_KAOSU_PROD_SCHEDULE"
+          },
+          {
+            "after": 0,
+            "before": null,
+            "field": "PRIORITY",
+            "key": "9004",
+            "table": "ZZ_KAOSU_PROD_SCHEDULE"
+          },
+          {
+            "after": "DO",
+            "before": null,
+            "field": "PRODUCTION_STATUS",
+            "key": "9004",
+            "table": "ZZ_KAOSU_PROD_SCHEDULE"
+          },
+          {
+            "after": 60,
+            "before": null,
+            "field": "SCHEDULE_CYCLE_TIME",
+            "key": "9004",
+            "table": "ZZ_KAOSU_PROD_SCHEDULE"
+          },
+          {
+            "after": "2026-11-02",
+            "before": null,
+            "field": "SCHEDULE_DATE",
+            "key": "9004",
+            "table": "ZZ_KAOSU_PROD_SCHEDULE"
+          },
+          {
+            "after": "2026-11-02 09:40:00",
+            "before": null,
+            "field": "SCHEDULE_END_TIME",
+            "key": "9004",
+            "table": "ZZ_KAOSU_PROD_SCHEDULE"
+          },
+          {
+            "after": "2026-11-02 08:00:00",
+            "before": null,
+            "field": "SCHEDULE_START_TIME",
+            "key": "9004",
+            "table": "ZZ_KAOSU_PROD_SCHEDULE"
+          },
+          {
+            "after": "日班",
+            "before": null,
+            "field": "SHIFT_CLASS_1",
+            "key": "9004",
+            "table": "ZZ_KAOSU_PROD_SCHEDULE"
+          },
+          {
+            "after": "夜班",
+            "before": null,
+            "field": "SHIFT_CLASS_2",
+            "key": "9004",
+            "table": "ZZ_KAOSU_PROD_SCHEDULE"
+          },
+          {
+            "after": "2026-11-02 20:00:00",
+            "before": null,
+            "field": "SHIFT_END_TIME_1",
+            "key": "9004",
+            "table": "ZZ_KAOSU_PROD_SCHEDULE"
+          },
+          {
+            "after": "2026-11-03 08:00:00",
+            "before": null,
+            "field": "SHIFT_END_TIME_2",
+            "key": "9004",
+            "table": "ZZ_KAOSU_PROD_SCHEDULE"
+          },
+          {
+            "after": "2026-11-02 08:00:00",
+            "before": null,
+            "field": "SHIFT_START_TIME_1",
+            "key": "9004",
+            "table": "ZZ_KAOSU_PROD_SCHEDULE"
+          },
+          {
+            "after": "2026-11-02 20:00:00",
+            "before": null,
+            "field": "SHIFT_START_TIME_2",
+            "key": "9004",
+            "table": "ZZ_KAOSU_PROD_SCHEDULE"
+          },
+          {
+            "after": 100,
+            "before": null,
+            "field": "TARGET_SHOT",
+            "key": "9004",
+            "table": "ZZ_KAOSU_PROD_SCHEDULE"
+          },
+          {
+            "after": "52",
+            "before": null,
+            "field": "TOL_SID",
+            "key": "9004",
+            "table": "ZZ_KAOSU_PROD_SCHEDULE"
+          },
+          {
+            "after": "9004",
+            "before": null,
+            "field": "ZZ_KAOSU_PROD_SCHEDULE_SID",
+            "key": "9004",
+            "table": "ZZ_KAOSU_PROD_SCHEDULE"
+          },
+          {
+            "after": "7001",
+            "before": null,
+            "field": "ZZ_KAOSU_PROD_SHIFT_DAILY_REPORT_BASE_SID",
+            "key": "9004",
+            "table": "ZZ_KAOSU_PROD_SCHEDULE"
+          },
+          {
+            "after": "2026-11-01 16:01:06",
+            "before": null,
+            "field": "CREATE_TIME",
+            "key": "9005",
+            "table": "ZZ_KAOSU_PROD_SCHEDULE_DETAIL"
+          },
+          {
+            "after": "DEMO_SUPERVISOR",
+            "before": null,
+            "field": "CREATE_USER",
+            "key": "9005",
+            "table": "ZZ_KAOSU_PROD_SCHEDULE_DETAIL"
+          },
+          {
+            "after": "2026-11-01 16:01:06",
+            "before": null,
+            "field": "EDIT_TIME",
+            "key": "9005",
+            "table": "ZZ_KAOSU_PROD_SCHEDULE_DETAIL"
+          },
+          {
+            "after": "DEMO_SUPERVISOR",
+            "before": null,
+            "field": "EDIT_USER",
+            "key": "9005",
+            "table": "ZZ_KAOSU_PROD_SCHEDULE_DETAIL"
+          },
+          {
+            "after": "EPS-A",
+            "before": null,
+            "field": "PART_NO",
+            "key": "9005",
+            "table": "ZZ_KAOSU_PROD_SCHEDULE_DETAIL"
+          },
+          {
+            "after": "模擬左側緩衝件",
+            "before": null,
+            "field": "PART_SPEC",
+            "key": "9005",
+            "table": "ZZ_KAOSU_PROD_SCHEDULE_DETAIL"
+          },
+          {
+            "after": 1,
+            "before": null,
+            "field": "SCHEDULE_CUR_CAV",
+            "key": "9005",
+            "table": "ZZ_KAOSU_PROD_SCHEDULE_DETAIL"
+          },
+          {
+            "after": 100,
+            "before": null,
+            "field": "TARGET_PCS",
+            "key": "9005",
+            "table": "ZZ_KAOSU_PROD_SCHEDULE_DETAIL"
+          },
+          {
+            "after": "63",
+            "before": null,
+            "field": "TOL_DETALS_SID",
+            "key": "9005",
+            "table": "ZZ_KAOSU_PROD_SCHEDULE_DETAIL"
+          },
+          {
+            "after": 1000,
+            "before": null,
+            "field": "WO_QUANTITY",
+            "key": "9005",
+            "table": "ZZ_KAOSU_PROD_SCHEDULE_DETAIL"
+          },
+          {
+            "after": "71",
+            "before": null,
+            "field": "WO_SID",
+            "key": "9005",
+            "table": "ZZ_KAOSU_PROD_SCHEDULE_DETAIL"
+          },
+          {
+            "after": "9005",
+            "before": null,
+            "field": "ZZ_KAOSU_PROD_SCHEDULE_DETAIL_SID",
+            "key": "9005",
+            "table": "ZZ_KAOSU_PROD_SCHEDULE_DETAIL"
+          },
+          {
+            "after": "9004",
+            "before": null,
+            "field": "ZZ_KAOSU_PROD_SCHEDULE_SID",
+            "key": "9005",
+            "table": "ZZ_KAOSU_PROD_SCHEDULE_DETAIL"
+          },
+          {
+            "after": "2026-11-01 16:01:06",
+            "before": null,
+            "field": "CREATE_TIME",
+            "key": "9006",
+            "table": "ZZ_KAOSU_PROD_SCHEDULE_DETAIL"
+          },
+          {
+            "after": "DEMO_SUPERVISOR",
+            "before": null,
+            "field": "CREATE_USER",
+            "key": "9006",
+            "table": "ZZ_KAOSU_PROD_SCHEDULE_DETAIL"
+          },
+          {
+            "after": "2026-11-01 16:01:06",
+            "before": null,
+            "field": "EDIT_TIME",
+            "key": "9006",
+            "table": "ZZ_KAOSU_PROD_SCHEDULE_DETAIL"
+          },
+          {
+            "after": "DEMO_SUPERVISOR",
+            "before": null,
+            "field": "EDIT_USER",
+            "key": "9006",
+            "table": "ZZ_KAOSU_PROD_SCHEDULE_DETAIL"
+          },
+          {
+            "after": "EPS-A",
+            "before": null,
+            "field": "PART_NO",
+            "key": "9006",
+            "table": "ZZ_KAOSU_PROD_SCHEDULE_DETAIL"
+          },
+          {
+            "after": "模擬左側緩衝件",
+            "before": null,
+            "field": "PART_SPEC",
+            "key": "9006",
+            "table": "ZZ_KAOSU_PROD_SCHEDULE_DETAIL"
+          },
+          {
+            "after": 1,
+            "before": null,
+            "field": "SCHEDULE_CUR_CAV",
+            "key": "9006",
+            "table": "ZZ_KAOSU_PROD_SCHEDULE_DETAIL"
+          },
+          {
+            "after": 100,
+            "before": null,
+            "field": "TARGET_PCS",
+            "key": "9006",
+            "table": "ZZ_KAOSU_PROD_SCHEDULE_DETAIL"
+          },
+          {
+            "after": "64",
+            "before": null,
+            "field": "TOL_DETALS_SID",
+            "key": "9006",
+            "table": "ZZ_KAOSU_PROD_SCHEDULE_DETAIL"
+          },
+          {
+            "after": 1000,
+            "before": null,
+            "field": "WO_QUANTITY",
+            "key": "9006",
+            "table": "ZZ_KAOSU_PROD_SCHEDULE_DETAIL"
+          },
+          {
+            "after": "71",
+            "before": null,
+            "field": "WO_SID",
+            "key": "9006",
+            "table": "ZZ_KAOSU_PROD_SCHEDULE_DETAIL"
+          },
+          {
+            "after": "9006",
+            "before": null,
+            "field": "ZZ_KAOSU_PROD_SCHEDULE_DETAIL_SID",
+            "key": "9006",
+            "table": "ZZ_KAOSU_PROD_SCHEDULE_DETAIL"
+          },
+          {
+            "after": "9004",
+            "before": null,
+            "field": "ZZ_KAOSU_PROD_SCHEDULE_SID",
+            "key": "9006",
+            "table": "ZZ_KAOSU_PROD_SCHEDULE_DETAIL"
+          }
+        ],
+        "confirmed_at": "2026-11-01T09:01:20.657248+00:00",
+        "conversation_id": "rUv0Sxaxg7xsrDFAc5_1H4np",
+        "created_at": "2026-11-01T09:01:06.339622+00:00",
+        "digest": "042e4a503aefe8bcbb1f1580fce8e186bcdbf977197e89302e2ce7b29796ca3b",
+        "event_time": "2026-11-01T09:01:06.339622+00:00",
+        "expires_at": "2026-11-01T09:11:06.339622+00:00",
+        "id": "6e0b05b4-8688-41e7-89d7-1c457a6b2687",
+        "independent_confirmation": false,
+        "intent_revision": 9,
+        "mode": "simulation",
+        "module": "schedule",
+        "state_digest": "2cb210bbd6d3716e620bbc4bb97841d32cf6113a964fd9a594ef417b3ef5f8c1",
+        "status": "succeeded",
+        "summary": "儲存排程",
+        "target": {
+          "affected_orders": [
+            "WO-A"
+          ],
+          "equipment": "MC36",
+          "execution_id": null,
+          "mold_no": "MOLD-SPLIT",
+          "report_id": null,
+          "schedule_details": [
+            {
+              "cavities": 1,
+              "detail_id": "9005",
+              "mold_detail_id": "63",
+              "mold_detail_name": "同品號左模穴",
+              "mold_detail_no": "MOLD-SPLIT-L",
+              "part_no": "EPS-A",
+              "wo": "WO-A"
+            },
+            {
+              "cavities": 1,
+              "detail_id": "9006",
+              "mold_detail_id": "64",
+              "mold_detail_name": "同品號右模穴",
+              "mold_detail_no": "MOLD-SPLIT-R",
+              "part_no": "EPS-A",
+              "wo": "WO-A"
+            }
+          ],
+          "schedule_id": "9004",
+          "work_order": null
+        },
+        "writes_enabled": true
+      }
+    }
+  },
+  {
+    "confirm_requests": 1,
+    "response": {
+      "proposal": {
+        "action": "schedule.save",
+        "actor_id": "DEMO_SUPERVISOR",
+        "args": {
+          "cycle_seconds": 60,
+          "details": [
+            {
+              "cavities": 1,
+              "detail_id": "9005",
+              "mold_detail_id": "63",
+              "part_no": "EPS-A",
+              "wo": "WO-A"
+            },
+            {
+              "cavities": 1,
+              "detail_id": "9006",
+              "mold_detail_id": "64",
+              "part_no": "EPS-A",
+              "wo": "WO-A"
+            }
+          ],
+          "equipment": "MC36",
+          "mold_no": "MOLD-SPLIT",
+          "part_no": "EPS-A",
+          "priority": 0,
+          "schedule_id": "9004",
+          "start_time": "2026-11-02 08:00:00",
+          "status": "DO",
+          "target_shots": 110
+        },
+        "business_timezone": "UTC+07:00",
+        "changes": [
+          {
+            "after": "2026-11-01 16:01:55",
+            "before": "2026-11-01 16:01:06",
+            "field": "SCHEDULE_EDIT_TIME",
+            "key": "9005",
+            "table": "WIP_OPI_WDOEACICO_HIST"
+          },
+          {
+            "after": "2026-11-01 16:01:55",
+            "before": "2026-11-01 16:01:06",
+            "field": "SCHEDULE_EDIT_TIME",
+            "key": "9006",
+            "table": "WIP_OPI_WDOEACICO_HIST"
+          },
+          {
+            "after": "2026-11-01 16:01:55",
+            "before": "2026-11-01 16:01:06",
+            "field": "EDIT_TIME",
+            "key": "9004",
+            "table": "ZZ_KAOSU_PROD_SCHEDULE"
+          },
+          {
+            "after": "2026-11-02 09:50:00",
+            "before": "2026-11-02 09:40:00",
+            "field": "SCHEDULE_END_TIME",
+            "key": "9004",
+            "table": "ZZ_KAOSU_PROD_SCHEDULE"
+          },
+          {
+            "after": 110,
+            "before": 100,
+            "field": "TARGET_SHOT",
+            "key": "9004",
+            "table": "ZZ_KAOSU_PROD_SCHEDULE"
+          },
+          {
+            "after": "2026-11-01 16:01:55",
+            "before": "2026-11-01 16:01:06",
+            "field": "EDIT_TIME",
+            "key": "9005",
+            "table": "ZZ_KAOSU_PROD_SCHEDULE_DETAIL"
+          },
+          {
+            "after": 110,
+            "before": 100,
+            "field": "TARGET_PCS",
+            "key": "9005",
+            "table": "ZZ_KAOSU_PROD_SCHEDULE_DETAIL"
+          },
+          {
+            "after": "2026-11-01 16:01:55",
+            "before": "2026-11-01 16:01:06",
+            "field": "EDIT_TIME",
+            "key": "9006",
+            "table": "ZZ_KAOSU_PROD_SCHEDULE_DETAIL"
+          },
+          {
+            "after": 110,
+            "before": 100,
+            "field": "TARGET_PCS",
+            "key": "9006",
+            "table": "ZZ_KAOSU_PROD_SCHEDULE_DETAIL"
+          }
+        ],
+        "confirmed_at": "2026-11-01T09:02:00.570081+00:00",
+        "conversation_id": "4bOcK9fZDGgbvNxl-zOcKdE9",
+        "created_at": "2026-11-01T09:01:55.564220+00:00",
+        "digest": "d102c62c582f1891ef43d62283e00e7eb318b84a0112a4cc257c3d304b5be107",
+        "event_time": "2026-11-01T09:01:55.564220+00:00",
+        "expires_at": "2026-11-01T09:11:55.564220+00:00",
+        "id": "b382a305-43ea-47c9-b3dc-1356cb8ef117",
+        "independent_confirmation": false,
+        "intent_revision": 5,
+        "mode": "simulation",
+        "module": "schedule",
+        "state_digest": "58c6247c5053d623e4ff1c80a8fad3e65bbc51066053942ecc28da16ab611e4e",
+        "status": "succeeded",
+        "summary": "儲存排程",
+        "target": {
+          "affected_orders": [
+            "WO-A"
+          ],
+          "equipment": "MC36",
+          "execution_id": null,
+          "mold_no": "MOLD-SPLIT",
+          "report_id": null,
+          "schedule_details": [
+            {
+              "cavities": 1,
+              "detail_id": "9005",
+              "mold_detail_id": "63",
+              "mold_detail_name": "同品號左模穴",
+              "mold_detail_no": "MOLD-SPLIT-L",
+              "part_no": "EPS-A",
+              "wo": "WO-A"
+            },
+            {
+              "cavities": 1,
+              "detail_id": "9006",
+              "mold_detail_id": "64",
+              "mold_detail_name": "同品號右模穴",
+              "mold_detail_no": "MOLD-SPLIT-R",
+              "part_no": "EPS-A",
+              "wo": "WO-A"
+            }
+          ],
+          "schedule_id": "9004",
+          "work_order": null
+        },
+        "writes_enabled": true
+      }
+    }
+  }
+]

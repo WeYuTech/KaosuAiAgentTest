@@ -1,0 +1,14 @@
+{
+  "基準": "c60a18ab7bdfa73ef0328bb8335dad7d051b9e04",
+  "分支": "codex/issue23-sidebar-layout",
+  "環境": "本機隔離模擬，模型費用上限0，不連正式SQL",
+  "建立時間UTC": "2026-11-01T15:06:39.163142+00:00",
+  "建置檔案": {
+    "assets/index-C0cLipGY.js": "a7add9e9f9fa6cbf68059d767ef2b838ac8d75292585ede92dbd0fb46b83c249",
+    "assets/index-CHdGoSxi.css": "f3a07c77e27e92f812e3a447f7e31160c998a2c889d80bb124f1095b3c6f6d25",
+    "assets/ManagementPanel-SuvVGm2m.js": "24b831a1d51ac94cdfc5ae714c6325ad13c799ff32b30b170df7ffcea89f3380",
+    "index.html": "3f05b0d070ef29eb41fb234c04ac3a437246fbd4f7462d8c019292f9004298ca",
+    "motion-tokens.css": "70445385dc0f79f0e0bfc41f3f9d29a7156df672b6e31bf1bda39b3d33d08daf",
+    "widget-loader.js": "3b7a0a2c3043398a60893ff783b395400bfe4d200f28dbe1bb70a8293f3b9640"
+  }
+}

@@ -1,0 +1,351 @@
+{
+  "說明": "官方 assistant-ui 登錄原文與初次擷取清單；產品後續繁中及 MES runtime 整合差異須另行記錄。",
+  "擷取日期": "2026-10-07",
+  "官方儲存庫": "https://github.com/assistant-ui/assistant-ui",
+  "主題及字型參考提交": "5e64867445847d1c7f2c308e98da1817fbd230f3",
+  "登錄提交說明": "登錄服務未提供 commit 欄位，以本清單的 JSON 與檔案 SHA-256 核對，不宣稱其與參考 Git 提交逐字相同。",
+  "授權": "MIT，Copyright (c) 2026 AgentbaseAI Inc.；完整原文見 LICENSE.md。",
+  "官方字型": "Starter layout 使用 next/font/google 的 Inter 與 IBM Plex Mono；Vite 宿主整合需另行處理本機字型，未在此次研究下載字型二進位。",
+  "原版樣式": "官方 TSX 的 Tailwind 類別與 starter-globals.css 共同提供樣式；@assistant-ui/react 沒有完整外觀 stylesheet。",
+  "npm相依套件": [
+    "@assistant-ui/react-markdown@^0.14.19",
+    "@assistant-ui/react@^0.15.25",
+    "class-variance-authority",
+    "lucide-react",
+    "radix-ui",
+    "remark-gfm",
+    "tw-shimmer@^0.4.13",
+    "zustand"
+  ],
+  "基礎UI相依元件": [
+    "avatar",
+    "button",
+    "collapsible",
+    "dialog",
+    "input",
+    "skeleton",
+    "textarea",
+    "tooltip"
+  ],
+  "登錄數量": 18,
+  "初次擷取檔案數": 18,
+  "登錄": [
+    {
+      "元件": "thread",
+      "登錄來源": "https://r.assistant-ui.com/thread.json",
+      "原始JSON_SHA256": "18c52d652d2021a3b74cf282352d61a1e26006a258f15b02d73c1062598b2235",
+      "檔案": [
+        {
+          "上游檔案": "components/assistant-ui/elements/thread.aui.tsx",
+          "專案檔案": "src/components/assistant-ui/elements/thread.aui.tsx",
+          "原文SHA256": "9a59232333b78c579f5fa30799bfc431ba7b35929750de44c7c40410d1d66ac3",
+          "初次原樣擷取": true,
+          "目前檔案SHA256": "d23abf5fd8b8a4b303d1e35c300793bc586a3b31b80a075e058b91a2bbdc84fe",
+          "本地整合已修改": true,
+          "輸入同步修復": "r12：Input 的 value 與 onChange 直接使用既有草稿，解除官方文字訂閱更新稍晚導致的舊值回寫與游標跳動；不修改官方 IME、送出與取消處理"
+        }
+      ]
+    },
+    {
+      "元件": "thread-list",
+      "登錄來源": "https://r.assistant-ui.com/thread-list.json",
+      "原始JSON_SHA256": "e2bd5c8828cf2af4e469f90385afc3d2a0842ba0442285dd288e4bc82f16a97e",
+      "檔案": [
+        {
+          "上游檔案": "components/assistant-ui/elements/thread-list.aui.tsx",
+          "專案檔案": "src/components/assistant-ui/elements/thread-list.aui.tsx",
+          "原文SHA256": "ba1994d19c069340cad7506c1a36010a192bcf525498250dc2263da5f73c0def",
+          "初次原樣擷取": true,
+          "目前檔案SHA256": "7e0d86b52e0344a4f2cbffabcf1b8596b6df50f45ff619e0c3c2ba74b333b009",
+          "本地整合已修改": true
+        }
+      ]
+    },
+    {
+      "元件": "assistant-modal",
+      "登錄來源": "https://r.assistant-ui.com/assistant-modal.json",
+      "原始JSON_SHA256": "9c93696571408a5757b4e8e40d59756245628530c799dec25b099da7d93508c8",
+      "檔案": [
+        {
+          "上游檔案": "components/assistant-ui/elements/assistant-modal.aui.tsx",
+          "專案檔案": "src/components/assistant-ui/elements/assistant-modal.aui.tsx",
+          "原文SHA256": "73ccec4cf2bcf2526b74020f0c7c438c560c01c30d9dde1060cfbb1f01fe6f53",
+          "初次原樣擷取": true,
+          "目前檔案SHA256": "476c7d6b349b05d91d53527e814ffd74d360064b4707f3347bbd599dc9b49e9e",
+          "本地整合已修改": true,
+          "底部版權文字": "r13：移除 footer 與分隔線，以普通段落顯示使用者指定的英文版權文字，保留手機安全邊界"
+        }
+      ]
+    },
+    {
+      "元件": "tooltip-icon-button",
+      "登錄來源": "https://r.assistant-ui.com/tooltip-icon-button.json",
+      "原始JSON_SHA256": "ef006b6ede556c09d0cd7974f7336c2d811d8c6efc5a77610d82683657bb66a2",
+      "檔案": [
+        {
+          "上游檔案": "components/assistant-ui/elements/tooltip-icon-button.tsx",
+          "專案檔案": "src/components/assistant-ui/elements/tooltip-icon-button.tsx",
+          "原文SHA256": "1ec2af97d22c34c955588c866aba5ddbfc579b1fd9218f68f75010b10e5a7868",
+          "初次原樣擷取": true,
+          "目前檔案SHA256": "1ec2af97d22c34c955588c866aba5ddbfc579b1fd9218f68f75010b10e5a7868",
+          "本地整合已修改": false
+        }
+      ]
+    },
+    {
+      "元件": "markdown-text",
+      "登錄來源": "https://r.assistant-ui.com/markdown-text.json",
+      "原始JSON_SHA256": "42086136adbe8e82476db68a895b28e2a8be51dea5203938da3547ac07febcc6",
+      "檔案": [
+        {
+          "上游檔案": "components/assistant-ui/elements/markdown-text.tsx",
+          "專案檔案": "src/components/assistant-ui/elements/markdown-text.tsx",
+          "原文SHA256": "4621787f69160d9f34a170da8fb76005a811a7cfa704280e463518a67eb7fc8d",
+          "初次原樣擷取": true,
+          "目前檔案SHA256": "d649700911d273510d8b886325e07b7e373b125fe0a166c8077108542ec5a895",
+          "本地整合已修改": true,
+          "本地差異說明": "沿用官方 Markdown 與 useSmooth 引擎，由持續存在的 runtime Provider 觀察空答案活動回合並提供呈現資格，處理官方過濾空 text 後才掛載 Markdown 的情況；已核對快照可完成動畫，歷史與中斷立即顯示原文，不修改原始訊息、執行狀態或增加模型請求"
+        }
+      ]
+    },
+    {
+      "元件": "tool-fallback",
+      "登錄來源": "https://r.assistant-ui.com/tool-fallback.json",
+      "原始JSON_SHA256": "fb1f604fa5594238400632536de07729ed5aefc2296bb1474fe48eb8c8faa6ae",
+      "檔案": [
+        {
+          "上游檔案": "components/assistant-ui/elements/tool-fallback.aui.tsx",
+          "專案檔案": "src/components/assistant-ui/elements/tool-fallback.aui.tsx",
+          "原文SHA256": "12b9885a90564e03740277144694d7bd3e183f929e6d597b7bb7e23ff9e09123",
+          "初次原樣擷取": true,
+          "目前檔案SHA256": "12b9885a90564e03740277144694d7bd3e183f929e6d597b7bb7e23ff9e09123",
+          "本地整合已修改": false
+        }
+      ]
+    },
+    {
+      "元件": "attachment",
+      "登錄來源": "https://r.assistant-ui.com/attachment.json",
+      "原始JSON_SHA256": "59c884fac3a9934a69e26f29f38e174f8615adb02caebaf67ac8a805bc7c7368",
+      "檔案": [
+        {
+          "上游檔案": "components/assistant-ui/elements/attachment.aui.tsx",
+          "專案檔案": "src/components/assistant-ui/elements/attachment.aui.tsx",
+          "原文SHA256": "b8e3dd0f08a6f464a4e33db791a99e566e848104da83ff67117b7e97a7050d16",
+          "初次原樣擷取": true,
+          "目前檔案SHA256": "b8e3dd0f08a6f464a4e33db791a99e566e848104da83ff67117b7e97a7050d16",
+          "本地整合已修改": false
+        }
+      ]
+    },
+    {
+      "元件": "file",
+      "登錄來源": "https://r.assistant-ui.com/file.json",
+      "原始JSON_SHA256": "7eff2e7e6a04b9474b22ac5cfc6e53fea332b4f3009f5fe93703a80dee80fa7c",
+      "檔案": [
+        {
+          "上游檔案": "components/assistant-ui/elements/file.tsx",
+          "專案檔案": "src/components/assistant-ui/elements/file.tsx",
+          "原文SHA256": "115ed660c91dc78de16a627c2868543a2deca6771d9ac7960e36215f0281fd68",
+          "初次原樣擷取": true,
+          "目前檔案SHA256": "115ed660c91dc78de16a627c2868543a2deca6771d9ac7960e36215f0281fd68",
+          "本地整合已修改": false
+        }
+      ]
+    },
+    {
+      "元件": "follow-up-suggestions",
+      "登錄來源": "https://r.assistant-ui.com/follow-up-suggestions.json",
+      "原始JSON_SHA256": "3c94f0fc36f6c091779257fe07934493272c71b372165d40e8a88e189594e795",
+      "檔案": [
+        {
+          "上游檔案": "components/assistant-ui/elements/follow-up-suggestions.aui.tsx",
+          "專案檔案": "src/components/assistant-ui/elements/follow-up-suggestions.aui.tsx",
+          "原文SHA256": "f0db1e9cfc5f648adeb57c8ac61fbeca4ebbb4d55267a9c107709af01b73abb4",
+          "初次原樣擷取": true,
+          "目前檔案SHA256": "f0db1e9cfc5f648adeb57c8ac61fbeca4ebbb4d55267a9c107709af01b73abb4",
+          "本地整合已修改": false
+        }
+      ]
+    },
+    {
+      "元件": "image",
+      "登錄來源": "https://r.assistant-ui.com/image.json",
+      "原始JSON_SHA256": "46e1926f8f209d9715ce97e0640ee27f9ddc679dfc9424a4572f7e276d4ec59d",
+      "檔案": [
+        {
+          "上游檔案": "components/assistant-ui/elements/image.tsx",
+          "專案檔案": "src/components/assistant-ui/elements/image.tsx",
+          "原文SHA256": "01f7655ba942cc344dd585890e2c6df372725d198523c75e99db327f5c9a057f",
+          "初次原樣擷取": true,
+          "目前檔案SHA256": "01f7655ba942cc344dd585890e2c6df372725d198523c75e99db327f5c9a057f",
+          "本地整合已修改": false
+        }
+      ]
+    },
+    {
+      "元件": "reasoning",
+      "登錄來源": "https://r.assistant-ui.com/reasoning.json",
+      "原始JSON_SHA256": "d639834dd9c6da11337508995b967247e0ddaca837741c38c6a729ff43bf788c",
+      "檔案": [
+        {
+          "上游檔案": "components/assistant-ui/elements/reasoning.aui.tsx",
+          "專案檔案": "src/components/assistant-ui/elements/reasoning.aui.tsx",
+          "原文SHA256": "af46e4d5c13cbb2cf584b9f7212d95b9cd97b6e08c741bc829227e40dff65b4e",
+          "初次原樣擷取": true,
+          "目前檔案SHA256": "af46e4d5c13cbb2cf584b9f7212d95b9cd97b6e08c741bc829227e40dff65b4e",
+          "本地整合已修改": false
+        }
+      ]
+    },
+    {
+      "元件": "tool-group",
+      "登錄來源": "https://r.assistant-ui.com/tool-group.json",
+      "原始JSON_SHA256": "cf35b118fd3161d727d8fabbb1d0a1d192b5d5838bc7b037146c14ee72e45a95",
+      "檔案": [
+        {
+          "上游檔案": "components/assistant-ui/elements/tool-group.aui.tsx",
+          "專案檔案": "src/components/assistant-ui/elements/tool-group.aui.tsx",
+          "原文SHA256": "6fa7eb02ceefeb956cac1e34ab12bf95919e52036f58083d4dbd1aa69fb310e8",
+          "初次原樣擷取": true,
+          "目前檔案SHA256": "6fa7eb02ceefeb956cac1e34ab12bf95919e52036f58083d4dbd1aa69fb310e8",
+          "本地整合已修改": false
+        }
+      ]
+    },
+    {
+      "元件": "use-copy-to-clipboard",
+      "登錄來源": "https://r.assistant-ui.com/use-copy-to-clipboard.json",
+      "原始JSON_SHA256": "fa6b3e0631a82bd22b52b0794d66036e18964c4db1dcb55716773dbdf8b5421f",
+      "檔案": [
+        {
+          "上游檔案": "hooks/use-copy-to-clipboard.ts",
+          "專案檔案": "src/hooks/use-copy-to-clipboard.ts",
+          "原文SHA256": "1f3b8a1bab79cef961f62eb25d6b58a0d16c957d63ba1faf086ad09c99712c0a",
+          "初次原樣擷取": true,
+          "目前檔案SHA256": "1f3b8a1bab79cef961f62eb25d6b58a0d16c957d63ba1faf086ad09c99712c0a",
+          "本地整合已修改": false
+        }
+      ]
+    },
+    {
+      "元件": "use-attachment-src",
+      "登錄來源": "https://r.assistant-ui.com/use-attachment-src.json",
+      "原始JSON_SHA256": "680a09daa8f19c320782c52c17c544b6ed89fc8df557e997cc3825a654c0e64a",
+      "檔案": [
+        {
+          "上游檔案": "hooks/use-attachment-src.ts",
+          "專案檔案": "src/hooks/use-attachment-src.ts",
+          "原文SHA256": "dfb621f1a18f4013994aa29815beddb436020105164526ab7c86b0b0a32040a1",
+          "初次原樣擷取": true,
+          "目前檔案SHA256": "dfb621f1a18f4013994aa29815beddb436020105164526ab7c86b0b0a32040a1",
+          "本地整合已修改": false
+        }
+      ]
+    },
+    {
+      "元件": "elements-media-player",
+      "登錄來源": "https://r.assistant-ui.com/elements-media-player.json",
+      "原始JSON_SHA256": "5698a91b0f17f6e3be1a00b29de0009b452358bc9cb419dcb1eefcf15493200a",
+      "檔案": [
+        {
+          "上游檔案": "components/assistant-ui/elements/media-player.tsx",
+          "專案檔案": "src/components/assistant-ui/elements/media-player.tsx",
+          "原文SHA256": "10d9aa25e3b962c3a5420932b990a9975fbb09efe78410c884eea12461439eaa",
+          "初次原樣擷取": true,
+          "目前檔案SHA256": "10d9aa25e3b962c3a5420932b990a9975fbb09efe78410c884eea12461439eaa",
+          "本地整合已修改": false
+        }
+      ]
+    },
+    {
+      "元件": "elements-href",
+      "登錄來源": "https://r.assistant-ui.com/elements-href.json",
+      "原始JSON_SHA256": "d7b7778513ed7fddc8915109aed2c326c5e435e02bd5cfa9029d647b056d30ba",
+      "檔案": [
+        {
+          "上游檔案": "components/assistant-ui/utils/href.ts",
+          "專案檔案": "src/components/assistant-ui/utils/href.ts",
+          "原文SHA256": "3a8038d038b1918ae3f58a61dcd30933633131dda341eb5bea5b6a650b31a912",
+          "初次原樣擷取": true,
+          "目前檔案SHA256": "3a8038d038b1918ae3f58a61dcd30933633131dda341eb5bea5b6a650b31a912",
+          "本地整合已修改": false
+        }
+      ]
+    },
+    {
+      "元件": "elements-reasoning",
+      "登錄來源": "https://r.assistant-ui.com/elements-reasoning.json",
+      "原始JSON_SHA256": "965cf8108448fbf05e4901aad6310fd8ae09c9363a53847bc9411d3b1c3a2934",
+      "檔案": [
+        {
+          "上游檔案": "components/assistant-ui/elements/reasoning.tsx",
+          "專案檔案": "src/components/assistant-ui/elements/reasoning.tsx",
+          "原文SHA256": "06a21e6bc3ccc1fde0f100c3ed7b412d82ecc455fd35674ba62d09b991fc8e1f",
+          "初次原樣擷取": true,
+          "目前檔案SHA256": "06a21e6bc3ccc1fde0f100c3ed7b412d82ecc455fd35674ba62d09b991fc8e1f",
+          "本地整合已修改": false
+        }
+      ]
+    },
+    {
+      "元件": "elements-surfaces",
+      "登錄來源": "https://r.assistant-ui.com/elements-surfaces.json",
+      "原始JSON_SHA256": "80e6d0b29bb9bce0aa889022e9361e52d627c1b1deb9b96a4f1ee8b4698ca2a3",
+      "檔案": [
+        {
+          "上游檔案": "components/assistant-ui/elements/surfaces.tsx",
+          "專案檔案": "src/components/assistant-ui/elements/surfaces.tsx",
+          "原文SHA256": "a82542ec08f0afd0565b220a1d32235b1fd7c08b394c55977119665da3860d3a",
+          "初次原樣擷取": true,
+          "目前檔案SHA256": "a82542ec08f0afd0565b220a1d32235b1fd7c08b394c55977119665da3860d3a",
+          "本地整合已修改": false
+        }
+      ]
+    }
+  ],
+  "主題字型及授權副本": [
+    {
+      "上游檔案": "templates/default/app/globals.css",
+      "副本檔案": "src/components/assistant-ui/上游來源/starter-globals.css",
+      "來源": "https://raw.githubusercontent.com/assistant-ui/assistant-ui/5e64867445847d1c7f2c308e98da1817fbd230f3/templates/default/app/globals.css",
+      "SHA256": "775972c60ff85b1457af3981914c068c2dca46548c4701ee1428b23dc86e2b51"
+    },
+    {
+      "上游檔案": "templates/default/app/layout.tsx",
+      "副本檔案": "src/components/assistant-ui/上游來源/starter-layout.tsx",
+      "來源": "https://raw.githubusercontent.com/assistant-ui/assistant-ui/5e64867445847d1c7f2c308e98da1817fbd230f3/templates/default/app/layout.tsx",
+      "SHA256": "71d4e3fe2aa8b69ebb116197fe3eb7be06c0a76accd6315e3fbb6e882c33e1fd"
+    },
+    {
+      "上游檔案": "apps/registry/app/globals.css",
+      "副本檔案": "src/components/assistant-ui/上游來源/registry-globals.css",
+      "來源": "https://raw.githubusercontent.com/assistant-ui/assistant-ui/5e64867445847d1c7f2c308e98da1817fbd230f3/apps/registry/app/globals.css",
+      "SHA256": "95859cc13d07f9c1b1306aa0e6ebfccbc9ff480ce596b5d97e9fb8e0d1db380a"
+    },
+    {
+      "上游檔案": "LICENSE",
+      "副本檔案": "src/components/assistant-ui/上游來源/LICENSE.md",
+      "來源": "https://raw.githubusercontent.com/assistant-ui/assistant-ui/5e64867445847d1c7f2c308e98da1817fbd230f3/LICENSE",
+      "SHA256": "eafb05991a572efa34097474b31fef45b14a8879ed1d1a8fd77de62e6fa7d275"
+    }
+  ],
+  "目前產品整合狀態": "官方 templates 已整合繁體中文、MES 外部 runtime、宿主 Portal、能力限制、視窗滿版及保存結果；不宣稱目前檔案逐字同上游。",
+  "本地差異核對說明": "原文SHA256保留初次擷取證據；目前檔案SHA256只反映本次文件更新時的程式，後續修改需重新核對。",
+  "正式字型整合": "Inter variable 與 IBM Plex Mono 400／500／600 透過本機 Fontsource Latin WOFF2；預覽生成4檔，正式IIFE CSS內嵌，中文使用系統fallback。",
+  "基礎UI官方來源": [
+    {
+      "元件": "Avatar",
+      "官方CLI": "npx shadcn@4.21.3 add avatar --yes",
+      "登錄來源": "https://ui.shadcn.com/r/styles/new-york-v4/avatar.json",
+      "原文副本": "src/components/assistant-ui/上游來源/shadcn-avatar.json",
+      "原始JSON_SHA256": "f843fc6e2d2fea1337bdcdc8b70c5189f84562d87f8e852e994f4bbdd7cd229d",
+      "上游檔案": "registry/new-york-v4/ui/avatar.tsx",
+      "上游原文SHA256": "0c5c48b8a1dff4fdc5ff9b6cb79cc9cd138682b7d86868068f571befe9675e88",
+      "專案檔案": "src/components/ui/avatar.tsx",
+      "目前檔案SHA256": "f757031690c648e3b115907bff6ded599076ea7245715d32b98dad2bd2153899",
+      "差異說明": "CLI 依專案 rsc=false 移除 use client 宣告；元件沿用官方 new-york-v4 原版。",
+      "授權": "MIT，沿用 src/components/ui/LICENSE.md 的 shadcn 原文。"
+    }
+  ]
+}

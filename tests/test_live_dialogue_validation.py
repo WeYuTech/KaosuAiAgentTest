@@ -2,7 +2,14 @@ import json
 from types import SimpleNamespace
 import pytest
 from fastapi.testclient import TestClient
-from app.main import create_app
+from app.main import create_app as _create_app
+
+
+def create_app(*args, **kwargs):
+    """既有業務回歸固定為修改意圖，分類器由 Issue27 的獨立測試驗證。"""
+    kwargs.setdefault("intent_classifier", lambda _: {"intent": "change"})
+    return _create_app(*args, **kwargs)
+
 from app.mes import MesBridge, MesError
 
 
@@ -117,7 +124,8 @@ def test_長對話每次正式查詢與草稿前重新驗證相同身分(tmp_pat
         assert reply.json()["proposal"]["actor_id"] == "TEST"
         assert reply.json()["proposal"]["writes_enabled"] is False
         assert bridge.tools == [("query", 61), ("query", 122), ("prepare", 183)]
-        assert bridge.validations[-3:] == [("report", 61), ("report", 122), ("report", 183)]
+        assert all(("report", moment) in bridge.validations for moment in (61, 122, 183))
+        assert bridge.validations[-1] == ("report", 183)  # 回傳前仍重新確認可信身分。
 
 
 @pytest.mark.parametrize("session,status", [("changed", 401), ("sid_changed", 401), ("expired", 401), ("revoked", 403)])

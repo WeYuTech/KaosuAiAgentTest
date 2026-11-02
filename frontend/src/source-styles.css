@@ -1,0 +1,262 @@
+@layer theme, base, components, utilities;
+@import "./source-design-tokens.css";
+@import "tailwindcss";
+@import "tw-animate-css";
+
+/* PostCSS 將 Preflight 及所有選擇器限定於助理／預覽 root。 */
+@source not "./components/assistant-ui/上游來源";
+
+/* 保留 Fontsource 官方 Latin 描述；顯式來源讓 Vite 正確重設資產路徑。 */
+@font-face {
+  font-family: 'Inter Variable';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 100 900;
+  src: url('../node_modules/@fontsource-variable/inter/files/inter-latin-wght-normal.woff2') format('woff2');
+  unicode-range: U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;
+}
+
+@font-face {
+  font-family: 'IBM Plex Mono';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 400;
+  src: url('../node_modules/@fontsource/ibm-plex-mono/files/ibm-plex-mono-latin-400-normal.woff2') format('woff2');
+  unicode-range: U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;
+}
+
+@font-face {
+  font-family: 'IBM Plex Mono';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 500;
+  src: url('../node_modules/@fontsource/ibm-plex-mono/files/ibm-plex-mono-latin-500-normal.woff2') format('woff2');
+  unicode-range: U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;
+}
+
+@font-face {
+  font-family: 'IBM Plex Mono';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 600;
+  src: url('../node_modules/@fontsource/ibm-plex-mono/files/ibm-plex-mono-latin-600-normal.woff2') format('woff2');
+  unicode-range: U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;
+}
+
+@custom-variant data-open (&:where([data-state="open"], [data-open]:not([data-open="false"])));
+@custom-variant data-closed (&:where([data-state="closed"], [data-closed]:not([data-closed="false"])));
+
+@theme inline {
+  --spacing: var(--mes-space-unit);
+  --text-xs: var(--mes-text-xs);
+  --text-sm: var(--mes-text-sm);
+  --text-base: var(--mes-text-base);
+  --text-lg: var(--mes-text-lg);
+  --text-xl: var(--mes-text-xl);
+  --text-2xl: var(--mes-text-2xl);
+  --text-xs--line-height: var(--mes-text-line-height);
+  --text-sm--line-height: var(--mes-text-line-height);
+  --text-base--line-height: var(--mes-text-line-height);
+  @keyframes collapsible-down {
+    from {
+      height: 0;
+    }
+    to {
+      height: var(
+        --radix-collapsible-content-height,
+        var(--collapsible-panel-height, auto)
+      );
+    }
+  }
+  @keyframes collapsible-up {
+    from {
+      height: var(
+        --radix-collapsible-content-height,
+        var(--collapsible-panel-height, auto)
+      );
+    }
+    to {
+      height: 0;
+    }
+  }
+}
+
+
+@custom-variant dark (&:is(#mes-ai-chat-root.dark, #mes-ai-chat-root.dark *));
+
+/* 查詢過程沿用 Radix 收合；正文不等待面板動效 */
+#mes-ai-chat-root .mes-trace-panel[data-state="open"] {
+  animation: collapsible-down var(--mes-trace-duration) ease-out;
+}
+#mes-ai-chat-root .mes-trace-panel[data-state="closed"] {
+  animation: collapsible-up var(--mes-trace-duration) ease-in;
+}
+#mes-ai-chat-root .mes-trace-chevron {
+  transition: transform var(--mes-trace-duration) ease-out;
+}
+@media (prefers-reduced-motion: reduce) {
+  #mes-ai-chat-root .mes-trace-panel { animation: none; }
+  #mes-ai-chat-root .mes-trace-chevron { transition: none; }
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-inter);
+  --font-mono: var(--font-ibm-plex-mono);
+  --color-sidebar-ring: var(--sidebar-ring);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar: var(--sidebar);
+  --color-chart-5: var(--chart-5);
+  --color-chart-4: var(--chart-4);
+  --color-chart-3: var(--chart-3);
+  --color-chart-2: var(--chart-2);
+  --color-chart-1: var(--chart-1);
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+  --color-border: var(--border);
+  --color-destructive: var(--destructive);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent: var(--accent);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-muted: var(--muted);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary: var(--secondary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary: var(--primary);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-popover: var(--popover);
+  --color-card-foreground: var(--card-foreground);
+  --color-card: var(--card);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --radius-2xl: calc(var(--radius) + 8px);
+  --radius-3xl: 1.5rem;
+  --animate-shimmer: shimmer-sweep var(--shimmer-duration, 1000ms) linear
+    infinite both;
+  @keyframes shimmer-sweep {
+    from {
+      background-position: 150% 0;
+    }
+    to {
+      background-position: -100% 0;
+    }
+  }
+}
+
+
+@layer base {
+  * { @apply border-border; }
+  :where(#mes-ai-chat-root, #mes-ai-preview-root) {
+    color-scheme: light;
+    font-family: var(--font-inter);
+    font-optical-sizing: auto;
+    font-size: var(--mes-text-base);
+    line-height: var(--mes-text-line-height);
+    @apply bg-background text-foreground;
+  }
+  :where(#mes-ai-chat-root, #mes-ai-preview-root).dark { color-scheme: dark; }
+}
+
+/* 只提供宿主定位、滿版與存取橋接，不另設 MES 聊天皮膚。 */
+#mes-ai-chat-root { position: relative; z-index: var(--aui-widget-layer); }
+:where(#mes-ai-chat-root, #mes-ai-preview-root) :focus-visible:not(.aui-composer-input):not(.aui-edit-composer-input):not([data-slot="history-search-input"]) {
+  outline: var(--aui-focus-width) solid var(--ring);
+  outline-offset: var(--aui-focus-offset);
+}
+:where(#mes-ai-chat-root, #mes-ai-preview-root) [data-radix-popper-content-wrapper]:has(> .aui-modal-content[data-expanded="true"]) {
+  position: fixed !important;
+  inset: 0 !important;
+  width: 100% !important;
+  min-width: 0 !important;
+  height: var(--aui-viewport-height) !important;
+  transform: none !important;
+}
+:where(#mes-ai-chat-root, #mes-ai-preview-root) .aui-modal-content[data-expanded="true"] {
+  width: 100% !important;
+  height: 100% !important;
+  max-width: none;
+  max-height: none;
+  border-width: 0;
+  border-radius: 0;
+}
+:where(#mes-ai-chat-root, #mes-ai-preview-root) .aui-modal-brand {
+  height: var(--aui-brand-logo-height);
+  width: auto;
+  max-width: var(--aui-brand-logo-max-width);
+}
+#mes-ai-chat-root .aui-modal-brand { filter: var(--aui-brand-logo-filter); }
+:where(#mes-ai-chat-root, #mes-ai-preview-root) .aui-modal-content[data-expanded="true"] .aui-modal-copyright {
+  padding-bottom: calc(var(--aui-copyright-padding) + var(--aui-safe-area-bottom));
+}
+#mes-ai-chat-root .mes-ai-copy-target {
+  position: fixed;
+  opacity: 0;
+  width: var(--aui-hidden-size);
+  height: var(--aui-hidden-size);
+}
+
+.mes-report-chart-plot { height: var(--mes-chart-height); }
+.mes-report-chart-plot-tall { height: var(--mes-chart-tall-height); }
+.mes-report-heat-cell[data-tone="0"] { background: var(--mes-heat-low); }
+.mes-report-heat-cell[data-tone="1"] { background: var(--mes-heat-mid-low); }
+.mes-report-heat-cell[data-tone="2"] { background: var(--mes-heat-mid-high); }
+.mes-report-heat-cell[data-tone="3"] { background: var(--mes-heat-high); }
+
+/* 共用可讀性尺度；保留上游元件、互動與宿主的尺寸。 */
+#mes-ai-chat-root .aui-modal-content {
+  container-type: inline-size;
+  container-name: mes-chat-shell;
+}
+:where(#mes-ai-chat-root, #mes-ai-preview-root) :is([data-slot="button"], .aui-button-icon) {
+  min-height: var(--aui-control-min-size);
+  min-width: var(--aui-control-min-size);
+  font-size: var(--mes-text-sm);
+}
+:where(#mes-ai-chat-root, #mes-ai-preview-root) [data-slot="button"][data-size="default"],
+:where(#mes-ai-chat-root, #mes-ai-preview-root) [data-slot="input"],
+:where(#mes-ai-chat-root, #mes-ai-preview-root) [data-slot="select-trigger"],
+#mes-ai-chat-root .aui-composer-send,
+#mes-ai-chat-root .aui-composer-cancel {
+  min-height: var(--aui-control-height);
+}
+#mes-ai-chat-root .aui-composer-send,
+#mes-ai-chat-root .aui-composer-cancel {
+  min-width: var(--aui-control-height);
+}
+#mes-ai-chat-root .aui-modal-header {
+  height: var(--aui-header-height);
+}
+#mes-ai-chat-root .aui-modal-title {
+  font-size: var(--mes-text-sm);
+}
+#mes-ai-chat-root .aui-modal-header svg,
+#mes-ai-chat-root .aui-composer-action-wrapper svg {
+  width: var(--aui-control-icon-size);
+  height: var(--aui-control-icon-size);
+}
+#mes-ai-chat-root [data-slot="aui_assistant-message-root"] {
+  padding-bottom: var(--aui-assistant-action-reserve);
+  margin-bottom: calc(0px - var(--aui-assistant-action-reserve));
+}
+#mes-ai-chat-root [data-slot="aui_assistant-message-footer"] {
+  min-height: var(--aui-assistant-action-reserve);
+}
+
+@container mes-chat-shell (max-width: 560px) {
+  #mes-ai-chat-root .aui-modal-header {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    height: auto;
+    padding-block: var(--aui-header-padding);
+    gap: var(--aui-header-gap);
+  }
+  #mes-ai-chat-root .aui-modal-header-actions { grid-column: 1 / -1; justify-self: end; }
+}

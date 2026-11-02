@@ -1,0 +1,1262 @@
+[
+  {
+    "file": "G3-1366-繁中淺色-作業單.jpg",
+    "sha": "151e417",
+    "dpr": 1,
+    "fields": [
+      {
+        "id": "guide-ok",
+        "value": "125"
+      },
+      {
+        "id": "guide-defects-0-code",
+        "value": "NG01"
+      },
+      {
+        "id": "guide-defects-0-quantity",
+        "value": "3"
+      },
+      {
+        "id": "guide-comment",
+        "value": ""
+      }
+    ],
+    "focus": "guide-ok",
+    "guide": {
+      "bottom": 652.921875,
+      "height": 521.671875,
+      "left": 918.546875,
+      "right": 1345.984375,
+      "top": 131.25,
+      "width": 427.4375,
+      "x": 918.546875,
+      "y": 131.25
+    },
+    "language": "zh-TW",
+    "mode": "desktop-workbench dual-flow chat-sheet  ",
+    "pageOverflow": false,
+    "primary": {
+      "bottom": 729.25,
+      "height": 618,
+      "left": 897.546875,
+      "right": 1365.984375,
+      "top": 111.25,
+      "width": 468.4375,
+      "x": 897.546875,
+      "y": 111.25
+    },
+    "primaryText": "新增報工\n\n草稿 · 尚未送出\n\nWO-261102-0382\n\nP-102 · 外殼\n\nMC37 · MOLD-A · 2026-11-02 08:10:00\n\n選擇／更換對象\n這一筆人工良品數量\n有不良品嗎？\n沒有不良品\n有，選原因與數量\n不良原因\n請選擇\nNG01 · 刮傷\nNG02 · 破損\n不良數量\n移除\n+ 另一個原因\n\n不良合計：3\n\n備註（選填）\n上一步\n下一步：核對內容",
+    "theme": "light",
+    "viewport": [
+      1366,
+      768
+    ],
+    "workspace": {
+      "bottom": 729.25,
+      "height": 618,
+      "left": 312,
+      "right": 1366,
+      "top": 111.25,
+      "width": 1054,
+      "x": 312,
+      "y": 111.25
+    }
+  },
+  {
+    "file": "G3-1366-繁中淺色-精靈.jpg",
+    "sha": "151e417",
+    "dpr": 1,
+    "fields": [
+      {
+        "id": "guide-ok",
+        "value": "125"
+      },
+      {
+        "id": "guide-defects-0-code",
+        "value": "NG01"
+      },
+      {
+        "id": "guide-defects-0-quantity",
+        "value": "3"
+      },
+      {
+        "id": "guide-comment",
+        "value": ""
+      }
+    ],
+    "focus": "guide-ok",
+    "guide": {
+      "bottom": 598.140625,
+      "height": 470.890625,
+      "left": 514,
+      "right": 1149,
+      "top": 127.25,
+      "width": 635,
+      "x": 514,
+      "y": 127.25
+    },
+    "language": "zh-TW",
+    "mode": "desktop-workbench dual-flow step-wizard  ",
+    "pageOverflow": false,
+    "primary": {
+      "bottom": 609.25,
+      "height": 498,
+      "left": 312,
+      "right": 1366,
+      "top": 111.25,
+      "width": 1054,
+      "x": 312,
+      "y": 111.25
+    },
+    "primaryText": "✓\n選擇對象\n2\n填寫內容\n3\n核對送出\n新增報工\n\n草稿 · 尚未送出\n\nWO-261102-0382\n\nP-102 · 外殼\n\nMC37 · MOLD-A · 2026-11-02 08:10:00\n\n選擇／更換對象\n這一筆人工良品數量\n有不良品嗎？\n沒有不良品\n有，選原因與數量\n不良原因\n請選擇\nNG01 · 刮傷\nNG02 · 破損\n不良數量\n移除\n+ 另一個原因\n\n不良合計：3\n\n備註（選填）\n上一步\n下一步：核對內容",
+    "theme": "light",
+    "viewport": [
+      1366,
+      768
+    ],
+    "workspace": {
+      "bottom": 729.25,
+      "height": 618,
+      "left": 312,
+      "right": 1366,
+      "top": 111.25,
+      "width": 1054,
+      "x": 312,
+      "y": 111.25
+    }
+  },
+  {
+    "file": "G3-1920-繁中淺色-精靈.jpg",
+    "sha": "151e417",
+    "dpr": 1,
+    "fields": [
+      {
+        "id": "guide-ok",
+        "value": "125"
+      },
+      {
+        "id": "guide-defects-0-code",
+        "value": "NG01"
+      },
+      {
+        "id": "guide-defects-0-quantity",
+        "value": "3"
+      },
+      {
+        "id": "guide-comment",
+        "value": ""
+      }
+    ],
+    "focus": "guide-ok",
+    "guide": {
+      "bottom": 598.140625,
+      "height": 470.890625,
+      "left": 791,
+      "right": 1441,
+      "top": 127.25,
+      "width": 650,
+      "x": 791,
+      "y": 127.25
+    },
+    "language": "zh-TW",
+    "mode": "desktop-workbench dual-flow step-wizard  ",
+    "pageOverflow": false,
+    "primary": {
+      "bottom": 921.25,
+      "height": 810,
+      "left": 312,
+      "right": 1920,
+      "top": 111.25,
+      "width": 1608,
+      "x": 312,
+      "y": 111.25
+    },
+    "primaryText": "✓\n選擇對象\n2\n填寫內容\n3\n核對送出\n新增報工\n\n草稿 · 尚未送出\n\nWO-261102-0382\n\nP-102 · 外殼\n\nMC37 · MOLD-A · 2026-11-02 08:10:00\n\n選擇／更換對象\n這一筆人工良品數量\n有不良品嗎？\n沒有不良品\n有，選原因與數量\n不良原因\n請選擇\nNG01 · 刮傷\nNG02 · 破損\n不良數量\n移除\n+ 另一個原因\n\n不良合計：3\n\n備註（選填）\n上一步\n下一步：核對內容",
+    "theme": "light",
+    "viewport": [
+      1920,
+      1080
+    ],
+    "workspace": {
+      "bottom": 1041.25,
+      "height": 930,
+      "left": 312,
+      "right": 1920,
+      "top": 111.25,
+      "width": 1608,
+      "x": 312,
+      "y": 111.25
+    }
+  },
+  {
+    "file": "G3-1920-繁中淺色-作業單.jpg",
+    "sha": "151e417",
+    "dpr": 1,
+    "fields": [
+      {
+        "id": "guide-ok",
+        "value": "125"
+      },
+      {
+        "id": "guide-defects-0-code",
+        "value": "NG01"
+      },
+      {
+        "id": "guide-defects-0-quantity",
+        "value": "3"
+      },
+      {
+        "id": "guide-comment",
+        "value": ""
+      }
+    ],
+    "focus": "guide-ok",
+    "guide": {
+      "bottom": 577.140625,
+      "height": 445.890625,
+      "left": 1226.328125,
+      "right": 1900,
+      "top": 131.25,
+      "width": 673.671875,
+      "x": 1226.328125,
+      "y": 131.25
+    },
+    "language": "zh-TW",
+    "mode": "desktop-workbench dual-flow chat-sheet  ",
+    "pageOverflow": false,
+    "primary": {
+      "bottom": 1041.25,
+      "height": 930,
+      "left": 1205.328125,
+      "right": 1920,
+      "top": 111.25,
+      "width": 714.671875,
+      "x": 1205.328125,
+      "y": 111.25
+    },
+    "primaryText": "新增報工\n\n草稿 · 尚未送出\n\nWO-261102-0382\n\nP-102 · 外殼\n\nMC37 · MOLD-A · 2026-11-02 08:10:00\n\n選擇／更換對象\n這一筆人工良品數量\n有不良品嗎？\n沒有不良品\n有，選原因與數量\n不良原因\n請選擇\nNG01 · 刮傷\nNG02 · 破損\n不良數量\n移除\n+ 另一個原因\n\n不良合計：3\n\n備註（選填）\n上一步\n下一步：核對內容",
+    "theme": "light",
+    "viewport": [
+      1920,
+      1080
+    ],
+    "workspace": {
+      "bottom": 1041.25,
+      "height": 930,
+      "left": 312,
+      "right": 1920,
+      "top": 111.25,
+      "width": 1608,
+      "x": 312,
+      "y": 111.25
+    }
+  },
+  {
+    "file": "G3-768-繁中淺色-作業單.jpg",
+    "sha": "151e417",
+    "dpr": 1,
+    "fields": [
+      {
+        "id": "guide-ok",
+        "value": "125"
+      },
+      {
+        "id": "guide-defects-0-code",
+        "value": "NG01"
+      },
+      {
+        "id": "guide-defects-0-quantity",
+        "value": "3"
+      },
+      {
+        "id": "guide-comment",
+        "value": ""
+      }
+    ],
+    "focus": "guide-ok",
+    "guide": {
+      "bottom": 696.3125,
+      "height": 565.0625,
+      "left": 429,
+      "right": 748,
+      "top": 131.25,
+      "width": 319,
+      "x": 429,
+      "y": 131.25
+    },
+    "language": "zh-TW",
+    "mode": "desktop-workbench dual-flow chat-sheet  ",
+    "pageOverflow": false,
+    "primary": {
+      "bottom": 985.25,
+      "height": 874,
+      "left": 408,
+      "right": 768,
+      "top": 111.25,
+      "width": 360,
+      "x": 408,
+      "y": 111.25
+    },
+    "primaryText": "新增報工\n\n草稿 · 尚未送出\n\nWO-261102-0382\n\nP-102 · 外殼\n\nMC37 · MOLD-A · 2026-11-02 08:10:00\n\n選擇／更換對象\n這一筆人工良品數量\n有不良品嗎？\n沒有不良品\n有，選原因與數量\n不良原因\n請選擇\nNG01 · 刮傷\nNG02 · 破損\n不良數量\n移除\n+ 另一個原因\n\n不良合計：3\n\n備註（選填）\n上一步\n下一步：核對內容",
+    "theme": "light",
+    "viewport": [
+      768,
+      1024
+    ],
+    "workspace": {
+      "bottom": 985.25,
+      "height": 874,
+      "left": 0,
+      "right": 768,
+      "top": 111.25,
+      "width": 768,
+      "x": 0,
+      "y": 111.25
+    }
+  },
+  {
+    "file": "G3-768-繁中淺色-精靈.jpg",
+    "sha": "151e417",
+    "dpr": 1,
+    "fields": [
+      {
+        "id": "guide-ok",
+        "value": "125"
+      },
+      {
+        "id": "guide-defects-0-code",
+        "value": "NG01"
+      },
+      {
+        "id": "guide-defects-0-quantity",
+        "value": "3"
+      },
+      {
+        "id": "guide-comment",
+        "value": ""
+      }
+    ],
+    "focus": "guide-ok",
+    "guide": {
+      "bottom": 598.140625,
+      "height": 470.890625,
+      "left": 59,
+      "right": 709,
+      "top": 127.25,
+      "width": 650,
+      "x": 59,
+      "y": 127.25
+    },
+    "language": "zh-TW",
+    "mode": "desktop-workbench dual-flow step-wizard  ",
+    "pageOverflow": false,
+    "primary": {
+      "bottom": 865.25,
+      "height": 754,
+      "left": 0,
+      "right": 768,
+      "top": 111.25,
+      "width": 768,
+      "x": 0,
+      "y": 111.25
+    },
+    "primaryText": "✓\n選擇對象\n2\n填寫內容\n3\n核對送出\n新增報工\n\n草稿 · 尚未送出\n\nWO-261102-0382\n\nP-102 · 外殼\n\nMC37 · MOLD-A · 2026-11-02 08:10:00\n\n選擇／更換對象\n這一筆人工良品數量\n有不良品嗎？\n沒有不良品\n有，選原因與數量\n不良原因\n請選擇\nNG01 · 刮傷\nNG02 · 破損\n不良數量\n移除\n+ 另一個原因\n\n不良合計：3\n\n備註（選填）\n上一步\n下一步：核對內容",
+    "theme": "light",
+    "viewport": [
+      768,
+      1024
+    ],
+    "workspace": {
+      "bottom": 985.25,
+      "height": 874,
+      "left": 0,
+      "right": 768,
+      "top": 111.25,
+      "width": 768,
+      "x": 0,
+      "y": 111.25
+    }
+  },
+  {
+    "file": "G3-390-繁中淺色-精靈.jpg",
+    "sha": "151e417",
+    "dpr": 1,
+    "fields": [
+      {
+        "id": "guide-ok",
+        "value": "125"
+      },
+      {
+        "id": "guide-defects-0-code",
+        "value": "NG01"
+      },
+      {
+        "id": "guide-defects-0-quantity",
+        "value": "3"
+      },
+      {
+        "id": "guide-comment",
+        "value": ""
+      }
+    ],
+    "focus": "guide-ok",
+    "guide": {
+      "bottom": 744.671875,
+      "height": 575.671875,
+      "left": 16,
+      "right": 359,
+      "top": 169,
+      "width": 343,
+      "x": 16,
+      "y": 169
+    },
+    "language": "zh-TW",
+    "mode": "desktop-workbench dual-flow step-wizard  ",
+    "pageOverflow": false,
+    "primary": {
+      "bottom": 675.25,
+      "height": 522.25,
+      "left": 0,
+      "right": 375,
+      "top": 153,
+      "width": 375,
+      "x": 0,
+      "y": 153
+    },
+    "primaryText": "✓\n選擇對象\n2\n填寫內容\n3\n核對送出\n新增報工\n\n草稿 · 尚未送出\n\nWO-261102-0382\n\nP-102 · 外殼\n\nMC37 · MOLD-A · 2026-11-02 08:10:00\n\n選擇／更換對象\n這一筆人工良品數量\n有不良品嗎？\n沒有不良品\n有，選原因與數量\n不良原因\n請選擇\nNG01 · 刮傷\nNG02 · 破損\n不良數量\n移除\n+ 另一個原因\n\n不良合計：3\n\n備註（選填）\n上一步\n下一步：核對內容",
+    "theme": "light",
+    "viewport": [
+      390,
+      844
+    ],
+    "workspace": {
+      "bottom": 805.25,
+      "height": 652.25,
+      "left": 0,
+      "right": 390,
+      "top": 153,
+      "width": 390,
+      "x": 0,
+      "y": 153
+    }
+  },
+  {
+    "file": "G3-390-繁中淺色-作業單.jpg",
+    "sha": "151e417",
+    "dpr": 1,
+    "fields": [
+      {
+        "id": "guide-ok",
+        "value": "125"
+      },
+      {
+        "id": "guide-defects-0-code",
+        "value": "NG01"
+      },
+      {
+        "id": "guide-defects-0-quantity",
+        "value": "3"
+      },
+      {
+        "id": "guide-comment",
+        "value": ""
+      }
+    ],
+    "focus": "guide-ok",
+    "guide": {
+      "bottom": 956.671875,
+      "height": 546.671875,
+      "left": 16,
+      "right": 359,
+      "top": 410,
+      "width": 343,
+      "x": 16,
+      "y": 410
+    },
+    "language": "zh-TW",
+    "mode": "desktop-workbench dual-flow chat-sheet  ",
+    "pageOverflow": false,
+    "primary": {
+      "bottom": 805.25,
+      "height": 412.25,
+      "left": 0,
+      "right": 375,
+      "top": 393,
+      "width": 375,
+      "x": 0,
+      "y": 393
+    },
+    "primaryText": "新增報工\n\n草稿 · 尚未送出\n\nWO-261102-0382\n\nP-102 · 外殼\n\nMC37 · MOLD-A · 2026-11-02 08:10:00\n\n選擇／更換對象\n這一筆人工良品數量\n有不良品嗎？\n沒有不良品\n有，選原因與數量\n不良原因\n請選擇\nNG01 · 刮傷\nNG02 · 破損\n不良數量\n移除\n+ 另一個原因\n\n不良合計：3\n\n備註（選填）\n上一步\n下一步：核對內容",
+    "theme": "light",
+    "viewport": [
+      390,
+      844
+    ],
+    "workspace": {
+      "bottom": 805.25,
+      "height": 652.25,
+      "left": 0,
+      "right": 390,
+      "top": 153,
+      "width": 390,
+      "x": 0,
+      "y": 153
+    }
+  },
+  {
+    "file": "G3-320-繁中淺色-作業單.jpg",
+    "sha": "151e417",
+    "dpr": 1,
+    "fields": [
+      {
+        "id": "guide-ok",
+        "value": "125"
+      },
+      {
+        "id": "guide-defects-0-code",
+        "value": "NG01"
+      },
+      {
+        "id": "guide-defects-0-quantity",
+        "value": "3"
+      },
+      {
+        "id": "guide-comment",
+        "value": ""
+      }
+    ],
+    "focus": "guide-ok",
+    "guide": {
+      "bottom": 1001.453125,
+      "height": 591.453125,
+      "left": 16,
+      "right": 289,
+      "top": 410,
+      "width": 273,
+      "x": 16,
+      "y": 410
+    },
+    "language": "zh-TW",
+    "mode": "desktop-workbench dual-flow chat-sheet  ",
+    "pageOverflow": false,
+    "primary": {
+      "bottom": 698.5,
+      "height": 305.5,
+      "left": 0,
+      "right": 305,
+      "top": 393,
+      "width": 305,
+      "x": 0,
+      "y": 393
+    },
+    "primaryText": "新增報工\n\n草稿 · 尚未送出\n\nWO-261102-0382\n\nP-102 · 外殼\n\nMC37 · MOLD-A · 2026-11-02 08:10:00\n\n選擇／更換對象\n這一筆人工良品數量\n有不良品嗎？\n沒有不良品\n有，選原因與數量\n不良原因\n請選擇\nNG01 · 刮傷\nNG02 · 破損\n不良數量\n移除\n+ 另一個原因\n\n不良合計：3\n\n備註（選填）\n上一步\n下一步：核對內容",
+    "theme": "light",
+    "viewport": [
+      320,
+      760
+    ],
+    "workspace": {
+      "bottom": 698.5,
+      "height": 545.5,
+      "left": 0,
+      "right": 320,
+      "top": 153,
+      "width": 320,
+      "x": 0,
+      "y": 153
+    }
+  },
+  {
+    "file": "G3-320-修正後作業單按鈕可達.jpg",
+    "sha": "46089cd",
+    "dpr": 1,
+    "fields": [
+      {
+        "id": "guide-ok",
+        "value": "125"
+      },
+      {
+        "id": "guide-defects-0-code",
+        "value": "NG01"
+      },
+      {
+        "id": "guide-defects-0-quantity",
+        "value": "3"
+      },
+      {
+        "id": "guide-comment",
+        "value": ""
+      }
+    ],
+    "focus": "",
+    "guide": {
+      "bottom": 682.953125,
+      "height": 591.453125,
+      "left": 16,
+      "right": 289,
+      "top": 91.5,
+      "width": 273,
+      "x": 16,
+      "y": 91.5
+    },
+    "language": "zh-TW",
+    "mode": "desktop-workbench dual-flow chat-sheet  ",
+    "pageOverflow": false,
+    "primary": {
+      "bottom": 698.953125,
+      "height": 624.453125,
+      "left": 0,
+      "right": 305,
+      "top": 74.5,
+      "width": 305,
+      "x": 0,
+      "y": 74.5
+    },
+    "primaryText": "新增報工\n\n草稿 · 尚未送出\n\nWO-261102-0382\n\nP-102 · 外殼\n\nMC37 · MOLD-A · 2026-11-02 08:10:00\n\n選擇／更換對象\n這一筆人工良品數量\n有不良品嗎？\n沒有不良品\n有，選原因與數量\n不良原因\n請選擇\nNG01 · 刮傷\nNG02 · 破損\n不良數量\n移除\n+ 另一個原因\n\n不良合計：3\n\n備註（選填）\n上一步\n下一步：核對內容",
+    "theme": "light",
+    "viewport": [
+      320,
+      760
+    ],
+    "workspace": {
+      "bottom": 698.5,
+      "height": 545.5,
+      "left": 0,
+      "right": 320,
+      "top": 153,
+      "width": 320,
+      "x": 0,
+      "y": 153
+    }
+  },
+  {
+    "file": "G3-320-繁中淺色-精靈.jpg",
+    "sha": "46089cd",
+    "dpr": 1,
+    "fields": [
+      {
+        "id": "guide-ok",
+        "value": "125"
+      },
+      {
+        "id": "guide-defects-0-code",
+        "value": "NG01"
+      },
+      {
+        "id": "guide-defects-0-quantity",
+        "value": "3"
+      },
+      {
+        "id": "guide-comment",
+        "value": ""
+      }
+    ],
+    "focus": "guide-defects-0-quantity",
+    "guide": {
+      "bottom": 545.234375,
+      "height": 629.234375,
+      "left": 16,
+      "right": 289,
+      "top": -84,
+      "width": 273,
+      "x": 16,
+      "y": -84
+    },
+    "language": "zh-TW",
+    "mode": "desktop-workbench dual-flow step-wizard  ",
+    "pageOverflow": false,
+    "primary": {
+      "bottom": 561.234375,
+      "height": 661.234375,
+      "left": 0,
+      "right": 305,
+      "top": -100,
+      "width": 305,
+      "x": 0,
+      "y": -100
+    },
+    "primaryText": "✓\n選擇對象\n2\n填寫內容\n3\n核對送出\n新增報工\n\n草稿 · 尚未送出\n\nWO-261102-0382\n\nP-102 · 外殼\n\nMC37 · MOLD-A · 2026-11-02 08:10:00\n\n選擇／更換對象\n這一筆人工良品數量\n有不良品嗎？\n沒有不良品\n有，選原因與數量\n不良原因\n請選擇\nNG01 · 刮傷\nNG02 · 破損\n不良數量\n移除\n+ 另一個原因\n\n不良合計：3\n\n備註（選填）\n上一步\n下一步：核對內容",
+    "theme": "light",
+    "viewport": [
+      320,
+      760
+    ],
+    "workspace": {
+      "bottom": 698.5,
+      "height": 545.5,
+      "left": 0,
+      "right": 320,
+      "top": 153,
+      "width": 320,
+      "x": 0,
+      "y": 153
+    }
+  },
+  {
+    "file": "G3-390-修正後精靈.jpg",
+    "sha": "46089cd",
+    "dpr": 1,
+    "fields": [
+      {
+        "id": "guide-ok",
+        "value": "125"
+      },
+      {
+        "id": "guide-defects-0-code",
+        "value": "NG01"
+      },
+      {
+        "id": "guide-defects-0-quantity",
+        "value": "3"
+      },
+      {
+        "id": "guide-comment",
+        "value": ""
+      }
+    ],
+    "focus": "guide-defects-0-quantity",
+    "guide": {
+      "bottom": 650.671875,
+      "height": 575.671875,
+      "left": 16,
+      "right": 359,
+      "top": 75,
+      "width": 343,
+      "x": 16,
+      "y": 75
+    },
+    "language": "zh-TW",
+    "mode": "desktop-workbench dual-flow step-wizard  ",
+    "pageOverflow": false,
+    "primary": {
+      "bottom": 666.671875,
+      "height": 607.671875,
+      "left": 0,
+      "right": 375,
+      "top": 59,
+      "width": 375,
+      "x": 0,
+      "y": 59
+    },
+    "primaryText": "✓\n選擇對象\n2\n填寫內容\n3\n核對送出\n新增報工\n\n草稿 · 尚未送出\n\nWO-261102-0382\n\nP-102 · 外殼\n\nMC37 · MOLD-A · 2026-11-02 08:10:00\n\n選擇／更換對象\n這一筆人工良品數量\n有不良品嗎？\n沒有不良品\n有，選原因與數量\n不良原因\n請選擇\nNG01 · 刮傷\nNG02 · 破損\n不良數量\n移除\n+ 另一個原因\n\n不良合計：3\n\n備註（選填）\n上一步\n下一步：核對內容",
+    "theme": "light",
+    "viewport": [
+      390,
+      844
+    ],
+    "workspace": {
+      "bottom": 805.25,
+      "height": 652.25,
+      "left": 0,
+      "right": 390,
+      "top": 153,
+      "width": 390,
+      "x": 0,
+      "y": 153
+    }
+  },
+  {
+    "file": "G3-390-英文黑暗-精靈.jpg",
+    "sha": "46089cd",
+    "dpr": 1,
+    "fields": [
+      {
+        "id": "guide-ok",
+        "value": "125"
+      },
+      {
+        "id": "guide-defects-0-code",
+        "value": "NG01"
+      },
+      {
+        "id": "guide-defects-0-quantity",
+        "value": "3"
+      },
+      {
+        "id": "guide-comment",
+        "value": ""
+      }
+    ],
+    "focus": "radix-_r_6_",
+    "guide": {
+      "bottom": 650.625,
+      "height": 651.625,
+      "left": 16,
+      "right": 359,
+      "top": -1,
+      "width": 343,
+      "x": 16,
+      "y": -1
+    },
+    "language": "en",
+    "mode": "desktop-workbench dual-flow step-wizard  ",
+    "pageOverflow": false,
+    "primary": {
+      "bottom": 666.625,
+      "height": 683.625,
+      "left": 0,
+      "right": 375,
+      "top": -17,
+      "width": 375,
+      "x": 0,
+      "y": -17
+    },
+    "primaryText": "✓\nChoose target\n2\nEnter details\n3\nReview and confirm\nRecord production\n\nDraft · not submitted\n\nWO-261102-0382\n\nP-102 · 外殼\n\nMC37 · MOLD-A · 2026-11-02 08:10:00\n\nChoose / change target\nGood units in this record\nAny defects?\nNo defects\nYes, add reason and quantity\nDefect reason\nPlease select\nNG01 · 刮傷\nNG02 · 破損\nDefect quantity\nRemove\n+ Another reason\n\nTotal defects：3\n\nNote (optional)\nBack\nNext: review changes",
+    "theme": "dark",
+    "viewport": [
+      390,
+      844
+    ],
+    "workspace": {
+      "bottom": 805.25,
+      "height": 652.25,
+      "left": 0,
+      "right": 390,
+      "top": 153,
+      "width": 390,
+      "x": 0,
+      "y": 153
+    }
+  },
+  {
+    "file": "G3-390-英文黑暗-作業單.jpg",
+    "sha": "46089cd",
+    "dpr": 1,
+    "fields": [
+      {
+        "id": "guide-ok",
+        "value": "125"
+      },
+      {
+        "id": "guide-defects-0-code",
+        "value": "NG01"
+      },
+      {
+        "id": "guide-defects-0-quantity",
+        "value": "3"
+      },
+      {
+        "id": "guide-comment",
+        "value": ""
+      }
+    ],
+    "focus": "guide-defects-0-quantity",
+    "guide": {
+      "bottom": 919.34375,
+      "height": 613.84375,
+      "left": 16,
+      "right": 359,
+      "top": 305.5,
+      "width": 343,
+      "x": 16,
+      "y": 305.5
+    },
+    "language": "en",
+    "mode": "desktop-workbench dual-flow chat-sheet  ",
+    "pageOverflow": false,
+    "primary": {
+      "bottom": 935.34375,
+      "height": 646.84375,
+      "left": 0,
+      "right": 375,
+      "top": 288.5,
+      "width": 375,
+      "x": 0,
+      "y": 288.5
+    },
+    "primaryText": "Record production\n\nDraft · not submitted\n\nWO-261102-0382\n\nP-102 · 外殼\n\nMC37 · MOLD-A · 2026-11-02 08:10:00\n\nChoose / change target\nGood units in this record\nAny defects?\nNo defects\nYes, add reason and quantity\nDefect reason\nPlease select\nNG01 · 刮傷\nNG02 · 破損\nDefect quantity\nRemove\n+ Another reason\n\nTotal defects：3\n\nNote (optional)\nBack\nNext: review changes",
+    "theme": "dark",
+    "viewport": [
+      390,
+      844
+    ],
+    "workspace": {
+      "bottom": 805.25,
+      "height": 652.25,
+      "left": 0,
+      "right": 390,
+      "top": 153,
+      "width": 390,
+      "x": 0,
+      "y": 153
+    }
+  },
+  {
+    "file": "G3-768-泰文深藍-作業單.jpg",
+    "sha": "46089cd",
+    "dpr": 1,
+    "fields": [
+      {
+        "id": "guide-ok",
+        "value": "125"
+      },
+      {
+        "id": "guide-defects-0-code",
+        "value": "NG01"
+      },
+      {
+        "id": "guide-defects-0-quantity",
+        "value": "3"
+      },
+      {
+        "id": "guide-comment",
+        "value": ""
+      }
+    ],
+    "focus": "radix-_r_6_",
+    "guide": {
+      "bottom": 968.53125,
+      "height": 494.28125,
+      "left": 202,
+      "right": 719,
+      "top": 474.25,
+      "width": 517,
+      "x": 202,
+      "y": 474.25
+    },
+    "language": "th",
+    "mode": "desktop-workbench dual-flow chat-sheet  ",
+    "pageOverflow": false,
+    "primary": {
+      "bottom": 984.53125,
+      "height": 527.28125,
+      "left": 186,
+      "right": 735,
+      "top": 457.25,
+      "width": 549,
+      "x": 186,
+      "y": 457.25
+    },
+    "primaryText": "บันทึกผลผลิต\n\nฉบับร่าง · ยังไม่ส่ง\n\nWO-261102-0382\n\nP-102 · 外殼\n\nMC37 · MOLD-A · 2026-11-02 08:10:00\n\nเลือก / เปลี่ยนเป้าหมาย\nจำนวนชิ้นงานดีในรายการนี้\nมีชิ้นงานเสียหรือไม่?\nไม่มีชิ้นงานเสีย\nมี ระบุสาเหตุและจำนวน\nสาเหตุของเสีย\nโปรดเลือก\nNG01 · 刮傷\nNG02 · 破損\nจำนวนชิ้นงานเสีย\nลบ\n+ เพิ่มสาเหตุ\n\nรวมของเสีย：3\n\nหมายเหตุ (ไม่บังคับ)\nย้อนกลับ\nถัดไป: ตรวจสอบข้อมูล",
+    "theme": "navy",
+    "viewport": [
+      768,
+      1024
+    ],
+    "workspace": {
+      "bottom": 901.75,
+      "height": 530.5,
+      "left": 186,
+      "right": 750,
+      "top": 371.25,
+      "width": 564,
+      "x": 186,
+      "y": 371.25
+    }
+  },
+  {
+    "file": "G3-768-泰文深藍-精靈.jpg",
+    "sha": "46089cd",
+    "dpr": 1,
+    "fields": [
+      {
+        "id": "guide-ok",
+        "value": "125"
+      },
+      {
+        "id": "guide-defects-0-code",
+        "value": "NG01"
+      },
+      {
+        "id": "guide-defects-0-quantity",
+        "value": "3"
+      },
+      {
+        "id": "guide-comment",
+        "value": ""
+      }
+    ],
+    "focus": "guide-defects-0-quantity",
+    "guide": {
+      "bottom": 598.140625,
+      "height": 470.890625,
+      "left": 59,
+      "right": 709,
+      "top": 127.25,
+      "width": 650,
+      "x": 59,
+      "y": 127.25
+    },
+    "language": "th",
+    "mode": "desktop-workbench dual-flow step-wizard  ",
+    "pageOverflow": false,
+    "primary": {
+      "bottom": 865.25,
+      "height": 754,
+      "left": 0,
+      "right": 768,
+      "top": 111.25,
+      "width": 768,
+      "x": 0,
+      "y": 111.25
+    },
+    "primaryText": "✓\nเลือกเป้าหมาย\n2\nกรอกรายละเอียด\n3\nตรวจสอบและยืนยัน\nบันทึกผลผลิต\n\nฉบับร่าง · ยังไม่ส่ง\n\nWO-261102-0382\n\nP-102 · 外殼\n\nMC37 · MOLD-A · 2026-11-02 08:10:00\n\nเลือก / เปลี่ยนเป้าหมาย\nจำนวนชิ้นงานดีในรายการนี้\nมีชิ้นงานเสียหรือไม่?\nไม่มีชิ้นงานเสีย\nมี ระบุสาเหตุและจำนวน\nสาเหตุของเสีย\nโปรดเลือก\nNG01 · 刮傷\nNG02 · 破損\nจำนวนชิ้นงานเสีย\nลบ\n+ เพิ่มสาเหตุ\n\nรวมของเสีย：3\n\nหมายเหตุ (ไม่บังคับ)\nย้อนกลับ\nถัดไป: ตรวจสอบข้อมูล",
+    "theme": "navy",
+    "viewport": [
+      768,
+      1024
+    ],
+    "workspace": {
+      "bottom": 985.25,
+      "height": 874,
+      "left": 0,
+      "right": 768,
+      "top": 111.25,
+      "width": 768,
+      "x": 0,
+      "y": 111.25
+    }
+  },
+  {
+    "file": "G3-320-泰文深藍-精靈.jpg",
+    "sha": "46089cd",
+    "dpr": 1,
+    "fields": [
+      {
+        "id": "guide-ok",
+        "value": "125"
+      },
+      {
+        "id": "guide-defects-0-code",
+        "value": "NG01"
+      },
+      {
+        "id": "guide-defects-0-quantity",
+        "value": "3"
+      },
+      {
+        "id": "guide-comment",
+        "value": ""
+      }
+    ],
+    "focus": "guide-defects-0-quantity",
+    "guide": {
+      "bottom": 630.40625,
+      "height": 722.40625,
+      "left": 16,
+      "right": 289,
+      "top": -92,
+      "width": 273,
+      "x": 16,
+      "y": -92
+    },
+    "language": "th",
+    "mode": "desktop-workbench dual-flow step-wizard  ",
+    "pageOverflow": false,
+    "primary": {
+      "bottom": 646.40625,
+      "height": 754.40625,
+      "left": 0,
+      "right": 305,
+      "top": -108,
+      "width": 305,
+      "x": 0,
+      "y": -108
+    },
+    "primaryText": "✓\nเลือกเป้าหมาย\n2\nกรอกรายละเอียด\n3\nตรวจสอบและยืนยัน\nบันทึกผลผลิต\n\nฉบับร่าง · ยังไม่ส่ง\n\nWO-261102-0382\n\nP-102 · 外殼\n\nMC37 · MOLD-A · 2026-11-02 08:10:00\n\nเลือก / เปลี่ยนเป้าหมาย\nจำนวนชิ้นงานดีในรายการนี้\nมีชิ้นงานเสียหรือไม่?\nไม่มีชิ้นงานเสีย\nมี ระบุสาเหตุและจำนวน\nสาเหตุของเสีย\nโปรดเลือก\nNG01 · 刮傷\nNG02 · 破損\nจำนวนชิ้นงานเสีย\nลบ\n+ เพิ่มสาเหตุ\n\nรวมของเสีย：3\n\nหมายเหตุ (ไม่บังคับ)\nย้อนกลับ\nถัดไป: ตรวจสอบข้อมูล",
+    "theme": "navy",
+    "viewport": [
+      320,
+      760
+    ],
+    "workspace": {
+      "bottom": 698.5,
+      "height": 545.5,
+      "left": 0,
+      "right": 320,
+      "top": 153,
+      "width": 320,
+      "x": 0,
+      "y": 153
+    }
+  },
+  {
+    "file": "G3-1366-繁中MES藍-精靈.jpg",
+    "sha": "46089cd",
+    "dpr": 1,
+    "fields": [
+      {
+        "id": "guide-ok",
+        "value": "125"
+      },
+      {
+        "id": "guide-defects-0-code",
+        "value": "NG01"
+      },
+      {
+        "id": "guide-defects-0-quantity",
+        "value": "3"
+      },
+      {
+        "id": "guide-comment",
+        "value": ""
+      }
+    ],
+    "focus": "radix-_r_6_",
+    "guide": {
+      "bottom": 598.140625,
+      "height": 470.890625,
+      "left": 514,
+      "right": 1149,
+      "top": 127.25,
+      "width": 635,
+      "x": 514,
+      "y": 127.25
+    },
+    "language": "zh-TW",
+    "mode": "desktop-workbench dual-flow step-wizard  ",
+    "pageOverflow": false,
+    "primary": {
+      "bottom": 609.25,
+      "height": 498,
+      "left": 312,
+      "right": 1366,
+      "top": 111.25,
+      "width": 1054,
+      "x": 312,
+      "y": 111.25
+    },
+    "primaryText": "✓\n選擇對象\n2\n填寫內容\n3\n核對送出\n新增報工\n\n草稿 · 尚未送出\n\nWO-261102-0382\n\nP-102 · 外殼\n\nMC37 · MOLD-A · 2026-11-02 08:10:00\n\n選擇／更換對象\n這一筆人工良品數量\n有不良品嗎？\n沒有不良品\n有，選原因與數量\n不良原因\n請選擇\nNG01 · 刮傷\nNG02 · 破損\n不良數量\n移除\n+ 另一個原因\n\n不良合計：3\n\n備註（選填）\n上一步\n下一步：核對內容",
+    "theme": "mes",
+    "viewport": [
+      1366,
+      768
+    ],
+    "workspace": {
+      "bottom": 729.25,
+      "height": 618,
+      "left": 312,
+      "right": 1366,
+      "top": 111.25,
+      "width": 1054,
+      "x": 312,
+      "y": 111.25
+    }
+  },
+  {
+    "file": "G3-1366-繁中MES藍-作業單.jpg",
+    "sha": "46089cd",
+    "dpr": 1,
+    "fields": [
+      {
+        "id": "guide-ok",
+        "value": "125"
+      },
+      {
+        "id": "guide-defects-0-code",
+        "value": "NG01"
+      },
+      {
+        "id": "guide-defects-0-quantity",
+        "value": "3"
+      },
+      {
+        "id": "guide-comment",
+        "value": ""
+      }
+    ],
+    "focus": "guide-defects-0-quantity",
+    "guide": {
+      "bottom": 652.921875,
+      "height": 521.671875,
+      "left": 918.546875,
+      "right": 1345.984375,
+      "top": 131.25,
+      "width": 427.4375,
+      "x": 918.546875,
+      "y": 131.25
+    },
+    "language": "zh-TW",
+    "mode": "desktop-workbench dual-flow chat-sheet  ",
+    "pageOverflow": false,
+    "primary": {
+      "bottom": 729.25,
+      "height": 618,
+      "left": 897.546875,
+      "right": 1365.984375,
+      "top": 111.25,
+      "width": 468.4375,
+      "x": 897.546875,
+      "y": 111.25
+    },
+    "primaryText": "新增報工\n\n草稿 · 尚未送出\n\nWO-261102-0382\n\nP-102 · 外殼\n\nMC37 · MOLD-A · 2026-11-02 08:10:00\n\n選擇／更換對象\n這一筆人工良品數量\n有不良品嗎？\n沒有不良品\n有，選原因與數量\n不良原因\n請選擇\nNG01 · 刮傷\nNG02 · 破損\n不良數量\n移除\n+ 另一個原因\n\n不良合計：3\n\n備註（選填）\n上一步\n下一步：核對內容",
+    "theme": "mes",
+    "viewport": [
+      1366,
+      768
+    ],
+    "workspace": {
+      "bottom": 729.25,
+      "height": 618,
+      "left": 312,
+      "right": 1366,
+      "top": 111.25,
+      "width": 1054,
+      "x": 312,
+      "y": 111.25
+    }
+  },
+  {
+    "file": "G3-1366-側欄加寬.jpg",
+    "sha": "46089cd",
+    "dpr": 1,
+    "fields": [
+      {
+        "id": "guide-ok",
+        "value": "125"
+      },
+      {
+        "id": "guide-defects-0-code",
+        "value": "NG01"
+      },
+      {
+        "id": "guide-defects-0-quantity",
+        "value": "3"
+      },
+      {
+        "id": "guide-comment",
+        "value": ""
+      }
+    ],
+    "focus": "",
+    "guide": {
+      "bottom": 673.921875,
+      "height": 542.671875,
+      "left": 977.21875,
+      "right": 1346,
+      "top": 131.25,
+      "width": 368.78125,
+      "x": 977.21875,
+      "y": 131.25
+    },
+    "language": "zh-TW",
+    "mode": "desktop-workbench dual-flow chat-sheet  ",
+    "pageOverflow": false,
+    "primary": {
+      "bottom": 729.25,
+      "height": 618,
+      "left": 956.21875,
+      "right": 1366,
+      "top": 111.25,
+      "width": 409.78125,
+      "x": 956.21875,
+      "y": 111.25
+    },
+    "primaryText": "新增報工\n\n草稿 · 尚未送出\n\nWO-261102-0382\n\nP-102 · 外殼\n\nMC37 · MOLD-A · 2026-11-02 08:10:00\n\n選擇／更換對象\n這一筆人工良品數量\n有不良品嗎？\n沒有不良品\n有，選原因與數量\n不良原因\n請選擇\nNG01 · 刮傷\nNG02 · 破損\n不良數量\n移除\n+ 另一個原因\n\n不良合計：3\n\n備註（選填）\n上一步\n下一步：核對內容",
+    "theme": "mes",
+    "viewport": [
+      1366,
+      768
+    ],
+    "workspace": {
+      "bottom": 729.25,
+      "height": 618,
+      "left": 444,
+      "right": 1366,
+      "top": 111.25,
+      "width": 922,
+      "x": 444,
+      "y": 111.25
+    }
+  }
+]

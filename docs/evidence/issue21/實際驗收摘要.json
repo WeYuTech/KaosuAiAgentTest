@@ -1,0 +1,136 @@
+{
+  "baseline": "ee4b3e0aa7ca3bbe2ef5aeba83e6544c5f213b13",
+  "implementationAndValidationSha": "72248cf180e1261594b34dc217cebf74dada4373",
+  "productionUpdated": false,
+  "effectiveViewport": {
+    "width": 2187,
+    "height": 1069
+  },
+  "viewportAttempts": [
+    {
+      "requested": {
+        "width": 1366,
+        "height": 768
+      },
+      "observed": {
+        "width": 2187,
+        "scrollWidth": 2187,
+        "dialogWidth": 768.0000610351562
+      },
+      "notApplied": true
+    },
+    {
+      "requested": {
+        "width": 1920,
+        "height": 1080
+      },
+      "observed": {
+        "width": 2187,
+        "scrollWidth": 2187,
+        "dialogWidth": 768.0000610351562
+      },
+      "notApplied": true
+    },
+    {
+      "requested": {
+        "width": 768,
+        "height": 1024
+      },
+      "observed": {
+        "width": 2187,
+        "scrollWidth": 2187,
+        "dialogWidth": 768.0000610351562
+      },
+      "notApplied": true
+    },
+    {
+      "requested": {
+        "width": 390,
+        "height": 844
+      },
+      "observed": {
+        "width": 2187,
+        "scrollWidth": 2187,
+        "dialogWidth": 768.0000610351562
+      },
+      "notApplied": true
+    }
+  ],
+  "cycles": [
+    {
+      "cycle": 1,
+      "activeReport": false
+    },
+    {
+      "cycle": 2,
+      "activeReport": false
+    },
+    {
+      "cycle": 3,
+      "activeReport": false
+    },
+    {
+      "cycle": 4,
+      "activeReport": false
+    },
+    {
+      "cycle": 5,
+      "activeReport": false
+    }
+  ],
+  "themes": [
+    {
+      "name": "明亮模式",
+      "groups": 1,
+      "overflow": false
+    },
+    {
+      "name": "黑暗模式",
+      "groups": 1,
+      "overflow": false
+    },
+    {
+      "name": "深藍模式",
+      "groups": 1,
+      "overflow": false
+    },
+    {
+      "name": "MES 藍色",
+      "groups": 1,
+      "overflow": false
+    },
+    {
+      "name": "跟隨系統",
+      "groups": 1,
+      "overflow": false
+    }
+  ],
+  "scroll": {
+    "afterUserHome": {
+      "top": 0,
+      "height": 334,
+      "scroll": 6244
+    },
+    "afterReply": {
+      "top": 0,
+      "height": 334,
+      "scroll": 8187
+    },
+    "latestButtonVisible": true,
+    "afterLatestClick": {
+      "top": 7853.143,
+      "height": 330,
+      "scroll": 8187
+    }
+  },
+  "languageChecks": [
+    "繁中五主題",
+    "英文淺色報告",
+    "泰文深色報告"
+  ],
+  "recordings": "未執行：目前控制介面無錄影／trace能力",
+  "DPR": "未核實",
+  "zoom": "未核實",
+  "cpu": "未限速",
+  "network": "loopback；訊息回覆替身固定延遲2秒，非模型效能測量"
+}

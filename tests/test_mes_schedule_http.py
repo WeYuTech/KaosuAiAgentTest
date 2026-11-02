@@ -40,6 +40,16 @@ def save_args():
     return {"equipment": "TEST-MC36", "part_no": "TEST-PART-A", "mold_no": "TEST-MOLD-A", "start_time": "2026-10-31 07:59", "cycle_seconds": 60, "target_shots": 10, "status": "RUN", "comment": "隔離排程驗收-" + uuid4().hex[:8], "details": [{"part_no": "TEST-PART-A", "wo": "TEST-WO-A", "cavities": 2}, {"part_no": "TEST-PART-B", "wo": "TEST-WO-B", "cavities": 1}]}
 
 
+def test_模具候選沿用函式可選範圍並由主檔補名稱(sql_client):
+    params = {"kind": "molds", "part_no": "TEST-PART-A", "search": "隔離驗收模具", "page_size": 1}
+    response = sql_client.get('/api/candidates', params=params)
+    assert response.status_code == 200, response.text
+    records = response.json()['records']
+    assert records and records[0]['TOL_NO'] == 'TEST-MOLD-A'
+    assert records[0]['TOL_NAME'] == '隔離驗收模具'
+    assert sql_client.get('/api/candidates', params={**params, 'part_no': '不存在的品號'}).json()['records'] == []
+
+
 def preview(client, args):
     response = client.post("/api/proposals", json={"module": "schedule", "action": "schedule.save", "args": args})
     assert response.status_code == 200, response.text

@@ -1,0 +1,122 @@
+[
+  {
+    "label": "改前",
+    "requested": [
+      1366,
+      768
+    ],
+    "dpr": 1.0000000447034836,
+    "height": 768,
+    "scrollWidth": 1366,
+    "sidebarHidden": false,
+    "width": 1366
+  },
+  {
+    "label": "改後",
+    "requested": [
+      1366,
+      768
+    ],
+    "dpr": 1.0000000447034836,
+    "height": 1080,
+    "scrollWidth": 1920,
+    "sidebarHidden": false,
+    "width": 1920
+  },
+  {
+    "label": "改前",
+    "requested": [
+      768,
+      1024
+    ],
+    "dpr": 1.0000000447034836,
+    "height": 1024,
+    "scrollWidth": 768,
+    "sidebarHidden": false,
+    "width": 768
+  },
+  {
+    "label": "改後",
+    "requested": [
+      768,
+      1024
+    ],
+    "dpr": 1.0000000447034836,
+    "height": 1080,
+    "scrollWidth": 1920,
+    "sidebarHidden": false,
+    "width": 1920
+  },
+  {
+    "label": "改前",
+    "requested": [
+      390,
+      844
+    ],
+    "dpr": 1.0000000447034836,
+    "height": 844,
+    "scrollWidth": 390,
+    "sidebarHidden": false,
+    "width": 390
+  },
+  {
+    "label": "改後",
+    "requested": [
+      390,
+      844
+    ],
+    "dpr": 1.0000000447034836,
+    "height": 1080,
+    "scrollWidth": 1920,
+    "sidebarHidden": false,
+    "width": 1920
+  },
+  {
+    "label": "改前",
+    "requested": [
+      320,
+      568
+    ],
+    "dpr": 1.0000000447034836,
+    "height": 568,
+    "scrollWidth": 320,
+    "sidebarHidden": false,
+    "width": 320
+  },
+  {
+    "label": "改後",
+    "requested": [
+      320,
+      568
+    ],
+    "dpr": 1.0000000447034836,
+    "height": 1080,
+    "scrollWidth": 1920,
+    "sidebarHidden": false,
+    "width": 1920
+  },
+  {
+    "label": "改前",
+    "requested": [
+      812,
+      375
+    ],
+    "dpr": 1.0000000447034836,
+    "height": 375,
+    "scrollWidth": 812,
+    "sidebarHidden": false,
+    "width": 812
+  },
+  {
+    "label": "改後",
+    "requested": [
+      812,
+      375
+    ],
+    "dpr": 1.0000000447034836,
+    "height": 1080,
+    "scrollWidth": 1920,
+    "sidebarHidden": false,
+    "width": 1920
+  }
+]

@@ -1,0 +1,24 @@
+{
+  "health": {
+    "status": "ok",
+    "mode": "simulation",
+    "model_configured": false,
+    "model": "gpt-6.1-sol",
+    "business_timezone": "UTC+07:00",
+    "business_date": "2026-11-02",
+    "server_time": "2026-11-02T09:51:52.207394+07:00"
+  },
+  "counts": {
+    "active": 8,
+    "archived": 0,
+    "deleted": 0
+  },
+  "proposals": [],
+  "audit_results": [
+    {
+      "action": "report.add",
+      "result": null,
+      "status": "cancelled"
+    }
+  ]
+}

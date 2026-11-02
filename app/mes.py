@@ -550,6 +550,10 @@ class MesBridge:
                           "work_order": ", ".join(sorted({r["WO"] for r in affected if r.get("WO")})),
                           "schedule_id": sid, "execution_id":eid, "report_id":args.get("report_id"),
                           "affected_orders": sorted({r["WO"] for r in affected if r.get("WO")})}
+                if eid and len(affected) == 1:
+                    target.update(domain.execution_confirmation_target(state, affected[0]))
+                if args.get("report_id"):
+                    target.update(domain.report_confirmation_target(state, args["report_id"]))
                 return {"module": module, "action": action, "args": deepcopy(args), "version": self._version(state, identity, module, action, args),
                         "changes": preview_changes, "target": target, "live_write_verified": False, "writes_enabled": self.config.writes_enabled,
                         "time_policy": "異動時間以人員確認後執行時的 MES 伺服器時間為準；目前顯示為預覽時間",

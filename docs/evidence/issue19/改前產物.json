@@ -1,0 +1,26 @@
+{
+  "assets\\ibm-plex-mono-latin-400-normal-DMJ8VG8y.woff2": {
+    "bytes": 14708,
+    "gzip": 14731
+  },
+  "assets\\index-DuvHDXGr.css": {
+    "bytes": 42516,
+    "gzip": 8750
+  },
+  "assets\\index-t9on2G5N.js": {
+    "bytes": 609072,
+    "gzip": 184258
+  },
+  "assets\\inter-latin-wght-normal-Dx4kXJAl.woff2": {
+    "bytes": 48256,
+    "gzip": 48249
+  },
+  "assets\\noto-sans-thai-thai-400-normal-BEOmKAI1.woff2": {
+    "bytes": 9112,
+    "gzip": 9135
+  },
+  "assets\\noto-sans-thai-thai-600-normal-Cs73sVjl.woff2": {
+    "bytes": 9220,
+    "gzip": 9243
+  }
+}

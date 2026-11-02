@@ -1,0 +1,288 @@
+@layer components {
+.assistant-main {container:dual-workspace / inline-size;}
+/* 兩種呈現共用控制器；寬度與垂直節奏集中於此，不固定產品高度。 */
+.dual-flow {display:grid!important;grid-template-columns:minmax(275px,.9fr) minmax(380px,1.1fr);position:relative;min-height:0;overflow:hidden;gap:0;}
+.dual-flow>.chat-layout {min-width:0;min-height:0;}
+.dual-flow>.operation-primary {min-width:0;min-height:0;overflow:auto;border-left:1px solid var(--border);padding:20px;background:var(--background);font-size:14px;}
+.dual-flow .guided-flow {padding:0;border:0;background:transparent;box-shadow:none;font-size:14px;margin:0;}
+.dual-flow .guide-phase {margin:0 0 6px;}
+.dual-flow .guide-phase h2 {font-size:19px;line-height:1.45;font-weight:500;margin:0;}
+.dual-flow .operation-sheet-status {font-size:12px;margin:0 0 12px;}
+.dual-flow .guide-body {padding:0;margin:0;}
+.dual-flow .guide-fields {gap:10px;margin:8px 0;}
+.dual-flow .guide-field {font-size:14px;gap:5px;margin:0;}
+#mes-ai-chat-root .dual-flow :is(input:not([type=radio]):not([type=checkbox]),select) {min-height:40px;font-size:14px;padding:8px 10px;}
+#mes-ai-chat-root .dual-flow :is(.guide-navigation,.guide-options,.candidate-apply) button {min-height:40px;font-size:14px;padding:8px 12px;}
+.dual-flow .guide-navigation {margin-top:10px;gap:8px;padding-block:8px;background:var(--background);position:static;}
+.dual-flow .guide-options {margin:0;gap:8px;}
+.dual-flow .guide-defect {display:grid;grid-template-columns:minmax(0,1fr) minmax(70px,.45fr) auto;gap:8px;align-items:end;padding:0;border:0;}
+.dual-flow .guide-defect>button {min-height:40px;padding:8px;font-size:13px;}
+.dual-flow .defect-total {font-size:12px;color:var(--muted-foreground);margin:0;}
+.dual-flow .optional-note {font-size:13px;}
+#mes-ai-chat-root .dual-flow .optional-note>summary {padding:0;min-height:24px;}
+.dual-flow .optional-note>.guide-field {margin-top:8px;}
+.report-entry-fields {display:grid;grid-template-columns:1fr 1fr;gap:8px;align-items:start;}
+.report-entry-fields>:is(.guide-defect,.defect-tools,.optional-note) {grid-column:1/-1;}
+.dual-flow .defect-tools {display:flex;align-items:center;justify-content:space-between;gap:12px;}
+.dual-flow .defect-tools>button {padding:4px 0;border:0;background:transparent;min-height:32px;font-size:13px;}
+.dual-flow #guide-defects legend {padding:0;font-weight:400;font-size:14px;}
+.dual-flow #guide-defects .guide-options {margin-top:5px;}
+.dual-flow>.operation-pane {position:absolute;inset:0;background:var(--background);z-index:20;width:auto;max-width:none;}
+.dual-flow.step-wizard {grid-template-columns:minmax(0,1fr);grid-template-rows:minmax(0,1fr) auto;}
+.dual-flow.step-wizard>.operation-primary {grid-row:1;border:0;width:100%;padding:16px max(16px,calc((100% - 650px)/2));}
+.dual-flow.step-wizard>.operation-primary:has(.guide-choosing),.dual-flow.step-wizard>.operation-primary:has(.guide-detail) {padding-inline:24px;}
+.dual-flow.step-wizard .guide-phase {display:inline-block;margin:0 12px 8px 0;}
+.dual-flow.step-wizard .operation-sheet-status {display:inline-block;margin:0 0 8px;}
+.dual-flow.step-wizard>.chat-layout {grid-row:2;min-height:0;max-height:130px;width:min(100%,698px);margin-inline:auto;border-top:1px solid var(--border);}
+.dual-flow.step-wizard .conversation-scroll {max-height:40px;min-height:0;}
+.dual-flow.step-wizard .pane-heading,.dual-flow.step-wizard .composer-footnote {display:none;}
+.dual-flow.step-wizard .composer-area {padding:8px 24px;}
+.dual-flow.step-wizard .aui-composer-input {min-height:40px;}
+.dual-flow.step-wizard .aui-composer-action-wrapper {flex:none;}
+.dual-flow.step-wizard .model-notice {margin:0 0 4px;font-size:12px;}
+.operation-steps {display:flex;align-items:center;gap:8px;margin:0 0 16px;}
+.operation-steps button {flex:1;display:flex;align-items:center;justify-content:flex-start;gap:6px;border:0;background:transparent;padding:4px 0;min-height:40px;font-size:13px;color:var(--muted-foreground);}
+.operation-steps b {display:grid;place-items:center;flex:none;width:24px;height:24px;border-radius:50%;background:var(--muted);font-size:12px;}
+.operation-steps [aria-current=step] {color:var(--foreground);font-weight:600;}
+.operation-steps [aria-current=step] b {background:var(--primary);color:var(--primary-foreground);}
+.dual-flow .proposal {padding:0;border:0;box-shadow:none;margin:10px 0;font-size:14px;background:transparent;}
+.dual-flow .proposal-heading {gap:8px;margin-bottom:12px;}
+.dual-flow .proposal-heading h2 {font-size:19px;font-weight:500;}
+.dual-flow .proposal-icon {display:none;}
+.dual-flow .proposal .business-target {display:grid;gap:0;padding:0;background:transparent;border-radius:0;}
+.dual-flow .business-target>span {display:flex;border-bottom:1px solid var(--border);padding:9px 0;}
+.dual-flow .business-target>span>span {display:flex;flex:1;justify-content:space-between;gap:12px;}
+.dual-flow .business-target svg {display:none;}
+.dual-flow .business-target small {font-size:14px;}
+.dual-flow .business-quantities {display:block;margin:0;}
+.dual-flow .business-quantities .business-value,.dual-flow .business-value {display:flex;justify-content:space-between;padding:9px 0;border:0;border-bottom:1px solid var(--border);background:transparent;border-radius:0;font-size:14px;}
+.dual-flow .business-value strong,.dual-flow .business-quantities strong {font-size:14px;font-weight:500;}
+.dual-flow .business-note {font-size:12px;margin:10px 0;}
+.dual-flow .business-caption {font-size:12px;}
+.dual-flow .proposal details,.dual-flow .expiry {font-size:12px;margin:8px 0;}
+.dual-flow .proposal-confirmation {position:static;background:var(--background);padding:8px 0;border-top:1px solid var(--border);}
+.dual-flow .proposal-actions {padding:4px 0;margin-top:4px;}
+.dual-flow>.operation-primary {scroll-padding-bottom:140px;}
+.dual-flow .proposal-actions button {font-size:14px;min-height:40px;}
+.operation-mode-option {display:flex;align-items:flex-start;gap:12px;padding:14px 0;cursor:pointer;}
+.operation-mode-option span {display:grid;gap:6px;}
+.operation-mode-option small {font-size:14px;color:var(--muted-foreground);}
+@container dual-workspace (max-width:760px) {
+  .dual-flow {grid-template-columns:minmax(0,1fr);grid-template-rows:max-content max-content;overflow:auto;scroll-padding-block:16px;}
+  .dual-flow>.chat-layout {min-height:0;max-height:none;}
+  .dual-flow .conversation-scroll {max-height:160px;}
+  .dual-flow>.operation-primary {min-height:min-content;overflow:visible;border-left:0;border-top:1px solid var(--border);padding:16px;}
+  .dual-flow.step-wizard {grid-template-rows:max-content max-content;}
+  .dual-flow.step-wizard>.operation-primary {padding:16px;}
+  .dual-flow .guide-navigation,.dual-flow .proposal-confirmation {position:static;}
+}
+.dual-flow #missing-fields {background:transparent;border:0;padding:0;margin:8px 0 16px;font-size:13px;color:var(--muted-foreground);}
+.dual-flow #missing-fields ul {display:flex;flex-wrap:wrap;gap:4px 12px;margin:4px 0;}
+.dual-flow #missing-fields button {padding:2px 0;min-height:24px;font-size:13px;}
+.dual-flow .guide-body>form {display:grid;gap:12px;}
+.dual-flow .guide-body form h2 {margin:4px 0;}
+.dual-flow .sheet-target {display:flex;align-items:flex-start;justify-content:space-between;gap:8px;padding:10px 12px;border:1px solid var(--border);border-radius:9px;}
+.dual-flow .sheet-target p {font-size:12px;color:var(--muted-foreground);margin:4px 0 0;}
+.dual-flow .sheet-target strong {font-weight:500;}
+.dual-flow .sheet-target p:first-of-type {display:inline;margin-left:8px;}
+.dual-flow .sheet-target button {font-size:12px;padding:6px 8px;min-height:36px;}
+.dual-flow .guide-body fieldset {padding:0;border:0;margin:0;}
+.dual-flow:has(.guide-choosing)>.operation-primary {grid-column:1/-1;grid-row:1;}
+.dual-flow:has(.guide-choosing)>.chat-layout {display:none;}
+.record-choice-scroll {min-width:0;overflow:auto;}
+.record-choices {width:100%;border-collapse:collapse;font-size:14px;}
+.record-choices th {font-size:12px;font-weight:400;color:var(--muted-foreground);text-align:left;}
+.record-choices :is(th,td) {padding:10px 8px;border-bottom:1px solid var(--border);vertical-align:middle;}
+.record-choices strong,.record-choices small {display:block;overflow-wrap:anywhere;}
+.record-choices strong {font-weight:500;}
+.record-choices small {font-size:12px;color:var(--muted-foreground);margin-top:3px;}
+.record-choices input {width:17px;height:17px;}
+.record-choices th:first-child {width:44px;}
+.record-choices th:last-child {width:60px;}
+.record-choices button {white-space:nowrap;padding:6px 8px;min-height:36px;}
+.dual-flow .guide-body>.guide-fields {grid-template-columns:repeat(3,minmax(0,1fr)) auto;align-items:end;gap:8px;}
+.dual-flow .guide-body>.guide-fields>.guide-search-options {order:2;}
+.dual-flow .guide-body>.guide-fields>button {min-height:40px;font-size:14px;padding:8px 16px;}
+.record-choice-detail {background:var(--muted);}
+@container field-group (max-width:500px){
+ .dual-flow .guide-body>.guide-fields {grid-template-columns:minmax(0,1fr);}
+ .report-entry-fields {grid-template-columns:minmax(0,1fr);}
+ .record-choices thead {display:none;}
+ .record-choices tbody {display:grid;}
+ .record-choices tr {display:grid;grid-template-columns:28px minmax(0,1fr) 50px;padding:10px 0;border-bottom:1px solid var(--border);}
+ .record-choices td {padding:3px;border:0;}
+ .record-choices td:first-child {grid-row:1/3;align-self:center;}
+ .record-choices td:nth-child(2) {grid-column:2;grid-row:1;}
+ .record-choices td:nth-child(3) {grid-column:2;grid-row:2;font-size:12px;}
+ .record-choices td:last-child {grid-column:3;grid-row:1/3;align-self:center;}
+ .record-choices .record-choice-detail {display:block;}
+}
+.candidate-dialog {width:min(800px,calc(100vw - 24px));}
+.candidate-record {border:1px solid var(--border);border-radius:8px;padding:12px;min-width:0;}
+.candidate-option {display:flex;align-items:flex-start;gap:12px;cursor:pointer;font-size:14px;}
+.candidate-option>span {display:grid;gap:4px;min-width:0;}
+.candidate-record details {margin-top:8px;font-size:13px;}
+.candidate-record summary {cursor:pointer;color:var(--muted-foreground);}
+.candidate-apply {position:sticky;bottom:0;display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between;padding:12px;background:var(--background);border-top:1px solid var(--border);z-index:1;}
+.candidate-search {display:flex;gap:8px;}
+.candidate-search input {flex:1;min-width:0;}
+.candidate-results {display:grid;gap:8px;}
+.candidate-trigger {justify-content:space-between;text-align:left;}
+.entry-transcript {max-height:35vh;overflow:auto;font-size:14px;}
+.entry-message {white-space:pre-wrap;line-height:1.7;margin:12px 0;}
+.entry-message.user {font-weight:600;}
+@keyframes dual-enter {from{opacity:.8;transform:translateY(3px)}to{opacity:1;transform:none}}
+@media(prefers-reduced-motion:reduce){.dual-flow .guide-phase,.dual-flow .guide-body{animation:none;}}
+}
+
+@layer components {
+ .dual-flow.selection-ai-open:has(.guide-choosing)>.chat-layout {display:flex;}
+ .dual-flow.chat-sheet.selection-ai-open:has(.guide-choosing) {grid-template-columns:minmax(250px,.65fr) minmax(420px,1fr);}
+ .dual-flow.selection-ai-open:has(.guide-choosing)>.operation-primary {grid-column:auto;}
+ .dual-flow.step-wizard.selection-ai-open .conversation-scroll {max-height:180px;}
+ @container dual-workspace (max-width:760px){
+  .dual-flow.chat-sheet.selection-ai-open:has(.guide-choosing){grid-template-columns:minmax(0,1fr);}
+  .dual-flow.selection-ai-open>.chat-layout{max-height:none;}
+ }
+}
+
+@layer components {
+/* 第一段：首頁、純聊天與作業單共用一份作業狀態。 */
+.modules .welcome-card {text-align:center;margin-bottom:28px;}
+.modules .entry-grid {flex-direction:row;flex-wrap:wrap;justify-content:center;gap:10px;margin-top:18px;}
+#mes-ai-chat-root .modules .entry-card {width:auto;flex:none;border:1px solid var(--border);border-radius:24px;min-height:40px;padding:8px 14px;display:flex;align-items:center;gap:8px;}
+.modules .entry-card strong {font-size:13px;}
+.modules .entry-card p {display:none;}
+.modules .onboarding-content {max-width:750px;justify-content:flex-start;padding-top:clamp(36px,16vh,130px);}
+.entry-chat.modules {padding:0;overflow:hidden;min-height:0;}
+.entry-chat.modules .onboarding-content {padding:0 28px 18px;max-width:840px;min-height:0;height:100%;}
+.entry-chat .welcome-card {display:none;}
+.entry-chat .entry-transcript {flex:1;min-height:0;max-height:none;overflow:auto;padding:24px 4px 38px;display:flex;flex-direction:column;gap:24px;}
+.entry-chat .entry-message {margin:0;line-height:1.8;font-size:15px;}
+.entry-chat .entry-message.user {align-self:flex-end;max-width:85%;background:var(--muted);border-radius:20px 20px 5px 20px;padding:10px 17px;font-weight:400;font-size:14px;}
+.entry-chat .entry-message p {margin:0;}
+.entry-chat .entry-composer {flex:none;}
+.entry-chat .entry-grid {flex:none;margin-top:12px;}
+.dual-flow.chat-only {grid-template-columns:minmax(0,1fr);grid-template-rows:minmax(0,1fr);}
+.dual-flow.chat-only>.operation-primary {display:none;}
+.dual-flow.chat-only>.chat-layout {display:flex;grid-row:1;width:100%;max-height:none;border:0;}
+.dual-flow.chat-only .conversation-scroll {max-height:none;}
+.dual-flow .conversation-scroll {padding-bottom:38px;scroll-padding-bottom:38px;}
+.dual-flow .composer-area {flex:none;}
+.chat-query-results {border:1px solid var(--border);border-radius:12px;overflow:hidden;font-size:13px;}
+.chat-query-results>p {margin:0;padding:13px 16px;}
+.chat-query-results>p>small {display:block;margin-top:4px;color:var(--muted-foreground);font-size:12px;}
+.chat-query-scroll {overflow:auto;}
+.chat-query-results table {width:100%;border-collapse:collapse;text-align:left;}
+.chat-query-results :is(th,td) {padding:12px;border-top:1px solid var(--border);font-size:13px;white-space:nowrap;}
+.chat-query-results th {font-weight:400;color:var(--muted-foreground);background:var(--muted);}
+.chat-query-results td small {display:block;color:var(--muted-foreground);font-size:12px;margin-top:4px;}
+.chat-query-results :is(th,td):not(:first-child) {text-align:right;}
+.chat-query-results>button {width:100%;padding:12px;border-top:1px solid var(--border);font-size:13px;}
+.request-progress {font-size:14px;color:var(--muted-foreground);margin:12px 0;}
+.request-progress p {display:flex;align-items:center;gap:10px;line-height:1.7;}
+.request-progress svg {flex:none;}
+.request-skeleton {display:grid;gap:15px;padding:4px 0;}
+.request-skeleton span {height:13px;border-radius:5px;background:var(--muted);animation:request-pulse 1.4s ease-in-out infinite;}
+.request-skeleton span:nth-child(2) {width:86%;}
+.request-skeleton span:nth-child(3) {width:65%;}
+@keyframes request-pulse {50%{opacity:.45}}
+#mes-ai-chat-root .history-select {justify-content:flex-start;}
+.history-footer {flex:none;}
+@container dual-workspace (max-width:760px) {
+ .dual-flow.chat-only {overflow:hidden;}
+ .dual-flow.chat-only .conversation-scroll {max-height:none;}
+ .entry-chat.modules .onboarding-content {padding-inline:16px;}
+}
+}
+
+@layer components {
+.dual-flow .pane-heading {background:transparent;border:0;padding:4px 20px;min-height:32px;}
+.dual-flow .context-tools button {font-size:12px;min-height:28px;padding:4px 8px;}
+.dual-flow .chat-query-results td {font-weight:400;}
+}
+
+@layer components {
+/* 精靈從同一對話投影最新助理訊息；長訊息仍可捲動，不另建對話狀態。 */
+.dual-flow.step-wizard:not(.chat-only):not(.selection-ai-open) .conversation-scroll {display:block;flex:none;max-height:108px;padding:10px 24px;overflow:auto;}
+.dual-flow.step-wizard:not(.chat-only):not(.selection-ai-open) [data-slot=aui_message-group] {gap:0;}
+.dual-flow.step-wizard:not(.chat-only):not(.selection-ai-open) .aui-assistant-message {font-size:13px;}
+.dual-flow.step-wizard:not(.chat-only):not(.selection-ai-open) .chat-layout {--aui-assistant-action-reserve:0px;}
+.dual-flow.step-wizard:not(.chat-only):not(.selection-ai-open) .latest-message {display:none;}
+.dual-flow.step-wizard>.chat-layout {max-height:none;}
+.dual-flow.step-wizard .operation-steps {margin-bottom:8px;}
+.dual-flow.step-wizard .proposal .business-target>span,
+.dual-flow.step-wizard .proposal .business-value {padding-block:4px;}
+.dual-flow.step-wizard .proposal .business-note {margin-block:4px;}
+.dual-flow.step-wizard .proposal-heading {margin-bottom:8px;}
+.dual-flow .proposal-actions .proposal-back {margin-right:auto;}
+#mes-ai-chat-root .dual-flow .proposal :is(.business-target small,.business-target strong,.business-value,.business-value strong,.business-value small) {font-size:14px;line-height:1.5;}
+.dual-flow .report-entry-fields {grid-template-columns:minmax(0,1fr);gap:14px;}
+.dual-flow .sheet-target {border-width:0 0 1px;border-radius:0;padding:12px 0 16px;margin-bottom:12px;}
+}
+
+/* 第二段：彈窗內容可捲動，查詢範圍、AI 與帶入動作各有保留空間。 */
+#mes-ai-chat-root .target-picker-dialog {width:min(920px,calc(100vw - 32px));height:min(680px,calc(100dvh - 32px));max-height:calc(100dvh - 32px);}
+#mes-ai-chat-root .target-picker-dialog .operation-dialog-body {display:flex;flex:1;flex-direction:column;min-height:0;overflow:hidden;padding:16px 20px;gap:12px;}
+#mes-ai-chat-root .target-picker-dialog .guide-fields {display:grid;grid-template-columns:repeat(3,minmax(0,1fr)) auto;gap:10px;align-items:end;margin:0;flex:none;}
+#mes-ai-chat-root .target-picker-dialog .guide-fields input,#mes-ai-chat-root .target-picker-dialog .guide-fields select {min-height:38px;font-size:14px;}
+#mes-ai-chat-root .target-picker-dialog .guide-search-options {grid-column:1/-1;order:2;}
+#mes-ai-chat-root .target-picker-dialog .guide-search-options[open] {max-height:150px;overflow:auto;}
+#mes-ai-chat-root .picker-results {flex:1;min-height:80px;overflow:auto;overscroll-behavior:contain;}
+#mes-ai-chat-root .picker-results[hidden] {display:none;}
+#mes-ai-chat-root .picker-results .record-choice-scroll {overflow:visible;}
+#mes-ai-chat-root .picker-status {display:flex;align-items:center;justify-content:center;gap:12px;min-height:120px;}
+#mes-ai-chat-root .operation-dialog-footer {flex:none;border-top:1px solid var(--border);padding:12px 20px;}
+#mes-ai-chat-root .picker-pagination,#mes-ai-chat-root .picker-actions {display:flex;gap:8px;align-items:center;justify-content:flex-end;font-size:13px;}
+#mes-ai-chat-root .picker-pagination>span:first-child {margin-right:auto;}
+#mes-ai-chat-root .picker-pagination button,#mes-ai-chat-root .picker-actions button {min-height:36px;padding:8px 12px;font-size:13px;}
+#mes-ai-chat-root .picker-selection {font-size:13px;line-height:1.5;margin:8px 0;color:var(--muted-foreground);}
+#mes-ai-chat-root .picker-selection p {margin:4px 0;color:var(--foreground);}
+#mes-ai-chat-root .picker-ai {margin-bottom:12px;}
+#mes-ai-chat-root .picker-ai>p {font-size:13px;max-height:40px;overflow:auto;margin:0 0 8px;}
+#mes-ai-chat-root .picker-ai .composer-area {padding:0;}
+#mes-ai-chat-root .picker-ai textarea {min-height:38px;max-height:72px;}
+#mes-ai-chat-root .picker-ai .composer-footnote {display:none;}
+#mes-ai-chat-root .report-record-picker {min-height:0;overflow:auto;border:0;padding:0;}
+#mes-ai-chat-root .target-picker-dialog .record-choices th {position:sticky;top:0;background:var(--background);z-index:1;}
+#mes-ai-chat-root .mold-stages {padding:0;list-style:none;margin:12px 0;}
+#mes-ai-chat-root .mold-stages li {display:flex;align-items:center;gap:12px;padding:12px 0;border-bottom:1px solid var(--border);}
+#mes-ai-chat-root .mold-stages li>b {border:1px solid var(--border);border-radius:50%;width:24px;height:24px;text-align:center;}
+#mes-ai-chat-root .mold-stages li>div {flex:1;display:grid;gap:4px;}
+#mes-ai-chat-root .mold-stages small,#mes-ai-chat-root .mold-clear-action small {color:var(--muted-foreground);font-size:12px;}
+#mes-ai-chat-root .mold-stages button {min-height:36px;font-size:13px;}
+#mes-ai-chat-root .mold-clear-action {display:flex;gap:12px;align-items:center;}
+#mes-ai-chat-root .mold-proposal .business-summary {max-height:none;overflow:visible;}
+#mes-ai-chat-root .mold-proposal .proposal-confirmation {position:sticky;bottom:0;background:var(--background);z-index:2;}
+#mes-ai-chat-root .dual-flow .guide-detail {display:grid;grid-template-columns:1.2fr 1fr 80px;gap:8px;padding:10px;border:1px solid var(--border);margin-bottom:10px;}
+#mes-ai-chat-root .dual-flow .guide-detail>legend {padding:0 6px;font-size:13px;}
+#mes-ai-chat-root .dual-flow .guide-detail>.guide-field {margin:0;}
+#mes-ai-chat-root .dual-flow .guide-detail>.text-button {grid-row:2;grid-column:1/3;justify-self:start;}
+#mes-ai-chat-root .dual-flow .guide-detail>button.secondary {grid-column:3;font-size:12px;padding:4px;min-height:32px;}
+@media(max-width:600px){
+ #mes-ai-chat-root .target-picker-dialog {width:calc(100vw - 16px);height:calc(100dvh - 16px);max-height:calc(100dvh - 16px);}
+ #mes-ai-chat-root .target-picker-dialog .operation-dialog-body,#mes-ai-chat-root .target-picker-dialog .operation-dialog-footer {padding:10px;}
+ #mes-ai-chat-root .target-picker-dialog .guide-fields {grid-template-columns:1fr 1fr;}
+ #mes-ai-chat-root .picker-actions {flex-wrap:wrap;}
+ #mes-ai-chat-root .picker-actions button {flex:0 0 auto;white-space:nowrap;}
+ #mes-ai-chat-root .picker-actions>button:first-child {margin-right:auto;}
+ #mes-ai-chat-root .picker-selection {max-height:50px;overflow:auto;}
+ #mes-ai-chat-root .target-picker-dialog .record-choices {min-width:0;width:100%;}
+ #mes-ai-chat-root .target-picker-dialog .record-choices thead {display:none;}
+ #mes-ai-chat-root .target-picker-dialog .record-choices tr {display:grid;grid-template-columns:26px minmax(0,1fr) 52px;border-bottom:1px solid var(--border);padding:8px 0;}
+ #mes-ai-chat-root .target-picker-dialog .record-choices td {padding:3px;border:0;overflow-wrap:anywhere;}
+ #mes-ai-chat-root .target-picker-dialog .record-choices td:first-child {grid-row:1/3;align-self:center;}
+ #mes-ai-chat-root .target-picker-dialog .record-choices td:nth-child(2) {grid-column:2;grid-row:1;}
+ #mes-ai-chat-root .target-picker-dialog .record-choices td:nth-child(3) {grid-column:2;grid-row:2;font-size:12px;}
+ #mes-ai-chat-root .target-picker-dialog .record-choices td:last-child {grid-column:3;grid-row:1/3;}
+ #mes-ai-chat-root .target-picker-dialog .record-choices .record-choice-detail {display:block;}
+}
+
+#mes-ai-chat-root .target-picker-dialog [hidden]{display:none;}
+
+#mes-ai-chat-root .target-picker-dialog .guide-field{margin:0;gap:6px;font-size:13px;}
+#mes-ai-chat-root .target-picker-dialog .guide-search-options summary{min-height:28px;padding:4px 0;font-size:13px;}
+#mes-ai-chat-root .picker-ai .composer-area{margin:0;width:100%;max-width:none;}
+#mes-ai-chat-root .picker-ai .composer-area>.text-button{min-height:28px;padding:3px 0;font-size:13px;}
+
+#mes-ai-chat-root .report-picker-context {display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:12px;}

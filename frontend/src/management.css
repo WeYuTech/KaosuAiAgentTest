@@ -1,0 +1,41 @@
+@layer components {
+.management-panel { background:var(--background); color:var(--foreground); padding:0; width:100%; min-width:0; }
+.management-panel header,.management-panel h2,.management-panel h3,.management-actions { display:flex; align-items:center; gap:10px; }
+.management-panel header { justify-content:space-between; }
+.management-panel h2 { font-size:20px; margin:0; }
+.management-panel p { line-height:1.6; overflow-wrap:break-word; }
+.management-field { display:grid; gap:8px; margin:16px 0; }
+.management-field input,.management-field select,.management-field textarea { width:100%; min-width:0; padding:10px 12px; border:1px solid var(--border); border-radius:8px; background:var(--background); color:inherit; }
+.management-actions { flex-wrap:wrap; margin:16px 0; justify-content:flex-end; }
+.management-panel button { min-height:40px; padding:8px 12px; }
+.management-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(min(100%,220px),1fr)); gap:12px; }
+.management-job { padding:16px 0; border-bottom:1px solid var(--border); }
+.management-run { display:block; width:100%; margin:10px 0; text-align:left; }
+.management-confirm {padding:0;}
+
+
+.management-summary>div { display:grid; grid-template-columns:minmax(100px,1fr) 2fr; padding:12px 0; gap:12px; border-bottom:1px solid var(--border); }
+.management-summary dd { margin:0; overflow-wrap:anywhere; }
+
+
+.mes-operation-dialog {display:flex;flex-direction:column;gap:0;width:min(460px,calc(100% - 24px));max-width:calc(100% - 24px);max-height:calc(100dvh - 24px);padding:0;overflow:hidden;border:1px solid var(--border);border-radius:16px;background:var(--background);}
+.management-dialog {width:min(768px,calc(100% - 24px));max-width:768px;}
+.operation-dialog-header {display:flex;align-items:center;justify-content:space-between;gap:16px;padding:16px 20px;border-bottom:1px solid var(--border);flex-shrink:0;}
+.operation-dialog-header h2 {font-size:18px;line-height:1.4;margin:0;overflow-wrap:anywhere;}
+.operation-dialog-header .icon-button {flex-shrink:0;width:36px;min-height:36px;padding:8px;}
+.operation-dialog-body {min-height:0;overflow:auto;overscroll-behavior:contain;padding:20px;container:management-content / inline-size;}
+.operation-dialog-description {padding:12px 20px 0;}
+.operation-dialog-actions {display:flex;flex-wrap:wrap;gap:8px;justify-content:flex-end;margin-top:24px;}
+.operation-dialog-actions button {min-height:40px;padding:8px 16px;}
+.management-request-status {font-size:14px;color:var(--muted-foreground);}
+.management-request-status:empty {display:none;}
+.management-info {display:flex;gap:12px;flex-wrap:wrap;align-items:baseline;}
+.report-editor {display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.3fr);gap:24px;align-items:start;}
+.report-editor>* {min-width:0;}
+.report-jobs {border-top:1px solid var(--border);margin-top:24px;padding-top:16px;}
+.report-jobs h3,.report-editor h3 {font-size:16px;margin:12px 0;}
+.management-job-title {display:flex;align-items:center;justify-content:space-between;gap:12px;}
+.management-job strong {overflow-wrap:anywhere;}
+@container management-content (max-width:580px) {.report-editor {grid-template-columns:minmax(0,1fr);gap:16px;}.management-summary>div {grid-template-columns:minmax(0,1fr);gap:4px;}}
+@media(max-height:500px){.operation-dialog-header {padding:8px 16px;}.operation-dialog-body {padding:12px 16px;}.operation-dialog-actions {margin-top:12px;}}
+}

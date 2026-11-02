@@ -1,0 +1,218 @@
+[
+  {
+    "方法": "GET",
+    "路徑": "/api/budget",
+    "回應碼": 200,
+    "次數": 14
+  },
+  {
+    "方法": "GET",
+    "路徑": "/api/conversations",
+    "回應碼": 200,
+    "次數": 23
+  },
+  {
+    "方法": "GET",
+    "路徑": "/api/conversations/Hz8ALLrjDJ3bED3_hybBUleg/guide",
+    "回應碼": 200,
+    "次數": 11
+  },
+  {
+    "方法": "GET",
+    "路徑": "/api/conversations/dUSomAzBRjyzxh1Mv6G_eAJM",
+    "回應碼": 200,
+    "次數": 1
+  },
+  {
+    "方法": "GET",
+    "路徑": "/api/conversations/dUSomAzBRjyzxh1Mv6G_eAJM/guide",
+    "回應碼": 200,
+    "次數": 12
+  },
+  {
+    "方法": "GET",
+    "路徑": "/api/conversations/kUEd7NEpRAoFgjD2-dbbQhEJ/guide",
+    "回應碼": 200,
+    "次數": 8
+  },
+  {
+    "方法": "GET",
+    "路徑": "/api/conversations/oTMqCcCBsJvxSSQZP2m6NsdV",
+    "回應碼": 200,
+    "次數": 1
+  },
+  {
+    "方法": "GET",
+    "路徑": "/api/conversations/oTMqCcCBsJvxSSQZP2m6NsdV/guide",
+    "回應碼": 200,
+    "次數": 5
+  },
+  {
+    "方法": "GET",
+    "路徑": "/api/health",
+    "回應碼": 200,
+    "次數": 10
+  },
+  {
+    "方法": "GET",
+    "路徑": "/api/management",
+    "回應碼": 200,
+    "次數": 1
+  },
+  {
+    "方法": "GET",
+    "路徑": "/api/proposals/{識別}",
+    "回應碼": 200,
+    "次數": 1
+  },
+  {
+    "方法": "GET",
+    "路徑": "/api/report-schedules",
+    "回應碼": 200,
+    "次數": 8
+  },
+  {
+    "方法": "GET",
+    "路徑": "/api/session",
+    "回應碼": 200,
+    "次數": 6
+  },
+  {
+    "方法": "GET",
+    "路徑": "/api/session",
+    "回應碼": 401,
+    "次數": 4
+  },
+  {
+    "方法": "GET",
+    "路徑": "/api/workspace",
+    "回應碼": 200,
+    "次數": 11
+  },
+  {
+    "方法": "GET",
+    "路徑": "/before/api/budget",
+    "回應碼": 200,
+    "次數": 1
+  },
+  {
+    "方法": "GET",
+    "路徑": "/before/api/conversations",
+    "回應碼": 200,
+    "次數": 1
+  },
+  {
+    "方法": "GET",
+    "路徑": "/before/api/health",
+    "回應碼": 200,
+    "次數": 1
+  },
+  {
+    "方法": "GET",
+    "路徑": "/before/api/health",
+    "回應碼": 404,
+    "次數": 2
+  },
+  {
+    "方法": "GET",
+    "路徑": "/before/api/session",
+    "回應碼": 200,
+    "次數": 1
+  },
+  {
+    "方法": "GET",
+    "路徑": "/before/api/session",
+    "回應碼": 404,
+    "次數": 2
+  },
+  {
+    "方法": "POST",
+    "路徑": "/api/conversations",
+    "回應碼": 200,
+    "次數": 4
+  },
+  {
+    "方法": "POST",
+    "路徑": "/api/conversations/Hz8ALLrjDJ3bED3_hybBUleg/guide",
+    "回應碼": 200,
+    "次數": 7
+  },
+  {
+    "方法": "POST",
+    "路徑": "/api/conversations/Hz8ALLrjDJ3bED3_hybBUleg/proposals",
+    "回應碼": 200,
+    "次數": 1
+  },
+  {
+    "方法": "POST",
+    "路徑": "/api/conversations/dUSomAzBRjyzxh1Mv6G_eAJM/guide",
+    "回應碼": 200,
+    "次數": 6
+  },
+  {
+    "方法": "POST",
+    "路徑": "/api/conversations/dUSomAzBRjyzxh1Mv6G_eAJM/locale",
+    "回應碼": 200,
+    "次數": 2
+  },
+  {
+    "方法": "POST",
+    "路徑": "/api/conversations/dUSomAzBRjyzxh1Mv6G_eAJM/metadata",
+    "回應碼": 200,
+    "次數": 1
+  },
+  {
+    "方法": "POST",
+    "路徑": "/api/conversations/dUSomAzBRjyzxh1Mv6G_eAJM/proposals",
+    "回應碼": 200,
+    "次數": 1
+  },
+  {
+    "方法": "POST",
+    "路徑": "/api/conversations/kUEd7NEpRAoFgjD2-dbbQhEJ/guide",
+    "回應碼": 200,
+    "次數": 3
+  },
+  {
+    "方法": "POST",
+    "路徑": "/api/conversations/kUEd7NEpRAoFgjD2-dbbQhEJ/metadata",
+    "回應碼": 200,
+    "次數": 3
+  },
+  {
+    "方法": "POST",
+    "路徑": "/api/conversations/kUEd7NEpRAoFgjD2-dbbQhEJ/proposals",
+    "回應碼": 200,
+    "次數": 1
+  },
+  {
+    "方法": "POST",
+    "路徑": "/api/conversations/oTMqCcCBsJvxSSQZP2m6NsdV/guide",
+    "回應碼": 200,
+    "次數": 1
+  },
+  {
+    "方法": "POST",
+    "路徑": "/api/proposals/{識別}/confirm",
+    "回應碼": 200,
+    "次數": 3
+  },
+  {
+    "方法": "POST",
+    "路徑": "/api/report-schedules",
+    "回應碼": 200,
+    "次數": 1
+  },
+  {
+    "方法": "POST",
+    "路徑": "/api/report-schedules/report-schedule:555f5ac5a243b11b9259ea827981c27ad4f4b6a2e4faae67fdbbb4db2d7bcfe9",
+    "回應碼": 200,
+    "次數": 3
+  },
+  {
+    "方法": "POST",
+    "路徑": "/api/session/demo",
+    "回應碼": 200,
+    "次數": 2
+  }
+]

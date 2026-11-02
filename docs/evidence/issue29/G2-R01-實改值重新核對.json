@@ -1,0 +1,836 @@
+{
+  "before": {
+    "conversation": "MNeCi2GJeMvRW1L2s7WFAjry",
+    "revision": 2,
+    "guide_version": 2,
+    "proposal_id": "bf6b8201-f874-4360-afe8-03b6d3189b18",
+    "digest": "0b96d5a18d21f61c712236cceb18a5dc6cfc32e652a861d569478e1e0e7571cf",
+    "expires_at": "2026-11-02T07:40:53.998662+00:00"
+  },
+  "old_card_status": "superseded",
+  "guide": {
+    "action": "schedule.save",
+    "args": {
+      "comment": "Issue29 隔離多工單驗收",
+      "cycle_seconds": 60,
+      "details": [
+        {
+          "cavities": 2,
+          "mold_detail_id": "61",
+          "part_no": "P-102",
+          "wo": "WO-261102-0382"
+        },
+        {
+          "cavities": 1,
+          "mold_detail_id": "62",
+          "part_no": "EPS-B",
+          "wo": "WO-B"
+        }
+      ],
+      "equipment": "MC36",
+      "mold_no": "MOLD-A",
+      "part_no": "P-102",
+      "priority": 0,
+      "start_time": "2026-11-03 08:00",
+      "status": "DO",
+      "target_shots": 11
+    },
+    "intent": "create",
+    "missing": [],
+    "ready": true,
+    "step": "review",
+    "version": 4,
+    "proposal": {
+      "action": "schedule.save",
+      "actor_id": "DEMO_SUPERVISOR",
+      "args": {
+        "comment": "Issue29 隔離多工單驗收",
+        "cycle_seconds": 60,
+        "details": [
+          {
+            "cavities": 2,
+            "mold_detail_id": "61",
+            "part_no": "P-102",
+            "wo": "WO-261102-0382"
+          },
+          {
+            "cavities": 1,
+            "mold_detail_id": "62",
+            "part_no": "EPS-B",
+            "wo": "WO-B"
+          }
+        ],
+        "equipment": "MC36",
+        "mold_no": "MOLD-A",
+        "part_no": "P-102",
+        "priority": 0,
+        "start_time": "2026-11-03 08:00",
+        "status": "DO",
+        "target_shots": 11
+      },
+      "business_timezone": "UTC+07:00",
+      "changes": [
+        {
+          "after": "N",
+          "before": null,
+          "field": "COMPLETED",
+          "key": "9010",
+          "table": "WIP_OPI_WDOEACICO_HIST"
+        },
+        {
+          "after": "2026-11-02 14:31:52",
+          "before": null,
+          "field": "CREATE_TIME",
+          "key": "9010",
+          "table": "WIP_OPI_WDOEACICO_HIST"
+        },
+        {
+          "after": "SQLtrigger_user",
+          "before": null,
+          "field": "CREATE_USER",
+          "key": "9010",
+          "table": "WIP_OPI_WDOEACICO_HIST"
+        },
+        {
+          "after": "EPS-FORMING",
+          "before": null,
+          "field": "DEPT_NO",
+          "key": "9010",
+          "table": "WIP_OPI_WDOEACICO_HIST"
+        },
+        {
+          "after": "2026-11-02 14:31:52",
+          "before": null,
+          "field": "EDIT_TIME",
+          "key": "9010",
+          "table": "WIP_OPI_WDOEACICO_HIST"
+        },
+        {
+          "after": "SQLtrigger_user",
+          "before": null,
+          "field": "EDIT_USER",
+          "key": "9010",
+          "table": "WIP_OPI_WDOEACICO_HIST"
+        },
+        {
+          "after": "Y",
+          "before": null,
+          "field": "ENABLE_FLAG",
+          "key": "9010",
+          "table": "WIP_OPI_WDOEACICO_HIST"
+        },
+        {
+          "after": "MC36",
+          "before": null,
+          "field": "EQP_NO",
+          "key": "9010",
+          "table": "WIP_OPI_WDOEACICO_HIST"
+        },
+        {
+          "after": "EPS-FORMING",
+          "before": null,
+          "field": "OPERATION_CODE",
+          "key": "9010",
+          "table": "WIP_OPI_WDOEACICO_HIST"
+        },
+        {
+          "after": 2,
+          "before": null,
+          "field": "OPI_CAV",
+          "key": "9010",
+          "table": "WIP_OPI_WDOEACICO_HIST"
+        },
+        {
+          "after": 2,
+          "before": null,
+          "field": "SCHEDULE_CUR_CAV",
+          "key": "9010",
+          "table": "WIP_OPI_WDOEACICO_HIST"
+        },
+        {
+          "after": "2026-11-02 14:31:52",
+          "before": null,
+          "field": "SCHEDULE_EDIT_TIME",
+          "key": "9010",
+          "table": "WIP_OPI_WDOEACICO_HIST"
+        },
+        {
+          "after": "DEMO_SUPERVISOR",
+          "before": null,
+          "field": "SCHEDULE_EDIT_USER",
+          "key": "9010",
+          "table": "WIP_OPI_WDOEACICO_HIST"
+        },
+        {
+          "after": "日班",
+          "before": null,
+          "field": "SHIFT_CLASS_1",
+          "key": "9010",
+          "table": "WIP_OPI_WDOEACICO_HIST"
+        },
+        {
+          "after": "夜班",
+          "before": null,
+          "field": "SHIFT_CLASS_2",
+          "key": "9010",
+          "table": "WIP_OPI_WDOEACICO_HIST"
+        },
+        {
+          "after": "2026-11-03",
+          "before": null,
+          "field": "SHIFT_DAY",
+          "key": "9010",
+          "table": "WIP_OPI_WDOEACICO_HIST"
+        },
+        {
+          "after": "2026-11-03 20:00:00",
+          "before": null,
+          "field": "SHIFT_END_TIME_1",
+          "key": "9010",
+          "table": "WIP_OPI_WDOEACICO_HIST"
+        },
+        {
+          "after": "2026-11-04 08:00:00",
+          "before": null,
+          "field": "SHIFT_END_TIME_2",
+          "key": "9010",
+          "table": "WIP_OPI_WDOEACICO_HIST"
+        },
+        {
+          "after": "2026-11-03 08:00:00",
+          "before": null,
+          "field": "SHIFT_START_TIME_1",
+          "key": "9010",
+          "table": "WIP_OPI_WDOEACICO_HIST"
+        },
+        {
+          "after": "2026-11-03 20:00:00",
+          "before": null,
+          "field": "SHIFT_START_TIME_2",
+          "key": "9010",
+          "table": "WIP_OPI_WDOEACICO_HIST"
+        },
+        {
+          "after": "51",
+          "before": null,
+          "field": "TOL_SID",
+          "key": "9010",
+          "table": "WIP_OPI_WDOEACICO_HIST"
+        },
+        {
+          "after": "9010",
+          "before": null,
+          "field": "WIP_OPI_WDOEACICO_HIST_SID",
+          "key": "9010",
+          "table": "WIP_OPI_WDOEACICO_HIST"
+        },
+        {
+          "after": "WO-261102-0382",
+          "before": null,
+          "field": "WO",
+          "key": "9010",
+          "table": "WIP_OPI_WDOEACICO_HIST"
+        },
+        {
+          "after": "9010",
+          "before": null,
+          "field": "ZZ_KAOSU_PROD_SCHEDULE_DETAIL_SID",
+          "key": "9010",
+          "table": "WIP_OPI_WDOEACICO_HIST"
+        },
+        {
+          "after": "9009",
+          "before": null,
+          "field": "ZZ_KAOSU_PROD_SCHEDULE_SID",
+          "key": "9010",
+          "table": "WIP_OPI_WDOEACICO_HIST"
+        },
+        {
+          "after": "MOLD-A-L",
+          "before": null,
+          "field": "ZZ_TOL_DETALS_NO",
+          "key": "9010",
+          "table": "WIP_OPI_WDOEACICO_HIST"
+        },
+        {
+          "after": "N",
+          "before": null,
+          "field": "COMPLETED",
+          "key": "9011",
+          "table": "WIP_OPI_WDOEACICO_HIST"
+        },
+        {
+          "after": "2026-11-02 14:31:52",
+          "before": null,
+          "field": "CREATE_TIME",
+          "key": "9011",
+          "table": "WIP_OPI_WDOEACICO_HIST"
+        },
+        {
+          "after": "SQLtrigger_user",
+          "before": null,
+          "field": "CREATE_USER",
+          "key": "9011",
+          "table": "WIP_OPI_WDOEACICO_HIST"
+        },
+        {
+          "after": "EPS-FORMING",
+          "before": null,
+          "field": "DEPT_NO",
+          "key": "9011",
+          "table": "WIP_OPI_WDOEACICO_HIST"
+        },
+        {
+          "after": "2026-11-02 14:31:52",
+          "before": null,
+          "field": "EDIT_TIME",
+          "key": "9011",
+          "table": "WIP_OPI_WDOEACICO_HIST"
+        },
+        {
+          "after": "SQLtrigger_user",
+          "before": null,
+          "field": "EDIT_USER",
+          "key": "9011",
+          "table": "WIP_OPI_WDOEACICO_HIST"
+        },
+        {
+          "after": "Y",
+          "before": null,
+          "field": "ENABLE_FLAG",
+          "key": "9011",
+          "table": "WIP_OPI_WDOEACICO_HIST"
+        },
+        {
+          "after": "MC36",
+          "before": null,
+          "field": "EQP_NO",
+          "key": "9011",
+          "table": "WIP_OPI_WDOEACICO_HIST"
+        },
+        {
+          "after": "EPS-FORMING",
+          "before": null,
+          "field": "OPERATION_CODE",
+          "key": "9011",
+          "table": "WIP_OPI_WDOEACICO_HIST"
+        },
+        {
+          "after": 1,
+          "before": null,
+          "field": "OPI_CAV",
+          "key": "9011",
+          "table": "WIP_OPI_WDOEACICO_HIST"
+        },
+        {
+          "after": 1,
+          "before": null,
+          "field": "SCHEDULE_CUR_CAV",
+          "key": "9011",
+          "table": "WIP_OPI_WDOEACICO_HIST"
+        },
+        {
+          "after": "2026-11-02 14:31:52",
+          "before": null,
+          "field": "SCHEDULE_EDIT_TIME",
+          "key": "9011",
+          "table": "WIP_OPI_WDOEACICO_HIST"
+        },
+        {
+          "after": "DEMO_SUPERVISOR",
+          "before": null,
+          "field": "SCHEDULE_EDIT_USER",
+          "key": "9011",
+          "table": "WIP_OPI_WDOEACICO_HIST"
+        },
+        {
+          "after": "日班",
+          "before": null,
+          "field": "SHIFT_CLASS_1",
+          "key": "9011",
+          "table": "WIP_OPI_WDOEACICO_HIST"
+        },
+        {
+          "after": "夜班",
+          "before": null,
+          "field": "SHIFT_CLASS_2",
+          "key": "9011",
+          "table": "WIP_OPI_WDOEACICO_HIST"
+        },
+        {
+          "after": "2026-11-03",
+          "before": null,
+          "field": "SHIFT_DAY",
+          "key": "9011",
+          "table": "WIP_OPI_WDOEACICO_HIST"
+        },
+        {
+          "after": "2026-11-03 20:00:00",
+          "before": null,
+          "field": "SHIFT_END_TIME_1",
+          "key": "9011",
+          "table": "WIP_OPI_WDOEACICO_HIST"
+        },
+        {
+          "after": "2026-11-04 08:00:00",
+          "before": null,
+          "field": "SHIFT_END_TIME_2",
+          "key": "9011",
+          "table": "WIP_OPI_WDOEACICO_HIST"
+        },
+        {
+          "after": "2026-11-03 08:00:00",
+          "before": null,
+          "field": "SHIFT_START_TIME_1",
+          "key": "9011",
+          "table": "WIP_OPI_WDOEACICO_HIST"
+        },
+        {
+          "after": "2026-11-03 20:00:00",
+          "before": null,
+          "field": "SHIFT_START_TIME_2",
+          "key": "9011",
+          "table": "WIP_OPI_WDOEACICO_HIST"
+        },
+        {
+          "after": "51",
+          "before": null,
+          "field": "TOL_SID",
+          "key": "9011",
+          "table": "WIP_OPI_WDOEACICO_HIST"
+        },
+        {
+          "after": "9011",
+          "before": null,
+          "field": "WIP_OPI_WDOEACICO_HIST_SID",
+          "key": "9011",
+          "table": "WIP_OPI_WDOEACICO_HIST"
+        },
+        {
+          "after": "WO-B",
+          "before": null,
+          "field": "WO",
+          "key": "9011",
+          "table": "WIP_OPI_WDOEACICO_HIST"
+        },
+        {
+          "after": "9011",
+          "before": null,
+          "field": "ZZ_KAOSU_PROD_SCHEDULE_DETAIL_SID",
+          "key": "9011",
+          "table": "WIP_OPI_WDOEACICO_HIST"
+        },
+        {
+          "after": "9009",
+          "before": null,
+          "field": "ZZ_KAOSU_PROD_SCHEDULE_SID",
+          "key": "9011",
+          "table": "WIP_OPI_WDOEACICO_HIST"
+        },
+        {
+          "after": "MOLD-A-R",
+          "before": null,
+          "field": "ZZ_TOL_DETALS_NO",
+          "key": "9011",
+          "table": "WIP_OPI_WDOEACICO_HIST"
+        },
+        {
+          "after": "Y",
+          "before": null,
+          "field": "CHANGE_MOLD",
+          "key": "9009",
+          "table": "ZZ_KAOSU_PROD_SCHEDULE"
+        },
+        {
+          "after": "Issue29 隔離多工單驗收",
+          "before": null,
+          "field": "COMMENT",
+          "key": "9009",
+          "table": "ZZ_KAOSU_PROD_SCHEDULE"
+        },
+        {
+          "after": "2026-11-02 14:31:52",
+          "before": null,
+          "field": "CREATE_TIME",
+          "key": "9009",
+          "table": "ZZ_KAOSU_PROD_SCHEDULE"
+        },
+        {
+          "after": "DEMO_SUPERVISOR",
+          "before": null,
+          "field": "CREATE_USER",
+          "key": "9009",
+          "table": "ZZ_KAOSU_PROD_SCHEDULE"
+        },
+        {
+          "after": "2026-11-02 14:31:52",
+          "before": null,
+          "field": "EDIT_TIME",
+          "key": "9009",
+          "table": "ZZ_KAOSU_PROD_SCHEDULE"
+        },
+        {
+          "after": "DEMO_SUPERVISOR",
+          "before": null,
+          "field": "EDIT_USER",
+          "key": "9009",
+          "table": "ZZ_KAOSU_PROD_SCHEDULE"
+        },
+        {
+          "after": "36",
+          "before": null,
+          "field": "EQP_SID",
+          "key": "9009",
+          "table": "ZZ_KAOSU_PROD_SCHEDULE"
+        },
+        {
+          "after": "EPS-FORMING",
+          "before": null,
+          "field": "OPERATION_CODE",
+          "key": "9009",
+          "table": "ZZ_KAOSU_PROD_SCHEDULE"
+        },
+        {
+          "after": 0,
+          "before": null,
+          "field": "PRIORITY",
+          "key": "9009",
+          "table": "ZZ_KAOSU_PROD_SCHEDULE"
+        },
+        {
+          "after": "DO",
+          "before": null,
+          "field": "PRODUCTION_STATUS",
+          "key": "9009",
+          "table": "ZZ_KAOSU_PROD_SCHEDULE"
+        },
+        {
+          "after": 60,
+          "before": null,
+          "field": "SCHEDULE_CYCLE_TIME",
+          "key": "9009",
+          "table": "ZZ_KAOSU_PROD_SCHEDULE"
+        },
+        {
+          "after": "2026-11-03",
+          "before": null,
+          "field": "SCHEDULE_DATE",
+          "key": "9009",
+          "table": "ZZ_KAOSU_PROD_SCHEDULE"
+        },
+        {
+          "after": "2026-11-03 08:11:00",
+          "before": null,
+          "field": "SCHEDULE_END_TIME",
+          "key": "9009",
+          "table": "ZZ_KAOSU_PROD_SCHEDULE"
+        },
+        {
+          "after": "2026-11-03 08:00:00",
+          "before": null,
+          "field": "SCHEDULE_START_TIME",
+          "key": "9009",
+          "table": "ZZ_KAOSU_PROD_SCHEDULE"
+        },
+        {
+          "after": "日班",
+          "before": null,
+          "field": "SHIFT_CLASS_1",
+          "key": "9009",
+          "table": "ZZ_KAOSU_PROD_SCHEDULE"
+        },
+        {
+          "after": "夜班",
+          "before": null,
+          "field": "SHIFT_CLASS_2",
+          "key": "9009",
+          "table": "ZZ_KAOSU_PROD_SCHEDULE"
+        },
+        {
+          "after": "2026-11-03 20:00:00",
+          "before": null,
+          "field": "SHIFT_END_TIME_1",
+          "key": "9009",
+          "table": "ZZ_KAOSU_PROD_SCHEDULE"
+        },
+        {
+          "after": "2026-11-04 08:00:00",
+          "before": null,
+          "field": "SHIFT_END_TIME_2",
+          "key": "9009",
+          "table": "ZZ_KAOSU_PROD_SCHEDULE"
+        },
+        {
+          "after": "2026-11-03 08:00:00",
+          "before": null,
+          "field": "SHIFT_START_TIME_1",
+          "key": "9009",
+          "table": "ZZ_KAOSU_PROD_SCHEDULE"
+        },
+        {
+          "after": "2026-11-03 20:00:00",
+          "before": null,
+          "field": "SHIFT_START_TIME_2",
+          "key": "9009",
+          "table": "ZZ_KAOSU_PROD_SCHEDULE"
+        },
+        {
+          "after": 11,
+          "before": null,
+          "field": "TARGET_SHOT",
+          "key": "9009",
+          "table": "ZZ_KAOSU_PROD_SCHEDULE"
+        },
+        {
+          "after": "51",
+          "before": null,
+          "field": "TOL_SID",
+          "key": "9009",
+          "table": "ZZ_KAOSU_PROD_SCHEDULE"
+        },
+        {
+          "after": "9009",
+          "before": null,
+          "field": "ZZ_KAOSU_PROD_SCHEDULE_SID",
+          "key": "9009",
+          "table": "ZZ_KAOSU_PROD_SCHEDULE"
+        },
+        {
+          "after": "7001",
+          "before": null,
+          "field": "ZZ_KAOSU_PROD_SHIFT_DAILY_REPORT_BASE_SID",
+          "key": "9009",
+          "table": "ZZ_KAOSU_PROD_SCHEDULE"
+        },
+        {
+          "after": "2026-11-02 14:31:52",
+          "before": null,
+          "field": "CREATE_TIME",
+          "key": "9010",
+          "table": "ZZ_KAOSU_PROD_SCHEDULE_DETAIL"
+        },
+        {
+          "after": "DEMO_SUPERVISOR",
+          "before": null,
+          "field": "CREATE_USER",
+          "key": "9010",
+          "table": "ZZ_KAOSU_PROD_SCHEDULE_DETAIL"
+        },
+        {
+          "after": "2026-11-02 14:31:52",
+          "before": null,
+          "field": "EDIT_TIME",
+          "key": "9010",
+          "table": "ZZ_KAOSU_PROD_SCHEDULE_DETAIL"
+        },
+        {
+          "after": "DEMO_SUPERVISOR",
+          "before": null,
+          "field": "EDIT_USER",
+          "key": "9010",
+          "table": "ZZ_KAOSU_PROD_SCHEDULE_DETAIL"
+        },
+        {
+          "after": "P-102",
+          "before": null,
+          "field": "PART_NO",
+          "key": "9010",
+          "table": "ZZ_KAOSU_PROD_SCHEDULE_DETAIL"
+        },
+        {
+          "after": "外殼",
+          "before": null,
+          "field": "PART_SPEC",
+          "key": "9010",
+          "table": "ZZ_KAOSU_PROD_SCHEDULE_DETAIL"
+        },
+        {
+          "after": 2,
+          "before": null,
+          "field": "SCHEDULE_CUR_CAV",
+          "key": "9010",
+          "table": "ZZ_KAOSU_PROD_SCHEDULE_DETAIL"
+        },
+        {
+          "after": 22,
+          "before": null,
+          "field": "TARGET_PCS",
+          "key": "9010",
+          "table": "ZZ_KAOSU_PROD_SCHEDULE_DETAIL"
+        },
+        {
+          "after": "61",
+          "before": null,
+          "field": "TOL_DETALS_SID",
+          "key": "9010",
+          "table": "ZZ_KAOSU_PROD_SCHEDULE_DETAIL"
+        },
+        {
+          "after": 1000,
+          "before": null,
+          "field": "WO_QUANTITY",
+          "key": "9010",
+          "table": "ZZ_KAOSU_PROD_SCHEDULE_DETAIL"
+        },
+        {
+          "after": "71",
+          "before": null,
+          "field": "WO_SID",
+          "key": "9010",
+          "table": "ZZ_KAOSU_PROD_SCHEDULE_DETAIL"
+        },
+        {
+          "after": "9010",
+          "before": null,
+          "field": "ZZ_KAOSU_PROD_SCHEDULE_DETAIL_SID",
+          "key": "9010",
+          "table": "ZZ_KAOSU_PROD_SCHEDULE_DETAIL"
+        },
+        {
+          "after": "9009",
+          "before": null,
+          "field": "ZZ_KAOSU_PROD_SCHEDULE_SID",
+          "key": "9010",
+          "table": "ZZ_KAOSU_PROD_SCHEDULE_DETAIL"
+        },
+        {
+          "after": "2026-11-02 14:31:52",
+          "before": null,
+          "field": "CREATE_TIME",
+          "key": "9011",
+          "table": "ZZ_KAOSU_PROD_SCHEDULE_DETAIL"
+        },
+        {
+          "after": "DEMO_SUPERVISOR",
+          "before": null,
+          "field": "CREATE_USER",
+          "key": "9011",
+          "table": "ZZ_KAOSU_PROD_SCHEDULE_DETAIL"
+        },
+        {
+          "after": "2026-11-02 14:31:52",
+          "before": null,
+          "field": "EDIT_TIME",
+          "key": "9011",
+          "table": "ZZ_KAOSU_PROD_SCHEDULE_DETAIL"
+        },
+        {
+          "after": "DEMO_SUPERVISOR",
+          "before": null,
+          "field": "EDIT_USER",
+          "key": "9011",
+          "table": "ZZ_KAOSU_PROD_SCHEDULE_DETAIL"
+        },
+        {
+          "after": "EPS-B",
+          "before": null,
+          "field": "PART_NO",
+          "key": "9011",
+          "table": "ZZ_KAOSU_PROD_SCHEDULE_DETAIL"
+        },
+        {
+          "after": "模擬右側緩衝件",
+          "before": null,
+          "field": "PART_SPEC",
+          "key": "9011",
+          "table": "ZZ_KAOSU_PROD_SCHEDULE_DETAIL"
+        },
+        {
+          "after": 1,
+          "before": null,
+          "field": "SCHEDULE_CUR_CAV",
+          "key": "9011",
+          "table": "ZZ_KAOSU_PROD_SCHEDULE_DETAIL"
+        },
+        {
+          "after": 11,
+          "before": null,
+          "field": "TARGET_PCS",
+          "key": "9011",
+          "table": "ZZ_KAOSU_PROD_SCHEDULE_DETAIL"
+        },
+        {
+          "after": "62",
+          "before": null,
+          "field": "TOL_DETALS_SID",
+          "key": "9011",
+          "table": "ZZ_KAOSU_PROD_SCHEDULE_DETAIL"
+        },
+        {
+          "after": 1000,
+          "before": null,
+          "field": "WO_QUANTITY",
+          "key": "9011",
+          "table": "ZZ_KAOSU_PROD_SCHEDULE_DETAIL"
+        },
+        {
+          "after": "72",
+          "before": null,
+          "field": "WO_SID",
+          "key": "9011",
+          "table": "ZZ_KAOSU_PROD_SCHEDULE_DETAIL"
+        },
+        {
+          "after": "9011",
+          "before": null,
+          "field": "ZZ_KAOSU_PROD_SCHEDULE_DETAIL_SID",
+          "key": "9011",
+          "table": "ZZ_KAOSU_PROD_SCHEDULE_DETAIL"
+        },
+        {
+          "after": "9009",
+          "before": null,
+          "field": "ZZ_KAOSU_PROD_SCHEDULE_SID",
+          "key": "9011",
+          "table": "ZZ_KAOSU_PROD_SCHEDULE_DETAIL"
+        }
+      ],
+      "conversation_id": "MNeCi2GJeMvRW1L2s7WFAjry",
+      "created_at": "2026-11-02T07:31:52.690376+00:00",
+      "digest": "5e35685d6ba141a9495112c26be25f320df2ee8b9f5df012b0067f2aae6bf3a7",
+      "event_time": "2026-11-02T07:31:52.690376+00:00",
+      "expires_at": "2026-11-02T07:41:52.690376+00:00",
+      "id": "d8c03c56-0782-4b27-99e3-6efd28151d9f",
+      "independent_confirmation": false,
+      "intent_revision": 4,
+      "mode": "simulation",
+      "module": "schedule",
+      "state_digest": "8aaacee4843b35a4e327d3002166245f2a9030488889e367be477df9b20cf994",
+      "status": "pending",
+      "summary": "儲存排程",
+      "target": {
+        "affected_orders": [
+          "WO-261102-0382",
+          "WO-B"
+        ],
+        "equipment": "MC36",
+        "execution_id": null,
+        "mold_no": "MOLD-A",
+        "report_id": null,
+        "schedule_details": [
+          {
+            "cavities": 2,
+            "detail_id": "9010",
+            "mold_detail_id": "61",
+            "mold_detail_name": null,
+            "mold_detail_no": "MOLD-A-L",
+            "part_no": "P-102",
+            "wo": "WO-261102-0382"
+          },
+          {
+            "cavities": 1,
+            "detail_id": "9011",
+            "mold_detail_id": "62",
+            "mold_detail_name": null,
+            "mold_detail_no": "MOLD-A-R",
+            "part_no": "EPS-B",
+            "wo": "WO-B"
+          }
+        ],
+        "schedule_id": "9009",
+        "work_order": null
+      },
+      "writes_enabled": true
+    }
+  }
+}

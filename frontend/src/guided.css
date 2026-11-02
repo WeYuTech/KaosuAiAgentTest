@@ -1,3 +1,4 @@
+@layer components {
 /* Guide 元件只維持一套尺度，與主題及作業卡共用 tokens。 */
 .guided-flow {
   font-size:var(--mes-text-base);
@@ -204,3 +205,5 @@
 .guide-action-grid .secondary:hover { background:var(--muted); }
 .guided-flow:has(.guide-action-grid) { border:0; box-shadow:none; padding:0; }
 .guided-flow:has(.guide-action-grid)>.guide-phase,.guided-flow:has(.guide-action-grid)>.operation-sheet-status { display:none; }
+
+}
