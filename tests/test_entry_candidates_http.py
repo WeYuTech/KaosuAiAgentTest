@@ -3,6 +3,30 @@ from fastapi.testclient import TestClient
 from app.main import create_app
 from test_dual_flow_http import prepare
 
+
+def test_招呼能力及超出範圍直接回覆並保留原句(tmp_path):
+    decision = {'intent':'greeting','module':'none'}
+    with TestClient(create_app(tmp_path/'first-flow.db', intent_classifier=lambda _: decision)) as c:
+        c.post('/api/session/demo',json={'identity':'operator'})
+        for i, (intent, text, expected) in enumerate([
+            ('greeting','你好','你好，我在'),
+            ('greeting','測試','你好，我在'),
+            ('capabilities','你能幫我做什麼？','生產報工'),
+            ('unsupported','幫我訂餐','超出目前 MES 助理支援的範圍'),
+            ('clarify','幫我處理 MC37','你想查詢生產資料'),
+        ]):
+            decision['intent'] = intent
+            body={'entry_id':'first-flow','request_id':f'first-flow-{i}','text':text}
+            response=c.post('/api/entry/messages',json=body)
+            assert response.status_code==200,response.text
+            result=response.json()
+            assert expected in result['messages'][-1]['content']
+            assert result['messages'][-2]['content']==text
+            assert '請選擇其中一項作業' not in result['messages'][-1]['content']
+            assert result['choices']==['report']
+            assert c.get('/api/conversations').json()['total']==0
+            assert c.get(f'/api/entry/requests/first-flow-{i}').json()==result
+
 def test_未綁模組能力入口保存且不建立業務聊天(tmp_path,monkeypatch):
     monkeypatch.delenv('OPENAI_API_KEY',raising=False)
     with TestClient(create_app(tmp_path/'entry.db')) as c:

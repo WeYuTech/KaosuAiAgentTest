@@ -127,8 +127,11 @@ def install(app, store, actor_for, allowed, now, create_conversation, process_me
                 content += L('。可查詢資料、填寫作業與核對；寫入仍需人工確認。',' You can query, fill in and review operations. Writes require human confirmation.',' ค้นหา กรอก และตรวจสอบงาน การบันทึกต้องได้รับการยืนยันจากคุณ')
                 if status == 'model_unavailable':
                     content += L('\nAI 尚未設定，這是目前可用功能清單；請點選作業捷徑使用人工流程。','\nAI is not configured. This is the available feature list; choose a task to use the manual workflow.','\nยังไม่ได้ตั้งค่า AI นี่คือรายการฟังก์ชันที่ใช้ได้ โปรดเลือกงานเพื่อทำด้วยตนเอง')
+            elif intent == 'greeting':
+                content = L('你好，我在。你可以直接問生產問題，例如「查 MC37 今天的工單」，或說明想完成的作業。','Hello! Ask a production question or describe the operation you need.','สวัสดี ถามข้อมูลการผลิตหรือบอกงานที่ต้องการได้เลย')
+                status = 'answered'
             elif intent == 'unsupported' or module == 'none':
-                content = L('請選擇你要處理的作業，我會保留你的原句。','Choose the operation you need; your original request is retained.','เลือกงานที่ต้องการ ข้อความเดิมจะถูกเก็บไว้') if intent != 'unsupported' else L('目前支援排程、報工與模具上下模。請選擇其中一項作業。','I support scheduling, reporting and mold operations. Choose one of these tasks.','รองรับการวางแผน รายงานผลผลิต และแม่พิมพ์ โปรดเลือกงานเหล่านี้')
+                content = L('你想查詢生產資料，還是進行排程、報工或模具作業？可以繼續補充需求，原句已保留。','Would you like to query production data or perform an operation? Add details; your original request is retained.','ต้องการดูข้อมูลการผลิตหรือทำงานใด โปรดเพิ่มรายละเอียด ข้อความเดิมถูกเก็บไว้') if intent != 'unsupported' else L('這個需求超出目前 MES 助理支援的範圍；我能查詢生產資料，並協助排程、報工與模具上下模。你可以補充相關需求，或使用下方捷徑。','This request is outside the MES assistant scope. I can query production data and help with scheduling, reporting and mold operations. Add a related request or use a shortcut.','คำขอนี้อยู่นอกขอบเขตผู้ช่วย MES รองรับข้อมูลการผลิต การวางแผน รายงานผลผลิต และแม่พิมพ์ ระบุคำขอที่เกี่ยวข้องหรือใช้ทางลัดได้')
                 status = 'clarify' if intent != 'unsupported' else 'unsupported'
             elif intent in ('readonly','change','clarify'):
                 allowed(actor, module)

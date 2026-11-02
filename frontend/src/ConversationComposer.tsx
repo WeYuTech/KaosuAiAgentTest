@@ -1,13 +1,13 @@
 import { type Ref } from 'react';
 import { ComposerPrimitive } from '@assistant-ui/react';
-import { ArrowUp, LoaderCircle } from 'lucide-react';
+import { ArrowUp, Square } from 'lucide-react';
 import { TooltipIconButton } from './components/assistant-ui/elements/tooltip-icon-button';
 import { t } from './i18n';
 
 /** 移植 thread.aui.tsx 的 Composer；value 永遠來自同一份 App 草稿。 */
-export function ConversationComposer({ id, value, onChange, disabled, sendDisabled, busy, placeholder, inputRef, hint, compact=false }: {
+export function ConversationComposer({ id, value, onChange, disabled, sendDisabled, busy, onStop, stopped, placeholder, inputRef, hint, compact=false }: {
   id: string; value: string; onChange: (text: string) => void; onSend?: () => void;
-  disabled?: boolean; sendDisabled?: boolean; busy?: boolean; placeholder: string;
+  disabled?: boolean; sendDisabled?: boolean; busy?: boolean; onStop?: () => void; stopped?: boolean; placeholder: string;
   inputRef?: Ref<HTMLTextAreaElement>; hint?: string; compact?: boolean;
 }) {
   return <ComposerPrimitive.Root className="aui-composer-root relative flex w-full flex-col" style={{["--composer-bg" as string]:"color-mix(in oklab, var(--color-muted) 30%, transparent)",["--composer-radius" as string]:"1rem",["--composer-padding" as string]:"8px"}}>
@@ -17,10 +17,10 @@ export function ConversationComposer({ id, value, onChange, disabled, sendDisabl
         aria-label={t('描述作業需求')} onChange={event => onChange(event.currentTarget.value)} cancelOnEscape={false} addAttachmentOnPaste={false}
         unstable_focusOnRunStart={false} unstable_focusOnScrollToBottom={false} unstable_focusOnThreadSwitched={false}/>
       <div className="aui-composer-action-wrapper relative flex items-center justify-between"><span><span className="sr-only">{hint}</span></span>
-        <ComposerPrimitive.Send asChild><TooltipIconButton tooltip={t('送出訊息')} type="button" variant="default" size="icon"
+        {busy ? <TooltipIconButton tooltip={stopped?'已停止等待；原請求仍在處理':'停止等待'} type="button" variant="default" size="icon" className="aui-composer-send size-7 rounded-full" aria-label="停止等待" disabled={stopped||!onStop} onClick={onStop}><Square className="size-4" fill="currentColor"/></TooltipIconButton> : <ComposerPrimitive.Send asChild><TooltipIconButton tooltip={t('送出訊息')} type="button" variant="default" size="icon"
           className="aui-composer-send size-7 rounded-full" disabled={disabled || sendDisabled || busy} aria-label={t('送出訊息')}>
-          {busy ? <LoaderCircle className="spin size-4"/> : <ArrowUp className="aui-composer-send-icon size-4"/>}
-        </TooltipIconButton></ComposerPrimitive.Send>
+          <ArrowUp className="aui-composer-send-icon size-4"/>
+        </TooltipIconButton></ComposerPrimitive.Send>}
       </div>
     </div>
   </ComposerPrimitive.Root>;

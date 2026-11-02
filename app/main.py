@@ -785,7 +785,7 @@ def create_app(db_path=None, model=None, intent_classifier=None):
             convo = {**convo, "interaction_scope": body.scope}
             # 注入 model 是離線 HTTP 測試替身；正式請求一律使用受限分類器。
             decision = decision_override or (intent_classifier(convo) if intent_classifier else {"intent": "change"} if model else classify(convo, actor["roles"]))
-            if decision.get("intent") not in {"readonly", "change", "clarify", "unsupported", "capabilities"}:
+            if decision.get("intent") not in {"greeting", "readonly", "change", "clarify", "unsupported", "capabilities"}:
                 raise HTTPException(502, "無法確認訊息意圖，原操作未變更")
             other_module = decision.get("module") in {"schedule","report","mold"} and decision["module"] != convo["module"]
             selection = body.scope == "selection"

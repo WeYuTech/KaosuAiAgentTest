@@ -1,7 +1,7 @@
 @layer components {
 .assistant-main {container:dual-workspace / inline-size;}
 /* 兩種呈現共用控制器；寬度與垂直節奏集中於此，不固定產品高度。 */
-.dual-flow {display:grid!important;grid-template-columns:minmax(280px,1fr) minmax(360px,.8fr);position:relative;min-height:0;overflow:hidden;gap:0;}
+.dual-flow {display:grid!important;grid-template-columns:minmax(275px,.9fr) minmax(380px,1.1fr);position:relative;min-height:0;overflow:hidden;gap:0;}
 .dual-flow>.chat-layout {min-width:0;min-height:0;}
 .dual-flow>.operation-primary {min-width:0;min-height:0;overflow:auto;border-left:1px solid var(--border);padding:20px;background:var(--background);font-size:14px;}
 .dual-flow .guided-flow {padding:0;border:0;background:transparent;box-shadow:none;font-size:14px;margin:0;}
@@ -144,4 +144,72 @@
   .dual-flow.chat-sheet.selection-ai-open:has(.guide-choosing){grid-template-columns:minmax(0,1fr);}
   .dual-flow.selection-ai-open>.chat-layout{max-height:none;}
  }
+}
+
+@layer components {
+/* 第一段：首頁、純聊天與作業單共用一份作業狀態。 */
+.modules .welcome-card {text-align:center;margin-bottom:28px;}
+.modules .entry-grid {flex-direction:row;flex-wrap:wrap;justify-content:center;gap:10px;margin-top:18px;}
+#mes-ai-chat-root .modules .entry-card {width:auto;flex:none;border:1px solid var(--border);border-radius:24px;min-height:40px;padding:8px 14px;display:flex;align-items:center;gap:8px;}
+.modules .entry-card strong {font-size:13px;}
+.modules .entry-card p {display:none;}
+.modules .onboarding-content {max-width:750px;justify-content:flex-start;padding-top:clamp(36px,16vh,130px);}
+.entry-chat.modules {padding:0;overflow:hidden;min-height:0;}
+.entry-chat.modules .onboarding-content {padding:0 28px 18px;max-width:840px;min-height:0;height:100%;}
+.entry-chat .welcome-card {display:none;}
+.entry-chat .entry-transcript {flex:1;min-height:0;max-height:none;overflow:auto;padding:24px 4px 38px;display:flex;flex-direction:column;gap:24px;}
+.entry-chat .entry-message {margin:0;line-height:1.8;font-size:15px;}
+.entry-chat .entry-message.user {align-self:flex-end;max-width:85%;background:var(--muted);border-radius:20px 20px 5px 20px;padding:10px 17px;font-weight:400;font-size:14px;}
+.entry-chat .entry-message p {margin:0;}
+.entry-chat .entry-composer {flex:none;}
+.entry-chat .entry-grid {flex:none;margin-top:12px;}
+.dual-flow.chat-only {grid-template-columns:minmax(0,1fr);grid-template-rows:minmax(0,1fr);}
+.dual-flow.chat-only>.operation-primary {display:none;}
+.dual-flow.chat-only>.chat-layout {display:flex;grid-row:1;width:100%;max-height:none;border:0;}
+.dual-flow.chat-only .conversation-scroll {max-height:none;}
+.dual-flow .conversation-scroll {padding-bottom:38px;scroll-padding-bottom:38px;}
+.dual-flow .composer-area {flex:none;}
+.chat-query-results {border:1px solid var(--border);border-radius:12px;overflow:hidden;font-size:13px;}
+.chat-query-results>p {margin:0;padding:13px 16px;}
+.chat-query-scroll {overflow:auto;}
+.chat-query-results table {width:100%;border-collapse:collapse;text-align:left;}
+.chat-query-results :is(th,td) {padding:12px;border-top:1px solid var(--border);font-size:13px;white-space:nowrap;}
+.chat-query-results th {font-weight:400;color:var(--muted-foreground);background:var(--muted);}
+.chat-query-results td small {display:block;color:var(--muted-foreground);font-size:12px;margin-top:4px;}
+.chat-query-results :is(th,td):not(:first-child) {text-align:right;}
+.chat-query-results>button {width:100%;padding:12px;border-top:1px solid var(--border);font-size:13px;}
+.request-progress {font-size:14px;color:var(--muted-foreground);margin:12px 0;}
+.request-progress p {display:flex;align-items:center;gap:10px;line-height:1.7;}
+.request-progress svg {flex:none;}
+.request-skeleton {display:grid;gap:15px;padding:4px 0;}
+.request-skeleton span {height:13px;border-radius:5px;background:var(--muted);animation:request-pulse 1.4s ease-in-out infinite;}
+.request-skeleton span:nth-child(2) {width:86%;}
+.request-skeleton span:nth-child(3) {width:65%;}
+@keyframes request-pulse {50%{opacity:.45}}
+#mes-ai-chat-root .history-select {justify-content:flex-start;}
+.history-footer {flex:none;}
+@container dual-workspace (max-width:760px) {
+ .dual-flow.chat-only {overflow:hidden;}
+ .dual-flow.chat-only .conversation-scroll {max-height:none;}
+ .entry-chat.modules .onboarding-content {padding-inline:16px;}
+}
+}
+
+@layer components {
+.dual-flow .pane-heading {background:transparent;border:0;padding:4px 20px;min-height:32px;}
+.dual-flow .context-tools button {font-size:12px;min-height:28px;padding:4px 8px;}
+.dual-flow .chat-query-results td {font-weight:400;}
+}
+
+@layer components {
+/* 精靈保留同一聊天狀態與輸入框；不露出被裁切的歷史訊息碎片。 */
+.dual-flow.step-wizard:not(.chat-only):not(.selection-ai-open) .conversation-scroll {display:none;}
+.dual-flow.step-wizard:not(.chat-only):not(.selection-ai-open) .latest-message {display:none;}
+.dual-flow.step-wizard>.chat-layout {max-height:none;}
+.dual-flow.step-wizard .operation-steps {margin-bottom:8px;}
+.dual-flow.step-wizard .proposal .business-target>span,
+.dual-flow.step-wizard .proposal .business-value {padding-block:6px;}
+.dual-flow.step-wizard .proposal-heading {margin-bottom:8px;}
+.dual-flow .report-entry-fields {grid-template-columns:minmax(0,1fr);gap:14px;}
+.dual-flow .sheet-target {border-width:0 0 1px;border-radius:0;padding:12px 0 16px;margin-bottom:12px;}
 }

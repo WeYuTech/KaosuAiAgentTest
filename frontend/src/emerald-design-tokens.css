@@ -55,3 +55,10 @@
 #mes-ai-chat-root[data-theme="mes"] .conversation-history {
   background: var(--sidebar);
 }
+
+/* 第 32 項固定深色範例：工作區與輸入區維持低對比中性色。 */
+#mes-ai-chat-root[data-theme="dark"] {
+  --background:#1e1f21; --card:#1e1f21; --foreground:#e7e7e9;
+  --muted:#292a2d; --muted-foreground:#a1a1aa; --border:#38393d;
+  --input:#38393d; --accent:#292a2d;
+}

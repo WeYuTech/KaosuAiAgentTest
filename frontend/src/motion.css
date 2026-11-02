@@ -22,3 +22,9 @@
 #mes-ai-chat-root .conversation-history {opacity:1;transition:opacity var(--motion-panel) var(--motion-ease),display var(--motion-panel) allow-discrete;}
 #mes-ai-chat-root .history-overlay {opacity:1;}
 @starting-style{#mes-ai-chat-root .conversation-history{opacity:0;}}
+
+/* 活動圖示使用獨立 keyframes，避免 Tailwind 同名 spin 被覆寫。 */
+@keyframes mes-request-spin {to {transform:rotate(360deg)}}
+#mes-ai-chat-root .spin {animation:mes-request-spin .9s linear infinite;transform-origin:center;}
+#mes-ai-chat-root .dual-enter {animation:dual-enter .18s ease-out;}
+@media(prefers-reduced-motion:reduce){#mes-ai-chat-root .spin,#mes-ai-chat-root .dual-enter{animation:none!important;}}
