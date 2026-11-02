@@ -3,10 +3,11 @@ import json
 import os
 from pathlib import Path
 import sys
+from types import SimpleNamespace
 
 ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT))
-os.environ.update(MES_MODE='simulation', OPENAI_API_KEY='', AI_TEST_BUDGET_USD='0', MES_SQL_ACCEPTANCE='0')
+os.environ.update(MES_MODE='simulation', OPENAI_API_KEY='synthetic-offline-fixture', AI_TEST_BUDGET_USD='0', MES_SQL_ACCEPTANCE='0')
 from app.main import create_app
 from app import domain, model
 from app.store import Store
@@ -23,7 +24,16 @@ def fixture():
 
 def create_preview():
     model.budget_store = lambda: Store(ROOT/'.local/issue29-budget.db')
-    app = create_app(ROOT/'.local/issue29-preview.db', model=lambda *_: {'content':'隔離驗收：請選擇本次工單，已提供的數量保留在作業單。'}, intent_classifier=lambda _: {'intent':'readonly'})
+    def fixture_response(payload):
+        # 明示的查詢情境腳本，只供 UI 契約驗收；不作模型理解能力證據。
+        inputs = payload.get('input', [])
+        text = next((item.get('content','') for item in reversed(inputs) if item.get('role')=='user'), '')
+        if text == '只看 MC38 今天的工單' and inputs[-1].get('type') != 'function_call_output':
+            data = {'type':'function_call','name':'query_workspace','arguments':json.dumps({'equipment':'MC38','date':'2026-11-02'}),'call_id':'isolated-query'}
+            return SimpleNamespace(output=[SimpleNamespace(**data,model_dump=lambda **_: data)])
+        return SimpleNamespace(output=[],output_text='隔離替身驗收：查詢與說明不修改已套用工單、數量或確認卡。')
+    model.invoke = fixture_response
+    app = create_app(ROOT/'.local/issue29-preview.db', intent_classifier=lambda _: {'intent':'readonly'})
     with app.state.store.transaction() as db:
         if not app.state.store.get(db,'STATE','simulation'):
             app.state.store.put(db,'STATE','simulation',fixture())

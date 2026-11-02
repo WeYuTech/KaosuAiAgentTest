@@ -1,6 +1,9 @@
 /* 固定介面詞彙：中文原文為鍵，不翻譯 MES 主檔名稱或歷史訊息。 */
 export const translations: Record<string, [string, string]> = Object.fromEntries(`
 預覽說明|Preview information|ข้อมูลการตรวจสอบ
+更多查詢條件|More search options|ตัวเลือกการค้นหาเพิ่มเติม
+返回選取資料|Back to record selection|กลับไปเลือกข้อมูล
+選擇一筆資料，帶入目前作業。|Select a record to use in the current operation.|เลือกรายการเพื่อใช้ในงานปัจจุบัน
 本次執行|This execution|การดำเนินการครั้งนี้
 以此資料開始作業|Start an operation with this record|เริ่มงานด้วยรายการนี้
 已帶入目前作業，請選擇操作。|Record added to the current context. Choose an operation.|นำรายการเข้าสู่งานปัจจุบันแล้ว โปรดเลือกการดำเนินการ

@@ -132,3 +132,14 @@
 @keyframes dual-enter {from{opacity:.8;transform:translateY(3px)}to{opacity:1;transform:none}}
 @media(prefers-reduced-motion:reduce){.dual-flow .guide-phase,.dual-flow .guide-body{animation:none;}}
 }
+
+@layer components {
+ .dual-flow.selection-ai-open:has(.guide-choosing)>.chat-layout {display:flex;}
+ .dual-flow.chat-sheet.selection-ai-open:has(.guide-choosing) {grid-template-columns:minmax(250px,.65fr) minmax(420px,1fr);}
+ .dual-flow.selection-ai-open:has(.guide-choosing)>.operation-primary {grid-column:auto;}
+ .dual-flow.step-wizard.selection-ai-open .conversation-scroll {max-height:180px;}
+ @container dual-workspace (max-width:760px){
+  .dual-flow.chat-sheet.selection-ai-open:has(.guide-choosing){grid-template-columns:minmax(0,1fr);}
+  .dual-flow.selection-ai-open>.chat-layout{max-height:240px;}
+ }
+}

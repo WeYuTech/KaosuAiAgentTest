@@ -11,6 +11,7 @@ const {CandidateSelect}=await server.ssrLoadModule('/src/CandidateSelect.tsx');
 const {useOperationMode,readOperationMode,operationModeKey}=await server.ssrLoadModule('/src/operation-mode.ts');
 const {ApiError}=await server.ssrLoadModule('/src/api.ts');
 const {useEntry}=await server.ssrLoadModule('/src/use-entry.ts');
+const {rememberOperationFocus,operationFocusTarget}=await server.ssrLoadModule('/src/operation-focus.ts');
 await server.close();after(()=>window.happyDOM.abort());
 const noop=()=>{};
 function mount(){const host=document.createElement('div');host.id='mes-ai-chat-root';document.body.append(host);return {host,root:createRoot(host)};}
@@ -128,3 +129,64 @@ test('已選執行紀錄的修改動作立即顯示單次報工，不藏在空�
  await act(async()=>root.unmount());host.remove();
 });
 
+
+test('R01 新增排程 pending 返回目標未改值再核對不發 mutation 或 prepare',async()=>{
+ const {host,root}=mount();const calls=[];const args={equipment:'MC37',part_no:'EPS-A',mold_no:'MOLD-A',details:[{mold_detail_id:'m1',part_no:'EPS-A',wo:'WO-A',cavities:1}],start_time:'2026-11-02T08:00',cycle_seconds:30,target_shots:100,status:'DO',priority:0};
+ const proposal={id:'schedule-original',digest:'digest',action:'schedule.save',status:'pending',expires_at:new Date(Date.now()+600000).toISOString(),args};
+ const guide={version:7,action:'schedule.save',intent:'create',args,step:'review',missing:[],ready:true,proposal};
+ const props={apiRequest:async(path,body)=>{calls.push({path,body});return structuredClone(guide);},conversation:{id:'schedule',messages:[],module:'schedule'},module:'schedule',workspace:{records:[],catalogs:{molds:[{TOL_NO:'MOLD-A',DETAILS:[{TOL_DETALS_SID:'m1',PART_NO:'EPS-A'}]}]}},selected:null,signal:0,proposal,status:'',disabled:false,date:null,onReply:noop,onAudit:noop,onHome:noop,presentation:'step-wizard'};
+ await act(async()=>root.render(h(GuidedFlow,props)));
+ const click=async text=>act(async()=>[...host.querySelectorAll('button')].find(b=>b.textContent===text).click());
+ await click('上一步：修改資料');await click('上一步');await click('下一步');
+ await act(async()=>host.querySelector('form').dispatchEvent(new Event('submit',{bubbles:true,cancelable:true})));
+ assert.equal(calls.filter(c=>c.body).length,0);assert.ok(host.textContent.includes('上一步：修改資料'));assert.equal(proposal.id,'schedule-original');
+ await act(async()=>root.unmount());host.remove();
+});
+
+test('報工子選取返回與取消保留最新草稿；暫選和查看都不套用',async()=>{
+ const {host,root}=mount();const calls=[];let guide={version:3,action:'report.update',args:{report_id:'3001',ok:125,defects:[]},step:'details',missing:[],ready:true};
+ const record={WIP_OPI_WDOEACICO_HIST_SID:'2001',WO:'WO-A',EQP_NO:'MC37',REPORTS:[{WIP_OPI_WDOEACICOOUTPUT_HIST_SID:'3001',CREATE_TIME:'09:00',OK_QTY:120},{WIP_OPI_WDOEACICOOUTPUT_HIST_SID:'3002',CREATE_TIME:'10:00',OK_QTY:90}]};
+ const request=async(path,body)=>{calls.push({path,body});if(body)guide={...guide,...body,version:guide.version+1};return structuredClone(guide);};
+ const props={apiRequest:request,conversation:{id:'child',messages:[],module:'report'},module:'report',workspace:{records:[record],catalogs:{}},selected:null,signal:0,proposal:null,status:'',disabled:false,date:null,onReply:noop,onAudit:noop,onHome:noop};
+ await act(async()=>root.render(h(GuidedFlow,props)));
+ const click=async text=>act(async()=>[...host.querySelectorAll('button')].find(b=>b.textContent===text).click());
+ await click('選擇／更換對象');await act(async()=>host.querySelector('input[type=radio]').click());await click('帶入作業單');
+ await act(async()=>host.querySelectorAll('.report-record-picker input[type=radio]')[1].click());await click('查看');
+ assert.equal(calls.filter(c=>c.body).length,0);await click('返回工單');await click('帶入作業單');await click('取消選取');assert.equal(host.querySelector('#guide-ok').value,'125');assert.equal(guide.args.report_id,'3001');
+ await act(async()=>root.unmount());host.remove();
+});
+
+test('主檔暫選跨頁保留，改查詢需重選，確認帶入才更新值',async()=>{
+ const {host,root}=mount();const chosen=[];
+ const request=async path=>{const q=new URL(path,'http://localhost').searchParams;return {records:[{PART_NO:q.get('page')==='2'?'B':'A',PART_SPEC:'測試'}],page:Number(q.get('page')),has_more:q.get('page')==='1',filters:{search:q.get('search'),part_no:''}};};
+ await act(async()=>root.render(h(CandidateSelect,{kind:'parts',value:'',title:'品號',id:'part',choose:r=>chosen.push(r),request})));
+ await act(async()=>host.querySelector('button').click());
+ const dialog=()=>document.querySelector('.candidate-dialog');const click=async text=>act(async()=>[...dialog().querySelectorAll('button')].find(b=>b.textContent===text).click());
+ await click('查看');await act(async()=>dialog().querySelector('input[type=radio]').click());assert.equal(chosen.length,0);await click('下一頁');assert.ok(dialog().querySelector('.candidate-apply').textContent.includes('A'));
+ await act(async()=>inputValue(dialog().querySelector('.candidate-search input'),'B'));await click('搜尋');assert.equal(dialog().querySelector('.candidate-apply .primary').disabled,true);
+ await act(async()=>dialog().querySelector('input[type=radio]').click());await click('帶入作業單');assert.equal(chosen.length,1);
+ await act(async()=>root.unmount());host.remove();
+});
+
+test('邏輯焦點恢復重建欄位與游標，隱藏欄位改落搜尋入口',()=>{
+ const host=document.createElement('section');host.innerHTML='<div class="guided-flow"><input id="guide-ok" value="125"></div>';document.body.append(host);
+ const input=host.querySelector('input');input.setSelectionRange(1,2);const memory=rememberOperationFocus(input);
+ input.remove();host.querySelector('div').innerHTML='<input id="guide-ok" value="125"><div class="guide-choosing"><input id="guide-search-equipment"></div>';
+ for(const field of host.querySelectorAll('input')){field.getClientRects=()=>[{}];field.scrollIntoView=()=>{};}
+ assert.equal(operationFocusTarget(host,memory).id,'guide-ok');assert.equal(host.querySelector('#guide-ok').selectionStart,1);assert.equal(host.querySelector('#guide-ok').selectionEnd,2);
+ host.querySelector('#guide-ok').hidden=true;assert.equal(operationFocusTarget(host,memory).id,'guide-search-equipment');host.remove();
+});
+
+test('已驗證查詢更新選取條件但不改業務草稿，換模式保留頁碼',async()=>{
+ const {host,root}=mount();const mutations=[];const guide={version:2,action:'report.add',args:{ok:125,defects:[]},step:'details',missing:['execution_id'],ready:false};
+ const props={apiRequest:async(path,body)=>{if(body)mutations.push(body);return structuredClone(guide);},conversation:{id:'query',messages:[],module:'report'},module:'report',selected:null,signal:0,proposal:null,status:'',disabled:false,date:null,onReply:noop,onAudit:noop,onHome:noop};
+ const workspace={records:[{WIP_OPI_WDOEACICO_HIST_SID:'2001',EQP_NO:'MC37',WO:'WO-A',ZZ_MODLE_UPLOAD_END:'now'}],catalogs:{},total:40,page:2,query_context:{version:2,filters:{equipment:'MC37',date:'2026-11-02',page:2,page_size:20}}};
+ await act(async()=>root.render(h(GuidedFlow,{...props,workspace})));
+ await act(async()=>[...host.querySelectorAll('button')].find(b=>b.textContent==='選擇／更換對象').click());assert.equal(host.querySelector('#guide-search-equipment').value,'MC37');
+ await act(async()=>host.querySelector('input[type=radio]').click());assert.ok(host.textContent.includes('帶入作業單'));
+ await act(async()=>root.render(h(GuidedFlow,{...props,workspace,presentation:'step-wizard'})));assert.equal(host.querySelector('input[type=radio]').checked,true);assert.equal(host.querySelector('.guide-options span').textContent,'2');
+ await act(async()=>root.render(h(GuidedFlow,{...props,presentation:'step-wizard',workspace:{...workspace,records:[],page:1,total:0,query_context:{version:3,filters:{equipment:'MC38',page:1,page_size:20}}}})));
+ assert.equal(host.querySelector('#guide-search-equipment').value,'MC38');assert.equal(host.querySelector('.candidate-apply'),null);assert.ok(host.textContent.includes('請重新選取'));assert.equal(mutations.length,0);
+ await act(async()=>[...host.querySelectorAll('button')].find(b=>b.textContent==='取消選取').click());assert.equal(host.querySelector('#guide-ok').value,'125');
+ await act(async()=>root.unmount());host.remove();
+});
