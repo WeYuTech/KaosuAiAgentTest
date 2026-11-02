@@ -18,12 +18,12 @@ for(const locale of ['zh-TW','en','th']) test(`真實 Radix 選單三語、主�
   const host=document.createElement('div');host.id='mes-ai-chat-root';document.body.append(host);
   const mount=document.createElement('div');host.append(mount);const root=createRoot(mount);const changes=[];
   setLocale(locale);
-  await act(async()=>root.render(createElement(HeaderMenu,{signedIn:true,locale,theme:'light',localeBusy:false,onLocale:v=>changes.push(['locale',v]),onTheme:v=>changes.push(['theme',v]),onManage:()=>{},onUsage:()=>{},onMinimize:()=>{},onHistory:()=>{},sidebarResize:{narrow:()=>{},widen:()=>{},reset:()=>{}}})));
+  await act(async()=>root.render(createElement(HeaderMenu,{signedIn:true,locale,theme:'light',localeBusy:false,onLocale:v=>changes.push(['locale',v]),onTheme:v=>changes.push(['theme',v]),onManage:()=>{},onUsage:()=>{},onMinimize:()=>{},onHistory:()=>{}})));
   const trigger=host.querySelector('button[aria-haspopup="menu"]');assert.ok(trigger);
   await act(async()=>{trigger.focus();trigger.dispatchEvent(new KeyboardEvent('keydown',{key:'Enter',bubbles:true}));});
   const menu=host.querySelector('[role="menu"]');assert.ok(menu,'選單 Portal 留在助理容器');
   assert.ok(menu.querySelector(`[aria-label="${t('語言')}"]`));assert.ok(menu.querySelector(`[aria-label="${t('主題')}"]`));
-  for(const text of ['繁體中文','English','ไทย',t('MES 藍色'),t('封存聊天'),t('已刪除聊天'),t('側欄'),t('重設寬度')])assert.ok(menu.textContent.includes(text));
+  for(const text of ['繁體中文','English','ไทย',t('MES 藍色'),t('封存聊天'),t('已刪除聊天')])assert.ok(menu.textContent.includes(text));
   const thai=[...menu.querySelectorAll('[role="menuitemradio"]')].find(x=>x.textContent==='ไทย');
   await act(async()=>{thai.dispatchEvent(new MouseEvent('click',{bubbles:true}));});
   assert.deepEqual(changes,[['locale','th']]);
