@@ -236,6 +236,7 @@ export function GuidedFlow({ presentation='chat-sheet', reviewActionsExternal=fa
         if (quiet && e instanceof ApiError && e.status === 422 && comparable(patch) !== comparable(latestArgs.current)) {
           obsoleteValidation.current.add(e); setSaveState('saved'); throw e;
         }
+        if(e instanceof ApiError&&e.status===422)setValidationAttempted(true);
         setSaveState(e instanceof ApiError && e.status === 422 ? 'invalid' : e instanceof ApiError && e.status === 409 ? 'conflict' : 'failed');
         if(e instanceof ApiError && [401,403].includes(e.status)) onAccessDenied?.(); throw e;
       }
@@ -421,7 +422,7 @@ export function GuidedFlow({ presentation='chat-sheet', reviewActionsExternal=fa
   }
   const selectedReport = pendingTarget ? rows(pendingTarget.REPORTS) : reportRows;
   const completed = ['succeeded', 'cancelled'].includes(status);
-  useEffect(()=>{if(status==='succeeded') editorRef.current?.closest('.operation-primary')?.scrollTo({top:0});},[status]);
+  useEffect(()=>{if(status==='succeeded'||status==='unknown') editorRef.current?.closest('.operation-primary')?.scrollTo({top:0});},[status]);
   const at = completed ? 4 : status==='unknown' ? 3 : Math.max(0, steps.indexOf(step));
   const choosing=picker||(at===1&&(query||presentation==='step-wizard'||!hasEditableFields(action)));
   useEffect(()=>{onSelectionChange?.(choosing);return()=>onSelectionChange?.(false);},[choosing,onSelectionChange]);
@@ -446,12 +447,12 @@ export function GuidedFlow({ presentation='chat-sheet', reviewActionsExternal=fa
     
     {error && <div className="error-banner" role="alert"><span>{error}</span>{!guide && <button className="secondary" onClick={() => { setError(''); setReload(v => v + 1); }}>{L('重新載入作業單','Reload operation sheet','โหลดใบงานใหม่')}</button>}</div>}
     {editing && Boolean(guide?.missing.length) && <div id="missing-fields" role="status"><strong>{L('尚需補充','Still needed','ข้อมูลที่ยังขาด')}</strong><ul>{guide?.missing.map(key => <li key={key}><button type="button" className="text-button" onClick={() => {if(['execution_id','schedule_id','report_id'].includes(key)){setPicker(true);return;}document.getElementById(fieldId(key.replace(/^(details\[\d+\])\.part_no$/, '$1.mold_detail_id')))?.focus();}}>{missingText(key)}</button></li>)}</ul></div>}
-    {['failed','conflict'].includes(saveState) && <div className="draft-recovery" role="alert"><p>{saveState==='conflict'?L('資料已由另一個操作更新，請先比較版本。','Another operation changed this draft. Compare versions first.','ข้อมูลถูกแก้ไข โปรดเปรียบเทียบเวอร์ชัน'):L('儲存未完成，輸入仍保留。重試前會先核對最新版本。','Save did not complete. Your input is retained; retry checks the latest version.','บันทึกไม่สำเร็จ เก็บข้อมูลไว้แล้ว ตรวจสอบเวอร์ชันก่อนลองใหม่')}</p><button className="secondary" disabled={busy||disabled} onClick={() => void work(async () => {
+    {['failed','conflict'].includes(saveState) && <div className="draft-recovery" role="alert"><p>{saveState==='conflict'?L('資料已由另一個操作更新，請先比較版本。','Another operation changed this draft. Compare versions first.','ข้อมูลถูกแก้ไข โปรดเปรียบเทียบเวอร์ชัน'):L('儲存未完成，輸入仍保留。重試前會先核對最新版本。','Save did not complete. Your input is retained; retry checks the latest version.','บันทึกไม่สำเร็จ เก็บข้อมูลไว้แล้ว ตรวจสอบเวอร์ชันก่อนลองใหม่')}</p>{!conflict&&<button className="secondary" disabled={busy||disabled} onClick={() => void work(async () => {
       const value = await request<Guide>(`/api/conversations/${conversation.id}/guide`);
       if (comparable(value.args) === comparable(args) && value.action === action) { adopt(value); setSaveState('saved'); }
       else if(saveState==='failed'&&value.action===action&&value.version===versionRef.current&&comparable(value.args)===comparable(serverArgs.current)){serverGuide.current=value;setGuide(value);setSaveState('saved');setError('');}
       else {setConflict(value);setSaveState('conflict');}
-    })}>{saveState==='failed'?L('重試儲存','Retry saving','ลองบันทึกอีกครั้ง'):L('讀取伺服器版本核對','Read server version','อ่านเวอร์ชันเซิร์ฟเวอร์')}</button>{conflict && <><div className="draft-comparison"><section><h3>{L('你的修改','Your edits','การแก้ไขของคุณ')}</h3><Fields value={Object.fromEntries([...new Set([...Object.keys(args),...Object.keys(conflict.args)])].sort().map(key=>[key,args[key]??null]))}/></section><section><h3>{L('最新內容','Latest values','ข้อมูลล่าสุด')}</h3><Fields value={Object.fromEntries([...new Set([...Object.keys(args),...Object.keys(conflict.args)])].sort().map(key=>[key,conflict.args[key]??null]))}/></section></div><button className="secondary" disabled={busy||disabled||!sameDraftTarget(action,conflict.action,args,conflict.args)} onClick={() => {
+    })}>{saveState==='failed'?L('重試儲存','Retry saving','ลองบันทึกอีกครั้ง'):L('讀取伺服器版本核對','Read server version','อ่านเวอร์ชันเซิร์ฟเวอร์')}</button>}{conflict && <><div className="draft-comparison"><section><h3>{L('你的修改','Your edits','การแก้ไขของคุณ')}</h3><Fields value={Object.fromEntries([...new Set([...Object.keys(args),...Object.keys(conflict.args)])].sort().map(key=>[key,args[key]??null]))}/></section><section><h3>{L('最新內容','Latest values','ข้อมูลล่าสุด')}</h3><Fields value={Object.fromEntries([...new Set([...Object.keys(args),...Object.keys(conflict.args)])].sort().map(key=>[key,conflict.args[key]??null]))}/></section></div><button className="secondary" disabled={busy||disabled||!sameDraftTarget(action,conflict.action,args,conflict.args)} onClick={() => {
       const next=reapplyDraft(serverArgs.current,args,conflict.args);
       versionRef.current=conflict.version;serverArgs.current=conflict.args;serverGuide.current=conflict;
       setGuide(conflict);setArgs(next);setConflict(null);setSaveState('saved');setError('');setStep('details');onReply({proposal:null});

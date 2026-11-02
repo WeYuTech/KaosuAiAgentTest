@@ -214,9 +214,23 @@
 .field-error {color:var(--danger,#e88888);font-size:13px;}
 .draft-recovery {padding:16px;border:1px solid var(--border);border-radius:12px;}
 .draft-recovery button {margin:6px 6px 0 0;}
-@media(max-width:600px){.draft-comparison{grid-template-columns:1fr;}}
+@media(max-width:600px){
+ .draft-comparison{gap:8px;margin:10px 0;}
+ .draft-comparison section{padding:8px;}
+ .draft-comparison h3{font-size:14px;margin:0 0 8px;}
+ .draft-comparison .fields>div{display:block;padding:6px 0;}
+ .draft-comparison .fields dt{font-size:12px;}
+ .draft-comparison .fields dd{font-size:14px;margin:2px 0 0;}
+ .draft-comparison .fields{margin:0;}
+ .draft-comparison .technical-details{margin:8px 0 0;padding:0;font-size:12px;}
+ .draft-recovery{padding:10px;font-size:13px;}
+ .draft-recovery button{font-size:13px;min-height:40px;}
+}
 
 .audit-record {border:1px solid var(--border);border-radius:12px;padding:16px;margin:12px 0;overflow-wrap:anywhere;}
 .audit-record header,.audit-changes li {display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;}
 .audit-changes {list-style:none;padding:0;}.audit-changes li {padding:8px 0;}
 .operation-id code {overflow-wrap:anywhere;}
+
+/* 未知結果的唯一查核入口固定在作業可視區底部。 */
+.proposal .write-disabled:has(button){position:sticky;bottom:0;background:var(--background);z-index:2;}
