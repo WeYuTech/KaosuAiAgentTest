@@ -18,7 +18,7 @@ export function HeaderMenu({signedIn,locale,theme,localeBusy,onLocale,onTheme,on
  const themes=[['light','明亮模式',Sun],['dark','黑暗模式',Moon],['navy','深藍模式',Palette],['mes','MES 藍色',Factory],['system','跟隨系統',Monitor]] as const;
  return <DropdownMenu modal={false}>
   <DropdownMenuTrigger asChild><TooltipIconButton ref={trigger} tooltip={t('更多功能')} aria-label={t('更多功能')} className="size-7 rounded-md p-0 text-muted-foreground hover:text-foreground"><MoreHorizontal className="size-3.5"/></TooltipIconButton></DropdownMenuTrigger>
-  <DropdownMenuContent align="end" onCloseAutoFocus={event=>{const scope=historyDestination.current;if(scope){event.preventDefault();historyDestination.current=null;onHistory?.(scope);}}}>
+  <DropdownMenuContent align="end" className="[scrollbar-width:none] [&::-webkit-scrollbar]:hidden" onCloseAutoFocus={event=>{const scope=historyDestination.current;if(scope){event.preventDefault();historyDestination.current=null;onHistory?.(scope);}}}>
    {onHistory&&<><DropdownMenuItem disabled={!signedIn} onSelect={()=>{historyDestination.current='archived';}}><Archive/>{t('封存聊天')}</DropdownMenuItem><DropdownMenuItem disabled={!signedIn} onSelect={()=>{historyDestination.current='deleted';}}><Trash2/>{t('已刪除聊天')}</DropdownMenuItem><DropdownMenuSeparator/></>}
    {sections.map(([key,title,Icon])=><DropdownMenuItem key={key} disabled={!signedIn} onSelect={()=>trigger.current&&onManage(key,trigger.current)}><Icon/>{t(title)}</DropdownMenuItem>)}
    <DropdownMenuSeparator/><DropdownMenuLabel>{t('介面外觀')}</DropdownMenuLabel>
