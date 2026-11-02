@@ -10,11 +10,31 @@ const {GuidedFlow}=await server.ssrLoadModule('/src/GuidedFlow.tsx');
 const {CandidateSelect}=await server.ssrLoadModule('/src/CandidateSelect.tsx');
 const {useOperationMode,readOperationMode,operationModeKey}=await server.ssrLoadModule('/src/operation-mode.ts');
 const {ApiError}=await server.ssrLoadModule('/src/api.ts');
+const {useEntry}=await server.ssrLoadModule('/src/use-entry.ts');
 await server.close();after(()=>window.happyDOM.abort());
 const noop=()=>{};
 function mount(){const host=document.createElement('div');host.id='mes-ai-chat-root';document.body.append(host);return {host,root:createRoot(host)};}
 const tick=()=>new Promise(r=>setTimeout(r,720));
 const inputValue=(input,text)=>{Object.getOwnPropertyDescriptor(window.HTMLInputElement.prototype,'value').set.call(input,text);input.dispatchEvent(new Event('input',{bubbles:true}));};
+
+test('HTTP 缺少 randomUUID 仍可開啟入口，未知結果沿用原識別查核且不重送',async()=>{
+ const original=Object.getOwnPropertyDescriptor(globalThis,'crypto');const nativeCrypto=globalThis.crypto;
+ Object.defineProperty(globalThis,'crypto',{configurable:true,value:{getRandomValues:nativeCrypto.getRandomValues.bind(nativeCrypto)}});
+ const {host,root}=mount();let entry;const calls=[];
+ const request=async(path,body)=>{calls.push({path,body});if(body)throw new Error('連線中斷');if(path.includes('/requests/'))return {request_id:calls.find(c=>c.body).body.request_id,status:'unknown'};return {messages:[]};};
+ function Harness(){entry=useEntry('HTTP測試','live',request);return h('div',null,entry.entryId);}
+ try{
+  await act(async()=>root.render(h(Harness)));
+  const id=entry.entryId;assert.match(id,/^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/);
+  await act(async()=>assert.rejects(entry.send('查詢設備',{}),/連線中斷/));
+  const sent=calls.find(c=>c.body).body;assert.notEqual(sent.request_id,id);assert.equal(entry.blocked,true);
+  await act(async()=>entry.send('再送一次',{}));assert.equal(calls.filter(c=>c.body).length,1);
+  await act(async()=>root.unmount());const restored=createRoot(host);
+  await act(async()=>restored.render(h(Harness)));assert.equal(entry.entryId,id);assert.equal(entry.blocked,true);
+  await act(async()=>entry.check());assert.ok(calls.some(c=>c.path.endsWith('/requests/'+sent.request_id)));assert.equal(calls.filter(c=>c.body).length,1);
+  await act(async()=>restored.unmount());
+ }finally{await act(async()=>{try{root.unmount();}catch{}});host.remove();Object.defineProperty(globalThis,'crypto',original);}
+});
 
 test('彈窗搜尋的提交不冒泡為父層作業預覽',async()=>{
  const {host,root}=mount();let outer=0,queries=0;

@@ -1,6 +1,7 @@
 import {useEffect,useRef,useState} from 'react';
 import {ApiError,type Message,type Module,type Reply,type Row,type api} from './api';
 import {getLocale} from './i18n';
+import {createRequestId} from './request-id';
 
 interface Receipt {request_id:string;status:string;conversation_id?:string;module?:Module;messages?:Message[];reply?:Reply;error?:string;recovery_conversation_id?:string;recovery_proposal_id?:string}
 interface Marker {entry_id:string;request_id?:string;text?:string}
@@ -9,7 +10,7 @@ export function useEntry(actor:string|undefined,environment:string|null,request:
   const scope=JSON.stringify([actor,environment]);
   const latestScope=useRef(scope);latestScope.current=scope;
   const key=`mes-neutral-entry:v1:${scope}`;
-  const marker=useRef<Marker>({entry_id:crypto.randomUUID()});
+  const marker=useRef<Marker>({entry_id:createRequestId()});
   const pending=useRef(false);
   const [messages,setMessages]=useState<Message[]>([]);
   const [receipt,setReceipt]=useState<Receipt|null>(null);
@@ -17,7 +18,7 @@ export function useEntry(actor:string|undefined,environment:string|null,request:
   function persist(value:Marker){marker.current=value;try{sessionStorage.setItem(key,JSON.stringify(value));}catch{/* 本分頁識別仍保留，不自動重送。 */}}
   useEffect(()=>{
     pending.current=false;setBusy(false);setReceipt(null);setMessages([]);
-    let value:Marker={entry_id:crypto.randomUUID()};
+    let value:Marker={entry_id:createRequestId()};
     try{const saved=JSON.parse(sessionStorage.getItem(key)||'null');if(typeof saved?.entry_id==='string')value=saved;}catch{/* 損壞偏好重新開始。 */}
     marker.current=value;
     if(!actor)return;
@@ -33,7 +34,7 @@ export function useEntry(actor:string|undefined,environment:string|null,request:
   async function send(text:string,context:Row,module_choice?:Module):Promise<Receipt|undefined>{
     if(!actor||pending.current||marker.current.request_id)return;
     const mine=scope;pending.current=true;setBusy(true);
-    const record={entry_id:marker.current.entry_id,request_id:crypto.randomUUID(),text};persist(record);
+    const record={entry_id:marker.current.entry_id,request_id:createRequestId(),text};persist(record);
     setMessages(previous=>[...previous,{role:'user',content:text}]);setReceipt({status:'processing',request_id:record.request_id});
     try{const result=await request<Receipt>('/api/entry/messages',{...record,locale:getLocale(),context,module_choice});if(latestScope.current!==mine)return;return accept(result);}
     catch(error){if(latestScope.current!==mine)throw error;setReceipt({status:'unknown',request_id:record.request_id,error:error instanceof Error?error.message:String(error)});throw error;}
@@ -46,6 +47,6 @@ export function useEntry(actor:string|undefined,environment:string|null,request:
     catch(error){if(latestScope.current===mine&&error instanceof ApiError&&error.status===404){persist({entry_id:marker.current.entry_id});setReceipt(null);}throw error;}
     finally{if(latestScope.current===mine){pending.current=false;setBusy(false);}}
   }
-  function reset(){if(marker.current.request_id||pending.current)return;persist({entry_id:crypto.randomUUID()});setMessages([]);setReceipt(null);}
+  function reset(){if(marker.current.request_id||pending.current)return;persist({entry_id:createRequestId()});setMessages([]);setReceipt(null);}
   return {entryId:marker.current.entry_id,messages,receipt,busy,blocked:!!marker.current.request_id,send,check,reset};
 }
