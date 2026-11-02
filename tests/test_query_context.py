@@ -69,3 +69,19 @@ def test_模型查詢與手動共用條件並保留原確認卡(tmp_path, monkey
         assert c.get(f'/api/conversations/{cid}/query').json()==data
         assert response.json()['proposal']==card
         assert c.get('/api/audit').json()['records']==[]
+
+
+def test_單筆報工核對快照不依賴目前查詢且保留被移除原因(tmp_path):
+    from test_domain_http import confirm
+    with TestClient(create_app(tmp_path/'report-snapshot.db')) as c:
+        c.post('/api/session/demo',json={'identity':'supervisor'})
+        confirm(c,'report','report.add',{'execution_id':'2001','ok':125,'defects':[{'code':'NG01','quantity':3},{'code':'NG02','quantity':2}]})
+        row=c.get('/api/workspace?module=report&execution_id=2001').json()['records'][0]['REPORTS'][0]
+        rid=row['WIP_OPI_WDOEACICOOUTPUT_HIST_SID']
+        card=c.post('/api/proposals',json={'module':'report','action':'report.update','args':{'report_id':rid,'ok':130,'defects':[{'code':'NG01','quantity':1}]}}).json()['proposal']
+        before=card['target']['report_before']
+        assert before['OK_QTY']==125 and before['NG_QTY']==5
+        assert before['CREATE_TIME']==row['CREATE_TIME']
+        assert {r['NG_CODE']:r['NG_CODE_QTY'] for r in before['DEFECTS']}=={'NG01':3,'NG02':2}
+        assert c.get('/api/workspace?module=report&equipment=MC38').json()['records']==[]
+        assert c.get(f'/api/proposals/{card["id"]}').json()['proposal']['target']['report_before']==before

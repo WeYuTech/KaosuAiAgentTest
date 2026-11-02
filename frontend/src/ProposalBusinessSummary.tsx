@@ -16,10 +16,12 @@ export function ProposalBusinessSummary({ proposal, workspace }: { proposal: Pro
   const partNo = target.part_no ?? record?.PART_NO;
   const parts = Array.isArray(workspace.catalogs.parts) ? workspace.catalogs.parts as Row[] : [];
   const part = [partNo,target.part_spec ?? record?.PART_SPEC ?? parts.find(row=>row.PART_NO===partNo)?.PART_SPEC].filter(Boolean).join(' · ');
-  const report = Array.isArray(record?.REPORTS) ? (record.REPORTS as Row[]).find(r => String(r.WIP_OPI_WDOEACICOOUTPUT_HIST_SID) === String(args.report_id)) : undefined;
+  const report = target.report_before ?? (Array.isArray(record?.REPORTS) ? (record.REPORTS as Row[]).find(r => String(r.WIP_OPI_WDOEACICOOUTPUT_HIST_SID) === String(args.report_id)) : undefined);
   const affected = [...new Set((target.affected_orders ?? []).map(order => typeof order === 'string' ? order : typeof order === 'object' && order ? display((order as Row).WO ?? (order as Row).work_order ?? (order as Row).wo ?? order) : display(order)))];
   const reasons = Array.isArray(workspace.catalogs.defect_reasons) ? workspace.catalogs.defect_reasons as Row[] : [];
   const defects = Array.isArray(args.defects) ? args.defects as { code: string; quantity: number }[] : [];
+  const previousDefects=Array.isArray(report?.DEFECTS)?report.DEFECTS as Row[]:[];
+  const visibleDefects=action==='report.update'?[...defects,...previousDefects.filter(row=>!defects.some(d=>d.code===row.NG_CODE)).map(row=>({code:String(row.NG_CODE),quantity:0}))]:defects;
   const findChange = (field: string) => changes.find(change => change.field === field);
   const nextTimes = changes.filter(change => change.field === 'REAL_CHECK_IN_TIME' && change.before !== change.after);
   const molds = Array.isArray(workspace.catalogs.molds) ? workspace.catalogs.molds as Row[] : [];
@@ -45,11 +47,12 @@ export function ProposalBusinessSummary({ proposal, workspace }: { proposal: Pro
       {Boolean(workOrder) && <span><ClipboardList size={16}/><span><small>{t("工單")}</small><strong>{display(workOrder)}</strong></span></span>}
       {Boolean(part) && <span><span><small>{t("品號／規格")}</small><strong>{part}</strong></span></span>}
       {Boolean(executionTime) && <span><span><small>{t("本次執行")}</small><strong>{display(executionTime)}</strong></span></span>}
+      {Boolean(report?.CREATE_TIME)&&<span><span><small>{t('報工時間')}</small><strong>{display(report?.CREATE_TIME)}</strong></span></span>}
       {Boolean(scheduleTime) && <span><CalendarDays size={16}/><span><small>{t("預計開始")}</small><strong>{display(scheduleTime)}</strong></span></span>}
     </div>
     {action === 'report.add' || action === 'report.update' ? <>
       <div className="business-quantities">{businessRow(t("人工良品"), args.ok, action === 'report.update' ? findChange('OK_QTY')?.before ?? report?.OK_QTY : undefined, t("件"))}{businessRow(t("不良合計"), defects.reduce((sum, item) => sum + Number(item.quantity), 0), action === 'report.update' ? findChange('NG_QTY')?.before ?? report?.NG_QTY : undefined, t("件"))}</div>
-      {defects.length > 0 && <div className="business-defects"><span className="business-caption">{t("不良原因")}</span>{defects.map((defect, index) => {
+      {visibleDefects.length > 0 && <div className="business-defects"><span className="business-caption">{t("不良原因")}</span>{visibleDefects.map((defect, index) => {
         const reason = reasons.find(reason => reason.NG_CODE_NO === defect.code);
         const name = reason?.NG_CODE_NAME ?? reason?.NAME ?? defect.code;
         const previous = Array.isArray(report?.DEFECTS) ? (report.DEFECTS as Row[]).find(item => item.NG_CODE === defect.code)?.NG_CODE_QTY : undefined;

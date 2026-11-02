@@ -1,5 +1,6 @@
 /* 固定介面詞彙：中文原文為鍵，不翻譯 MES 主檔名稱或歷史訊息。 */
 export const translations: Record<string, [string, string]> = Object.fromEntries(`
+報工時間|Report time|เวลารายงานผลผลิต
 預覽說明|Preview information|ข้อมูลการตรวจสอบ
 更多查詢條件|More search options|ตัวเลือกการค้นหาเพิ่มเติม
 返回選取資料|Back to record selection|กลับไปเลือกข้อมูล

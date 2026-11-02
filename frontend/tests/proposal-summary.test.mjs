@@ -19,6 +19,12 @@ const molds = [{ TOL_NO: 'MOLD-SPLIT', DETAILS: [
   { TOL_DETALS_SID: '61', PART_NO: 'EPS-A', TOL_DETALS_NO: 'MOLD-ONE-L', TOL_DETALS_NAME: '單一模穴' },
 ] }];
 
+test('報工快照在查詢離頁後保留時間、原量及被移除原因歸零',()=>{
+ const proposal={action:'report.update',args:{report_id:'r',ok:130,defects:[{code:'NG01',quantity:1}]},changes:[],target:{report_before:{CREATE_TIME:'2026-11-02 14:00',OK_QTY:125,NG_QTY:5,DEFECTS:[{NG_CODE:'NG01',NG_CODE_QTY:3},{NG_CODE:'NG02',NG_CODE_QTY:2}]}}};
+ const html=renderToStaticMarkup(createElement(ProposalBusinessSummary,{proposal,workspace:{records:[],catalogs:{defect_reasons:[{NG_CODE_NO:'NG02',NG_CODE_NAME:'破損'}]}}}));
+ for(const text of ['2026-11-02 14:00','破損','business-before">2</span>','business-after">0<small>件','business-before">125</span>'])assert.ok(html.includes(text),text);
+});
+
 test('未變動數量不畫刪除線，離頁核對仍呈現後端執行時間與品號', () => {
   const proposal={action:'report.update',args:{report_id:'3001',ok:125,defects:[]},changes:[{field:'OK_QTY',before:125,after:125}],target:{equipment:'MC37',work_order:'WO-261102-0382',part_no:'P-102',part_spec:'外殼',execution_time:'2026-11-02 08:10:00'}};
   const html=renderToStaticMarkup(createElement(ProposalBusinessSummary,{proposal,workspace:{records:[],catalogs:{}}}));

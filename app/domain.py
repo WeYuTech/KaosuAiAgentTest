@@ -116,6 +116,16 @@ def schedule_confirmation_target(before, after, args):
             "mold_no": mold["TOL_NO"], "schedule_details": details, "affected_orders": sorted({d["wo"] for d in details if d["wo"]})}
 
 
+def report_confirmation_target(state, report_id):
+    report = state["tables"].get(OUTPUT, {}).get(report_id)
+    if not report:
+        return {}
+    return {"report_before": {**{key: report.get(key) for key in ("CREATE_TIME", "OK_QTY", "NG_QTY")},
+                              "DEFECTS": [{"NG_CODE": row["NG_CODE"], "NG_CODE_QTY": row["NG_CODE_QTY"]}
+                                          for row in state["tables"].get(DEFECT, {}).values()
+                                          if row.get("WIP_OPI_WDOEACICOOUTPUT_HIST_SID") == report_id]}}
+
+
 def _pick(rows, field, value, label):
     matches = [r for r in rows if str(r.get(field, "")) == str(value)]
     if len(matches) != 1:
