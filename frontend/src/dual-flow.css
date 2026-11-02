@@ -220,3 +220,66 @@
 .dual-flow .report-entry-fields {grid-template-columns:minmax(0,1fr);gap:14px;}
 .dual-flow .sheet-target {border-width:0 0 1px;border-radius:0;padding:12px 0 16px;margin-bottom:12px;}
 }
+
+/* 第二段：彈窗內容可捲動，查詢範圍、AI 與帶入動作各有保留空間。 */
+#mes-ai-chat-root .target-picker-dialog {width:min(920px,calc(100vw - 32px));height:min(680px,calc(100dvh - 32px));max-height:calc(100dvh - 32px);}
+#mes-ai-chat-root .target-picker-dialog .operation-dialog-body {display:flex;flex:1;flex-direction:column;min-height:0;overflow:hidden;padding:16px 20px;gap:12px;}
+#mes-ai-chat-root .target-picker-dialog .guide-fields {display:grid;grid-template-columns:repeat(3,minmax(0,1fr)) auto;gap:10px;align-items:end;margin:0;flex:none;}
+#mes-ai-chat-root .target-picker-dialog .guide-fields input,#mes-ai-chat-root .target-picker-dialog .guide-fields select {min-height:38px;font-size:14px;}
+#mes-ai-chat-root .target-picker-dialog .guide-search-options {grid-column:1/-1;order:2;}
+#mes-ai-chat-root .target-picker-dialog .guide-search-options[open] {max-height:150px;overflow:auto;}
+#mes-ai-chat-root .picker-results {flex:1;min-height:80px;overflow:auto;overscroll-behavior:contain;}
+#mes-ai-chat-root .picker-results[hidden] {display:none;}
+#mes-ai-chat-root .picker-results .record-choice-scroll {overflow:visible;}
+#mes-ai-chat-root .picker-status {display:flex;align-items:center;justify-content:center;gap:12px;min-height:120px;}
+#mes-ai-chat-root .operation-dialog-footer {flex:none;border-top:1px solid var(--border);padding:12px 20px;}
+#mes-ai-chat-root .picker-pagination,#mes-ai-chat-root .picker-actions {display:flex;gap:8px;align-items:center;justify-content:flex-end;font-size:13px;}
+#mes-ai-chat-root .picker-pagination>span:first-child {margin-right:auto;}
+#mes-ai-chat-root .picker-pagination button,#mes-ai-chat-root .picker-actions button {min-height:36px;padding:8px 12px;font-size:13px;}
+#mes-ai-chat-root .picker-selection {font-size:13px;line-height:1.5;margin:8px 0;color:var(--muted-foreground);}
+#mes-ai-chat-root .picker-selection p {margin:4px 0;color:var(--foreground);}
+#mes-ai-chat-root .picker-ai {margin-bottom:12px;}
+#mes-ai-chat-root .picker-ai>p {font-size:13px;max-height:40px;overflow:auto;margin:0 0 8px;}
+#mes-ai-chat-root .picker-ai .composer-area {padding:0;}
+#mes-ai-chat-root .picker-ai textarea {min-height:38px;max-height:72px;}
+#mes-ai-chat-root .picker-ai .composer-footnote {display:none;}
+#mes-ai-chat-root .report-record-picker {min-height:0;overflow:auto;border:0;padding:0;}
+#mes-ai-chat-root .target-picker-dialog .record-choices th {position:sticky;top:0;background:var(--background);z-index:1;}
+#mes-ai-chat-root .mold-stages {padding:0;list-style:none;margin:12px 0;}
+#mes-ai-chat-root .mold-stages li {display:flex;align-items:center;gap:12px;padding:12px 0;border-bottom:1px solid var(--border);}
+#mes-ai-chat-root .mold-stages li>b {border:1px solid var(--border);border-radius:50%;width:24px;height:24px;text-align:center;}
+#mes-ai-chat-root .mold-stages li>div {flex:1;display:grid;gap:4px;}
+#mes-ai-chat-root .mold-stages small,#mes-ai-chat-root .mold-clear-action small {color:var(--muted-foreground);font-size:12px;}
+#mes-ai-chat-root .mold-stages button {min-height:36px;font-size:13px;}
+#mes-ai-chat-root .mold-clear-action {display:flex;gap:12px;align-items:center;}
+#mes-ai-chat-root .mold-proposal .business-summary {max-height:calc(100dvh - 555px);min-height:100px;overflow:auto;overscroll-behavior:contain;padding-right:8px;}
+#mes-ai-chat-root .mold-proposal .proposal-confirmation {position:sticky;bottom:0;background:var(--background);z-index:2;}
+#mes-ai-chat-root .dual-flow .guide-detail {display:grid;grid-template-columns:1.2fr 1fr 80px;gap:8px;padding:10px;border:1px solid var(--border);margin-bottom:10px;}
+#mes-ai-chat-root .dual-flow .guide-detail>legend {padding:0 6px;font-size:13px;}
+#mes-ai-chat-root .dual-flow .guide-detail>.guide-field {margin:0;}
+#mes-ai-chat-root .dual-flow .guide-detail>.text-button {grid-row:2;grid-column:1/3;justify-self:start;}
+#mes-ai-chat-root .dual-flow .guide-detail>button.secondary {grid-column:3;font-size:12px;padding:4px;min-height:32px;}
+@media(max-width:600px){
+ #mes-ai-chat-root .target-picker-dialog {width:calc(100vw - 16px);height:calc(100dvh - 16px);max-height:calc(100dvh - 16px);}
+ #mes-ai-chat-root .target-picker-dialog .operation-dialog-body,#mes-ai-chat-root .target-picker-dialog .operation-dialog-footer {padding:10px;}
+ #mes-ai-chat-root .target-picker-dialog .guide-fields {grid-template-columns:1fr 1fr;}
+ #mes-ai-chat-root .picker-actions {flex-wrap:wrap;}
+ #mes-ai-chat-root .picker-actions button {flex:1;}
+ #mes-ai-chat-root .picker-selection {max-height:50px;overflow:auto;}
+ #mes-ai-chat-root .target-picker-dialog .record-choices {min-width:0;width:100%;}
+ #mes-ai-chat-root .target-picker-dialog .record-choices thead {display:none;}
+ #mes-ai-chat-root .target-picker-dialog .record-choices tr {display:grid;grid-template-columns:26px minmax(0,1fr) 52px;border-bottom:1px solid var(--border);padding:8px 0;}
+ #mes-ai-chat-root .target-picker-dialog .record-choices td {padding:3px;border:0;overflow-wrap:anywhere;}
+ #mes-ai-chat-root .target-picker-dialog .record-choices td:first-child {grid-row:1/3;align-self:center;}
+ #mes-ai-chat-root .target-picker-dialog .record-choices td:nth-child(2) {grid-column:2;grid-row:1;}
+ #mes-ai-chat-root .target-picker-dialog .record-choices td:nth-child(3) {grid-column:2;grid-row:2;font-size:12px;}
+ #mes-ai-chat-root .target-picker-dialog .record-choices td:last-child {grid-column:3;grid-row:1/3;}
+ #mes-ai-chat-root .target-picker-dialog .record-choices .record-choice-detail {display:block;}
+}
+
+#mes-ai-chat-root .target-picker-dialog [hidden]{display:none;}
+
+#mes-ai-chat-root .target-picker-dialog .guide-field{margin:0;gap:6px;font-size:13px;}
+#mes-ai-chat-root .target-picker-dialog .guide-search-options summary{min-height:28px;padding:4px 0;font-size:13px;}
+#mes-ai-chat-root .picker-ai .composer-area{margin:0;width:100%;max-width:none;}
+#mes-ai-chat-root .picker-ai .composer-area>.text-button{min-height:28px;padding:3px 0;font-size:13px;}

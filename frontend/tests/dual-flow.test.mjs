@@ -8,6 +8,8 @@ const {createElement:h,act,useState,useRef}=await import('react');const {createR
 const {createServer}=await import('vite');const server=await createServer({server:{middlewareMode:true,hmr:false,ws:false},appType:'custom'});
 const {GuidedFlow}=await server.ssrLoadModule('/src/GuidedFlow.tsx');
 const {CandidateSelect}=await server.ssrLoadModule('/src/CandidateSelect.tsx');
+const {MoldStages,moldStageAvailability}=await server.ssrLoadModule('/src/MoldStages.tsx');
+const {ProposalBusinessSummary}=await server.ssrLoadModule('/src/ProposalBusinessSummary.tsx');
 const {useOperationMode,readOperationMode,operationModeKey}=await server.ssrLoadModule('/src/operation-mode.ts');
 const {ApiError}=await server.ssrLoadModule('/src/api.ts');
 const {useEntry}=await server.ssrLoadModule('/src/use-entry.ts');
@@ -150,9 +152,9 @@ test('報工子選取返回與取消保留最新草稿；暫選和查看都不�
  const props={apiRequest:request,conversation:{id:'child',messages:[],module:'report'},module:'report',workspace:{records:[record],catalogs:{}},selected:null,signal:0,proposal:null,status:'',disabled:false,date:null,onReply:noop,onAudit:noop,onHome:noop};
  await act(async()=>root.render(h(GuidedFlow,props)));
  const click=async text=>act(async()=>[...host.querySelectorAll('button')].find(b=>b.textContent===text).click());
- await click('選擇／更換對象');await act(async()=>host.querySelector('input[type=radio]').click());await click('帶入作業單');
+ await click('選擇／更換對象');await act(async()=>host.querySelector('input[type=radio]').click());await click('選擇報工紀錄');
  await act(async()=>host.querySelectorAll('.report-record-picker input[type=radio]')[1].click());await click('查看');
- assert.equal(calls.filter(c=>c.body).length,0);await click('返回工單');await click('帶入作業單');await click('取消選取');assert.equal(host.querySelector('#guide-ok').value,'125');assert.equal(guide.args.report_id,'3001');
+ assert.equal(calls.filter(c=>c.body).length,0);await click('返回工單');await click('選擇報工紀錄');await click('取消選取');assert.equal(host.querySelector('#guide-ok').value,'125');assert.equal(guide.args.report_id,'3001');
  await act(async()=>root.unmount());host.remove();
 });
 
@@ -184,7 +186,7 @@ test('已驗證查詢更新選取條件但不改業務草稿，換模式保留�
  await act(async()=>root.render(h(GuidedFlow,{...props,workspace})));
  await act(async()=>[...host.querySelectorAll('button')].find(b=>b.textContent==='選擇／更換對象').click());assert.equal(host.querySelector('#guide-search-equipment').value,'MC37');
  await act(async()=>host.querySelector('input[type=radio]').click());assert.ok(host.textContent.includes('帶入作業單'));
- await act(async()=>root.render(h(GuidedFlow,{...props,workspace,presentation:'step-wizard'})));assert.equal(host.querySelector('input[type=radio]').checked,true);assert.equal(host.querySelector('.guide-options span').textContent,'2');
+ await act(async()=>root.render(h(GuidedFlow,{...props,workspace,presentation:'step-wizard'})));assert.equal(host.querySelector('input[type=radio]').checked,true);assert.equal(host.querySelector('.picker-pagination').textContent.includes('2／2'),true);
  await act(async()=>root.render(h(GuidedFlow,{...props,presentation:'step-wizard',workspace:{...workspace,records:[],page:1,total:0,query_context:{version:3,filters:{equipment:'MC38',page:1,page_size:20}}}})));
  assert.equal(host.querySelector('#guide-search-equipment').value,'MC38');assert.equal(host.querySelector('.candidate-apply'),null);assert.ok(host.textContent.includes('請重新選取'));assert.equal(mutations.length,0);
  await act(async()=>[...host.querySelectorAll('button')].find(b=>b.textContent==='取消選取').click());assert.equal(host.querySelector('#guide-ok').value,'125');
@@ -196,7 +198,7 @@ test('翻頁沿用後端每頁筆數及隱含品號條件，預設 all 不清除
  const props={presentation:'step-wizard',apiRequest:async()=>guide,conversation:{id:'paging',module:'report',messages:[]},module:'report',selected:null,signal:0,proposal:null,status:'',disabled:false,date:null,onReply:noop,onAudit:noop,onHome:noop};
  function Harness(){const [workspace,setWorkspace]=useState({records:[{WIP_OPI_WDOEACICO_HIST_SID:'2001',WO:'WO-A',EQP_NO:'MC37'}],catalogs:{},page:1,page_size:1,total:2,query_context:{version:1,filters:{equipment:'MC37',part_no:'EPS-A',page:1,page_size:1}}});return h(GuidedFlow,{...props,workspace,onQuery:async filters=>{queries.push(filters);const result={...workspace,records:[{WIP_OPI_WDOEACICO_HIST_SID:'2002',WO:'WO-B',EQP_NO:'MC37'}],page:2,query_context:{version:2,filters}};setWorkspace(result);return result;}});}
  await act(async()=>root.render(h(Harness)));await act(async()=>host.querySelector('input[type=radio]').click());
- await act(async()=>[...host.querySelectorAll('button')].find(b=>b.textContent==='下一頁').click());assert.equal(queries[0].page_size,'1');assert.equal(queries[0].page,'2');assert.equal(queries[0].part_no,'EPS-A');assert.ok(host.querySelector('.candidate-apply').textContent.includes('WO-A'));assert.ok(host.textContent.includes('查看結果'));
+ await act(async()=>[...host.querySelectorAll('button')].find(b=>b.textContent==='下一頁').click());assert.equal(queries[0].page_size,'1');assert.equal(queries[0].page,'2');assert.equal(queries[0].part_no,'EPS-A');assert.ok(host.querySelector('.picker-selection').textContent.includes('WO-A'));assert.ok(host.textContent.includes('查看結果'));
  await act(async()=>root.unmount());host.remove();
 });
 
@@ -211,5 +213,48 @@ test('核對底列返回沿用原 Guide，未知結果仍禁止返回修改',asy
  assert.ok(![...host.querySelectorAll('button')].some(b=>b.textContent.includes('修改資料')));
  await act(async()=>handle.current.backToEdit());assert.equal(host.querySelector('#guide-ok').value,'125');
  await act(tick);assert.equal(calls.filter(c=>c.body).length,0);assert.equal(proposal.id,'original');
+ await act(async()=>root.unmount());host.remove();
+});
+
+
+test('模具四階段只開放後端下一步，無歷程與已完成均有停用原因',async()=>{
+ const fields=['ZZ_MODLE_UPLOAD_START','ZZ_MODLE_UPLOAD_END','ZZ_MODLE_REMOVE_START','ZZ_MODLE_REMOVE_END'];
+ const actions=['mold.mount_start','mold.mount_finish','mold.unmount_start','mold.unmount_finish'];
+ const {host,root}=mount();
+ for(let next=0;next<4;next++){
+  const member=Object.fromEntries(fields.map((key,i)=>[key,i<next?'2026-11-02 08:00:00':null]));
+  const record={EQP_NO:'MC37',TOL_NO:'MOLD-A',NEXT_ACTION:actions[next],EXECUTIONS:[member]};
+  await act(async()=>root.render(h(MoldStages,{record,disabled:false,choose:noop,select:noop})));
+  const buttons=[...host.querySelectorAll('.mold-stages button')];
+  assert.deepEqual(buttons.map(b=>!b.disabled),actions.map((_,i)=>i===next));
+  assert.ok(host.textContent.includes('伺服器預覽'));assert.ok(!host.textContent.includes('數量可以'));
+  assert.equal(moldStageAvailability(record,'mold.clear').allowed,next>0);
+ }
+ assert.equal(moldStageAvailability({EXECUTIONS:[],NEXT_ACTION:'mold.mount_start'},'mold.mount_start').allowed,false);
+ assert.equal(moldStageAvailability({EXECUTIONS:[{}],NEXT_ACTION:null},'mold.mount_start').allowed,false);
+ await act(async()=>root.unmount());host.remove();
+});
+
+test('排程新增保留零穴且不捏造原值，修改只標記實際變更',async()=>{
+ const {host,root}=mount();const args={equipment:'MC37',mold_no:'MOLD-A',cycle_seconds:30,target_shots:100,status:'DO',priority:0};
+ const proposal={action:'schedule.save',args,changes:[{field:'SCHEDULE_START_TIME',before:null,after:'2026-11-02 08:00:00'}],target:{schedule_details:[{wo:'WO-A',mold_detail_name:'左模穴',cavities:2},{wo:'WO-B',mold_detail_name:'右模穴',cavities:0}]}};
+ await act(async()=>root.render(h(ProposalBusinessSummary,{proposal,workspace:{records:[],catalogs:{}}})));
+ assert.equal(host.querySelectorAll('.business-before').length,0);assert.ok(host.textContent.includes('WO-B'));assert.ok(host.textContent.includes('0穴'));
+ const changed={...proposal,changes:[{field:'TARGET_SHOT',before:80,after:100},{field:'SCHEDULE_CYCLE_TIME',before:30,after:30}]};
+ await act(async()=>root.render(h(ProposalBusinessSummary,{proposal:changed,workspace:{records:[],catalogs:{}}})));
+ assert.deepEqual([...host.querySelectorAll('.business-before')].map(x=>x.textContent),['80']);
+ await act(async()=>root.unmount());host.remove();
+});
+
+test('候選慢查詢、空結果與失敗互斥，不以舊資料帶入',async()=>{
+ const {host,root}=mount();let resolve,reject;const request=()=>new Promise((r,j)=>{resolve=r;reject=j;});
+ await act(async()=>root.render(h(CandidateSelect,{kind:'parts',value:'',title:'品號',id:'part',choose:noop,request})));
+ await act(async()=>host.querySelector('button').click());
+ assert.ok(host.textContent.includes('查詢中'));assert.ok(!host.textContent.includes('沒有符合資料'));
+ await act(async()=>resolve({records:[],page:1,has_more:false,filters:{search:'',part_no:''}}));
+ assert.ok(!host.textContent.includes('查詢中'));assert.ok(host.textContent.includes('沒有符合資料'));
+ await act(async()=>host.querySelector('.candidate-search button').click());
+ await act(async()=>reject(new Error('候選連線失敗')));
+ assert.equal(host.querySelector('[role=alert]').textContent,'候選連線失敗');assert.ok(!host.textContent.includes('沒有符合資料'));assert.ok(!host.textContent.includes('查詢中'));
  await act(async()=>root.unmount());host.remove();
 });
