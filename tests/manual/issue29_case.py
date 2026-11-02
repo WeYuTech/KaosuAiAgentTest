@@ -13,7 +13,9 @@ with httpx.Client(base_url='http://127.0.0.1:8033') as c:
     post('/api/session/demo',{'identity':'supervisor'})
     action=case
     intent=None
-    if case.startswith('report.'):
+    if case=='query-page':action='';args={}
+    elif case=='partial-focus':action='report.add';args={'ok':125,'defects':[{'code':'NG01','quantity':3}]}
+    elif case.startswith('report.'):
         record=get('/api/workspace?module=report&execution_id=2001')['records'][0]
         if case=='report.add':args={'execution_id':'2001','ok':125,'defects':[{'code':'NG01','quantity':3},{'code':'NG02','quantity':2}]}
         elif case in {'report.update','report.delete'}:
@@ -33,12 +35,12 @@ with httpx.Client(base_url='http://127.0.0.1:8033') as c:
             args['schedule_id']=row['ZZ_KAOSU_PROD_SCHEDULE_SID']
             args['details']=[{'detail_id':d['ZZ_KAOSU_PROD_SCHEDULE_DETAIL_SID'],'mold_detail_id':d['TOL_DETALS_SID'],'part_no':d['PART_NO'],'wo':d['WO'] if i==0 else '', 'cavities':3 if i==0 else 0} for i,d in enumerate(row['DETAILS'])]
     else:raise ValueError(case)
-    module=action.split('.')[0]
+    module=action.split('.')[0] if action else 'report'
     cid=post('/api/conversations',{'module':module,'locale':'zh-TW'})['id']
     post(f'/api/conversations/{cid}/metadata',{'version':0,'title':'G2｜'+case})
-    guide=post(f'/api/conversations/{cid}/guide',{'version':0,'action':action,'args':args,'intent':intent,'step':'details'})
-    post(f'/api/conversations/{cid}/query',{'version':0,'filters':{'equipment':'MC37' if module=='report' else 'MC36','page_size':20}})
-    if action not in {'report.add','report.update','report.cavities','schedule.save'}:
+    guide=post(f'/api/conversations/{cid}/guide',{'version':0,'action':action,'args':args,'intent':intent,'step':'target' if case=='query-page' else 'details'})
+    post(f'/api/conversations/{cid}/query',{'version':0,'filters':{'equipment':'MC37' if module=='report' else 'MC36','page_size':1 if case=='query-page' else 20}})
+    if action and action not in {'report.add','report.update','report.cavities','schedule.save'}:
         post(f'/api/conversations/{cid}/proposals',{'version':guide['version'],'action':action,'args':guide['args']})
     entry={'case':case,'conversation':cid,'guide':get(f'/api/conversations/{cid}/guide')}
     path=Path(__file__).resolve().parents[2]/'.local/issue29-cases.jsonl'

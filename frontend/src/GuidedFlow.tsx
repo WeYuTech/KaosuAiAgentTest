@@ -1,4 +1,5 @@
 import {RecordChoices} from './RecordChoices';
+import {queryCriteria} from './query-context';
 import {CandidateSelect} from './CandidateSelect';
 import React, { useEffect, useImperativeHandle, useRef, useState } from 'react';
 import { ArrowLeft, ArrowRight, Check, ClipboardList, RefreshCw } from 'lucide-react';
@@ -86,6 +87,7 @@ export function GuidedFlow({ presentation='chat-sheet', onQuery, onSelectionChan
   const [endDate, setEndDate] = useState('');
   const [total, setTotal] = useState(workspace.total ?? workspace.records.length);
   const [page, setPage] = useState(1);
+  const pageSize=workspace.page_size??20;
   const [target, setTarget] = useState<Row | null>(selected);
   const [query, setQuery] = useState(false);
   const [loadedQuery, setLoadedQuery] = useState(false);
@@ -177,7 +179,7 @@ export function GuidedFlow({ presentation='chat-sheet', onQuery, onSelectionChan
     setRecords(workspace.records); setCatalogs(workspace.catalogs); setTotal(workspace.total ?? workspace.records.length);setPage(workspace.page??1);
     const context=workspace.query_context;
     if(context){const f=context.filters;const dates=String(f.date??'').split('~');setFilters({equipment:String(f.equipment??''),date:dates[0],wo:String(f.wo??''),history:String(f.history??'all'),search:String(f.search??''),fac:String(f.factory??''),sort:String(f.sort??'')});setEndDate(dates[1]??'');
-      const signature=JSON.stringify(Object.entries(f).filter(([k])=>!['page','page_size'].includes(k)).sort());
+      const signature=queryCriteria(f);
       if(candidateCriteria.current&&candidateCriteria.current!==signature){setCandidate(null);setPendingTarget(null);setReportCandidate(null);setSelectionNotice(L('查詢條件已更新，請重新選取；原作業內容保留。','Search updated. Select again; your operation is retained.','อัปเดตเงื่อนไขแล้ว โปรดเลือกใหม่ เก็บใบงานเดิมไว้แล้ว'));}
       candidateCriteria.current=signature;
     }
@@ -261,8 +263,8 @@ export function GuidedFlow({ presentation='chat-sheet', onQuery, onSelectionChan
   }
   async function load(nextPage = 1, extra: Row = {}) {
     const generation = ++readGeneration.current;
-    const params = new URLSearchParams({ module, page: String(nextPage), page_size: '20' });
-    for (const [key, value] of Object.entries({ ...filters, date: endDate && filters.date ? `${filters.date}~${endDate}` : filters.date, ...extra })) if (value !== '' && value != null) params.set(key, String(value));
+    const params = new URLSearchParams({ module, page: String(nextPage), page_size: String(pageSize) });
+    for (const [key, value] of Object.entries({ ...workspace.query_context?.filters, ...filters, factory:filters.fac, date: endDate && filters.date ? `${filters.date}~${endDate}` : filters.date, ...extra, page:nextPage, page_size:pageSize })) if (key!=='fac' && value !== '' && value != null) params.set(key, String(value));
     const result = onQuery ? await onQuery(Object.fromEntries([...params.entries()].filter(([key])=>key!=='module'))) : await request<Workspace>(`/api/workspace?${params}`);
     if (generation !== readGeneration.current) return result;
     setRecords(result.records); setTotal(result.total ?? result.records.length); setPage(nextPage);
@@ -384,7 +386,7 @@ export function GuidedFlow({ presentation='chat-sheet', onQuery, onSelectionChan
   const choosing=picker||(at===1&&(query||presentation==='step-wizard'||!hasEditableFields(action)));
   useEffect(()=>{onSelectionChange?.(choosing);return()=>onSelectionChange?.(false);},[choosing,onSelectionChange]);
   const editing=!choosing&&(at===2||(at===1&&presentation==='chat-sheet'&&hasEditableFields(action)));
-  const phases=[{step:'target',text:L('選擇對象','Choose target','เลือกเป้าหมาย')},...(hasEditableFields(action)?[{step:'details',text:L('填寫內容','Enter details','กรอกรายละเอียด')}]:[]),{step:'review',text:L('核對送出','Review and confirm','ตรวจสอบและยืนยัน')}];
+  const phases=[{step:'target',text:L('選擇對象','Choose target','เลือกเป้าหมาย')},...(hasEditableFields(action)?[{step:'details',text:L('填寫內容','Enter details','กรอกรายละเอียด')}]:[]),query?{step:'result',text:L('查看結果','View result','ดูผลลัพธ์')}:{step:'review',text:L('核對送出','Review and confirm','ตรวจสอบและยืนยัน')}];
   return <section ref={editorRef} className={`guided-flow ${presentation} ${at===3?'guide-review':''} ${choosing?'guide-choosing':''}`} aria-label={L('作業單', 'Operation sheet', 'ใบงาน')}>
     {presentation==='step-wizard'&&at>0&&<nav className="operation-steps" aria-label={L('作業步驟','Operation steps','ขั้นตอนการทำงาน')}>{phases.map((phase,index)=><button type="button" key={phase.step} aria-current={(choosing?'target':step)===phase.step?'step':undefined} disabled={locked||completed||steps.indexOf(phase.step)>at} onClick={()=>{setPicker(phase.step==='target');setStep(phase.step);}}><b>{steps.indexOf(phase.step)<at?'✓':index+1}</b><span>{phase.text}</span></button>)}</nav>}
     {at!==3&&at!==4&&<div className="guide-phase"><h2>{at===0?L('選擇作業','Choose operation','เลือกงาน'):actionName(action==='schedule.save'&&newSchedule?'schedule.new':action)}</h2></div>}
@@ -413,7 +415,7 @@ export function GuidedFlow({ presentation='chat-sheet', onQuery, onSelectionChan
       {!pendingTarget&&<RecordChoices records={choices} value={candidate} onSelect={setCandidate} identify={row=>String(row[EID]??row[SID])} disabled={locked} eligible={row=>canChooseRecord(module,action,query,row)} describe={row=>({primary:string(row.WO??row.WO_NO??row.EQP_NO),secondary:partDescription(row),context:[row.EQP_NO,row.SCHEDULE_START_TIME??row.REAL_CHECK_IN_TIME??row.SHIFT_DAY].filter(Boolean).join(' · ')})}/>}
       {!pendingTarget&&candidate&&<div className="candidate-apply"><span>{title(candidate)}</span><button type="button" className="primary" disabled={locked} onClick={()=>void chooseTarget(candidate)}>{query?L('查看選取資料','View selected record','ดูรายการที่เลือก'):L('帶入作業單','Use in operation sheet','ใช้ในใบงาน')}</button></div>}
       {!choices.length && <p>{L('沒有符合資料，請調整設備或日期再查詢。','No matching records. Change the machine or date.','ไม่พบข้อมูล โปรดเปลี่ยนเครื่องจักรหรือวันที่')}</p>}
-      <div hidden={!!pendingTarget} className="guide-options"><button className="secondary" disabled={locked || page <= 1} onClick={() => void work(async () => { await load(page-1); })}>{L('上一頁','Previous page','หน้าก่อน')}</button><span>{page}</span><button className="secondary" disabled={locked || page*20 >= total} onClick={() => void work(async () => { await load(page+1); })}>{L('下一頁','Next page','หน้าถัดไป')}</button></div>
+      <div hidden={!!pendingTarget} className="guide-options"><button className="secondary" disabled={locked || page <= 1} onClick={() => void work(async () => { await load(page-1); })}>{L('上一頁','Previous page','หน้าก่อน')}</button><span>{page}</span><button className="secondary" disabled={locked || page*pageSize >= total} onClick={() => void work(async () => { await load(page+1); })}>{L('下一頁','Next page','หน้าถัดไป')}</button></div>
       {pendingTarget && <fieldset className="report-record-picker"><button type="button" className="text-button" onClick={()=>{setPendingTarget(null);setReportCandidate(null);}}>{L('返回工單','Back to orders','กลับไปใบสั่งผลิต')}</button><legend>{L('選擇單筆人工報工','Choose one production record','เลือกบันทึกผลผลิตหนึ่งรายการ')}</legend>
         <RecordChoices columns={[L('報工時間／數量','Report time / quantities','เวลา / จำนวนผลผลิต'),L('工單','Work order','ใบสั่งผลิต')]} records={selectedReport} value={reportCandidate} onSelect={setReportCandidate} identify={r=>string(r[RID])} disabled={locked} describe={r=>({primary:string(r.CREATE_TIME),secondary:`${L('良品','Good','ชิ้นงานดี')} ${r.OK_QTY} · ${L('不良','Defects','ของเสีย')} ${r.NG_QTY??0}`,context:string(pendingTarget.WO)})}/>
         {reportCandidate&&<div className="candidate-apply"><button type="button" className="primary" disabled={locked} onClick={()=>void chooseReport(reportCandidate)}>{L('帶入作業單','Use in operation sheet','ใช้ในใบงาน')}</button></div>}

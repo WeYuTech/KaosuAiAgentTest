@@ -190,3 +190,12 @@ test('已驗證查詢更新選取條件但不改業務草稿，換模式保留�
  await act(async()=>[...host.querySelectorAll('button')].find(b=>b.textContent==='取消選取').click());assert.equal(host.querySelector('#guide-ok').value,'125');
  await act(async()=>root.unmount());host.remove();
 });
+
+test('翻頁沿用後端每頁筆數及隱含品號條件，預設 all 不清除暫選',async()=>{
+ const {host,root}=mount();const queries=[];const guide={version:1,action:'',args:{},step:'target',missing:[],ready:false};
+ const props={presentation:'step-wizard',apiRequest:async()=>guide,conversation:{id:'paging',module:'report',messages:[]},module:'report',selected:null,signal:0,proposal:null,status:'',disabled:false,date:null,onReply:noop,onAudit:noop,onHome:noop};
+ function Harness(){const [workspace,setWorkspace]=useState({records:[{WIP_OPI_WDOEACICO_HIST_SID:'2001',WO:'WO-A',EQP_NO:'MC37'}],catalogs:{},page:1,page_size:1,total:2,query_context:{version:1,filters:{equipment:'MC37',part_no:'EPS-A',page:1,page_size:1}}});return h(GuidedFlow,{...props,workspace,onQuery:async filters=>{queries.push(filters);const result={...workspace,records:[{WIP_OPI_WDOEACICO_HIST_SID:'2002',WO:'WO-B',EQP_NO:'MC37'}],page:2,query_context:{version:2,filters}};setWorkspace(result);return result;}});}
+ await act(async()=>root.render(h(Harness)));await act(async()=>host.querySelector('input[type=radio]').click());
+ await act(async()=>[...host.querySelectorAll('button')].find(b=>b.textContent==='下一頁').click());assert.equal(queries[0].page_size,'1');assert.equal(queries[0].page,'2');assert.equal(queries[0].part_no,'EPS-A');assert.ok(host.querySelector('.candidate-apply').textContent.includes('WO-A'));assert.ok(host.textContent.includes('查看結果'));
+ await act(async()=>root.unmount());host.remove();
+});
