@@ -5,9 +5,10 @@ import { renderToStaticMarkup } from 'react-dom/server';
 import { createServer } from 'vite';
 
 const server = await createServer({ server: { middlewareMode: true, hmr: false }, appType: 'custom' });
-let ProposalBusinessSummary;
+let ProposalBusinessSummary, mesDate, setBusinessTimezone, productionStatus;
 try {
   ({ ProposalBusinessSummary } = await server.ssrLoadModule('/src/ProposalBusinessSummary.tsx'));
+  ({mesDate,setBusinessTimezone,productionStatus}=await server.ssrLoadModule('/src/presentation.ts'));
 } finally {
   await server.close();
 }
@@ -98,4 +99,41 @@ test('離頁修改採用確認卡內後端已解析摘要，不受目前頁面�
   const html = renderToStaticMarkup(createElement(ProposalBusinessSummary, { proposal, workspace: { records: [], catalogs: {} } }));
   assertAllocation(html, 'WO-A · 同品號右模穴（MOLD-SPLIT-R）', 4);
   assertAllocation(html, 'WO-A · 同品號左模穴（MOLD-SPLIT-L）', 3);
+});
+
+
+test('完工不以空異動清單假定無下一張，明確 null 才顯示；模穴保留零與原值',()=>{
+ const workspace={records:[],catalogs:{}};
+ const render=target=>renderToStaticMarkup(createElement(ProposalBusinessSummary,{workspace,proposal:{action:'report.complete',args:{schedule_id:'s'},changes:[],target}}));
+ assert.ok(!render({}).includes('無下一張排程'));
+ assert.ok(render({next_schedule:null}).includes('無下一張排程'));
+ const next=render({next_schedule:{start_time:'2026-11-02T13:00',orders:['WO-NEXT-FULL']}});
+ assert.ok(next.includes('WO-NEXT-FULL'));assert.ok(next.includes('2026-11-02 13:00:00'));assert.ok(!next.includes('T13:00'));
+ const html=renderToStaticMarkup(createElement(ProposalBusinessSummary,{workspace,proposal:{action:'report.cavities',args:{cavities:0},changes:[],target:{cavities_before:2,mold_detail_name:'左模穴',mold_detail_no:'LEFT'}}}));
+ assert.ok(html.includes('左模穴'));assert.ok(html.includes('LEFT'));assert.ok(html.includes('business-before">2'));assert.ok(html.includes('business-after">0'));
+});
+
+
+test('新增排程的空狀態原值不冒充修改前狀態',()=>{
+ const html=renderToStaticMarkup(createElement(ProposalBusinessSummary,{workspace:{records:[],catalogs:{}},proposal:{action:'schedule.save',args:{status:'DO'},changes:[{field:'PRODUCTION_STATUS',before:null,after:'DO'}]}}));
+ assert.ok(html.includes('量產'));assert.ok(!html.includes('business-before'));assert.ok(!html.includes('未提供狀態'));
+});
+
+
+test('時間依後端業務時區，未設定不猜測，未知狀態保留來源值',()=>{
+ setBusinessTimezone(undefined);
+ assert.equal(mesDate('2026-11-03T01:00:00Z'),'2026-11-03T01:00:00Z');
+ setBusinessTimezone('UTC+08:00');
+ assert.equal(mesDate('2026-11-03T01:00:00Z'),'2026-11-03 09:00:00');
+ assert.equal(mesDate('2026-11-03T01:00:00+07:00'),'2026-11-03 02:00:00');
+ assert.equal(mesDate('2026-11-03 01:00'),'2026-11-03 01:00:00');
+ assert.equal(mesDate('2026-11-03T01:00:00Z','UTC-03:30'),'2026-11-02 21:30:00');
+ assert.equal(productionStatus('CUSTOM'),'CUSTOM（未知狀態）');
+ assert.equal(productionStatus(null),'未提供狀態');
+ setBusinessTimezone(undefined);
+});
+test('刪除不重複空的影響框，清除換模仍明示進出站與取消完工',()=>{
+ const render=action=>renderToStaticMarkup(createElement(ProposalBusinessSummary,{proposal:{action,args:{},changes:[],target:{work_order:'WO-A'}},workspace:{records:[],catalogs:{}}}));
+ assert.ok(!render('report.delete').includes('business-impact'));
+ assert.match(render('mold.clear'),/進出站時間，並取消完工/);
 });

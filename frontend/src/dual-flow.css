@@ -286,3 +286,88 @@
 #mes-ai-chat-root .picker-ai .composer-area>.text-button{min-height:28px;padding:3px 0;font-size:13px;}
 
 #mes-ai-chat-root .report-picker-context {display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:12px;}
+
+/* 第二階段：同一草稿的選取、輸入與核對，不另建操作來源。 */
+#mes-ai-chat-root .picker-results {position:relative;}
+#mes-ai-chat-root .picker-stale {opacity:.45;pointer-events:none;}
+#mes-ai-chat-root .picker-refresh {position:sticky;top:0;z-index:3;display:flex;gap:8px;align-items:center;margin:0;min-height:28px;background:var(--background);border-top:2px solid var(--primary);font-size:12px;}
+#mes-ai-chat-root .picker-failure {border:1px solid #b65a62;border-radius:10px;color:var(--foreground);padding:16px;}
+#mes-ai-chat-root .picker-empty {flex-direction:column;text-align:center;gap:8px;}
+#mes-ai-chat-root .record-choices tr[tabindex] {cursor:pointer;}
+#mes-ai-chat-root .record-choices tr.is-selected {background:var(--accent);}
+#mes-ai-chat-root .record-choices tr:focus-visible {outline:2px solid var(--primary);outline-offset:-2px;}
+#mes-ai-chat-root .record-time {font-size:12px;line-height:1.6;white-space:normal;}
+#mes-ai-chat-root .record-state {white-space:nowrap;font-size:12px;}
+#mes-ai-chat-root .sheet-target {animation:target-applied 650ms ease-out;}
+@keyframes target-applied {from{box-shadow:inset 0 0 0 2px var(--primary);}to{box-shadow:inset 0 0 0 2px transparent;}}
+#mes-ai-chat-root .inline-candidate {position:relative;min-width:0;}
+#mes-ai-chat-root .candidate-suggestions {position:absolute;top:100%;left:0;min-width:100%;max-width:min(380px,85vw);z-index:15;padding:6px;border:1px solid var(--border);border-radius:8px;background:var(--background);box-shadow:0 8px 24px #0003;}
+#mes-ai-chat-root .candidate-suggestions ul {list-style:none;padding:0;margin:0;max-height:180px;overflow:auto;}
+#mes-ai-chat-root .candidate-suggestions li {display:grid;min-height:36px;padding:8px;cursor:pointer;}
+#mes-ai-chat-root .candidate-suggestions li[aria-selected=true],#mes-ai-chat-root .candidate-suggestions li:hover {background:var(--accent);}
+#mes-ai-chat-root .candidate-suggestions small {font-size:12px;}
+#mes-ai-chat-root .candidate-pages {display:flex;gap:8px;}
+#mes-ai-chat-root .candidate-pages button {min-height:32px;font-size:12px;}
+#mes-ai-chat-root .mold-stages .stage-current {padding:12px;border:1px solid var(--primary);border-radius:10px;background:var(--accent);}
+#mes-ai-chat-root .mold-stages .stage-current button {background:var(--primary);color:var(--primary-foreground);}
+#mes-ai-chat-root .mold-stages .stage-future {color:var(--muted-foreground);}
+#mes-ai-chat-root .mold-clear-action {border-top:1px solid var(--border);padding-top:16px;}
+#mes-ai-chat-root .mold-clear-action button {border-color:#b65a62;}
+#mes-ai-chat-root .proposal-confirmation {position:sticky;bottom:-20px;z-index:3;background:var(--background);border-top:1px solid var(--border);padding:12px 0 20px;}
+#mes-ai-chat-root .business-value.is-changed {background:var(--accent);border-left:3px solid var(--primary);padding-left:10px;}
+#mes-ai-chat-root .business-value.is-unchanged {color:var(--muted-foreground);}
+#mes-ai-chat-root .business-summary h3 {margin:20px 0 8px;font-size:14px;}
+#mes-ai-chat-root .dual-flow .guide-detail {grid-template-columns:minmax(0,1.2fr) minmax(0,1fr) 80px;}
+@media(prefers-reduced-motion:reduce){#mes-ai-chat-root .sheet-target {animation:none;}}
+@media(max-width:600px){
+ #mes-ai-chat-root .target-picker-dialog .record-choices .record-state {grid-column:2;grid-row:3;}
+ #mes-ai-chat-root .dual-flow .guide-detail {grid-template-columns:minmax(0,1fr);}
+ #mes-ai-chat-root .dual-flow .guide-detail>button.secondary {grid-column:auto;}
+ #mes-ai-chat-root .proposal-confirmation .proposal-actions {flex-wrap:wrap;}
+ #mes-ai-chat-root .mold-stages li {flex-wrap:wrap;}
+ #mes-ai-chat-root .mold-stages li>button {margin-left:36px;}
+}
+
+#mes-ai-chat-root .business-impact ul {display:flex;flex-wrap:wrap;gap:6px 16px;padding-left:18px;margin:6px 0;}
+#mes-ai-chat-root .business-impact {margin-top:12px;padding:10px;}
+#mes-ai-chat-root .proposal-confirmation .independent-confirm {padding:10px;margin:6px 0;min-height:44px;}
+
+#mes-ai-chat-root .picker-refresh {position:absolute;left:0;right:0;top:0;}
+@media(min-width:601px){
+ #mes-ai-chat-root .target-picker-dialog .record-choices :is(th,td) {padding:6px 8px;}
+ #mes-ai-chat-root .target-picker-dialog .record-choices small {line-height:16px;margin-top:2px;}
+ #mes-ai-chat-root .target-picker-dialog .record-choices strong {line-height:18px;}
+ #mes-ai-chat-root .target-picker-dialog .record-choices button {min-height:32px;padding:4px 8px;}
+ #mes-ai-chat-root .target-picker-dialog .operation-dialog-footer {padding:8px 20px;}
+}
+
+@media(max-width:600px){
+ #mes-ai-chat-root .dual-flow:not(.chat-only) {grid-template-columns:minmax(0,1fr)!important;grid-template-rows:minmax(0,1fr) auto!important;overflow:hidden;}
+ #mes-ai-chat-root .dual-flow:not(.chat-only)>.operation-primary {grid-row:1;padding:12px 16px;border-left:0;min-height:0;overflow:auto;}
+ #mes-ai-chat-root .dual-flow:not(.chat-only)>.chat-layout {grid-row:2;max-height:220px;min-height:0;--aui-assistant-action-reserve:0px;border-top:1px solid var(--border);}
+ #mes-ai-chat-root .dual-flow:not(.chat-only) .conversation-scroll {flex:none;max-height:108px;min-height:0;padding:8px 16px;overflow:auto;}
+ #mes-ai-chat-root .dual-flow:not(.chat-only) .pane-heading {display:none;}
+ #mes-ai-chat-root .dual-flow:not(.chat-only) .composer-area {padding:6px 12px;}
+ #mes-ai-chat-root .dual-flow:not(.chat-only) .aui-composer-input {min-height:36px;max-height:48px;}
+ #mes-ai-chat-root .dual-flow:not(.chat-only) .composer-footnote {display:none;}
+}
+
+#mes-ai-chat-root .dual-flow .guide-navigation {position:sticky;bottom:0;z-index:2;border-top:1px solid var(--border);}
+
+@media(max-width:600px){
+ #mes-ai-chat-root .dual-flow:not(.chat-only) [data-slot="aui_composer-shell"] {flex-direction:row;align-items:flex-end;}
+ #mes-ai-chat-root .dual-flow:not(.chat-only) .aui-composer-input {flex:1;min-width:0;}
+ #mes-ai-chat-root .dual-flow:not(.chat-only) .aui-composer-action-wrapper {flex:none;}
+ #mes-ai-chat-root .dual-flow:not(.chat-only) .composer-area {margin:0;}
+}
+
+/* 核對底列填滿捲動區底部，避免下方透出被遮住的明細。 */
+#mes-ai-chat-root .dual-flow .proposal-confirmation {box-shadow:0 24px 0 var(--background);}
+#mes-ai-chat-root .mold-stages .stage-current {padding:12px;box-sizing:border-box;}
+#mes-ai-chat-root .mold-stages li>div {min-width:0;flex:1;}
+#mes-ai-chat-root .mold-stages li>button {flex:none;margin-right:0;padding:8px 12px;}
+#mes-ai-chat-root .mold-clear-action button {border:1px solid var(--destructive);color:var(--destructive);border-radius:8px;padding:8px 12px;background:var(--error-surface);}
+@media(max-width:600px){
+ #mes-ai-chat-root .dual-flow .proposal-confirmation {bottom:-12px;padding-bottom:12px;}
+ #mes-ai-chat-root .dual-flow:not(.chat-only) .aui-composer-input::placeholder {white-space:nowrap;}
+}

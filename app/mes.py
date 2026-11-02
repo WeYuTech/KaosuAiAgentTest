@@ -396,8 +396,12 @@ class MesBridge:
             reports=self._select(cursor,OUTPUT,f"{PK[EXECUTION]} IN ({','.join('?' for _ in eids)}) AND ENABLE_FLAG=?",(*eids,"Y"))
             oids=list(reports)
             defects=self._select(cursor,DEFECT,f"{PK[OUTPUT]} IN ({','.join('?' for _ in oids)})",oids) if oids else {}
+            details = {sid: self._query_rows(cursor, "dbo.GET_ZZ_KAOSU_PROD_SCHEDULE_DETAIL(?) AS d", (sid,)) for sid in sids}
             for row in rows:
                 hist=executions.get(row[PK[EXECUTION]],{})
+                detail = next((d for d in details.get(row.get(PK[SCHEDULE]), []) if str(d.get(PK[DETAIL])) == str(hist.get(PK[DETAIL]))), {})
+                row["mold_detail_no"] = detail.get("TOL_DETALS_NO")
+                row["mold_detail_name"] = detail.get("TOL_DETALS_NAME")
                 row["OPERATION_CODE"]="EPS-FORMING"
                 for field in ("REAL_CHECK_IN_TIME","ZZ_MODLE_UPLOAD_START","ZZ_MODLE_UPLOAD_END","ZZ_MODLE_REMOVE_START","ZZ_MODLE_REMOVE_END"):
                     row[field]=hist.get(field)
@@ -511,8 +515,12 @@ class MesBridge:
         tables["EQP_MASTER"] = self._select(cursor, "EQP_MASTER", "EQP_NO=?", (eqp,), lock)
         cursor.execute("SELECT REASON_CODE,REASON_NAME FROM dbo.BAS_REASON" + hint + " WHERE REASON_TYPE=? ORDER BY REASON_CODE", "NG_EPS")
         reasons = [{"NG_CODE_NO": str(r[0]), "NG_CODE_NAME": str(r[1])} for r in cursor.fetchall()]
+        molds = []
+        if action == "report.cavities":
+            for mold_id in sorted({r.get("TOL_SID") for r in tables[SCHEDULE].values() if r.get("TOL_SID")}):
+                molds.append({"TOL_SID": mold_id, "DETAILS": self._query_rows(cursor, "dbo.GET_ZZ_KAOSU_PLAN_TOL_DETAILS(?) AS d", (mold_id,))})
         return {"mode": "live", "next_id": 9000000000000000, "tables": tables,
-                "catalogs": {"defect_reasons": reasons, "parts": [], "molds": [], "work_orders": []}, "iot": {}}
+                "catalogs": {"defect_reasons": reasons, "parts": [], "molds": molds, "work_orders": []}, "iot": {}}
 
     def _version(self, state, identity, module, action, args):
         return hmac.new(self._signing_key, dumps({"state": state, "actor": identity["id"], "module": module, "action": action, "args": args}).encode(), hashlib.sha256).hexdigest()
@@ -550,6 +558,8 @@ class MesBridge:
                           "work_order": ", ".join(sorted({r["WO"] for r in affected if r.get("WO")})),
                           "schedule_id": sid, "execution_id":eid, "report_id":args.get("report_id"),
                           "affected_orders": sorted({r["WO"] for r in affected if r.get("WO")})}
+                if action == "report.complete":
+                    target.update(domain.completion_confirmation_target(after, sid))
                 if eid and len(affected) == 1:
                     target.update(domain.execution_confirmation_target(state, affected[0]))
                 if args.get("report_id"):

@@ -28,10 +28,10 @@ IDENTITIES = {
 ACTION_LABELS = {"schedule.save": "儲存排程", "report.add": "新增人工報工", "report.update": "修改人工報工",
                  "report.delete": "刪除人工報工", "report.cavities": "修改報工模穴", "report.complete": "整張排程完工",
                  "mold.mount_start": "開始上模並進站", "mold.mount_finish": "完成上模", "mold.unmount_start": "開始下模",
-                 "mold.unmount_finish": "完成下模、出站及完工", "mold.clear": "清除換模與進出站時間並取消完工"}
+                 "mold.unmount_finish": "完成下模、出站及完工", "mold.clear": "清除換模紀錄"}
 
 
-def proposal_target(state, args, after=None):
+def proposal_target(state, args, after=None, action=None):
     from app.domain import EXECUTION, OUTPUT, SCHEDULE, schedule_confirmation_target, execution_confirmation_target, report_confirmation_target
     tables = state["tables"]
     execution_id = args.get("execution_id")
@@ -52,6 +52,9 @@ def proposal_target(state, args, after=None):
         target.update(report_confirmation_target(state, report_id))
     if after is not None and "details" in args:
         target.update(schedule_confirmation_target(state, after, args))
+    if action == "report.complete" and after is not None:
+        from app.domain import completion_confirmation_target
+        target.update(completion_confirmation_target(after, schedule_id))
     return target
 
 
@@ -341,7 +344,7 @@ def create_app(db_path=None, model=None, intent_classifier=None):
                 after = call_domain(execute, state, body.module, body.action, body.args, actor, instant)
                 diff = changes(state, after)
                 version = digest(state)
-                target = proposal_target(state, body.args, after)
+                target = proposal_target(state, body.args, after, body.action)
                 enabled = True
                 policies = {}
             else:

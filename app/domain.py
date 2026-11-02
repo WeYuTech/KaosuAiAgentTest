@@ -88,8 +88,22 @@ def execution_confirmation_target(state, execution):
     detail = state['tables'].get(DETAIL, {}).get(execution.get('ZZ_KAOSU_PROD_SCHEDULE_DETAIL_SID'), {})
     part_no = execution.get('PART_NO') or detail.get('PART_NO')
     part = next((p for p in state.get('catalogs', {}).get('parts', []) if p.get('PART_NO') == part_no), {})
-    return {'part_no': part_no, 'part_spec': execution.get('PART_SPEC') or detail.get('PART_SPEC') or part.get('PART_SPEC'),
+    mold_detail = next((d for m in state.get('catalogs', {}).get('molds', []) for d in m.get('DETAILS', []) if d.get('TOL_DETALS_SID') == detail.get('TOL_DETALS_SID')), {})
+    return {'cavities_before': execution.get('OPI_CAV'), 'mold_detail_name': mold_detail.get('TOL_DETALS_NAME'), 'mold_detail_no': mold_detail.get('TOL_DETALS_NO'), 'part_no': part_no, 'part_spec': execution.get('PART_SPEC') or detail.get('PART_SPEC') or part.get('PART_SPEC'),
             'execution_time': execution.get('REAL_CHECK_IN_TIME') or execution.get('CHECK_IN_TIME')}
+
+
+def completion_confirmation_target(after, schedule_id):
+    """以執行過卡控的預覽狀態辨識下一張排程；不以異動清單缺項推斷。"""
+    members = _executions(after, schedule_id)
+    if not members:
+        return {}
+    remaining = sorted([r for r in after["tables"][EXECUTION].values()
+                        if r["COMPLETED"] == "N" and r["EQP_NO"] == members[0]["EQP_NO"]
+                        and r["SHIFT_DAY"] == members[0]["SHIFT_DAY"]],
+                       key=lambda r: (r.get("CHECK_IN_TIME") or "", r["WIP_OPI_WDOEACICO_HIST_SID"]))
+    return {"next_schedule": {"start_time": remaining[0].get("REAL_CHECK_IN_TIME"),
+                              "orders": sorted({r.get("WO") for r in _executions(after, remaining[0]["ZZ_KAOSU_PROD_SCHEDULE_SID"]) if r.get("WO")})} if remaining else None}
 
 
 def schedule_confirmation_target(before, after, args):
@@ -236,6 +250,7 @@ def query(state, module, filters=None):
                 eid = row["WIP_OPI_WDOEACICO_HIST_SID"]
                 schedule = _row(state, SCHEDULE, row["ZZ_KAOSU_PROD_SCHEDULE_SID"])
                 row["TOL_NO"] = _pick(state["catalogs"]["molds"], "TOL_SID", schedule["TOL_SID"], "模具")["TOL_NO"]
+                row.update(execution_confirmation_target(state, row))
                 reports = [deepcopy(r) for r in state["tables"][OUTPUT].values() if r["WIP_OPI_WDOEACICO_HIST_SID"] == eid and r["ENABLE_FLAG"] == "Y"]
                 reports.sort(key=lambda r: (r["CREATE_TIME"], r["WIP_OPI_WDOEACICOOUTPUT_HIST_SID"]))
                 for report in reports:
