@@ -234,3 +234,10 @@
 
 /* 未知結果的唯一查核入口固定在作業可視區底部。 */
 .proposal .write-disabled:has(button){position:sticky;bottom:0;background:var(--background);z-index:2;}
+
+.connection-state{display:flex;flex:1;flex-direction:column;align-items:center;justify-content:center;gap:16px;padding:32px;text-align:center;}
+.connection-state h1{font-size:24px;margin:0;}.connection-state p{max-width:440px;}
+.welcome-card.access-problem{border:1px solid var(--destructive);background:var(--error-surface);border-radius:12px;padding:20px;margin-bottom:20px;}
+.access-problem .welcome-description{display:block!important;}.access-reason{margin-top:12px;}
+.expiry-alert{margin:16px 0;font-size:16px;}.expiry-alert p,.panel-error p{margin:8px 0;}
+.panel-error{margin:16px;flex-shrink:0;}

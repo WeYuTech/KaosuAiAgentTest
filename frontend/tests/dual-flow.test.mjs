@@ -16,7 +16,8 @@ const {useOperationMode,readOperationMode,operationModeKey}=await server.ssrLoad
 const {ApiError}=await server.ssrLoadModule('/src/api.ts');
 const {useEntry}=await server.ssrLoadModule('/src/use-entry.ts');
 const {rememberOperationFocus,operationFocusTarget}=await server.ssrLoadModule('/src/operation-focus.ts');
-const {AuditRecords}=await server.ssrLoadModule('/src/AuditRecords.tsx');
+const {budgetCaption,money}=await server.ssrLoadModule('/src/BudgetSummary.tsx');
+const {AuditRecords,auditBusinessChanges}=await server.ssrLoadModule('/src/AuditRecords.tsx');
 await server.close();after(()=>window.happyDOM.abort());
 afterEach(()=>sessionStorage.clear());
 const noop=()=>{};
@@ -386,6 +387,20 @@ test('X01 未保存草稿在重新載入後先比較，不自動覆寫伺服器'
 test('A01 稽核使用實際差異、業務名稱與 MES 年份時間，不捏造未知結果',async()=>{
  const {host,root}=mount();const records=[{id:'proof',time:'2026-11-03T01:00:00+00:00',actor_name:'現場人員',equipment:'MC37',action:'report.update',status:'succeeded',changes:[{field:'OK_QTY',before:100,after:125},{field:'ENABLE_FLAG',before:'Y',after:'Y'},{field:'INTERNAL_KEY',before:null,after:'technical-only'}]},{id:'unresolved',time:'2026-11-03T01:01:00+00:00',actor:'現場人員',action:'report.add',status:'unknown',changes:[]}];
  await act(async()=>root.render(h(AuditRecords,{records,timezone:'UTC+07:00'})));
- assert.match(host.textContent,/修改報工/);assert.match(host.textContent,/2026-11-03 08:00:00/);assert.match(host.querySelector('.audit-changes').textContent,/100 → 125/);assert.match(host.querySelector('.audit-changes').textContent,/啟用 · 未變更/);assert.doesNotMatch(host.querySelector('.audit-changes').textContent,/INTERNAL_KEY/);assert.match(host.querySelectorAll('.audit-record')[1].textContent,/結果待核對/);assert.match(host.querySelectorAll('.audit-record')[1].textContent,/尚無可證明/);
+ assert.match(host.textContent,/修改報工/);assert.match(host.textContent,/2026-11-03 08:00:00/);assert.match(host.querySelector('.audit-changes').textContent,/100 → 125/);assert.doesNotMatch(host.querySelector('.audit-changes').textContent,/啟用/);assert.doesNotMatch(host.querySelector('.audit-changes').textContent,/INTERNAL_KEY/);assert.match(host.querySelectorAll('.audit-record')[1].textContent,/結果待核對/);assert.match(host.querySelectorAll('.audit-record')[1].textContent,/尚無可證明/);
  await act(async()=>root.unmount());host.remove();
+});
+
+
+test('審查 A01 業務異動區分新增修改刪除，省略系統欄位與空白備註',async()=>{
+ const {host,root}=mount();const changes=[{field:'NG_QTY',before:null,after:0},{field:'OK_QTY',before:100,after:125},{field:'COMMENT',before:'舊備註',after:null},{field:'COMMENT',before:null,after:''},{field:'CREATE_TIME',before:null,after:'2026-11-03'},{field:'EDIT_TIME',before:'a',after:'b'},{field:'OPI_CAV',before:2,after:2}];
+ assert.equal(auditBusinessChanges(changes).length,3);
+ await act(async()=>root.render(h(AuditRecords,{records:[{id:'business',action:'report.update',status:'succeeded',changes}],timezone:'UTC+07:00'})));
+ const text=host.querySelector('.audit-changes').textContent;assert.match(text,/新增：0/);assert.match(text,/修改：100 → 125/);assert.match(text,/刪除：舊備註/);assert.doesNotMatch(text,/建立時間|更新時間|— →|模穴/);
+ await act(async()=>root.unmount());host.remove();
+});
+
+test('審查 A02 側欄與費用明細共用未知值規則，不把 null 轉成零',()=>{
+ for(const value of [null,undefined,NaN,'0']){assert.equal(money(value),'尚未取得用量');assert.equal(budgetCaption({spent_usd:value,limit_usd:20}),'尚未取得用量');}
+ assert.equal(budgetCaption({spent_usd:0,limit_usd:20}),'US$0.00 / US$20.00');
 });

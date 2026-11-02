@@ -1,5 +1,13 @@
 /* 固定介面詞彙：中文原文為鍵，不翻譯 MES 主檔名稱或歷史訊息。 */
 export const translations: Record<string, [string, string]> = Object.fromEntries(`
+尚無可證明的業務欄位異動|No verified business field changes|ยังไม่มีการเปลี่ยนแปลงข้อมูลธุรกิจที่ยืนยันได้
+正在連線至作業服務|Connecting to the operation service|กำลังเชื่อมต่อบริการปฏิบัติงาน
+正在確認連線與登入狀態，完成後才能開始操作。|Checking connection and sign-in. Wait before starting an operation.|กำลังตรวจสอบการเชื่อมต่อและเข้าสู่ระบบ โปรดรอก่อนเริ่มงาน
+沒有這項操作的權限|You do not have permission for this operation|คุณไม่มีสิทธิ์ดำเนินการนี้
+登入已逾時|Session expired|เซสชันหมดอายุ
+請聯絡主管確認權限，再重新登入 MES。原作業與未送文字仍保留。|Contact your supervisor to check permissions, then sign in to MES again. Your operation and unsent text are retained.|ติดต่อหัวหน้างานเพื่อตรวจสอบสิทธิ์ แล้วเข้าสู่ MES อีกครั้ง เก็บงานและข้อความที่ยังไม่ส่งไว้แล้ว
+請重新登入 MES，再重新確認身分。原作業與未送文字仍保留。|Sign in to MES again and verify your identity. Your operation and unsent text are retained.|เข้าสู่ MES อีกครั้งและยืนยันตัวตน เก็บงานและข้อความที่ยังไม่ส่งไว้แล้ว
+資料載入失敗|Failed to load data|โหลดข้อมูลไม่สำเร็จ
 權限不足，無法繼續此操作。|Permission denied. This operation cannot continue.|ไม่มีสิทธิ์ดำเนินการนี้
 登入已逾時，請重新登入 MES。未送出的文字與草稿已保留，重新驗證原身分後可接續。|Session expired. Sign in to MES again with the same identity to resume your retained text and draft.|เซสชันหมดอายุ เข้าสู่ระบบ MES ด้วยบัญชีเดิมเพื่อทำต่อ ข้อความและฉบับร่างยังคงอยู่
 已讀取伺服器聊天紀錄；原訊息仍保留，未重新送出。若紀錄尚未更新，可稍後再查核。|Server history loaded. Your original message is retained and has not been resent. Check again later if needed.|โหลดประวัติจากเซิร์ฟเวอร์แล้ว เก็บข้อความเดิมและไม่ได้ส่งซ้ำ ตรวจสอบอีกครั้งได้
@@ -45,6 +53,7 @@ MES 業務時區|MES business timezone|เขตเวลาธุรกิจ M
 這個資料範圍沒有快照紀錄，不代表零產出。|No snapshot records in this scope; this does not mean zero production.|ไม่มีบันทึกภาพรวมในขอบเขตนี้ ไม่ได้หมายถึงผลผลิตเป็นศูนย์
 沒有可確認的完整報告，不代表零產出。|No verified complete report is available; this does not mean zero production.|ยังไม่มีรายงานสมบูรณ์ที่ยืนยันได้ ไม่ได้หมายถึงผลผลิตเป็นศูนย์
 新增|Add|เพิ่ม
+修改|Change|แก้ไข
 新增一份唯讀報告，依指定時間整理前一排程日資料。|Add a read-only report to collect the previous schedule-day data at a specified time.|เพิ่มรายงานอ่านอย่างเดียวเพื่อรวบรวมข้อมูลวันจัดตารางก่อนหน้า ณ เวลาที่กำหนด
 執行歷史|Run history|ประวัติการรัน
 可至「更多功能 → 已刪除聊天」還原；不影響 MES 業務資料與稽核紀錄。|Restore via More → Deleted chats. MES business data and audit records are unaffected.|คืนค่าได้ที่เพิ่มเติม → แชทที่ลบ ไม่กระทบข้อมูลธุรกิจ MES หรือบันทึกตรวจสอบ

@@ -19,7 +19,7 @@ def create_preview():
     if database.exists():
         raise RuntimeError('必須使用新的 fixture DB，不可沿用既有資料。')
     model.budget_store = lambda: Store(database.with_name('fixture-budget.db'))
-    model.invoke = lambda payload: SimpleNamespace(output=[], output_text='模擬分類：唯讀查詢已完成；此段沒有模型呼叫，也未寫入 MES。')
+    model.invoke = lambda payload: SimpleNamespace(output=[], output_text='已完成查詢，請核對工單與設備資料。')
     app = create_app(database, intent_classifier=lambda conversation: {'intent':'readonly','module':'report'})
     with app.state.store.transaction() as db:
         app.state.store.put(db, 'STATE', 'simulation', fixture_state())

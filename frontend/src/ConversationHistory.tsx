@@ -1,3 +1,4 @@
+import {budgetCaption} from './BudgetSummary';
 import {TooltipProvider,Tooltip,TooltipTrigger,TooltipContent} from './components/ui/tooltip';
 import {ThreadListNew,ThreadListSkeleton} from './components/assistant-ui/elements/thread-list.aui';
 import {HistorySearchDialog} from './HistorySearchDialog';
@@ -110,7 +111,7 @@ export function ConversationHistory({ actor, current, overlay, locked, busy, ref
         {error&&<button className="secondary" disabled={loading} onClick={()=>setNonce(v=>v+1)}>{t('重試')}</button>}
       </div>}
     </ThreadListPrimitive.Root>
-    <div className="history-footer"><button className="sidebar-budget" onClick={usage} disabled={!actor} aria-label={t('用量與使用統計')}><span><strong>{t('用量')}</strong><span>{!actor ? t('尚未登入') : budget && typeof budget.spent_usd==='number' && Number.isFinite(budget.spent_usd) && typeof budget.limit_usd==='number' && Number.isFinite(budget.limit_usd) ? `US$${budget.spent_usd.toFixed(2)} / US$${budget.limit_usd.toFixed(2)}` : t('尚未取得用量')}</span></span><span className="budget-track"><span style={{width:budget?`${Math.min(100,Math.max(0,Number(budget.limit_usd)>0?(Number(budget.spent_usd||0)+Number(budget.reserved_usd||0))/Number(budget.limit_usd)*100:100))}%`:'0%'}}/></span></button>{locked&&<p role="status">{t('請先完成、取消或查核原操作，再切換聊天。')}</p>}</div>
+    <div className="history-footer"><button className="sidebar-budget" onClick={usage} disabled={!actor} aria-label={t('用量與使用統計')}><span><strong>{t('用量')}</strong><span>{!actor ? t('尚未登入') : budgetCaption(budget)}</span></span><span className="budget-track" hidden={!budget||typeof budget.spent_usd!=='number'||!Number.isFinite(budget.spent_usd)}><span style={{width:budget?`${Math.min(100,Math.max(0,Number(budget.limit_usd)>0?(Number(budget.spent_usd||0)+Number(budget.reserved_usd||0))/Number(budget.limit_usd)*100:100))}%`:'0%'}}/></span></button>{locked&&<p role="status">{t('請先完成、取消或查核原操作，再切換聊天。')}</p>}</div>
     <HistorySearchDialog open={searchOpen} key={`${actor}:${scope}`} actor={actor} scope={scope} request={request} locked={locked||busy||saving} close={()=>setSearchOpen(false)} returnFocus={()=>searchButton.current} select={select}/>
     {dialog&&<OperationDialog open={dialogOpen} returnFocus={()=>trigger.current?.isConnected?trigger.current:searchButton.current} title={t(dialog.kind==='rename'?'重新命名':'刪除聊天？')} close={closeDialog} locked={saving} className="history-dialog"><div ref={dialogRef}>
       {dialog.kind==='delete'&&<p>{t('可至「更多功能 → 已刪除聊天」還原；不影響 MES 業務資料與稽核紀錄。')}</p>}

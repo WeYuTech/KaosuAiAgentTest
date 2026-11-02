@@ -46,7 +46,8 @@ for (const [locale, languageLabel, themeLabel, moduleLabel] of [
     const html = renderToStaticMarkup(createElement(App, { initialOpen: true }));
     // Radix Portal 開啟後才掛載；語言／主題選項改由 radix-menu.test.mjs 實際開選單驗證。
     assert.ok(html.includes(`aria-label="${t('更多功能')}"`));
-    assert.ok(html.includes(moduleLabel));
+    assert.ok(html.includes(t('正在連線至作業服務')));
+    assert.ok(!html.includes('id="entry-input"'), '連線未確認前不呈現可送出的首頁');
     if (locale !== 'zh-TW') assert.ok(!html.includes('今天，想完成什麼作業？'));
   });
 }
