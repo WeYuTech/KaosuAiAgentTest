@@ -199,3 +199,17 @@ test('翻頁沿用後端每頁筆數及隱含品號條件，預設 all 不清除
  await act(async()=>[...host.querySelectorAll('button')].find(b=>b.textContent==='下一頁').click());assert.equal(queries[0].page_size,'1');assert.equal(queries[0].page,'2');assert.equal(queries[0].part_no,'EPS-A');assert.ok(host.querySelector('.candidate-apply').textContent.includes('WO-A'));assert.ok(host.textContent.includes('查看結果'));
  await act(async()=>root.unmount());host.remove();
 });
+
+
+test('核對底列返回沿用原 Guide，未知結果仍禁止返回修改',async()=>{
+ const {host,root}=mount();const calls=[];const handle={current:null};
+ const proposal={id:'original',digest:'same',action:'report.add',status:'pending',args:{execution_id:'2001',ok:125,defects:[]}};
+ const props={ref:handle,reviewActionsExternal:true,presentation:'step-wizard',apiRequest:async(path,body)=>{calls.push({path,body});return {version:2,action:'report.add',args:proposal.args,step:'review',missing:[],ready:true,proposal};},conversation:{id:'back',messages:[],module:'report'},module:'report',workspace:{records:[],catalogs:{}},selected:null,signal:0,proposal,status:'unknown',disabled:false,date:null,onReply:noop,onAudit:noop,onHome:noop};
+ await act(async()=>root.render(h(GuidedFlow,props)));await act(async()=>handle.current.backToEdit());
+ assert.equal(host.querySelector('#guide-ok'),null);
+ await act(async()=>root.render(h(GuidedFlow,{...props,status:''})));
+ assert.ok(![...host.querySelectorAll('button')].some(b=>b.textContent.includes('修改資料')));
+ await act(async()=>handle.current.backToEdit());assert.equal(host.querySelector('#guide-ok').value,'125');
+ await act(tick);assert.equal(calls.filter(c=>c.body).length,0);assert.equal(proposal.id,'original');
+ await act(async()=>root.unmount());host.remove();
+});

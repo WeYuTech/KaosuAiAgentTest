@@ -666,4 +666,17 @@ MES 受限工具助理|MES constrained-tool agent|ผู้ช่วย MES ท�
 查詢未完成|Query incomplete|การสอบถามไม่เสร็จ
 執行中|Active|ทำงานอยู่
 已刪除|Deleted|ลบแล้ว
+正在查詢與整理資料…|Querying and organizing data…|กำลังค้นหาและจัดเรียงข้อมูล…
+已停止等待。原請求仍在處理，完成後會顯示結果；目前不會重送。|Stopped waiting. The original request is still processing; its result will appear when complete. It will not be resent.|หยุดรอแล้ว คำขอเดิมยังอยู่ระหว่างดำเนินการ ผลลัพธ์จะแสดงเมื่อเสร็จ และจะไม่ส่งซ้ำ
+停止等待|Stop waiting|หยุดรอ
+已停止等待；原請求仍在處理|Stopped waiting; the original request is still processing|หยุดรอแล้ว คำขอเดิมยังอยู่ระหว่างดำเนินการ
+工單查詢結果|Work order results|ผลการค้นหาใบสั่งผลิต
+工單／品號|Work order / Part|ใบสั่งผลิต / รหัสชิ้นงาน
+人工不良|Manually reported defects|จำนวนของเสียที่รายงานด้วยตนเอง
+查看全部|View all|ดูทั้งหมด
+顯示 {0}–{1}／{2} 筆|Showing {0}–{1} of {2} records|แสดง {0}–{1} จาก {2} รายการ
+顯示 {0}–{1} 筆；總筆數未提供|Showing {0}–{1} records; total not provided|แสดง {0}–{1} รายการ โดยไม่มีจำนวนรวม
+已顯示全部結果|All results shown|แสดงผลลัพธ์ทั้งหมดแล้ว
+目前為部分結果，請查看全部資料|Partial results; view all data for more|ผลลัพธ์บางส่วน โปรดดูข้อมูลทั้งหมด
+返回修改|Back to edit|กลับไปแก้ไข
 ` .trim().split('\n').map(line => { const [key, en, th] = line.split('|'); return [key, [en, th]]; }));

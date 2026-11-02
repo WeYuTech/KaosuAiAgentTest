@@ -8,6 +8,10 @@ const {createElement:h,act,useState}=await import('react');const {createRoot}=aw
 const {createServer}=await import('vite');const server=await createServer({server:{middlewareMode:true,hmr:false,ws:false},appType:'custom'});
 const {MesAssistantProvider,createAssistantAdapter}=await server.ssrLoadModule('/src/chat/assistant-runtime.tsx');
 const {ConversationComposer}=await server.ssrLoadModule('/src/ConversationComposer.tsx');
+const {RequestProgress}=await server.ssrLoadModule('/src/RequestProgress.tsx');
+const {ThreadMessages}=await server.ssrLoadModule('/src/components/assistant-ui/elements/thread.aui.tsx');
+const {ChatQueryResults}=await server.ssrLoadModule('/src/ChatQueryResults.tsx');
+const {setLocale,t}=await server.ssrLoadModule('/src/i18n.ts');
 const {ConversationHistory}=await server.ssrLoadModule('/src/ConversationHistory.tsx');
 const {PanelLoadBoundary}=await server.ssrLoadModule('/src/PanelLoadBoundary.tsx');
 const {copyTextWithFallback,copyUsingSelection}=await server.ssrLoadModule('/src/hooks/use-copy-to-clipboard.ts');await server.close();
@@ -78,4 +82,51 @@ test('換帳號立刻撤下舊聊天列，晚到清單不可重現前人資料',
   await act(async()=>root.render(h(Harness,{actor:'丙'})));
   await act(async()=>pending.shift()({records,total:1,page:1,page_size:30}));assert.equal(host.textContent.includes('甲的私人作業'),false);
   await act(async()=>root.unmount());host.remove();
+});
+
+
+test('等待狀態、停止鍵與查詢卡的可見文字及無障礙名稱均隨語言切換',async()=>{
+ const host=document.createElement('div');document.body.append(host);const root=createRoot(host);
+ try{
+  for(const locale of ['en','th']){
+   setLocale(locale);
+   const render=stopped=>h(MesAssistantProvider,{state:{...base,busy:true}},h('div',null,h(RequestProgress,{stopped}),h(ConversationComposer,{id:'localized',value:'',onChange:()=>{},placeholder:'',busy:true,disabled:true,onStop:()=>{},stopped}),h(ChatQueryResults,{workspace:{records:[],catalogs:{},total:0,page:1,page_size:20},onAll:()=>{}})));
+   await act(async()=>root.render(render(false)));
+   assert.notEqual(t('正在查詢與整理資料…'),'正在查詢與整理資料…');assert.equal(host.querySelector('[role=status]').textContent,t('正在查詢與整理資料…'));
+   assert.equal(host.querySelector('.aui-composer-send').getAttribute('aria-label'),t('停止等待'));
+   assert.equal(host.querySelector('section').getAttribute('aria-label'),t('工單查詢結果'));
+   assert.doesNotMatch(host.textContent,/[\u3400-\u9fff]/);
+   await act(async()=>root.render(render(true)));
+   assert.match(host.querySelector('[role=status]').textContent,locale==='en'?/original request is still processing/:/คำขอเดิม/);
+   assert.doesNotMatch(host.textContent,/[\u3400-\u9fff]/);
+  }
+ }finally{setLocale('zh-TW');await act(async()=>root.unmount());host.remove();}
+});
+
+test('查詢卡保留整頁資料，區分分頁、完整、空結果與未知總數',async()=>{
+ const host=document.createElement('div');document.body.append(host);const root=createRoot(host);let opened=0;
+ const records=Array.from({length:6},(_,i)=>({WO:'WO-'+(i+1),PART_NO:'P',MANUAL_OK:i,MANUAL_NG:0}));
+ const render=workspace=>h(ChatQueryResults,{workspace:{catalogs:{},...workspace},onAll:()=>opened++});
+ try{
+  await act(async()=>root.render(render({records,page:2,page_size:6,total:20})));
+  assert.equal(host.querySelectorAll('tbody tr').length,6);assert.match(host.textContent,/顯示 7–12／20 筆/);assert.match(host.textContent,/部分結果/);
+  await act(async()=>host.querySelector('button').click());assert.equal(opened,1);
+  await act(async()=>root.render(render({records,page:1,page_size:20,total:6})));
+  assert.match(host.textContent,/已顯示全部結果/);
+  await act(async()=>root.render(render({records:[],total:0})));
+  assert.match(host.textContent,/顯示 0–0／0 筆/);
+  await act(async()=>root.render(render({records})));
+  assert.match(host.textContent,/總筆數未提供/);assert.doesNotMatch(host.textContent,/已顯示全部結果/);
+ }finally{await act(async()=>root.unmount());host.remove();}
+});
+
+
+test('精靈可讀到最新助理補問，切回聊天保留全部訊息且不重新送出',async()=>{
+ const host=document.createElement('div');document.body.append(host);const root=createRoot(host);let sent=0;
+ const messages=[{role:'user',content:'查工單'},{role:'assistant',content:'找到工單'},{role:'user',content:'我要報工'},{role:'assistant',content:'請補充本次人工良品數量？'}];
+ const render=compact=>h(MesAssistantProvider,{state:{...base,messages,onSend:()=>sent++}},h(ThreadMessages,{latestAssistantOnly:compact}));
+ try{
+  await act(async()=>root.render(render(true)));assert.equal(host.querySelectorAll('[data-role]').length,1);assert.match(host.textContent,/請補充本次人工良品數量/);
+  await act(async()=>root.render(render(false)));assert.equal(host.querySelectorAll('[data-role]').length,4);assert.match(host.textContent,/找到工單/);assert.equal(sent,0);
+ }finally{await act(async()=>root.unmount());host.remove();}
 });

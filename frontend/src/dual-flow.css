@@ -13,7 +13,7 @@
 .dual-flow .guide-field {font-size:14px;gap:5px;margin:0;}
 #mes-ai-chat-root .dual-flow :is(input:not([type=radio]):not([type=checkbox]),select) {min-height:40px;font-size:14px;padding:8px 10px;}
 #mes-ai-chat-root .dual-flow :is(.guide-navigation,.guide-options,.candidate-apply) button {min-height:40px;font-size:14px;padding:8px 12px;}
-.dual-flow .guide-navigation {margin-top:10px;gap:8px;padding-block:8px;background:var(--background);position:sticky;bottom:0;z-index:2;}
+.dual-flow .guide-navigation {margin-top:10px;gap:8px;padding-block:8px;background:var(--background);position:static;}
 .dual-flow .guide-options {margin:0;gap:8px;}
 .dual-flow .guide-defect {display:grid;grid-template-columns:minmax(0,1fr) minmax(70px,.45fr) auto;gap:8px;align-items:end;padding:0;border:0;}
 .dual-flow .guide-defect>button {min-height:40px;padding:8px;font-size:13px;}
@@ -60,7 +60,7 @@
 .dual-flow .business-note {font-size:12px;margin:10px 0;}
 .dual-flow .business-caption {font-size:12px;}
 .dual-flow .proposal details,.dual-flow .expiry {font-size:12px;margin:8px 0;}
-.dual-flow .proposal-confirmation {position:sticky;bottom:0;background:var(--background);padding:8px 0;border-top:1px solid var(--border);z-index:2;}
+.dual-flow .proposal-confirmation {position:static;background:var(--background);padding:8px 0;border-top:1px solid var(--border);}
 .dual-flow .proposal-actions {padding:4px 0;margin-top:4px;}
 .dual-flow>.operation-primary {scroll-padding-bottom:140px;}
 .dual-flow .proposal-actions button {font-size:14px;min-height:40px;}
@@ -171,6 +171,7 @@
 .dual-flow .composer-area {flex:none;}
 .chat-query-results {border:1px solid var(--border);border-radius:12px;overflow:hidden;font-size:13px;}
 .chat-query-results>p {margin:0;padding:13px 16px;}
+.chat-query-results>p>small {display:block;margin-top:4px;color:var(--muted-foreground);font-size:12px;}
 .chat-query-scroll {overflow:auto;}
 .chat-query-results table {width:100%;border-collapse:collapse;text-align:left;}
 .chat-query-results :is(th,td) {padding:12px;border-top:1px solid var(--border);font-size:13px;white-space:nowrap;}
@@ -202,14 +203,20 @@
 }
 
 @layer components {
-/* 精靈保留同一聊天狀態與輸入框；不露出被裁切的歷史訊息碎片。 */
-.dual-flow.step-wizard:not(.chat-only):not(.selection-ai-open) .conversation-scroll {display:none;}
+/* 精靈從同一對話投影最新助理訊息；長訊息仍可捲動，不另建對話狀態。 */
+.dual-flow.step-wizard:not(.chat-only):not(.selection-ai-open) .conversation-scroll {display:block;flex:none;max-height:108px;padding:10px 24px;overflow:auto;}
+.dual-flow.step-wizard:not(.chat-only):not(.selection-ai-open) [data-slot=aui_message-group] {gap:0;}
+.dual-flow.step-wizard:not(.chat-only):not(.selection-ai-open) .aui-assistant-message {font-size:13px;}
+.dual-flow.step-wizard:not(.chat-only):not(.selection-ai-open) .chat-layout {--aui-assistant-action-reserve:0px;}
 .dual-flow.step-wizard:not(.chat-only):not(.selection-ai-open) .latest-message {display:none;}
 .dual-flow.step-wizard>.chat-layout {max-height:none;}
 .dual-flow.step-wizard .operation-steps {margin-bottom:8px;}
 .dual-flow.step-wizard .proposal .business-target>span,
-.dual-flow.step-wizard .proposal .business-value {padding-block:6px;}
+.dual-flow.step-wizard .proposal .business-value {padding-block:4px;}
+.dual-flow.step-wizard .proposal .business-note {margin-block:4px;}
 .dual-flow.step-wizard .proposal-heading {margin-bottom:8px;}
+.dual-flow .proposal-actions .proposal-back {margin-right:auto;}
+#mes-ai-chat-root .dual-flow .proposal :is(.business-target small,.business-target strong,.business-value,.business-value strong,.business-value small) {font-size:14px;line-height:1.5;}
 .dual-flow .report-entry-fields {grid-template-columns:minmax(0,1fr);gap:14px;}
 .dual-flow .sheet-target {border-width:0 0 1px;border-radius:0;padding:12px 0 16px;margin-bottom:12px;}
 }

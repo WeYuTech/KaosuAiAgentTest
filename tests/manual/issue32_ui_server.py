@@ -62,6 +62,13 @@ def create_preview():
             state['tables'][domain.EXECUTION] = {key:value for key,value in state['tables'][domain.EXECUTION].items() if key == '2001'}
             app.state.store.put(db, 'STATE', 'simulation', state)
 
+    @app.middleware('http')
+    async def delay(request, call_next):
+        if request.method == 'POST' and request.url.path.endswith(('/messages','/query')):
+            await asyncio.sleep(2.5)
+        return await call_next(request)
+
+    app.mount('/', StaticFiles(directory=ROOT / 'frontend/dist', html=True))
     # 用公開 API 準備足夠的聊天列，以檢查左對齊與底列不被頁尾遮住。
     from fastapi.testclient import TestClient
     with TestClient(app) as client:
@@ -73,13 +80,6 @@ def create_preview():
                 chat = client.post('/api/conversations', json={'module':'report'}).json()
                 client.post(f'/api/conversations/{chat["id"]}/metadata', json={'version':0,'title':title,'is_pinned':title in titles[:2]}).raise_for_status()
 
-    @app.middleware('http')
-    async def delay(request, call_next):
-        if request.method == 'POST' and request.url.path.endswith(('/messages','/query')):
-            await asyncio.sleep(2.5)
-        return await call_next(request)
-
-    app.mount('/', StaticFiles(directory=ROOT / 'frontend/dist', html=True))
     return app
 
 

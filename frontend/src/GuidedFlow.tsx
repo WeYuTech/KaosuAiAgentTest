@@ -11,7 +11,7 @@ import './guided.css';
 import type {OperationMode} from './operation-mode';
 
 export interface Guide { version: number; action: string; intent?: 'create' | 'update' | null; args: Row; step: string; missing: string[]; ready: boolean; proposal?: Proposal | null }
-export interface GuideHandle { flush: () => Promise<void>; focusField: (key: string) => void; beginReport: (record: Row) => Promise<void>; selectTarget: (record:Row) => Promise<void> }
+export interface GuideHandle { backToEdit: () => void; flush: () => Promise<void>; focusField: (key: string) => void; beginReport: (record: Row) => Promise<void>; selectTarget: (record:Row) => Promise<void> }
 const SID = 'ZZ_KAOSU_PROD_SCHEDULE_SID';
 const EID = 'WIP_OPI_WDOEACICO_HIST_SID';
 const RID = 'WIP_OPI_WDOEACICOOUTPUT_HIST_SID';
@@ -24,9 +24,10 @@ const fieldId = (key: string) => 'guide-' + key.replace(/[.\[\]]+/g, '-').replac
 const steps = ['action', 'target', 'details', 'review', 'result'];
 
 /** 步驟與自然語言共用後端草稿；此元件只準備確認卡，不執行業務寫入。 */
-export function GuidedFlow({ presentation='chat-sheet', onQuery, onSelectionChange, onAskSelection, onPresentationBusyChange, apiRequest = api, ref, onBusyChange, onWorkChange, onContextChange, onSnapshot, onAccessDenied, beforeTargetChange, conversation, module, workspace, selected, signal, proposal, status, disabled, date, onReply, onAudit, onHome }: {
+export function GuidedFlow({ presentation='chat-sheet', reviewActionsExternal=false, onQuery, onSelectionChange, onAskSelection, onPresentationBusyChange, apiRequest = api, ref, onBusyChange, onWorkChange, onContextChange, onSnapshot, onAccessDenied, beforeTargetChange, conversation, module, workspace, selected, signal, proposal, status, disabled, date, onReply, onAudit, onHome }: {
   onQuery?:(filters:Row)=>Promise<Workspace>;onSelectionChange?:(value:boolean)=>void;onAskSelection?:()=>void;
   presentation?:OperationMode;onPresentationBusyChange?:(busy:boolean)=>void;
+  reviewActionsExternal?:boolean;
   apiRequest?: typeof api;
   onAccessDenied?: () => void;
   beforeTargetChange?: () => boolean;
@@ -111,7 +112,7 @@ export function GuidedFlow({ presentation='chat-sheet', onQuery, onSelectionChan
   useEffect(() => { onBusyChange?.(busy || dirty || saveState === 'saving' || (!guide && !error)); }, [busy, dirty, saveState, guide, error, onBusyChange]);
   useEffect(() => () => { onWorkChange?.(false); }, [onWorkChange]);
   useEffect(() => () => { onBusyChange?.(false); }, [onBusyChange]);
-  useImperativeHandle(ref, () => ({ selectTarget: async record=>{if(locked)return;await work(async()=>{if(action){await applyTarget(record,action);}else{setTarget(record);setRetainTarget(true);setPicker(false);}});}, focusField: key => { const field=editorRef.current?.querySelector<HTMLElement>(`#${fieldId(key.replace(/^(details\[\d+\])\.part_no$/, '$1.mold_detail_id'))}`); (field ?? editorRef.current?.querySelector<HTMLElement>('input, select, button'))?.focus(); }, beginReport: async record => {
+  useImperativeHandle(ref, () => ({ backToEdit: () => {if(!locked)setStep(hasEditableFields(action)?'details':'target');}, selectTarget: async record=>{if(locked)return;await work(async()=>{if(action){await applyTarget(record,action);}else{setTarget(record);setRetainTarget(true);setPicker(false);}});}, focusField: key => { const field=editorRef.current?.querySelector<HTMLElement>(`#${fieldId(key.replace(/^(details\[\d+\])\.part_no$/, '$1.mold_detail_id'))}`); (field ?? editorRef.current?.querySelector<HTMLElement>('input, select, button'))?.focus(); }, beginReport: async record => {
     if (locked || beforeTargetChange && !beforeTargetChange()) return;
     await work(async () => {
       await save('target', {execution_id: null, report_id: null, schedule_id: null}, 'report.add');
@@ -432,7 +433,7 @@ export function GuidedFlow({ presentation='chat-sheet', onQuery, onSelectionChan
       if (!value.ready) { setStep('details'); throw new Error(L('資料還沒填齊，請完成必要欄位。','Some details are missing. Complete the required fields.','ข้อมูลยังไม่ครบ โปรดกรอกข้อมูลที่จำเป็น')); }
       await preview(value);
     }); }}><div className="sheet-target"><div><strong>{string(target?.WO??target?.WO_NO)||draftOrders||L('尚未選擇工單','No order selected','ยังไม่ได้เลือกใบสั่งผลิต')}</strong>{target?<><p>{partDescription(target)}</p><p>{[target.EQP_NO,target.TOL_NO,target.SCHEDULE_START_TIME??target.REAL_CHECK_IN_TIME??target.SHIFT_DAY].filter(Boolean).join(' · ')}</p></>:args.equipment?<p>{[args.equipment,args.mold_no,args.part_no,args.start_time].filter(Boolean).join(' · ')}</p>:<p>{L('請選擇本次作業對象','Choose the target for this operation','เลือกเป้าหมายสำหรับงานนี้')}</p>}</div>{(!(action==='schedule.save'&&newSchedule)||presentation==='step-wizard')&&<button type="button" className="secondary" onClick={()=>setPicker(true)}>{L('選擇／更換對象','Choose / change target','เลือก / เปลี่ยนเป้าหมาย')}</button>}</div>{detailsForm()}<div className="guide-navigation"><button className="secondary" type="button" disabled={locked} onClick={() => {setStep('target');setPicker(true);}}><ArrowLeft size={18}/>{L('上一步','Back','ย้อนกลับ')}</button><button className="primary" type="submit" disabled={locked}>{L('下一步：核對內容','Next: review changes','ถัดไป: ตรวจสอบข้อมูล')}<ArrowRight size={18}/></button></div></form>}
-    {at === 3 && <>{status !== 'unknown' && <button className="secondary" disabled={locked} onClick={() => setStep(hasEditableFields(action)?'details':'target')}><ArrowLeft size={18}/>{L('上一步：修改資料','Back: change details','ย้อนกลับ: แก้ไขข้อมูล')}</button>}</>}
+    {at === 3 && (!reviewActionsExternal||!proposal||status==='superseded') && <>{status !== 'unknown' && <button className="secondary" disabled={locked} onClick={() => setStep(hasEditableFields(action)?'details':'target')}><ArrowLeft size={18}/>{L('上一步：修改資料','Back: change details','ย้อนกลับ: แก้ไขข้อมูล')}</button>}</>}
     {at === 4 && <>{(!proposal||query)&&<h2>{query ? L('查詢完成','Search complete','ค้นหาเสร็จแล้ว') : status === 'cancelled' ? L('已取消，沒有寫入','Cancelled, no changes written','ยกเลิกแล้ว ไม่มีการบันทึก') : L('已完成並留下紀錄','Completed and recorded','ดำเนินการเสร็จและบันทึกแล้ว')}</h2>}<div className="guide-options"><button className="secondary" onClick={onAudit}>{L('查看紀錄','View history','ดูประวัติ')}</button><button className="primary" disabled={locked} onClick={() => void work(async () => { await save('action', {}, ''); setQuery(false); setRetainTarget(Boolean(target)); })}>{target?L('繼續此工單','Continue this order','ทำต่อในใบสั่งผลิตนี้'):L('選擇作業','Choose task','เลือกงาน')}</button><button className="secondary" onClick={onHome}>{L('回作業選擇','Choose another module','เลือกโมดูลอื่น')}</button></div></>}
     </fieldset>
     {busy && <p role="status">{L('正在核對資料…','Checking details…','กำลังตรวจสอบข้อมูล…')}</p>}

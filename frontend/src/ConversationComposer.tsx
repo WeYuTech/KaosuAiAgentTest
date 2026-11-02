@@ -17,7 +17,7 @@ export function ConversationComposer({ id, value, onChange, disabled, sendDisabl
         aria-label={t('描述作業需求')} onChange={event => onChange(event.currentTarget.value)} cancelOnEscape={false} addAttachmentOnPaste={false}
         unstable_focusOnRunStart={false} unstable_focusOnScrollToBottom={false} unstable_focusOnThreadSwitched={false}/>
       <div className="aui-composer-action-wrapper relative flex items-center justify-between"><span><span className="sr-only">{hint}</span></span>
-        {busy ? <TooltipIconButton tooltip={stopped?'已停止等待；原請求仍在處理':'停止等待'} type="button" variant="default" size="icon" className="aui-composer-send size-7 rounded-full" aria-label="停止等待" disabled={stopped||!onStop} onClick={onStop}><Square className="size-4" fill="currentColor"/></TooltipIconButton> : <ComposerPrimitive.Send asChild><TooltipIconButton tooltip={t('送出訊息')} type="button" variant="default" size="icon"
+        {busy ? <TooltipIconButton tooltip={t(stopped?'已停止等待；原請求仍在處理':'停止等待')} type="button" variant="default" size="icon" className="aui-composer-send size-7 rounded-full" aria-label={t('停止等待')} disabled={stopped||!onStop} onClick={onStop}><Square className="size-4" fill="currentColor"/></TooltipIconButton> : <ComposerPrimitive.Send asChild><TooltipIconButton tooltip={t('送出訊息')} type="button" variant="default" size="icon"
           className="aui-composer-send size-7 rounded-full" disabled={disabled || sendDisabled || busy} aria-label={t('送出訊息')}>
           <ArrowUp className="aui-composer-send-icon size-4"/>
         </TooltipIconButton></ComposerPrimitive.Send>}
