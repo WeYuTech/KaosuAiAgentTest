@@ -16,6 +16,7 @@ const {useOperationMode,readOperationMode,operationModeKey}=await server.ssrLoad
 const {ApiError}=await server.ssrLoadModule('/src/api.ts');
 const {useEntry}=await server.ssrLoadModule('/src/use-entry.ts');
 const {rememberOperationFocus,operationFocusTarget}=await server.ssrLoadModule('/src/operation-focus.ts');
+const {AuditRecords}=await server.ssrLoadModule('/src/AuditRecords.tsx');
 await server.close();after(()=>window.happyDOM.abort());
 afterEach(()=>sessionStorage.clear());
 const noop=()=>{};
@@ -378,5 +379,13 @@ test('X01 未保存草稿在重新載入後先比較，不自動覆寫伺服器'
  sessionStorage.setItem('kaosu-guide-input:operator:resume',JSON.stringify({action:'report.add',args:{...guide.args,ok:'125'},base:guide.args,version:2,at:Date.now()}));
  const props={apiRequest:async(path,body)=>{if(body)writes.push(body);return structuredClone(guide);},conversation:{id:'resume',actor_id:'operator',module:'report'},module:'report',workspace:{records:[],catalogs:{}},selected:null,signal:0,proposal:null,status:'',disabled:false,date:null,onReply:noop,onAudit:noop,onHome:noop};
  await act(async()=>root.render(h(GuidedFlow,props)));await act(tick);assert.equal(host.querySelector('#guide-ok').value,'125');assert.ok(host.querySelector('.draft-comparison'));assert.equal(writes.length,0);
+ await act(async()=>root.unmount());host.remove();
+});
+
+
+test('A01 稽核使用實際差異、業務名稱與 MES 年份時間，不捏造未知結果',async()=>{
+ const {host,root}=mount();const records=[{id:'proof',time:'2026-11-03T01:00:00+00:00',actor_name:'現場人員',equipment:'MC37',action:'report.update',status:'succeeded',changes:[{field:'OK_QTY',before:100,after:125},{field:'ENABLE_FLAG',before:'Y',after:'Y'},{field:'INTERNAL_KEY',before:null,after:'technical-only'}]},{id:'unresolved',time:'2026-11-03T01:01:00+00:00',actor:'現場人員',action:'report.add',status:'unknown',changes:[]}];
+ await act(async()=>root.render(h(AuditRecords,{records,timezone:'UTC+07:00'})));
+ assert.match(host.textContent,/修改報工/);assert.match(host.textContent,/2026-11-03 08:00:00/);assert.match(host.querySelector('.audit-changes').textContent,/100 → 125/);assert.match(host.querySelector('.audit-changes').textContent,/啟用 · 未變更/);assert.doesNotMatch(host.querySelector('.audit-changes').textContent,/INTERNAL_KEY/);assert.match(host.querySelectorAll('.audit-record')[1].textContent,/結果待核對/);assert.match(host.querySelectorAll('.audit-record')[1].textContent,/尚無可證明/);
  await act(async()=>root.unmount());host.remove();
 });
