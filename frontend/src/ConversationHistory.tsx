@@ -66,14 +66,14 @@ export function ConversationHistory({ actor, current, overlay, locked, busy, ref
     load();
     return()=>{valid=false;};
   },[actor,scope,page,nonce,refresh,requestKey]);
-  useEffect(()=>{if(dialog){dialogRef.current?.querySelector<HTMLInputElement>('input')?.focus();if(dialog.kind==='delete')dialogRef.current?.focus();}},[dialog?.kind]);
+  useEffect(()=>{if(dialogOpen&&dialog){dialogRef.current?.querySelector<HTMLInputElement>('input')?.focus();if(dialog.kind==='delete')dialogRef.current?.focus();}},[dialogOpen,dialog?.kind]);
   useLayoutEffect(()=>{if(settled&&scrollPosition.current!==null&&list.current){list.current.scrollTop=scrollPosition.current;scrollPosition.current=null;}},[settled,data]);
   const closeDialog=()=>setDialogOpen(false);
   async function mutate(entry:ChatEntry,patch:Record<string,unknown>) {
     if(saving||busy)return;
     scrollPosition.current=list.current?.scrollTop??0;setSaving(true);setError('');setDialogError('');
-    try {if(patch.is_archived||patch.is_deleted)await beforeChange(entry.id); const result=await requestRef.current<ChatEntry>(`/api/conversations/${entry.id}/metadata`,{version:entry.metadata_version,...patch}); restoreFocus.current=patch.is_pinned===undefined;setResponse(old=>old?{...old,data:{...old.data,records:old.data.records.map(row=>row.id===result.id?result:row)}}:old);changed(result);setNonce(v=>v+1);if(dialog)closeDialog();}
-    catch(e){const message=t(e instanceof Error?e.message:String(e));if(dialog)setDialogError(message);else setError(message);if(e instanceof ApiError&&e.status===409)setNonce(v=>v+1);}
+    try {if(patch.is_archived||patch.is_deleted)await beforeChange(entry.id); const result=await requestRef.current<ChatEntry>(`/api/conversations/${entry.id}/metadata`,{version:entry.metadata_version,...patch}); restoreFocus.current=patch.is_pinned===undefined;setResponse(old=>old?{...old,data:{...old.data,records:old.data.records.map(row=>row.id===result.id?result:row)}}:old);changed(result);setNonce(v=>v+1);if(dialogOpen)closeDialog();}
+    catch(e){const message=t(e instanceof Error?e.message:String(e));if(dialogOpen)setDialogError(message);else setError(message);if(e instanceof ApiError&&e.status===409)setNonce(v=>v+1);}
     finally{setSaving(false);}
   }
   const handlers=useRef({select,create,locked,busy,saving,data});handlers.current={select,create,locked,busy,saving,data};

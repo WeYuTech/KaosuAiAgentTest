@@ -121,6 +121,15 @@ test('定時報告暫停、恢復及刪除以實際動詞確認，按確認前�
 });
 
 
+test('關閉命名後的釘選失敗仍在側欄顯示，不送到已關閉彈窗',async()=>{
+ const {host,root}=mount();const entry={id:'chat',module:'report',title:'原聊天',is_pinned:false,is_archived:false,is_deleted:false,metadata_version:0};
+ const request=async(path,body)=>{if(body)throw Error('模擬釘選失敗');return {records:[entry],total:1,page:1,page_size:30};};
+ function Harness(){const [history,onProjection]=useState();return h(MesAssistantProvider,{state:{...base,history}},h(ConversationHistory,{actor:'甲',current:null,overlay:false,locked:false,busy:false,refresh:0,request,close:noop,select:noop,create:noop,beforeChange:noop,changed:noop,usage:noop,onWorkChange:noop,budget:null,onProjection}));}
+ const action=async name=>{await act(async()=>host.querySelector('[aria-label="聊天室選單：原聊天"]').dispatchEvent(new KeyboardEvent('keydown',{key:'Enter',bubbles:true})));await act(async()=>[...host.querySelectorAll('[role=menuitem]')].find(x=>x.textContent===name).click());};
+ try{await act(async()=>root.render(h(Harness)));await action('重新命名');await act(async()=>button(host,'取消').click());await act(tick);await action('釘選');assert.equal(host.querySelector('.history-dialog'),null);assert.equal(host.querySelector('[role=alert]').textContent,'模擬釘選失敗');}
+ finally{await act(async()=>root.unmount());host.remove();}
+});
+
 test('固定分組保留伺服器順序，第二頁無釘選不冒充全帳號無釘選；刪除末列退回有效頁',async()=>{
  const {host,root}=mount(),requests=[];let controller;
  const row=(id,pin=false)=>({id,module:'report',title:id,is_pinned:pin,is_archived:false,is_deleted:false,metadata_version:3,updated_at:'2026-01-01T00:00:00Z'});
