@@ -6,7 +6,7 @@ export class ObsoleteContext extends Error {}
 export interface RequestContext {
   epoch: () => number;
   actor: () => string | undefined;
-  invalidate: () => void;
+  invalidate: (reason?: ApiError) => void;
 }
 
 /** 恢復流程可能把網路錯誤轉為 unknown；正常返回仍須核對原情境。 */
@@ -29,7 +29,7 @@ export async function requestInContext<T>(context: RequestContext, path: string,
   } catch (error) {
     if (!current()) throw new ObsoleteContext();
     if (error instanceof ApiError && [401, 403].includes(error.status)) {
-      context.invalidate();
+      context.invalidate(error);
       // 保留明確拒絕，讓提交恢復層記錄它；畫面以 epoch 隔離晚到結果。
       throw error;
     }

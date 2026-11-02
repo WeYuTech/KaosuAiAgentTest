@@ -74,3 +74,11 @@
 @media(prefers-reduced-motion:reduce){#mes-ai-chat-root .new-report-highlight {animation:none;outline:1px solid var(--primary);}}
 
 #mes-ai-chat-root .status-chip.status-warning {border-color:var(--destructive);color:var(--destructive);background:var(--error-surface);}
+
+/* 個人數量與共用帳本各自成組，未知費用保留原始未知狀態。 */
+.mes-operation-dialog.usage-dialog{width:min(820px,calc(100% - 24px));}
+.usage-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:24px;margin-top:18px;}
+.usage-grid>section{min-width:0;}.usage-grid h3{font-size:16px;margin:0 0 12px;}
+.usage-grid .fields>div{display:grid;grid-template-columns:1fr auto;padding:8px 0;gap:8px;}
+.usage-grid .fields dt,.usage-grid .fields dd{font-size:14px;margin:0;}
+@media(max-width:600px){.usage-grid{grid-template-columns:1fr;}}

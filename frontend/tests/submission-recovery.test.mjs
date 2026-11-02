@@ -73,3 +73,13 @@ test('跨分頁阻擋包含原操作位置，B沒有送出且不能解除A',asyn
   assert.equal(calls,0);assert.equal(pendingSubmission('actor',db).conversation,'A');
 });
 
+
+
+test('W06 確認等待期間重複提交只有一次 HTTP 寫入',async()=>{
+ const db=storage();let release;const gate=new Promise(resolve=>release=resolve);let writes=0;
+ const request=async(path,body)=>{if(body){writes++;await gate;}return {status:'succeeded',proposal:{...card,status:'succeeded'},changes:[]};};
+ const first=submitRecoverably('double-click','chat',card,true,db,request);
+ await new Promise(resolve=>setTimeout(resolve,0));
+ await assert.rejects(submitRecoverably('double-click','chat',card,true,db,request),SubmissionBlocked);
+ assert.equal(writes,1);release();assert.equal((await first).status,'succeeded');assert.equal(writes,1);
+});
