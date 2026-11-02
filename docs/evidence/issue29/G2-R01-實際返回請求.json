@@ -1,0 +1,47 @@
+{
+  "before": {
+    "conversation": "MNeCi2GJeMvRW1L2s7WFAjry",
+    "revision": 2,
+    "guide_version": 2,
+    "proposal_id": "bf6b8201-f874-4360-afe8-03b6d3189b18",
+    "digest": "0b96d5a18d21f61c712236cceb18a5dc6cfc32e652a861d569478e1e0e7571cf",
+    "expires_at": "2026-11-02T07:40:53.998662+00:00"
+  },
+  "after": {
+    "conversation": "MNeCi2GJeMvRW1L2s7WFAjry",
+    "revision": 2,
+    "guide_version": 2,
+    "proposal_id": "bf6b8201-f874-4360-afe8-03b6d3189b18",
+    "digest": "0b96d5a18d21f61c712236cceb18a5dc6cfc32e652a861d569478e1e0e7571cf",
+    "expires_at": "2026-11-02T07:40:53.998662+00:00"
+  },
+  "unchanged": true,
+  "mutation_requests": [],
+  "requests": [
+    {
+      "method": "GET",
+      "path": "/api/conversations/MNeCi2GJeMvRW1L2s7WFAjry/guide",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/conversations/MNeCi2GJeMvRW1L2s7WFAjry/guide",
+      "status": 200
+    },
+    {
+      "method": "POST",
+      "path": "/api/session/demo",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/conversations/MNeCi2GJeMvRW1L2s7WFAjry",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/conversations/MNeCi2GJeMvRW1L2s7WFAjry/guide",
+      "status": 200
+    }
+  ]
+}

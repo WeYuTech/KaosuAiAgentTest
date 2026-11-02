@@ -1,0 +1,1615 @@
+[
+  {
+    "file": "G2-報工多原因-作業單.jpg",
+    "sha": "600ab8b",
+    "locale": "zh-TW",
+    "theme": "light",
+    "fields": [
+      {
+        "id": "guide-ok",
+        "value": "125"
+      },
+      {
+        "id": "guide-defects-0-code",
+        "value": "NG01"
+      },
+      {
+        "id": "guide-defects-0-quantity",
+        "value": "3"
+      },
+      {
+        "id": "guide-defects-1-code",
+        "value": "NG02"
+      },
+      {
+        "id": "guide-defects-1-quantity",
+        "value": "2"
+      },
+      {
+        "id": "guide-comment",
+        "value": ""
+      }
+    ],
+    "focus": "guide-ok",
+    "mode": "desktop-workbench dual-flow chat-sheet  ",
+    "viewport": {
+      "dpr": 1,
+      "height": 768,
+      "width": 1366
+    },
+    "visibleText": "新增報工\n\n草稿 · 尚未送出\n\nWO-261102-0382\n\nP-102 · 外殼\n\nMC37 · MOLD-A · 2026-11-02 08:10:00\n\n選擇／更換對象\n這一筆人工良品數量\n有不良品嗎？\n沒有不良品\n有，選原因與數量\n不良原因\n請選擇\nNG01 · 刮傷\nNG02 · 破損\n不良數量\n移除\n不良原因\n請選擇\nNG01 · 刮傷\nNG02 · 破損\n不良數量\n移除\n+ 另一個原因\n\n不良合計：5\n\n備註（選填）\n上一步\n下一步：核對內容",
+    "workspace": {
+      "height": 618,
+      "width": 1054
+    }
+  },
+  {
+    "file": "G2-報工多原因-精靈.jpg",
+    "sha": "600ab8b",
+    "locale": "zh-TW",
+    "theme": "light",
+    "fields": [
+      {
+        "id": "guide-ok",
+        "value": "125"
+      },
+      {
+        "id": "guide-defects-0-code",
+        "value": "NG01"
+      },
+      {
+        "id": "guide-defects-0-quantity",
+        "value": "3"
+      },
+      {
+        "id": "guide-defects-1-code",
+        "value": "NG02"
+      },
+      {
+        "id": "guide-defects-1-quantity",
+        "value": "2"
+      },
+      {
+        "id": "guide-comment",
+        "value": ""
+      }
+    ],
+    "focus": "guide-ok",
+    "mode": "desktop-workbench dual-flow step-wizard  ",
+    "viewport": {
+      "dpr": 1,
+      "height": 768,
+      "width": 1366
+    },
+    "visibleText": "✓\n選擇對象\n2\n填寫內容\n3\n核對送出\n新增報工\n\n草稿 · 尚未送出\n\nWO-261102-0382\n\nP-102 · 外殼\n\nMC37 · MOLD-A · 2026-11-02 08:10:00\n\n選擇／更換對象\n這一筆人工良品數量\n有不良品嗎？\n沒有不良品\n有，選原因與數量\n不良原因\n請選擇\nNG01 · 刮傷\nNG02 · 破損\n不良數量\n移除\n不良原因\n請選擇\nNG01 · 刮傷\nNG02 · 破損\n不良數量\n移除\n+ 另一個原因\n\n不良合計：5\n\n備註（選填）\n上一步\n下一步：核對內容",
+    "workspace": {
+      "height": 618,
+      "width": 1054
+    }
+  },
+  {
+    "file": "G2-選取AI更新條件-精靈.jpg",
+    "sha": "600ab8b",
+    "locale": "zh-TW",
+    "theme": "light",
+    "fields": [
+      {
+        "id": "guide-search-equipment",
+        "value": "MC38"
+      },
+      {
+        "id": "guide-search-date",
+        "value": "2026-11-02"
+      },
+      {
+        "id": "guide-search-wo",
+        "value": ""
+      },
+      {
+        "id": "",
+        "value": ""
+      },
+      {
+        "id": "",
+        "value": ""
+      },
+      {
+        "id": "",
+        "value": "all"
+      }
+    ],
+    "focus": "",
+    "mode": "desktop-workbench dual-flow step-wizard selection-ai-open ",
+    "viewport": {
+      "dpr": 1,
+      "height": 768,
+      "width": 1366
+    },
+    "visibleText": "✓\n選擇對象\n2\n填寫內容\n3\n核對送出\n新增報工\n\n草稿 · 尚未送出\n\n查詢條件已更新，請重新選取；原作業內容保留。\n\n取消選取詢問 AI／補充條件\n選擇這次要操作的對象\n設備\n日期\n工單\n更多查詢條件\n查詢\n\n找到 0 筆，選擇符合現場的工單。\n\n選取\t工單／品號\t設備／執行時間\t明細\n\n沒有符合資料，請調整設備或日期再查詢。\n\n上一頁\n1\n下一頁",
+    "workspace": {
+      "height": 618,
+      "width": 1054
+    }
+  },
+  {
+    "file": "G2-報工多原因核對-精靈.jpg",
+    "sha": "600ab8b",
+    "locale": "zh-TW",
+    "theme": "light",
+    "fields": [],
+    "focus": "",
+    "mode": "desktop-workbench dual-flow step-wizard  ",
+    "viewport": {
+      "dpr": 1,
+      "height": 768,
+      "width": 1366
+    },
+    "visibleText": "✓\n選擇對象\n✓\n填寫內容\n3\n核對送出\n\n查詢條件已更新，請重新選取；原作業內容保留。\n\n上一步：修改資料\n待你確認 · 尚未寫入\n新增報工\n設備\nMC37\n工單\nWO-261102-0382\n品號／規格\nP-102 · 外殼\n本次執行\n2026-11-02 08:10:00\n人工良品\n125\n件\n不良合計\n5\n件\n不良原因\n刮傷\n3\n件\n破損\n2\n件\n\n以上為人工報工數量，與 IoT 推算產量分開記錄。\n\n查看資料異動明細26項\n確認期限：2026-11-02 14:28:23\n取消草稿\n同意並寫入\n技術資料",
+    "workspace": {
+      "height": 618,
+      "width": 1054
+    }
+  },
+  {
+    "file": "G2-報工多原因核對-作業單.jpg",
+    "sha": "600ab8b",
+    "locale": "zh-TW",
+    "theme": "light",
+    "fields": [],
+    "focus": "chat-input",
+    "mode": "desktop-workbench dual-flow chat-sheet  ",
+    "viewport": {
+      "dpr": 1,
+      "height": 768,
+      "width": 1366
+    },
+    "visibleText": "查詢條件已更新，請重新選取；原作業內容保留。\n\n上一步：修改資料\n待你確認 · 尚未寫入\n新增報工\n設備\nMC37\n工單\nWO-261102-0382\n品號／規格\nP-102 · 外殼\n本次執行\n2026-11-02 08:10:00\n人工良品\n125\n件\n不良合計\n5\n件\n不良原因\n刮傷\n3\n件\n破損\n2\n件\n\n以上為人工報工數量，與 IoT 推算產量分開記錄。\n\n查看資料異動明細26項\n確認期限：2026-11-02 14:28:23\n取消草稿\n同意並寫入\n技術資料",
+    "workspace": {
+      "height": 618,
+      "width": 1054
+    }
+  },
+  {
+    "file": "G2-報工多原因結果-作業單.jpg",
+    "sha": "600ab8b",
+    "locale": "zh-TW",
+    "theme": "light",
+    "fields": [],
+    "focus": "",
+    "mode": "desktop-workbench dual-flow chat-sheet  ",
+    "viewport": {
+      "dpr": 1,
+      "height": 768,
+      "width": 1366
+    },
+    "visibleText": "查詢條件已更新，請重新選取；原作業內容保留。\n\n查看紀錄\n繼續此工單\n回作業選擇\n作業處理結果\n新增報工\n已完成\n設備\nMC37\n工單\nWO-261102-0382\n品號／規格\nP-102 · 外殼\n本次執行\n2026-11-02 08:10:00\n人工良品\n125\n件\n不良合計\n5\n件\n不良原因\n刮傷\n3\n件\n破損\n2\n件\n\n以上為人工報工數量，與 IoT 推算產量分開記錄。\n\n查看資料異動明細26項\n技術資料",
+    "workspace": {
+      "height": 564.8125,
+      "width": 1054
+    }
+  },
+  {
+    "file": "G2-修改報工-作業單.jpg",
+    "sha": "600ab8b",
+    "locale": "zh-TW",
+    "theme": "light",
+    "fields": [
+      {
+        "id": "guide-ok",
+        "value": "130"
+      },
+      {
+        "id": "guide-defects-0-code",
+        "value": "NG01"
+      },
+      {
+        "id": "guide-defects-0-quantity",
+        "value": "1"
+      },
+      {
+        "id": "guide-comment",
+        "value": ""
+      }
+    ],
+    "focus": "",
+    "mode": "desktop-workbench dual-flow chat-sheet  ",
+    "viewport": {
+      "dpr": 1,
+      "height": 768,
+      "width": 1366
+    },
+    "visibleText": "修改報工\n\n草稿 · 尚未送出\n\nWO-261102-0382\n\nP-102 · 外殼\n\nMC37 · MOLD-A · 2026-11-02 08:10:00\n\n選擇／更換對象\n這一筆人工良品數量\n有不良品嗎？\n沒有不良品\n有，選原因與數量\n不良原因\n請選擇\nNG01 · 刮傷\nNG02 · 破損\n不良數量\n移除\n+ 另一個原因\n\n不良合計：1\n\n備註（選填）\n上一步\n下一步：核對內容",
+    "workspace": {
+      "height": 618,
+      "width": 1054
+    }
+  },
+  {
+    "file": "G2-修改報工-第二層.jpg",
+    "sha": "600ab8b",
+    "locale": "zh-TW",
+    "theme": "light",
+    "fields": [
+      {
+        "id": "guide-search-equipment",
+        "value": "MC37"
+      },
+      {
+        "id": "guide-search-date",
+        "value": ""
+      },
+      {
+        "id": "guide-search-wo",
+        "value": ""
+      },
+      {
+        "id": "",
+        "value": ""
+      },
+      {
+        "id": "",
+        "value": ""
+      },
+      {
+        "id": "",
+        "value": "all"
+      },
+      {
+        "id": "",
+        "value": "on"
+      },
+      {
+        "id": "",
+        "value": "on"
+      },
+      {
+        "id": "",
+        "value": "on"
+      }
+    ],
+    "focus": "",
+    "mode": "desktop-workbench dual-flow chat-sheet  ",
+    "viewport": {
+      "dpr": 1,
+      "height": 768,
+      "width": 1366
+    },
+    "visibleText": "修改報工\n\n草稿 · 尚未送出\n\n取消選取詢問 AI／補充條件\n選擇這次要操作的對象\n返回工單\n選擇單筆人工報工\n選取\t工單／品號\t設備／執行時間\t明細\n\t\n2026-11-02 13:45:46\n良品 125 · 不良 3\n\tWO-261102-0382\t查看\n\t\n2026-11-02 13:54:43\n良品 125 · 不良 3\n\tWO-261102-0382\t查看\n\t\n2026-11-02 14:18:23\n良品 125 · 不良 5\n\tWO-261102-0382\t查看",
+    "workspace": {
+      "height": 618,
+      "width": 1054
+    }
+  },
+  {
+    "file": "G2-修改報工-精靈.jpg",
+    "sha": "600ab8b",
+    "locale": "zh-TW",
+    "theme": "light",
+    "fields": [
+      {
+        "id": "guide-ok",
+        "value": "130"
+      },
+      {
+        "id": "guide-defects-0-code",
+        "value": "NG01"
+      },
+      {
+        "id": "guide-defects-0-quantity",
+        "value": "1"
+      },
+      {
+        "id": "guide-comment",
+        "value": ""
+      }
+    ],
+    "focus": "chat-input",
+    "mode": "desktop-workbench dual-flow step-wizard  ",
+    "viewport": {
+      "dpr": 1,
+      "height": 768,
+      "width": 1366
+    },
+    "visibleText": "✓\n選擇對象\n2\n填寫內容\n3\n核對送出\n修改報工\n\n草稿 · 尚未送出\n\nWO-261102-0382\n\nP-102 · 外殼\n\nMC37 · MOLD-A · 2026-11-02 08:10:00\n\n選擇／更換對象\n這一筆人工良品數量\n有不良品嗎？\n沒有不良品\n有，選原因與數量\n不良原因\n請選擇\nNG01 · 刮傷\nNG02 · 破損\n不良數量\n移除\n+ 另一個原因\n\n不良合計：1\n\n備註（選填）\n上一步\n下一步：核對內容",
+    "workspace": {
+      "height": 618,
+      "width": 1054
+    }
+  },
+  {
+    "file": "G2-修改報工核對-精靈.jpg",
+    "sha": "78ad720",
+    "locale": "zh-TW",
+    "theme": "light",
+    "fields": [],
+    "focus": "",
+    "mode": "desktop-workbench dual-flow step-wizard  ",
+    "viewport": {
+      "dpr": 1,
+      "height": 768,
+      "width": 1366
+    },
+    "visibleText": "✓\n選擇對象\n✓\n填寫內容\n3\n核對送出\n上一步：修改資料\n待你確認 · 尚未寫入\n修改報工\n設備\nMC37\n工單\nWO-261102-0382\n品號／規格\nP-102 · 外殼\n本次執行\n2026-11-02 08:10:00\n報工時間\n2026-11-02 14:18:23\n人工良品\n125\n130\n件\n不良合計\n5\n1\n件\n不良原因\n刮傷\n3\n1\n件\n破損\n2\n0\n件\n\n以上為人工報工數量，與 IoT 推算產量分開記錄。\n\n查看資料異動明細27項\n確認期限：2026-11-02 14:29:44\n取消草稿\n同意並寫入\n技術資料",
+    "workspace": {
+      "height": 618,
+      "width": 1054
+    }
+  },
+  {
+    "file": "G2-修改報工核對-作業單.jpg",
+    "sha": "78ad720",
+    "locale": "zh-TW",
+    "theme": "light",
+    "fields": [],
+    "focus": "chat-input",
+    "mode": "desktop-workbench dual-flow chat-sheet  ",
+    "viewport": {
+      "dpr": 1,
+      "height": 768,
+      "width": 1366
+    },
+    "visibleText": "上一步：修改資料\n待你確認 · 尚未寫入\n修改報工\n設備\nMC37\n工單\nWO-261102-0382\n品號／規格\nP-102 · 外殼\n本次執行\n2026-11-02 08:10:00\n報工時間\n2026-11-02 14:18:23\n人工良品\n125\n130\n件\n不良合計\n5\n1\n件\n不良原因\n刮傷\n3\n1\n件\n破損\n2\n0\n件\n\n以上為人工報工數量，與 IoT 推算產量分開記錄。\n\n查看資料異動明細27項\n確認期限：2026-11-02 14:29:44\n取消草稿\n同意並寫入\n技術資料",
+    "workspace": {
+      "height": 618,
+      "width": 1054
+    }
+  },
+  {
+    "file": "G2-修改報工結果-作業單.jpg",
+    "sha": "78ad720",
+    "locale": "zh-TW",
+    "theme": "light",
+    "fields": [],
+    "focus": "",
+    "mode": "desktop-workbench dual-flow chat-sheet  ",
+    "viewport": {
+      "dpr": 1,
+      "height": 768,
+      "width": 1366
+    },
+    "visibleText": "查看紀錄\n繼續此工單\n回作業選擇\n作業處理結果\n修改報工\n已完成\n設備\nMC37\n工單\nWO-261102-0382\n品號／規格\nP-102 · 外殼\n本次執行\n2026-11-02 08:10:00\n報工時間\n2026-11-02 14:18:23\n人工良品\n125\n130\n件\n不良合計\n5\n1\n件\n不良原因\n刮傷\n1\n件\n\n以上為人工報工數量，與 IoT 推算產量分開記錄。\n\n查看資料異動明細27項\n技術資料",
+    "workspace": {
+      "height": 564.8125,
+      "width": 1054
+    }
+  },
+  {
+    "file": "G2-刪除報工核對-作業單.jpg",
+    "sha": "f8ec8df",
+    "locale": "zh-TW",
+    "theme": "light",
+    "fields": [],
+    "focus": "",
+    "mode": "desktop-workbench dual-flow chat-sheet  ",
+    "viewport": {
+      "dpr": 1,
+      "height": 768,
+      "width": 1366
+    },
+    "visibleText": "上一步：修改資料\n待你確認 · 尚未寫入\n刪除報工\n設備\nMC37\n工單\nWO-261102-0382\n品號／規格\nP-102 · 外殼\n本次執行\n2026-11-02 08:10:00\n報工時間\n2026-11-02 14:18:23\n將刪除人工良品\n130\n件\n將刪除不良數\n1\n件\n影響工單\nWO-261102-0382\n查看資料異動明細18項\n確認期限：2026-11-02 14:33:39\n我已核對這筆「刪除報工」的對象及影響，確認要單獨執行。\n取消草稿\n確認這筆操作\n技術資料",
+    "workspace": {
+      "height": 618,
+      "width": 1054
+    }
+  },
+  {
+    "file": "G2-刪除報工核對-精靈.jpg",
+    "sha": "f8ec8df",
+    "locale": "zh-TW",
+    "theme": "light",
+    "fields": [],
+    "focus": "chat-input",
+    "mode": "desktop-workbench dual-flow step-wizard  ",
+    "viewport": {
+      "dpr": 1,
+      "height": 768,
+      "width": 1366
+    },
+    "visibleText": "✓\n選擇對象\n2\n核對送出\n上一步：修改資料\n待你確認 · 尚未寫入\n刪除報工\n設備\nMC37\n工單\nWO-261102-0382\n品號／規格\nP-102 · 外殼\n本次執行\n2026-11-02 08:10:00\n報工時間\n2026-11-02 14:18:23\n將刪除人工良品\n130\n件\n將刪除不良數\n1\n件\n影響工單\nWO-261102-0382\n查看資料異動明細18項\n確認期限：2026-11-02 14:33:39\n我已核對這筆「刪除報工」的對象及影響，確認要單獨執行。\n取消草稿\n確認這筆操作\n技術資料",
+    "workspace": {
+      "height": 618,
+      "width": 1054
+    }
+  },
+  {
+    "file": "G2-刪除報工結果-精靈.jpg",
+    "sha": "f8ec8df",
+    "locale": "zh-TW",
+    "theme": "light",
+    "fields": [],
+    "focus": "",
+    "mode": "desktop-workbench dual-flow step-wizard  ",
+    "viewport": {
+      "dpr": 1,
+      "height": 768,
+      "width": 1366
+    },
+    "visibleText": "✓\n選擇對象\n✓\n核對送出\n查看紀錄\n繼續此工單\n回作業選擇\n作業處理結果\n刪除報工\n已完成\n設備\nMC37\n工單\nWO-261102-0382\n品號／規格\nP-102 · 外殼\n本次執行\n2026-11-02 08:10:00\n報工時間\n2026-11-02 14:18:23\n將刪除人工良品\n130\n件\n將刪除不良數\n1\n件\n影響工單\nWO-261102-0382\n查看資料異動明細18項\n技術資料",
+    "workspace": {
+      "height": 564.8125,
+      "width": 1054
+    }
+  },
+  {
+    "file": "G2-模穴編輯-精靈.jpg",
+    "sha": "f8ec8df",
+    "locale": "zh-TW",
+    "theme": "light",
+    "fields": [
+      {
+        "id": "guide-cavities",
+        "value": "3"
+      }
+    ],
+    "focus": "",
+    "mode": "desktop-workbench dual-flow step-wizard  ",
+    "viewport": {
+      "dpr": 1,
+      "height": 768,
+      "width": 1366
+    },
+    "visibleText": "✓\n選擇對象\n2\n填寫內容\n3\n核對送出\n修改模穴\n\n草稿 · 尚未送出\n\nWO-261102-0382\n\nP-102 · 外殼\n\nMC37 · MOLD-A · 2026-11-02 08:10:00\n\n選擇／更換對象\n實際報工模穴數\n上一步\n下一步：核對內容",
+    "workspace": {
+      "height": 618,
+      "width": 1054
+    }
+  },
+  {
+    "file": "G2-模穴編輯-作業單.jpg",
+    "sha": "f8ec8df",
+    "locale": "zh-TW",
+    "theme": "light",
+    "fields": [
+      {
+        "id": "guide-cavities",
+        "value": "3"
+      }
+    ],
+    "focus": "guide-cavities",
+    "mode": "desktop-workbench dual-flow chat-sheet  ",
+    "viewport": {
+      "dpr": 1,
+      "height": 768,
+      "width": 1366
+    },
+    "visibleText": "修改模穴\n\n草稿 · 尚未送出\n\nWO-261102-0382\n\nP-102 · 外殼\n\nMC37 · MOLD-A · 2026-11-02 08:10:00\n\n選擇／更換對象\n實際報工模穴數\n上一步\n下一步：核對內容",
+    "workspace": {
+      "height": 618,
+      "width": 1054
+    }
+  },
+  {
+    "file": "G2-模穴核對-作業單.jpg",
+    "sha": "f8ec8df",
+    "locale": "zh-TW",
+    "theme": "light",
+    "fields": [],
+    "focus": "",
+    "mode": "desktop-workbench dual-flow chat-sheet  ",
+    "viewport": {
+      "dpr": 1,
+      "height": 768,
+      "width": 1366
+    },
+    "visibleText": "上一步：修改資料\n待你確認 · 尚未寫入\n調整模穴數\n設備\nMC37\n工單\nWO-261102-0382\n品號／規格\nP-102 · 外殼\n本次執行\n2026-11-02 08:10:00\n報工模穴數\n2\n3\n穴\n查看資料異動明細1項\n確認期限：2026-11-02 14:34:27\n取消草稿\n同意並寫入\n技術資料",
+    "workspace": {
+      "height": 618,
+      "width": 1054
+    }
+  },
+  {
+    "file": "G2-模穴核對-精靈.jpg",
+    "sha": "f8ec8df",
+    "locale": "zh-TW",
+    "theme": "light",
+    "fields": [],
+    "focus": "chat-input",
+    "mode": "desktop-workbench dual-flow step-wizard  ",
+    "viewport": {
+      "dpr": 1,
+      "height": 768,
+      "width": 1366
+    },
+    "visibleText": "✓\n選擇對象\n✓\n填寫內容\n3\n核對送出\n上一步：修改資料\n待你確認 · 尚未寫入\n調整模穴數\n設備\nMC37\n工單\nWO-261102-0382\n品號／規格\nP-102 · 外殼\n本次執行\n2026-11-02 08:10:00\n報工模穴數\n2\n3\n穴\n查看資料異動明細1項\n確認期限：2026-11-02 14:34:27\n取消草稿\n同意並寫入\n技術資料",
+    "workspace": {
+      "height": 618,
+      "width": 1054
+    }
+  },
+  {
+    "file": "G2-模穴結果-精靈.jpg",
+    "sha": "f8ec8df",
+    "locale": "zh-TW",
+    "theme": "light",
+    "fields": [],
+    "focus": "",
+    "mode": "desktop-workbench dual-flow step-wizard  ",
+    "viewport": {
+      "dpr": 1,
+      "height": 768,
+      "width": 1366
+    },
+    "visibleText": "✓\n選擇對象\n✓\n填寫內容\n✓\n核對送出\n查看紀錄\n繼續此工單\n回作業選擇\n作業處理結果\n調整模穴數\n已完成\n設備\nMC37\n工單\nWO-261102-0382\n品號／規格\nP-102 · 外殼\n本次執行\n2026-11-02 08:10:00\n報工模穴數\n2\n3\n穴\n查看資料異動明細1項\n技術資料",
+    "workspace": {
+      "height": 564.8125,
+      "width": 1054
+    }
+  },
+  {
+    "file": "G2-整張完工核對-精靈.jpg",
+    "sha": "f8ec8df",
+    "locale": "zh-TW",
+    "theme": "light",
+    "fields": [],
+    "focus": "",
+    "mode": "desktop-workbench dual-flow step-wizard  ",
+    "viewport": {
+      "dpr": 1,
+      "height": 768,
+      "width": 1366
+    },
+    "visibleText": "✓\n選擇對象\n2\n核對送出\n上一步：修改資料\n待你確認 · 尚未寫入\n排程完工\n設備\nMC37\n工單\nWO-261102-0382\n品號／規格\nP-102 · 外殼\n本次執行\n2026-11-02 08:10:00\n完工時間\n2026-11-02 14:24:44\n影響工單\nWO-261102-0382\nWO-B\n\n同一排程的所有工單會一併完工。\n\n連動作業\n\n下一張排程的實際開始時間會一併更新為：2026-11-02 14:24:44\n\n查看資料異動明細7項\n確認期限：2026-11-02 14:34:44\n我已核對這筆「排程完工」的對象及影響，確認要單獨執行。\n取消草稿\n確認這筆操作\n技術資料",
+    "workspace": {
+      "height": 618,
+      "width": 1054
+    }
+  },
+  {
+    "file": "G2-整張完工核對-作業單.jpg",
+    "sha": "f8ec8df",
+    "locale": "zh-TW",
+    "theme": "light",
+    "fields": [],
+    "focus": "chat-input",
+    "mode": "desktop-workbench dual-flow chat-sheet  ",
+    "viewport": {
+      "dpr": 1,
+      "height": 768,
+      "width": 1366
+    },
+    "visibleText": "上一步：修改資料\n待你確認 · 尚未寫入\n排程完工\n設備\nMC37\n工單\nWO-261102-0382\n品號／規格\nP-102 · 外殼\n本次執行\n2026-11-02 08:10:00\n完工時間\n2026-11-02 14:24:44\n影響工單\nWO-261102-0382\nWO-B\n\n同一排程的所有工單會一併完工。\n\n連動作業\n\n下一張排程的實際開始時間會一併更新為：2026-11-02 14:24:44\n\n查看資料異動明細7項\n確認期限：2026-11-02 14:34:44\n我已核對這筆「排程完工」的對象及影響，確認要單獨執行。\n取消草稿\n確認這筆操作\n技術資料",
+    "workspace": {
+      "height": 618,
+      "width": 1054
+    }
+  },
+  {
+    "file": "G2-整張完工結果-作業單.jpg",
+    "sha": "f8ec8df",
+    "locale": "zh-TW",
+    "theme": "light",
+    "fields": [],
+    "focus": "",
+    "mode": "desktop-workbench dual-flow chat-sheet  ",
+    "viewport": {
+      "dpr": 1,
+      "height": 768,
+      "width": 1366
+    },
+    "visibleText": "查看紀錄\n繼續此工單\n回作業選擇\n作業處理結果\n排程完工\n已完成\n設備\nMC37\n工單\nWO-261102-0382\n品號／規格\nP-102 · 外殼\n本次執行\n2026-11-02 08:10:00\n完工時間\n2026-11-02 14:24:44\n影響工單\nWO-261102-0382\nWO-B\n\n同一排程的所有工單會一併完工。\n\n連動作業\n\n下一張排程的實際開始時間會一併更新為：2026-11-02 14:24:44\n\n查看資料異動明細7項\n技術資料",
+    "workspace": {
+      "height": 564.8125,
+      "width": 1054
+    }
+  },
+  {
+    "file": "G2-開始上模核對-作業單.jpg",
+    "sha": "f8ec8df",
+    "locale": "zh-TW",
+    "theme": "light",
+    "fields": [],
+    "focus": "",
+    "mode": "desktop-workbench dual-flow chat-sheet  ",
+    "viewport": {
+      "dpr": 1,
+      "height": 768,
+      "width": 1366
+    },
+    "visibleText": "上一步：修改資料\n待你確認 · 尚未寫入\n開始上模\n設備\nMC36\n預計開始\n2026-11-02 08:00:00\n開始上模時間\n2026-11-02 14:24:44\n查看資料異動明細4項\n確認期限：2026-11-02 14:34:44\n取消草稿\n同意並寫入\n技術資料",
+    "workspace": {
+      "height": 618,
+      "width": 1054
+    }
+  },
+  {
+    "file": "G2-開始上模核對-精靈.jpg",
+    "sha": "f8ec8df",
+    "locale": "zh-TW",
+    "theme": "light",
+    "fields": [],
+    "focus": "chat-input",
+    "mode": "desktop-workbench dual-flow step-wizard  ",
+    "viewport": {
+      "dpr": 1,
+      "height": 768,
+      "width": 1366
+    },
+    "visibleText": "✓\n選擇對象\n2\n核對送出\n上一步：修改資料\n待你確認 · 尚未寫入\n開始上模\n設備\nMC36\n預計開始\n2026-11-02 08:00:00\n開始上模時間\n2026-11-02 14:24:44\n查看資料異動明細4項\n確認期限：2026-11-02 14:34:44\n取消草稿\n同意並寫入\n技術資料",
+    "workspace": {
+      "height": 618,
+      "width": 1054
+    }
+  },
+  {
+    "file": "G2-資料競爭明確拒絕.jpg",
+    "sha": "f8ec8df",
+    "locale": "zh-TW",
+    "theme": "light",
+    "fields": [],
+    "focus": "",
+    "mode": "desktop-workbench dual-flow step-wizard  ",
+    "viewport": {
+      "dpr": 1,
+      "height": 768,
+      "width": 1366
+    },
+    "visibleText": "✓\n選擇對象\n2\n核對送出\n上一步：修改資料\n待你確認 · 尚未寫入\n開始上模\n設備\nMC36\n預計開始\n2026-11-02 08:00:00\n開始上模時間\n2026-11-02 14:24:44\n\n本次提交已拒絕，請返回修改後重新核對。\n\n查看資料異動明細4項\n確認期限：2026-11-02 14:34:44\n取消草稿\n同意並寫入\n技術資料",
+    "workspace": {
+      "height": 556,
+      "width": 1054
+    }
+  },
+  {
+    "file": "G2-開始上模核對-精靈.jpg",
+    "sha": "f8ec8df",
+    "locale": "zh-TW",
+    "theme": "light",
+    "fields": [],
+    "focus": "",
+    "mode": "desktop-workbench dual-flow step-wizard  ",
+    "viewport": {
+      "dpr": 1,
+      "height": 768,
+      "width": 1366
+    },
+    "visibleText": "✓\n選擇對象\n2\n核對送出\n上一步：修改資料\n待你確認 · 尚未寫入\n開始上模\n設備\nMC36\n預計開始\n2026-11-02 08:00:00\n開始上模時間\n2026-11-02 14:26:25\n查看資料異動明細4項\n確認期限：2026-11-02 14:36:25\n取消草稿\n同意並寫入\n技術資料",
+    "workspace": {
+      "height": 618,
+      "width": 1054
+    }
+  },
+  {
+    "file": "G2-開始上模結果-精靈.jpg",
+    "sha": "f8ec8df",
+    "locale": "zh-TW",
+    "theme": "light",
+    "fields": [],
+    "focus": "",
+    "mode": "desktop-workbench dual-flow step-wizard  ",
+    "viewport": {
+      "dpr": 1,
+      "height": 768,
+      "width": 1366
+    },
+    "visibleText": "✓\n選擇對象\n✓\n核對送出\n查看紀錄\n繼續此工單\n回作業選擇\n作業處理結果\n開始上模\n已完成\n設備\nMC36\n本次執行\n2026-11-02 14:26:25\n預計開始\n2026-11-02 08:00:00\n開始上模時間\n2026-11-02 14:26:25\n查看資料異動明細4項\n技術資料",
+    "workspace": {
+      "height": 564.8125,
+      "width": 1054
+    }
+  },
+  {
+    "file": "G2-完成上模核對-精靈.jpg",
+    "sha": "f8ec8df",
+    "locale": "zh-TW",
+    "theme": "light",
+    "fields": [],
+    "focus": "",
+    "mode": "desktop-workbench dual-flow step-wizard  ",
+    "viewport": {
+      "dpr": 1,
+      "height": 768,
+      "width": 1366
+    },
+    "visibleText": "✓\n選擇對象\n2\n核對送出\n上一步：修改資料\n待你確認 · 尚未寫入\n完成上模\n設備\nMC36\n本次執行\n2026-11-02 14:26:25\n預計開始\n2026-11-02 08:00:00\n完成上模時間\n2026-11-02 14:27:25\n查看資料異動明細2項\n確認期限：2026-11-02 14:37:25\n取消草稿\n同意並寫入\n技術資料",
+    "workspace": {
+      "height": 618,
+      "width": 1054
+    }
+  },
+  {
+    "file": "G2-完成上模核對-作業單.jpg",
+    "sha": "f8ec8df",
+    "locale": "zh-TW",
+    "theme": "light",
+    "fields": [],
+    "focus": "chat-input",
+    "mode": "desktop-workbench dual-flow chat-sheet  ",
+    "viewport": {
+      "dpr": 1,
+      "height": 768,
+      "width": 1366
+    },
+    "visibleText": "上一步：修改資料\n待你確認 · 尚未寫入\n完成上模\n設備\nMC36\n本次執行\n2026-11-02 14:26:25\n預計開始\n2026-11-02 08:00:00\n完成上模時間\n2026-11-02 14:27:25\n查看資料異動明細2項\n確認期限：2026-11-02 14:37:25\n取消草稿\n同意並寫入\n技術資料",
+    "workspace": {
+      "height": 618,
+      "width": 1054
+    }
+  },
+  {
+    "file": "G2-完成上模結果-作業單.jpg",
+    "sha": "f8ec8df",
+    "locale": "zh-TW",
+    "theme": "light",
+    "fields": [],
+    "focus": "",
+    "mode": "desktop-workbench dual-flow chat-sheet  ",
+    "viewport": {
+      "dpr": 1,
+      "height": 768,
+      "width": 1366
+    },
+    "visibleText": "查看紀錄\n繼續此工單\n回作業選擇\n作業處理結果\n完成上模\n已完成\n設備\nMC36\n本次執行\n2026-11-02 14:26:25\n預計開始\n2026-11-02 08:00:00\n完成上模時間\n2026-11-02 14:27:25\n查看資料異動明細2項\n技術資料",
+    "workspace": {
+      "height": 564.8125,
+      "width": 1054
+    }
+  },
+  {
+    "file": "G2-開始下模核對-作業單.jpg",
+    "sha": "f8ec8df",
+    "locale": "zh-TW",
+    "theme": "light",
+    "fields": [],
+    "focus": "",
+    "mode": "desktop-workbench dual-flow chat-sheet  ",
+    "viewport": {
+      "dpr": 1,
+      "height": 768,
+      "width": 1366
+    },
+    "visibleText": "上一步：修改資料\n待你確認 · 尚未寫入\n開始下模\n設備\nMC36\n本次執行\n2026-11-02 14:26:25\n預計開始\n2026-11-02 08:00:00\n開始下模時間\n2026-11-02 14:27:57\n查看資料異動明細2項\n確認期限：2026-11-02 14:37:57\n取消草稿\n同意並寫入\n技術資料",
+    "workspace": {
+      "height": 618,
+      "width": 1054
+    }
+  },
+  {
+    "file": "G2-開始下模核對-精靈.jpg",
+    "sha": "f8ec8df",
+    "locale": "zh-TW",
+    "theme": "light",
+    "fields": [],
+    "focus": "chat-input",
+    "mode": "desktop-workbench dual-flow step-wizard  ",
+    "viewport": {
+      "dpr": 1,
+      "height": 768,
+      "width": 1366
+    },
+    "visibleText": "✓\n選擇對象\n2\n核對送出\n上一步：修改資料\n待你確認 · 尚未寫入\n開始下模\n設備\nMC36\n本次執行\n2026-11-02 14:26:25\n預計開始\n2026-11-02 08:00:00\n開始下模時間\n2026-11-02 14:27:57\n查看資料異動明細2項\n確認期限：2026-11-02 14:37:57\n取消草稿\n同意並寫入\n技術資料",
+    "workspace": {
+      "height": 618,
+      "width": 1054
+    }
+  },
+  {
+    "file": "G2-開始下模結果-精靈.jpg",
+    "sha": "f8ec8df",
+    "locale": "zh-TW",
+    "theme": "light",
+    "fields": [],
+    "focus": "",
+    "mode": "desktop-workbench dual-flow step-wizard  ",
+    "viewport": {
+      "dpr": 1,
+      "height": 768,
+      "width": 1366
+    },
+    "visibleText": "✓\n選擇對象\n✓\n核對送出\n查看紀錄\n繼續此工單\n回作業選擇\n作業處理結果\n開始下模\n已完成\n設備\nMC36\n本次執行\n2026-11-02 14:26:25\n預計開始\n2026-11-02 08:00:00\n開始下模時間\n2026-11-02 14:27:57\n查看資料異動明細2項\n技術資料",
+    "workspace": {
+      "height": 564.8125,
+      "width": 1054
+    }
+  },
+  {
+    "file": "G2-完成下模核對-精靈.jpg",
+    "sha": "f8ec8df",
+    "locale": "zh-TW",
+    "theme": "light",
+    "fields": [],
+    "focus": "",
+    "mode": "desktop-workbench dual-flow step-wizard  ",
+    "viewport": {
+      "dpr": 1,
+      "height": 768,
+      "width": 1366
+    },
+    "visibleText": "✓\n選擇對象\n2\n核對送出\n上一步：修改資料\n待你確認 · 尚未寫入\n完成下模\n設備\nMC36\n本次執行\n2026-11-02 14:26:25\n預計開始\n2026-11-02 08:00:00\n完成下模時間\n2026-11-02 14:28:17\n影響工單\nWO-261102-0382\n查看資料異動明細5項\n確認期限：2026-11-02 14:38:17\n我已核對這筆「完成下模」的對象及影響，確認要單獨執行。\n取消草稿\n確認這筆操作\n技術資料",
+    "workspace": {
+      "height": 618,
+      "width": 1054
+    }
+  },
+  {
+    "file": "G2-完成下模核對-作業單.jpg",
+    "sha": "f8ec8df",
+    "locale": "zh-TW",
+    "theme": "light",
+    "fields": [],
+    "focus": "chat-input",
+    "mode": "desktop-workbench dual-flow chat-sheet  ",
+    "viewport": {
+      "dpr": 1,
+      "height": 768,
+      "width": 1366
+    },
+    "visibleText": "上一步：修改資料\n待你確認 · 尚未寫入\n完成下模\n設備\nMC36\n本次執行\n2026-11-02 14:26:25\n預計開始\n2026-11-02 08:00:00\n完成下模時間\n2026-11-02 14:28:17\n影響工單\nWO-261102-0382\n查看資料異動明細5項\n確認期限：2026-11-02 14:38:17\n我已核對這筆「完成下模」的對象及影響，確認要單獨執行。\n取消草稿\n確認這筆操作\n技術資料",
+    "workspace": {
+      "height": 618,
+      "width": 1054
+    }
+  },
+  {
+    "file": "G2-完成下模結果-作業單.jpg",
+    "sha": "f8ec8df",
+    "locale": "zh-TW",
+    "theme": "light",
+    "fields": [],
+    "focus": "",
+    "mode": "desktop-workbench dual-flow chat-sheet  ",
+    "viewport": {
+      "dpr": 1,
+      "height": 768,
+      "width": 1366
+    },
+    "visibleText": "查看紀錄\n繼續此工單\n回作業選擇\n作業處理結果\n完成下模\n已完成\n設備\nMC36\n本次執行\n2026-11-02 14:26:25\n預計開始\n2026-11-02 08:00:00\n完成下模時間\n2026-11-02 14:28:17\n影響工單\nWO-261102-0382\n查看資料異動明細5項\n技術資料",
+    "workspace": {
+      "height": 564.8125,
+      "width": 1054
+    }
+  },
+  {
+    "file": "G2-清除換模核對-作業單.jpg",
+    "sha": "f8ec8df",
+    "locale": "zh-TW",
+    "theme": "light",
+    "fields": [],
+    "focus": "",
+    "mode": "desktop-workbench dual-flow chat-sheet  ",
+    "viewport": {
+      "dpr": 1,
+      "height": 768,
+      "width": 1366
+    },
+    "visibleText": "上一步：修改資料\n待你確認 · 尚未寫入\n清空上下模\n設備\nMC36\n本次執行\n2026-11-02 14:26:25\n預計開始\n2026-11-02 08:00:00\n開始上模時間\n2026-11-02 14:26:25\n清除時間\n完成上模時間\n2026-11-02 14:27:25\n清除時間\n開始下模時間\n2026-11-02 14:27:57\n清除時間\n完成下模時間\n2026-11-02 14:28:17\n清除時間\n影響工單\nWO-261102-0382\n\n會清除這張排程的上下模時間，請確認現場狀態。\n\n進站時間\n2026-11-02 14:26:25\n清除時間\n出站時間\n2026-11-02 14:28:17\n清除時間\n完工狀態\nY\nN\n查看資料異動明細9項\n確認期限：2026-11-02 14:38:56\n我已核對這筆「清空上下模」的對象及影響，確認要單獨執行。\n取消草稿\n確認這筆操作\n技術資料",
+    "workspace": {
+      "height": 618,
+      "width": 1054
+    }
+  },
+  {
+    "file": "G2-清除換模核對-精靈.jpg",
+    "sha": "f8ec8df",
+    "locale": "zh-TW",
+    "theme": "light",
+    "fields": [],
+    "focus": "chat-input",
+    "mode": "desktop-workbench dual-flow step-wizard  ",
+    "viewport": {
+      "dpr": 1,
+      "height": 768,
+      "width": 1366
+    },
+    "visibleText": "✓\n選擇對象\n2\n核對送出\n上一步：修改資料\n待你確認 · 尚未寫入\n清空上下模\n設備\nMC36\n本次執行\n2026-11-02 14:26:25\n預計開始\n2026-11-02 08:00:00\n開始上模時間\n2026-11-02 14:26:25\n清除時間\n完成上模時間\n2026-11-02 14:27:25\n清除時間\n開始下模時間\n2026-11-02 14:27:57\n清除時間\n完成下模時間\n2026-11-02 14:28:17\n清除時間\n影響工單\nWO-261102-0382\n\n會清除這張排程的上下模時間，請確認現場狀態。\n\n進站時間\n2026-11-02 14:26:25\n清除時間\n出站時間\n2026-11-02 14:28:17\n清除時間\n完工狀態\nY\nN\n查看資料異動明細9項\n確認期限：2026-11-02 14:38:56\n我已核對這筆「清空上下模」的對象及影響，確認要單獨執行。\n取消草稿\n確認這筆操作\n技術資料",
+    "workspace": {
+      "height": 618,
+      "width": 1054
+    }
+  },
+  {
+    "file": "G2-清除換模結果-精靈.jpg",
+    "sha": "f8ec8df",
+    "locale": "zh-TW",
+    "theme": "light",
+    "fields": [],
+    "focus": "",
+    "mode": "desktop-workbench dual-flow step-wizard  ",
+    "viewport": {
+      "dpr": 1,
+      "height": 768,
+      "width": 1366
+    },
+    "visibleText": "✓\n選擇對象\n✓\n核對送出\n查看紀錄\n繼續此工單\n回作業選擇\n作業處理結果\n清空上下模\n已完成\n設備\nMC36\n預計開始\n2026-11-02 08:00:00\n開始上模時間\n2026-11-02 14:26:25\n清除時間\n完成上模時間\n2026-11-02 14:27:25\n清除時間\n開始下模時間\n2026-11-02 14:27:57\n清除時間\n完成下模時間\n2026-11-02 14:28:17\n清除時間\n影響工單\nWO-261102-0382\n\n會清除這張排程的上下模時間，請確認現場狀態。\n\n進站時間\n2026-11-02 14:26:25\n清除時間\n出站時間\n2026-11-02 14:28:17\n清除時間\n完工狀態\nY\nN\n查看資料異動明細9項\n技術資料",
+    "workspace": {
+      "height": 564.8125,
+      "width": 1054
+    }
+  },
+  {
+    "file": "G2-新增排程編輯-精靈.jpg",
+    "sha": "ab8e6fc",
+    "locale": "zh-TW",
+    "theme": "light",
+    "fields": [
+      {
+        "id": "guide-start_time",
+        "value": "2026-11-03T08:00"
+      },
+      {
+        "id": "guide-cycle_seconds",
+        "value": "60"
+      },
+      {
+        "id": "guide-target_shots",
+        "value": "10"
+      },
+      {
+        "id": "guide-status",
+        "value": "DO"
+      },
+      {
+        "id": "guide-priority",
+        "value": "0"
+      },
+      {
+        "id": "guide-comment",
+        "value": "Issue29 隔離多工單驗收"
+      }
+    ],
+    "focus": "",
+    "mode": "desktop-workbench dual-flow step-wizard  ",
+    "viewport": {
+      "dpr": 1,
+      "height": 768,
+      "width": 1366
+    },
+    "visibleText": "✓\n選擇對象\n2\n填寫內容\n3\n核對送出\n新增排程\n\n草稿 · 尚未送出\n\nWO-261102-0382 · WO-B\n\nMC36 · MOLD-A · P-102 · 2026-11-03 08:00\n\n選擇／更換對象\n開始時間（MES時間）\n週期（秒）\n目標模次\n進階設定：狀態、優先序、備註\n上一步\n下一步：核對內容",
+    "workspace": {
+      "height": 618,
+      "width": 1054
+    }
+  },
+  {
+    "file": "G2-新增排程編輯-作業單.jpg",
+    "sha": "ab8e6fc",
+    "locale": "zh-TW",
+    "theme": "light",
+    "fields": [
+      {
+        "id": "guide-details-0-mold_detail_id",
+        "value": "61"
+      },
+      {
+        "id": "guide-details-0-cavities",
+        "value": "2"
+      },
+      {
+        "id": "guide-details-1-mold_detail_id",
+        "value": "62"
+      },
+      {
+        "id": "guide-details-1-cavities",
+        "value": "1"
+      },
+      {
+        "id": "guide-start_time",
+        "value": "2026-11-03T08:00"
+      },
+      {
+        "id": "guide-cycle_seconds",
+        "value": "60"
+      },
+      {
+        "id": "guide-target_shots",
+        "value": "10"
+      },
+      {
+        "id": "guide-status",
+        "value": "DO"
+      },
+      {
+        "id": "guide-priority",
+        "value": "0"
+      },
+      {
+        "id": "guide-comment",
+        "value": "Issue29 隔離多工單驗收"
+      }
+    ],
+    "focus": "guide-start_time",
+    "mode": "desktop-workbench dual-flow chat-sheet  ",
+    "viewport": {
+      "dpr": 1,
+      "height": 768,
+      "width": 1366
+    },
+    "visibleText": "新增排程\n\n草稿 · 尚未送出\n\nWO-261102-0382 · WO-B\n\nMC36 · MOLD-A · P-102 · 2026-11-03 08:00\n\n設備\nMC36\n品號／規格\nP-102\n模具\nMOLD-A\n\n選擇模具的各組模穴，再分配工單與穴數。\n\n已加入明細：2\n\n工單與模穴 1\n模具明細／品號\n請選擇\nMOLD-A-L · P-102\nMOLD-A-R · EPS-B\n工單\nWO-261102-0382\n未分配工單（0 穴）\n模穴數\n移除此列\n工單與模穴 2\n模具明細／品號\n請選擇\nMOLD-A-L · P-102\nMOLD-A-R · EPS-B\n工單\nWO-B\n未分配工單（0 穴）\n模穴數\n移除此列\n+ 加入工單／模穴\n開始時間（MES時間）\n週期（秒）\n目標模次\n進階設定：狀態、優先序、備註\n上一步\n下一步：核對內容",
+    "workspace": {
+      "height": 618,
+      "width": 1054
+    }
+  },
+  {
+    "file": "G2-排程品號選取.jpg",
+    "sha": "ab8e6fc",
+    "locale": "zh-TW",
+    "theme": "light",
+    "fields": [
+      {
+        "id": "guide-details-0-mold_detail_id",
+        "value": "61"
+      },
+      {
+        "id": "guide-details-0-cavities",
+        "value": "2"
+      },
+      {
+        "id": "guide-details-1-mold_detail_id",
+        "value": "62"
+      },
+      {
+        "id": "guide-details-1-cavities",
+        "value": "1"
+      },
+      {
+        "id": "guide-start_time",
+        "value": "2026-11-03T08:00"
+      },
+      {
+        "id": "guide-cycle_seconds",
+        "value": "60"
+      },
+      {
+        "id": "guide-target_shots",
+        "value": "10"
+      },
+      {
+        "id": "guide-status",
+        "value": "DO"
+      },
+      {
+        "id": "guide-priority",
+        "value": "0"
+      },
+      {
+        "id": "guide-comment",
+        "value": "Issue29 隔離多工單驗收"
+      }
+    ],
+    "focus": "",
+    "mode": "desktop-workbench dual-flow chat-sheet  ",
+    "viewport": {
+      "dpr": 1,
+      "height": 768,
+      "width": 1366
+    },
+    "visibleText": "新增排程\n\n草稿 · 尚未送出\n\nWO-261102-0382 · WO-B\n\nMC36 · MOLD-A · P-102 · 2026-11-03 08:00\n\n設備\nMC36\n品號／規格\nP-102\n模具\nMOLD-A\n\n選擇模具的各組模穴，再分配工單與穴數。\n\n已加入明細：2\n\n工單與模穴 1\n模具明細／品號\n請選擇\nMOLD-A-L · P-102\nMOLD-A-R · EPS-B\n工單\nWO-261102-0382\n未分配工單（0 穴）\n模穴數\n移除此列\n工單與模穴 2\n模具明細／品號\n請選擇\nMOLD-A-L · P-102\nMOLD-A-R · EPS-B\n工單\nWO-B\n未分配工單（0 穴）\n模穴數\n移除此列\n+ 加入工單／模穴\n開始時間（MES時間）\n週期（秒）\n目標模次\n進階設定：狀態、優先序、備註\n上一步\n下一步：核對內容",
+    "workspace": {
+      "height": 618,
+      "width": 1054
+    }
+  },
+  {
+    "file": "G2-新增排程核對-作業單.jpg",
+    "sha": "ab8e6fc",
+    "locale": "zh-TW",
+    "theme": "light",
+    "fields": [],
+    "focus": "",
+    "mode": "desktop-workbench dual-flow chat-sheet  ",
+    "viewport": {
+      "dpr": 1,
+      "height": 768,
+      "width": 1366
+    },
+    "visibleText": "上一步：修改資料\n待你確認 · 尚未寫入\n儲存排程\n設備\nMC36\n預計開始\n2026-11-03 08:00\n排程日期\n2026-11-03\n預計結束\n2026-11-03 08:10:00\n模具\nMOLD-A\n週期\n60\n秒\n目標模次\n10\n模\n工單與模具明細分配\nWO-261102-0382 · MOLD-A-L\n2\n穴\n目標件數\n20\n件\nWO-B · MOLD-A-R\n1\n穴\n目標件數\n10\n件\n備註\nIssue29 隔離多工單驗收\n查看資料異動明細102項\n確認期限：2026-11-02 14:40:53\n取消草稿\n同意並寫入\n技術資料",
+    "workspace": {
+      "height": 618,
+      "width": 1054
+    }
+  },
+  {
+    "file": "G2-新增排程目標-精靈.jpg",
+    "sha": "ab8e6fc",
+    "locale": "zh-TW",
+    "theme": "light",
+    "fields": [
+      {
+        "id": "guide-details-0-mold_detail_id",
+        "value": "61"
+      },
+      {
+        "id": "guide-details-0-cavities",
+        "value": "2"
+      },
+      {
+        "id": "guide-details-1-mold_detail_id",
+        "value": "62"
+      },
+      {
+        "id": "guide-details-1-cavities",
+        "value": "1"
+      }
+    ],
+    "focus": "guide-details-0-cavities",
+    "mode": "desktop-workbench dual-flow step-wizard  ",
+    "viewport": {
+      "dpr": 1,
+      "height": 768,
+      "width": 1366
+    },
+    "visibleText": "1\n選擇對象\n2\n填寫內容\n3\n核對送出\n新增排程\n\n草稿 · 尚未送出\n\n取消選取詢問 AI／補充條件\n選擇這次要操作的對象\n設備\nMC36\n品號／規格\nP-102\n模具\nMOLD-A\n\n選擇模具的各組模穴，再分配工單與穴數。\n\n已加入明細：2\n\n工單與模穴 1\n模具明細／品號\n請選擇\nMOLD-A-L · P-102\nMOLD-A-R · EPS-B\n工單\nWO-261102-0382\n未分配工單（0 穴）\n模穴數\n移除此列\n工單與模穴 2\n模具明細／品號\n請選擇\nMOLD-A-L · P-102\nMOLD-A-R · EPS-B\n工單\nWO-B\n未分配工單（0 穴）\n模穴數\n移除此列\n+ 加入工單／模穴\n下一步",
+    "workspace": {
+      "height": 618,
+      "width": 1054
+    }
+  },
+  {
+    "file": "G2-新增排程核對-精靈.jpg",
+    "sha": "ab8e6fc",
+    "locale": "zh-TW",
+    "theme": "light",
+    "fields": [],
+    "focus": "",
+    "mode": "desktop-workbench dual-flow step-wizard  ",
+    "viewport": {
+      "dpr": 1,
+      "height": 768,
+      "width": 1366
+    },
+    "visibleText": "✓\n選擇對象\n✓\n填寫內容\n3\n核對送出\n上一步：修改資料\n待你確認 · 尚未寫入\n儲存排程\n設備\nMC36\n預計開始\n2026-11-03 08:00\n排程日期\n2026-11-03\n預計結束\n2026-11-03 08:10:00\n模具\nMOLD-A\n週期\n60\n秒\n目標模次\n10\n模\n工單與模具明細分配\nWO-261102-0382 · MOLD-A-L\n2\n穴\n目標件數\n20\n件\nWO-B · MOLD-A-R\n1\n穴\n目標件數\n10\n件\n備註\nIssue29 隔離多工單驗收\n查看資料異動明細102項\n確認期限：2026-11-02 14:40:53\n取消草稿\n同意並寫入\n技術資料",
+    "workspace": {
+      "height": 618,
+      "width": 1054
+    }
+  },
+  {
+    "file": "G2-新增排程實改模次核對-精靈.jpg",
+    "sha": "ab8e6fc",
+    "locale": "zh-TW",
+    "theme": "light",
+    "fields": [],
+    "focus": "",
+    "mode": "desktop-workbench dual-flow step-wizard  ",
+    "viewport": {
+      "dpr": 1,
+      "height": 768,
+      "width": 1366
+    },
+    "visibleText": "✓\n選擇對象\n✓\n填寫內容\n3\n核對送出\n上一步：修改資料\n待你確認 · 尚未寫入\n儲存排程\n設備\nMC36\n預計開始\n2026-11-03 08:00\n排程日期\n2026-11-03\n預計結束\n2026-11-03 08:11:00\n模具\nMOLD-A\n週期\n60\n秒\n目標模次\n11\n模\n工單與模具明細分配\nWO-261102-0382 · MOLD-A-L\n2\n穴\n目標件數\n22\n件\nWO-B · MOLD-A-R\n1\n穴\n目標件數\n11\n件\n備註\nIssue29 隔離多工單驗收\n查看資料異動明細102項\n確認期限：2026-11-02 14:41:52\n取消草稿\n同意並寫入\n技術資料",
+    "workspace": {
+      "height": 618,
+      "width": 1054
+    }
+  },
+  {
+    "file": "G2-新增排程結果-精靈.jpg",
+    "sha": "ab8e6fc",
+    "locale": "zh-TW",
+    "theme": "light",
+    "fields": [],
+    "focus": "",
+    "mode": "desktop-workbench dual-flow step-wizard  ",
+    "viewport": {
+      "dpr": 1,
+      "height": 768,
+      "width": 1366
+    },
+    "visibleText": "✓\n選擇對象\n✓\n填寫內容\n✓\n核對送出\n查看紀錄\n選擇作業\n回作業選擇\n作業處理結果\n儲存排程\n已完成\n設備\nMC36\n預計開始\n2026-11-03 08:00\n排程日期\n2026-11-03\n預計結束\n2026-11-03 08:11:00\n模具\nMOLD-A\n週期\n60\n秒\n目標模次\n11\n模\n工單與模具明細分配\nWO-261102-0382 · MOLD-A-L\n2\n穴\n目標件數\n22\n件\nWO-B · MOLD-A-R\n1\n穴\n目標件數\n11\n件\n備註\nIssue29 隔離多工單驗收\n查看資料異動明細102項\n技術資料",
+    "workspace": {
+      "height": 564.8125,
+      "width": 1054
+    }
+  },
+  {
+    "file": "G2-修改排程零穴-精靈.jpg",
+    "sha": "ab8e6fc",
+    "locale": "zh-TW",
+    "theme": "light",
+    "fields": [
+      {
+        "id": "guide-details-0-mold_detail_id",
+        "value": "61"
+      },
+      {
+        "id": "guide-details-0-cavities",
+        "value": "3"
+      },
+      {
+        "id": "guide-details-1-mold_detail_id",
+        "value": "62"
+      },
+      {
+        "id": "guide-details-1-cavities",
+        "value": "0"
+      },
+      {
+        "id": "guide-start_time",
+        "value": "2026-11-03T08:00"
+      },
+      {
+        "id": "guide-cycle_seconds",
+        "value": "60"
+      },
+      {
+        "id": "guide-target_shots",
+        "value": "10"
+      },
+      {
+        "id": "guide-status",
+        "value": "DO"
+      },
+      {
+        "id": "guide-priority",
+        "value": "0"
+      },
+      {
+        "id": "guide-comment",
+        "value": "Issue29 隔離多工單驗收"
+      }
+    ],
+    "focus": "",
+    "mode": "desktop-workbench dual-flow step-wizard  ",
+    "viewport": {
+      "dpr": 1,
+      "height": 768,
+      "width": 1366
+    },
+    "visibleText": "✓\n選擇對象\n2\n填寫內容\n3\n核對送出\n修改排程\n\n草稿 · 尚未送出\n\nWO-261102-0382\n\nMC36 · MOLD-A · 2026-11-03 08:00:00\n\n選擇／更換對象\n設備\nMC36\n品號／規格\nP-102\n模具\nMOLD-A\n\n選擇模具的各組模穴，再分配工單與穴數。\n\n已加入明細：2\n\n工單與模穴 1\n模具明細／品號\n請選擇\nMOLD-A-L · P-102\nMOLD-A-R · EPS-B\n工單\nWO-261102-0382\n未分配工單（0 穴）\n模穴數\n移除此列\n工單與模穴 2\n模具明細／品號\n請選擇\nMOLD-A-L · P-102\nMOLD-A-R · EPS-B\n工單\n搜尋並選擇\n未分配工單（0 穴）\n模穴數\n移除此列\n+ 加入工單／模穴\n開始時間（MES時間）\n週期（秒）\n目標模次\n進階設定：狀態、優先序、備註\n上一步\n下一步：核對內容",
+    "workspace": {
+      "height": 618,
+      "width": 1054
+    }
+  },
+  {
+    "file": "G2-修改排程零穴-作業單.jpg",
+    "sha": "ab8e6fc",
+    "locale": "zh-TW",
+    "theme": "light",
+    "fields": [
+      {
+        "id": "guide-details-0-mold_detail_id",
+        "value": "61"
+      },
+      {
+        "id": "guide-details-0-cavities",
+        "value": "3"
+      },
+      {
+        "id": "guide-details-1-mold_detail_id",
+        "value": "62"
+      },
+      {
+        "id": "guide-details-1-cavities",
+        "value": "0"
+      },
+      {
+        "id": "guide-start_time",
+        "value": "2026-11-03T08:00"
+      },
+      {
+        "id": "guide-cycle_seconds",
+        "value": "60"
+      },
+      {
+        "id": "guide-target_shots",
+        "value": "10"
+      },
+      {
+        "id": "guide-status",
+        "value": "DO"
+      },
+      {
+        "id": "guide-priority",
+        "value": "0"
+      },
+      {
+        "id": "guide-comment",
+        "value": "Issue29 隔離多工單驗收"
+      }
+    ],
+    "focus": "guide-details-0-mold_detail_id",
+    "mode": "desktop-workbench dual-flow chat-sheet  ",
+    "viewport": {
+      "dpr": 1,
+      "height": 768,
+      "width": 1366
+    },
+    "visibleText": "修改排程\n\n草稿 · 尚未送出\n\nWO-261102-0382\n\nMC36 · MOLD-A · 2026-11-03 08:00:00\n\n選擇／更換對象\n設備\nMC36\n品號／規格\nP-102\n模具\nMOLD-A\n\n選擇模具的各組模穴，再分配工單與穴數。\n\n已加入明細：2\n\n工單與模穴 1\n模具明細／品號\n請選擇\nMOLD-A-L · P-102\nMOLD-A-R · EPS-B\n工單\nWO-261102-0382\n未分配工單（0 穴）\n模穴數\n移除此列\n工單與模穴 2\n模具明細／品號\n請選擇\nMOLD-A-L · P-102\nMOLD-A-R · EPS-B\n工單\n搜尋並選擇\n未分配工單（0 穴）\n模穴數\n移除此列\n+ 加入工單／模穴\n開始時間（MES時間）\n週期（秒）\n目標模次\n進階設定：狀態、優先序、備註\n上一步\n下一步：核對內容",
+    "workspace": {
+      "height": 618,
+      "width": 1054
+    }
+  },
+  {
+    "file": "G2-修改排程核對-作業單.jpg",
+    "sha": "9549e2b",
+    "locale": "zh-TW",
+    "theme": "light",
+    "fields": [],
+    "focus": "",
+    "mode": "desktop-workbench dual-flow chat-sheet  ",
+    "viewport": {
+      "dpr": 1,
+      "height": 768,
+      "width": 1366
+    },
+    "visibleText": "上一步：修改資料\n待你確認 · 尚未寫入\n儲存排程\n設備\nMC36\n預計開始\n2026-11-03 08:00\n排程日期\n2026-11-03\n預計結束\n2026-11-03 08:12:00\n模具\nMOLD-A\n週期\n60\n秒\n目標模次\n11\n12\n模\n工單與模具明細分配\nWO-261102-0382 · MOLD-A-L\n2\n3\n穴\n目標件數\n22\n36\n件\n工單分配\nWO-B\n未分配工單\nEPS-B · MOLD-A-R\n1\n0\n穴\n目標件數\n11\n0\n件\n備註\nIssue29 隔離多工單驗收\n查看資料異動明細18項\n確認期限：2026-11-02 14:44:15\n取消草稿\n同意並寫入\n技術資料",
+    "workspace": {
+      "height": 618,
+      "width": 1054
+    }
+  },
+  {
+    "file": "G2-修改排程核對-精靈.jpg",
+    "sha": "9549e2b",
+    "locale": "zh-TW",
+    "theme": "light",
+    "fields": [],
+    "focus": "chat-input",
+    "mode": "desktop-workbench dual-flow step-wizard  ",
+    "viewport": {
+      "dpr": 1,
+      "height": 768,
+      "width": 1366
+    },
+    "visibleText": "✓\n選擇對象\n✓\n填寫內容\n3\n核對送出\n上一步：修改資料\n待你確認 · 尚未寫入\n儲存排程\n設備\nMC36\n預計開始\n2026-11-03 08:00\n排程日期\n2026-11-03\n預計結束\n2026-11-03 08:12:00\n模具\nMOLD-A\n週期\n60\n秒\n目標模次\n11\n12\n模\n工單與模具明細分配\nWO-261102-0382 · MOLD-A-L\n2\n3\n穴\n目標件數\n22\n36\n件\n工單分配\nWO-B\n未分配工單\nEPS-B · MOLD-A-R\n1\n0\n穴\n目標件數\n11\n0\n件\n備註\nIssue29 隔離多工單驗收\n查看資料異動明細18項\n確認期限：2026-11-02 14:44:15\n取消草稿\n同意並寫入\n技術資料",
+    "workspace": {
+      "height": 618,
+      "width": 1054
+    }
+  },
+  {
+    "file": "G2-修改排程結果-精靈.jpg",
+    "sha": "9549e2b",
+    "locale": "zh-TW",
+    "theme": "light",
+    "fields": [],
+    "focus": "",
+    "mode": "desktop-workbench dual-flow step-wizard  ",
+    "viewport": {
+      "dpr": 1,
+      "height": 768,
+      "width": 1366
+    },
+    "visibleText": "✓\n選擇對象\n✓\n填寫內容\n✓\n核對送出\n查看紀錄\n繼續此工單\n回作業選擇\n作業處理結果\n儲存排程\n已完成\n設備\nMC36\n預計開始\n2026-11-03 08:00\n排程日期\n2026-11-03\n預計結束\n2026-11-03 08:12:00\n模具\nMOLD-A\n週期\n60\n秒\n目標模次\n11\n12\n模\n工單與模具明細分配\nWO-261102-0382 · MOLD-A-L\n2\n3\n穴\n目標件數\n22\n36\n件\n工單分配\nWO-B\n未分配工單\nEPS-B · MOLD-A-R\n1\n0\n穴\n目標件數\n11\n0\n件\n備註\nIssue29 隔離多工單驗收\n查看資料異動明細18項\n技術資料",
+    "workspace": {
+      "height": 564.8125,
+      "width": 1054
+    }
+  },
+  {
+    "file": "G2-跨頁保留暫選-精靈.jpg",
+    "sha": "2806e7a",
+    "locale": "zh-TW",
+    "theme": "light",
+    "fields": [
+      {
+        "id": "guide-search-equipment",
+        "value": "MC37"
+      },
+      {
+        "id": "guide-search-date",
+        "value": ""
+      },
+      {
+        "id": "guide-search-wo",
+        "value": ""
+      },
+      {
+        "id": "",
+        "value": ""
+      },
+      {
+        "id": "",
+        "value": ""
+      },
+      {
+        "id": "",
+        "value": "all"
+      },
+      {
+        "id": "",
+        "value": "on"
+      }
+    ],
+    "focus": "",
+    "mode": "desktop-workbench dual-flow step-wizard  ",
+    "viewport": {
+      "dpr": 1,
+      "height": 768,
+      "width": 1366
+    },
+    "visibleText": "1\n選擇對象\n2\n查看結果\n\n草稿 · 尚未送出\n\n取消選取詢問 AI／補充條件\n查詢作業資料\n設備\n日期\n工單\n更多查詢條件\n查詢\n\n找到 3 筆，選擇符合現場的工單。\n\n選取\t工單／品號\t設備／執行時間\t明細\n\t\nWO-261102-0382\nP-102 · 外殼\n\tMC37 · 2026-11-02 08:10:00\t查看\nMC37 · WO-B · MOLD-A · 2026-11-02 08:10:00 · 已完工\n查看選取資料\n上一頁\n1\n下一頁\n下一步",
+    "workspace": {
+      "height": 618,
+      "width": 1054
+    }
+  },
+  {
+    "file": "G2-跨頁保留暫選-作業單.jpg",
+    "sha": "2806e7a",
+    "locale": "zh-TW",
+    "theme": "light",
+    "fields": [
+      {
+        "id": "guide-search-equipment",
+        "value": "MC37"
+      },
+      {
+        "id": "guide-search-date",
+        "value": ""
+      },
+      {
+        "id": "guide-search-wo",
+        "value": ""
+      },
+      {
+        "id": "",
+        "value": ""
+      },
+      {
+        "id": "",
+        "value": ""
+      },
+      {
+        "id": "",
+        "value": "all"
+      },
+      {
+        "id": "",
+        "value": "on"
+      }
+    ],
+    "focus": "",
+    "mode": "desktop-workbench dual-flow chat-sheet  ",
+    "viewport": {
+      "dpr": 1,
+      "height": 768,
+      "width": 1366
+    },
+    "visibleText": "草稿 · 尚未送出\n\n取消選取詢問 AI／補充條件\n查詢作業資料\n設備\n日期\n工單\n更多查詢條件\n查詢\n\n找到 3 筆，選擇符合現場的工單。\n\n選取\t工單／品號\t設備／執行時間\t明細\n\t\nWO-261102-0382\nP-102 · 外殼\n\tMC37 · 2026-11-02 08:10:00\t查看\nMC37 · WO-B · MOLD-A · 2026-11-02 08:10:00 · 已完工\n查看選取資料\n上一頁\n1\n下一頁\n下一步",
+    "workspace": {
+      "height": 618,
+      "width": 1054
+    }
+  },
+  {
+    "file": "G2-R03-缺工單切精靈焦點.jpg",
+    "sha": "151e417",
+    "locale": "zh-TW",
+    "theme": "light",
+    "fields": [
+      {
+        "id": "guide-search-equipment",
+        "value": "MC37"
+      },
+      {
+        "id": "guide-search-date",
+        "value": ""
+      },
+      {
+        "id": "guide-search-wo",
+        "value": ""
+      },
+      {
+        "id": "",
+        "value": ""
+      },
+      {
+        "id": "",
+        "value": ""
+      },
+      {
+        "id": "",
+        "value": "all"
+      },
+      {
+        "id": "",
+        "value": "on"
+      },
+      {
+        "id": "",
+        "value": "on"
+      },
+      {
+        "id": "",
+        "value": "on"
+      }
+    ],
+    "focus": "guide-search-equipment",
+    "mode": "desktop-workbench dual-flow step-wizard  ",
+    "viewport": {
+      "dpr": 1,
+      "height": 768,
+      "width": 1366
+    },
+    "visibleText": "1\n選擇對象\n2\n填寫內容\n3\n核對送出\n新增報工\n\n草稿 · 尚未送出\n\n取消選取詢問 AI／補充條件\n選擇這次要操作的對象\n設備\n日期\n工單\n更多查詢條件\n查詢\n\n找到 3 筆，選擇符合現場的工單。\n\n選取\t工單／品號\t設備／執行時間\t明細\n\t\nWO-261102-0382\nP-102 · 外殼\n\tMC37 · 2026-11-02 08:10:00\t查看\n\t\nWO-B\nEPS-B · 模擬右側緩衝件\n\tMC37 · 2026-11-02 08:10:00\t查看\n\t\nWO-261102-0382\nP-102 · 外殼\n\tMC37 · 2026-11-02 14:24:44\t查看\n上一頁\n1\n下一頁",
+    "workspace": {
+      "height": 618,
+      "width": 1054
+    }
+  },
+  {
+    "file": "G2-補問返回選取保留未送文字.jpg",
+    "sha": "151e417",
+    "locale": "zh-TW",
+    "theme": "light",
+    "fields": [
+      {
+        "id": "guide-search-equipment",
+        "value": "MC37"
+      },
+      {
+        "id": "guide-search-date",
+        "value": ""
+      },
+      {
+        "id": "guide-search-wo",
+        "value": ""
+      },
+      {
+        "id": "",
+        "value": ""
+      },
+      {
+        "id": "",
+        "value": ""
+      },
+      {
+        "id": "",
+        "value": "all"
+      },
+      {
+        "id": "",
+        "value": "on"
+      },
+      {
+        "id": "",
+        "value": "on"
+      },
+      {
+        "id": "",
+        "value": "on"
+      }
+    ],
+    "focus": "guide-selection-ai",
+    "mode": "desktop-workbench dual-flow step-wizard  ",
+    "viewport": {
+      "dpr": 1,
+      "height": 768,
+      "width": 1366
+    },
+    "visibleText": "1\n選擇對象\n2\n填寫內容\n3\n核對送出\n新增報工\n\n草稿 · 尚未送出\n\n取消選取詢問 AI／補充條件\n選擇這次要操作的對象\n設備\n日期\n工單\n更多查詢條件\n查詢\n\n找到 3 筆，選擇符合現場的工單。\n\n選取\t工單／品號\t設備／執行時間\t明細\n\t\nWO-261102-0382\nP-102 · 外殼\n\tMC37 · 2026-11-02 08:10:00\t查看\n\t\nWO-B\nEPS-B · 模擬右側緩衝件\n\tMC37 · 2026-11-02 08:10:00\t查看\n\t\nWO-261102-0382\nP-102 · 外殼\n\tMC37 · 2026-11-02 14:24:44\t查看\n上一頁\n1\n下一頁",
+    "workspace": {
+      "height": 618,
+      "width": 1054
+    }
+  },
+  {
+    "file": "G2-R03-返回作業單保留數量.jpg",
+    "sha": "151e417",
+    "locale": "zh-TW",
+    "theme": "light",
+    "fields": [
+      {
+        "id": "guide-ok",
+        "value": "125"
+      },
+      {
+        "id": "guide-defects-0-code",
+        "value": "NG01"
+      },
+      {
+        "id": "guide-defects-0-quantity",
+        "value": "3"
+      },
+      {
+        "id": "guide-comment",
+        "value": ""
+      }
+    ],
+    "focus": "guide-ok",
+    "mode": "desktop-workbench dual-flow chat-sheet  ",
+    "viewport": {
+      "dpr": 1,
+      "height": 768,
+      "width": 1366
+    },
+    "visibleText": "新增報工\n\n草稿 · 尚未送出\n\n尚需補充\n選擇作業對象\n尚未選擇工單\n\n請選擇本次作業對象\n\n選擇／更換對象\n這一筆人工良品數量\n有不良品嗎？\n沒有不良品\n有，選原因與數量\n不良原因\n請選擇\nNG01 · 刮傷\nNG02 · 破損\n不良數量\n移除\n+ 另一個原因\n\n不良合計：3\n\n備註（選填）\n上一步\n下一步：核對內容",
+    "workspace": {
+      "height": 618,
+      "width": 1054
+    }
+  }
+]
