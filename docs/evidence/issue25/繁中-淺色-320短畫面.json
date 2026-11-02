@@ -1,0 +1,67 @@
+{
+  "colors": [
+    {
+      "bg": "rgb(249, 249, 249)",
+      "color": "rgb(34, 34, 34)",
+      "font": "14px",
+      "height": 427.8999938964844,
+      "selector": ".conversation-history"
+    },
+    {
+      "bg": "rgb(233, 233, 233)",
+      "color": "rgb(34, 34, 34)",
+      "font": "14px",
+      "height": 42,
+      "selector": ".history-row.selected"
+    },
+    {
+      "bg": "rgba(0, 0, 0, 0)",
+      "color": "rgb(34, 34, 34)",
+      "font": "14px",
+      "height": 44,
+      "selector": ".history-create button"
+    },
+    {
+      "bg": "rgba(0, 0, 0, 0)",
+      "color": "rgb(118, 118, 118)",
+      "font": "11px",
+      "height": 63,
+      "selector": ".history-footer"
+    }
+  ],
+  "dpr": 1.0000000149011612,
+  "focus": "更多功能",
+  "groups": [
+    "已釘選",
+    "近期"
+  ],
+  "locale": "zh-TW",
+  "main": {
+    "bottom": 568,
+    "height": 427.8999938964844,
+    "left": 0,
+    "right": 320,
+    "top": 140.10000610351562,
+    "width": 320,
+    "x": 0,
+    "y": 140.10000610351562
+  },
+  "overflow": false,
+  "sidebar": {
+    "bottom": 568,
+    "height": 427.8999938964844,
+    "left": 0,
+    "right": 320,
+    "top": 140.10000610351562,
+    "width": 320,
+    "x": 0,
+    "y": 140.10000610351562
+  },
+  "theme": "light",
+  "viewport": [
+    320,
+    568
+  ],
+  "source_sha": "a889de4beb57da4730d527f6ad5353ab4b57a2b0",
+  "evidence_note": "移除側欄品牌字及模擬提示列之前的操作／配對驗收"
+}

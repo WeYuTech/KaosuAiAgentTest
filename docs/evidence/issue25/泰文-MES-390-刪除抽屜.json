@@ -1,0 +1,58 @@
+{
+  "colors": [
+    {
+      "bg": "rgb(22, 42, 88)",
+      "color": "rgb(244, 249, 255)",
+      "font": "14px",
+      "height": 681.4000244140625,
+      "selector": ".conversation-history"
+    },
+    null,
+    {
+      "bg": "rgba(0, 0, 0, 0)",
+      "color": "rgb(244, 249, 255)",
+      "font": "14px",
+      "height": 44,
+      "selector": ".history-create button"
+    },
+    {
+      "bg": "rgba(0, 0, 0, 0)",
+      "color": "rgb(225, 237, 249)",
+      "font": "11px",
+      "height": 63,
+      "selector": ".history-footer"
+    }
+  ],
+  "dpr": 1.0000000149011612,
+  "focus": "แชตที่ลบแล้ว",
+  "groups": [],
+  "locale": "th",
+  "main": {
+    "bottom": 844.0000305175781,
+    "height": 681.4000244140625,
+    "left": 0,
+    "right": 390.3999938964844,
+    "top": 162.60000610351562,
+    "width": 390.3999938964844,
+    "x": 0,
+    "y": 162.60000610351562
+  },
+  "overflow": false,
+  "sidebar": {
+    "bottom": 844.0000305175781,
+    "height": 681.4000244140625,
+    "left": 0,
+    "right": 390.3999938964844,
+    "top": 162.60000610351562,
+    "width": 390.3999938964844,
+    "x": 0,
+    "y": 162.60000610351562
+  },
+  "theme": "mes",
+  "viewport": [
+    390,
+    844
+  ],
+  "source_sha": "a889de4beb57da4730d527f6ad5353ab4b57a2b0",
+  "evidence_note": "移除側欄品牌字及模擬提示列之前的操作／配對驗收"
+}

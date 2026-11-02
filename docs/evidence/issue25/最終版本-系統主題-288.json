@@ -1,0 +1,67 @@
+{
+  "colors": [
+    {
+      "bg": "rgb(249, 249, 249)",
+      "color": "rgb(34, 34, 34)",
+      "font": "14px",
+      "height": 595.2000122070312,
+      "selector": ".conversation-history"
+    },
+    {
+      "bg": "rgb(233, 233, 233)",
+      "color": "rgb(34, 34, 34)",
+      "font": "14px",
+      "height": 42,
+      "selector": ".history-row.selected"
+    },
+    {
+      "bg": "rgba(0, 0, 0, 0)",
+      "color": "rgb(34, 34, 34)",
+      "font": "14px",
+      "height": 42,
+      "selector": ".history-create button"
+    },
+    {
+      "bg": "rgba(0, 0, 0, 0)",
+      "color": "rgb(118, 118, 118)",
+      "font": "11px",
+      "height": 63,
+      "selector": ".history-footer"
+    }
+  ],
+  "dpr": 1.25,
+  "focus": "生產情報助理聊天紀錄新聊天縮小聊天室更多功能縮小助理新聊天已釘選查詢 MC37 今天目前產量生產排程近期生產報工生產報工查看目前可以報工的工單模具上下模查看目前這張工單只查詢這筆報工現況用量US$0.",
+  "groups": [
+    "已釘選",
+    "近期"
+  ],
+  "locale": "zh-TW",
+  "main": {
+    "bottom": 651.2000122070312,
+    "height": 595.2000122070312,
+    "left": 312,
+    "right": 1528,
+    "top": 56,
+    "width": 1216,
+    "x": 312,
+    "y": 56
+  },
+  "overflow": false,
+  "sidebar": {
+    "bottom": 651.2000122070312,
+    "height": 595.2000122070312,
+    "left": 0,
+    "right": 288,
+    "top": 56,
+    "width": 288,
+    "x": 0,
+    "y": 56
+  },
+  "theme": "light",
+  "viewport": [
+    1528,
+    651
+  ],
+  "source_sha": "eb686b03fd53a30c5ada780a9c745de4f020e365",
+  "evidence_note": "最終介面"
+}

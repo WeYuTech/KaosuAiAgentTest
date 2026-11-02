@@ -1,0 +1,64 @@
+{
+  "colors": [
+    {
+      "bg": "color(srgb 0.982427 0.982606 0.983806)",
+      "color": "oklch(0.141 0.005 285.823)",
+      "font": "17px",
+      "height": 670.7000122070312,
+      "selector": ".conversation-history"
+    },
+    {
+      "bg": "oklch(0.967 0.001 286.375)",
+      "color": "oklch(0.141 0.005 285.823)",
+      "font": "17px",
+      "height": 45.5,
+      "selector": ".history-row.selected"
+    },
+    {
+      "bg": "rgba(0, 0, 0, 0)",
+      "color": "oklch(0.141 0.005 285.823)",
+      "font": "15px",
+      "height": 40,
+      "selector": ".history-create button"
+    },
+    {
+      "bg": "rgba(0, 0, 0, 0)",
+      "color": "oklch(0.141 0.005 285.823)",
+      "font": "13px",
+      "height": 73.5,
+      "selector": ".history-footer"
+    }
+  ],
+  "dpr": 1.0000000149011612,
+  "focus": "生產情報助理聊天紀錄新聊天縮小聊天室更多功能縮小助理隔離模擬環境，正式 MES 資料不會變更WeYu新聊天聊天已釘選查詢 MC37 今天目前產量生產排程今天生產報工生產報工查看目前可以報工的工單模具上",
+  "groups": [],
+  "locale": "zh-TW",
+  "main": {
+    "bottom": 768.0000152587891,
+    "height": 670.7000122070312,
+    "left": 328,
+    "right": 1366.4000244140625,
+    "top": 97.3000030517578,
+    "width": 1038.4000244140625,
+    "x": 328,
+    "y": 97.3000030517578
+  },
+  "overflow": false,
+  "sidebar": {
+    "bottom": 768.0000152587891,
+    "height": 670.7000122070312,
+    "left": 0,
+    "right": 304,
+    "top": 97.3000030517578,
+    "width": 304,
+    "x": 0,
+    "y": 97.3000030517578
+  },
+  "theme": "light",
+  "viewport": [
+    1366,
+    768
+  ],
+  "source_sha": "f5401783c83c20a610ed6b680bdea3b439682dcc",
+  "evidence_note": "PR #24 比較基準"
+}
