@@ -48,3 +48,39 @@
  #mes-ai-chat-root .workspace-bar .module-switcher,#mes-ai-chat-root .workspace-bar p {display:none;}
  #mes-ai-chat-root .workspace-bar {min-height:32px;}
 }
+/* PR43：短視窗先保留資料與操作，空聊天的歡迎文字不佔用輸入空間。 */
+#mes-ai-chat-root .review-scroll-hint,#mes-ai-chat-root .compact-filter-toggle {display:none;}
+#mes-ai-chat-root .target-picker-dialog .record-choices th:last-child {white-space:nowrap;min-width:72px;}
+@container dual-workspace (max-width:760px) {
+ #mes-ai-chat-root .dual-flow:not(.chat-only) .conversation-scroll:has(.chat-welcome) {display:none;}
+ #mes-ai-chat-root .dual-flow:not(.chat-only) .composer-area {flex-shrink:0;}
+ #mes-ai-chat-root .dual-flow:not(.chat-only) .chat-layout:has(.chat-welcome) {height:auto;max-height:none;}
+}
+@media(max-height:520px) {
+ #mes-ai-chat-root .assistant-copyright {display:none;}
+ #mes-ai-chat-root .dual-flow:not(.chat-only)>.chat-layout {height:44px;max-height:44px;min-height:44px;}
+ #mes-ai-chat-root .dual-flow:not(.chat-only) .composer-area {padding:2px 8px;}
+ #mes-ai-chat-root .dual-flow:not(.chat-only) [data-slot=aui_composer-shell] {min-height:38px;height:38px;padding:2px 8px;}
+ #mes-ai-chat-root .dual-flow:not(.chat-only) .aui-composer-input {height:30px;min-height:30px;max-height:30px;padding:3px 0;line-height:24px;}
+ #mes-ai-chat-root .dual-flow:not(.chat-only) .aui-composer-action-wrapper {padding:0;}
+ #mes-ai-chat-root .dual-flow:not(.chat-only) .operation-primary {padding:8px 12px;}
+ #mes-ai-chat-root .dual-flow .proposal-actions {bottom:-8px;padding:4px 0 8px;gap:6px;flex-wrap:wrap;}
+ #mes-ai-chat-root .dual-flow .proposal-actions button {min-height:32px;padding:4px 8px;font-size:12px;}
+ #mes-ai-chat-root .review-scroll-hint {display:block;flex:0 0 100%;font-size:12px;line-height:1.4;margin:0;color:var(--foreground);}
+ #mes-ai-chat-root .dual-flow .guide-navigation {padding:4px 0;bottom:-8px;}
+ #mes-ai-chat-root .dual-flow .guide-navigation button {min-height:32px;padding:4px 8px;}
+ #mes-ai-chat-root .target-picker-dialog .operation-dialog-header {padding:8px 12px;}
+ #mes-ai-chat-root .target-picker-dialog .operation-dialog-body {padding:6px 12px;gap:4px;}
+ #mes-ai-chat-root .target-picker-dialog .compact-filter-toggle {display:block;align-self:flex-start;flex:none;min-height:28px;padding:2px 8px;font-size:12px;}
+ #mes-ai-chat-root .target-picker-dialog .compact-picker-filters:not([data-expanded=true]) {display:none;}
+ #mes-ai-chat-root .target-picker-dialog .compact-picker-filters[data-expanded=true] {max-height:90px;overflow:auto;}
+ #mes-ai-chat-root .target-picker-dialog .operation-dialog-footer {padding:4px 12px;}
+ #mes-ai-chat-root .target-picker-dialog .picker-pagination {margin:0;gap:8px;}
+ #mes-ai-chat-root .target-picker-dialog .picker-selection {font-size:12px;margin:2px 0;line-height:1.4;}
+ #mes-ai-chat-root .target-picker-dialog .picker-actions {gap:8px;}
+ #mes-ai-chat-root .target-picker-dialog .picker-actions button {min-height:32px;padding:4px 8px;font-size:12px;}
+ #mes-ai-chat-root .target-picker-dialog .record-choices :is(th,td) {padding:3px 6px;}
+}
+@media(max-height:520px){
+ #mes-ai-chat-root .dual-flow .aui-composer-send {width:32px;height:32px;min-width:32px;min-height:32px;}
+}

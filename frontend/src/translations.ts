@@ -1,5 +1,6 @@
 /* 固定介面詞彙：中文原文為鍵，不翻譯 MES 主檔名稱或歷史訊息。 */
 export const translations: Record<string, [string, string]> = Object.fromEntries(`
+請向下捲動完成核對，並勾選獨立確認後送出。|Scroll down to review, then select the independent confirmation before submitting.|เลื่อนลงเพื่อตรวจสอบ แล้วทำเครื่องหมายยืนยันแยกก่อนส่ง
 整張排程完工|Complete schedule|จบแผนการผลิต
 取消|Cancel|ยกเลิก
 完成|Done|เสร็จสิ้น
