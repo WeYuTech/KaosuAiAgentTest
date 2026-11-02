@@ -30,7 +30,8 @@ def live(bridge,actor,kind,search='',part_no='',page=1,page_size=20):
         'equipment':('dbo.EQP_MASTER AS c',[],['c.EQP_TYPE=?'],['EPS'],['EQP_NO','EQP_NAME'],'EQP_NO'),
         'parts':('dbo.GET_ZZ_KAOSU_PLAN_PART(?) AS c',['EPS-FORMING'],[],[],['PART_NO','PART_SPEC'],'PART_NO'),
         'work_orders':('dbo.V_ZZ_SCHEDULE_WO_TOL_SID_NEW AS c',[],['c.PART_NO=?'],[part_no],['WO','PART_NO','WO_SID'],'WO'),
-        'molds':('dbo.GET_ZZ_KAOSU_PLAN_TOL(?,?) AS c',[part_no,'EPS-FORMING'],[],[],['TOL_NO','TOL_NAME','TOL_SID'],'TOL_NO'),
+        # 原函式只回傳識別、作業與週期；名稱來自主檔，仍以函式決定可選範圍。
+        'molds':('(SELECT m.TOL_NO,t.TOL_NAME,m.TOL_SID FROM dbo.GET_ZZ_KAOSU_PLAN_TOL(?,?) AS m LEFT JOIN dbo.TOL_MASTER AS t ON t.TOL_SID=m.TOL_SID) AS c',[part_no,'EPS-FORMING'],[],[],['TOL_NO','TOL_NAME','TOL_SID'],'TOL_NO'),
     }
     source,parameters,clauses,values,columns,order=sources[kind]
     if search:
