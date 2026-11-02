@@ -620,16 +620,19 @@ def create_app(db_path=None, model=None, intent_classifier=None):
             convo = owned(store.get(db, "CONVERSATION", cid), actor)
             return update_metadata(db, store, convo, patch, body.version, now().isoformat())
 
-    @app.post("/api/conversations")
-    def new_conversation(body: Conversation, request: Request):
-        actor = actor_for(request)
+    def conversation_value(body, actor):
         allowed(actor, body.module)
         from app.model import budget_store
         from app.management import settings
         ledger = budget_store()
         with ledger.transaction() as db: config = settings(db, ledger)
-        convo = {"model_settings": config, "id": secrets.token_urlsafe(18), "module": body.module, "context": body.context,
+        return {"model_settings": config, "id": secrets.token_urlsafe(18), "module": body.module, "context": body.context,
                  "actor_id": actor["id"], "locale": body.locale, "messages": [], "created_at": now().isoformat()}
+
+    @app.post("/api/conversations")
+    def new_conversation(body: Conversation, request: Request):
+        actor = actor_for(request)
+        convo = conversation_value(body, actor)
         with store.transaction() as db:
             if body.entry_id:
                 entry = store.get(db, 'STATE', 'entry:v1:'+body.entry_id)
@@ -790,7 +793,7 @@ def create_app(db_path=None, model=None, intent_classifier=None):
                     store.put(db, "CONVERSATION", cid, current)
 
     from app.entry import install as install_entry
-    install_entry(app, store, actor_for, allowed, now, new_conversation, process_message, intent_classifier)
+    install_entry(app, store, actor_for, allowed, now, conversation_value, process_message, intent_classifier)
     return app
 
 

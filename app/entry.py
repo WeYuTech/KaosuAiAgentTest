@@ -139,16 +139,18 @@ def install(app, store, actor_for, allowed, now, create_conversation, process_me
                     content = L('原作業尚未完成，請先返回確認、取消或查核。','An operation is unresolved. Return to confirm, cancel or reconcile it first.','ยังมีงานค้าง โปรดกลับไปยืนยัน ยกเลิก หรือตรวจสอบก่อน')
                     status = 'recovery_required'
                 else:
-                    convo = create_conversation(Conversation(module=module, context=body.context, locale=body.locale), request)
+                    convo = create_conversation(Conversation(module=module, context=body.context, locale=body.locale), actor)
                     conversation_id = convo['id']
                     with store.transaction() as db:
                         # 交接前先登錄對話，逾時只能查核此識別，不建立第二份。
-                        stored = store.get(db, 'CONVERSATION', conversation_id)
-                        stored['messages'] = entry['messages']
-                        store.put(db, 'CONVERSATION', conversation_id, stored)
-                        row['conversation_id'] = conversation_id
-                        row['module'] = module
-                        store.put(db, 'STATE', 'entry-request:v1:'+body.request_id, row)
+                        active=receipt(db,body.request_id,actor)
+                        if active['token']!=token or active['expires_at'] < now().isoformat():
+                            raise HTTPException(409,'入口訊息已過期，請查核原訊息')
+                        convo['messages'] = entry['messages']
+                        store.put(db, 'CONVERSATION', conversation_id, convo)
+                        active['conversation_id'] = conversation_id
+                        active['module'] = module
+                        store.put(db, 'STATE', 'entry-request:v1:'+body.request_id, active)
                     reply = process_message(conversation_id, Message(text=body.text), request, decision)
                     result.update(module=module, reply=reply)
                     messages = reply['messages']

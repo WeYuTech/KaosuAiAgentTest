@@ -73,6 +73,31 @@ def test_入口逾時只查回原識別且失敗原文仍可恢復(tmp_path):
         assert c.get('/api/conversations').json()['total']==0
         assert c.post('/api/conversations',json={'module':'report','entry_id':'entry-expiry'}).status_code==200
 
+def test_入口查核逾時後晚到分類不能建立聊天(tmp_path):
+    from threading import Event, Thread
+    entered, release = Event(), Event()
+    def classify(_):
+        entered.set()
+        assert release.wait(5)
+        return {'intent':'change','module':'report'}
+    app=create_app(tmp_path/'late.db',intent_classifier=classify)
+    with TestClient(app) as c:
+        c.post('/api/session/demo',json={'identity':'operator'})
+        results=[]
+        worker=Thread(target=lambda:results.append(c.post('/api/entry/messages',json={'entry_id':'entry-late','request_id':'message-late','text':'報工'})))
+        worker.start()
+        try:
+            assert entered.wait(5)
+            with app.state.store.transaction() as db:
+                row=app.state.store.get(db,'STATE','entry-request:v1:message-late')
+                row['expires_at']='2000-01-01T00:00:00+00:00'
+                app.state.store.put(db,'STATE','entry-request:v1:message-late',row)
+            assert c.get('/api/entry/requests/message-late').json()['status']=='failed'
+        finally:
+            release.set();worker.join(5)
+        assert results[0].status_code==409
+        assert c.get('/api/conversations').json()['total']==0
+
 def test_候選搜尋超過兩百筆仍查得到且回傳真實分頁(tmp_path):
     app=create_app(tmp_path/'candidates.db')
     with TestClient(app) as c:
