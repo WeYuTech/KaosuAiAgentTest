@@ -22,7 +22,7 @@ const button=(host,text)=>[...host.querySelectorAll('button')].find(b=>b.textCon
 const tick=()=>new Promise(r=>setTimeout(r,220));
 
 test('全域入口在清單未重掛下切範圍；延遲回覆隔離、焦點與空集合',async()=>{
- const {host,root}=mount(),requests=[];let mounts=0;
+ const {host,root}=mount(),requests=[];
  const request=path=>new Promise((resolve,reject)=>requests.push({path,resolve,reject}));
  function Harness(){const [history,onProjection]=useState(),[visible,setVisible]=useState(false);const controller=useRef();return h(MesAssistantProvider,{state:{...base,history}},h(HeaderMenu,{signedIn:true,locale:'zh-TW',theme:'light',localeBusy:false,onLocale:noop,onTheme:noop,onManage:noop,onUsage:noop,onMinimize:noop,onHistory:scope=>{setVisible(true);controller.current.showScope(scope);}}),h(ConversationHistory,{ref:controller,visible,actor:'甲',current:null,overlay:true,locked:true,busy:false,refresh:0,request,close:()=>setVisible(false),select:noop,create:noop,beforeChange:noop,changed:noop,usage:noop,onWorkChange:noop,budget:null,onProjection}));}
  try {
