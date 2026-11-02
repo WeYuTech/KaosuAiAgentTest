@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>已選定：平面清單側欄</title>
+<style>html{color-scheme:light dark}body{margin:0;padding:20px;background:light-dark(#ffffff,#111111);color:light-dark(#222222,#ececec);font:14px/1.6 system-ui,sans-serif}.reference-note{max-width:560px;margin:0 auto 8px;text-align:center;font-size:13px}
+    #weyu-sidebar-five .wy-stage { display:flex; justify-content:center; align-items:flex-start; min-height:682px; padding:28px 36px 30px 12px; box-sizing:border-box; }
+    #weyu-sidebar-five .wy-product { --wy-bg:light-dark(#f9f9f9,#171717); --wy-ink:light-dark(#222222,#ececec); --wy-muted:light-dark(#767676,#a2a2a2); --wy-line:light-dark(#e5e5e5,#343434); --wy-hover:light-dark(#eeeeee,#242424); --wy-selected:light-dark(#e9e9e9,#303030); --wy-soft:light-dark(#f0f0f0,#222222); --wy-strong:light-dark(#242424,#eeeeee); --wy-on-strong:light-dark(#ffffff,#202020); --wy-popover:light-dark(#ffffff,#262626); --wy-shadow:light-dark(#0000000d,#0000002b); --wy-focus:light-dark(#646464,#b5b5b5); width:var(--wy-width,304px); max-width:100%; height:624px; position:relative; display:flex; flex-direction:column; flex:none; box-sizing:border-box; background:var(--wy-bg); color:var(--wy-ink); border:1px solid var(--wy-line); border-radius:14px; box-shadow:0 8px 28px var(--wy-shadow); font:400 14px/1.5 "Segoe UI","Noto Sans TC","Microsoft JhengHei",sans-serif; text-align:left; transition:width 180ms ease; }
+    #weyu-sidebar-five .wy-product * { box-sizing:border-box; }
+    #weyu-sidebar-five .wy-product [hidden] { display:none !important; }
+    #weyu-sidebar-five .wy-product button, #weyu-sidebar-five .wy-product input { font:inherit; color:inherit; }
+    #weyu-sidebar-five .wy-product button { appearance:none; border:0; margin:0; background:transparent; }
+    #weyu-sidebar-five .wy-product button:focus-visible, #weyu-sidebar-five .wy-product input:focus-visible { outline:2px solid var(--wy-focus); outline-offset:2px; }
+    #weyu-sidebar-five .wy-header { height:66px; flex:none; display:flex; align-items:center; gap:8px; padding:0 16px 0 20px; }
+    #weyu-sidebar-five .wy-brand { font-size:20px; font-weight:650; letter-spacing:-.7px; margin-right:auto; white-space:nowrap; }
+    #weyu-sidebar-five .wy-brand-mark { display:none; }
+    #weyu-sidebar-five .wy-icon { display:inline-flex; justify-content:center; align-items:center; width:32px; height:32px; border-radius:8px; color:var(--wy-muted); flex:none; padding:7px; }
+    #weyu-sidebar-five .wy-icon:hover { background:var(--wy-hover); color:var(--wy-ink); }
+    #weyu-sidebar-five .wy-product svg { flex:none; width:18px; height:18px; stroke-width:1.65; }
+    #weyu-sidebar-five .wy-create-slot { flex:none; padding:0 12px 17px; }
+    #weyu-sidebar-five .wy-new { display:flex; align-items:center; gap:10px; height:42px; padding:0 12px; width:100%; border-radius:9px; font-weight:500 !important; white-space:nowrap; text-align:left; }
+    #weyu-sidebar-five .wy-new:hover { background:var(--wy-hover); }
+    #weyu-sidebar-five .wy-search-slot { flex:none; margin:0 16px 16px; }
+    #weyu-sidebar-five .wy-search-box { display:flex; align-items:center; gap:8px; min-width:0; min-height:39px; padding:0 10px; border:1px solid var(--wy-line); border-radius:9px; background:var(--wy-popover); color:var(--wy-muted); }
+    #weyu-sidebar-five .wy-search-box input { display:block; min-width:0; width:100%; border:0; background:transparent; padding:8px 0; font-size:14px; line-height:22px; color:var(--wy-ink); }
+    #weyu-sidebar-five .wy-search-box input::placeholder { color:var(--wy-muted); }
+    #weyu-sidebar-five .wy-search-box .wy-search-clear { width:26px; height:26px; padding:5px; }
+    #weyu-sidebar-five .wy-search-box .wy-search-clear svg { width:14px; height:14px; }
+    #weyu-sidebar-five .wy-content { flex:1; min-height:0; overflow-y:auto; overscroll-behavior:contain; scrollbar-width:thin; scrollbar-color:var(--wy-line) transparent; padding:0 10px 16px; }
+    #weyu-sidebar-five .wy-group h3 { margin:0 0 8px; padding:0 12px; color:var(--wy-muted); font-size:12px; line-height:20px; font-weight:500; letter-spacing:.15px; }
+    #weyu-sidebar-five .wy-group + .wy-group { margin-top:27px; }
+    #weyu-sidebar-five .wy-rows { display:grid; gap:2px; }
+    #weyu-sidebar-five .wy-row { display:flex; align-items:center; min-width:0; min-height:42px; position:relative; border-radius:9px; }
+    #weyu-sidebar-five .wy-row[data-selected="true"] { background:var(--wy-selected); }
+    #weyu-sidebar-five .wy-row:hover { background:var(--wy-hover); }
+    #weyu-sidebar-five .wy-row[data-selected="true"]:hover { background:var(--wy-selected); }
+    #weyu-sidebar-five .wy-thread { flex:1; min-width:0; min-height:42px; display:flex; align-items:center; padding:9px 8px 9px 12px; text-align:left; border-radius:8px; }
+    #weyu-sidebar-five .wy-thread span { display:block; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+    #weyu-sidebar-five .wy-more { margin-right:4px !important; width:28px; height:28px; padding:5px; opacity:0; color:var(--wy-muted); }
+    #weyu-sidebar-five .wy-row:hover .wy-more, #weyu-sidebar-five .wy-row:focus-within .wy-more, #weyu-sidebar-five .wy-row[data-selected="true"] .wy-more { opacity:1; }
+    #weyu-sidebar-five .wy-empty { margin:8px 12px 16px; color:var(--wy-muted); font-size:13px; }
+    #weyu-sidebar-five .wy-footer { flex:none; margin:0 20px; padding:16px 0 18px; }
+    #weyu-sidebar-five .wy-usage { display:flex; justify-content:space-between; align-items:center; gap:8px; color:var(--wy-muted); font-size:11px; line-height:18px; white-space:nowrap; }
+    #weyu-sidebar-five .wy-track { height:3px; background:var(--wy-line); border-radius:4px; margin-top:8px; overflow:hidden; }
+    #weyu-sidebar-five .wy-track > span { display:block; width:6.05%; height:100%; background:var(--wy-muted); border-radius:inherit; }
+    #weyu-sidebar-five .wy-bottom-create { flex:none; padding:12px 16px 0; }
+    #weyu-sidebar-five .wy-resizer { position:absolute; top:12px; bottom:12px; right:-24px; width:24px; cursor:col-resize; touch-action:none; border-radius:4px; z-index:3; }
+    #weyu-sidebar-five .wy-resizer::after { content:""; display:block; position:absolute; width:2px; top:0; bottom:0; left:0; background:transparent; border-radius:2px; transition:background 120ms ease; }
+    #weyu-sidebar-five .wy-resizer:hover::after, #weyu-sidebar-five .wy-resizer:focus-visible::after, #weyu-sidebar-five .wy-product[data-dragging="true"] .wy-resizer::after { background:var(--wy-focus); }
+    #weyu-sidebar-five .wy-product[data-dragging="true"] { transition:none; user-select:none; }
+    #weyu-sidebar-five .wy-menu { position:absolute; left:18px; right:18px; bottom:62px; z-index:5; background:var(--wy-popover); color:var(--wy-ink); border:1px solid var(--wy-line); box-shadow:0 6px 25px var(--wy-shadow); border-radius:12px; padding:6px; }
+    #weyu-sidebar-five .wy-menu button { display:flex; align-items:center; gap:10px; width:100%; padding:9px 10px; border-radius:7px; text-align:left; }
+    #weyu-sidebar-five .wy-menu button:hover { background:var(--wy-hover); }
+    #weyu-sidebar-five .wy-sr { position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; }
+    #weyu-sidebar-five .wy-product[data-collapsed="true"] { width:64px !important; }
+    #weyu-sidebar-five .wy-product[data-collapsed="true"] > :not(.wy-header) { display:none !important; }
+    #weyu-sidebar-five .wy-product[data-collapsed="true"] .wy-header { height:auto; padding:20px 10px; display:flex; flex-direction:column; gap:20px; }
+    #weyu-sidebar-five .wy-product[data-collapsed="true"] .wy-brand { margin:0; }
+    #weyu-sidebar-five .wy-product[data-collapsed="true"] .wy-brand-full, #weyu-sidebar-five .wy-product[data-collapsed="true"] .wy-search-trigger, #weyu-sidebar-five .wy-product[data-collapsed="true"] .wy-header-new { display:none; }
+    #weyu-sidebar-five .wy-product[data-collapsed="true"] .wy-brand-mark { display:inline; }
+    @media(max-width:420px) { #weyu-sidebar-five .wy-stage { padding:58px 32px 24px 12px; min-height:706px; } }
+    @media(pointer:coarse) { #weyu-sidebar-five .wy-icon { width:40px; height:40px; } #weyu-sidebar-five .wy-more { opacity:1; width:36px; height:40px; } #weyu-sidebar-five .wy-thread { min-height:44px; } }
+    @media(prefers-reduced-motion:reduce) { #weyu-sidebar-five .wy-product, #weyu-sidebar-five .wy-resizer::after { transition:none; } }
+  </style>
+</head>
+<body>
+<p class="reference-note">已選定：平面清單。此檔為靜態外觀參考；聊天與金額為示意資料，正式互動依對應 Issue。</p>
+<div id="weyu-sidebar-five"><div class="wy-stage"><aside id="wy-flat" class="wy-product wy-flat" aria-label="WeYu 側欄示意：平面清單" style="--wy-width: 304px;">
+        <header class="wy-header"><span class="wy-brand"><span class="wy-brand-full">WeYu</span><span class="wy-brand-mark">W</span></span><button class="wy-icon wy-search-trigger cursor-interaction" aria-label="搜尋聊天" data-action="search" type="button"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="search" aria-hidden="true" class="lucide lucide-search"><path d="m21 21-4.34-4.34"></path><circle cx="11" cy="11" r="8"></circle></svg></button><button class="wy-icon wy-collapse cursor-interaction" aria-label="收合側欄" data-action="collapse" type="button"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="panel-left-close" aria-hidden="true" class="lucide lucide-panel-left-close"><rect width="18" height="18" x="3" y="3" rx="2"></rect><path d="M9 3v18"></path><path d="m16 15-3-3 3-3"></path></svg></button></header>
+        <div class="wy-create-slot"><button class="wy-new cursor-interaction" data-action="new" type="button"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="square-pen" aria-hidden="true" class="lucide lucide-square-pen"><path d="M12 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.375 2.625a1 1 0 0 1 3 3l-9.013 9.014a2 2 0 0 1-.853.505l-2.873.84a.5.5 0 0 1-.62-.62l.84-2.873a2 2 0 0 1 .506-.852z"></path></svg><span>新聊天</span></button></div>
+        <div class="wy-search-slot" hidden=""><div class="wy-search-box"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="search" aria-hidden="true" class="lucide lucide-search"><path d="m21 21-4.34-4.34"></path><circle cx="11" cy="11" r="8"></circle></svg><input type="search" placeholder="搜尋聊天" aria-label="搜尋聊天" autocomplete="off"><button class="wy-icon wy-search-clear cursor-interaction" data-action="clear-search" aria-label="清除並關閉搜尋" type="button"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="x" aria-hidden="true" class="lucide lucide-x"><path d="M18 6 6 18"></path><path d="m6 6 12 12"></path></svg></button></div></div><div class="wy-content">
+    <section class="wy-group wy-pinned" aria-label="已釘選"><h3>已釘選</h3><div class="wy-rows">
+      <div class="wy-row" data-pinned="true"><button class="wy-thread cursor-interaction" data-action="select" data-tooltip="查詢 MC37 今天目前產量" type="button"><span>查詢 MC37 今天目前產量</span></button><button class="wy-icon wy-more cursor-interaction" data-action="more" aria-label="查詢 MC37 今天目前產量的更多操作" type="button"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="ellipsis" aria-hidden="true" class="lucide lucide-ellipsis"><circle cx="12" cy="12" r="1"></circle><circle cx="19" cy="12" r="1"></circle><circle cx="5" cy="12" r="1"></circle></svg></button></div>
+      <div class="wy-row" data-pinned="true"><button class="wy-thread cursor-interaction" data-action="select" data-tooltip="生產排程" type="button"><span>生產排程</span></button><button class="wy-icon wy-more cursor-interaction" data-action="more" aria-label="生產排程的更多操作" type="button"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="ellipsis" aria-hidden="true" class="lucide lucide-ellipsis"><circle cx="12" cy="12" r="1"></circle><circle cx="19" cy="12" r="1"></circle><circle cx="5" cy="12" r="1"></circle></svg></button></div>
+    </div><p class="wy-empty" hidden="">尚無釘選</p></section>
+    <section class="wy-group wy-recent" aria-label="近期聊天"><h3>近期</h3><div class="wy-rows">
+      <div class="wy-row" data-selected="true"><button class="wy-thread cursor-interaction" data-action="select" aria-current="page" data-tooltip="生產報工" type="button"><span>生產報工</span></button><button class="wy-icon wy-more cursor-interaction" data-action="more" aria-label="生產報工的更多操作" type="button"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="ellipsis" aria-hidden="true" class="lucide lucide-ellipsis"><circle cx="12" cy="12" r="1"></circle><circle cx="19" cy="12" r="1"></circle><circle cx="5" cy="12" r="1"></circle></svg></button></div>
+      <div class="wy-row"><button class="wy-thread cursor-interaction" data-action="select" data-tooltip="查看目前可以報工的工單" type="button"><span>查看目前可以報工的工單</span></button><button class="wy-icon wy-more cursor-interaction" data-action="more" aria-label="查看目前可以報工的工單的更多操作" type="button"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="ellipsis" aria-hidden="true" class="lucide lucide-ellipsis"><circle cx="12" cy="12" r="1"></circle><circle cx="19" cy="12" r="1"></circle><circle cx="5" cy="12" r="1"></circle></svg></button></div>
+      <div class="wy-row"><button class="wy-thread cursor-interaction" data-action="select" data-tooltip="模具上下模" type="button"><span>模具上下模</span></button><button class="wy-icon wy-more cursor-interaction" data-action="more" aria-label="模具上下模的更多操作" type="button"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="ellipsis" aria-hidden="true" class="lucide lucide-ellipsis"><circle cx="12" cy="12" r="1"></circle><circle cx="19" cy="12" r="1"></circle><circle cx="5" cy="12" r="1"></circle></svg></button></div>
+      <div class="wy-row"><button class="wy-thread cursor-interaction" data-action="select" data-tooltip="查看目前這張工單" type="button"><span>查看目前這張工單</span></button><button class="wy-icon wy-more cursor-interaction" data-action="more" aria-label="查看目前這張工單的更多操作" type="button"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="ellipsis" aria-hidden="true" class="lucide lucide-ellipsis"><circle cx="12" cy="12" r="1"></circle><circle cx="19" cy="12" r="1"></circle><circle cx="5" cy="12" r="1"></circle></svg></button></div>
+      <div class="wy-row"><button class="wy-thread cursor-interaction" data-action="select" data-tooltip="只查詢這筆報工現況" type="button"><span>只查詢這筆報工現況</span></button><button class="wy-icon wy-more cursor-interaction" data-action="more" aria-label="只查詢這筆報工現況的更多操作" type="button"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="ellipsis" aria-hidden="true" class="lucide lucide-ellipsis"><circle cx="12" cy="12" r="1"></circle><circle cx="19" cy="12" r="1"></circle><circle cx="5" cy="12" r="1"></circle></svg></button></div>
+    </div><p class="wy-empty" hidden="">尚無聊天</p></section>
+  </div><footer class="wy-footer"><div class="wy-usage"><span>用量</span><span>US$1.21 / 20.00</span></div><div class="wy-track" aria-hidden="true"><span></span></div></footer>
+      </aside></div></div>
+</body>
+</html>
