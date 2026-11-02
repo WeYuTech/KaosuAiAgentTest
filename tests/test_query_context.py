@@ -81,6 +81,7 @@ def test_單筆報工核對快照不依賴目前查詢且保留被移除原因(t
         card=c.post('/api/proposals',json={'module':'report','action':'report.update','args':{'report_id':rid,'ok':130,'defects':[{'code':'NG01','quantity':1}]}}).json()['proposal']
         before=card['target']['report_before']
         assert before['OK_QTY']==125 and before['NG_QTY']==5
+        assert card['target']['affected_orders']==['WO-A']
         assert before['CREATE_TIME']==row['CREATE_TIME']
         assert {r['NG_CODE']:r['NG_CODE_QTY'] for r in before['DEFECTS']}=={'NG01':3,'NG02':2}
         assert c.get('/api/workspace?module=report&equipment=MC38').json()['records']==[]
