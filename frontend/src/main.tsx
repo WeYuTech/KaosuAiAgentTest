@@ -197,7 +197,7 @@ export function App({ initialOpen = false }: { initialOpen?: boolean } = {}) {
     historyController.current?.showScope(scope);
   }
   function toggleHistory(){if(historyVisible){collapseHistory();return;}focusHistory.current=true;if(sidebar.wide)sidebar.collapse(false);else setHistoryOpen(true);setHistoryRevision(v=>v+1);}
-  useEffect(()=>{if(historyVisible&&focusHistory.current){focusHistory.current=false;panelRef.current?.querySelector<HTMLElement>('.history-top button')?.focus({preventScroll:true});}else if(!historyVisible&&panelRef.current?.querySelector('.conversation-history')?.contains(document.activeElement))historyTrigger.current?.focus({preventScroll:true});},[historyVisible]);
+  useEffect(()=>{if(historyVisible&&focusHistory.current){focusHistory.current=false;panelRef.current?.querySelector<HTMLElement>('.history-search-trigger')?.focus({preventScroll:true});}else if(!historyVisible&&panelRef.current?.querySelector('.conversation-history')?.contains(document.activeElement))historyTrigger.current?.focus({preventScroll:true});},[historyVisible]);
   const titleRef = useRef<HTMLHeadingElement>(null);
   const chatScroll=useChatScroll(conversation?.id??null,stage==='chat');
   const launcherRef = useRef<HTMLButtonElement>(null);
