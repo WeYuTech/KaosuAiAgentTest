@@ -80,6 +80,11 @@ export const translations: Record<string, [string, string]> = Object.fromEntries
 今天|Today|วันนี้
 昨天|Yesterday|เมื่อวาน
 更早|Earlier|ก่อนหน้านี้
+近期|Recent|ล่าสุด
+尚無聊天|No chats yet|ยังไม่มีแชต
+用量|Usage|การใช้งาน
+側欄|Sidebar|แถบด้านข้าง
+可至「更多功能 → 已刪除聊天」還原；MES 業務與稽核紀錄保留。|Restore via More features → Deleted chats. MES operations and audit records are retained.|กู้คืนได้ที่ คุณสมบัติเพิ่มเติม → แชตที่ลบ ข้อมูลงาน MES และบันทึกตรวจสอบยังคงอยู่
 已釘選|Pinned|ปักหมุดแล้ว
 複製程式碼|Copy code|คัดลอกโค้ด
 原句已恢復，先前送達結果未知；系統不會自動重送。|Your text was restored. The earlier delivery is unknown; it will not be sent again automatically.|กู้คืนข้อความแล้ว ยังไม่ทราบผลการส่งครั้งก่อน ระบบจะไม่ส่งซ้ำอัตโนมัติ

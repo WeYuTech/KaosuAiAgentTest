@@ -16,7 +16,7 @@ import {HeaderMenu} from './HeaderMenu';
 import { AssistantHeader } from './AssistantChrome';
 import {BudgetSummary} from './BudgetSummary';
 import {SidebarSplitter,useSidebarLayout} from './SidebarSplitter';
-import { ConversationHistory, type ChatEntry } from './ConversationHistory';
+import { ConversationHistory, type ChatEntry, type HistoryController, type HistoryScope } from './ConversationHistory';
 import type {ManagementSection} from './ManagementPanel';
 import {OperationDialog} from './OperationDialog';
 const ManagementPanel=React.lazy(()=>import('./ManagementPanel').then(module=>({default:module.ManagementPanel})));
@@ -191,8 +191,13 @@ export function App({ initialOpen = false }: { initialOpen?: boolean } = {}) {
   const showHistoryOverlay=!sidebar.wide&&historyOpen;
   function collapseHistory(){historyTrigger.current?.focus({preventScroll:true});setHistoryOpen(false);if(sidebar.wide)sidebar.collapse(true);}
   const focusHistory=useRef(false);
+  const historyController=useRef<HistoryController>(null);
+  function openHistoryScope(scope:HistoryScope){
+    if(sidebar.wide)sidebar.collapse(false);else setHistoryOpen(true);
+    historyController.current?.showScope(scope);
+  }
   function toggleHistory(){if(historyVisible){collapseHistory();return;}focusHistory.current=true;if(sidebar.wide)sidebar.collapse(false);else setHistoryOpen(true);setHistoryRevision(v=>v+1);}
-  useEffect(()=>{if(historyVisible&&focusHistory.current){focusHistory.current=false;panelRef.current?.querySelector<HTMLElement>('.history-top button')?.focus({preventScroll:true});}else if(panelRef.current?.querySelector('.conversation-history')?.contains(document.activeElement))historyTrigger.current?.focus({preventScroll:true});},[historyVisible]);
+  useEffect(()=>{if(historyVisible&&focusHistory.current){focusHistory.current=false;panelRef.current?.querySelector<HTMLElement>('.history-top button')?.focus({preventScroll:true});}else if(!historyVisible&&panelRef.current?.querySelector('.conversation-history')?.contains(document.activeElement))historyTrigger.current?.focus({preventScroll:true});},[historyVisible]);
   const titleRef = useRef<HTMLHeadingElement>(null);
   const chatScroll=useChatScroll(conversation?.id??null,stage==='chat');
   const launcherRef = useRef<HTMLButtonElement>(null);
@@ -608,12 +613,12 @@ export function App({ initialOpen = false }: { initialOpen?: boolean } = {}) {
       <AssistantHeader titleRef={titleRef} title={t('生產情報助理')}>
         <TooltipIconButton tooltip={t('聊天紀錄')} className="aui-modal-tool text-muted-foreground hover:text-foreground size-7 rounded-md p-0 header-history" aria-label={t('聊天紀錄')} title={t('聊天紀錄')} ref={historyTrigger as React.RefObject<HTMLButtonElement>} aria-pressed={historyVisible} onClick={toggleHistory}><History size={16}/></TooltipIconButton><TooltipIconButton hidden={historyVisible} tooltip={t('新聊天')} className="aui-modal-tool text-muted-foreground hover:text-foreground size-7 rounded-md p-0 header-new-chat" aria-label={t('新聊天')} title={t('新聊天')} disabled={busy||historyBusy||pending||unresolved||!!recoveryTarget} onClick={()=>void newChat()}><Plus size={16}/></TooltipIconButton>
         <TooltipIconButton tooltip={expanded ? t('縮小聊天室') : t('放大聊天室')} className="aui-modal-tool text-muted-foreground hover:text-foreground size-7 rounded-md p-0" title={expanded ? t('縮小聊天室') : t('放大聊天室')} aria-label={expanded ? t('縮小聊天室') : t('放大聊天室')} onClick={toggleExpanded}>{expanded ? <Minimize2 size={18}/> : <Maximize2 size={18}/>}</TooltipIconButton>
-        <HeaderMenu signedIn={!!session} locale={locale} theme={theme} localeBusy={localeBusy||busy} onLocale={value=>void changeLanguage(value)} onTheme={setTheme} onManage={(section,trigger)=>{managementTrigger.current=trigger;setManagement(section);setManagementGeneration(v=>v+1);setManagementOpen(true);}} onUsage={()=>void showBudget()} onMinimize={minimize}/>
+        <HeaderMenu onHistory={openHistoryScope} sidebarResize={sidebar.wide&&historyVisible?{narrow:()=>sidebar.commit(sidebar.width-32),widen:()=>sidebar.commit(sidebar.width+32),reset:()=>sidebar.commit(288)}:undefined} signedIn={!!session} locale={locale} theme={theme} localeBusy={localeBusy||busy} onLocale={value=>void changeLanguage(value)} onTheme={setTheme} onManage={(section,trigger)=>{managementTrigger.current=trigger;setManagement(section);setManagementGeneration(v=>v+1);setManagementOpen(true);}} onUsage={()=>void showBudget()} onMinimize={minimize}/>
         <TooltipIconButton tooltip={t('縮小助理')} className="aui-modal-tool text-muted-foreground hover:text-foreground size-7 rounded-md p-0" aria-label={t('縮小助理')} title={t('縮小助理（Esc）')} onClick={minimize}><X size={18}/></TooltipIconButton>
       </AssistantHeader>
       {(mode === null || simulation || !session) && <div className="assistant-session-status" role="status">{mode === null ? t('檢查連線中') : simulation ? t('隔離模擬環境，正式 MES 資料不會變更') : t('登入已逾時，請重新登入 MES 後再使用')}</div>}
       <div className="assistant-body" ref={bodyRef} data-sidebar-dragging={sidebarDragging||undefined} style={{'--sidebar-width':`${sidebar.width}px`} as React.CSSProperties}>
-      <ConversationHistory visible={historyVisible} resize={sidebar.wide?{narrow:()=>sidebar.commit(sidebar.width-32),widen:()=>sidebar.commit(sidebar.width+32),reset:()=>sidebar.commit(288)}:undefined} onProjection={setHistoryProjection} key={session?.actor.id||'signed-out'} actor={session?.actor.id} current={conversation} overlay={showHistoryOverlay} locked={pending||unresolved||!!recoveryTarget} busy={busy||guideWorking} refresh={historyRevision+messages.length} request={scopedRequest} close={collapseHistory} select={selectChat} create={newChat} beforeChange={async id=>{if(id===conversation?.id)await guideRef.current?.flush();}} changed={historyChanged} onWorkChange={setHistoryBusy} usage={()=>void showBudget()} budget={budget}/>
+      <ConversationHistory ref={historyController} visible={historyVisible} onProjection={setHistoryProjection} key={session?.actor.id||'signed-out'} actor={session?.actor.id} current={conversation} overlay={showHistoryOverlay} locked={pending||unresolved||!!recoveryTarget} busy={busy||guideWorking} refresh={historyRevision+messages.length} request={scopedRequest} close={collapseHistory} select={selectChat} create={newChat} beforeChange={async id=>{if(id===conversation?.id)await guideRef.current?.flush();}} changed={historyChanged} onWorkChange={setHistoryBusy} usage={()=>void showBudget()} budget={budget}/>
       <SidebarSplitter width={sidebar.width} preferred={sidebar.preferred} max={sidebar.max} visible={sidebar.wide&&historyVisible} preview={sidebar.preview} commit={sidebar.commit} collapse={collapseHistory} onDragging={setSidebarDragging}/>
       <div className="assistant-main" inert={showHistoryOverlay||usageOpen||managementOpen ? true : undefined}>
 

@@ -1,21 +1,26 @@
 import {useRef} from 'react';
-import {MoreHorizontal,Settings2,Bot,Gauge,CalendarClock,Sun,Moon,Palette,Factory,Monitor} from 'lucide-react';
+import {MoreHorizontal,Settings2,Bot,Gauge,CalendarClock,Sun,Moon,Palette,Factory,Monitor,Archive,Trash2} from 'lucide-react';
+import type {HistoryScope} from './ConversationHistory';
 import {t,type Locale} from './i18n';
 import {type Theme} from './theme';
 import {type ManagementSection} from './ManagementPanel';
 import {TooltipIconButton} from './components/assistant-ui/elements/tooltip-icon-button';
 import {DropdownMenu,DropdownMenuTrigger,DropdownMenuContent,DropdownMenuItem,DropdownMenuLabel,DropdownMenuRadioGroup,DropdownMenuRadioItem,DropdownMenuSeparator} from './components/ui/dropdown-menu';
 /** 來源 AssistantMoreMenu；三語、MES 主題及既有受限管理為明列適配。 */
-export function HeaderMenu({signedIn,locale,theme,localeBusy,onLocale,onTheme,onManage,onUsage,onMinimize}:{
+export function HeaderMenu({signedIn,locale,theme,localeBusy,onLocale,onTheme,onManage,onUsage,onMinimize,onHistory,sidebarResize}:{
+ onHistory?:(scope:HistoryScope)=>void;sidebarResize?:{narrow:()=>void;widen:()=>void;reset:()=>void};
  signedIn:boolean;locale:Locale;theme:Theme;localeBusy:boolean;onLocale:(value:Locale)=>void;onTheme:(value:Theme)=>void;
  onManage:(section:ManagementSection,trigger:HTMLButtonElement)=>void;onUsage:()=>void;onMinimize:()=>void;
 }) {
  const trigger=useRef<HTMLButtonElement>(null);
+ const historyDestination=useRef<HistoryScope|null>(null);
  const sections=[['api','API 設定',Settings2],['agent','Agent 設定',Bot],['budget','用量額度',Gauge],['reports','定時報告',CalendarClock]] as const;
  const themes=[['light','明亮模式',Sun],['dark','黑暗模式',Moon],['navy','深藍模式',Palette],['mes','MES 藍色',Factory],['system','跟隨系統',Monitor]] as const;
  return <DropdownMenu modal={false}>
   <DropdownMenuTrigger asChild><TooltipIconButton ref={trigger} tooltip={t('更多功能')} aria-label={t('更多功能')} className="size-7 rounded-md p-0 text-muted-foreground hover:text-foreground"><MoreHorizontal className="size-3.5"/></TooltipIconButton></DropdownMenuTrigger>
-  <DropdownMenuContent align="end">
+  <DropdownMenuContent align="end" onCloseAutoFocus={event=>{const scope=historyDestination.current;if(scope){event.preventDefault();historyDestination.current=null;onHistory?.(scope);}}}>
+   {onHistory&&<><DropdownMenuItem disabled={!signedIn} onSelect={()=>{historyDestination.current='archived';}}><Archive/>{t('封存聊天')}</DropdownMenuItem><DropdownMenuItem disabled={!signedIn} onSelect={()=>{historyDestination.current='deleted';}}><Trash2/>{t('已刪除聊天')}</DropdownMenuItem><DropdownMenuSeparator/></>}
+   {sidebarResize&&<><DropdownMenuLabel>{t('側欄')}</DropdownMenuLabel><DropdownMenuItem onSelect={sidebarResize.narrow}>{t('縮窄側欄')}</DropdownMenuItem><DropdownMenuItem onSelect={sidebarResize.widen}>{t('加寬側欄')}</DropdownMenuItem><DropdownMenuItem onSelect={sidebarResize.reset}>{t('重設寬度')}</DropdownMenuItem><DropdownMenuSeparator/></>}
    {sections.map(([key,title,Icon])=><DropdownMenuItem key={key} disabled={!signedIn} onSelect={()=>trigger.current&&onManage(key,trigger.current)}><Icon/>{t(title)}</DropdownMenuItem>)}
    <DropdownMenuSeparator/><DropdownMenuLabel>{t('介面外觀')}</DropdownMenuLabel>
    <DropdownMenuRadioGroup aria-label={t('主題')} value={theme} onValueChange={v=>onTheme(v as Theme)}>{themes.map(([value,title,Icon])=><DropdownMenuRadioItem key={value} value={value}><Icon/>{t(title)}</DropdownMenuRadioItem>)}</DropdownMenuRadioGroup>

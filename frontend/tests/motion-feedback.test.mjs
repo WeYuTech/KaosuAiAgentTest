@@ -4,9 +4,10 @@ import {Window} from 'happy-dom';
 const window=new Window({url:'http://localhost/'});
 for(const key of ['window','document','navigator','HTMLElement','HTMLFormElement','HTMLSelectElement','HTMLInputElement','HTMLTextAreaElement','Node','Element','DocumentFragment','MutationObserver','ResizeObserver','NodeFilter','CustomEvent','Event','KeyboardEvent','MouseEvent','PointerEvent','FocusEvent','getComputedStyle','requestAnimationFrame','cancelAnimationFrame'])Object.defineProperty(globalThis,key,{configurable:true,value:['getComputedStyle','requestAnimationFrame','cancelAnimationFrame'].includes(key)?window[key].bind(window):window[key]});
 globalThis.IS_REACT_ACT_ENVIRONMENT=true;
-const {createElement:h,act,useState}=await import('react');const {createRoot}=await import('react-dom/client');
+const {createElement:h,act,useState,useRef}=await import('react');const {createRoot}=await import('react-dom/client');
 const {createServer}=await import('vite');const server=await createServer({server:{middlewareMode:true,hmr:false,ws:false},appType:'custom'});
 const {MesAssistantProvider,createAssistantAdapter}=await server.ssrLoadModule('/src/chat/assistant-runtime.tsx');
+const {HeaderMenu}=await server.ssrLoadModule('/src/HeaderMenu.tsx');
 const {ConversationHistory}=await server.ssrLoadModule('/src/ConversationHistory.tsx');
 const {ManagementPanel}=await server.ssrLoadModule('/src/ManagementPanel.tsx');
 const {OperationDialog}=await server.ssrLoadModule('/src/OperationDialog.tsx');
@@ -20,17 +21,21 @@ function mount(){const host=document.createElement('div');host.id='mes-ai-chat-r
 const button=(host,text)=>[...host.querySelectorAll('button')].find(b=>b.textContent.trim()===text);
 const tick=()=>new Promise(r=>setTimeout(r,220));
 
-test('歷史初載與錯誤不冒充空集合；切範圍立即請求且空頁無分頁',async()=>{
- const {host,root}=mount(),requests=[];
+test('全域入口在清單未重掛下切範圍；延遲回覆隔離、焦點與空集合',async()=>{
+ const {host,root}=mount(),requests=[];let mounts=0;
  const request=path=>new Promise((resolve,reject)=>requests.push({path,resolve,reject}));
- function Harness(){const [history,onProjection]=useState();return h(MesAssistantProvider,{state:{...base,history}},h(ConversationHistory,{actor:'甲',current:null,overlay:false,locked:false,busy:false,refresh:0,request,close:noop,select:noop,create:noop,beforeChange:noop,changed:noop,usage:noop,onWorkChange:noop,budget:null,onProjection}));}
- await act(async()=>root.render(h(Harness)));assert.equal(requests.length,1);assert.ok(host.querySelector('[aria-busy="true"]'));assert.ok(!host.textContent.includes('還沒有歷史聊天'));
- await act(async()=>requests[0].reject(Error('連線失敗')));assert.ok(host.textContent.includes('連線失敗'));assert.ok(!host.textContent.includes('還沒有歷史聊天'));
- await act(async()=>host.querySelector('button.history-scope').dispatchEvent(new KeyboardEvent('keydown',{key:'Enter',bubbles:true})));await act(async()=>[...document.querySelectorAll('[role=menuitemradio]')].find(x=>x.textContent.includes('已刪除聊天')).click());assert.equal(requests.length,2);assert.ok(requests[1].path.includes('scope=deleted'));assert.ok(!host.textContent.includes('目前沒有已刪除的聊天'));
- await act(async()=>requests[1].resolve({records:[],total:0,page:1,page_size:10}));assert.ok(host.textContent.includes('目前沒有已刪除的聊天'));assert.equal(host.querySelector('[aria-label="下一頁"]'),null);assert.equal(host.querySelector('input[aria-label="搜尋聊天"]').closest('[hidden]')?.className,'history-search-slot');
- await act(async()=>host.querySelector('button.history-scope').dispatchEvent(new KeyboardEvent('keydown',{key:'Enter',bubbles:true})));await act(async()=>[...document.querySelectorAll('[role=menuitemradio]')].find(x=>x.textContent.includes('封存聊天')).click());assert.equal(requests.length,3);
- await act(async()=>requests[2].resolve({records:[],total:0,page:1,page_size:10}));assert.ok(host.textContent.includes('尚無封存聊天'));
- await act(async()=>root.unmount());host.remove();
+ function Harness(){const [history,onProjection]=useState(),[visible,setVisible]=useState(false);const controller=useRef();return h(MesAssistantProvider,{state:{...base,history}},h(HeaderMenu,{signedIn:true,locale:'zh-TW',theme:'light',localeBusy:false,onLocale:noop,onTheme:noop,onManage:noop,onUsage:noop,onMinimize:noop,onHistory:scope=>{setVisible(true);controller.current.showScope(scope);}}),h(ConversationHistory,{ref:controller,visible,actor:'甲',current:null,overlay:true,locked:true,busy:false,refresh:0,request,close:()=>setVisible(false),select:noop,create:noop,beforeChange:noop,changed:noop,usage:noop,onWorkChange:noop,budget:null,onProjection}));}
+ try {
+ await act(async()=>root.render(h(Harness)));const original=host.querySelector('aside');assert.equal(requests.length,1);assert.ok(original.hidden);
+ const open=async name=>{await act(async()=>host.querySelector('[aria-label="更多功能"]').dispatchEvent(new KeyboardEvent('keydown',{key:'Enter',bubbles:true})));await act(async()=>[...host.querySelectorAll('[role=menuitem]')].find(x=>x.textContent===name).click());};
+ await open('已刪除聊天');assert.equal(requests.length,2);assert.ok(requests[1].path.includes('scope=deleted'));assert.equal(original.hidden,false);assert.equal(document.activeElement.textContent,'已刪除聊天');assert.equal(host.querySelector('[aria-label="聊天範圍"]'),null);
+ await act(async()=>requests[0].resolve({records:[{id:'old',title:'不可出現的舊回覆'}],total:1,page:1,page_size:30}));assert.ok(!host.textContent.includes('不可出現'));
+ await act(async()=>requests[1].resolve({records:[],total:0,page:1,page_size:30}));assert.equal(host.querySelectorAll('.history-empty').length,1);assert.equal(host.querySelector('.history-empty').textContent,'尚無聊天');assert.equal(host.querySelector('[aria-label="下一頁"]'),null);
+ await open('封存聊天');assert.equal(host.querySelector('aside'),original);assert.equal(document.activeElement.textContent,'封存聊天');assert.equal(requests.length,3);
+ await act(async()=>requests[2].reject(Error('連線失敗')));assert.ok(host.textContent.includes('連線失敗'));assert.equal(host.querySelector('.history-empty'),null);
+ await act(async()=>button(host,'返回聊天').click());assert.ok(requests.at(-1).path.includes('scope=active'));assert.equal(document.activeElement,host.querySelector('button[aria-label="搜尋聊天"]'));
+ assert.deepEqual([...host.querySelectorAll('.history-group h3')].map(x=>x.textContent),['已釘選','近期']);assert.ok(button(host,'新聊天').disabled,'未知／待確認鎖定未被管理導覽解除');
+ } finally {await act(async()=>root.unmount());host.remove();}
 });
 
 test('搜尋聚焦及組字清空不隱藏欄位；伺服器 page_size 控制多頁',async()=>{
@@ -38,7 +43,7 @@ test('搜尋聚焦及組字清空不隱藏欄位；伺服器 page_size 控制多
  function Harness(){const [history,onProjection]=useState();return h(MesAssistantProvider,{state:{...base,history}},h(ConversationHistory,{actor:'甲',current:null,overlay:false,locked:false,busy:false,refresh:0,request,close:noop,select:noop,create:noop,beforeChange:noop,changed:noop,usage:noop,onWorkChange:noop,budget:null,onProjection}));}
  await act(async()=>root.render(h(Harness)));await act(async()=>requests[0].resolve({records:[],total:21,page:1,page_size:10}));assert.ok(host.textContent.includes('1 / 3'));
  await act(async()=>host.querySelector('[aria-label="下一頁"]').click());assert.equal(requests.length,2);assert.ok(requests[1].path.includes('page=2'));
- await act(async()=>host.querySelector('button[aria-label="搜尋聊天"]').click());const input=host.querySelector('input[aria-label="搜尋聊天"]');await act(async()=>input.focus());await act(async()=>requests[1].resolve({records:[],total:0,page:2,page_size:10}));assert.equal(input.closest('[hidden]'),null);
+ await act(async()=>host.querySelector('button[aria-label="搜尋聊天"]').click());const input=host.querySelector('input[aria-label="搜尋聊天"]');await act(async()=>input.focus());await act(async()=>requests[1].resolve({records:[],total:21,page:2,page_size:10}));assert.equal(input.closest('[hidden]'),null);
  await act(async()=>input.dispatchEvent(new Event('compositionstart',{bubbles:true})));await act(async()=>input.blur());assert.equal(input.closest('[hidden]'),null);
  await act(async()=>input.dispatchEvent(new Event('compositionend',{bubbles:true})));assert.equal(input.closest('[hidden]'),null);await act(async()=>host.querySelector('[aria-label="關閉搜尋"]').click());assert.ok(input.closest('[hidden]'));assert.equal(document.activeElement,host.querySelector('button[aria-label="搜尋聊天"]'));
  await act(async()=>root.unmount());host.remove();
@@ -109,5 +114,41 @@ test('定時報告暫停、恢復及刪除以實際動詞確認，按確認前�
  await act(async()=>button(host,verb).click());assert.equal(writes.length,count+1);assert.equal(writes.at(-1).status,status);assert.equal(writes.at(-1).version,count+1);
  }
  assert.ok(host.textContent.includes('尚未建立定時報告'));
+ } finally {await act(async()=>root.unmount());host.remove();}
+});
+
+
+test('固定分組保留伺服器順序，第二頁無釘選不冒充全帳號無釘選；刪除末列退回有效頁',async()=>{
+ const {host,root}=mount(),requests=[];let controller;
+ const row=(id,pin=false)=>({id,module:'report',title:id,is_pinned:pin,is_archived:false,is_deleted:false,metadata_version:3,updated_at:'2026-01-01T00:00:00Z'});
+ const request=(path,body)=>new Promise((resolve,reject)=>requests.push({path,body,resolve,reject}));
+ function Harness(){const [history,onProjection]=useState();const ref=useRef();controller=ref;return h(MesAssistantProvider,{state:{...base,history}},h(ConversationHistory,{ref,actor:'甲',current:null,overlay:false,locked:false,busy:false,refresh:0,request,close:noop,select:noop,create:noop,beforeChange:noop,changed:noop,usage:noop,onWorkChange:noop,budget:null,onProjection}));}
+ try {
+ await act(async()=>root.render(h(Harness)));
+ await act(async()=>requests[0].resolve({records:[row('釘選乙',true),row('釘選甲',true),row('近期乙')],total:4,page:1,page_size:3}));
+ const groups=host.querySelectorAll('.history-group');assert.deepEqual([...groups[0].querySelectorAll('.history-select')].map(x=>x.textContent),['釘選乙','釘選甲']);assert.deepEqual([...groups[1].querySelectorAll('.history-select')].map(x=>x.textContent),['近期乙']);
+ await act(async()=>host.querySelector('[aria-label="下一頁"]').click());await act(async()=>requests[1].resolve({records:[row('近期甲')],total:4,page:2,page_size:3}));
+ assert.equal(groups[0].querySelectorAll('.history-row').length,0);assert.equal(groups[0].querySelector('h3').textContent,'已釘選');assert.equal(host.querySelector('.history-empty'),null);
+ await act(async()=>host.querySelector('[aria-label="聊天室選單：近期甲"]').dispatchEvent(new KeyboardEvent('keydown',{key:'Enter',bubbles:true})));await act(async()=>[...host.querySelectorAll('[role=menuitem]')].find(x=>x.textContent==='刪除聊天').click());
+ assert.ok(host.textContent.includes('更多功能 → 已刪除聊天'));await act(async()=>button(host,'刪除').click());assert.deepEqual(requests.at(-1).body,{version:3,is_deleted:true});
+ await act(async()=>requests.at(-1).resolve({...row('近期甲'),is_deleted:true,metadata_version:4}));await act(async()=>requests.at(-1).resolve({records:[],total:3,page:2,page_size:3}));
+ assert.ok(requests.at(-1).path.includes('page=1'));assert.equal(host.querySelector('.history-empty'),null,'回退頁讀取中不閃現空集合');
+ await act(async()=>requests.at(-1).resolve({records:[row('釘選乙',true),row('釘選甲',true),row('近期乙')],total:3,page:1,page_size:3}));assert.equal(host.querySelector('[aria-label="下一頁"]'),null);
+ } finally {await act(async()=>root.unmount());host.remove();}
+});
+
+test('搜尋與管理返回均清空查詢回第一頁；搜尋關閉還焦點且晚回覆不能污染新範圍',async()=>{
+ const {host,root}=mount(),requests=[];let controller;
+ const request=path=>new Promise(resolve=>requests.push({path,resolve}));
+ function Harness(){const [history,onProjection]=useState();const ref=useRef();controller=ref;return h(MesAssistantProvider,{state:{...base,history}},h(ConversationHistory,{ref,actor:'甲',current:null,overlay:false,locked:false,busy:false,refresh:0,request,close:noop,select:noop,create:noop,beforeChange:noop,changed:noop,usage:noop,onWorkChange:noop,budget:null,onProjection}));}
+ try {
+ await act(async()=>root.render(h(Harness)));await act(async()=>requests[0].resolve({records:[],total:0,page:1,page_size:30}));
+ await act(async()=>host.querySelector('button[aria-label="搜尋聊天"]').click());const input=host.querySelector('input');
+ await act(async()=>{Object.getOwnPropertyDescriptor(window.HTMLInputElement.prototype,'value').set.call(input,'MC37');input.dispatchEvent(new Event('input',{bubbles:true}));});
+ await act(tick);const old=requests.at(-1);assert.ok(old.path.includes('q=MC37'));
+ await act(async()=>controller.current.showScope('archived'));assert.ok(requests.at(-1).path.includes('q=&scope=archived&page=1'));assert.ok(input.closest('[hidden]'));assert.equal(input.value,'');
+ await act(async()=>old.resolve({records:[{id:'old',title:'不應出現'}],total:1,page:1,page_size:30}));assert.ok(!host.textContent.includes('不應出現'));
+ await act(async()=>button(host,'返回聊天').click());assert.ok(requests.at(-1).path.includes('q=&scope=active&page=1'));
+ await act(async()=>host.querySelector('button[aria-label="搜尋聊天"]').click());await act(async()=>input.dispatchEvent(new KeyboardEvent('keydown',{key:'Escape',bubbles:true})));assert.ok(input.closest('[hidden]'));assert.equal(document.activeElement,host.querySelector('button[aria-label="搜尋聊天"]'));
  } finally {await act(async()=>root.unmount());host.remove();}
 });

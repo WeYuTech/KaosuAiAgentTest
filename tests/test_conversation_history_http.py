@@ -124,3 +124,21 @@ def test_模型執行中不可封存且更名不被晚到回覆覆蓋(tmp_path, 
         assert c.get('/api/conversations/statistics').json()['messages'] == 2
         c.post('/api/session/demo', json={"identity": "supervisor"})
         assert c.get('/api/conversations/statistics').json()['conversations'] == 0
+
+
+def test_已刪除還原保留封存且舊版本不能取消封存(tmp_path, monkeypatch):
+    monkeypatch.setenv("MES_MODE", "simulation")
+    with TestClient(create_app(tmp_path / "restore-archived.db")) as c:
+        c.post('/api/session/demo', json={"identity": "operator"})
+        cid = c.post('/api/conversations', json={"module": "report"}).json()['id']
+        path = f'/api/conversations/{cid}/metadata'
+        assert c.post(path, json={"version": 0, "is_archived": True}).status_code == 200
+        assert c.post(path, json={"version": 1, "is_deleted": True}).status_code == 200
+        restored = c.post(path, json={"version": 2, "is_deleted": False})
+        assert restored.status_code == 200 and restored.json()['is_archived'] is True
+        assert c.get('/api/conversations').json()['total'] == 0
+        assert c.get('/api/conversations?scope=deleted').json()['total'] == 0
+        assert c.get('/api/conversations?scope=archived').json()['records'][0]['id'] == cid
+        assert c.post(path, json={"version": 2, "is_archived": False}).status_code == 409
+        assert c.post(path, json={"version": 3, "is_archived": False}).status_code == 200
+        assert c.get('/api/conversations').json()['records'][0]['id'] == cid
