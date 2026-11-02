@@ -1,5 +1,5 @@
 import {useEffect,useRef,useState} from 'react';
-import {MessageCircle,X,ChevronLeft,ChevronRight} from 'lucide-react';
+import {MessageCircle,LoaderCircle,X,ChevronLeft,ChevronRight} from 'lucide-react';
 import {Dialog,DialogContent,DialogTitle} from './components/ui/dialog';
 import type {ChatEntry,HistoryScope} from './ConversationHistory';
 import {t} from './i18n';
@@ -51,7 +51,7 @@ export function HistorySearchDialog({open,actor,scope,request,locked,close,retur
       </div>
       <div className="history-search-results" aria-busy={!!actor&&!settled}>
         <h3>{t(query?'搜尋聊天':scope==='active'?'近期':scope==='archived'?'封存聊天':'已刪除聊天')}</h3>
-        {!actor?<p>{t('尚未登入')}</p>:!settled?<p role="status">{t('正在讀取資料…')}</p>:error?<div role="alert"><p>{error}</p><button className="text-button" onClick={()=>setRetry(v=>v+1)}>{t('重試')}</button></div>:<>
+        {!actor?<p>{t('尚未登入')}</p>:!settled?<p role="status"><LoaderCircle className="spin" size={18}/>{t('搜尋中…')}</p>:error?<div role="alert"><p>{error}</p><button className="secondary" onClick={()=>setRetry(v=>v+1)}>{t('重試')}</button></div>:<>
           {data?.records.map(entry=><button key={entry.id} className="history-search-result" disabled={locked||selecting||entry.is_deleted} title={entry.title} onClick={()=>void choose(entry)}><MessageCircle size={19}/><span>{entry.title}</span></button>)}
           {!data?.records.length&&<p>{t(query?'找不到符合的聊天':'尚無聊天')}</p>}
           {data&&data.total>data.page_size&&<div className="history-pagination"><button className="icon-button" disabled={page<=1||selecting} aria-label={t('上一頁')} onClick={()=>setPage(v=>v-1)}><ChevronLeft size={18}/></button><span>{data.page} / {Math.ceil(data.total/data.page_size)}</span><button className="icon-button" disabled={page*data.page_size>=data.total||selecting} aria-label={t('下一頁')} onClick={()=>setPage(v=>v+1)}><ChevronRight size={18}/></button></div>}

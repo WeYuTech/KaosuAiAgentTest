@@ -32,7 +32,7 @@ test('全域入口在清單未重掛下切範圍；延遲回覆隔離、焦點�
  const open=async name=>{await act(async()=>host.querySelector('[aria-label="更多功能"]').dispatchEvent(new KeyboardEvent('keydown',{key:'Enter',bubbles:true})));await act(async()=>[...host.querySelectorAll('[role=menuitem]')].find(x=>x.textContent===name).click());};
  await open('已刪除聊天');assert.equal(requests.length,2);assert.ok(requests[1].path.includes('scope=deleted'));assert.equal(original.hidden,false);assert.equal(document.activeElement.textContent,'已刪除聊天');assert.equal(host.querySelector('[aria-label="聊天範圍"]'),null);
  await act(async()=>requests[0].resolve({records:[{id:'old',title:'不可出現的舊回覆'}],total:1,page:1,page_size:30}));assert.ok(!host.textContent.includes('不可出現'));
- await act(async()=>requests[1].resolve({records:[],total:0,page:1,page_size:30}));assert.equal(host.querySelectorAll('.history-empty').length,1);assert.equal(host.querySelector('.history-empty').textContent,'尚無聊天');assert.equal(host.querySelector('[aria-label="下一頁"]'),null);
+ await act(async()=>requests[1].resolve({records:[],total:0,page:1,page_size:30}));assert.equal(host.querySelectorAll('.history-empty').length,1);assert.ok(host.querySelector('.history-empty').textContent.includes('尚無'));assert.equal(host.querySelector('[aria-label="下一頁"]'),null);
  await open('封存聊天');assert.equal(host.querySelector('aside'),original);assert.equal(document.activeElement.textContent,'封存聊天');assert.equal(requests.length,3);
  await act(async()=>requests[2].reject(Error('連線失敗')));assert.ok(host.textContent.includes('連線失敗'));assert.equal(host.querySelector('.history-empty'),null);
  await act(async()=>button(host,'返回聊天').click());assert.ok(requests.at(-1).path.includes('scope=active'));assert.ok(document.activeElement===host.querySelector('button[aria-label="搜尋聊天"]'),'焦點應返回搜尋按鈕：'+document.activeElement?.tagName);
@@ -55,12 +55,14 @@ test('定時報告初載不顯示假空態；解析成功不搶焦點，核對�
  const {host,root}=mount(),requests=[];const request=(path,body)=>new Promise((resolve,reject)=>requests.push({path,body,resolve,reject}));
  await act(async()=>root.render(h(ManagementPanel,{section:'reports',request,close:noop,roles:['report','review'],locked:false})));
  assert.ok(host.textContent.includes('正在載入報告…'));assert.ok(!host.textContent.includes('尚未建立定時報告'));
- await act(async()=>requests.shift().resolve({records:[]}));assert.ok(host.textContent.includes('尚未建立定時報告'));
+ await act(async()=>requests.shift().resolve({records:[],timezone:'UTC+0800'}));assert.ok(host.textContent.includes('尚未建立定時報告'));
+ await act(async()=>button(host,'新增').click());
  const input=host.querySelector('textarea');
  await act(async()=>{const setter=Object.getOwnPropertyDescriptor(window.HTMLTextAreaElement.prototype,'value').set;setter.call(input,'每天 08:00 產生 MC37 的報工報告');input.dispatchEvent(new Event('input',{bubbles:true}));});
  const parse=button(host,'解析並填入');await act(async()=>{parse.focus();parse.click();});assert.ok(host.textContent.includes('正在解析條件…'));
  await act(async()=>requests.shift().resolve({title:'早班報告',module:'report',equipment:'MC37',frequency:'weekdays',hour:8,minute:0}));assert.equal(document.activeElement,parse);assert.ok(host.textContent.includes('已填入，請核對'));
- await act(async()=>host.querySelector('form').dispatchEvent(new Event('submit',{bubbles:true,cancelable:true})));assert.ok(host.textContent.includes('建立定時報告？'));assert.equal(document.activeElement.tagName,'H2');assert.equal(document.activeElement.textContent,'建立定時報告？');
+ await act(async()=>host.querySelector('form').dispatchEvent(new Event('submit',{bubbles:true,cancelable:true})));assert.ok(requests[0].path.endsWith('/preview'));
+ await act(async()=>requests.shift().resolve({title:'解析條件',module:'report',equipment:'MC37',frequency:'weekdays',hour:8,minute:0}));assert.ok(host.textContent.includes('建立定時報告？'));assert.equal(document.activeElement.tagName,'H2');assert.equal(document.activeElement.textContent,'建立定時報告？');
  await act(async()=>button(host,'返回修改').click());assert.equal([...host.querySelectorAll('input')].some(x=>x.value==='早班報告'),true);
  await act(async()=>root.unmount());host.remove();
 });
@@ -108,8 +110,7 @@ test('定時報告暫停、恢復及刪除以實際動詞確認，按確認前�
  assert.equal(host.querySelector('.operation-dialog-header h2').textContent,'定時報告');
  for(const [verb,status] of [['暫停','paused'],['恢復','active'],['刪除','deleted']]){
  const count=writes.length;
- await act(async()=>host.querySelector('[aria-label="報告操作"]').dispatchEvent(new KeyboardEvent('keydown',{key:'Enter',bubbles:true})));
- await act(async()=>[...document.querySelectorAll('[role=menuitem]')].find(x=>x.textContent===verb).click());
+ await act(async()=>button(host,verb).click());
  assert.equal(host.querySelector('.operation-dialog-header h2').textContent,verb+'定時報告？');
  assert.equal(document.activeElement,host.querySelector('.operation-dialog-header h2'));
  assert.ok(host.querySelector('.management-summary').textContent.includes('早班驗收'));assert.equal(writes.length,count);
@@ -164,7 +165,7 @@ test('可信身分替換重設清單範圍並隔離舊身分回覆',async()=>{
  await act(async()=>root.render(h(Harness)));await act(async()=>controller.current.showScope('deleted'));const old=requests.at(-1);
  await act(async()=>changeActor('乙'));assert.ok(requests.at(-1).path.includes('scope=active&page=1'));
  await act(async()=>old.resolve({records:[{id:'secret',title:'甲的聊天'}],total:1,page:1,page_size:30}));assert.ok(!host.textContent.includes('甲的聊天'));
- await act(async()=>requests.at(-1).resolve({records:[],total:0,page:1,page_size:30}));assert.equal(host.querySelector('.history-subview'),null);assert.equal(host.querySelectorAll('.history-empty').length,1);assert.equal(host.querySelector('.history-empty').textContent,'尚無聊天');
+ await act(async()=>requests.at(-1).resolve({records:[],total:0,page:1,page_size:30}));assert.equal(host.querySelector('.history-subview'),null);assert.equal(host.querySelectorAll('.history-empty').length,1);assert.ok(host.querySelector('.history-empty').textContent.includes('尚無'));
  } finally {await act(async()=>root.unmount());host.remove();}
 });
 
@@ -186,4 +187,29 @@ test('搜尋彈窗獨立查詢、淘汰過期結果、維持操作鎖定且選�
   await act(async()=>setLocked(false));await act(async()=>modal.querySelector('.history-search-result').click());await act(tick);
   assert.deepEqual(selected,['MC38 報工']);assert.equal(host.querySelector('.history-search-dialog'),null);
  } finally {await act(async()=>root.unmount());host.remove();}
+});
+
+test('管理設定無變更不能送出，真正唯讀無表單；儲存失敗保留前後值可重試',async()=>{
+ const {host,root}=mount();let fail=true;const writes=[];
+ const config={settings:{version:2,model:'測試模型',reasoning_effort:'low',max_tool_rounds:5},budget_config:{version:0,limit_usd:20,warning_percent:80},budget:{spent_usd:2,reserved_usd:1,limit_usd:20,remaining_usd:17},hard_limit_usd:20,write_allowed:false,api_key_configured:true,models:['測試模型'],provider:'OpenAI Responses API',agent:'受限助理'};
+ const request=async(path,body)=>{if(body){writes.push(body);if(fail)throw Error('模擬儲存失敗');config.settings={...body,version:3};}return structuredClone(config);};
+ try{
+ await act(async()=>root.render(h(ManagementPanel,{key:'read',section:'api',request,close:noop,roles:['report'],locked:false})));
+ assert.equal(host.querySelectorAll('input,select,[role=combobox]').length,0);assert.equal(button(host,'核對變更'),undefined);assert.ok(host.textContent.includes('僅供查看'));
+ config.write_allowed=true;
+ await act(async()=>root.render(h(ManagementPanel,{key:'edit',section:'agent',request,close:noop,roles:['review'],locked:false})));
+ assert.ok(button(host,'核對變更').disabled);
+ const input=host.querySelector('input');await act(async()=>{Object.getOwnPropertyDescriptor(window.HTMLInputElement.prototype,'value').set.call(input,'3');input.dispatchEvent(new Event('input',{bubbles:true}));});
+ await act(async()=>button(host,'核對變更').click());assert.ok(host.querySelector('del').textContent.includes('5'));assert.ok(host.querySelector('.setting-diff strong').textContent.includes('3'));assert.equal(writes.length,0);
+ await act(async()=>button(host,'儲存').click());assert.ok(host.textContent.includes('模擬儲存失敗'));assert.ok(host.querySelector('.setting-diff strong').textContent.includes('3'));
+ fail=false;await act(async()=>button(host,'儲存').click());assert.ok(host.textContent.includes('設定已保存'));assert.equal(writes[1].version,2);assert.equal(writes[1].max_tool_rounds,3);assert.ok(button(host,'核對變更').disabled);
+ }finally{await act(async()=>root.unmount());host.remove();}
+});
+
+test('設定讀取失敗可重試，錯誤不冒充空設定',async()=>{
+ const {host,root}=mount();let reject,resolve;const request=()=>new Promise((r,j)=>{resolve=r;reject=j;});
+ try{await act(async()=>root.render(h(ManagementPanel,{section:'budget',request,close:noop,roles:['review'],locked:false})));assert.ok(host.textContent.includes('正在讀取資料'));assert.equal(host.querySelector('input'),null);
+ await act(async()=>reject(Error('讀取失敗')));assert.ok(host.textContent.includes('讀取失敗'));await act(async()=>button(host,'重試').click());assert.ok(host.textContent.includes('正在讀取資料'));assert.ok(!host.textContent.includes('讀取失敗'));
+ await act(async()=>resolve({settings:{version:0},budget_config:{version:0,limit_usd:20,warning_percent:80},budget:{spent_usd:3,reserved_usd:4,unknown_calls:2},write_allowed:false}));assert.ok(host.textContent.includes('3 USD'));assert.ok(host.textContent.includes('4 USD'));assert.equal(host.querySelector('input'),null);
+ }finally{await act(async()=>root.unmount());host.remove();}
 });

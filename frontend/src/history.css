@@ -67,3 +67,9 @@
 .assistant-header h2:focus {outline:none;}
 .header-new-chat[hidden] {display:none;}
 }
+
+#mes-ai-chat-root .history-select {justify-content:flex-start;}
+#mes-ai-chat-root .history-row>.icon-button {width:32px;min-height:32px;height:32px;}
+#mes-ai-chat-root [role=menuitem] {white-space:nowrap;min-height:32px;}
+#mes-ai-chat-root .history-empty {padding:8px 12px;text-align:left;}
+#mes-ai-chat-root .danger-action {border:1px solid var(--destructive);color:var(--destructive);background:var(--error-surface);border-radius:8px;padding:8px 12px;}
