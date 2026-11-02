@@ -1,0 +1,297 @@
+{
+  "source": "weyu-mes-five-flows.html",
+  "sourceSha256": "d99078e94c9767aaed0cbac0d310a0410df31723b3804acb03b7f2a8399d29d9",
+  "selectedVariants": [
+    {
+      "key": "split",
+      "name": "聊天＋作業單"
+    },
+    {
+      "key": "wizard",
+      "name": "分步作業精靈"
+    }
+  ],
+  "extraction": [
+    "Preserved selected markup, scoped product CSS, shared data and local interaction code.",
+    "Removed the three unselected variant DOMs and their top-level rendering functions.",
+    "Replaced host carousel with two external reference navigation buttons; product UI unchanged.",
+    "Embedded official Lucide ESM rendering helpers and only the used icon data, with original licenses; no authored SVG paths.",
+    "Retained only the original host typography/icon primitives needed to preserve the selected rendered design: heading/paragraph fonts, 18 px small-text line height, 16 px icons, font smoothing.",
+    "No runtime network requests or MES connection.",
+    "Product fonts use the original family declarations; screenshot environment supplies Noto Sans CJK TC through Fontconfig."
+  ],
+  "lucide": {
+    "distribution": "lucide v1.8.0; selected icon data plus original ESM rendering helpers",
+    "names": [
+      "arrow-left",
+      "arrow-right",
+      "arrow-up",
+      "chevron-left",
+      "chevron-right",
+      "circle-check",
+      "circle-help",
+      "file-text",
+      "search",
+      "sparkles",
+      "square-pen"
+    ],
+    "sha256": "2d0e3ceb560ad6bc20d4fa5dcecd2a73616f52ce90105ec1848d2474ab2093c0"
+  },
+  "caveats": [
+    "Reference navigation compares two independent demo states; it is NOT the product settings switch or shared production state architecture.",
+    "All records, dates, amounts, permissions and eligibility are illustrative fixtures, not current MES data or business rules.",
+    "Local regex parsing and canned explanations are demo shortcuts, not the real AI entry/router.",
+    "The sample covers one report scenario; production must cover schedule/report/mold and each existing business action.",
+    "Client-side review and completion are illustrative; production must use server preview, version/actor/auth checks and actual confirmation outcomes.",
+    "Do not copy the 24-row in-memory search, four-row pagination, fixed dates, or completed-row disabling as backend contracts.",
+    "No pending/unknown recovery, async save conflict, cross-tab arbitration or mode switch persistence is implemented in the demo.",
+    "The reference header and preview badge are presentation context; latest approved product shell and brand changes take precedence.",
+    "Outer min-heights, border radius and screenshot dimensions are comparison framing, not fixed production viewport requirements."
+  ],
+  "capture": {
+    "engine": "Chromium headless shell via Playwright",
+    "deviceScaleFactor": 1,
+    "colorScheme": "light",
+    "fonts": "Original CSS families; local Noto Sans CJK TC fallback through Fontconfig",
+    "crop": "Original .mf-app bounding box only; excludes external reference mode buttons",
+    "snapshots": [
+      {
+        "file": "chat-sheet-initial.png",
+        "flow": "split",
+        "state": "initial",
+        "width": 1024,
+        "height": 904,
+        "viewport": {
+          "width": 1056,
+          "height": 1100
+        },
+        "documentOverflow": false,
+        "controlsClipped": [],
+        "label": "原示範初始狀態：需求已辨識為生產報工，尚未選定工單"
+      },
+      {
+        "file": "chat-sheet-edit.png",
+        "flow": "split",
+        "state": "edit",
+        "width": 1024,
+        "height": 904,
+        "viewport": {
+          "width": 1056,
+          "height": 1100
+        },
+        "documentOverflow": false,
+        "controlsClipped": [],
+        "label": "選定工單後，將良品數量由 120 修改為 125",
+        "fixture": {
+          "target": "execution-1",
+          "workOrder": "WO-261102-0382",
+          "machine": "MC37",
+          "good": 125,
+          "bad": 3,
+          "reason": "刮傷"
+        }
+      },
+      {
+        "file": "chat-sheet-review.png",
+        "flow": "split",
+        "state": "review",
+        "width": 1024,
+        "height": 904,
+        "viewport": {
+          "width": 1056,
+          "height": 1100
+        },
+        "documentOverflow": false,
+        "controlsClipped": [],
+        "label": "最終核對：保留選定工單與手動修改的數量，尚未寫入"
+      },
+      {
+        "file": "chat-sheet-narrow.png",
+        "flow": "split",
+        "state": "narrow",
+        "width": 320,
+        "height": 1040,
+        "viewport": {
+          "width": 352,
+          "height": 1200
+        },
+        "documentOverflow": false,
+        "controlsClipped": [],
+        "label": "320 px 寬主工作區的核對狀態",
+        "narrowState": "review"
+      },
+      {
+        "file": "wizard-initial.png",
+        "flow": "wizard",
+        "state": "initial",
+        "width": 1024,
+        "height": 904,
+        "viewport": {
+          "width": 1056,
+          "height": 1100
+        },
+        "documentOverflow": false,
+        "controlsClipped": [],
+        "label": "原示範初始狀態：需求已辨識為生產報工，尚未選定工單"
+      },
+      {
+        "file": "wizard-edit.png",
+        "flow": "wizard",
+        "state": "edit",
+        "width": 1024,
+        "height": 904,
+        "viewport": {
+          "width": 1056,
+          "height": 1100
+        },
+        "documentOverflow": false,
+        "controlsClipped": [],
+        "label": "選定工單後，將良品數量由 120 修改為 125",
+        "fixture": {
+          "target": "execution-1",
+          "workOrder": "WO-261102-0382",
+          "machine": "MC37",
+          "good": 125,
+          "bad": 3,
+          "reason": "刮傷"
+        }
+      },
+      {
+        "file": "wizard-review.png",
+        "flow": "wizard",
+        "state": "review",
+        "width": 1024,
+        "height": 904,
+        "viewport": {
+          "width": 1056,
+          "height": 1100
+        },
+        "documentOverflow": false,
+        "controlsClipped": [],
+        "label": "最終核對：保留選定工單與手動修改的數量，尚未寫入"
+      },
+      {
+        "file": "wizard-narrow.png",
+        "flow": "wizard",
+        "state": "narrow",
+        "width": 320,
+        "height": 1040,
+        "viewport": {
+          "width": 352,
+          "height": 1200
+        },
+        "documentOverflow": false,
+        "controlsClipped": [],
+        "label": "320 px 寬主工作區的核對狀態",
+        "narrowState": "review"
+      }
+    ],
+    "viewedStates": [
+      "chat-sheet-initial",
+      "wizard-initial",
+      "chat-sheet-narrow",
+      "wizard-narrow",
+      "chat-sheet-review",
+      "wizard-edit"
+    ]
+  },
+  "validation": {
+    "errors": [],
+    "networkRequests": [],
+    "stateCount": 2,
+    "iframeCount": 0,
+    "hostRuntimeRequired": false,
+    "checks": [
+      {
+        "flow": "split",
+        "editRetainedInReview": true,
+        "helpPreservedReview": true,
+        "simulatedCompletionOnly": true
+      },
+      {
+        "flow": "wizard",
+        "editRetainedInReview": true,
+        "helpPreservedReview": true,
+        "simulatedCompletionOnly": true
+      }
+    ],
+    "originalInitialRenderingComparison": [
+      {
+        "flow": "split",
+        "baseline": "visualize-qa/flow-1.png",
+        "imagePixels": 925696,
+        "pixelsWithAnyRgbDifference": 298,
+        "meanAbsoluteRgbDifference": 0.00035972932798672565,
+        "pixelsWithChannelDifferenceOver10": 5,
+        "interpretation": "Same approved layout and spacing after preserving the original inherited typography and icon primitives; residual subpixel raster/rounded-edge differences only."
+      },
+      {
+        "flow": "wizard",
+        "baseline": "visualize-qa/flow-2.png",
+        "imagePixels": 925696,
+        "pixelsWithAnyRgbDifference": 81,
+        "meanAbsoluteRgbDifference": 6.445600571533923e-05,
+        "pixelsWithChannelDifferenceOver10": 0,
+        "interpretation": "Same approved layout and spacing after preserving the original inherited typography and icon primitives; residual subpixel raster/rounded-edge differences only."
+      }
+    ]
+  },
+  "files": [
+    {
+      "file": "reference.html",
+      "bytes": 53153,
+      "sha256": "cbcbefe3f2060a190c5b001e421df4ea6d928e73bf1a1ca57dabf34cd01935ec"
+    },
+    {
+      "file": "selected-fragment.html",
+      "bytes": 36039,
+      "sha256": "196f3423ab6b40b013d0113a1d790c86c15dcbffc26f06f1bfb504f567bea28c"
+    },
+    {
+      "file": "chat-sheet-initial.png",
+      "bytes": 52379,
+      "sha256": "6fb83c3ca967a4f5d124dd39fae67faa53490b121c9bcbf65b10a21d8c8fbd1d"
+    },
+    {
+      "file": "chat-sheet-edit.png",
+      "bytes": 55455,
+      "sha256": "104246c504502fd2dc04658a678edffa6f3fee42fc7a90fe26ac5ab5eb5c46bc"
+    },
+    {
+      "file": "chat-sheet-review.png",
+      "bytes": 56316,
+      "sha256": "c449e408a451520a3e33ed65e76cc938cc625dac228d715c003ae79069c22a04"
+    },
+    {
+      "file": "chat-sheet-narrow.png",
+      "bytes": 50870,
+      "sha256": "0c194f6b448cb88a66c806353ec3ea283d4e1b037307e5f208d76aa68cfac55d"
+    },
+    {
+      "file": "wizard-initial.png",
+      "bytes": 71653,
+      "sha256": "8ad97491c7e3e639a7b9b2472843833fed71b2e64eda5f80174f73c24606a47e"
+    },
+    {
+      "file": "wizard-edit.png",
+      "bytes": 44180,
+      "sha256": "64d862e904c8ddf87b49d6b0d3ea6ce48e27f2713c752fe6212d5db6b6428325"
+    },
+    {
+      "file": "wizard-review.png",
+      "bytes": 48254,
+      "sha256": "d1c726633a88c7db9a40fd1b4b26bbc688aea1c6113914ff7f5118586ac37d0b"
+    },
+    {
+      "file": "wizard-narrow.png",
+      "bytes": 42931,
+      "sha256": "8f862e90a9141de2d241e2455c3f6a11f6f12c93a30dda2729c119e48dbbcf9a"
+    }
+  ],
+  "fileRoles": {
+    "reference.html": "Open this self-contained offline reference in a browser. Only the two chosen designs are included.",
+    "selected-fragment.html": "Audit/source extraction; only the selected original product markup, CSS and shared interaction script. Use reference.html for the complete rendered reference.",
+    "manifest.json": "Hashes, screenshot dimensions/states, export decisions, validation results and prototype-only caveats.",
+    "*.png": "Frozen visual references, not production UI assets."
+  }
+}

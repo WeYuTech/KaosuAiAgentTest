@@ -95,6 +95,7 @@ class Conversation(Input):
     module: Literal["schedule", "report", "mold"]
     context: dict[str, Any] = Field(default_factory=dict)
     locale: Literal["zh-TW", "en", "th"] = "zh-TW"
+    entry_id: str | None = Field(default=None, min_length=8, max_length=100)
 
 
 class GuideUpdate(Input):
@@ -132,7 +133,7 @@ class Review(Input):
     source: str = Field(min_length=1, max_length=500)
 
 
-def create_app(db_path=None, model=None):
+def create_app(db_path=None, model=None, intent_classifier=None):
     app = FastAPI(title="MES 對話操作助理", version="0.1.0")
     store = Store(db_path or ROOT / ".local" / "operations.db")
     mode = os.getenv("MES_MODE", "simulation")
@@ -250,7 +251,7 @@ def create_app(db_path=None, model=None):
     from app.reports import install as install_reports
     install_reports(app, store, actor_for, scheduled_query)
 
-    def check_conversation_edit(db, convo, intent_token=None, version=None):
+    def check_conversation_edit(db, convo, intent_token=None, version=None, allow_unknown=False):
         from app.guide import initial, reject
         if convo.get("is_archived") or convo.get("is_deleted"):
             reject("conversation_readonly", "請先還原聊天室，再繼續操作。")
@@ -260,7 +261,7 @@ def create_app(db_path=None, model=None):
                 reject("guide_stale", "這輪對話已失效，請重新核對需求。")
         elif processing.get("expires_at", "") > now().isoformat():
             reject("conversation_busy", "上一則訊息仍在處理，請稍後修改。")
-        if any(p.get("conversation_id") == convo["id"] and p["status"] == "unknown" for p in store.all(db, "PROPOSAL")):
+        if not allow_unknown and any(p.get("conversation_id") == convo["id"] and p["status"] == "unknown" for p in store.all(db, "PROPOSAL")):
             reject("outcome_unknown", "操作結果待核對，不得修改或重送。")
         if version is not None and version != convo.get("guide", initial())["version"]:
             reject("guide_stale", "草稿版本已變更，請重新讀取。", current_version=convo.get("guide", initial())["version"])
@@ -285,8 +286,7 @@ def create_app(db_path=None, model=None):
             check_conversation_edit(db, convo, intent_token, version)
             convo["guide"] = merge(convo.get("guide"), convo["module"], patch)
             convo["updated_at"] = now().isoformat()
-            if not intent_token:
-                convo["revision"] = convo.get("revision", 0) + 1
+            convo["revision"] = convo.get("revision", 0) + 1
             for old in store.all(db, "PROPOSAL"):
                 if old.get("conversation_id") == cid and old["status"] == "pending":
                     old["status"] = "superseded"
@@ -417,6 +417,22 @@ def create_app(db_path=None, model=None):
         with store.transaction() as db:
             return call_domain(query, state_for(db), module, dict(request.query_params))
 
+    @app.get("/api/candidates")
+    def candidates(request: Request, kind: str, search: str = '', part_no: str = '', page: int = 1, page_size: int = 20):
+        from app import candidates as source
+        actor = actor_for(request)
+        allowed(actor, 'schedule')
+        source.validate(kind, search, part_no, page, page_size)
+        if mode != 'simulation':
+            try:
+                return source.live(mes_bridge(), actor, kind, search, part_no, page, page_size)
+            except MesError:
+                raise
+            except Exception:
+                raise MesError('候選資料查詢失敗，請縮小條件後再試；未執行寫入。') from None
+        with store.transaction() as db:
+            return source.simulation(state_for(db), kind, search, part_no, page, page_size)
+
     @app.post("/api/proposals")
     def proposals(body: Proposal, request: Request):
         return make_proposal(body, actor_for(request))
@@ -449,6 +465,8 @@ def create_app(db_path=None, model=None):
             if body.approved:
                 if proposal.get("conversation_id"):
                     convo = store.get(db, "CONVERSATION", proposal["conversation_id"])
+                    if convo and (convo.get("processing") or {}).get("expires_at", "") > now().isoformat():
+                        raise HTTPException(409, "訊息仍在處理，請完成說明或修改後再確認")
                     if not convo or convo.get("revision") != proposal.get("intent_revision"):
                         raise HTTPException(409, "對話需求已變更，請重新建立確認卡")
                 if proposal["expires_at"] < now().isoformat():
@@ -613,6 +631,23 @@ def create_app(db_path=None, model=None):
         convo = {"model_settings": config, "id": secrets.token_urlsafe(18), "module": body.module, "context": body.context,
                  "actor_id": actor["id"], "locale": body.locale, "messages": [], "created_at": now().isoformat()}
         with store.transaction() as db:
+            if body.entry_id:
+                entry = store.get(db, 'STATE', 'entry:v1:'+body.entry_id)
+                if not entry or entry['actor_id'] != actor['id']:
+                    raise HTTPException(404, '找不到入口對話')
+                if entry.get('processing'):
+                    raise HTTPException(409, '請先查核原入口訊息')
+                if entry.get('handoff'):
+                    previous = store.get(db, 'CONVERSATION', entry['handoff'])
+                    if previous and previous['module'] == body.module and not previous.get('is_deleted'):
+                        return previous
+                    raise HTTPException(409, '入口已交接，請返回原作業或建立新聊天')
+                unresolved = next((p for p in store.all(db, 'PROPOSAL') if p['actor_id']==actor['id'] and p['status'] in ('pending','unknown')), None)
+                if unresolved:
+                    raise HTTPException(409, '請先完成、取消或查核原作業')
+                convo['messages'] = entry['messages']
+                entry['handoff'] = convo['id']
+                store.put(db, 'STATE', 'entry:v1:'+body.entry_id, entry)
             store.put(db, "CONVERSATION", convo["id"], convo)
         return convo
 
@@ -667,28 +702,30 @@ def create_app(db_path=None, model=None):
 
     @app.post("/api/conversations/{cid}/messages")
     def message(cid: str, body: Message, request: Request):
+        return process_message(cid, body, request)
+
+    def process_message(cid, body, request, decision_override=None):
         actor = actor_for(request)
         get_conversation(cid, actor)
         intent_token = secrets.token_urlsafe(24)
         with store.transaction() as db:
             convo = store.get(db, "CONVERSATION", cid)
-            check_conversation_edit(db, convo)
+            check_conversation_edit(db, convo, allow_unknown=True)
             if (convo.get("processing") or {}).get("expires_at", "") > now().isoformat():
                 raise HTTPException(409, "上一則訊息仍在處理")
-            convo["revision"] = convo.get("revision", 0) + 1
             convo["processing"] = {"token": intent_token, "expires_at": (now() + timedelta(minutes=10)).isoformat()}
             convo["messages"].append({"role": "user", "content": body.text})
             convo["updated_at"] = now().isoformat()
             store.put(db, "CONVERSATION", cid, convo)
             state = state_for(db) if mode == "simulation" else None
-            for old in store.all(db, "PROPOSAL"):
-                if old.get("conversation_id") == cid and old["status"] == "pending":
-                    old["status"] = "superseded"
-                    store.put(db, "PROPOSAL", old["id"], old)
 
         def tool_actor():
             if mode == "simulation":
-                return actor
+                fresh = actor_for(request)
+                if fresh["id"] != actor["id"]:
+                    raise HTTPException(401, "登入身分已改變")
+                allowed(fresh, convo["module"])
+                return fresh
             fresh = mes_bridge().resolve_identity(request.headers.get("cookie", ""), convo["module"])
             if fresh["id"] != actor["id"] or fresh.get("user_sid") != actor.get("user_sid"):
                 raise MesError("MES 登入身分已改變，請重新開啟對話並核對操作身分。", "unauthorized")
@@ -697,13 +734,36 @@ def create_app(db_path=None, model=None):
 
         try:
             from app.model import respond
-            if model:
+            from app.intents import classify
+            # 注入 model 是離線 HTTP 測試替身；正式請求一律使用受限分類器。
+            decision = decision_override or (intent_classifier(convo) if intent_classifier else {"intent": "change"} if model else classify(convo, actor["roles"]))
+            if decision.get("intent") not in {"readonly", "change", "clarify", "unsupported", "capabilities"}:
+                raise HTTPException(502, "無法確認訊息意圖，原操作未變更")
+            other_module = decision.get("module") in {"schedule","report","mold"} and decision["module"] != convo["module"]
+            read_only = other_module or decision["intent"] != "change"
+            with store.transaction() as db:
+                current = store.get(db, "CONVERSATION", cid)
+                check_conversation_edit(db, current, intent_token, allow_unknown=read_only)
+                if not read_only:
+                    current["revision"] = current.get("revision", 0) + 1
+                    for old in store.all(db, "PROPOSAL"):
+                        if old.get("conversation_id") == cid and old["status"] == "pending":
+                            old["status"] = "superseded"
+                            store.put(db, "PROPOSAL", old["id"], old)
+                    store.put(db, "CONVERSATION", cid, current)
+                convo = current
+            if other_module:
+                result = {"content": {"zh-TW":"這項需求屬於其他模組。請先完成、取消或查核目前作業，再從入口選擇對應模組；目前內容已保留。","en":"This request belongs to another module. Complete, cancel or reconcile the current operation before choosing that module. Your current draft is retained.","th":"คำขอนี้อยู่ในโมดูลอื่น โปรดดำเนินการ ยกเลิก หรือตรวจสอบงานปัจจุบันก่อนเลือกโมดูลนั้น เก็บฉบับร่างไว้แล้ว"}.get(convo.get("locale"),"請先完成目前作業，再選擇其他模組。")}
+            elif model:
                 result = model(convo, state, store)
             else:
                 query_fn = (lambda filters: mes_bridge().snapshot(tool_actor(), convo["module"], filters)) if mode != "simulation" else None
                 result = respond(convo, state, store, query_fn=query_fn,
-                                 draft_fn=lambda patch, version: save_guide(cid, tool_actor(), patch, version, intent_token),
-                                 prepare_fn=lambda action, args: make_proposal(Proposal(module=convo["module"], action=action, args=args, conversation_id=cid), tool_actor(), intent_token))
+                                 draft_fn=None if read_only else lambda patch, version: save_guide(cid, tool_actor(), patch, version, intent_token),
+                                 prepare_fn=None if read_only else lambda action, args: make_proposal(Proposal(module=convo["module"], action=action, args=args, conversation_id=cid), tool_actor(), intent_token), read_only=read_only, authorize_fn=tool_actor)
+            tool_actor()
+            if read_only and (result.get("action") or result.get("proposal")):
+                raise HTTPException(502, "唯讀回覆包含未允許的操作，已阻擋")
             proposal = result.get("proposal")
             if result.get("action"):
                 try:
@@ -721,7 +781,7 @@ def create_app(db_path=None, model=None):
                 convo.pop("processing", None)
                 store.put(db, "CONVERSATION", cid, convo)
                 guide = guide_view(db, convo)
-            return {"messages": convo["messages"], "proposal": proposal, "data": result.get("data"), "guide": guide}
+            return {"messages": convo["messages"], "proposal": guide.get("proposal") if read_only else proposal, "data": result.get("data"), "guide": guide}
         finally:
             with store.transaction() as db:
                 current = store.get(db, "CONVERSATION", cid)
@@ -729,6 +789,8 @@ def create_app(db_path=None, model=None):
                     current.pop("processing", None)
                     store.put(db, "CONVERSATION", cid, current)
 
+    from app.entry import install as install_entry
+    install_entry(app, store, actor_for, allowed, now, new_conversation, process_message, intent_classifier)
     return app
 
 

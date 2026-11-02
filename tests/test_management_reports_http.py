@@ -157,6 +157,7 @@ def test_模型實際使用新聊天設定且舊聊天維持原值(setup,monkeyp
     from app import model
     from test_live_dialogue_validation import model_tool
     c,_,_=setup
+    monkeypatch.setattr('app.intents.classify',lambda *_:{'intent':'readonly','module':'report'})
     monkeypatch.setenv('OPENAI_API_KEY','synthetic-no-network')
     c.post('/api/session/demo',json={'identity':'supervisor'})
     old=c.post('/api/conversations',json={'module':'report'}).json()

@@ -7,7 +7,8 @@ import {type ManagementSection} from './ManagementPanel';
 import {TooltipIconButton} from './components/assistant-ui/elements/tooltip-icon-button';
 import {DropdownMenu,DropdownMenuTrigger,DropdownMenuContent,DropdownMenuItem,DropdownMenuLabel,DropdownMenuRadioGroup,DropdownMenuRadioItem,DropdownMenuSeparator} from './components/ui/dropdown-menu';
 /** 來源 AssistantMoreMenu；三語、MES 主題及既有受限管理為明列適配。 */
-export function HeaderMenu({signedIn,locale,theme,localeBusy,onLocale,onTheme,onManage,onUsage,onMinimize,onHistory}:{
+export function HeaderMenu({signedIn,locale,theme,localeBusy,onLocale,onTheme,onManage,onUsage,onMinimize,onHistory,onInterfaceSettings}:{
+ onInterfaceSettings?:()=>void;
  onHistory?:(scope:HistoryScope)=>void;
  signedIn:boolean;locale:Locale;theme:Theme;localeBusy:boolean;onLocale:(value:Locale)=>void;onTheme:(value:Theme)=>void;
  onManage:(section:ManagementSection,trigger:HTMLButtonElement)=>void;onUsage:()=>void;onMinimize:()=>void;
@@ -20,6 +21,7 @@ export function HeaderMenu({signedIn,locale,theme,localeBusy,onLocale,onTheme,on
   <DropdownMenuTrigger asChild><TooltipIconButton ref={trigger} tooltip={t('更多功能')} aria-label={t('更多功能')} className="size-7 rounded-md p-0 text-muted-foreground hover:text-foreground"><MoreHorizontal className="size-3.5"/></TooltipIconButton></DropdownMenuTrigger>
   <DropdownMenuContent align="end" className="[scrollbar-width:none] [&::-webkit-scrollbar]:hidden" onCloseAutoFocus={event=>{const scope=historyDestination.current;if(scope){event.preventDefault();historyDestination.current=null;onHistory?.(scope);}}}>
    {onHistory&&<><DropdownMenuItem disabled={!signedIn} onSelect={()=>{historyDestination.current='archived';}}><Archive/>{t('封存聊天')}</DropdownMenuItem><DropdownMenuItem disabled={!signedIn} onSelect={()=>{historyDestination.current='deleted';}}><Trash2/>{t('已刪除聊天')}</DropdownMenuItem><DropdownMenuSeparator/></>}
+   {onInterfaceSettings&&<><DropdownMenuItem disabled={!signedIn} onSelect={onInterfaceSettings}>{locale==='en'?'Interface settings':locale==='th'?'การตั้งค่าอินเทอร์เฟซ':'介面設定'}</DropdownMenuItem><DropdownMenuSeparator/></>}
    {sections.map(([key,title,Icon])=><DropdownMenuItem key={key} disabled={!signedIn} onSelect={()=>trigger.current&&onManage(key,trigger.current)}><Icon/>{t(title)}</DropdownMenuItem>)}
    <DropdownMenuSeparator/><DropdownMenuLabel>{t('介面外觀')}</DropdownMenuLabel>
    <DropdownMenuRadioGroup aria-label={t('主題')} value={theme} onValueChange={v=>onTheme(v as Theme)}>{themes.map(([value,title,Icon])=><DropdownMenuRadioItem key={value} value={value}><Icon/>{t(title)}</DropdownMenuRadioItem>)}</DropdownMenuRadioGroup>

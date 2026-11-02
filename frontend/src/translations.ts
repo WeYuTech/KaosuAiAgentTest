@@ -1,5 +1,7 @@
 /* 固定介面詞彙：中文原文為鍵，不翻譯 MES 主檔名稱或歷史訊息。 */
 export const translations: Record<string, [string, string]> = Object.fromEntries(`
+以此資料開始作業|Start an operation with this record|เริ่มงานด้วยรายการนี้
+已帶入目前作業，請選擇操作。|Record added to the current context. Choose an operation.|นำรายการเข้าสู่งานปัจจุบันแล้ว โปรดเลือกการดำเนินการ
 此處可切換模擬身分；正式 MES 沿用登入權限。|Switch simulation roles here. Production MES uses your signed-in permissions.|สลับบทบาทจำลองได้ที่นี่ ระบบ MES จริงใช้สิทธิ์ของผู้เข้าสู่ระบบ
 沿用 MES 登入權限，請確認本次作業人員。|MES sign-in permissions apply. Confirm the operator.|ใช้สิทธิ์การเข้าสู่ระบบ MES กรุณายืนยันผู้ปฏิบัติงาน
 定時報告|Scheduled reports|รายงานตามกำหนด

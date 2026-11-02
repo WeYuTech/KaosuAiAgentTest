@@ -104,17 +104,19 @@ def invoke(payload):
             store.put(db, "BUDGET", call_id, entry)
 
 
-def respond(conversation, state, store, query_fn=None, prepare_fn=None, draft_fn=None):
+def respond(conversation, state, store, query_fn=None, prepare_fn=None, draft_fn=None, *, read_only=False, authorize_fn=None):
     from app.domain import actions, query, BusinessError
     from app.mes import MesError
     recoverable = {"validation", "scope_too_large", "ambiguous", "not_found", "stale", "conflict", "linked_reports"}
     if not os.getenv("OPENAI_API_KEY"):
         raise HTTPException(503, "尚未設定後端模型金鑰；可先使用明確標示的結構化模擬表單")
+    if read_only and (prepare_fn or draft_fn):
+        raise HTTPException(500, "唯讀工具設定不合法")
     module = conversation["module"]
     schemas = {name: schema for name, schema in actions().items() if name.startswith(module + ".")}
     tools = [{"type": "function", "name": "prepare_" + name.replace(".", "_"),
               "description": f"準備 {name} 確認卡，不會執行寫入。資料齊全且使用者已指定唯一目標才可呼叫。",
-              "parameters": strict_schema(schema), "strict": True} for name, schema in schemas.items()]
+              "parameters": strict_schema(schema), "strict": True} for name, schema in schemas.items()] if not read_only else []
     filters_schema = {"type": "object", "properties": {
         "equipment": {"type": "string"}, "wo": {"type": "string"}, "date": {"type": "string"},
         "execution_id": {"type": "string"}, "schedule_id": {"type": "string"},
@@ -125,7 +127,7 @@ def respond(conversation, state, store, query_fn=None, prepare_fn=None, draft_fn
         "search": {"type": "string"}, "catalog": {"type": "string"}, "mold_no": {"type": "string"}}, "required": []}
     tools += [{"type": "function", "name": "query_workspace", "description": "查詢目前模組資料與有效選項；不寫入。", "parameters": strict_schema(filters_schema), "strict": True}]
     tools.append({"type": "function", "name": "search_operation_knowledge", "description": "檢索目前模組已發布知識。不同語言提問時，可將業務詞彙翻譯為中文後查詢；不查未審回饋，不改寫知識或卡控。", "parameters": strict_schema({"type": "object", "properties": {"query": {"type": "string", "minLength": 1, "maxLength": 2000}}, "required": ["query"]}), "strict": True})
-    if draft_fn:
+    if draft_fn and not read_only:
         properties = {}
         for schema in schemas.values():
             properties.update(partial_schema(schema)["properties"])
@@ -153,10 +155,12 @@ def respond(conversation, state, store, query_fn=None, prepare_fn=None, draft_fn
     language = {"zh-TW": "繁體中文", "en": "English", "th": "ภาษาไทย"}.get(locale, "繁體中文")
     instructions += "\n呈現語言：" + language + "。所有回答、補問及卡控解釋使用此語言；設備、工單、料號、模具編號、原始備註與業務數值保持原樣，資料庫內部識別不要顯示。知識可能為其他語言，請理解後以呈現語言說明。"
     instructions += "\n遇到跨語言作業問題時，使用 search_operation_knowledge 將問題轉成中文業務詞彙檢索已發布來源，再以選定語言回答；沒有來源時明確說明，不把翻譯當成新規則。"
-    if draft_fn:
+    if draft_fn and not read_only:
         from app.guide import initial
         instructions += "\n目前引導草稿（內容未通過業務驗證）：" + dumps(conversation.get("guide") or initial())
         instructions += "\n有操作意圖但資料不齊時，先用 update_operation_draft 保存使用者已提供值，再依 missing 補問。只查詢不必建立草稿。不得猜 ID 或補不存在的值。換目標會清除舊目標相關資料；保持既有數量時只更新新增欄位。"
+    if read_only:
+        instructions += "\n本輪僅能解釋或查詢。禁止修改草稿、準備確認卡或返回 action。遇到修改需求應說明需返回作業修改流程，不得假稱已修改。"
     prepared_text = {"zh-TW": "已整理操作草稿。請核對下方確認卡，按下同意後才會寫入。", "en": "The draft is ready. Review the confirmation card; changes are written only after your approval.", "th": "เตรียมฉบับร่างแล้ว โปรดตรวจสอบบัตรยืนยัน ระบบจะบันทึกเมื่อคุณอนุมัติเท่านั้น"}.get(locale, "已整理操作草稿。請核對確認卡。")
     empty_text = {"zh-TW": "請補充要操作的目標與內容。", "en": "Please provide the record you want to work on and the changes you need.", "th": "โปรดระบุรายการที่ต้องการดำเนินการและรายละเอียดที่ต้องการเปลี่ยนแปลง"}.get(locale, "請補充要操作的目標與內容。")
     exhausted_text = {"zh-TW": "需要更多資訊才能確定目標，請提供設備、工單或排程編號。", "en": "Please provide the machine, work order or schedule ID so I can identify the correct record.", "th": "โปรดระบุเครื่องจักร ใบสั่งผลิต หรือรหัสแผนการผลิต เพื่อระบุรายการที่ถูกต้อง"}.get(locale, "需要更多資訊才能確定目標，請提供設備、工單或排程編號。")
@@ -181,10 +185,14 @@ def respond(conversation, state, store, query_fn=None, prepare_fn=None, draft_fn
             return {"content": response.output_text or empty_text, "data": data, "knowledge": knowledge}
         inputs.extend(item.model_dump(exclude_none=True) for item in response.output)
         for call in calls:
+            if authorize_fn:
+                authorize_fn()
             try:
                 args = without_nulls(json.loads(call.arguments))
             except (ValueError, TypeError):
                 raise HTTPException(502, "模型工具參數格式不符，未執行寫入")
+            if call.name not in {tool["name"] for tool in tools}:
+                raise HTTPException(502, "模型提出未允許的工具，已阻擋")
             if call.name == "query_workspace":
                 try:
                     data = query_fn(args) if query_fn else query(state, module, args)

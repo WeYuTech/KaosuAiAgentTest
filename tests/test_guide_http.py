@@ -1,6 +1,13 @@
 """以公開 HTTP 驗證持久化引導草稿；不呼叫付費模型。"""
 from fastapi.testclient import TestClient
-from app.main import create_app
+from app.main import create_app as _create_app
+
+
+def create_app(*args, **kwargs):
+    """既有業務回歸固定為修改意圖，分類器由 Issue27 的獨立測試驗證。"""
+    kwargs.setdefault("intent_classifier", lambda _: {"intent": "change"})
+    return _create_app(*args, **kwargs)
+
 import pytest
 
 

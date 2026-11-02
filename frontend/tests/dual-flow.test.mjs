@@ -1,0 +1,55 @@
+import {test,after,afterEach} from 'node:test';
+import assert from 'node:assert/strict';
+import {Window} from 'happy-dom';
+const window=new Window({url:'http://localhost/'});
+for(const key of ['window','document','navigator','HTMLElement','HTMLFormElement','HTMLSelectElement','HTMLInputElement','HTMLTextAreaElement','Node','Element','DocumentFragment','MutationObserver','ResizeObserver','NodeFilter','CustomEvent','Event','KeyboardEvent','MouseEvent','PointerEvent','FocusEvent','localStorage','sessionStorage','getComputedStyle','requestAnimationFrame','cancelAnimationFrame'])Object.defineProperty(globalThis,key,{configurable:true,value:['getComputedStyle','requestAnimationFrame','cancelAnimationFrame'].includes(key)?window[key].bind(window):window[key]});
+globalThis.IS_REACT_ACT_ENVIRONMENT=true;
+const {createElement:h,act,useState,useRef}=await import('react');const {createRoot}=await import('react-dom/client');
+const {createServer}=await import('vite');const server=await createServer({server:{middlewareMode:true,hmr:false,ws:false},appType:'custom'});
+const {GuidedFlow}=await server.ssrLoadModule('/src/GuidedFlow.tsx');
+const {useOperationMode,readOperationMode,operationModeKey}=await server.ssrLoadModule('/src/operation-mode.ts');
+const {ApiError}=await server.ssrLoadModule('/src/api.ts');
+await server.close();after(()=>window.happyDOM.abort());
+const noop=()=>{};
+function mount(){const host=document.createElement('div');host.id='mes-ai-chat-root';document.body.append(host);return {host,root:createRoot(host)};}
+const tick=()=>new Promise(r=>setTimeout(r,720));
+const inputValue=(input,text)=>{Object.getOwnPropertyDescriptor(window.HTMLInputElement.prototype,'value').set.call(input,text);input.dispatchEvent(new Event('input',{bubbles:true}));};
+
+test('一般偏好依可信身分及環境隔離，忙碌採最後選擇且其他分頁不強制切換',async()=>{
+ const {host,root}=mount();let mode;function Harness({actor='甲',env='simulation',busy=false,epoch='a'}){mode=useOperationMode(actor,env,epoch,busy);return h('input',{defaultValue:'原輸入'});}
+ await act(async()=>root.render(h(Harness,{})));const input=host.firstChild;assert.equal(mode.mode,'chat-sheet');
+ await act(async()=>mode.choose('step-wizard'));assert.equal(mode.mode,'step-wizard');assert.ok(input===host.firstChild);
+ await act(async()=>root.render(h(Harness,{busy:true})));await act(async()=>mode.choose('chat-sheet'));assert.equal(mode.deferred,true);assert.equal(mode.mode,'step-wizard');
+ await act(async()=>mode.choose('step-wizard'));await act(async()=>mode.choose('chat-sheet'));await act(async()=>root.render(h(Harness,{})));assert.equal(mode.mode,'chat-sheet');
+ await act(async()=>mode.choose('step-wizard'));await act(async()=>root.render(h(Harness,{actor:'乙'})));assert.equal(mode.mode,'chat-sheet');
+ await act(async()=>root.render(h(Harness,{env:'live'})));assert.equal(mode.mode,'chat-sheet');
+ await act(async()=>root.render(h(Harness,{})));assert.equal(mode.mode,'step-wizard');
+ window.dispatchEvent(new window.StorageEvent('storage',{key:operationModeKey('甲','simulation'),newValue:'{"version":1,"mode":"chat-sheet"}'}));assert.equal(mode.mode,'step-wizard');
+ assert.equal(readOperationMode({getItem:()=>'{broken'},'x'),'chat-sheet');assert.equal(readOperationMode({getItem:()=>{throw Error('blocked')}},'x'),'chat-sheet');
+ await act(async()=>root.unmount());host.remove();
+});
+
+test('單一 Guide 保留最後字元與無效輸入，模式切換零 mutation，失敗後不採用舊值',async()=>{
+ const {host,root}=mount();let serverGuide={version:1,action:'report.add',args:{execution_id:'2001',ok:120,defects:[]},step:'details',missing:[],ready:true};const calls=[];
+ const request=async(path,body)=>{calls.push({path,body});if(body){if(typeof body.args.ok==='string')throw new ApiError('數量必須是整數',422);serverGuide={...serverGuide,version:serverGuide.version+1,args:body.args};}return structuredClone(serverGuide);};
+ const props={apiRequest:request,conversation:{id:'a',messages:[],module:'report'},module:'report',workspace:{records:[{WIP_OPI_WDOEACICO_HIST_SID:'2001',WO:'WO-A',EQP_NO:'MC37'}],catalogs:{defect_reasons:[]}},selected:null,signal:0,proposal:null,status:'',disabled:false,date:null,onReply:noop,onAudit:noop,onHome:noop};
+ await act(async()=>root.render(h(GuidedFlow,{...props,presentation:'chat-sheet'})));const section=host.querySelector('.guided-flow');
+ const field=host.querySelector('#guide-ok');await act(async()=>inputValue(field,'125'));
+ const before=calls.filter(c=>c.body).length;
+ await act(async()=>root.render(h(GuidedFlow,{...props,presentation:'step-wizard'})));assert.ok(section===host.querySelector('.guided-flow'));assert.equal(host.querySelector('#guide-ok').value,'125');assert.equal(calls.filter(c=>c.body).length,before);
+ await act(tick);assert.equal(serverGuide.args.ok,125);assert.equal(calls.filter(c=>c.body).length,before+1);
+ await act(async()=>inputValue(host.querySelector('#guide-ok'),'1.'));await act(async()=>root.render(h(GuidedFlow,{...props,presentation:'chat-sheet'})));assert.equal(host.querySelector('#guide-ok').value,'1.');await act(tick);assert.ok(host.textContent.includes('數量必須是整數'));
+ await act(async()=>root.render(h(GuidedFlow,{...props,presentation:'step-wizard'})));assert.equal(host.querySelector('#guide-ok').value,'1.');assert.equal(serverGuide.args.ok,125);
+ await act(async()=>root.unmount());host.remove();
+});
+
+test('pending 返回修改只是呈現，切換模式不重新準備確認卡',async()=>{
+ const {host,root}=mount();const calls=[];const proposal={id:'p',digest:'same',status:'pending',args:{execution_id:'2001',ok:120,defects:[]}};
+ const request=async(path,body)=>{calls.push({path,body});return {version:2,action:'report.add',args:proposal.args,step:'review',missing:[],ready:true,proposal};};
+ const props={apiRequest:request,conversation:{id:'a',messages:[],module:'report'},module:'report',workspace:{records:[],catalogs:{}},selected:null,signal:0,proposal,status:'',disabled:false,date:null,onReply:noop,onAudit:noop,onHome:noop};
+ await act(async()=>root.render(h(GuidedFlow,{...props,presentation:'chat-sheet'})));
+ await act(async()=>[...host.querySelectorAll('button')].find(b=>b.textContent.includes('修改資料')).click());assert.equal(host.querySelector('#guide-ok').value,'120');
+ await act(async()=>root.render(h(GuidedFlow,{...props,presentation:'step-wizard'})));await act(tick);assert.equal(calls.filter(c=>c.body).length,0);assert.equal(host.querySelector('#guide-ok').value,'120');
+ await act(async()=>root.unmount());host.remove();
+});
+

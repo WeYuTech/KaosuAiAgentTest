@@ -3,7 +3,7 @@ export type Module = 'schedule' | 'report' | 'mold';
 export type Identity = 'planner' | 'operator' | 'technician' | 'supervisor';
 export type Row = Record<string, unknown>;
 export interface Session { actor: { id: string; name: string; roles: string[] }; mode: string }
-export interface Message { role: string; content: string; proposal?: Proposal | null }
+export interface Message { data?:unknown; role: string; content: string; proposal?: Proposal | null }
 export interface Change { table: string; key: unknown; field: string; before: unknown; after: unknown }
 export interface Proposal { local_rejection?: boolean; id: string; digest: string; summary: string; changes: Change[]; expires_at: string; action: string; args: Row; status?: string; independent_confirmation?: boolean; writes_enabled?: boolean; business_timezone?: string; time_policy?: string; new_id_policy?: string; preview?: { time_policy?: string; new_id_policy?: string }; target?: { equipment?: string; work_order?: string; schedule_id?: string; execution_id?: string; report_id?: string; affected_orders?: unknown[]; schedule_details?: Row[] } }
 export interface Conversation { id: string; module: Module; messages: Message[]; locale?: string; actor_id?: string; title?: string; is_archived?: boolean; is_deleted?: boolean; metadata_version?: number }

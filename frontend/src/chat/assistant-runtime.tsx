@@ -1,4 +1,4 @@
-import { useEffect, useRef, type ReactNode } from 'react';
+import { useEffect, useRef, useState, type ReactNode } from 'react';
 import { AssistantRuntimeProvider, useExternalStoreRuntime, type ExternalStoreAdapter, type ThreadMessageLike, type AppendMessage } from '@assistant-ui/react';
 import type { ChatEntry } from '../ConversationHistory';
 import type {PresentedMessage} from './message-presentation';
@@ -52,14 +52,15 @@ export function createAssistantAdapter(state: AssistantProjection, latest: () =>
 export function MesAssistantProvider({state, children}: {state: AssistantProjection; children: ReactNode}) {
   const current = useRef(state); current.current = state;
   const sending = useRef(false);
+  const [sendEpoch,setSendEpoch]=useState(0);
   const runtime = useExternalStoreRuntime(createAssistantAdapter(state, () => current.current, async action => {
     if (sending.current) return;
     sending.current = true;
-    try { await action(); } finally { sending.current = false; }
+    try { await action(); } finally { sending.current = false; setSendEpoch(value=>value+1); }
   }));
   useEffect(() => {
     const composer = runtime.thread.composer;
     if (composer.getState().text !== state.draft) composer.setText(state.draft);
-  }, [runtime, state.draft, state.conversationId]);
+  }, [runtime, state.draft, state.conversationId, sendEpoch]);
   return <AssistantRuntimeProvider runtime={runtime}>{children}</AssistantRuntimeProvider>;
 }

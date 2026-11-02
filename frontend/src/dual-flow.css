@@ -1,0 +1,57 @@
+@layer components {
+.assistant-main {container:dual-workspace / inline-size;}
+.dual-flow {display:grid!important;grid-template-columns:minmax(280px,1fr) minmax(360px,1fr);position:relative;min-height:0;overflow:auto;gap:0;}
+.dual-flow>.chat-layout {min-width:0;min-height:0;}
+.dual-flow>.operation-primary {min-width:0;min-height:0;overflow:auto;border-left:1px solid var(--border);padding:20px;background:var(--background);font-size:14px;}
+.operation-primary>header {display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:8px;margin-bottom:16px;}
+.operation-primary>header h2 {font-size:18px;margin:0;}
+.operation-primary>header span {font-size:13px;color:var(--muted-foreground);}
+.dual-flow .guided-flow {padding:0;border:0;background:transparent;box-shadow:none;font-size:14px;margin:0;}
+.dual-flow .guided-flow h2 {font-size:18px;}
+.dual-flow .guide-phase {margin-bottom:16px;font-size:14px;}
+.dual-flow .guide-body {padding:0;}
+.dual-flow .guide-fields {gap:12px;}
+.dual-flow .guide-field {font-size:14px;gap:6px;}
+.dual-flow .guide-record {padding:12px;border-radius:8px;}
+#mes-ai-chat-root .dual-flow .guide-field :is(input,select),#mes-ai-chat-root .dual-flow .guide-navigation button {min-height:40px;font-size:14px;}
+.dual-flow>.operation-pane {position:absolute;inset:0;background:var(--background);z-index:20;width:auto;max-width:none;}
+.dual-flow.step-wizard {grid-template-columns:minmax(0,1fr);grid-template-rows:minmax(180px,1fr) auto;}
+.dual-flow.step-wizard>.operation-primary {grid-row:1;max-width:100%;border-left:0;padding:24px clamp(16px,5%,64px);}
+.dual-flow.step-wizard>.chat-layout {grid-row:2;max-height:240px;border-top:1px solid var(--border);}
+.dual-flow.step-wizard .conversation-scroll {max-height:100px;}
+.dual-flow .guide-phase,.dual-flow .guide-body {animation:dual-enter var(--aui-duration-normal,160ms) ease-out;}
+.operation-mode-option {display:flex;align-items:flex-start;gap:12px;padding:14px 0;cursor:pointer;}
+.operation-mode-option span {display:grid;gap:6px;}
+.operation-mode-option small {font-size:14px;color:var(--muted-foreground);}
+@container dual-workspace (max-width:760px) {
+  .dual-flow {grid-template-columns:minmax(0,1fr);grid-template-rows:auto auto;overflow:auto;}
+  .dual-flow>.chat-layout {min-height:180px;max-height:300px;}
+  .dual-flow>.operation-primary {overflow:visible;border-left:0;border-top:1px solid var(--border);padding:16px;}
+  .dual-flow.step-wizard>.operation-primary {padding:16px;}
+}
+.dual-flow #missing-fields {background:transparent;border:0;padding:0;margin:8px 0 16px;font-size:13px;color:var(--muted-foreground);}
+.dual-flow #missing-fields ul {display:flex;flex-wrap:wrap;gap:4px 12px;margin:4px 0;}
+.dual-flow #missing-fields button {padding:2px 0;min-height:24px;font-size:13px;}
+.dual-flow .guide-body>form {display:grid;gap:12px;}
+.dual-flow .guide-body form h2 {margin:4px 0;}
+.dual-flow .sheet-target {display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;padding:12px 0;}
+.dual-flow .guide-body fieldset {padding:8px 0;border:0;margin:0;}
+.dual-flow:has(.guide-choosing)>.operation-primary {grid-column:1/-1;grid-row:1;}
+.dual-flow:has(.guide-choosing)>.chat-layout {display:none;}
+.candidate-dialog {width:min(800px,calc(100vw - 24px));}
+.candidate-record {border:1px solid var(--border);border-radius:8px;padding:12px;min-width:0;}
+.candidate-option {display:flex;align-items:flex-start;gap:12px;cursor:pointer;font-size:14px;}
+.candidate-option>span {display:grid;gap:4px;min-width:0;}
+.candidate-record details {margin-top:8px;font-size:13px;}
+.candidate-record summary {cursor:pointer;color:var(--muted-foreground);}
+.candidate-apply {position:sticky;bottom:0;display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between;padding:12px;background:var(--background);border-top:1px solid var(--border);z-index:1;}
+.candidate-search {display:flex;gap:8px;}
+.candidate-search input {flex:1;min-width:0;}
+.candidate-results {display:grid;gap:8px;}
+.candidate-trigger {justify-content:space-between;text-align:left;}
+.entry-transcript {max-height:35vh;overflow:auto;font-size:14px;}
+.entry-message {white-space:pre-wrap;line-height:1.7;margin:12px 0;}
+.entry-message.user {font-weight:600;}
+@keyframes dual-enter {from{opacity:.8;transform:translateY(3px)}to{opacity:1;transform:none}}
+@media(prefers-reduced-motion:reduce){.dual-flow .guide-phase,.dual-flow .guide-body{animation:none;}}
+}
