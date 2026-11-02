@@ -1,0 +1,154 @@
+{
+  "commit": "43fab233567813ccae6931b76a05687d27048fc0",
+  "scope": "Isolated browser fixture with verbatim styles.css, motion.css (tokens embedded), dual-flow.css; no full Tailwind/PostCSS build and no production session",
+  "samples": [
+    {
+      "mode": "no-preference",
+      "elapsed_ms": 240,
+      "first": {
+        "#working svg": {
+          "animationName": "spin",
+          "animationDuration": "1s",
+          "animationPlayState": "running",
+          "animationIterationCount": "infinite",
+          "transform": "matrix(0.743194, 0.669076, -0.669076, 0.743194, 0, 0)",
+          "animationCount": 1
+        },
+        "#query svg": {
+          "animationName": "none",
+          "animationDuration": "0s",
+          "animationPlayState": "running",
+          "animationIterationCount": "1",
+          "transform": "none",
+          "animationCount": 0
+        },
+        "#entry svg": {
+          "animationName": "none",
+          "animationDuration": "0s",
+          "animationPlayState": "running",
+          "animationIterationCount": "1",
+          "transform": "none",
+          "animationCount": 0
+        },
+        ".guide-body": {
+          "animationName": "none",
+          "animationDuration": "0s",
+          "animationPlayState": "running",
+          "animationIterationCount": "1",
+          "transform": "none",
+          "animationCount": 0
+        }
+      },
+      "second": {
+        "#working svg": {
+          "animationName": "spin",
+          "animationDuration": "1s",
+          "animationPlayState": "running",
+          "animationIterationCount": "infinite",
+          "transform": "matrix(-0.669048, 0.743219, -0.743219, -0.669048, 0, 0)",
+          "animationCount": 1
+        },
+        "#query svg": {
+          "animationName": "none",
+          "animationDuration": "0s",
+          "animationPlayState": "running",
+          "animationIterationCount": "1",
+          "transform": "none",
+          "animationCount": 0
+        },
+        "#entry svg": {
+          "animationName": "none",
+          "animationDuration": "0s",
+          "animationPlayState": "running",
+          "animationIterationCount": "1",
+          "transform": "none",
+          "animationCount": 0
+        },
+        ".guide-body": {
+          "animationName": "none",
+          "animationDuration": "0s",
+          "animationPlayState": "running",
+          "animationIterationCount": "1",
+          "transform": "none",
+          "animationCount": 0
+        }
+      },
+      "spinnerMoved": true,
+      "queryMoved": false
+    },
+    {
+      "mode": "reduce",
+      "elapsed_ms": 240,
+      "first": {
+        "#working svg": {
+          "animationName": "none",
+          "animationDuration": "0s",
+          "animationPlayState": "running",
+          "animationIterationCount": "1",
+          "transform": "none",
+          "animationCount": 0
+        },
+        "#query svg": {
+          "animationName": "none",
+          "animationDuration": "0s",
+          "animationPlayState": "running",
+          "animationIterationCount": "1",
+          "transform": "none",
+          "animationCount": 0
+        },
+        "#entry svg": {
+          "animationName": "none",
+          "animationDuration": "0s",
+          "animationPlayState": "running",
+          "animationIterationCount": "1",
+          "transform": "none",
+          "animationCount": 0
+        },
+        ".guide-body": {
+          "animationName": "none",
+          "animationDuration": "0s",
+          "animationPlayState": "running",
+          "animationIterationCount": "1",
+          "transform": "none",
+          "animationCount": 0
+        }
+      },
+      "second": {
+        "#working svg": {
+          "animationName": "none",
+          "animationDuration": "0s",
+          "animationPlayState": "running",
+          "animationIterationCount": "1",
+          "transform": "none",
+          "animationCount": 0
+        },
+        "#query svg": {
+          "animationName": "none",
+          "animationDuration": "0s",
+          "animationPlayState": "running",
+          "animationIterationCount": "1",
+          "transform": "none",
+          "animationCount": 0
+        },
+        "#entry svg": {
+          "animationName": "none",
+          "animationDuration": "0s",
+          "animationPlayState": "running",
+          "animationIterationCount": "1",
+          "transform": "none",
+          "animationCount": 0
+        },
+        ".guide-body": {
+          "animationName": "none",
+          "animationDuration": "0s",
+          "animationPlayState": "running",
+          "animationIterationCount": "1",
+          "transform": "none",
+          "animationCount": 0
+        }
+      },
+      "spinnerMoved": false,
+      "queryMoved": false
+    }
+  ]
+}

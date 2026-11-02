@@ -1,0 +1,167 @@
+{
+  "scope": "Reference prototype only; no actual MES, API persistence or production build verification",
+  "source": "/workspace/scratch/a81174739f93/uiux-reference-20261102/reference.html",
+  "sha256": "af399cbab4becdd8280dee1d666c36e0afd8686673cb643effa99ebffe78a8b9",
+  "scenes": 80,
+  "errors": [],
+  "fixedFailures": [
+    "W09 unknown composer/new-operation bypass",
+    "F06 pure explanation replayed whole work area",
+    "U02 mode preference replaced submission timer",
+    "Q08 third-row detail/apply used first row"
+  ],
+  "checks": [
+    {
+      "name": "H01 first question leaves home",
+      "pass": true,
+      "scene": "capabilities"
+    },
+    {
+      "name": "Q01 normal spinner changes at four sample times",
+      "pass": true,
+      "samples": [
+        {
+          "now": 201.30000000074506,
+          "name": "ux-spin",
+          "duration": "0.85s",
+          "playState": "running",
+          "transform": "matrix(1, 0, 0, 1, 0, 0)",
+          "currentTime": 0
+        },
+        {
+          "now": 367.80000000074506,
+          "name": "ux-spin",
+          "duration": "0.85s",
+          "playState": "running",
+          "transform": "matrix(0.445249, 0.895407, -0.895407, 0.445249, 0, 0)",
+          "currentTime": 150.07399999995508
+        },
+        {
+          "now": 611.9000000022352,
+          "name": "ux-spin",
+          "duration": "0.85s",
+          "playState": "running",
+          "transform": "matrix(-0.98306, 0.183284, -0.183284, -0.98306, 0, 0)",
+          "currentTime": 400.063999999955
+        },
+        {
+          "now": 881.6000000014901,
+          "name": "ux-spin",
+          "duration": "0.85s",
+          "playState": "running",
+          "transform": "matrix(0.214318, -0.976764, 0.976764, 0.214318, 0, 0)",
+          "currentTime": 666.719999999955
+        }
+      ]
+    },
+    {
+      "name": "Q07 stopped query has no late results",
+      "pass": true
+    },
+    {
+      "name": "Q08 third-row detail applies third row",
+      "pass": true,
+      "resultIndex": 2,
+      "target": "WO-261102-0384"
+    },
+    {
+      "name": "P04 unique composer and tentative selection preserved",
+      "pass": true,
+      "composers": 1,
+      "picked": "WO-261102-0382"
+    },
+    {
+      "name": "P03 radio focus survives selection render",
+      "pass": true,
+      "focus": "WO-261102-0382",
+      "picked": "WO-261102-0382"
+    },
+    {
+      "name": "F02 mode switch preserves quantity, defects and composer draft",
+      "pass": true,
+      "mode": "wizard",
+      "good": "125",
+      "draft": "尚未送出的補充"
+    },
+    {
+      "name": "F06 unchanged navigation preserves pending",
+      "pass": true
+    },
+    {
+      "name": "F06 explanation preserves review without replaying workspace",
+      "pass": true,
+      "phase": "review",
+      "pending": true,
+      "replay": {
+        "name": "none",
+        "animations": 0
+      }
+    },
+    {
+      "name": "W09 unknown blocks composer and new operation",
+      "pass": true,
+      "composerDisabled": true,
+      "substate": "unknown",
+      "pending": true,
+      "good": 125
+    },
+    {
+      "name": "W09 readonly reconciliation reaches demo receipt",
+      "pass": true
+    },
+    {
+      "name": "U02 deferred mode does not replace active submission timer",
+      "pass": true,
+      "deferred": {
+        "substate": "submitting",
+        "mode": "sheet",
+        "pendingMode": "wizard"
+      },
+      "result": {
+        "substate": "success",
+        "mode": "wizard",
+        "pendingMode": "",
+        "pending": false,
+        "busy": false
+      }
+    },
+    {
+      "name": "U03 actual setting diff and saved baseline",
+      "pass": true,
+      "reviewInitiallyDisabled": true,
+      "diff": "核對設定變更\n推理強度\n低\n高\n返回修改\n儲存",
+      "oldValues": [
+        "低"
+      ],
+      "saved": "high"
+    },
+    {
+      "name": "B06 cycle preserved through mode switch and review",
+      "pass": true,
+      "cycleInput": "45",
+      "mode": "wizard",
+      "phase": "review",
+      "cycleRow": "週期\n45 秒"
+    },
+    {
+      "name": "Reduced motion keeps status without animation",
+      "pass": true,
+      "samples": [
+        {
+          "name": "none",
+          "transform": "none",
+          "animations": 0,
+          "reduced": true,
+          "status": "正在查詢 MC37 的工單…"
+        },
+        {
+          "name": "none",
+          "transform": "none",
+          "animations": 0,
+          "reduced": true,
+          "status": "正在查詢 MC37 的工單…"
+        }
+      ]
+    }
+  ]
+}

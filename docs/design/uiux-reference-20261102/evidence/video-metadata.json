@@ -1,0 +1,23 @@
+{
+  "scope": "Reference prototype only, no production MES",
+  "source": "/workspace/scratch/a81174739f93/uiux-reference-20261102/reference.html",
+  "sha256": "af399cbab4becdd8280dee1d666c36e0afd8686673cb643effa99ebffe78a8b9",
+  "recordingSpeed": "normal; original timestamps preserved; no retiming",
+  "viewport": {
+    "width": 1366,
+    "height": 840
+  },
+  "sequence": [
+    "home sends query, continuous spinner",
+    "stop query",
+    "sheet edit → settings → wizard preserves values",
+    "wizard review",
+    "normal spinner → prefers-reduced-motion reduce, readable status retained"
+  ],
+  "duration_seconds": 7.88,
+  "bytes": 270903,
+  "codec": "VP9",
+  "fps": 25,
+  "video_sha256": "8467fc3bf2e0be478a3928801a3b68b73c2d8c18884da290da8eba6aa16e575d",
+  "compression": "VP9 CRF 38; source resolution, frame rate and timestamps retained; audio absent"
+}

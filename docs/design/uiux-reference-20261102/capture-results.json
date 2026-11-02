@@ -1,0 +1,338 @@
+{
+  "kind": "reference-only",
+  "scenes": 80,
+  "errors": [],
+  "requests": [],
+  "snapshots": [
+    {
+      "key": "home",
+      "file": "evidence/home.png",
+      "viewport": {
+        "width": 1366,
+        "height": 900
+      },
+      "app": {
+        "x": 16,
+        "y": 62,
+        "width": 1334,
+        "height": 744
+      },
+      "theme": "dark"
+    },
+    {
+      "key": "capabilities",
+      "file": "evidence/capabilities.png",
+      "viewport": {
+        "width": 1366,
+        "height": 900
+      },
+      "app": {
+        "x": 16,
+        "y": 62,
+        "width": 1334,
+        "height": 744
+      },
+      "theme": "dark"
+    },
+    {
+      "key": "loading",
+      "file": "evidence/loading.png",
+      "viewport": {
+        "width": 1366,
+        "height": 900
+      },
+      "app": {
+        "x": 16,
+        "y": 62,
+        "width": 1334,
+        "height": 744
+      },
+      "theme": "dark"
+    },
+    {
+      "key": "results",
+      "file": "evidence/results.png",
+      "viewport": {
+        "width": 1366,
+        "height": 900
+      },
+      "app": {
+        "x": 16,
+        "y": 62,
+        "width": 1334,
+        "height": 744
+      },
+      "theme": "dark"
+    },
+    {
+      "key": "sheet-edit",
+      "file": "evidence/sheet-edit.png",
+      "viewport": {
+        "width": 1366,
+        "height": 900
+      },
+      "app": {
+        "x": 16,
+        "y": 62,
+        "width": 1334,
+        "height": 744
+      },
+      "theme": "dark"
+    },
+    {
+      "key": "sheet-review",
+      "file": "evidence/sheet-review.png",
+      "viewport": {
+        "width": 1366,
+        "height": 900
+      },
+      "app": {
+        "x": 16,
+        "y": 62,
+        "width": 1334,
+        "height": 744
+      },
+      "theme": "dark"
+    },
+    {
+      "key": "wizard-edit",
+      "file": "evidence/wizard-edit.png",
+      "viewport": {
+        "width": 1366,
+        "height": 900
+      },
+      "app": {
+        "x": 16,
+        "y": 62,
+        "width": 1334,
+        "height": 744
+      },
+      "theme": "dark"
+    },
+    {
+      "key": "wizard-review",
+      "file": "evidence/wizard-review.png",
+      "viewport": {
+        "width": 1366,
+        "height": 900
+      },
+      "app": {
+        "x": 16,
+        "y": 62,
+        "width": 1334,
+        "height": 744
+      },
+      "theme": "dark"
+    },
+    {
+      "key": "picker-selected",
+      "file": "evidence/picker-selected.png",
+      "viewport": {
+        "width": 1366,
+        "height": 900
+      },
+      "app": {
+        "x": 16,
+        "y": 62,
+        "width": 1334,
+        "height": 744
+      },
+      "theme": "dark"
+    },
+    {
+      "key": "picker-ai",
+      "file": "evidence/picker-ai.png",
+      "viewport": {
+        "width": 1366,
+        "height": 900
+      },
+      "app": {
+        "x": 16,
+        "y": 62,
+        "width": 1334,
+        "height": 744
+      },
+      "theme": "dark"
+    },
+    {
+      "key": "schedule-add",
+      "file": "evidence/schedule-add.png",
+      "viewport": {
+        "width": 1366,
+        "height": 900
+      },
+      "app": {
+        "x": 16,
+        "y": 62,
+        "width": 1334,
+        "height": 744
+      },
+      "theme": "dark"
+    },
+    {
+      "key": "mold-down",
+      "file": "evidence/mold-down.png",
+      "viewport": {
+        "width": 1366,
+        "height": 900
+      },
+      "app": {
+        "x": 16,
+        "y": 62,
+        "width": 1334,
+        "height": 744
+      },
+      "theme": "dark"
+    },
+    {
+      "key": "unknown",
+      "file": "evidence/unknown.png",
+      "viewport": {
+        "width": 1366,
+        "height": 900
+      },
+      "app": {
+        "x": 16,
+        "y": 62,
+        "width": 1334,
+        "height": 744
+      },
+      "theme": "dark"
+    },
+    {
+      "key": "preferences",
+      "file": "evidence/preferences.png",
+      "viewport": {
+        "width": 1366,
+        "height": 900
+      },
+      "app": {
+        "x": 16,
+        "y": 62,
+        "width": 1334,
+        "height": 744
+      },
+      "theme": "dark"
+    },
+    {
+      "key": "delete-chat",
+      "file": "evidence/delete-chat.png",
+      "viewport": {
+        "width": 1366,
+        "height": 900
+      },
+      "app": {
+        "x": 16,
+        "y": 62,
+        "width": 1334,
+        "height": 744
+      },
+      "theme": "dark"
+    },
+    {
+      "key": "schedule-report-create",
+      "file": "evidence/schedule-report-create.png",
+      "viewport": {
+        "width": 1366,
+        "height": 900
+      },
+      "app": {
+        "x": 16,
+        "y": 62,
+        "width": 1334,
+        "height": 744
+      },
+      "theme": "dark"
+    },
+    {
+      "key": "sheet-edit",
+      "file": "evidence/sheet-edit-light.png",
+      "viewport": {
+        "width": 1366,
+        "height": 900
+      },
+      "app": {
+        "x": 16,
+        "y": 62,
+        "width": 1334,
+        "height": 744
+      },
+      "theme": "light"
+    },
+    {
+      "key": "home",
+      "file": "evidence/home-390.png",
+      "viewport": {
+        "width": 390,
+        "height": 1000
+      },
+      "app": {
+        "x": 8,
+        "y": 135.25,
+        "width": 374,
+        "height": 810
+      },
+      "theme": "dark"
+    },
+    {
+      "key": "sheet-edit",
+      "file": "evidence/sheet-edit-390.png",
+      "viewport": {
+        "width": 390,
+        "height": 1000
+      },
+      "app": {
+        "x": 8,
+        "y": 135.25,
+        "width": 374,
+        "height": 810
+      },
+      "theme": "dark"
+    },
+    {
+      "key": "picker-selected",
+      "file": "evidence/picker-selected-390.png",
+      "viewport": {
+        "width": 390,
+        "height": 1000
+      },
+      "app": {
+        "x": 8,
+        "y": 135.25,
+        "width": 374,
+        "height": 810
+      },
+      "theme": "dark"
+    },
+    {
+      "key": "wizard-review",
+      "file": "evidence/wizard-review-390.png",
+      "viewport": {
+        "width": 390,
+        "height": 1000
+      },
+      "app": {
+        "x": 8,
+        "y": 135.25,
+        "width": 374,
+        "height": 810
+      },
+      "theme": "dark"
+    },
+    {
+      "key": "delete-chat",
+      "file": "evidence/delete-chat-390.png",
+      "viewport": {
+        "width": 390,
+        "height": 1000
+      },
+      "app": {
+        "x": 8,
+        "y": 135.25,
+        "width": 374,
+        "height": 810
+      },
+      "theme": "dark"
+    }
+  ]
+}

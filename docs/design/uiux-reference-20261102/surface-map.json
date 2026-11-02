@@ -1,0 +1,292 @@
+{
+  "source_product_sha": "43fab233567813ccae6931b76a05687d27048fc0",
+  "surfaces": [
+    {
+      "surface_id": "S01",
+      "scene_ids": [
+        "H01"
+      ],
+      "required_product_overlay": null
+    },
+    {
+      "surface_id": "S02",
+      "scene_ids": [
+        "H02",
+        "H03",
+        "H04"
+      ],
+      "required_product_overlay": null
+    },
+    {
+      "surface_id": "S03",
+      "scene_ids": [
+        "Q01",
+        "Q02",
+        "Q07",
+        "C01",
+        "C02"
+      ],
+      "required_product_overlay": null
+    },
+    {
+      "surface_id": "S04",
+      "scene_ids": [
+        "H02",
+        "H03",
+        "H05",
+        "F01",
+        "F04",
+        "B06",
+        "B08"
+      ],
+      "required_product_overlay": null
+    },
+    {
+      "surface_id": "S05",
+      "scene_ids": [
+        "F01",
+        "F02",
+        "F03"
+      ],
+      "required_product_overlay": null
+    },
+    {
+      "surface_id": "S06",
+      "scene_ids": [
+        "F04",
+        "F05",
+        "F06"
+      ],
+      "required_product_overlay": null
+    },
+    {
+      "surface_id": "S07",
+      "scene_ids": [
+        "P01",
+        "P02",
+        "P03",
+        "P06",
+        "P07",
+        "P08"
+      ],
+      "required_product_overlay": null
+    },
+    {
+      "surface_id": "S08",
+      "scene_ids": [
+        "P04"
+      ],
+      "required_product_overlay": null
+    },
+    {
+      "surface_id": "S09",
+      "scene_ids": [
+        "P05"
+      ],
+      "required_product_overlay": null
+    },
+    {
+      "surface_id": "S10",
+      "scene_ids": [
+        "B01",
+        "B02",
+        "B03",
+        "B04",
+        "B05"
+      ],
+      "required_product_overlay": null
+    },
+    {
+      "surface_id": "S11",
+      "scene_ids": [
+        "B06",
+        "B07"
+      ],
+      "required_product_overlay": null
+    },
+    {
+      "surface_id": "S12",
+      "scene_ids": [
+        "B08",
+        "B09",
+        "B10"
+      ],
+      "required_product_overlay": null
+    },
+    {
+      "surface_id": "S13",
+      "scene_ids": [
+        "W01",
+        "W02",
+        "W03",
+        "W04"
+      ],
+      "required_product_overlay": null
+    },
+    {
+      "surface_id": "S14",
+      "scene_ids": [
+        "F03",
+        "F06",
+        "W05",
+        "W06",
+        "W07",
+        "W08",
+        "W09",
+        "W10"
+      ],
+      "required_product_overlay": null
+    },
+    {
+      "surface_id": "S15",
+      "scene_ids": [
+        "C01",
+        "X05",
+        "W09"
+      ],
+      "required_product_overlay": null
+    },
+    {
+      "surface_id": "S16",
+      "scene_ids": [
+        "N01",
+        "N07"
+      ],
+      "required_product_overlay": null
+    },
+    {
+      "surface_id": "S17",
+      "scene_ids": [
+        "N01"
+      ],
+      "required_product_overlay": null
+    },
+    {
+      "surface_id": "S18",
+      "scene_ids": [
+        "N02",
+        "N08",
+        "N09",
+        "N10"
+      ],
+      "required_product_overlay": null
+    },
+    {
+      "surface_id": "S19",
+      "scene_ids": [
+        "N03",
+        "N04"
+      ],
+      "required_product_overlay": null
+    },
+    {
+      "surface_id": "S20",
+      "scene_ids": [
+        "N05",
+        "N06"
+      ],
+      "required_product_overlay": null
+    },
+    {
+      "surface_id": "S21",
+      "scene_ids": [
+        "U01",
+        "N01"
+      ],
+      "required_product_overlay": "既有三語五外觀及更多選單功能保留；範例主要以繁中深淺兩外觀演示"
+    },
+    {
+      "surface_id": "S22",
+      "scene_ids": [
+        "U01",
+        "U02"
+      ],
+      "required_product_overlay": null
+    },
+    {
+      "surface_id": "S23",
+      "scene_ids": [
+        "U03",
+        "U04",
+        "U05",
+        "U06",
+        "U07",
+        "U08"
+      ],
+      "required_product_overlay": null
+    },
+    {
+      "surface_id": "S24",
+      "scene_ids": [
+        "R01",
+        "R02",
+        "R03",
+        "R06"
+      ],
+      "required_product_overlay": null
+    },
+    {
+      "surface_id": "S25",
+      "scene_ids": [
+        "R04",
+        "R05"
+      ],
+      "required_product_overlay": "核對更多執行狀態 running/completed/failed/missed/interrupted，勿以未完成當作零產出"
+    },
+    {
+      "surface_id": "S26",
+      "scene_ids": [
+        "Q03",
+        "Q04",
+        "Q05",
+        "Q06",
+        "Q08",
+        "A01"
+      ],
+      "required_product_overlay": null
+    },
+    {
+      "surface_id": "S27",
+      "scene_ids": [
+        "A02",
+        "U05"
+      ],
+      "required_product_overlay": null
+    },
+    {
+      "surface_id": "S28",
+      "scene_ids": [
+        "X01",
+        "X02",
+        "X03",
+        "H05"
+      ],
+      "required_product_overlay": null
+    },
+    {
+      "surface_id": "S29",
+      "scene_ids": [
+        "N05",
+        "U07",
+        "U08",
+        "X04"
+      ],
+      "required_product_overlay": null
+    },
+    {
+      "surface_id": "S30",
+      "scene_ids": [
+        "H01",
+        "N01",
+        "F02",
+        "F05",
+        "P01"
+      ],
+      "required_product_overlay": "另測真實浮窗開關／放大還原／iframe／9宿主context／200%與三語五外觀；本套全頁範例不提供宿主 MES 頁"
+    }
+  ],
+  "excluded_dormant": [
+    "問題回報／FeedbackReview：現行唯一入口 hidden；本次不復活",
+    "DraftForm、MessageContent：未掛載路徑"
+  ]
+}

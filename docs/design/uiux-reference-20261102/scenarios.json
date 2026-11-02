@@ -1,0 +1,482 @@
+[
+  {
+    "id": "H01",
+    "group": "首頁與聊天",
+    "label": "空首頁",
+    "key": "home"
+  },
+  {
+    "id": "H02",
+    "group": "首頁與聊天",
+    "label": "能力問答",
+    "key": "capabilities"
+  },
+  {
+    "id": "H03",
+    "group": "首頁與聊天",
+    "label": "需求不明・自然追問",
+    "key": "clarify"
+  },
+  {
+    "id": "H04",
+    "group": "首頁與聊天",
+    "label": "超出範圍・友善引導",
+    "key": "unsupported"
+  },
+  {
+    "id": "H05",
+    "group": "首頁與聊天",
+    "label": "AI 未設定・人工入口",
+    "key": "unconfigured"
+  },
+  {
+    "id": "Q01",
+    "group": "查詢與回饋",
+    "label": "查詢中・連續旋轉",
+    "key": "loading"
+  },
+  {
+    "id": "Q02",
+    "group": "查詢與回饋",
+    "label": "等待較久・可以停止",
+    "key": "slow"
+  },
+  {
+    "id": "Q03",
+    "group": "查詢與回饋",
+    "label": "資料列表",
+    "key": "results"
+  },
+  {
+    "id": "Q04",
+    "group": "查詢與回饋",
+    "label": "查無資料",
+    "key": "empty"
+  },
+  {
+    "id": "Q05",
+    "group": "查詢與回饋",
+    "label": "連線失敗",
+    "key": "query-error"
+  },
+  {
+    "id": "Q06",
+    "group": "查詢與回饋",
+    "label": "資料不完整・縮小範圍",
+    "key": "partial"
+  },
+  {
+    "id": "Q07",
+    "group": "查詢與回饋",
+    "label": "已停止查詢",
+    "key": "cancelled"
+  },
+  {
+    "id": "Q08",
+    "group": "查詢與回饋",
+    "label": "資料詳細內容",
+    "key": "result-detail"
+  },
+  {
+    "id": "N01",
+    "group": "聊天管理",
+    "label": "平面清單與拖曳側欄",
+    "key": "sidebar"
+  },
+  {
+    "id": "N02",
+    "group": "聊天管理",
+    "label": "搜尋聊天",
+    "key": "search"
+  },
+  {
+    "id": "N03",
+    "group": "聊天管理",
+    "label": "封存聊天",
+    "key": "archives"
+  },
+  {
+    "id": "N04",
+    "group": "聊天管理",
+    "label": "已刪除聊天",
+    "key": "deleted"
+  },
+  {
+    "id": "N05",
+    "group": "聊天管理",
+    "label": "刪除聊天確認",
+    "key": "delete-chat"
+  },
+  {
+    "id": "N06",
+    "group": "聊天管理",
+    "label": "重新命名",
+    "key": "rename"
+  },
+  {
+    "id": "F01",
+    "group": "兩種操作模式",
+    "label": "聊天＋作業單・選擇對象",
+    "key": "sheet-empty"
+  },
+  {
+    "id": "F02",
+    "group": "兩種操作模式",
+    "label": "聊天＋作業單・填寫",
+    "key": "sheet-edit"
+  },
+  {
+    "id": "F03",
+    "group": "兩種操作模式",
+    "label": "聊天＋作業單・核對",
+    "key": "sheet-review"
+  },
+  {
+    "id": "F04",
+    "group": "兩種操作模式",
+    "label": "分步精靈・選擇對象",
+    "key": "wizard-select"
+  },
+  {
+    "id": "F05",
+    "group": "兩種操作模式",
+    "label": "分步精靈・填寫",
+    "key": "wizard-edit"
+  },
+  {
+    "id": "F06",
+    "group": "兩種操作模式",
+    "label": "分步精靈・核對",
+    "key": "wizard-review"
+  },
+  {
+    "id": "P01",
+    "group": "大量資料選取",
+    "label": "搜尋／篩選／分頁",
+    "key": "picker"
+  },
+  {
+    "id": "P02",
+    "group": "大量資料選取",
+    "label": "查看明細・不直接套用",
+    "key": "picker-detail"
+  },
+  {
+    "id": "P03",
+    "group": "大量資料選取",
+    "label": "暫選・等待帶入",
+    "key": "picker-selected"
+  },
+  {
+    "id": "P04",
+    "group": "大量資料選取",
+    "label": "選取中詢問 AI",
+    "key": "picker-ai"
+  },
+  {
+    "id": "P05",
+    "group": "大量資料選取",
+    "label": "單筆報工・返回工單",
+    "key": "report-picker"
+  },
+  {
+    "id": "B01",
+    "group": "三模組作業",
+    "label": "報工・多個不良原因",
+    "key": "report-multiple"
+  },
+  {
+    "id": "B02",
+    "group": "三模組作業",
+    "label": "報工・修改前後值",
+    "key": "report-update"
+  },
+  {
+    "id": "B03",
+    "group": "三模組作業",
+    "label": "報工・刪除單筆核對",
+    "key": "report-delete"
+  },
+  {
+    "id": "B04",
+    "group": "三模組作業",
+    "label": "整張排程完工・連動影響",
+    "key": "complete"
+  },
+  {
+    "id": "B05",
+    "group": "三模組作業",
+    "label": "模穴數調整",
+    "key": "cavities"
+  },
+  {
+    "id": "B06",
+    "group": "三模組作業",
+    "label": "排程新增・多工單",
+    "key": "schedule-add"
+  },
+  {
+    "id": "B07",
+    "group": "三模組作業",
+    "label": "排程修改・核對異動",
+    "key": "schedule-edit"
+  },
+  {
+    "id": "B08",
+    "group": "三模組作業",
+    "label": "模具・四階段操作",
+    "key": "mold-phases"
+  },
+  {
+    "id": "B09",
+    "group": "三模組作業",
+    "label": "下模完成・連動核對",
+    "key": "mold-down"
+  },
+  {
+    "id": "B10",
+    "group": "三模組作業",
+    "label": "清除模具時間・獨立確認",
+    "key": "mold-clear"
+  },
+  {
+    "id": "W01",
+    "group": "儲存與送出狀態",
+    "label": "欄位驗證",
+    "key": "validation"
+  },
+  {
+    "id": "W02",
+    "group": "儲存與送出狀態",
+    "label": "正在儲存草稿",
+    "key": "saving"
+  },
+  {
+    "id": "W03",
+    "group": "儲存與送出狀態",
+    "label": "草稿儲存失敗",
+    "key": "save-error"
+  },
+  {
+    "id": "W04",
+    "group": "儲存與送出狀態",
+    "label": "資料已變更",
+    "key": "conflict"
+  },
+  {
+    "id": "W05",
+    "group": "儲存與送出狀態",
+    "label": "核對已過期",
+    "key": "expired"
+  },
+  {
+    "id": "W06",
+    "group": "儲存與送出狀態",
+    "label": "正在送出・禁止重複",
+    "key": "submitting"
+  },
+  {
+    "id": "W07",
+    "group": "儲存與送出狀態",
+    "label": "完成回執",
+    "key": "success"
+  },
+  {
+    "id": "W08",
+    "group": "儲存與送出狀態",
+    "label": "提交被拒絕",
+    "key": "rejected"
+  },
+  {
+    "id": "W09",
+    "group": "儲存與送出狀態",
+    "label": "結果未知・僅查核",
+    "key": "unknown"
+  },
+  {
+    "id": "W10",
+    "group": "儲存與送出狀態",
+    "label": "寫入未啟用",
+    "key": "write-disabled"
+  },
+  {
+    "id": "U01",
+    "group": "設定",
+    "label": "介面設定・切換操作方式",
+    "key": "preferences"
+  },
+  {
+    "id": "U02",
+    "group": "設定",
+    "label": "忙碌時延後切換",
+    "key": "mode-busy"
+  },
+  {
+    "id": "U03",
+    "group": "設定",
+    "label": "API 設定・核對後儲存",
+    "key": "api"
+  },
+  {
+    "id": "U04",
+    "group": "設定",
+    "label": "Agent 設定",
+    "key": "agent"
+  },
+  {
+    "id": "U05",
+    "group": "設定",
+    "label": "用量額度",
+    "key": "budget"
+  },
+  {
+    "id": "U06",
+    "group": "設定",
+    "label": "API 設定・一般使用者唯讀",
+    "key": "api-readonly"
+  },
+  {
+    "id": "R01",
+    "group": "定時報告",
+    "label": "建立定時報告",
+    "key": "schedule-report-create"
+  },
+  {
+    "id": "R02",
+    "group": "定時報告",
+    "label": "我的定時報告",
+    "key": "schedule-report-list"
+  },
+  {
+    "id": "R03",
+    "group": "定時報告",
+    "label": "尚無定時報告",
+    "key": "schedule-report-empty"
+  },
+  {
+    "id": "R04",
+    "group": "定時報告",
+    "label": "執行歷史",
+    "key": "schedule-report-history"
+  },
+  {
+    "id": "R05",
+    "group": "定時報告",
+    "label": "報告詳細內容",
+    "key": "schedule-report-detail"
+  },
+  {
+    "id": "R06",
+    "group": "定時報告",
+    "label": "刪除定時報告",
+    "key": "schedule-report-delete"
+  },
+  {
+    "id": "A01",
+    "group": "紀錄與統計",
+    "label": "操作紀錄・前後差異",
+    "key": "audit"
+  },
+  {
+    "id": "A02",
+    "group": "紀錄與統計",
+    "label": "使用統計",
+    "key": "usage"
+  },
+  {
+    "id": "X01",
+    "group": "系統狀態",
+    "label": "登入已逾時",
+    "key": "session"
+  },
+  {
+    "id": "X02",
+    "group": "系統狀態",
+    "label": "權限不足",
+    "key": "permission"
+  },
+  {
+    "id": "X03",
+    "group": "系統狀態",
+    "label": "正在連線",
+    "key": "connecting"
+  },
+  {
+    "id": "N07",
+    "group": "聊天管理",
+    "label": "尚無聊天紀錄",
+    "key": "sidebar-empty"
+  },
+  {
+    "id": "N08",
+    "group": "聊天管理",
+    "label": "搜尋沒有結果",
+    "key": "history-empty"
+  },
+  {
+    "id": "N09",
+    "group": "聊天管理",
+    "label": "搜尋聊天中",
+    "key": "history-loading"
+  },
+  {
+    "id": "N10",
+    "group": "聊天管理",
+    "label": "搜尋失敗",
+    "key": "history-error"
+  },
+  {
+    "id": "P06",
+    "group": "大量資料選取",
+    "label": "候選讀取中",
+    "key": "picker-loading"
+  },
+  {
+    "id": "P07",
+    "group": "大量資料選取",
+    "label": "候選沒有結果",
+    "key": "picker-empty"
+  },
+  {
+    "id": "P08",
+    "group": "大量資料選取",
+    "label": "候選查詢失敗",
+    "key": "picker-error"
+  },
+  {
+    "id": "U07",
+    "group": "設定",
+    "label": "設定載入中",
+    "key": "settings-loading"
+  },
+  {
+    "id": "U08",
+    "group": "設定",
+    "label": "設定載入失敗",
+    "key": "settings-error"
+  },
+  {
+    "id": "C01",
+    "group": "聊天生命週期",
+    "label": "訊息送達未知",
+    "key": "message-unknown"
+  },
+  {
+    "id": "C02",
+    "group": "聊天生命週期",
+    "label": "長回覆與回到最新",
+    "key": "long-reply"
+  },
+  {
+    "id": "X04",
+    "group": "系統狀態",
+    "label": "附屬面板載入失敗",
+    "key": "panel-error"
+  },
+  {
+    "id": "X05",
+    "group": "系統狀態",
+    "label": "恢復原本待確認作業",
+    "key": "recover-operation"
+  }
+]

@@ -1,0 +1,317 @@
+{
+  "kind": "Reference-only final regression, not MES product acceptance",
+  "referenceSha256": "af399cbab4becdd8280dee1d666c36e0afd8686673cb643effa99ebffe78a8b9",
+  "sourceBytes": 137824,
+  "totalScenes": 80,
+  "checks": [
+    {
+      "name": "REF-QA01-sidebar-visible",
+      "pass": true,
+      "details": [
+        {
+          "text": "每日生產追蹤",
+          "opacity": "1",
+          "width": 184
+        },
+        {
+          "text": "本週排程調整",
+          "opacity": "1",
+          "width": 184
+        },
+        {
+          "text": "MC37 今日生產",
+          "opacity": "1",
+          "width": 184
+        },
+        {
+          "text": "新增人工報工",
+          "opacity": "1",
+          "width": 184
+        },
+        {
+          "text": "模具上下模",
+          "opacity": "1",
+          "width": 184
+        },
+        {
+          "text": "查詢昨日產量",
+          "opacity": "1",
+          "width": 184
+        },
+        {
+          "text": "排程工單確認",
+          "opacity": "1",
+          "width": 184
+        },
+        {
+          "text": "生產異常追蹤",
+          "opacity": "1",
+          "width": 184
+        },
+        {
+          "text": "本週工單進度",
+          "opacity": "1",
+          "width": 184
+        },
+        {
+          "text": "修改報工數量",
+          "opacity": "1",
+          "width": 184
+        },
+        {
+          "text": "MC38 生產資料",
+          "opacity": "1",
+          "width": 184
+        },
+        {
+          "text": "模穴數調整",
+          "opacity": "1",
+          "width": 184
+        }
+      ]
+    },
+    {
+      "name": "REF-QA06-mode-radio-focus",
+      "pass": true,
+      "details": {
+        "tag": "INPUT",
+        "mode": "wizard"
+      }
+    },
+    {
+      "name": "REF-QA06-mode-save-focus",
+      "pass": true,
+      "details": {
+        "tag": "INPUT",
+        "input": "good",
+        "mode": null
+      }
+    },
+    {
+      "name": "REF-QA06-mode-restores-draft-and-focus",
+      "pass": true,
+      "details": {
+        "focus": {
+          "tag": "INPUT",
+          "input": "good",
+          "mode": null
+        },
+        "good": "137"
+      }
+    },
+    {
+      "name": "REF-QA06-picker-focus",
+      "pass": true,
+      "details": {
+        "tag": "INPUT",
+        "pick": "WO-261102-0382",
+        "mode": null
+      }
+    },
+    {
+      "name": "REF-QA03-invalid-tentative-disabled",
+      "pass": true,
+      "details": {
+        "invalid": true,
+        "invalidText": "已選項目不在目前範圍，請重選\nWO-261102-0382",
+        "state": {
+          "scene": "picker",
+          "screen": "work",
+          "mode": "sheet",
+          "theme": "dark",
+          "phase": "edit",
+          "module": "report",
+          "action": "add",
+          "dialog": "picker",
+          "draft": "",
+          "good": 125,
+          "defects": [
+            {
+              "reason": "刮傷",
+              "quantity": 3
+            }
+          ],
+          "note": "",
+          "target": null,
+          "tentative": {
+            "id": "WO-261102-0382",
+            "equipment": "MC37",
+            "product": "P-102 外殼",
+            "status": "生產中",
+            "good": 120,
+            "defect": 3
+          },
+          "query": "",
+          "equipment": "MC38",
+          "page": 1,
+          "detail": null,
+          "askAI": true,
+          "aiAnswer": "已改查 MC38。尚未帶入作業，原草稿保持不變。",
+          "pending": false,
+          "busy": false,
+          "validation": false,
+          "approved": false,
+          "mobilePane": "task",
+          "menu": false,
+          "sideOpen": false,
+          "collapsed": false,
+          "toast": "",
+          "substate": "",
+          "reportAction": "上模開始",
+          "scheduleRows": 2,
+          "historyQuery": "",
+          "reportTitle": "每日生產摘要",
+          "reportFrequency": "daily",
+          "reportModule": "report",
+          "reportEquipment": "MC37",
+          "reportTime": "08:00",
+          "paused": false,
+          "preferenceChoice": "sheet",
+          "pendingMode": "",
+          "queryDone": false,
+          "customUser": "",
+          "customReply": "",
+          "savingText": "草稿已儲存",
+          "readonlySettings": false,
+          "reportRequest": "",
+          "filterUpdated": true,
+          "reportRecord": {
+            "id": "RPT-0382-01",
+            "good": 120,
+            "defect": 3,
+            "time": "11/02 09:10"
+          },
+          "pickerLevel": "order"
+        }
+      }
+    },
+    {
+      "name": "REF-QA03-new-valid-selection",
+      "pass": true,
+      "details": {
+        "target": {
+          "id": "WO-261102-0390",
+          "equipment": "MC38",
+          "product": "P-108 上蓋",
+          "status": "生產中",
+          "good": 230,
+          "defect": 3
+        }
+      }
+    },
+    {
+      "name": "REF-QA04-result-row-identity",
+      "pass": true,
+      "details": {
+        "detail": [
+          "WO-261102-0382P-102 外殼1203明細",
+          "WO-261102-0383P-104 底座860明細",
+          "WO-261102-0384P-108 上蓋2300明細",
+          "生產中 · 模具 M-102帶入報工人工報工：230 良品／0 不良IoT 產量：尚無資料",
+          "WO-261102-0385P-102 外殼480明細"
+        ],
+        "target": {
+          "id": "WO-261102-0384",
+          "equipment": "MC37",
+          "product": "P-108 上蓋",
+          "status": "生產中",
+          "good": 230,
+          "defect": 0
+        }
+      }
+    },
+    {
+      "name": "REF-QA05-report-select-roundtrip",
+      "pass": true,
+      "details": {
+        "frequency": "weekdays",
+        "module": "schedule"
+      }
+    },
+    {
+      "name": "REF-QA07-cleared-composer-home",
+      "pass": true,
+      "details": {
+        "after": {
+          "draft": "",
+          "visible": ""
+        },
+        "later": {
+          "draft": "",
+          "visible": ""
+        }
+      }
+    },
+    {
+      "name": "REF-QA07-cleared-composer-picker",
+      "pass": true,
+      "details": {
+        "after": {
+          "draft": "",
+          "visible": ""
+        },
+        "later": {
+          "draft": "",
+          "visible": ""
+        }
+      }
+    },
+    {
+      "name": "REF-QA02-datetime-width",
+      "pass": true,
+      "details": [
+        {
+          "width": 390,
+          "inputWidth": 332,
+          "value": "2026-11-02T08:00"
+        },
+        {
+          "width": 320,
+          "inputWidth": 262,
+          "value": "2026-11-02T08:00"
+        }
+      ]
+    },
+    {
+      "name": "desktop-1366x768-primary-visible",
+      "pass": true,
+      "details": [
+        {
+          "key": "sheet-edit",
+          "text": "核對內容",
+          "top": 695.3125,
+          "bottom": 737,
+          "viewport": 768,
+          "visible": true
+        },
+        {
+          "key": "wizard-edit",
+          "text": "下一步",
+          "top": 560.03125,
+          "bottom": 601.71875,
+          "viewport": 768,
+          "visible": true
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "desktop": [
+    {
+      "key": "sheet-edit",
+      "text": "核對內容",
+      "top": 695.3125,
+      "bottom": 737,
+      "viewport": 768,
+      "visible": true
+    },
+    {
+      "key": "wizard-edit",
+      "text": "下一步",
+      "top": 560.03125,
+      "bottom": 601.71875,
+      "viewport": 768,
+      "visible": true
+    }
+  ]
+}

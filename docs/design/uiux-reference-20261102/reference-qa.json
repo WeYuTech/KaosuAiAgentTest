@@ -1,0 +1,59 @@
+{
+  "scope": "互動參考範例；不是 MES 產品或正式站驗收",
+  "reference_sha256": "af399cbab4becdd8280dee1d666c36e0afd8686673cb643effa99ebffe78a8b9",
+  "scenes": 80,
+  "screenshots": 22,
+  "runtime_errors": [],
+  "external_requests": [],
+  "motion_and_flow_checks": {
+    "source_sha256": "af399cbab4becdd8280dee1d666c36e0afd8686673cb643effa99ebffe78a8b9",
+    "passed": 15,
+    "total": 15,
+    "file": "motion-qa.json"
+  },
+  "independent_regression": {
+    "file": "interaction-qa.json",
+    "review": "independent-review.md"
+  },
+  "visual_review": {
+    "representatives": [
+      "H01",
+      "Q03",
+      "F02",
+      "F05",
+      "P03",
+      "R01",
+      "N05"
+    ],
+    "widths": [
+      1366,
+      390,
+      320
+    ],
+    "standard_desktop": {
+      "viewport": [
+        1366,
+        768
+      ],
+      "preview_height": 690,
+      "F02_review_action_visible": true,
+      "F05_next_action_visible": true
+    },
+    "prior_new_state_rendering": {
+      "source_sha256": "746f57c19a9c6d9213e3453a0519818192c81e75a54782012b1b87b2ff2f1ef5",
+      "scenes": 23,
+      "widths": [
+        1366,
+        390,
+        320
+      ],
+      "reason_reused": "最終版只修 change 事件兩行；CSS／markup／scenes 相同，相關互動已於最終版重測"
+    }
+  },
+  "limitations": [
+    "未連線真實 MES、未測真實 AI／API／持久化／權限。",
+    "不是最終 80 情境×全部尺寸×三語×五外觀的完整交叉測試。",
+    "額外宿主、iframe、真正 200% 瀏覽器縮放、行動軟鍵盤與五外觀三語仍是產品交付驗收項。",
+    "假資料、固定時間、角色、金額、server preview 和回執是fixture，不能當作業務契約。"
+  ]
+}
