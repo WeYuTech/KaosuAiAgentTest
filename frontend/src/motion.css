@@ -1,7 +1,8 @@
 @import "../public/motion-tokens.css";
 @keyframes mes-enter {from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:translateY(0)}}
-@keyframes mes-dialog-enter {from{opacity:0;translate:0 6px}to{opacity:1;translate:0 0}}
-@keyframes mes-dialog-exit {from{opacity:1;translate:0 0}to{opacity:0;translate:0 6px}}
+/* translate 保留 Dialog 的 -50% 置中；動畫只使用獨立 transform。 */
+@keyframes mes-dialog-enter {from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+@keyframes mes-dialog-exit {from{opacity:1;transform:translateY(0)}to{opacity:0;transform:translateY(6px)}}
 @keyframes mes-fade-in {from{opacity:0}to{opacity:1}}
 @keyframes mes-fade-out {from{opacity:1}to{opacity:0}}
 #mes-ai-chat-root [data-enter=true] {animation:mes-enter var(--motion-enter) var(--motion-ease);}

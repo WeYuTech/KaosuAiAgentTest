@@ -40,10 +40,26 @@ test('等待中按停止不呼叫送出或取消 API，原請求鎖定到回覆'
   function Harness(){const [stop,setStop]=useState(false);return h(MesAssistantProvider,{state:{...base,busy:true,disabled:true,onSend:()=>sent++}},h(ConversationComposer,{id:'waiting',value:'原需求',onChange:()=>{},placeholder:'輸入',busy:true,disabled:true,stopped:stop,onStop:()=>{stopped++;setStop(true);}}));}
   await act(async()=>root.render(h(Harness)));
   const button=host.querySelector('button');assert.equal(button.getAttribute('aria-label'),'停止等待');assert.equal(button.disabled,false);
-  await act(async()=>button.click());assert.equal(stopped,1);assert.equal(sent,0);assert.equal(button.disabled,true);assert.equal(host.querySelector('textarea').disabled,true);assert.equal(host.querySelector('textarea').value,'原需求');
+  await act(async()=>button.click());assert.equal(stopped,1);assert.equal(sent,0);assert.equal(button.disabled,true);assert.equal(host.querySelector('textarea').disabled,true);assert.equal(host.querySelector('textarea').value,'');
   await act(async()=>button.click());assert.equal(stopped,1);assert.equal(sent,0);
   await act(async()=>root.unmount());host.remove();
 });
+test('送出等待只隱藏輸入顯示；拒絕或未知恢復原句，成功由草稿狀態清空',async()=>{
+ const host=document.createElement('div');document.body.append(host);const root=createRoot(host);let changed=0;
+ const render=(busy,draft)=>h(MesAssistantProvider,{state:{...base,busy,draft}},h(ConversationComposer,{id:'delivery',value:draft,onChange:()=>changed++,placeholder:'輸入',busy,disabled:busy,onStop:()=>{}}));
+ try{
+  for(const outcome of ['rejected','unknown','succeeded']){
+   await act(async()=>root.render(render(false,'MC37 良品 125')));
+   assert.equal(host.querySelector('textarea').value,'MC37 良品 125');
+   await act(async()=>root.render(render(true,'MC37 良品 125')));
+   assert.equal(host.querySelector('textarea').value,'');assert.equal(host.querySelector('textarea').disabled,true);
+   await act(async()=>root.render(render(false,outcome==='succeeded'?'':'MC37 良品 125')));
+   assert.equal(host.querySelector('textarea').value,outcome==='succeeded'?'':'MC37 良品 125');
+  }
+  assert.equal(changed,0);
+ }finally{await act(async()=>root.unmount());host.remove();}
+});
+
 test('管理區塊載入失敗只隔離面板，原作業仍可見且不刷新',async()=>{
   const host=document.createElement('div');host.id='mes-ai-chat-root';document.body.append(host);let caught=0,closed=0;
   const root=createRoot(host,{onCaughtError:()=>caught++});
