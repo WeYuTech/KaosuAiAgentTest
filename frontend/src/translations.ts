@@ -1,5 +1,19 @@
 /* 固定介面詞彙：中文原文為鍵，不翻譯 MES 主檔名稱或歷史訊息。 */
 export const translations: Record<string, [string, string]> = Object.fromEntries(`
+請先選擇設備與排程|Choose a machine and schedule first|โปรดเลือกเครื่องจักรและแผนการผลิตก่อน
+沒有上模紀錄可清除|No mounting history to clear|ไม่มีประวัติติดตั้งแม่พิมพ์ให้ล้าง
+排程沒有執行紀錄，請重新查詢|This schedule has no execution records. Search again.|แผนนี้ไม่มีบันทึกการดำเนินการ โปรดค้นหาอีกครั้ง
+目前可執行|Available now|ดำเนินการได้ตอนนี้
+此階段已完成|This stage is complete|ขั้นตอนนี้เสร็จแล้ว
+階段不一致或已完成，請核對歷程|Stages differ or are complete. Review the history.|ขั้นตอนไม่ตรงกันหรือเสร็จแล้ว โปรดตรวจสอบประวัติ
+尚未完成前一階段|Complete the previous stage first|โปรดทำขั้นตอนก่อนหน้าให้เสร็จ
+時間由伺服器預覽產生，核對後才執行；不需填寫數量。|Times come from the server preview. Review before executing; no quantity is required.|เวลาได้จากการตรวจสอบบนเซิร์ฟเวอร์ ตรวจสอบก่อนดำเนินการ ไม่ต้องกรอกจำนวน
+清除換模紀錄|Clear mold history|ล้างประวัติการเปลี่ยนแม่พิมพ์
+核對時間與連動影響|Review times and related effects|ตรวจสอบเวลาและผลกระทบที่เกี่ยวข้อง
+補充條件，或詢問這些資料…|Refine the criteria or ask about these records…|เพิ่มเงื่อนไขหรือถามเกี่ยวกับข้อมูลเหล่านี้…
+補充模具或階段需求，修改後請重新核對|Describe changes to the mold or stage, then review again|ระบุการเปลี่ยนแปลงแม่พิมพ์หรือขั้นตอน แล้วตรวจสอบอีกครั้ง
+補充排程修改，例如：目標改為 150 模|Describe schedule changes, for example: change the target to 150 shots|ระบุการแก้ไขแผน เช่น เปลี่ยนเป้าหมายเป็น 150 ครั้ง
+未完工|Not completed|ยังไม่เสร็จ
 報工時間|Report time|เวลารายงานผลผลิต
 工單分配|Order allocation|การจัดสรรใบสั่งผลิต
 未分配工單|Unassigned order|ไม่กำหนดใบสั่งผลิต

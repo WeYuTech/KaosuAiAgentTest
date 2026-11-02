@@ -148,7 +148,7 @@ test('R01 新增排程 pending 返回目標未改值再核對不發 mutation 或
 test('報工子選取返回與取消保留最新草稿；暫選和查看都不套用',async()=>{
  const {host,root}=mount();const calls=[];let guide={version:3,action:'report.update',args:{report_id:'3001',ok:125,defects:[]},step:'details',missing:[],ready:true};
  const record={WIP_OPI_WDOEACICO_HIST_SID:'2001',WO:'WO-A',EQP_NO:'MC37',REPORTS:[{WIP_OPI_WDOEACICOOUTPUT_HIST_SID:'3001',CREATE_TIME:'09:00',OK_QTY:120},{WIP_OPI_WDOEACICOOUTPUT_HIST_SID:'3002',CREATE_TIME:'10:00',OK_QTY:90}]};
- const request=async(path,body)=>{calls.push({path,body});if(body)guide={...guide,...body,version:guide.version+1};return structuredClone(guide);};
+ const request=async(path,body)=>{calls.push({path,body});if(path.includes('/workspace'))return {records:[record],catalogs:{}};if(body)guide={...guide,...body,version:guide.version+1};return structuredClone(guide);};
  const props={apiRequest:request,conversation:{id:'child',messages:[],module:'report'},module:'report',workspace:{records:[record],catalogs:{}},selected:null,signal:0,proposal:null,status:'',disabled:false,date:null,onReply:noop,onAudit:noop,onHome:noop};
  await act(async()=>root.render(h(GuidedFlow,props)));
  const click=async text=>act(async()=>[...host.querySelectorAll('button')].find(b=>b.textContent===text).click());
@@ -188,7 +188,7 @@ test('已驗證查詢更新選取條件但不改業務草稿，換模式保留�
  await act(async()=>host.querySelector('input[type=radio]').click());assert.ok(host.textContent.includes('帶入作業單'));
  await act(async()=>root.render(h(GuidedFlow,{...props,workspace,presentation:'step-wizard'})));assert.equal(host.querySelector('input[type=radio]').checked,true);assert.equal(host.querySelector('.picker-pagination').textContent.includes('2／2'),true);
  await act(async()=>root.render(h(GuidedFlow,{...props,presentation:'step-wizard',workspace:{...workspace,records:[],page:1,total:0,query_context:{version:3,filters:{equipment:'MC38',page:1,page_size:20}}}})));
- assert.equal(host.querySelector('#guide-search-equipment').value,'MC38');assert.equal(host.querySelector('.candidate-apply'),null);assert.ok(host.textContent.includes('請重新選取'));assert.equal(mutations.length,0);
+ assert.equal(host.querySelector('#guide-search-equipment').value,'MC38');assert.equal(host.querySelector('.candidate-apply'),null);assert.ok(document.querySelector('.target-picker-dialog').textContent.includes('請重新選取'));assert.equal(mutations.length,0);
  await act(async()=>[...host.querySelectorAll('button')].find(b=>b.textContent==='取消選取').click());assert.equal(host.querySelector('#guide-ok').value,'125');
  await act(async()=>root.unmount());host.remove();
 });
@@ -256,5 +256,50 @@ test('候選慢查詢、空結果與失敗互斥，不以舊資料帶入',async(
  await act(async()=>host.querySelector('.candidate-search button').click());
  await act(async()=>reject(new Error('候選連線失敗')));
  assert.equal(host.querySelector('[role=alert]').textContent,'候選連線失敗');assert.ok(!host.textContent.includes('沒有符合資料'));assert.ok(!host.textContent.includes('查詢中'));
+ await act(async()=>root.unmount());host.remove();
+});
+
+
+test('審查：主選取讀取與失敗不宣稱完整結果，重試後才呈現零筆',async()=>{
+ const {host,root}=mount();let resolve,reject;
+ const guide={version:1,action:'',args:{},step:'target',missing:[],ready:false};
+ const props={apiRequest:async()=>guide,onQuery:()=>new Promise((r,j)=>{resolve=r;reject=j;}),conversation:{id:'states',module:'mold',messages:[]},module:'mold',workspace:{records:[],catalogs:{},total:0},selected:null,signal:0,proposal:null,status:'',disabled:false,date:null,onReply:noop,onAudit:noop,onHome:noop};
+ await act(async()=>root.render(h(GuidedFlow,props)));
+ const dialog=()=>document.querySelector('.target-picker-dialog');
+ assert.ok(!dialog().textContent.includes('請重新選取'));
+ await act(async()=>dialog().querySelector('form').dispatchEvent(new Event('submit',{bubbles:true,cancelable:true})));
+ assert.ok(dialog().textContent.includes('正在讀取候選資料'));assert.equal(dialog().querySelector('.picker-pagination'),null);
+ await act(async()=>reject(new Error('隔離查詢失敗')));
+ assert.ok(dialog().textContent.includes('隔離查詢失敗'));assert.equal(dialog().querySelector('.picker-pagination'),null);assert.ok(!dialog().textContent.includes('沒有符合資料'));
+ await act(async()=>[...dialog().querySelectorAll('button')].find(b=>b.textContent==='重新查詢').click());
+ await act(async()=>resolve({records:[],catalogs:{},total:0}));
+ assert.ok(dialog().textContent.includes('沒有符合資料'));assert.ok(dialog().textContent.includes('共 0 筆'));assert.ok(!dialog().textContent.includes('請重新選取'));
+ await act(async()=>root.unmount());host.remove();
+});
+
+test('審查：開啟選取預帶設備日期但不修改 Guide，子層有工單脈絡',async()=>{
+ const {host,root}=mount();const queries=[],writes=[];
+ const record={WIP_OPI_WDOEACICO_HIST_SID:'2001',EQP_NO:'MC37',WO:'WO-A',SCHEDULE_START_TIME:'2026-11-02 08:00:00',REPORTS:[{WIP_OPI_WDOEACICOOUTPUT_HIST_SID:'3001',OK_QTY:10}]};
+ const guide={version:1,action:'report.update',args:{report_id:'3001',ok:125,defects:[]},step:'details',missing:[],ready:true};
+ const workspace={records:[record],catalogs:{},total:1};
+ await act(async()=>root.render(h(GuidedFlow,{apiRequest:async(path,body)=>{if(body)writes.push(body);return guide;},onQuery:async f=>{queries.push(f);return workspace;},conversation:{id:'context',module:'report',messages:[]},module:'report',workspace,selected:record,signal:0,proposal:null,status:'',disabled:false,date:null,onReply:noop,onAudit:noop,onHome:noop})));
+ const click=async text=>act(async()=>[...document.querySelectorAll('button')].find(b=>b.textContent===text).click());
+ await click('選擇／更換對象');assert.equal(queries[0].equipment,'MC37');assert.equal(queries[0].date,'2026-11-02');
+ assert.equal(document.querySelector('#guide-search-equipment').value,'MC37');assert.equal(writes.length,0);
+ await act(async()=>document.querySelector('.target-picker-dialog input[type=radio]').click());await click('選擇報工紀錄');
+ assert.ok(document.querySelector('.report-picker-context').textContent.includes('MC37 · WO-A'));assert.equal(document.querySelectorAll('.report-record-picker legend').length,0);
+ assert.ok(document.querySelector('.target-picker-dialog').textContent.includes('帶入這筆報工'));assert.equal(writes.length,0);
+ await click('取消選取');assert.equal(host.querySelector('#guide-ok').value,'125');
+ await act(async()=>root.unmount());host.remove();
+});
+
+test('審查：排程只有一列開始時間，模具完工狀態採業務文字及三語',async()=>{
+ const {host,root}=mount();const workspace={records:[],catalogs:{}};
+ await act(async()=>root.render(h(ProposalBusinessSummary,{workspace,proposal:{action:'schedule.save',args:{start_time:'2026-11-02T13:00'},changes:[{field:'SCHEDULE_START_TIME',before:'2026-11-02 08:00:00',after:'2026-11-02 13:00:00'}]}})));
+ assert.equal(host.textContent.split('預計開始').length-1,1);assert.ok(!host.textContent.includes('T13:00'));
+ await act(async()=>root.render(h(ProposalBusinessSummary,{workspace,proposal:{action:'mold.unmount_finish',args:{},changes:[{field:'COMPLETED',before:'N',after:'Y'}]}})));
+ assert.ok(host.textContent.includes('未完工'));assert.ok(host.textContent.includes('已完工'));
+ const {translations}=await import('../src/translations.ts');const t=(key,_,language)=>translations[key]?.[language==='en'?0:1]??key;
+ for(const language of ['en','th'])for(const key of ['目前可執行','尚未完成前一階段','清除換模紀錄','核對時間與連動影響','補充條件，或詢問這些資料…','補充模具或階段需求，修改後請重新核對'])assert.notEqual(t(key,{},language),key);
  await act(async()=>root.unmount());host.remove();
 });

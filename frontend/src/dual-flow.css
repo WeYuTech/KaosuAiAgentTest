@@ -252,7 +252,7 @@
 #mes-ai-chat-root .mold-stages small,#mes-ai-chat-root .mold-clear-action small {color:var(--muted-foreground);font-size:12px;}
 #mes-ai-chat-root .mold-stages button {min-height:36px;font-size:13px;}
 #mes-ai-chat-root .mold-clear-action {display:flex;gap:12px;align-items:center;}
-#mes-ai-chat-root .mold-proposal .business-summary {max-height:calc(100dvh - 555px);min-height:100px;overflow:auto;overscroll-behavior:contain;padding-right:8px;}
+#mes-ai-chat-root .mold-proposal .business-summary {max-height:none;overflow:visible;}
 #mes-ai-chat-root .mold-proposal .proposal-confirmation {position:sticky;bottom:0;background:var(--background);z-index:2;}
 #mes-ai-chat-root .dual-flow .guide-detail {display:grid;grid-template-columns:1.2fr 1fr 80px;gap:8px;padding:10px;border:1px solid var(--border);margin-bottom:10px;}
 #mes-ai-chat-root .dual-flow .guide-detail>legend {padding:0 6px;font-size:13px;}
@@ -264,7 +264,8 @@
  #mes-ai-chat-root .target-picker-dialog .operation-dialog-body,#mes-ai-chat-root .target-picker-dialog .operation-dialog-footer {padding:10px;}
  #mes-ai-chat-root .target-picker-dialog .guide-fields {grid-template-columns:1fr 1fr;}
  #mes-ai-chat-root .picker-actions {flex-wrap:wrap;}
- #mes-ai-chat-root .picker-actions button {flex:1;}
+ #mes-ai-chat-root .picker-actions button {flex:0 0 auto;white-space:nowrap;}
+ #mes-ai-chat-root .picker-actions>button:first-child {margin-right:auto;}
  #mes-ai-chat-root .picker-selection {max-height:50px;overflow:auto;}
  #mes-ai-chat-root .target-picker-dialog .record-choices {min-width:0;width:100%;}
  #mes-ai-chat-root .target-picker-dialog .record-choices thead {display:none;}
@@ -283,3 +284,5 @@
 #mes-ai-chat-root .target-picker-dialog .guide-search-options summary{min-height:28px;padding:4px 0;font-size:13px;}
 #mes-ai-chat-root .picker-ai .composer-area{margin:0;width:100%;max-width:none;}
 #mes-ai-chat-root .picker-ai .composer-area>.text-button{min-height:28px;padding:3px 0;font-size:13px;}
+
+#mes-ai-chat-root .report-picker-context {display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:12px;}

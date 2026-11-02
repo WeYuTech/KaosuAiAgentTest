@@ -48,7 +48,7 @@ export function ProposalBusinessSummary({ proposal, workspace }: { proposal: Pro
       {Boolean(part) && <span><span><small>{t("品號／規格")}</small><strong>{part}</strong></span></span>}
       {!action.startsWith('mold.') && Boolean(executionTime) && <span><span><small>{t("本次執行")}</small><strong>{display(executionTime)}</strong></span></span>}
       {Boolean(report?.CREATE_TIME)&&<span><span><small>{t('報工時間')}</small><strong>{display(report?.CREATE_TIME)}</strong></span></span>}
-      {Boolean(scheduleTime) && <span><CalendarDays size={16}/><span><small>{t("預計開始")}</small><strong>{display(scheduleTime)}</strong></span></span>}
+      {action!=='schedule.save' && Boolean(scheduleTime) && <span><CalendarDays size={16}/><span><small>{t("預計開始")}</small><strong>{display(scheduleTime)}</strong></span></span>}
     </div>
     {action === 'report.add' || action === 'report.update' ? <>
       <div className="business-quantities">{businessRow(t("人工良品"), args.ok, action === 'report.update' ? findChange('OK_QTY')?.before ?? report?.OK_QTY : undefined, t("件"))}{businessRow(t("不良合計"), defects.reduce((sum, item) => sum + Number(item.quantity), 0), action === 'report.update' ? findChange('NG_QTY')?.before ?? report?.NG_QTY : undefined, t("件"))}</div>
@@ -79,7 +79,7 @@ export function ProposalBusinessSummary({ proposal, workspace }: { proposal: Pro
     </>}
     {['mold.clear','mold.unmount_finish'].includes(action) && ['CHECK_IN_TIME','CHECK_OUT_TIME','COMPLETED_TIME','COMPLETED'].map(field => {
       const change = findChange(field); if (!change) return null;
-      return <div key={field}>{businessRow(t(field === 'CHECK_IN_TIME' ? '進站時間' : field === 'CHECK_OUT_TIME' ? '出站時間' : field==='COMPLETED_TIME'?'完工時間':'完工狀態'), change.after === null ? t('清除時間') : change.after, change.before)}</div>;
+      return <div key={field}>{businessRow(t(field === 'CHECK_IN_TIME' ? '進站時間' : field === 'CHECK_OUT_TIME' ? '出站時間' : field==='COMPLETED_TIME'?'完工時間':'完工狀態'), field==='COMPLETED'?t(change.after==='Y'?'已完工':'未完工'):change.after === null ? t('清除時間') : change.after, field==='COMPLETED'?t(change.before==='Y'?'已完工':'未完工'):change.before)}</div>;
     })}
     {(action === 'report.complete' || action === 'report.delete' || action === 'mold.clear' || action === 'mold.unmount_finish') && <div className="business-impact"><strong>{t("影響工單")}</strong>{affected.length ? <ul>{affected.map(order => <li key={order}>{order}</li>)}</ul> : workOrder ? <p>{display(workOrder)}</p> : <p>{t("請核對上方作業對象與摘要。")}</p>}{action === 'report.complete' && <p>{t("同一排程的所有工單會一併完工。")}</p>}{action === 'mold.clear' && <p>{t("會清除這張排程的上下模時間，請確認現場狀態。")}</p>}</div>}
     {nextTimes.length > 0 && <div className="business-impact"><strong>{t("連動作業")}</strong><p>{t("下一張排程的實際開始時間會一併更新為：")}{display(nextTimes[0].after)}</p></div>}
