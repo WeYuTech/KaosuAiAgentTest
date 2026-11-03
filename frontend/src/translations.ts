@@ -1,5 +1,9 @@
 /* 固定介面詞彙：中文原文為鍵，不翻譯 MES 主檔名稱或歷史訊息。 */
 export const translations: Record<string, [string, string]> = Object.fromEntries(`
+重新查詢|Retry search|ค้นหาอีกครั้ง
+修改條件|Change filters|แก้ไขเงื่อนไข
+選擇工單|Choose order|เลือกใบสั่งผลิต
+對話與已選項目會保留|Your conversation and selection are retained|เก็บบทสนทนาและรายการที่เลือกไว้
 最後更新|Last updated|อัปเดตล่าสุด
 開始聊天後，紀錄會顯示在這裡。|Your conversations will appear here once you start chatting.|บทสนทนาจะปรากฏที่นี่เมื่อคุณเริ่มแชท
 可先使用作業單完成操作。|You can use the operation sheet first.|ใช้แบบฟอร์มงานก่อนได้
