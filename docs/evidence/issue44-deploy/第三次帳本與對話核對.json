@@ -1,0 +1,31 @@
+{
+  "before": {
+    "conversations": 21,
+    "active_messages": 0,
+    "proposals": {
+      "cancelled": 7
+    },
+    "audit": 7,
+    "budget": {
+      "calls": 250,
+      "spent_usd": 2.123702,
+      "unsettled": 0
+    }
+  },
+  "after": {
+    "conversations": 21,
+    "active_messages": 0,
+    "proposals": {
+      "cancelled": 7
+    },
+    "audit": 7,
+    "budget": {
+      "calls": 250,
+      "spent_usd": 2.123702,
+      "unsettled": 0
+    }
+  },
+  "paid_queries_sent": 0,
+  "this_attempt_cost_usd": 0,
+  "ledger_reset": false
+}
