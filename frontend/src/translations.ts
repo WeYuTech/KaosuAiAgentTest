@@ -777,6 +777,7 @@ MES 登入無法驗證；請重新登入或洽管理員。|MES sign-in could not
 高|High|สูง
 處理中|Processing|กำลังดำเนินการ
 返回修改|Back to edit|กลับไปแก้ไข
+返回選擇|Back to selection|กลับไปเลือก
 刪除定時報告|Delete scheduled report|ลบรายงานตามเวลา
 刪除|Delete|ลบ
 今天想查什麼？|What would you like to know today?|วันนี้อยากทราบอะไร?
@@ -870,4 +871,5 @@ MES 受限工具助理|MES constrained-tool agent|ผู้ช่วย MES ท�
 已顯示全部結果|All results shown|แสดงผลลัพธ์ทั้งหมดแล้ว
 目前為部分結果，請查看全部資料|Partial results; view all data for more|ผลลัพธ์บางส่วน โปรดดูข้อมูลทั้งหมด
 返回修改|Back to edit|กลับไปแก้ไข
+
 ` .trim().split('\n').map(line => { const [key, en, th] = line.split('|'); return [key, [en, th]]; }));

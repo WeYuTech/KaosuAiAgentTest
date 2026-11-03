@@ -436,7 +436,7 @@
 #mes-ai-chat-root .dual-flow .guide-defect:last-of-type{margin-bottom:0}
 #mes-ai-chat-root .dual-flow .guide-defect .defect-remove{width:32px;height:36px;min-height:36px;border:0;background:transparent;padding:8px;display:grid;place-items:center;margin-bottom:2px}
 #mes-ai-chat-root .dual-flow .defect-tools{display:flex;align-items:center;justify-content:space-between;margin-top:8px;gap:8px}
-#mes-ai-chat-root .dual-flow .defect-tools>button{font-size:13px;font-weight:400;line-height:1.55;padding:5px 10px;min-height:32px;border-color:transparent;background:transparent;gap:8px}
+#mes-ai-chat-root .dual-flow .defect-tools>button{font-size:13px;font-weight:400;line-height:1.55;padding:5px 10px;min-height:32px;border-color:transparent;background:transparent;gap:12px}
 #mes-ai-chat-root .dual-flow .no-defects{display:flex;align-items:flex-start;gap:9px;font-size:13px;line-height:1.6;font-weight:400}
 #mes-ai-chat-root .dual-flow .no-defects input{margin:4px 0 0;width:16px;height:16px;min-height:0;flex:none}
 #mes-ai-chat-root .dual-flow .optional-note{margin:0;padding:0;border:0;font-size:13px;line-height:1.55}
@@ -633,3 +633,8 @@
  #mes-ai-chat-root .dual-flow.step-wizard .awaiting-review .proposal-heading{padding-top:20px}
  #mes-ai-chat-root .dual-flow.step-wizard .awaiting-review .proposal-actions{margin-inline:-20px;padding-inline:20px}
 }
+
+/* 核對審查：精靈目標摘要移除額外的 4px 上距。 */
+#mes-ai-chat-root .dual-flow.step-wizard .sheet-target{margin-top:0}
+#mes-ai-chat-root .dual-flow .picker-underlay>svg{width:18px;height:18px;margin-bottom:3px;color:var(--muted-foreground)}
+#mes-ai-chat-root .dual-flow.chat-sheet .picker-underlay{margin-top:4px}

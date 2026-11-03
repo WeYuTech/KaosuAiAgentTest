@@ -3,7 +3,7 @@
     "id": "F01",
     "width": 1366,
     "height": 768,
-    "ratio": 1.09914516227428,
+    "ratio": 1.074266410444119,
     "metrics": [
       {
         "name": "作業標題",
@@ -291,10 +291,10 @@
         "product": {
           "rect": {
             "x": 774,
-            "y": 177.1875,
+            "y": 181.1875,
             "width": 567,
-            "height": 216.828125,
-            "top": 177.1875,
+            "height": 212.828125,
+            "top": 181.1875,
             "right": 1341,
             "bottom": 394.015625,
             "left": 774
@@ -310,9 +310,61 @@
         },
         "delta": {
           "x": 0,
-          "y": 4,
+          "y": 0,
           "width": 0,
-          "height": 4,
+          "height": 0,
+          "bottom": 0
+        },
+        "differences": []
+      },
+      {
+        "name": "空白圖示",
+        "index": 0,
+        "reference": {
+          "rect": {
+            "x": 1048.5,
+            "y": 219.1875,
+            "width": 18,
+            "height": 18,
+            "top": 219.1875,
+            "right": 1066.5,
+            "bottom": 237.1875,
+            "left": 1048.5
+          },
+          "style": {
+            "font-family": "Inter, \"Noto Sans TC\", system-ui, -apple-system, \"Segoe UI\", sans-serif",
+            "font-size": "14px",
+            "font-weight": "400",
+            "line-height": "21.7px",
+            "letter-spacing": "normal",
+            "color": "rgb(170, 170, 177)"
+          }
+        },
+        "product": {
+          "rect": {
+            "x": 1048.5,
+            "y": 219.1875,
+            "width": 18,
+            "height": 18,
+            "top": 219.1875,
+            "right": 1066.5,
+            "bottom": 237.1875,
+            "left": 1048.5
+          },
+          "style": {
+            "font-family": "Inter, \"Noto Sans TC\", system-ui, -apple-system, \"Segoe UI\", sans-serif",
+            "font-size": "14px",
+            "font-weight": "400",
+            "line-height": "21.7px",
+            "letter-spacing": "normal",
+            "color": "rgb(170, 170, 177)"
+          }
+        },
+        "delta": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0,
           "bottom": 0
         },
         "differences": []
@@ -1201,13 +1253,66 @@
         },
         "differences": []
       }
-    ]
+    ],
+    "text": {
+      "groups": [
+        {
+          "name": "標題",
+          "reference": [
+            "新增人工報工"
+          ],
+          "product": [
+            "新增人工報工"
+          ],
+          "consistent": true
+        },
+        {
+          "name": "狀態",
+          "reference": [],
+          "product": [],
+          "consistent": true
+        },
+        {
+          "name": "內容",
+          "reference": [
+            "選擇要操作的工單",
+            "搜尋設備或工單，確認後再帶入。",
+            "選擇工單"
+          ],
+          "product": [
+            "選擇要操作的工單",
+            "搜尋設備或工單，確認後再帶入。",
+            "選擇工單"
+          ],
+          "consistent": true
+        },
+        {
+          "name": "步驟",
+          "reference": [],
+          "product": [],
+          "consistent": true
+        },
+        {
+          "name": "動作",
+          "reference": [
+            "先選擇作業對象",
+            "下一步"
+          ],
+          "product": [
+            "先選擇作業對象",
+            "下一步"
+          ],
+          "consistent": true
+        }
+      ],
+      "consistent": true
+    }
   },
   {
     "id": "F02",
     "width": 1366,
     "height": 768,
-    "ratio": 0.9707479258174719,
+    "ratio": 0.9688415080527085,
     "metrics": [
       {
         "name": "作業標題",
@@ -1860,10 +1965,10 @@
           "rect": {
             "x": 774,
             "y": 466.890625,
-            "width": 96,
+            "width": 100,
             "height": 32,
             "top": 466.890625,
-            "right": 870,
+            "right": 874,
             "bottom": 498.890625,
             "left": 774
           },
@@ -1879,7 +1984,7 @@
         "delta": {
           "x": 0,
           "y": 1,
-          "width": 4,
+          "width": 0,
           "height": 0.140625,
           "bottom": 0.859375
         },
@@ -3081,7 +3186,84 @@
         },
         "differences": []
       }
-    ]
+    ],
+    "text": {
+      "groups": [
+        {
+          "name": "標題",
+          "reference": [
+            "新增人工報工"
+          ],
+          "product": [
+            "新增人工報工"
+          ],
+          "consistent": true
+        },
+        {
+          "name": "狀態",
+          "reference": [],
+          "product": [],
+          "consistent": true
+        },
+        {
+          "name": "內容",
+          "reference": [
+            "MC37 · WO-261102-0382",
+            "P-102 外殼",
+            "良品數量",
+            "125",
+            "件",
+            "不良品",
+            "合計 3 件",
+            "原因",
+            "刮傷",
+            "數量",
+            "3",
+            "新增原因",
+            "沒有不良品",
+            "備註（選填）"
+          ],
+          "product": [
+            "MC37 · WO-261102-0382",
+            "P-102 外殼",
+            "良品數量",
+            "125",
+            "件",
+            "不良品",
+            "合計",
+            "3",
+            "件",
+            "原因",
+            "刮傷",
+            "數量",
+            "3",
+            "新增原因",
+            "沒有不良品",
+            "備註（選填）"
+          ],
+          "consistent": true
+        },
+        {
+          "name": "步驟",
+          "reference": [],
+          "product": [],
+          "consistent": true
+        },
+        {
+          "name": "動作",
+          "reference": [
+            "草稿已儲存",
+            "核對內容"
+          ],
+          "product": [
+            "草稿已儲存",
+            "核對內容"
+          ],
+          "consistent": true
+        }
+      ],
+      "consistent": true
+    }
   },
   {
     "id": "F03",
@@ -4961,13 +5143,86 @@
         },
         "differences": []
       }
-    ]
+    ],
+    "text": {
+      "groups": [
+        {
+          "name": "標題",
+          "reference": [
+            "核對人工報工"
+          ],
+          "product": [
+            "核對人工報工"
+          ],
+          "consistent": true
+        },
+        {
+          "name": "狀態",
+          "reference": [
+            "尚未送出"
+          ],
+          "product": [
+            "尚未送出"
+          ],
+          "consistent": true
+        },
+        {
+          "name": "內容",
+          "reference": [
+            "MC37 · WO-261102-0382",
+            "P-102 外殼",
+            "人工良品",
+            "125 件",
+            "不良合計",
+            "3 件",
+            "不良原因",
+            "刮傷 3 件",
+            "查看異動明細",
+            "確認期限：11/02 10:00（MES）"
+          ],
+          "product": [
+            "MC37 · WO-261102-0382",
+            "P-102 外殼",
+            "人工良品",
+            "125 件",
+            "不良合計",
+            "3 件",
+            "不良原因",
+            "刮傷 3 件",
+            "查看異動明細",
+            "確認期限：11/02 10:00（MES）"
+          ],
+          "consistent": true
+        },
+        {
+          "name": "步驟",
+          "reference": [],
+          "product": [],
+          "consistent": true
+        },
+        {
+          "name": "動作",
+          "reference": [
+            "返回修改",
+            "取消草稿",
+            "確認送出"
+          ],
+          "product": [
+            "返回修改",
+            "取消草稿",
+            "確認送出"
+          ],
+          "consistent": true
+        }
+      ],
+      "consistent": true
+    }
   },
   {
     "id": "F04",
     "width": 1366,
     "height": 768,
-    "ratio": 1.6159750183016106,
+    "ratio": 1.1083912884333822,
     "metrics": [
       {
         "name": "作業標題",
@@ -5517,10 +5772,10 @@
             "x": 508,
             "y": 236,
             "width": 594,
-            "height": 216.828125,
+            "height": 212.828125,
             "top": 236,
             "right": 1102,
-            "bottom": 452.828125,
+            "bottom": 448.828125,
             "left": 508
           },
           "style": {
@@ -5536,8 +5791,60 @@
           "x": 0,
           "y": 0,
           "width": 0,
-          "height": 4,
-          "bottom": 4
+          "height": 0,
+          "bottom": 0
+        },
+        "differences": []
+      },
+      {
+        "name": "空白圖示",
+        "index": 0,
+        "reference": {
+          "rect": {
+            "x": 796,
+            "y": 274,
+            "width": 18,
+            "height": 18,
+            "top": 274,
+            "right": 814,
+            "bottom": 292,
+            "left": 796
+          },
+          "style": {
+            "font-family": "Inter, \"Noto Sans TC\", system-ui, -apple-system, \"Segoe UI\", sans-serif",
+            "font-size": "14px",
+            "font-weight": "400",
+            "line-height": "21.7px",
+            "letter-spacing": "normal",
+            "color": "rgb(170, 170, 177)"
+          }
+        },
+        "product": {
+          "rect": {
+            "x": 796,
+            "y": 274,
+            "width": 18,
+            "height": 18,
+            "top": 274,
+            "right": 814,
+            "bottom": 292,
+            "left": 796
+          },
+          "style": {
+            "font-family": "Inter, \"Noto Sans TC\", system-ui, -apple-system, \"Segoe UI\", sans-serif",
+            "font-size": "14px",
+            "font-weight": "400",
+            "line-height": "21.7px",
+            "letter-spacing": "normal",
+            "color": "rgb(170, 170, 177)"
+          }
+        },
+        "delta": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0,
+          "bottom": 0
         },
         "differences": []
       },
@@ -6373,13 +6680,80 @@
         },
         "differences": []
       }
-    ]
+    ],
+    "text": {
+      "groups": [
+        {
+          "name": "標題",
+          "reference": [
+            "新增人工報工"
+          ],
+          "product": [
+            "新增人工報工"
+          ],
+          "consistent": true
+        },
+        {
+          "name": "狀態",
+          "reference": [],
+          "product": [],
+          "consistent": true
+        },
+        {
+          "name": "內容",
+          "reference": [
+            "選擇要操作的工單",
+            "搜尋設備或工單，確認後再帶入。",
+            "選擇工單"
+          ],
+          "product": [
+            "選擇要操作的工單",
+            "搜尋設備或工單，確認後再帶入。",
+            "選擇工單"
+          ],
+          "consistent": true
+        },
+        {
+          "name": "步驟",
+          "reference": [
+            "1",
+            "選擇對象",
+            "2",
+            "填寫內容",
+            "3",
+            "核對送出"
+          ],
+          "product": [
+            "1",
+            "選擇對象",
+            "2",
+            "填寫內容",
+            "3",
+            "核對送出"
+          ],
+          "consistent": true
+        },
+        {
+          "name": "動作",
+          "reference": [
+            "先選擇作業對象",
+            "下一步"
+          ],
+          "product": [
+            "先選擇作業對象",
+            "下一步"
+          ],
+          "consistent": true
+        }
+      ],
+      "consistent": true
+    }
   },
   {
     "id": "F05",
     "width": 1366,
     "height": 768,
-    "ratio": 1.9112791300634455,
+    "ratio": 1.5563041422645192,
     "metrics": [
       {
         "name": "作業標題",
@@ -6459,12 +6833,12 @@
         "product": {
           "rect": {
             "x": 508,
-            "y": 240,
+            "y": 236,
             "width": 594,
             "height": 74.28125,
-            "top": 240,
+            "top": 236,
             "right": 1102,
-            "bottom": 314.28125,
+            "bottom": 310.28125,
             "left": 508
           },
           "style": {
@@ -6478,10 +6852,10 @@
         },
         "delta": {
           "x": 0,
-          "y": 4,
+          "y": 0,
           "width": 0,
           "height": 0,
-          "bottom": 4
+          "bottom": 0
         },
         "differences": []
       },
@@ -6511,12 +6885,12 @@
         "product": {
           "rect": {
             "x": 557,
-            "y": 253,
+            "y": 249,
             "width": 169.671875,
             "height": 20,
-            "top": 253,
+            "top": 249,
             "right": 726.671875,
-            "bottom": 273,
+            "bottom": 269,
             "left": 557
           },
           "style": {
@@ -6530,10 +6904,10 @@
         },
         "delta": {
           "x": 0,
-          "y": 4,
+          "y": 0,
           "width": 0,
           "height": 0,
-          "bottom": 4
+          "bottom": 0
         },
         "differences": []
       },
@@ -6563,12 +6937,12 @@
         "product": {
           "rect": {
             "x": 557,
-            "y": 274.6875,
+            "y": 270.6875,
             "width": 497,
             "height": 18.59375,
-            "top": 274.6875,
+            "top": 270.6875,
             "right": 1054,
-            "bottom": 293.28125,
+            "bottom": 289.28125,
             "left": 557
           },
           "style": {
@@ -6582,10 +6956,10 @@
         },
         "delta": {
           "x": 0,
-          "y": 4,
+          "y": 0,
           "width": 0,
           "height": 0,
-          "bottom": 4
+          "bottom": 0
         },
         "differences": []
       },
@@ -6615,12 +6989,12 @@
         "product": {
           "rect": {
             "x": 508,
-            "y": 333.28125,
+            "y": 331.28125,
             "width": 594,
             "height": 67.140625,
-            "top": 333.28125,
+            "top": 331.28125,
             "right": 1102,
-            "bottom": 400.421875,
+            "bottom": 398.421875,
             "left": 508
           },
           "style": {
@@ -6667,12 +7041,12 @@
         "product": {
           "rect": {
             "x": 508,
-            "y": 360.421875,
+            "y": 358.421875,
             "width": 572,
             "height": 40,
-            "top": 360.421875,
+            "top": 358.421875,
             "right": 1080,
-            "bottom": 400.421875,
+            "bottom": 398.421875,
             "left": 508
           },
           "style": {
@@ -6719,12 +7093,12 @@
         "product": {
           "rect": {
             "x": 1089,
-            "y": 370.34375,
+            "y": 368.34375,
             "width": 13,
             "height": 20.140625,
-            "top": 370.34375,
+            "top": 368.34375,
             "right": 1102,
-            "bottom": 390.484375,
+            "bottom": 388.484375,
             "left": 1089
           },
           "style": {
@@ -6771,12 +7145,12 @@
         "product": {
           "rect": {
             "x": 508,
-            "y": 418.421875,
+            "y": 416.421875,
             "width": 594,
             "height": 20.140625,
-            "top": 418.421875,
+            "top": 416.421875,
             "right": 1102,
-            "bottom": 438.5625,
+            "bottom": 436.5625,
             "left": 508
           },
           "style": {
@@ -6823,12 +7197,12 @@
         "product": {
           "rect": {
             "x": 508,
-            "y": 446.5625,
+            "y": 444.5625,
             "width": 594,
             "height": 67.140625,
-            "top": 446.5625,
+            "top": 444.5625,
             "right": 1102,
-            "bottom": 513.703125,
+            "bottom": 511.703125,
             "left": 508
           },
           "style": {
@@ -6875,12 +7249,12 @@
         "product": {
           "rect": {
             "x": 508,
-            "y": 473.703125,
+            "y": 471.703125,
             "width": 454,
             "height": 40,
-            "top": 473.703125,
+            "top": 471.703125,
             "right": 962,
-            "bottom": 513.703125,
+            "bottom": 511.703125,
             "left": 508
           },
           "style": {
@@ -6927,12 +7301,12 @@
         "product": {
           "rect": {
             "x": 970,
-            "y": 473.703125,
+            "y": 471.703125,
             "width": 92,
             "height": 40,
-            "top": 473.703125,
+            "top": 471.703125,
             "right": 1062,
-            "bottom": 513.703125,
+            "bottom": 511.703125,
             "left": 970
           },
           "style": {
@@ -6979,12 +7353,12 @@
         "product": {
           "rect": {
             "x": 1070,
-            "y": 475.703125,
+            "y": 473.703125,
             "width": 32,
             "height": 36,
-            "top": 475.703125,
+            "top": 473.703125,
             "right": 1102,
-            "bottom": 511.703125,
+            "bottom": 509.703125,
             "left": 1070
           },
           "style": {
@@ -7031,12 +7405,12 @@
         "product": {
           "rect": {
             "x": 508,
-            "y": 522.703125,
-            "width": 96,
+            "y": 520.703125,
+            "width": 100,
             "height": 32,
-            "top": 522.703125,
-            "right": 604,
-            "bottom": 554.703125,
+            "top": 520.703125,
+            "right": 608,
+            "bottom": 552.703125,
             "left": 508
           },
           "style": {
@@ -7050,10 +7424,10 @@
         },
         "delta": {
           "x": 0,
-          "y": 2,
-          "width": 4,
+          "y": 0,
+          "width": 0,
           "height": 0.140625,
-          "bottom": 1.859375
+          "bottom": 0.140625
         },
         "differences": []
       },
@@ -7083,12 +7457,12 @@
         "product": {
           "rect": {
             "x": 1012,
-            "y": 528.296875,
+            "y": 526.296875,
             "width": 90,
             "height": 20.796875,
-            "top": 528.296875,
+            "top": 526.296875,
             "right": 1102,
-            "bottom": 549.09375,
+            "bottom": 547.09375,
             "left": 1012
           },
           "style": {
@@ -7102,10 +7476,10 @@
         },
         "delta": {
           "x": 0,
-          "y": 1.921875,
+          "y": 0.078125,
           "width": 0,
           "height": 0,
-          "bottom": 1.921875
+          "bottom": 0.078125
         },
         "differences": []
       },
@@ -7603,12 +7977,12 @@
         "product": {
           "rect": {
             "x": 508,
-            "y": 572.703125,
+            "y": 570.703125,
             "width": 594,
             "height": 32.140625,
-            "top": 572.703125,
+            "top": 570.703125,
             "right": 1102,
-            "bottom": 604.84375,
+            "bottom": 602.84375,
             "left": 508
           },
           "style": {
@@ -7622,10 +7996,10 @@
         },
         "delta": {
           "x": 0,
-          "y": 1.859375,
+          "y": 0.140625,
           "width": 0,
           "height": 0,
-          "bottom": 1.859375
+          "bottom": 0.140625
         },
         "differences": []
       },
@@ -8461,13 +8835,102 @@
         },
         "differences": []
       }
-    ]
+    ],
+    "text": {
+      "groups": [
+        {
+          "name": "標題",
+          "reference": [
+            "新增人工報工"
+          ],
+          "product": [
+            "新增人工報工"
+          ],
+          "consistent": true
+        },
+        {
+          "name": "狀態",
+          "reference": [],
+          "product": [],
+          "consistent": true
+        },
+        {
+          "name": "內容",
+          "reference": [
+            "MC37 · WO-261102-0382",
+            "P-102 外殼",
+            "良品數量",
+            "125",
+            "件",
+            "不良品",
+            "合計 3 件",
+            "原因",
+            "刮傷",
+            "數量",
+            "3",
+            "新增原因",
+            "沒有不良品",
+            "備註（選填）"
+          ],
+          "product": [
+            "MC37 · WO-261102-0382",
+            "P-102 外殼",
+            "良品數量",
+            "125",
+            "件",
+            "不良品",
+            "合計",
+            "3",
+            "件",
+            "原因",
+            "刮傷",
+            "數量",
+            "3",
+            "新增原因",
+            "沒有不良品",
+            "備註（選填）"
+          ],
+          "consistent": true
+        },
+        {
+          "name": "步驟",
+          "reference": [
+            "選擇對象",
+            "2",
+            "填寫內容",
+            "3",
+            "核對送出"
+          ],
+          "product": [
+            "選擇對象",
+            "2",
+            "填寫內容",
+            "3",
+            "核對送出"
+          ],
+          "consistent": true
+        },
+        {
+          "name": "動作",
+          "reference": [
+            "草稿已儲存",
+            "下一步"
+          ],
+          "product": [
+            "草稿已儲存",
+            "下一步"
+          ],
+          "consistent": true
+        }
+      ],
+      "consistent": true
+    }
   },
   {
     "id": "F06",
     "width": 1366,
     "height": 768,
-    "ratio": 1.9429256649585163,
+    "ratio": 0.955210621034651,
     "metrics": [
       {
         "name": "作業標題",
@@ -8547,12 +9010,12 @@
         "product": {
           "rect": {
             "x": 508,
-            "y": 240,
+            "y": 236,
             "width": 594,
             "height": 74.28125,
-            "top": 240,
+            "top": 236,
             "right": 1102,
-            "bottom": 314.28125,
+            "bottom": 310.28125,
             "left": 508
           },
           "style": {
@@ -8566,10 +9029,10 @@
         },
         "delta": {
           "x": 0,
-          "y": 4,
+          "y": 0,
           "width": 0,
           "height": 0,
-          "bottom": 4
+          "bottom": 0
         },
         "differences": []
       },
@@ -8599,12 +9062,12 @@
         "product": {
           "rect": {
             "x": 557,
-            "y": 253,
+            "y": 249,
             "width": 169.671875,
             "height": 20,
-            "top": 253,
+            "top": 249,
             "right": 726.671875,
-            "bottom": 273,
+            "bottom": 269,
             "left": 557
           },
           "style": {
@@ -8618,10 +9081,10 @@
         },
         "delta": {
           "x": 0,
-          "y": 4,
+          "y": 0,
           "width": 0,
           "height": 0,
-          "bottom": 4
+          "bottom": 0
         },
         "differences": []
       },
@@ -8651,12 +9114,12 @@
         "product": {
           "rect": {
             "x": 557,
-            "y": 274.6875,
+            "y": 270.6875,
             "width": 545,
             "height": 18.59375,
-            "top": 274.6875,
+            "top": 270.6875,
             "right": 1102,
-            "bottom": 293.28125,
+            "bottom": 289.28125,
             "left": 557
           },
           "style": {
@@ -8670,10 +9133,10 @@
         },
         "delta": {
           "x": 0,
-          "y": 4,
+          "y": 0,
           "width": 0,
           "height": 0,
-          "bottom": 4
+          "bottom": 0
         },
         "differences": []
       },
@@ -8963,12 +9426,12 @@
         "product": {
           "rect": {
             "x": 508,
-            "y": 336.28125,
+            "y": 332.28125,
             "width": 594,
             "height": 48.6875,
-            "top": 336.28125,
+            "top": 332.28125,
             "right": 1102,
-            "bottom": 384.96875,
+            "bottom": 380.96875,
             "left": 508
           },
           "style": {
@@ -8982,10 +9445,10 @@
         },
         "delta": {
           "x": 0,
-          "y": 4,
+          "y": 0,
           "width": 0,
           "height": 0,
-          "bottom": 4
+          "bottom": 0
         },
         "differences": []
       },
@@ -9015,12 +9478,12 @@
         "product": {
           "rect": {
             "x": 508,
-            "y": 384.96875,
+            "y": 380.96875,
             "width": 594,
             "height": 48.6875,
-            "top": 384.96875,
+            "top": 380.96875,
             "right": 1102,
-            "bottom": 433.65625,
+            "bottom": 429.65625,
             "left": 508
           },
           "style": {
@@ -9034,10 +9497,10 @@
         },
         "delta": {
           "x": 0,
-          "y": 4,
+          "y": 0,
           "width": 0,
           "height": 0,
-          "bottom": 4
+          "bottom": 0
         },
         "differences": []
       },
@@ -9067,12 +9530,12 @@
         "product": {
           "rect": {
             "x": 508,
-            "y": 433.65625,
+            "y": 429.65625,
             "width": 594,
             "height": 48.6875,
-            "top": 433.65625,
+            "top": 429.65625,
             "right": 1102,
-            "bottom": 482.34375,
+            "bottom": 478.34375,
             "left": 508
           },
           "style": {
@@ -9086,10 +9549,10 @@
         },
         "delta": {
           "x": 0,
-          "y": 4,
+          "y": 0,
           "width": 0,
           "height": 0,
-          "bottom": 4
+          "bottom": 0
         },
         "differences": []
       },
@@ -9119,12 +9582,12 @@
         "product": {
           "rect": {
             "x": 508,
-            "y": 349.28125,
+            "y": 345.28125,
             "width": 56,
             "height": 21.6875,
-            "top": 349.28125,
+            "top": 345.28125,
             "right": 564,
-            "bottom": 370.96875,
+            "bottom": 366.96875,
             "left": 508
           },
           "style": {
@@ -9138,10 +9601,10 @@
         },
         "delta": {
           "x": 0,
-          "y": 4,
+          "y": 0,
           "width": 0,
           "height": 0,
-          "bottom": 4
+          "bottom": 0
         },
         "differences": []
       },
@@ -9171,12 +9634,12 @@
         "product": {
           "rect": {
             "x": 508,
-            "y": 397.96875,
+            "y": 393.96875,
             "width": 56,
             "height": 21.6875,
-            "top": 397.96875,
+            "top": 393.96875,
             "right": 564,
-            "bottom": 419.65625,
+            "bottom": 415.65625,
             "left": 508
           },
           "style": {
@@ -9190,10 +9653,10 @@
         },
         "delta": {
           "x": 0,
-          "y": 4,
+          "y": 0,
           "width": 0,
           "height": 0,
-          "bottom": 4
+          "bottom": 0
         },
         "differences": []
       },
@@ -9223,12 +9686,12 @@
         "product": {
           "rect": {
             "x": 508,
-            "y": 446.65625,
+            "y": 442.65625,
             "width": 56,
             "height": 21.6875,
-            "top": 446.65625,
+            "top": 442.65625,
             "right": 564,
-            "bottom": 468.34375,
+            "bottom": 464.34375,
             "left": 508
           },
           "style": {
@@ -9242,10 +9705,10 @@
         },
         "delta": {
           "x": 0,
-          "y": 4,
+          "y": 0,
           "width": 0,
           "height": 0,
-          "bottom": 4
+          "bottom": 0
         },
         "differences": []
       },
@@ -9275,12 +9738,12 @@
         "product": {
           "rect": {
             "x": 1060.90625,
-            "y": 349.28125,
+            "y": 345.28125,
             "width": 41.09375,
             "height": 21.6875,
-            "top": 349.28125,
+            "top": 345.28125,
             "right": 1102,
-            "bottom": 370.96875,
+            "bottom": 366.96875,
             "left": 1060.90625
           },
           "style": {
@@ -9294,10 +9757,10 @@
         },
         "delta": {
           "x": 0,
-          "y": 4,
+          "y": 0,
           "width": 0,
           "height": 0,
-          "bottom": 4
+          "bottom": 0
         },
         "differences": []
       },
@@ -9327,12 +9790,12 @@
         "product": {
           "rect": {
             "x": 1076.859375,
-            "y": 397.96875,
+            "y": 393.96875,
             "width": 25.140625,
             "height": 21.6875,
-            "top": 397.96875,
+            "top": 393.96875,
             "right": 1102,
-            "bottom": 419.65625,
+            "bottom": 415.65625,
             "left": 1076.859375
           },
           "style": {
@@ -9346,10 +9809,10 @@
         },
         "delta": {
           "x": 0,
-          "y": 4,
+          "y": 0,
           "width": 0,
           "height": 0,
-          "bottom": 4
+          "bottom": 0
         },
         "differences": []
       },
@@ -9379,12 +9842,12 @@
         "product": {
           "rect": {
             "x": 1045.71875,
-            "y": 446.65625,
+            "y": 442.65625,
             "width": 56.28125,
             "height": 21.6875,
-            "top": 446.65625,
+            "top": 442.65625,
             "right": 1102,
-            "bottom": 468.34375,
+            "bottom": 464.34375,
             "left": 1045.71875
           },
           "style": {
@@ -9398,10 +9861,10 @@
         },
         "delta": {
           "x": 0,
-          "y": 4,
+          "y": 0,
           "width": 0,
           "height": 0,
-          "bottom": 4
+          "bottom": 0
         },
         "differences": []
       },
@@ -9639,12 +10102,12 @@
         "product": {
           "rect": {
             "x": 508,
-            "y": 514.34375,
+            "y": 510.34375,
             "width": 594,
             "height": 32.140625,
-            "top": 514.34375,
+            "top": 510.34375,
             "right": 1102,
-            "bottom": 546.484375,
+            "bottom": 542.484375,
             "left": 508
           },
           "style": {
@@ -9658,10 +10121,10 @@
         },
         "delta": {
           "x": 0,
-          "y": 4,
+          "y": 0,
           "width": 0,
           "height": 0,
-          "bottom": 4
+          "bottom": 0
         },
         "differences": []
       },
@@ -9691,12 +10154,12 @@
         "product": {
           "rect": {
             "x": 508,
-            "y": 562.484375,
+            "y": 558.484375,
             "width": 594,
             "height": 18.59375,
-            "top": 562.484375,
+            "top": 558.484375,
             "right": 1102,
-            "bottom": 581.078125,
+            "bottom": 577.078125,
             "left": 508
           },
           "style": {
@@ -9710,10 +10173,10 @@
         },
         "delta": {
           "x": 0,
-          "y": 4,
+          "y": 0,
           "width": 0,
           "height": 0,
-          "bottom": 4
+          "bottom": 0
         },
         "differences": []
       },
@@ -10549,13 +11012,92 @@
         },
         "differences": []
       }
-    ]
+    ],
+    "text": {
+      "groups": [
+        {
+          "name": "標題",
+          "reference": [
+            "核對人工報工"
+          ],
+          "product": [
+            "核對人工報工"
+          ],
+          "consistent": true
+        },
+        {
+          "name": "狀態",
+          "reference": [],
+          "product": [],
+          "consistent": true
+        },
+        {
+          "name": "內容",
+          "reference": [
+            "MC37 · WO-261102-0382",
+            "P-102 外殼",
+            "人工良品",
+            "125 件",
+            "不良合計",
+            "3 件",
+            "不良原因",
+            "刮傷 3 件",
+            "查看異動明細",
+            "確認期限：11/02 10:00（MES）"
+          ],
+          "product": [
+            "MC37 · WO-261102-0382",
+            "P-102 外殼",
+            "人工良品",
+            "125 件",
+            "不良合計",
+            "3 件",
+            "不良原因",
+            "刮傷 3 件",
+            "查看異動明細",
+            "確認期限：11/02 10:00（MES）"
+          ],
+          "consistent": true
+        },
+        {
+          "name": "步驟",
+          "reference": [
+            "選擇對象",
+            "填寫內容",
+            "3",
+            "核對送出"
+          ],
+          "product": [
+            "選擇對象",
+            "填寫內容",
+            "3",
+            "核對送出"
+          ],
+          "consistent": true
+        },
+        {
+          "name": "動作",
+          "reference": [
+            "返回修改",
+            "取消草稿",
+            "確認送出"
+          ],
+          "product": [
+            "返回修改",
+            "取消草稿",
+            "確認送出"
+          ],
+          "consistent": true
+        }
+      ],
+      "consistent": true
+    }
   },
   {
     "id": "B01",
     "width": 1366,
     "height": 768,
-    "ratio": 0.9728449853587116,
+    "ratio": 0.9709385675939483,
     "metrics": [
       {
         "name": "作業標題",
@@ -11416,10 +11958,10 @@
           "rect": {
             "x": 774,
             "y": 515.890625,
-            "width": 96,
+            "width": 100,
             "height": 32,
             "top": 515.890625,
-            "right": 870,
+            "right": 874,
             "bottom": 547.890625,
             "left": 774
           },
@@ -11435,7 +11977,7 @@
         "delta": {
           "x": 0,
           "y": 1,
-          "width": 4,
+          "width": 0,
           "height": 0.140625,
           "bottom": 0.859375
         },
@@ -12637,7 +13179,88 @@
         },
         "differences": []
       }
-    ]
+    ],
+    "text": {
+      "groups": [
+        {
+          "name": "標題",
+          "reference": [
+            "新增人工報工"
+          ],
+          "product": [
+            "新增人工報工"
+          ],
+          "consistent": true
+        },
+        {
+          "name": "狀態",
+          "reference": [],
+          "product": [],
+          "consistent": true
+        },
+        {
+          "name": "內容",
+          "reference": [
+            "MC37 · WO-261102-0382",
+            "P-102 外殼",
+            "良品數量",
+            "125",
+            "件",
+            "不良品",
+            "合計 5 件",
+            "原因",
+            "刮傷",
+            "數量",
+            "3",
+            "毛邊",
+            "2",
+            "新增原因",
+            "沒有不良品",
+            "備註（選填）"
+          ],
+          "product": [
+            "MC37 · WO-261102-0382",
+            "P-102 外殼",
+            "良品數量",
+            "125",
+            "件",
+            "不良品",
+            "合計",
+            "5",
+            "件",
+            "原因",
+            "刮傷",
+            "數量",
+            "3",
+            "毛邊",
+            "2",
+            "新增原因",
+            "沒有不良品",
+            "備註（選填）"
+          ],
+          "consistent": true
+        },
+        {
+          "name": "步驟",
+          "reference": [],
+          "product": [],
+          "consistent": true
+        },
+        {
+          "name": "動作",
+          "reference": [
+            "草稿已儲存",
+            "核對內容"
+          ],
+          "product": [
+            "草稿已儲存",
+            "核對內容"
+          ],
+          "consistent": true
+        }
+      ],
+      "consistent": true
+    }
   },
   {
     "id": "B02",
@@ -14881,13 +15504,96 @@
         },
         "differences": []
       }
-    ]
+    ],
+    "text": {
+      "groups": [
+        {
+          "name": "標題",
+          "reference": [
+            "核對人工報工"
+          ],
+          "product": [
+            "核對人工報工"
+          ],
+          "consistent": true
+        },
+        {
+          "name": "狀態",
+          "reference": [
+            "尚未送出"
+          ],
+          "product": [
+            "尚未送出"
+          ],
+          "consistent": true
+        },
+        {
+          "name": "內容",
+          "reference": [
+            "MC37 · WO-261102-0382",
+            "P-102 外殼",
+            "報工紀錄",
+            "RPT-0382-01",
+            "報工時間",
+            "11/02 09:10",
+            "人工良品",
+            "120 件",
+            "125 件",
+            "不良合計",
+            "3 件",
+            "不良原因",
+            "刮傷 3 件",
+            "查看異動明細",
+            "確認期限：11/02 10:00（MES）"
+          ],
+          "product": [
+            "MC37 · WO-261102-0382",
+            "P-102 外殼",
+            "報工紀錄",
+            "RPT-0382-01",
+            "報工時間",
+            "11/02 09:10",
+            "人工良品",
+            "120 件",
+            "125 件",
+            "不良合計",
+            "3 件",
+            "不良原因",
+            "刮傷 3 件",
+            "查看異動明細",
+            "確認期限：11/02 10:00（MES）"
+          ],
+          "consistent": true
+        },
+        {
+          "name": "步驟",
+          "reference": [],
+          "product": [],
+          "consistent": true
+        },
+        {
+          "name": "動作",
+          "reference": [
+            "返回修改",
+            "取消草稿",
+            "確認送出"
+          ],
+          "product": [
+            "返回修改",
+            "取消草稿",
+            "確認送出"
+          ],
+          "consistent": true
+        }
+      ],
+      "consistent": true
+    }
   },
   {
     "id": "B03",
     "width": 1366,
     "height": 768,
-    "ratio": 1.2899775805270863,
+    "ratio": 1.2609047096144461,
     "metrics": [
       {
         "name": "作業標題",
@@ -16969,13 +17675,92 @@
         },
         "differences": []
       }
-    ]
+    ],
+    "text": {
+      "groups": [
+        {
+          "name": "標題",
+          "reference": [
+            "核對刪除人工報工"
+          ],
+          "product": [
+            "核對刪除人工報工"
+          ],
+          "consistent": true
+        },
+        {
+          "name": "狀態",
+          "reference": [
+            "尚未送出"
+          ],
+          "product": [
+            "尚未送出"
+          ],
+          "consistent": true
+        },
+        {
+          "name": "內容",
+          "reference": [
+            "MC37 · WO-261102-0382",
+            "P-102 外殼",
+            "報工紀錄",
+            "RPT-0382-01",
+            "報工時間",
+            "11/02 09:10",
+            "將刪除良品",
+            "120 件",
+            "將刪除不良",
+            "3 件",
+            "我已核對對象與影響，確認執行這筆操作。",
+            "查看異動明細",
+            "確認期限：11/02 10:00（MES）"
+          ],
+          "product": [
+            "MC37 · WO-261102-0382",
+            "P-102 外殼",
+            "報工紀錄",
+            "RPT-0382-01",
+            "報工時間",
+            "11/02 09:10",
+            "將刪除良品",
+            "120 件",
+            "將刪除不良",
+            "3 件",
+            "我已核對對象與影響，確認執行這筆操作。",
+            "查看異動明細",
+            "確認期限：11/02 10:00（MES）"
+          ],
+          "consistent": true
+        },
+        {
+          "name": "步驟",
+          "reference": [],
+          "product": [],
+          "consistent": true
+        },
+        {
+          "name": "動作",
+          "reference": [
+            "返回選擇",
+            "取消草稿",
+            "確認送出"
+          ],
+          "product": [
+            "返回選擇",
+            "取消草稿",
+            "確認送出"
+          ],
+          "consistent": true
+        }
+      ],
+      "consistent": true
+    }
   },
   {
     "id": "B04",
     "width": 1366,
     "height": 768,
-    "ratio": 1.2940763787213274,
+    "ratio": 1.2650035078086872,
     "metrics": [
       {
         "name": "作業標題",
@@ -18953,7 +19738,84 @@
         },
         "differences": []
       }
-    ]
+    ],
+    "text": {
+      "groups": [
+        {
+          "name": "標題",
+          "reference": [
+            "核對整張排程完工"
+          ],
+          "product": [
+            "核對整張排程完工"
+          ],
+          "consistent": true
+        },
+        {
+          "name": "狀態",
+          "reference": [
+            "尚未送出"
+          ],
+          "product": [
+            "尚未送出"
+          ],
+          "consistent": true
+        },
+        {
+          "name": "內容",
+          "reference": [
+            "MC37 · WO-261102-0382",
+            "P-102 外殼",
+            "影響工單",
+            "WO-261102-0382、0383",
+            "排程狀態",
+            "生產中",
+            "完工",
+            "下一排程時間",
+            "依伺服器預覽確認",
+            "我已核對對象與影響，確認執行這筆操作。",
+            "查看異動明細",
+            "確認期限：11/02 10:00（MES）"
+          ],
+          "product": [
+            "MC37 · WO-261102-0382",
+            "P-102 外殼",
+            "影響工單",
+            "WO-261102-0382、0383",
+            "排程狀態",
+            "生產中",
+            "完工",
+            "下一排程時間",
+            "依伺服器預覽確認",
+            "我已核對對象與影響，確認執行這筆操作。",
+            "查看異動明細",
+            "確認期限：11/02 10:00（MES）"
+          ],
+          "consistent": true
+        },
+        {
+          "name": "步驟",
+          "reference": [],
+          "product": [],
+          "consistent": true
+        },
+        {
+          "name": "動作",
+          "reference": [
+            "返回選擇",
+            "取消草稿",
+            "確認送出"
+          ],
+          "product": [
+            "返回選擇",
+            "取消草稿",
+            "確認送出"
+          ],
+          "consistent": true
+        }
+      ],
+      "consistent": true
+    }
   },
   {
     "id": "B05",
@@ -20469,13 +21331,74 @@
         },
         "differences": []
       }
-    ]
+    ],
+    "text": {
+      "groups": [
+        {
+          "name": "標題",
+          "reference": [
+            "調整模穴數"
+          ],
+          "product": [
+            "調整模穴數"
+          ],
+          "consistent": true
+        },
+        {
+          "name": "狀態",
+          "reference": [],
+          "product": [],
+          "consistent": true
+        },
+        {
+          "name": "內容",
+          "reference": [
+            "MC37 · WO-261102-0382",
+            "P-102 外殼",
+            "模穴數",
+            "4",
+            "穴",
+            "目前 2 穴"
+          ],
+          "product": [
+            "MC37 · WO-261102-0382",
+            "P-102 外殼",
+            "模穴數",
+            "4",
+            "穴",
+            "目前",
+            "2",
+            "穴"
+          ],
+          "consistent": true
+        },
+        {
+          "name": "步驟",
+          "reference": [],
+          "product": [],
+          "consistent": true
+        },
+        {
+          "name": "動作",
+          "reference": [
+            "草稿已儲存",
+            "核對內容"
+          ],
+          "product": [
+            "草稿已儲存",
+            "核對內容"
+          ],
+          "consistent": true
+        }
+      ],
+      "consistent": true
+    }
   },
   {
     "id": "B06",
     "width": 1366,
     "height": 768,
-    "ratio": 1.580325006100537,
+    "ratio": 1.5709835590531966,
     "metrics": [
       {
         "name": "作業標題",
@@ -22869,7 +23792,125 @@
         },
         "differences": []
       }
-    ]
+    ],
+    "text": {
+      "groups": [
+        {
+          "name": "標題",
+          "reference": [
+            "新增生產排程"
+          ],
+          "product": [
+            "新增生產排程"
+          ],
+          "consistent": true
+        },
+        {
+          "name": "狀態",
+          "reference": [],
+          "product": [],
+          "consistent": true
+        },
+        {
+          "name": "內容",
+          "reference": [
+            "MC37 · WO-261102-0382",
+            "P-102 外殼",
+            "設備",
+            "MC37",
+            "模具",
+            "M-102",
+            "品號／規格",
+            "P-102",
+            "開始時間（MES）",
+            "2026-11-02T08:00",
+            "週期",
+            "30",
+            "秒",
+            "目標模次",
+            "500",
+            "狀態",
+            "量產（DO）",
+            "工單分配",
+            "2 筆明細",
+            "模具明細／品號",
+            "D1 · P-102",
+            "工單",
+            "WO-261102-0382",
+            "穴數",
+            "2",
+            "移除此列",
+            "模具明細／品號",
+            "D2 · P-104",
+            "工單",
+            "未分配",
+            "穴數",
+            "0",
+            "移除此列",
+            "新增工單明細",
+            "進階設定"
+          ],
+          "product": [
+            "MC37 · WO-261102-0382",
+            "P-102 外殼",
+            "設備",
+            "MC37",
+            "模具",
+            "M-102",
+            "品號／規格",
+            "P-102",
+            "開始時間（MES）",
+            "2026-11-02T08:00",
+            "週期",
+            "30",
+            "秒",
+            "目標模次",
+            "500",
+            "狀態",
+            "量產（DO）",
+            "工單分配",
+            "2",
+            "筆明細",
+            "模具明細／品號",
+            "D1 · P-102",
+            "工單",
+            "WO-261102-0382",
+            "穴數",
+            "2",
+            "移除此列",
+            "模具明細／品號",
+            "D2 · P-104",
+            "工單",
+            "未分配",
+            "穴數",
+            "0",
+            "移除此列",
+            "新增工單明細",
+            "進階設定"
+          ],
+          "consistent": true
+        },
+        {
+          "name": "步驟",
+          "reference": [],
+          "product": [],
+          "consistent": true
+        },
+        {
+          "name": "動作",
+          "reference": [
+            "草稿已儲存",
+            "核對內容"
+          ],
+          "product": [
+            "草稿已儲存",
+            "核對內容"
+          ],
+          "consistent": true
+        }
+      ],
+      "consistent": true
+    }
   },
   {
     "id": "B07",
@@ -26465,7 +27506,126 @@
         },
         "differences": []
       }
-    ]
+    ],
+    "text": {
+      "groups": [
+        {
+          "name": "標題",
+          "reference": [
+            "核對生產排程"
+          ],
+          "product": [
+            "核對生產排程"
+          ],
+          "consistent": true
+        },
+        {
+          "name": "狀態",
+          "reference": [
+            "尚未送出"
+          ],
+          "product": [
+            "尚未送出"
+          ],
+          "consistent": true
+        },
+        {
+          "name": "內容",
+          "reference": [
+            "MC37 · WO-261102-0382",
+            "P-102 外殼",
+            "設備",
+            "MC37",
+            "模具",
+            "M-102",
+            "開始時間（MES）",
+            "2026-11-02 07:30",
+            "2026-11-02 08:00",
+            "預計結束（MES）",
+            "11/02 12:10",
+            "週期",
+            "28 秒",
+            "30 秒",
+            "目標模次",
+            "500 模",
+            "生產狀態",
+            "量產（DO）",
+            "D1 · P-102",
+            "WO-261102-0382",
+            "模穴數",
+            "1 穴",
+            "2 穴",
+            "目標件數",
+            "1000 件",
+            "D2 · P-104",
+            "未分配工單",
+            "模穴數",
+            "0 穴",
+            "目標件數",
+            "0 件",
+            "查看異動明細",
+            "確認期限：11/02 10:00（MES）"
+          ],
+          "product": [
+            "MC37 · WO-261102-0382",
+            "P-102 外殼",
+            "設備",
+            "MC37",
+            "模具",
+            "M-102",
+            "開始時間（MES）",
+            "2026-11-02 07:30",
+            "2026-11-02 08:00",
+            "預計結束（MES）",
+            "11/02 12:10",
+            "週期",
+            "28 秒",
+            "30 秒",
+            "目標模次",
+            "500 模",
+            "生產狀態",
+            "量產（DO）",
+            "D1 · P-102",
+            "WO-261102-0382",
+            "模穴數",
+            "1 穴",
+            "2 穴",
+            "目標件數",
+            "1000 件",
+            "D2 · P-104",
+            "未分配工單",
+            "模穴數",
+            "0 穴",
+            "目標件數",
+            "0 件",
+            "查看異動明細",
+            "確認期限：11/02 10:00（MES）"
+          ],
+          "consistent": true
+        },
+        {
+          "name": "步驟",
+          "reference": [],
+          "product": [],
+          "consistent": true
+        },
+        {
+          "name": "動作",
+          "reference": [
+            "返回修改",
+            "取消草稿",
+            "確認送出"
+          ],
+          "product": [
+            "返回修改",
+            "取消草稿",
+            "確認送出"
+          ],
+          "consistent": true
+        }
+      ],
+      "consistent": true
+    }
   },
   {
     "id": "B08",
@@ -28657,13 +29817,102 @@
         },
         "differences": []
       }
-    ]
+    ],
+    "text": {
+      "groups": [
+        {
+          "name": "標題",
+          "reference": [
+            "模具作業"
+          ],
+          "product": [
+            "模具作業"
+          ],
+          "consistent": true
+        },
+        {
+          "name": "狀態",
+          "reference": [],
+          "product": [],
+          "consistent": true
+        },
+        {
+          "name": "內容",
+          "reference": [
+            "MC37 · WO-261102-0382",
+            "P-102 外殼",
+            "選擇本次要執行的階段。",
+            "1",
+            "上模開始",
+            "尚未執行",
+            "選擇",
+            "2",
+            "上模完成",
+            "上模完成後可進入生產",
+            "選擇",
+            "3",
+            "下模開始",
+            "依目前模具狀態執行",
+            "選擇",
+            "4",
+            "下模完成",
+            "依預覽核對完工連動",
+            "選擇",
+            "清除模具時間…"
+          ],
+          "product": [
+            "MC37 · WO-261102-0382",
+            "P-102 外殼",
+            "選擇本次要執行的階段。",
+            "1",
+            "上模開始",
+            "目前可執行",
+            "選擇",
+            "2",
+            "上模完成",
+            "尚未完成前一階段",
+            "選擇",
+            "3",
+            "下模開始",
+            "尚未完成前一階段",
+            "選擇",
+            "4",
+            "下模完成",
+            "尚未完成前一階段",
+            "選擇",
+            "清除換模紀錄",
+            "沒有上模紀錄可清除",
+            "查詢歷史"
+          ],
+          "consistent": false
+        },
+        {
+          "name": "步驟",
+          "reference": [],
+          "product": [],
+          "consistent": true
+        },
+        {
+          "name": "動作",
+          "reference": [
+            "草稿已儲存",
+            "核對內容"
+          ],
+          "product": [
+            "草稿已儲存",
+            "核對內容"
+          ],
+          "consistent": true
+        }
+      ],
+      "consistent": false
+    }
   },
   {
     "id": "B09",
     "width": 1366,
     "height": 768,
-    "ratio": 1.296078117374329,
+    "ratio": 1.2050466691068815,
     "metrics": [
       {
         "name": "作業標題",
@@ -30228,7 +31477,54 @@
       {
         "name": "核對獨立確認",
         "index": 0,
-        "missing": "reference"
+        "reference": {
+          "rect": {
+            "x": 774,
+            "y": 654.28125,
+            "width": 567,
+            "height": 20.796875,
+            "top": 654.28125,
+            "right": 1341,
+            "bottom": 675.078125,
+            "left": 774
+          },
+          "style": {
+            "font-family": "Inter, \"Noto Sans TC\", system-ui, -apple-system, \"Segoe UI\", sans-serif",
+            "font-size": "13px",
+            "font-weight": "400",
+            "line-height": "20.8px",
+            "letter-spacing": "normal",
+            "color": "rgb(236, 236, 238)"
+          }
+        },
+        "product": {
+          "rect": {
+            "x": 774,
+            "y": 654.28125,
+            "width": 567,
+            "height": 20.796875,
+            "top": 654.28125,
+            "right": 1341,
+            "bottom": 675.078125,
+            "left": 774
+          },
+          "style": {
+            "font-family": "Inter, \"Noto Sans TC\", system-ui, -apple-system, \"Segoe UI\", sans-serif",
+            "font-size": "13px",
+            "font-weight": "400",
+            "line-height": "20.8px",
+            "letter-spacing": "normal",
+            "color": "rgb(236, 236, 238)"
+          }
+        },
+        "delta": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0,
+          "bottom": 0
+        },
+        "differences": []
       },
       {
         "name": "核對明細",
@@ -30236,12 +31532,12 @@
         "reference": {
           "rect": {
             "x": 774,
-            "y": 650.28125,
+            "y": 707.078125,
             "width": 567,
             "height": 32.140625,
-            "top": 650.28125,
+            "top": 707.078125,
             "right": 1341,
-            "bottom": 682.421875,
+            "bottom": 739.21875,
             "left": 774
           },
           "style": {
@@ -30275,10 +31571,10 @@
         },
         "delta": {
           "x": 0,
-          "y": 56.796875,
+          "y": 0,
           "width": 0,
           "height": 0,
-          "bottom": 56.796875
+          "bottom": 0
         },
         "differences": []
       },
@@ -30288,12 +31584,12 @@
         "reference": {
           "rect": {
             "x": 774,
-            "y": 698.421875,
+            "y": 755.21875,
             "width": 567,
             "height": 18.59375,
-            "top": 698.421875,
+            "top": 755.21875,
             "right": 1341,
-            "bottom": 717.015625,
+            "bottom": 773.8125,
             "left": 774
           },
           "style": {
@@ -30327,10 +31623,10 @@
         },
         "delta": {
           "x": 0,
-          "y": 56.796875,
+          "y": 0,
           "width": 0,
           "height": 0,
-          "bottom": 56.796875
+          "bottom": 0
         },
         "differences": []
       },
@@ -31218,13 +32514,106 @@
         },
         "differences": []
       }
-    ]
+    ],
+    "text": {
+      "groups": [
+        {
+          "name": "標題",
+          "reference": [
+            "核對下模完成"
+          ],
+          "product": [
+            "核對下模完成"
+          ],
+          "consistent": true
+        },
+        {
+          "name": "狀態",
+          "reference": [
+            "尚未送出"
+          ],
+          "product": [
+            "尚未送出"
+          ],
+          "consistent": true
+        },
+        {
+          "name": "內容",
+          "reference": [
+            "MC37 · WO-261102-0382",
+            "P-102 外殼",
+            "本次動作",
+            "下模完成",
+            "模具",
+            "M-102",
+            "完成下模時間",
+            "11/02 09:45",
+            "出站時間",
+            "11/02 09:45",
+            "完工時間",
+            "11/02 09:45",
+            "完工狀態",
+            "未完工",
+            "已完工",
+            "影響工單",
+            "WO-261102-0382、WO-261102-0383",
+            "我已核對對象與影響，確認執行這筆操作。",
+            "查看異動明細",
+            "確認期限：11/02 10:00（MES）"
+          ],
+          "product": [
+            "MC37 · WO-261102-0382",
+            "P-102 外殼",
+            "本次動作",
+            "下模完成",
+            "模具",
+            "M-102",
+            "完成下模時間",
+            "11/02 09:45",
+            "出站時間",
+            "11/02 09:45",
+            "完工時間",
+            "11/02 09:45",
+            "完工狀態",
+            "未完工",
+            "已完工",
+            "影響工單",
+            "WO-261102-0382、WO-261102-0383",
+            "我已核對對象與影響，確認執行這筆操作。",
+            "查看異動明細",
+            "確認期限：11/02 10:00（MES）"
+          ],
+          "consistent": true
+        },
+        {
+          "name": "步驟",
+          "reference": [],
+          "product": [],
+          "consistent": true
+        },
+        {
+          "name": "動作",
+          "reference": [
+            "返回選擇",
+            "取消草稿",
+            "確認送出"
+          ],
+          "product": [
+            "返回選擇",
+            "取消草稿",
+            "確認送出"
+          ],
+          "consistent": true
+        }
+      ],
+      "consistent": true
+    }
   },
   {
     "id": "B10",
     "width": 1366,
     "height": 768,
-    "ratio": 1.1387986517813566,
+    "ratio": 1.1097257808687164,
     "metrics": [
       {
         "name": "作業標題",
@@ -34814,13 +36203,136 @@
         },
         "differences": []
       }
-    ]
+    ],
+    "text": {
+      "groups": [
+        {
+          "name": "標題",
+          "reference": [
+            "核對清除模具時間"
+          ],
+          "product": [
+            "核對清除模具時間"
+          ],
+          "consistent": true
+        },
+        {
+          "name": "狀態",
+          "reference": [
+            "尚未送出"
+          ],
+          "product": [
+            "尚未送出"
+          ],
+          "consistent": true
+        },
+        {
+          "name": "內容",
+          "reference": [
+            "MC37 · WO-261102-0382",
+            "P-102 外殼",
+            "本次動作",
+            "清除換模紀錄",
+            "模具",
+            "M-102",
+            "開始上模",
+            "11/02 07:50",
+            "清除",
+            "完成上模",
+            "11/02 08:10",
+            "清除",
+            "開始下模",
+            "11/02 09:40",
+            "清除",
+            "完成下模",
+            "11/02 09:45",
+            "清除",
+            "進站時間",
+            "11/02 07:50",
+            "清除",
+            "出站時間",
+            "11/02 09:45",
+            "清除",
+            "完工時間",
+            "11/02 09:45",
+            "清除",
+            "完工狀態",
+            "已完工",
+            "未完工",
+            "影響工單",
+            "WO-261102-0382、WO-261102-0383",
+            "我已核對對象與影響，確認執行這筆操作。",
+            "查看異動明細",
+            "確認期限：11/02 10:00（MES）"
+          ],
+          "product": [
+            "MC37 · WO-261102-0382",
+            "P-102 外殼",
+            "本次動作",
+            "清除換模紀錄",
+            "模具",
+            "M-102",
+            "開始上模",
+            "11/02 07:50",
+            "清除",
+            "完成上模",
+            "11/02 08:10",
+            "清除",
+            "開始下模",
+            "11/02 09:40",
+            "清除",
+            "完成下模",
+            "11/02 09:45",
+            "清除",
+            "進站時間",
+            "11/02 07:50",
+            "清除",
+            "出站時間",
+            "11/02 09:45",
+            "清除",
+            "完工時間",
+            "11/02 09:45",
+            "清除",
+            "完工狀態",
+            "已完工",
+            "未完工",
+            "影響工單",
+            "WO-261102-0382、WO-261102-0383",
+            "我已核對對象與影響，確認執行這筆操作。",
+            "查看異動明細",
+            "確認期限：11/02 10:00（MES）"
+          ],
+          "consistent": true
+        },
+        {
+          "name": "步驟",
+          "reference": [],
+          "product": [],
+          "consistent": true
+        },
+        {
+          "name": "動作",
+          "reference": [
+            "返回選擇",
+            "取消草稿",
+            "確認送出"
+          ],
+          "product": [
+            "返回選擇",
+            "取消草稿",
+            "確認送出"
+          ],
+          "consistent": true
+        }
+      ],
+      "consistent": true
+    }
   },
   {
     "id": "F01",
     "width": 390,
     "height": 810,
-    "ratio": 1.2355175688509021,
+    "ratio": 1.154795821462488,
     "metrics": [
       {
         "name": "作業標題",
@@ -35108,10 +36620,10 @@
         "product": {
           "rect": {
             "x": 21,
-            "y": 216.875,
+            "y": 220.875,
             "width": 348,
-            "height": 216.828125,
-            "top": 216.875,
+            "height": 212.828125,
+            "top": 220.875,
             "right": 369,
             "bottom": 433.703125,
             "left": 21
@@ -35127,9 +36639,61 @@
         },
         "delta": {
           "x": 0,
-          "y": 4,
+          "y": 0,
           "width": 0,
-          "height": 4,
+          "height": 0,
+          "bottom": 0
+        },
+        "differences": []
+      },
+      {
+        "name": "空白圖示",
+        "index": 0,
+        "reference": {
+          "rect": {
+            "x": 186,
+            "y": 258.875,
+            "width": 18,
+            "height": 18,
+            "top": 258.875,
+            "right": 204,
+            "bottom": 276.875,
+            "left": 186
+          },
+          "style": {
+            "font-family": "Inter, \"Noto Sans TC\", system-ui, -apple-system, \"Segoe UI\", sans-serif",
+            "font-size": "14px",
+            "font-weight": "400",
+            "line-height": "21.7px",
+            "letter-spacing": "normal",
+            "color": "rgb(170, 170, 177)"
+          }
+        },
+        "product": {
+          "rect": {
+            "x": 186,
+            "y": 258.875,
+            "width": 18,
+            "height": 18,
+            "top": 258.875,
+            "right": 204,
+            "bottom": 276.875,
+            "left": 186
+          },
+          "style": {
+            "font-family": "Inter, \"Noto Sans TC\", system-ui, -apple-system, \"Segoe UI\", sans-serif",
+            "font-size": "14px",
+            "font-weight": "400",
+            "line-height": "21.7px",
+            "letter-spacing": "normal",
+            "color": "rgb(170, 170, 177)"
+          }
+        },
+        "delta": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0,
           "bottom": 0
         },
         "differences": []
@@ -35238,13 +36802,66 @@
         },
         "differences": []
       }
-    ]
+    ],
+    "text": {
+      "groups": [
+        {
+          "name": "標題",
+          "reference": [
+            "新增人工報工"
+          ],
+          "product": [
+            "新增人工報工"
+          ],
+          "consistent": true
+        },
+        {
+          "name": "狀態",
+          "reference": [],
+          "product": [],
+          "consistent": true
+        },
+        {
+          "name": "內容",
+          "reference": [
+            "選擇要操作的工單",
+            "搜尋設備或工單，確認後再帶入。",
+            "選擇工單"
+          ],
+          "product": [
+            "選擇要操作的工單",
+            "搜尋設備或工單，確認後再帶入。",
+            "選擇工單"
+          ],
+          "consistent": true
+        },
+        {
+          "name": "步驟",
+          "reference": [],
+          "product": [],
+          "consistent": true
+        },
+        {
+          "name": "動作",
+          "reference": [
+            "先選擇作業對象",
+            "下一步"
+          ],
+          "product": [
+            "先選擇作業對象",
+            "下一步"
+          ],
+          "consistent": true
+        }
+      ],
+      "consistent": true
+    }
   },
   {
     "id": "F02",
     "width": 390,
     "height": 810,
-    "ratio": 0.8059512503956948,
+    "ratio": 0.7996201329534663,
     "metrics": [
       {
         "name": "作業標題",
@@ -35897,10 +37514,10 @@
           "rect": {
             "x": 21,
             "y": 506.578125,
-            "width": 96,
+            "width": 100,
             "height": 32,
             "top": 506.578125,
-            "right": 117,
+            "right": 121,
             "bottom": 538.578125,
             "left": 21
           },
@@ -35916,7 +37533,7 @@
         "delta": {
           "x": 0,
           "y": 1,
-          "width": 4,
+          "width": 0,
           "height": 0.140625,
           "bottom": 0.859375
         },
@@ -36338,7 +37955,84 @@
         },
         "differences": []
       }
-    ]
+    ],
+    "text": {
+      "groups": [
+        {
+          "name": "標題",
+          "reference": [
+            "新增人工報工"
+          ],
+          "product": [
+            "新增人工報工"
+          ],
+          "consistent": true
+        },
+        {
+          "name": "狀態",
+          "reference": [],
+          "product": [],
+          "consistent": true
+        },
+        {
+          "name": "內容",
+          "reference": [
+            "MC37 · WO-261102-0382",
+            "P-102 外殼",
+            "良品數量",
+            "125",
+            "件",
+            "不良品",
+            "合計 3 件",
+            "原因",
+            "刮傷",
+            "數量",
+            "3",
+            "新增原因",
+            "沒有不良品",
+            "備註（選填）"
+          ],
+          "product": [
+            "MC37 · WO-261102-0382",
+            "P-102 外殼",
+            "良品數量",
+            "125",
+            "件",
+            "不良品",
+            "合計",
+            "3",
+            "件",
+            "原因",
+            "刮傷",
+            "數量",
+            "3",
+            "新增原因",
+            "沒有不良品",
+            "備註（選填）"
+          ],
+          "consistent": true
+        },
+        {
+          "name": "步驟",
+          "reference": [],
+          "product": [],
+          "consistent": true
+        },
+        {
+          "name": "動作",
+          "reference": [
+            "草稿已儲存",
+            "核對內容"
+          ],
+          "product": [
+            "草稿已儲存",
+            "核對內容"
+          ],
+          "consistent": true
+        }
+      ],
+      "consistent": true
+    }
   },
   {
     "id": "F03",
@@ -37438,13 +39132,86 @@
         },
         "differences": []
       }
-    ]
+    ],
+    "text": {
+      "groups": [
+        {
+          "name": "標題",
+          "reference": [
+            "核對人工報工"
+          ],
+          "product": [
+            "核對人工報工"
+          ],
+          "consistent": true
+        },
+        {
+          "name": "狀態",
+          "reference": [
+            "尚未送出"
+          ],
+          "product": [
+            "尚未送出"
+          ],
+          "consistent": true
+        },
+        {
+          "name": "內容",
+          "reference": [
+            "MC37 · WO-261102-0382",
+            "P-102 外殼",
+            "人工良品",
+            "125 件",
+            "不良合計",
+            "3 件",
+            "不良原因",
+            "刮傷 3 件",
+            "查看異動明細",
+            "確認期限：11/02 10:00（MES）"
+          ],
+          "product": [
+            "MC37 · WO-261102-0382",
+            "P-102 外殼",
+            "人工良品",
+            "125 件",
+            "不良合計",
+            "3 件",
+            "不良原因",
+            "刮傷 3 件",
+            "查看異動明細",
+            "確認期限：11/02 10:00（MES）"
+          ],
+          "consistent": true
+        },
+        {
+          "name": "步驟",
+          "reference": [],
+          "product": [],
+          "consistent": true
+        },
+        {
+          "name": "動作",
+          "reference": [
+            "返回修改",
+            "取消草稿",
+            "確認送出"
+          ],
+          "product": [
+            "返回修改",
+            "取消草稿",
+            "確認送出"
+          ],
+          "consistent": true
+        }
+      ],
+      "consistent": true
+    }
   },
   {
     "id": "F04",
     "width": 390,
     "height": 810,
-    "ratio": 4.539411206077873,
+    "ratio": 2.8537511870845202,
     "metrics": [
       {
         "name": "作業標題",
@@ -37994,10 +39761,10 @@
             "x": 21,
             "y": 212,
             "width": 348,
-            "height": 216.828125,
+            "height": 212.828125,
             "top": 212,
             "right": 369,
-            "bottom": 428.828125,
+            "bottom": 424.828125,
             "left": 21
           },
           "style": {
@@ -38013,8 +39780,60 @@
           "x": 0,
           "y": 0,
           "width": 0,
-          "height": 4,
-          "bottom": 4
+          "height": 0,
+          "bottom": 0
+        },
+        "differences": []
+      },
+      {
+        "name": "空白圖示",
+        "index": 0,
+        "reference": {
+          "rect": {
+            "x": 186,
+            "y": 250,
+            "width": 18,
+            "height": 18,
+            "top": 250,
+            "right": 204,
+            "bottom": 268,
+            "left": 186
+          },
+          "style": {
+            "font-family": "Inter, \"Noto Sans TC\", system-ui, -apple-system, \"Segoe UI\", sans-serif",
+            "font-size": "14px",
+            "font-weight": "400",
+            "line-height": "21.7px",
+            "letter-spacing": "normal",
+            "color": "rgb(170, 170, 177)"
+          }
+        },
+        "product": {
+          "rect": {
+            "x": 186,
+            "y": 250,
+            "width": 18,
+            "height": 18,
+            "top": 250,
+            "right": 204,
+            "bottom": 268,
+            "left": 186
+          },
+          "style": {
+            "font-family": "Inter, \"Noto Sans TC\", system-ui, -apple-system, \"Segoe UI\", sans-serif",
+            "font-size": "14px",
+            "font-weight": "400",
+            "line-height": "21.7px",
+            "letter-spacing": "normal",
+            "color": "rgb(170, 170, 177)"
+          }
+        },
+        "delta": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0,
+          "bottom": 0
         },
         "differences": []
       },
@@ -38122,13 +39941,80 @@
         },
         "differences": []
       }
-    ]
+    ],
+    "text": {
+      "groups": [
+        {
+          "name": "標題",
+          "reference": [
+            "新增人工報工"
+          ],
+          "product": [
+            "新增人工報工"
+          ],
+          "consistent": true
+        },
+        {
+          "name": "狀態",
+          "reference": [],
+          "product": [],
+          "consistent": true
+        },
+        {
+          "name": "內容",
+          "reference": [
+            "選擇要操作的工單",
+            "搜尋設備或工單，確認後再帶入。",
+            "選擇工單"
+          ],
+          "product": [
+            "選擇要操作的工單",
+            "搜尋設備或工單，確認後再帶入。",
+            "選擇工單"
+          ],
+          "consistent": true
+        },
+        {
+          "name": "步驟",
+          "reference": [
+            "1",
+            "選擇對象",
+            "2",
+            "填寫內容",
+            "3",
+            "核對送出"
+          ],
+          "product": [
+            "1",
+            "選擇對象",
+            "2",
+            "填寫內容",
+            "3",
+            "核對送出"
+          ],
+          "consistent": true
+        },
+        {
+          "name": "動作",
+          "reference": [
+            "先選擇作業對象",
+            "下一步"
+          ],
+          "product": [
+            "先選擇作業對象",
+            "下一步"
+          ],
+          "consistent": true
+        }
+      ],
+      "consistent": true
+    }
   },
   {
     "id": "F05",
     "width": 390,
     "height": 810,
-    "ratio": 5.241215574548908,
+    "ratio": 4.47230136119025,
     "metrics": [
       {
         "name": "作業標題",
@@ -38208,12 +40094,12 @@
         "product": {
           "rect": {
             "x": 21,
-            "y": 216,
+            "y": 212,
             "width": 348,
             "height": 74.28125,
-            "top": 216,
+            "top": 212,
             "right": 369,
-            "bottom": 290.28125,
+            "bottom": 286.28125,
             "left": 21
           },
           "style": {
@@ -38227,10 +40113,10 @@
         },
         "delta": {
           "x": 0,
-          "y": 4,
+          "y": 0,
           "width": 0,
           "height": 0,
-          "bottom": 4
+          "bottom": 0
         },
         "differences": []
       },
@@ -38260,12 +40146,12 @@
         "product": {
           "rect": {
             "x": 70,
-            "y": 229,
+            "y": 225,
             "width": 169.671875,
             "height": 20,
-            "top": 229,
+            "top": 225,
             "right": 239.671875,
-            "bottom": 249,
+            "bottom": 245,
             "left": 70
           },
           "style": {
@@ -38279,10 +40165,10 @@
         },
         "delta": {
           "x": 0,
-          "y": 4,
+          "y": 0,
           "width": 0,
           "height": 0,
-          "bottom": 4
+          "bottom": 0
         },
         "differences": []
       },
@@ -38312,12 +40198,12 @@
         "product": {
           "rect": {
             "x": 70,
-            "y": 250.6875,
+            "y": 246.6875,
             "width": 251,
             "height": 18.59375,
-            "top": 250.6875,
+            "top": 246.6875,
             "right": 321,
-            "bottom": 269.28125,
+            "bottom": 265.28125,
             "left": 70
           },
           "style": {
@@ -38331,10 +40217,10 @@
         },
         "delta": {
           "x": 0,
-          "y": 4,
+          "y": 0,
           "width": 0,
           "height": 0,
-          "bottom": 4
+          "bottom": 0
         },
         "differences": []
       },
@@ -38364,12 +40250,12 @@
         "product": {
           "rect": {
             "x": 21,
-            "y": 309.28125,
+            "y": 305.28125,
             "width": 348,
             "height": 67.140625,
-            "top": 309.28125,
+            "top": 305.28125,
             "right": 369,
-            "bottom": 376.421875,
+            "bottom": 372.421875,
             "left": 21
           },
           "style": {
@@ -38383,10 +40269,10 @@
         },
         "delta": {
           "x": 0,
-          "y": 1,
+          "y": 3,
           "width": 0,
           "height": 0,
-          "bottom": 1
+          "bottom": 3
         },
         "differences": []
       },
@@ -38416,12 +40302,12 @@
         "product": {
           "rect": {
             "x": 21,
-            "y": 336.421875,
+            "y": 332.421875,
             "width": 326,
             "height": 40,
-            "top": 336.421875,
+            "top": 332.421875,
             "right": 347,
-            "bottom": 376.421875,
+            "bottom": 372.421875,
             "left": 21
           },
           "style": {
@@ -38435,10 +40321,10 @@
         },
         "delta": {
           "x": 0,
-          "y": 1,
+          "y": 3,
           "width": 0,
           "height": 0,
-          "bottom": 1
+          "bottom": 3
         },
         "differences": []
       },
@@ -38468,12 +40354,12 @@
         "product": {
           "rect": {
             "x": 356,
-            "y": 346.34375,
+            "y": 342.34375,
             "width": 13,
             "height": 20.140625,
-            "top": 346.34375,
+            "top": 342.34375,
             "right": 369,
-            "bottom": 366.484375,
+            "bottom": 362.484375,
             "left": 356
           },
           "style": {
@@ -38487,10 +40373,10 @@
         },
         "delta": {
           "x": 0,
-          "y": 1,
+          "y": 3,
           "width": 0,
           "height": 0,
-          "bottom": 1
+          "bottom": 3
         },
         "differences": []
       },
@@ -38520,12 +40406,12 @@
         "product": {
           "rect": {
             "x": 21,
-            "y": 394.421875,
+            "y": 390.421875,
             "width": 348,
             "height": 20.140625,
-            "top": 394.421875,
+            "top": 390.421875,
             "right": 369,
-            "bottom": 414.5625,
+            "bottom": 410.5625,
             "left": 21
           },
           "style": {
@@ -38539,10 +40425,10 @@
         },
         "delta": {
           "x": 0,
-          "y": 1,
+          "y": 3,
           "width": 0,
           "height": 0,
-          "bottom": 1
+          "bottom": 3
         },
         "differences": []
       },
@@ -38572,12 +40458,12 @@
         "product": {
           "rect": {
             "x": 21,
-            "y": 422.5625,
+            "y": 418.5625,
             "width": 348,
             "height": 67.140625,
-            "top": 422.5625,
+            "top": 418.5625,
             "right": 369,
-            "bottom": 489.703125,
+            "bottom": 485.703125,
             "left": 21
           },
           "style": {
@@ -38591,10 +40477,10 @@
         },
         "delta": {
           "x": 0,
-          "y": 1,
+          "y": 3,
           "width": 0,
           "height": 0,
-          "bottom": 1
+          "bottom": 3
         },
         "differences": []
       },
@@ -38624,12 +40510,12 @@
         "product": {
           "rect": {
             "x": 21,
-            "y": 449.703125,
+            "y": 445.703125,
             "width": 208,
             "height": 40,
-            "top": 449.703125,
+            "top": 445.703125,
             "right": 229,
-            "bottom": 489.703125,
+            "bottom": 485.703125,
             "left": 21
           },
           "style": {
@@ -38643,10 +40529,10 @@
         },
         "delta": {
           "x": 0,
-          "y": 1,
+          "y": 3,
           "width": 0,
           "height": 0,
-          "bottom": 1
+          "bottom": 3
         },
         "differences": []
       },
@@ -38676,12 +40562,12 @@
         "product": {
           "rect": {
             "x": 237,
-            "y": 449.703125,
+            "y": 445.703125,
             "width": 92,
             "height": 40,
-            "top": 449.703125,
+            "top": 445.703125,
             "right": 329,
-            "bottom": 489.703125,
+            "bottom": 485.703125,
             "left": 237
           },
           "style": {
@@ -38695,10 +40581,10 @@
         },
         "delta": {
           "x": 0,
-          "y": 1,
+          "y": 3,
           "width": 0,
           "height": 0,
-          "bottom": 1
+          "bottom": 3
         },
         "differences": []
       },
@@ -38728,12 +40614,12 @@
         "product": {
           "rect": {
             "x": 337,
-            "y": 451.703125,
+            "y": 447.703125,
             "width": 32,
             "height": 36,
-            "top": 451.703125,
+            "top": 447.703125,
             "right": 369,
-            "bottom": 487.703125,
+            "bottom": 483.703125,
             "left": 337
           },
           "style": {
@@ -38747,10 +40633,10 @@
         },
         "delta": {
           "x": 0,
-          "y": 1,
+          "y": 3,
           "width": 0,
           "height": 0,
-          "bottom": 1
+          "bottom": 3
         },
         "differences": []
       },
@@ -38780,12 +40666,12 @@
         "product": {
           "rect": {
             "x": 21,
-            "y": 498.703125,
-            "width": 96,
+            "y": 494.703125,
+            "width": 100,
             "height": 32,
-            "top": 498.703125,
-            "right": 117,
-            "bottom": 530.703125,
+            "top": 494.703125,
+            "right": 121,
+            "bottom": 526.703125,
             "left": 21
           },
           "style": {
@@ -38800,9 +40686,9 @@
         "delta": {
           "x": 0,
           "y": 2,
-          "width": 4,
+          "width": 0,
           "height": 0.140625,
-          "bottom": 1.859375
+          "bottom": 2.140625
         },
         "differences": []
       },
@@ -38832,12 +40718,12 @@
         "product": {
           "rect": {
             "x": 279,
-            "y": 504.296875,
+            "y": 500.296875,
             "width": 90,
             "height": 20.796875,
-            "top": 504.296875,
+            "top": 500.296875,
             "right": 369,
-            "bottom": 525.09375,
+            "bottom": 521.09375,
             "left": 279
           },
           "style": {
@@ -38851,10 +40737,10 @@
         },
         "delta": {
           "x": 0,
-          "y": 1.921875,
+          "y": 2.078125,
           "width": 0,
           "height": 0,
-          "bottom": 1.921875
+          "bottom": 2.078125
         },
         "differences": []
       },
@@ -39352,12 +41238,12 @@
         "product": {
           "rect": {
             "x": 21,
-            "y": 548.703125,
+            "y": 544.703125,
             "width": 348,
             "height": 32.140625,
-            "top": 548.703125,
+            "top": 544.703125,
             "right": 369,
-            "bottom": 580.84375,
+            "bottom": 576.84375,
             "left": 21
           },
           "style": {
@@ -39371,10 +41257,10 @@
         },
         "delta": {
           "x": 0,
-          "y": 1.859375,
+          "y": 2.140625,
           "width": 0,
           "height": 0,
-          "bottom": 1.859375
+          "bottom": 2.140625
         },
         "differences": []
       },
@@ -39482,13 +41368,102 @@
         },
         "differences": []
       }
-    ]
+    ],
+    "text": {
+      "groups": [
+        {
+          "name": "標題",
+          "reference": [
+            "新增人工報工"
+          ],
+          "product": [
+            "新增人工報工"
+          ],
+          "consistent": true
+        },
+        {
+          "name": "狀態",
+          "reference": [],
+          "product": [],
+          "consistent": true
+        },
+        {
+          "name": "內容",
+          "reference": [
+            "MC37 · WO-261102-0382",
+            "P-102 外殼",
+            "良品數量",
+            "125",
+            "件",
+            "不良品",
+            "合計 3 件",
+            "原因",
+            "刮傷",
+            "數量",
+            "3",
+            "新增原因",
+            "沒有不良品",
+            "備註（選填）"
+          ],
+          "product": [
+            "MC37 · WO-261102-0382",
+            "P-102 外殼",
+            "良品數量",
+            "125",
+            "件",
+            "不良品",
+            "合計",
+            "3",
+            "件",
+            "原因",
+            "刮傷",
+            "數量",
+            "3",
+            "新增原因",
+            "沒有不良品",
+            "備註（選填）"
+          ],
+          "consistent": true
+        },
+        {
+          "name": "步驟",
+          "reference": [
+            "選擇對象",
+            "2",
+            "填寫內容",
+            "3",
+            "核對送出"
+          ],
+          "product": [
+            "選擇對象",
+            "2",
+            "填寫內容",
+            "3",
+            "核對送出"
+          ],
+          "consistent": true
+        },
+        {
+          "name": "動作",
+          "reference": [
+            "草稿已儲存",
+            "下一步"
+          ],
+          "product": [
+            "草稿已儲存",
+            "下一步"
+          ],
+          "consistent": true
+        }
+      ],
+      "consistent": true
+    }
   },
   {
     "id": "F06",
     "width": 390,
     "height": 810,
-    "ratio": 5.483064260842039,
+    "ratio": 2.3488445710667936,
     "metrics": [
       {
         "name": "作業標題",
@@ -39568,12 +41543,12 @@
         "product": {
           "rect": {
             "x": 21,
-            "y": 216,
+            "y": 212,
             "width": 348,
             "height": 74.28125,
-            "top": 216,
+            "top": 212,
             "right": 369,
-            "bottom": 290.28125,
+            "bottom": 286.28125,
             "left": 21
           },
           "style": {
@@ -39587,10 +41562,10 @@
         },
         "delta": {
           "x": 0,
-          "y": 4,
+          "y": 0,
           "width": 0,
           "height": 0,
-          "bottom": 4
+          "bottom": 0
         },
         "differences": []
       },
@@ -39620,12 +41595,12 @@
         "product": {
           "rect": {
             "x": 70,
-            "y": 229,
+            "y": 225,
             "width": 169.671875,
             "height": 20,
-            "top": 229,
+            "top": 225,
             "right": 239.671875,
-            "bottom": 249,
+            "bottom": 245,
             "left": 70
           },
           "style": {
@@ -39639,10 +41614,10 @@
         },
         "delta": {
           "x": 0,
-          "y": 4,
+          "y": 0,
           "width": 0,
           "height": 0,
-          "bottom": 4
+          "bottom": 0
         },
         "differences": []
       },
@@ -39672,12 +41647,12 @@
         "product": {
           "rect": {
             "x": 70,
-            "y": 250.6875,
+            "y": 246.6875,
             "width": 299,
             "height": 18.59375,
-            "top": 250.6875,
+            "top": 246.6875,
             "right": 369,
-            "bottom": 269.28125,
+            "bottom": 265.28125,
             "left": 70
           },
           "style": {
@@ -39691,10 +41666,10 @@
         },
         "delta": {
           "x": 0,
-          "y": 4,
+          "y": 0,
           "width": 0,
           "height": 0,
-          "bottom": 4
+          "bottom": 0
         },
         "differences": []
       },
@@ -39984,12 +41959,12 @@
         "product": {
           "rect": {
             "x": 21,
-            "y": 312.28125,
+            "y": 308.28125,
             "width": 348,
             "height": 48.6875,
-            "top": 312.28125,
+            "top": 308.28125,
             "right": 369,
-            "bottom": 360.96875,
+            "bottom": 356.96875,
             "left": 21
           },
           "style": {
@@ -40003,10 +41978,10 @@
         },
         "delta": {
           "x": 0,
-          "y": 4,
+          "y": 0,
           "width": 0,
           "height": 0,
-          "bottom": 4
+          "bottom": 0
         },
         "differences": []
       },
@@ -40036,12 +42011,12 @@
         "product": {
           "rect": {
             "x": 21,
-            "y": 360.96875,
+            "y": 356.96875,
             "width": 348,
             "height": 48.6875,
-            "top": 360.96875,
+            "top": 356.96875,
             "right": 369,
-            "bottom": 409.65625,
+            "bottom": 405.65625,
             "left": 21
           },
           "style": {
@@ -40055,10 +42030,10 @@
         },
         "delta": {
           "x": 0,
-          "y": 4,
+          "y": 0,
           "width": 0,
           "height": 0,
-          "bottom": 4
+          "bottom": 0
         },
         "differences": []
       },
@@ -40088,12 +42063,12 @@
         "product": {
           "rect": {
             "x": 21,
-            "y": 409.65625,
+            "y": 405.65625,
             "width": 348,
             "height": 48.6875,
-            "top": 409.65625,
+            "top": 405.65625,
             "right": 369,
-            "bottom": 458.34375,
+            "bottom": 454.34375,
             "left": 21
           },
           "style": {
@@ -40107,10 +42082,10 @@
         },
         "delta": {
           "x": 0,
-          "y": 4,
+          "y": 0,
           "width": 0,
           "height": 0,
-          "bottom": 4
+          "bottom": 0
         },
         "differences": []
       },
@@ -40140,12 +42115,12 @@
         "product": {
           "rect": {
             "x": 21,
-            "y": 325.28125,
+            "y": 321.28125,
             "width": 56,
             "height": 21.6875,
-            "top": 325.28125,
+            "top": 321.28125,
             "right": 77,
-            "bottom": 346.96875,
+            "bottom": 342.96875,
             "left": 21
           },
           "style": {
@@ -40159,10 +42134,10 @@
         },
         "delta": {
           "x": 0,
-          "y": 4,
+          "y": 0,
           "width": 0,
           "height": 0,
-          "bottom": 4
+          "bottom": 0
         },
         "differences": []
       },
@@ -40192,12 +42167,12 @@
         "product": {
           "rect": {
             "x": 21,
-            "y": 373.96875,
+            "y": 369.96875,
             "width": 56,
             "height": 21.6875,
-            "top": 373.96875,
+            "top": 369.96875,
             "right": 77,
-            "bottom": 395.65625,
+            "bottom": 391.65625,
             "left": 21
           },
           "style": {
@@ -40211,10 +42186,10 @@
         },
         "delta": {
           "x": 0,
-          "y": 4,
+          "y": 0,
           "width": 0,
           "height": 0,
-          "bottom": 4
+          "bottom": 0
         },
         "differences": []
       },
@@ -40244,12 +42219,12 @@
         "product": {
           "rect": {
             "x": 21,
-            "y": 422.65625,
+            "y": 418.65625,
             "width": 56,
             "height": 21.6875,
-            "top": 422.65625,
+            "top": 418.65625,
             "right": 77,
-            "bottom": 444.34375,
+            "bottom": 440.34375,
             "left": 21
           },
           "style": {
@@ -40263,10 +42238,10 @@
         },
         "delta": {
           "x": 0,
-          "y": 4,
+          "y": 0,
           "width": 0,
           "height": 0,
-          "bottom": 4
+          "bottom": 0
         },
         "differences": []
       },
@@ -40296,12 +42271,12 @@
         "product": {
           "rect": {
             "x": 327.90625,
-            "y": 325.28125,
+            "y": 321.28125,
             "width": 41.09375,
             "height": 21.6875,
-            "top": 325.28125,
+            "top": 321.28125,
             "right": 369,
-            "bottom": 346.96875,
+            "bottom": 342.96875,
             "left": 327.90625
           },
           "style": {
@@ -40315,10 +42290,10 @@
         },
         "delta": {
           "x": 0,
-          "y": 4,
+          "y": 0,
           "width": 0,
           "height": 0,
-          "bottom": 4
+          "bottom": 0
         },
         "differences": []
       },
@@ -40348,12 +42323,12 @@
         "product": {
           "rect": {
             "x": 343.859375,
-            "y": 373.96875,
+            "y": 369.96875,
             "width": 25.140625,
             "height": 21.6875,
-            "top": 373.96875,
+            "top": 369.96875,
             "right": 369,
-            "bottom": 395.65625,
+            "bottom": 391.65625,
             "left": 343.859375
           },
           "style": {
@@ -40367,10 +42342,10 @@
         },
         "delta": {
           "x": 0,
-          "y": 4,
+          "y": 0,
           "width": 0,
           "height": 0,
-          "bottom": 4
+          "bottom": 0
         },
         "differences": []
       },
@@ -40400,12 +42375,12 @@
         "product": {
           "rect": {
             "x": 312.71875,
-            "y": 422.65625,
+            "y": 418.65625,
             "width": 56.28125,
             "height": 21.6875,
-            "top": 422.65625,
+            "top": 418.65625,
             "right": 369,
-            "bottom": 444.34375,
+            "bottom": 440.34375,
             "left": 312.71875
           },
           "style": {
@@ -40419,10 +42394,10 @@
         },
         "delta": {
           "x": 0,
-          "y": 4,
+          "y": 0,
           "width": 0,
           "height": 0,
-          "bottom": 4
+          "bottom": 0
         },
         "differences": []
       },
@@ -40660,12 +42635,12 @@
         "product": {
           "rect": {
             "x": 21,
-            "y": 490.34375,
+            "y": 486.34375,
             "width": 348,
             "height": 32.140625,
-            "top": 490.34375,
+            "top": 486.34375,
             "right": 369,
-            "bottom": 522.484375,
+            "bottom": 518.484375,
             "left": 21
           },
           "style": {
@@ -40679,10 +42654,10 @@
         },
         "delta": {
           "x": 0,
-          "y": 4,
+          "y": 0,
           "width": 0,
           "height": 0,
-          "bottom": 4
+          "bottom": 0
         },
         "differences": []
       },
@@ -40712,12 +42687,12 @@
         "product": {
           "rect": {
             "x": 21,
-            "y": 538.484375,
+            "y": 534.484375,
             "width": 348,
             "height": 18.59375,
-            "top": 538.484375,
+            "top": 534.484375,
             "right": 369,
-            "bottom": 557.078125,
+            "bottom": 553.078125,
             "left": 21
           },
           "style": {
@@ -40731,10 +42706,10 @@
         },
         "delta": {
           "x": 0,
-          "y": 4,
+          "y": 0,
           "width": 0,
           "height": 0,
-          "bottom": 4
+          "bottom": 0
         },
         "differences": []
       },
@@ -40842,13 +42817,92 @@
         },
         "differences": []
       }
-    ]
+    ],
+    "text": {
+      "groups": [
+        {
+          "name": "標題",
+          "reference": [
+            "核對人工報工"
+          ],
+          "product": [
+            "核對人工報工"
+          ],
+          "consistent": true
+        },
+        {
+          "name": "狀態",
+          "reference": [],
+          "product": [],
+          "consistent": true
+        },
+        {
+          "name": "內容",
+          "reference": [
+            "MC37 · WO-261102-0382",
+            "P-102 外殼",
+            "人工良品",
+            "125 件",
+            "不良合計",
+            "3 件",
+            "不良原因",
+            "刮傷 3 件",
+            "查看異動明細",
+            "確認期限：11/02 10:00（MES）"
+          ],
+          "product": [
+            "MC37 · WO-261102-0382",
+            "P-102 外殼",
+            "人工良品",
+            "125 件",
+            "不良合計",
+            "3 件",
+            "不良原因",
+            "刮傷 3 件",
+            "查看異動明細",
+            "確認期限：11/02 10:00（MES）"
+          ],
+          "consistent": true
+        },
+        {
+          "name": "步驟",
+          "reference": [
+            "選擇對象",
+            "填寫內容",
+            "3",
+            "核對送出"
+          ],
+          "product": [
+            "選擇對象",
+            "填寫內容",
+            "3",
+            "核對送出"
+          ],
+          "consistent": true
+        },
+        {
+          "name": "動作",
+          "reference": [
+            "返回修改",
+            "取消草稿",
+            "確認送出"
+          ],
+          "product": [
+            "返回修改",
+            "取消草稿",
+            "確認送出"
+          ],
+          "consistent": true
+        }
+      ],
+      "consistent": true
+    }
   },
   {
     "id": "B01",
     "width": 390,
     "height": 810,
-    "ratio": 0.8129154795821462,
+    "ratio": 0.8065843621399177,
     "metrics": [
       {
         "name": "作業標題",
@@ -41709,10 +43763,10 @@
           "rect": {
             "x": 21,
             "y": 555.578125,
-            "width": 96,
+            "width": 100,
             "height": 32,
             "top": 555.578125,
-            "right": 117,
+            "right": 121,
             "bottom": 587.578125,
             "left": 21
           },
@@ -41728,7 +43782,7 @@
         "delta": {
           "x": 0,
           "y": 1,
-          "width": 4,
+          "width": 0,
           "height": 0.140625,
           "bottom": 0.859375
         },
@@ -42150,7 +44204,88 @@
         },
         "differences": []
       }
-    ]
+    ],
+    "text": {
+      "groups": [
+        {
+          "name": "標題",
+          "reference": [
+            "新增人工報工"
+          ],
+          "product": [
+            "新增人工報工"
+          ],
+          "consistent": true
+        },
+        {
+          "name": "狀態",
+          "reference": [],
+          "product": [],
+          "consistent": true
+        },
+        {
+          "name": "內容",
+          "reference": [
+            "MC37 · WO-261102-0382",
+            "P-102 外殼",
+            "良品數量",
+            "125",
+            "件",
+            "不良品",
+            "合計 5 件",
+            "原因",
+            "刮傷",
+            "數量",
+            "3",
+            "毛邊",
+            "2",
+            "新增原因",
+            "沒有不良品",
+            "備註（選填）"
+          ],
+          "product": [
+            "MC37 · WO-261102-0382",
+            "P-102 外殼",
+            "良品數量",
+            "125",
+            "件",
+            "不良品",
+            "合計",
+            "5",
+            "件",
+            "原因",
+            "刮傷",
+            "數量",
+            "3",
+            "毛邊",
+            "2",
+            "新增原因",
+            "沒有不良品",
+            "備註（選填）"
+          ],
+          "consistent": true
+        },
+        {
+          "name": "步驟",
+          "reference": [],
+          "product": [],
+          "consistent": true
+        },
+        {
+          "name": "動作",
+          "reference": [
+            "草稿已儲存",
+            "核對內容"
+          ],
+          "product": [
+            "草稿已儲存",
+            "核對內容"
+          ],
+          "consistent": true
+        }
+      ],
+      "consistent": true
+    }
   },
   {
     "id": "B02",
@@ -43614,13 +45749,96 @@
         },
         "differences": []
       }
-    ]
+    ],
+    "text": {
+      "groups": [
+        {
+          "name": "標題",
+          "reference": [
+            "核對人工報工"
+          ],
+          "product": [
+            "核對人工報工"
+          ],
+          "consistent": true
+        },
+        {
+          "name": "狀態",
+          "reference": [
+            "尚未送出"
+          ],
+          "product": [
+            "尚未送出"
+          ],
+          "consistent": true
+        },
+        {
+          "name": "內容",
+          "reference": [
+            "MC37 · WO-261102-0382",
+            "P-102 外殼",
+            "報工紀錄",
+            "RPT-0382-01",
+            "報工時間",
+            "11/02 09:10",
+            "人工良品",
+            "120 件",
+            "125 件",
+            "不良合計",
+            "3 件",
+            "不良原因",
+            "刮傷 3 件",
+            "查看異動明細",
+            "確認期限：11/02 10:00（MES）"
+          ],
+          "product": [
+            "MC37 · WO-261102-0382",
+            "P-102 外殼",
+            "報工紀錄",
+            "RPT-0382-01",
+            "報工時間",
+            "11/02 09:10",
+            "人工良品",
+            "120 件",
+            "125 件",
+            "不良合計",
+            "3 件",
+            "不良原因",
+            "刮傷 3 件",
+            "查看異動明細",
+            "確認期限：11/02 10:00（MES）"
+          ],
+          "consistent": true
+        },
+        {
+          "name": "步驟",
+          "reference": [],
+          "product": [],
+          "consistent": true
+        },
+        {
+          "name": "動作",
+          "reference": [
+            "返回修改",
+            "取消草稿",
+            "確認送出"
+          ],
+          "product": [
+            "返回修改",
+            "取消草稿",
+            "確認送出"
+          ],
+          "consistent": true
+        }
+      ],
+      "consistent": true
+    }
   },
   {
     "id": "B03",
     "width": 390,
     "height": 810,
-    "ratio": 2.044950933839823,
+    "ratio": 1.9484013928458375,
     "metrics": [
       {
         "name": "作業標題",
@@ -44922,13 +47140,92 @@
         },
         "differences": []
       }
-    ]
+    ],
+    "text": {
+      "groups": [
+        {
+          "name": "標題",
+          "reference": [
+            "核對刪除人工報工"
+          ],
+          "product": [
+            "核對刪除人工報工"
+          ],
+          "consistent": true
+        },
+        {
+          "name": "狀態",
+          "reference": [
+            "尚未送出"
+          ],
+          "product": [
+            "尚未送出"
+          ],
+          "consistent": true
+        },
+        {
+          "name": "內容",
+          "reference": [
+            "MC37 · WO-261102-0382",
+            "P-102 外殼",
+            "報工紀錄",
+            "RPT-0382-01",
+            "報工時間",
+            "11/02 09:10",
+            "將刪除良品",
+            "120 件",
+            "將刪除不良",
+            "3 件",
+            "我已核對對象與影響，確認執行這筆操作。",
+            "查看異動明細",
+            "確認期限：11/02 10:00（MES）"
+          ],
+          "product": [
+            "MC37 · WO-261102-0382",
+            "P-102 外殼",
+            "報工紀錄",
+            "RPT-0382-01",
+            "報工時間",
+            "11/02 09:10",
+            "將刪除良品",
+            "120 件",
+            "將刪除不良",
+            "3 件",
+            "我已核對對象與影響，確認執行這筆操作。",
+            "查看異動明細",
+            "確認期限：11/02 10:00（MES）"
+          ],
+          "consistent": true
+        },
+        {
+          "name": "步驟",
+          "reference": [],
+          "product": [],
+          "consistent": true
+        },
+        {
+          "name": "動作",
+          "reference": [
+            "返回選擇",
+            "取消草稿",
+            "確認送出"
+          ],
+          "product": [
+            "返回選擇",
+            "取消草稿",
+            "確認送出"
+          ],
+          "consistent": true
+        }
+      ],
+      "consistent": true
+    }
   },
   {
     "id": "B04",
     "width": 390,
     "height": 810,
-    "ratio": 2.058562836340614,
+    "ratio": 1.9620132953466287,
     "metrics": [
       {
         "name": "作業標題",
@@ -46126,7 +48423,84 @@
         },
         "differences": []
       }
-    ]
+    ],
+    "text": {
+      "groups": [
+        {
+          "name": "標題",
+          "reference": [
+            "核對整張排程完工"
+          ],
+          "product": [
+            "核對整張排程完工"
+          ],
+          "consistent": true
+        },
+        {
+          "name": "狀態",
+          "reference": [
+            "尚未送出"
+          ],
+          "product": [
+            "尚未送出"
+          ],
+          "consistent": true
+        },
+        {
+          "name": "內容",
+          "reference": [
+            "MC37 · WO-261102-0382",
+            "P-102 外殼",
+            "影響工單",
+            "WO-261102-0382、0383",
+            "排程狀態",
+            "生產中",
+            "完工",
+            "下一排程時間",
+            "依伺服器預覽確認",
+            "我已核對對象與影響，確認執行這筆操作。",
+            "查看異動明細",
+            "確認期限：11/02 10:00（MES）"
+          ],
+          "product": [
+            "MC37 · WO-261102-0382",
+            "P-102 外殼",
+            "影響工單",
+            "WO-261102-0382、0383",
+            "排程狀態",
+            "生產中",
+            "完工",
+            "下一排程時間",
+            "依伺服器預覽確認",
+            "我已核對對象與影響，確認執行這筆操作。",
+            "查看異動明細",
+            "確認期限：11/02 10:00（MES）"
+          ],
+          "consistent": true
+        },
+        {
+          "name": "步驟",
+          "reference": [],
+          "product": [],
+          "consistent": true
+        },
+        {
+          "name": "動作",
+          "reference": [
+            "返回選擇",
+            "取消草稿",
+            "確認送出"
+          ],
+          "product": [
+            "返回選擇",
+            "取消草稿",
+            "確認送出"
+          ],
+          "consistent": true
+        }
+      ],
+      "consistent": true
+    }
   },
   {
     "id": "B05",
@@ -46862,13 +49236,74 @@
         },
         "differences": []
       }
-    ]
+    ],
+    "text": {
+      "groups": [
+        {
+          "name": "標題",
+          "reference": [
+            "調整模穴數"
+          ],
+          "product": [
+            "調整模穴數"
+          ],
+          "consistent": true
+        },
+        {
+          "name": "狀態",
+          "reference": [],
+          "product": [],
+          "consistent": true
+        },
+        {
+          "name": "內容",
+          "reference": [
+            "MC37 · WO-261102-0382",
+            "P-102 外殼",
+            "模穴數",
+            "4",
+            "穴",
+            "目前 2 穴"
+          ],
+          "product": [
+            "MC37 · WO-261102-0382",
+            "P-102 外殼",
+            "模穴數",
+            "4",
+            "穴",
+            "目前",
+            "2",
+            "穴"
+          ],
+          "consistent": true
+        },
+        {
+          "name": "步驟",
+          "reference": [],
+          "product": [],
+          "consistent": true
+        },
+        {
+          "name": "動作",
+          "reference": [
+            "草稿已儲存",
+            "核對內容"
+          ],
+          "product": [
+            "草稿已儲存",
+            "核對內容"
+          ],
+          "consistent": true
+        }
+      ],
+      "consistent": true
+    }
   },
   {
     "id": "B06",
     "width": 390,
     "height": 810,
-    "ratio": 3.8613485280151947,
+    "ratio": 3.8046850269072494,
     "metrics": [
       {
         "name": "作業標題",
@@ -48482,7 +50917,125 @@
         },
         "differences": []
       }
-    ]
+    ],
+    "text": {
+      "groups": [
+        {
+          "name": "標題",
+          "reference": [
+            "新增生產排程"
+          ],
+          "product": [
+            "新增生產排程"
+          ],
+          "consistent": true
+        },
+        {
+          "name": "狀態",
+          "reference": [],
+          "product": [],
+          "consistent": true
+        },
+        {
+          "name": "內容",
+          "reference": [
+            "MC37 · WO-261102-0382",
+            "P-102 外殼",
+            "設備",
+            "MC37",
+            "模具",
+            "M-102",
+            "品號／規格",
+            "P-102",
+            "開始時間（MES）",
+            "2026-11-02T08:00",
+            "週期",
+            "30",
+            "秒",
+            "目標模次",
+            "500",
+            "狀態",
+            "量產（DO）",
+            "工單分配",
+            "2 筆明細",
+            "模具明細／品號",
+            "D1 · P-102",
+            "工單",
+            "WO-261102-0382",
+            "穴數",
+            "2",
+            "移除此列",
+            "模具明細／品號",
+            "D2 · P-104",
+            "工單",
+            "未分配",
+            "穴數",
+            "0",
+            "移除此列",
+            "新增工單明細",
+            "進階設定"
+          ],
+          "product": [
+            "MC37 · WO-261102-0382",
+            "P-102 外殼",
+            "設備",
+            "MC37",
+            "模具",
+            "M-102",
+            "品號／規格",
+            "P-102",
+            "開始時間（MES）",
+            "2026-11-02T08:00",
+            "週期",
+            "30",
+            "秒",
+            "目標模次",
+            "500",
+            "狀態",
+            "量產（DO）",
+            "工單分配",
+            "2",
+            "筆明細",
+            "模具明細／品號",
+            "D1 · P-102",
+            "工單",
+            "WO-261102-0382",
+            "穴數",
+            "2",
+            "移除此列",
+            "模具明細／品號",
+            "D2 · P-104",
+            "工單",
+            "未分配",
+            "穴數",
+            "0",
+            "移除此列",
+            "新增工單明細",
+            "進階設定"
+          ],
+          "consistent": true
+        },
+        {
+          "name": "步驟",
+          "reference": [],
+          "product": [],
+          "consistent": true
+        },
+        {
+          "name": "動作",
+          "reference": [
+            "草稿已儲存",
+            "核對內容"
+          ],
+          "product": [
+            "草稿已儲存",
+            "核對內容"
+          ],
+          "consistent": true
+        }
+      ],
+      "consistent": true
+    }
   },
   {
     "id": "B07",
@@ -51298,7 +53851,126 @@
         },
         "differences": []
       }
-    ]
+    ],
+    "text": {
+      "groups": [
+        {
+          "name": "標題",
+          "reference": [
+            "核對生產排程"
+          ],
+          "product": [
+            "核對生產排程"
+          ],
+          "consistent": true
+        },
+        {
+          "name": "狀態",
+          "reference": [
+            "尚未送出"
+          ],
+          "product": [
+            "尚未送出"
+          ],
+          "consistent": true
+        },
+        {
+          "name": "內容",
+          "reference": [
+            "MC37 · WO-261102-0382",
+            "P-102 外殼",
+            "設備",
+            "MC37",
+            "模具",
+            "M-102",
+            "開始時間（MES）",
+            "2026-11-02 07:30",
+            "2026-11-02 08:00",
+            "預計結束（MES）",
+            "11/02 12:10",
+            "週期",
+            "28 秒",
+            "30 秒",
+            "目標模次",
+            "500 模",
+            "生產狀態",
+            "量產（DO）",
+            "D1 · P-102",
+            "WO-261102-0382",
+            "模穴數",
+            "1 穴",
+            "2 穴",
+            "目標件數",
+            "1000 件",
+            "D2 · P-104",
+            "未分配工單",
+            "模穴數",
+            "0 穴",
+            "目標件數",
+            "0 件",
+            "查看異動明細",
+            "確認期限：11/02 10:00（MES）"
+          ],
+          "product": [
+            "MC37 · WO-261102-0382",
+            "P-102 外殼",
+            "設備",
+            "MC37",
+            "模具",
+            "M-102",
+            "開始時間（MES）",
+            "2026-11-02 07:30",
+            "2026-11-02 08:00",
+            "預計結束（MES）",
+            "11/02 12:10",
+            "週期",
+            "28 秒",
+            "30 秒",
+            "目標模次",
+            "500 模",
+            "生產狀態",
+            "量產（DO）",
+            "D1 · P-102",
+            "WO-261102-0382",
+            "模穴數",
+            "1 穴",
+            "2 穴",
+            "目標件數",
+            "1000 件",
+            "D2 · P-104",
+            "未分配工單",
+            "模穴數",
+            "0 穴",
+            "目標件數",
+            "0 件",
+            "查看異動明細",
+            "確認期限：11/02 10:00（MES）"
+          ],
+          "consistent": true
+        },
+        {
+          "name": "步驟",
+          "reference": [],
+          "product": [],
+          "consistent": true
+        },
+        {
+          "name": "動作",
+          "reference": [
+            "返回修改",
+            "取消草稿",
+            "確認送出"
+          ],
+          "product": [
+            "返回修改",
+            "取消草稿",
+            "確認送出"
+          ],
+          "consistent": true
+        }
+      ],
+      "consistent": true
+    }
   },
   {
     "id": "B08",
@@ -52710,13 +55382,102 @@
         },
         "differences": []
       }
-    ]
+    ],
+    "text": {
+      "groups": [
+        {
+          "name": "標題",
+          "reference": [
+            "模具作業"
+          ],
+          "product": [
+            "模具作業"
+          ],
+          "consistent": true
+        },
+        {
+          "name": "狀態",
+          "reference": [],
+          "product": [],
+          "consistent": true
+        },
+        {
+          "name": "內容",
+          "reference": [
+            "MC37 · WO-261102-0382",
+            "P-102 外殼",
+            "選擇本次要執行的階段。",
+            "1",
+            "上模開始",
+            "尚未執行",
+            "選擇",
+            "2",
+            "上模完成",
+            "上模完成後可進入生產",
+            "選擇",
+            "3",
+            "下模開始",
+            "依目前模具狀態執行",
+            "選擇",
+            "4",
+            "下模完成",
+            "依預覽核對完工連動",
+            "選擇",
+            "清除模具時間…"
+          ],
+          "product": [
+            "MC37 · WO-261102-0382",
+            "P-102 外殼",
+            "選擇本次要執行的階段。",
+            "1",
+            "上模開始",
+            "目前可執行",
+            "選擇",
+            "2",
+            "上模完成",
+            "尚未完成前一階段",
+            "選擇",
+            "3",
+            "下模開始",
+            "尚未完成前一階段",
+            "選擇",
+            "4",
+            "下模完成",
+            "尚未完成前一階段",
+            "選擇",
+            "清除換模紀錄",
+            "沒有上模紀錄可清除",
+            "查詢歷史"
+          ],
+          "consistent": false
+        },
+        {
+          "name": "步驟",
+          "reference": [],
+          "product": [],
+          "consistent": true
+        },
+        {
+          "name": "動作",
+          "reference": [
+            "草稿已儲存",
+            "核對內容"
+          ],
+          "product": [
+            "草稿已儲存",
+            "核對內容"
+          ],
+          "consistent": true
+        }
+      ],
+      "consistent": false
+    }
   },
   {
     "id": "B09",
     "width": 390,
     "height": 810,
-    "ratio": 2.191832858499525,
+    "ratio": 1.8528015194681862,
     "metrics": [
       {
         "name": "作業標題",
@@ -54281,7 +57042,54 @@
       {
         "name": "核對獨立確認",
         "index": 0,
-        "missing": "reference"
+        "reference": {
+          "rect": {
+            "x": 21,
+            "y": 693.96875,
+            "width": 348,
+            "height": 20.796875,
+            "top": 693.96875,
+            "right": 369,
+            "bottom": 714.765625,
+            "left": 21
+          },
+          "style": {
+            "font-family": "Inter, \"Noto Sans TC\", system-ui, -apple-system, \"Segoe UI\", sans-serif",
+            "font-size": "13px",
+            "font-weight": "400",
+            "line-height": "20.8px",
+            "letter-spacing": "normal",
+            "color": "rgb(236, 236, 238)"
+          }
+        },
+        "product": {
+          "rect": {
+            "x": 21,
+            "y": 693.96875,
+            "width": 348,
+            "height": 20.796875,
+            "top": 693.96875,
+            "right": 369,
+            "bottom": 714.765625,
+            "left": 21
+          },
+          "style": {
+            "font-family": "Inter, \"Noto Sans TC\", system-ui, -apple-system, \"Segoe UI\", sans-serif",
+            "font-size": "13px",
+            "font-weight": "400",
+            "line-height": "20.8px",
+            "letter-spacing": "normal",
+            "color": "rgb(236, 236, 238)"
+          }
+        },
+        "delta": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0,
+          "bottom": 0
+        },
+        "differences": []
       },
       {
         "name": "核對明細",
@@ -54289,12 +57097,12 @@
         "reference": {
           "rect": {
             "x": 21,
-            "y": 689.96875,
+            "y": 746.765625,
             "width": 348,
             "height": 32.140625,
-            "top": 689.96875,
+            "top": 746.765625,
             "right": 369,
-            "bottom": 722.109375,
+            "bottom": 778.90625,
             "left": 21
           },
           "style": {
@@ -54328,10 +57136,10 @@
         },
         "delta": {
           "x": 0,
-          "y": 56.796875,
+          "y": 0,
           "width": 0,
           "height": 0,
-          "bottom": 56.796875
+          "bottom": 0
         },
         "differences": []
       },
@@ -54341,12 +57149,12 @@
         "reference": {
           "rect": {
             "x": 21,
-            "y": 738.109375,
+            "y": 794.90625,
             "width": 348,
             "height": 18.59375,
-            "top": 738.109375,
+            "top": 794.90625,
             "right": 369,
-            "bottom": 756.703125,
+            "bottom": 813.5,
             "left": 21
           },
           "style": {
@@ -54380,10 +57188,10 @@
         },
         "delta": {
           "x": 0,
-          "y": 56.796875,
+          "y": 0,
           "width": 0,
           "height": 0,
-          "bottom": 56.796875
+          "bottom": 0
         },
         "differences": []
       },
@@ -54491,13 +57299,106 @@
         },
         "differences": []
       }
-    ]
+    ],
+    "text": {
+      "groups": [
+        {
+          "name": "標題",
+          "reference": [
+            "核對下模完成"
+          ],
+          "product": [
+            "核對下模完成"
+          ],
+          "consistent": true
+        },
+        {
+          "name": "狀態",
+          "reference": [
+            "尚未送出"
+          ],
+          "product": [
+            "尚未送出"
+          ],
+          "consistent": true
+        },
+        {
+          "name": "內容",
+          "reference": [
+            "MC37 · WO-261102-0382",
+            "P-102 外殼",
+            "本次動作",
+            "下模完成",
+            "模具",
+            "M-102",
+            "完成下模時間",
+            "11/02 09:45",
+            "出站時間",
+            "11/02 09:45",
+            "完工時間",
+            "11/02 09:45",
+            "完工狀態",
+            "未完工",
+            "已完工",
+            "影響工單",
+            "WO-261102-0382、WO-261102-0383",
+            "我已核對對象與影響，確認執行這筆操作。",
+            "查看異動明細",
+            "確認期限：11/02 10:00（MES）"
+          ],
+          "product": [
+            "MC37 · WO-261102-0382",
+            "P-102 外殼",
+            "本次動作",
+            "下模完成",
+            "模具",
+            "M-102",
+            "完成下模時間",
+            "11/02 09:45",
+            "出站時間",
+            "11/02 09:45",
+            "完工時間",
+            "11/02 09:45",
+            "完工狀態",
+            "未完工",
+            "已完工",
+            "影響工單",
+            "WO-261102-0382、WO-261102-0383",
+            "我已核對對象與影響，確認執行這筆操作。",
+            "查看異動明細",
+            "確認期限：11/02 10:00（MES）"
+          ],
+          "consistent": true
+        },
+        {
+          "name": "步驟",
+          "reference": [],
+          "product": [],
+          "consistent": true
+        },
+        {
+          "name": "動作",
+          "reference": [
+            "返回選擇",
+            "取消草稿",
+            "確認送出"
+          ],
+          "product": [
+            "返回選擇",
+            "取消草稿",
+            "確認送出"
+          ],
+          "consistent": true
+        }
+      ],
+      "consistent": true
+    }
   },
   {
     "id": "B10",
     "width": 390,
     "height": 810,
-    "ratio": 1.5428933206710984,
+    "ratio": 1.446343779677113,
     "metrics": [
       {
         "name": "作業標題",
@@ -57307,6 +60208,129 @@
         },
         "differences": []
       }
-    ]
+    ],
+    "text": {
+      "groups": [
+        {
+          "name": "標題",
+          "reference": [
+            "核對清除模具時間"
+          ],
+          "product": [
+            "核對清除模具時間"
+          ],
+          "consistent": true
+        },
+        {
+          "name": "狀態",
+          "reference": [
+            "尚未送出"
+          ],
+          "product": [
+            "尚未送出"
+          ],
+          "consistent": true
+        },
+        {
+          "name": "內容",
+          "reference": [
+            "MC37 · WO-261102-0382",
+            "P-102 外殼",
+            "本次動作",
+            "清除換模紀錄",
+            "模具",
+            "M-102",
+            "開始上模",
+            "11/02 07:50",
+            "清除",
+            "完成上模",
+            "11/02 08:10",
+            "清除",
+            "開始下模",
+            "11/02 09:40",
+            "清除",
+            "完成下模",
+            "11/02 09:45",
+            "清除",
+            "進站時間",
+            "11/02 07:50",
+            "清除",
+            "出站時間",
+            "11/02 09:45",
+            "清除",
+            "完工時間",
+            "11/02 09:45",
+            "清除",
+            "完工狀態",
+            "已完工",
+            "未完工",
+            "影響工單",
+            "WO-261102-0382、WO-261102-0383",
+            "我已核對對象與影響，確認執行這筆操作。",
+            "查看異動明細",
+            "確認期限：11/02 10:00（MES）"
+          ],
+          "product": [
+            "MC37 · WO-261102-0382",
+            "P-102 外殼",
+            "本次動作",
+            "清除換模紀錄",
+            "模具",
+            "M-102",
+            "開始上模",
+            "11/02 07:50",
+            "清除",
+            "完成上模",
+            "11/02 08:10",
+            "清除",
+            "開始下模",
+            "11/02 09:40",
+            "清除",
+            "完成下模",
+            "11/02 09:45",
+            "清除",
+            "進站時間",
+            "11/02 07:50",
+            "清除",
+            "出站時間",
+            "11/02 09:45",
+            "清除",
+            "完工時間",
+            "11/02 09:45",
+            "清除",
+            "完工狀態",
+            "已完工",
+            "未完工",
+            "影響工單",
+            "WO-261102-0382、WO-261102-0383",
+            "我已核對對象與影響，確認執行這筆操作。",
+            "查看異動明細",
+            "確認期限：11/02 10:00（MES）"
+          ],
+          "consistent": true
+        },
+        {
+          "name": "步驟",
+          "reference": [],
+          "product": [],
+          "consistent": true
+        },
+        {
+          "name": "動作",
+          "reference": [
+            "返回選擇",
+            "取消草稿",
+            "確認送出"
+          ],
+          "product": [
+            "返回選擇",
+            "取消草稿",
+            "確認送出"
+          ],
+          "consistent": true
+        }
+      ],
+      "consistent": true
+    }
   }
 ]

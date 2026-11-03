@@ -1,3 +1,4 @@
+const {visibleText,compareText}=require('./visible-text.cjs');
 const {start,root,fixture,prepare}=require('./issue57-fixture.cjs');
 const {compare}=require('./issue55-capture.cjs');
 const fs=require('node:fs'),path=require('node:path');
@@ -23,7 +24,7 @@ pairs.push(
  ['分配模穴','.ux-schedule-row>.ux-field:nth-child(3)>input','.schedule-allocation input[id$=cavities]'],
  ['分配移除','[data-action=schedule-remove-row]','.schedule-allocation>button'],
  ['新增分配','[data-action=schedule-row]','.schedule-allocations>button'],
- ['空白選取','.ux-empty','.picker-underlay'],
+ ['空白選取','.ux-empty','.picker-underlay'],['空白圖示','.ux-empty>svg','.picker-underlay>svg'],
  ['作業對話輸入','.ux-work-chat textarea','.chat-sheet:not(.chat-only) #chat-input']
 );
 for(const [ref,product] of [['scheduleEquipment','guide-equipment'],['scheduleMold','guide-mold_no'],['schedulePart','guide-part_no'],['scheduleStart','guide-start_time'],['scheduleCycle','guide-cycle_seconds'],['scheduleShots','guide-target_shots'],['scheduleStatus','guide-status']])pairs.push(['排程欄位 '+ref,`[data-input=${ref}]`,`#${product}`]);
@@ -42,7 +43,7 @@ async function measure(page,selector){return page.locator(selector).evaluateAll(
  const page=await app.browser.newPage({viewport:{width,height},colorScheme:'dark'});await fixture(page,scene.key);await page.goto(app.url+'/?embed=1');await page.locator('#entry-input').waitFor();await prepare(page,scene.key);await page.waitForTimeout(800);await page.locator('.conversation-scroll').evaluate(el=>el.scrollTop=0);await page.mouse.move(0,0);await page.locator('input').evaluateAll(es=>es.forEach(e=>e.blur()));await page.evaluate(()=>document.fonts.ready);
  const a=await ref.locator('#ux-app').screenshot(),b=await page.screenshot();const diff=await compare(page,a,b,width,height);fs.writeFileSync(path.join(out,`${width}-${scene.id}.png`),Buffer.from(diff.png,'base64'));
  const metrics=[];for(const [name,r,p] of pairs){const [rs,ps]=await Promise.all([measure(ref,r),measure(page,p)]);for(let i=0;i<Math.max(rs.length,ps.length);i++){if(!rs[i]||!ps[i]){metrics.push({name,index:i,missing:!rs[i]?'reference':'product'});continue;}metrics.push({name,index:i,reference:rs[i],product:ps[i],delta:Object.fromEntries(['x','y','width','height','bottom'].map(k=>[k,Math.abs(rs[i].rect[k]-ps[i].rect[k])])),differences:props.filter(k=>rs[i].style[k]!==ps[i].style[k])});}}
- rows.push({id:scene.id,width,height,ratio:diff.ratio,metrics});console.log(scene.id,width,diff.ratio.toFixed(2),metrics.filter(m=>m.missing||m.differences.length||Object.values(m.delta).some(d=>d>4)).map(m=>({name:m.name,index:m.index,delta:m.delta,differences:m.differences,missing:m.missing})));await page.close();
+ const groups=[['標題','.ux-sheet-head h2,.ux-wizard-inner>h2','.guide-phase h2,.awaiting-review .proposal-heading h2'],['狀態','.ux-sheet-head .ux-tag','.awaiting-review .proposal-heading small'],['內容','.ux-sheet-scroll,.ux-wizard-inner','.operation-primary'],['步驟','.ux-steps','.operation-steps'],['動作','.ux-sheet-foot','.guide-navigation,.awaiting-review .proposal-actions']]; const text={groups:await Promise.all(groups.map(async([name,r,p])=>({name,...compareText(await visibleText(ref,r,name==='內容'?'h2':''),await visibleText(page,p,name==='內容'?'.guide-phase,.proposal-heading,.operation-steps,.guide-navigation,.proposal-actions':''))})))}; text.consistent=text.groups.every(g=>g.consistent); rows.push({id:scene.id,width,height,ratio:diff.ratio,metrics,text}); if(!text.consistent)console.log('文字差異',scene.id,JSON.stringify(text));console.log(scene.id,width,diff.ratio.toFixed(2),metrics.filter(m=>m.missing||m.differences.length||Object.values(m.delta).some(d=>d>4)).map(m=>({name:m.name,index:m.index,delta:m.delta,differences:m.differences,missing:m.missing})));await page.close();
  }await ref.close();}
  fs.writeFileSync(path.join(out,process.env.SCENE?`量測-${process.env.SCENE}-${process.env.WIDTH||'all'}.json`:'量測.json'),JSON.stringify(rows,null,2));
  }finally{await app.close();}})().catch(e=>{console.error(e);process.exitCode=1});
