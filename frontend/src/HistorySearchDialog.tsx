@@ -1,5 +1,5 @@
 import {useEffect,useRef,useState} from 'react';
-import {Search,MessageCircle,LoaderCircle,X,ChevronLeft,ChevronRight} from 'lucide-react';
+import {CircleHelp,Search,MessageCircle,LoaderCircle,X,ChevronLeft,ChevronRight} from 'lucide-react';
 import {Dialog,DialogContent,DialogTitle} from './components/ui/dialog';
 import type {ChatEntry,HistoryScope} from './ConversationHistory';
 import {t} from './i18n';
@@ -24,7 +24,7 @@ export function HistorySearchDialog({open,actor,scope,request,locked,close,retur
     let valid=true;
     if(!open||!actor||composing)return;
     const timer=setTimeout(()=>{
-      void requestRef.current<SearchPage>(`/api/conversations?${new URLSearchParams({q:query,scope,page:String(page)})}`)
+      void requestRef.current<SearchPage>(`/api/conversations?${new URLSearchParams({q:query,scope,page:String(page),page_size:'50'})}`)
         .then(data=>{if(valid){const last=Math.max(1,Math.ceil(data.total/data.page_size));if(page>last){setPage(last);return;}setResult({key,data});}})
         .catch(error=>{if(valid)setResult({key,error:error instanceof Error?error.message:String(error)});});
     },query?180:0);
@@ -57,8 +57,8 @@ export function HistorySearchDialog({open,actor,scope,request,locked,close,retur
       </div>
       <div className="history-search-results" aria-busy={!!actor&&!settled}>
         {scope==='deleted'&&<p className="history-scope-note">{t('聊天可還原，MES 業務紀錄不受影響。')}</p>}
-        {!actor?<p>{t('尚未登入')}</p>:!settled?<p className="history-search-loading" role="status"><LoaderCircle className="spin" size={18}/>{t('正在搜尋聊天…')}</p>:error?<div role="alert"><div className="history-search-error"><strong>{t('搜尋暫時無法使用')}</strong><p>{t('搜尋文字已保留。')}</p><details><summary>{t('詳細資料')}</summary>{error}</details></div><button className="secondary" onClick={()=>setRetry(v=>v+1)}>{t('重新搜尋')}</button></div>:<>
-          {data?.records.map(entry=><div key={entry.id} className="history-search-result"><div><strong>{entry.title}</strong><small>{new Date(entry.updated_at).toLocaleDateString('en-US',{month:'2-digit',day:'2-digit'})} · {t(({report:'生產報工',schedule:'生產排程',mold:'模具上下模'})[entry.module])}</small></div><button className="text-button" disabled={locked||selecting} onClick={()=>void(scope==='active'?choose(entry):restoreEntry(entry))}>{t(scope==='active'?'開啟':'還原')}</button></div>)}
+        {!actor?<p>{t('尚未登入')}</p>:!settled?<p className="history-search-loading" role="status"><LoaderCircle className="spin" size={18}/>{t('正在搜尋聊天…')}</p>:error?<div role="alert"><div className="history-search-error" title={error}><CircleHelp size={18}/><div><strong>{t('搜尋暫時無法使用')}</strong><p>{t('搜尋文字已保留。')}</p><span className="sr-only">{error}</span></div></div><button className="secondary" onClick={()=>setRetry(v=>v+1)}>{t('重新搜尋')}</button></div>:<>
+          {data?.records.map(entry=><div key={entry.id} className="history-search-result"><div><strong>{entry.title}</strong><small title={t('最後更新')}>{new Date(entry.updated_at).toLocaleDateString('en-US',{month:'2-digit',day:'2-digit'})}{scope==='active'?' · ':' '}{t(scope==='archived'?'封存':scope==='deleted'?'刪除':({report:'生產報工',schedule:'生產排程',mold:'模具上下模'})[entry.module])}</small></div><button className="text-button" disabled={locked||selecting} onClick={()=>void(scope==='active'?choose(entry):restoreEntry(entry))}>{t(scope==='active'?'開啟':'還原')}</button></div>)}
           {!data?.records.length&&<div className="history-search-empty"><Search size={25}/><h3>{t('沒有找到聊天')}</h3><p>{t('試試設備名稱、工單或其他關鍵字。')}</p>{query&&<button className="secondary" onClick={()=>{setQuery('');setPage(1);}}>{t('清除搜尋')}</button>}</div>}
           {data&&data.total>data.page_size&&<div className="history-pagination"><button className="icon-button" disabled={page<=1||selecting} aria-label={t('上一頁')} onClick={()=>setPage(v=>v-1)}><ChevronLeft size={18}/></button><span>{data.page} / {Math.ceil(data.total/data.page_size)}</span><button className="icon-button" disabled={page*data.page_size>=data.total||selecting} aria-label={t('下一頁')} onClick={()=>setPage(v=>v+1)}><ChevronRight size={18}/></button></div>}
         </>}

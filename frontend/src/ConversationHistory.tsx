@@ -42,13 +42,18 @@ export function ConversationHistory({ actor, current, overlay, locked, busy, ref
   const data=response?.listKey===listKey?response.data:emptyPage;
   const [title,setTitle]=useState(''), [dialogError,setDialogError]=useState('');
   const dialogRef=useRef<HTMLDivElement>(null), trigger=useRef<HTMLElement|null>(null);
+  function returnHistoryFocus(){
+    const search=searchButton.current;
+    if(search?.isConnected&&!search.closest('[hidden],[inert]'))return search;
+    return document.querySelector<HTMLElement>(`.reference-title-row button:not([hidden]), .workspace-bar button:not([hidden]), button[aria-label="${t('更多功能')}"]`);
+  }
   const requestRef=useRef(request); requestRef.current=request;
   const composing=useRef(false), restoreFocus=useRef(false);
   function showScope(next:HistoryScope){
     setSearchScope(next);setSearchOpen(true);
     if(overlay)close();
   }
-  useImperativeHandle(ref,()=>({showScope}),[]);
+  useImperativeHandle(ref,()=>({showScope}),[overlay,close]);
   useEffect(()=>{if(dialogOpen&&overlay)close();},[dialogOpen,overlay,close]);
   useEffect(()=>{if(!loading&&restoreFocus.current){restoreFocus.current=false;searchButton.current?.focus();}},[loading]);
   useEffect(()=>{onWorkChange(saving);return()=>onWorkChange(false);},[saving,onWorkChange]);
@@ -100,7 +105,7 @@ export function ConversationHistory({ actor, current, overlay, locked, busy, ref
         </ThreadListItemPrimitive.Root>;
         }}</ThreadListPrimitive.Items></div>}
       </section>)}
-      {!actor?<p className="muted history-empty">{t('尚未登入')}</p>:loading&&!data.records.length?<ThreadListSkeleton/>:settled&&!error&&!data.records.length?<div className="history-empty"><p>{t(scope==='active'?'尚無聊天':scope==='archived'?'尚無封存聊天':'尚無已刪除聊天')}</p>{scope==='active'&&<button className="secondary" disabled={locked||busy||saving} onClick={()=>void create()}>{t('新聊天')}</button>}</div>:null}
+      {!actor?<p className="muted history-empty">{t('尚未登入')}</p>:loading&&!data.records.length?<ThreadListSkeleton/>:settled&&!error&&!data.records.length?<div className="history-empty"><p>{t('開始聊天後，紀錄會顯示在這裡。')}</p></div>:null}
       {error&&<p role="alert">{error}</p>}
       {actor&&(error||settled&&data.total>data.page_size)&&<div className="history-pagination">
         {settled&&data.total>data.page_size&&<><button className="icon-button" disabled={page<=1||loading} onClick={()=>setPage(v=>v-1)} aria-label={t('上一頁')}><ChevronLeft size={16}/></button><span>{data.page} / {Math.ceil(data.total/data.page_size)}</span><button className="icon-button" disabled={page*data.page_size>=data.total||loading} onClick={()=>setPage(v=>v+1)} aria-label={t('下一頁')}><ChevronRight size={16}/></button></>}
@@ -108,8 +113,8 @@ export function ConversationHistory({ actor, current, overlay, locked, busy, ref
       </div>}
     </ThreadListPrimitive.Root>
     <div className="history-footer"><button className="sidebar-budget" onClick={usage} disabled={!actor} aria-label={t('用量與使用統計')}><span><strong>{t('用量')}</strong><span>{!actor ? t('尚未登入') : budgetCaption(budget)}</span></span><span className="budget-track" hidden={!budget||typeof budget.spent_usd!=='number'||!Number.isFinite(budget.spent_usd)}><span style={{width:budget?`${Math.min(100,Math.max(0,Number(budget.limit_usd)>0?(Number(budget.spent_usd||0)+Number(budget.reserved_usd||0))/Number(budget.limit_usd)*100:100))}%`:'0%'}}/></span></button>{locked&&<p role="status">{t('請先完成、取消或查核原操作，再切換聊天。')}</p>}</div>
-    <HistorySearchDialog open={searchOpen} key={`${actor}:${searchScope}`} actor={actor} scope={searchScope} request={request} locked={locked||busy||saving} close={()=>setSearchOpen(false)} returnFocus={()=>searchButton.current} select={select} restore={async entry=>{await beforeChange(entry.id);const result=await request<ChatEntry>(`/api/conversations/${entry.id}/metadata`,{version:entry.metadata_version,...(entry.is_deleted?{is_deleted:false}:{is_archived:false})});changed(result);setNonce(v=>v+1);}}/>
-    {dialog&&<OperationDialog open={dialogOpen} returnFocus={()=>trigger.current?.isConnected?trigger.current:searchButton.current} title={t(dialog.kind==='rename'?'重新命名':'刪除這個聊天？')} close={closeDialog} locked={saving} className="history-dialog"><div ref={dialogRef}>
+    <HistorySearchDialog open={searchOpen} key={`${actor}:${searchScope}`} actor={actor} scope={searchScope} request={request} locked={locked||busy||saving} close={()=>setSearchOpen(false)} returnFocus={returnHistoryFocus} select={select} restore={async entry=>{await beforeChange(entry.id);const result=await request<ChatEntry>(`/api/conversations/${entry.id}/metadata`,{version:entry.metadata_version,...(entry.is_deleted?{is_deleted:false}:{is_archived:false})});changed(result);setNonce(v=>v+1);}}/>
+    {dialog&&<OperationDialog open={dialogOpen} returnFocus={()=>trigger.current?.isConnected&&!trigger.current.closest('[hidden],[inert]')?trigger.current:returnHistoryFocus()} title={t(dialog.kind==='rename'?'重新命名':'刪除這個聊天？')} close={closeDialog} locked={saving} className="history-dialog"><div ref={dialogRef}>
       {dialog.kind==='delete'&&<p>{t('可在「已刪除聊天」還原。')}</p>}
       <form onSubmit={e=>{e.preventDefault();if(!saving&&!composing.current&&(dialog.kind!=='rename'||title.trim()))void mutate(dialog.entry,dialog.kind==='rename'?{title:title.trim()}:{is_deleted:true});}}>
         {dialog.kind==='rename'?<label>{t('聊天名稱')}<input maxLength={100} value={title} disabled={saving} onChange={e=>{setTitle(e.target.value);setDialogError('');}} onCompositionStart={()=>{composing.current=true;}} onCompositionEnd={()=>{composing.current=false;}} onKeyDown={e=>{if(e.key==='Enter'&&(e.nativeEvent.isComposing||e.nativeEvent.keyCode===229||composing.current))e.preventDefault();}}/></label>:<strong>{dialog.entry.title}</strong>}

@@ -30,12 +30,12 @@ test('全域入口在清單未重掛下切範圍；延遲回覆隔離、焦點�
  try {
  await act(async()=>root.render(h(Harness)));const original=host.querySelector('aside');assert.equal(requests.length,1);assert.ok(original.hidden);
  const open=async name=>{await act(async()=>host.querySelector('[aria-label="更多功能"]').dispatchEvent(new KeyboardEvent('keydown',{key:'Enter',bubbles:true})));await act(async()=>[...host.querySelectorAll('[role=menuitem]')].find(x=>x.textContent===name).click());};
- await open('已刪除聊天');assert.equal(requests.length,2);assert.ok(requests[1].path.includes('scope=deleted'));assert.equal(original.hidden,false);assert.ok(document.activeElement===host.querySelector('.history-search-dialog input'));assert.equal(host.querySelector('[aria-label="聊天範圍"]'),null);
+ await open('已刪除聊天');assert.equal(requests.length,2);assert.ok(requests[1].path.includes('scope=deleted'));assert.equal(original.hidden,true);assert.ok(document.activeElement===host.querySelector('.history-search-dialog input'));assert.equal(host.querySelector('[aria-label="聊天範圍"]'),null);
  await act(async()=>requests[0].resolve({records:[{id:'old',title:'不可出現的舊回覆'}],total:1,page:1,page_size:30}));assert.ok(!host.querySelector('.history-search-dialog').textContent.includes('不可出現'));
  await act(async()=>requests[1].resolve({records:[],total:0,page:1,page_size:30}));assert.equal(host.querySelectorAll('.history-search-empty').length,1);assert.ok(host.querySelector('.history-search-empty').textContent.includes('沒有找到聊天'));assert.equal(host.querySelector('[aria-label="下一頁"]'),null);
- await act(async()=>host.querySelector('[aria-label="關閉搜尋"]').click());await open('封存聊天');assert.equal(host.querySelector('aside'),original);assert.equal(host.querySelector('.history-search-dialog h2').textContent,'封存聊天');assert.equal(requests.length,3);
+ await act(async()=>host.querySelector('[aria-label="關閉搜尋"]').click());await act(tick);await open('封存聊天');assert.equal(host.querySelector('aside'),original);assert.equal(host.querySelector('.history-search-dialog h2').textContent,'封存聊天');assert.equal(requests.length,3);
  await act(async()=>requests[2].reject(Error('連線失敗')));assert.ok(host.textContent.includes('連線失敗'));assert.equal(host.querySelector('.history-empty'),null);
- await act(async()=>host.querySelector('[aria-label="關閉搜尋"]').click());await act(tick);assert.ok(document.activeElement===host.querySelector('button[aria-label="搜尋聊天"]'),'焦點應返回搜尋按鈕：'+document.activeElement?.tagName);
+ await act(async()=>host.querySelector('[aria-label="關閉搜尋"]').click());await act(tick);assert.ok(document.activeElement===host.querySelector('button[aria-label="更多功能"]'),'窄版管理彈窗關閉後焦點應返回可見的更多功能：'+document.activeElement?.tagName);
  assert.deepEqual([...host.querySelectorAll('.history-group h3')].map(x=>x.textContent),['已釘選','最近聊天']);assert.ok(button(host,'新聊天').disabled,'未知／待確認鎖定未被管理導覽解除');
  } finally {await act(async()=>root.unmount());host.remove();}
 });
@@ -176,7 +176,7 @@ test('可信身分替換重設清單範圍並隔離舊身分回覆',async()=>{
  await act(async()=>root.render(h(Harness)));await act(async()=>controller.current.showScope('deleted'));const old=requests.at(-1);
  await act(async()=>changeActor('乙'));assert.ok(requests.at(-1).path.includes('scope=active&page=1'));
  await act(async()=>old.resolve({records:[{id:'secret',title:'甲的聊天'}],total:1,page:1,page_size:30}));assert.ok(!host.textContent.includes('甲的聊天'));
- await act(async()=>requests.at(-1).resolve({records:[],total:0,page:1,page_size:30}));assert.equal(host.querySelector('.history-subview'),null);assert.equal(host.querySelectorAll('.history-empty').length,1);assert.ok(host.querySelector('.history-empty').textContent.includes('尚無'));
+ await act(async()=>requests.at(-1).resolve({records:[],total:0,page:1,page_size:30}));assert.equal(host.querySelector('.history-subview'),null);assert.equal(host.querySelectorAll('.history-empty').length,1);assert.ok(host.querySelector('.history-empty').textContent.includes('開始聊天後'));
  } finally {await act(async()=>root.unmount());host.remove();}
 });
 

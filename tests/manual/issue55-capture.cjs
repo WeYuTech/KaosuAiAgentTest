@@ -4,9 +4,14 @@ const fs=require('node:fs'),path=require('node:path');
 const out=path.join(root,'docs/design/issue55');fs.mkdirSync(out,{recursive:true});
 const scenes=JSON.parse(fs.readFileSync(path.join(root,'docs/design/uiux-reference-v2/scenarios.json'),'utf8')).filter(s=>/^[HNC]/.test(s.id));
 const selectors=['.assistant-header','.conversation-history','.reference-title-row','[data-slot=aui_composer-shell]','.entry-grid','.assistant-copyright','.history-search-dialog,.history-dialog'];
+const referenceSelectors=['.ux-appbar','.ux-side','.ux-top','.ux-compose','.ux-quick','.ux-copyright','.ux-dialog'];
+selectors.push('.header-tools button','.aui-composer-send','.entry-message.user','.entry-message.assistant','.history-top','.history-search-dialog input,.history-dialog input');
+referenceSelectors.push('.ux-appbar button','.ux-send','.ux-message.user','.ux-message.assistant','.ux-side-top','.ux-dialog input');
 async function prepare(page,scene){
- if(!['home','sidebar-empty','unconfigured'].includes(scene.key)){
-  await page.locator('#entry-input').fill((messages[scene.key]||messages.capabilities)[0]);await page.locator('#entry-input').press('Enter');
+ // 範例採展開視窗；透過正式尺寸按鈕進入相同狀態。
+ await page.locator('.header-tools button').nth(1).click();
+ if(!['home','sidebar','sidebar-empty','unconfigured'].includes(scene.key)){
+  await page.locator('#entry-input').fill(['message-unknown','long-reply'].includes(scene.key)?'查 MC37 今天的工單':(messages[scene.key]||messages.capabilities)[0]);await page.locator('#entry-input').press('Enter');
   if(scene.key==='message-unknown')await page.getByText('訊息是否送達，尚未確認',{exact:true}).waitFor();
   else await page.locator('.entry-message.assistant').waitFor();
  }
@@ -30,7 +35,8 @@ async function compare(page,a,b,width,height){return page.evaluate(async({a,b,wi
  for(let i=0;i<x.data.length;i+=4){const delta=Math.max(...[0,1,2].map(n=>Math.abs(x.data[i+n]-y.data[i+n])));if(delta>16){changed++;y.data[i]=255;y.data[i+1]=55;y.data[i+2]=120;}else{for(let n=0;n<3;n++)y.data[i+n]=Math.round(y.data[i+n]*.55);}}
  ctx.putImageData(y,0,0);const strip=document.createElement('canvas');strip.width=width*3;strip.height=height+30;const g=strip.getContext('2d');g.fillStyle='#101010';g.fillRect(0,0,strip.width,strip.height);g.fillStyle='#fff';g.font='14px sans-serif';['範例 v2','正式 React／HTTP fixture','差異疊圖：紅色超過 16 色階'].forEach((label,i)=>g.fillText(label,i*width+12,20));g.drawImage(left,0,30);g.drawImage(middle,width,30);g.drawImage(c,width*2,30);return {ratio:changed/(width*height)*100,png:strip.toDataURL('image/png').split(',')[1]};
 },{a:'data:image/png;base64,'+a.toString('base64'),b:'data:image/png;base64,'+b.toString('base64'),width,height});}
-(async()=>{const app=await start();const table=[];try{
+module.exports={prepare,compare};
+if(require.main===module)(async()=>{const app=await start();const table=[];try{
  for(const width of [1366,390]){const height=width===1366?768:810;
   const ref=await app.browser.newPage({viewport:{width,height},colorScheme:'dark'});await ref.goto('file:///'+path.join(root,'docs/design/uiux-reference-v2/reference.html').replaceAll('\\','/'));
   // 只移除範例控制列與宿主留白；產品內所有排版保持原樣。
@@ -39,10 +45,14 @@ async function compare(page,a,b,width,height){return page.evaluate(async({a,b,wi
    if(process.env.SCENE&&scene.id!==process.env.SCENE)continue;
    await ref.locator('#ux-scene').selectOption(scene.key,{force:true});await ref.waitForTimeout(250);
    const page=await app.browser.newPage({viewport:{width,height},colorScheme:'dark'});await fixture(page,scene.key);await page.goto(app.url+'/?embed=1');await page.locator('#entry-input').waitFor();await prepare(page,scene);
+   await page.mouse.move(0,0);await page.evaluate(()=>document.fonts.ready);await ref.evaluate(()=>document.fonts.ready);
    const a=await ref.locator('#ux-app').screenshot(),b=await page.screenshot();const diff=await compare(page,a,b,width,height);
+   fs.writeFileSync(path.join(root,'.local/issue55-product',`${width}-${scene.id}.png`),b);
    fs.writeFileSync(path.join(out,`${width}-${scene.id}.png`),Buffer.from(diff.png,'base64'));
    const rects=await page.evaluate(selectors=>selectors.map(selector=>{const el=document.querySelector(selector);const r=el?.getBoundingClientRect();return {selector,rect:r?.toJSON()};}),selectors);
-   table.push({width,height,id:scene.id,label:scene.label,ratio:diff.ratio,rects});console.log(width,scene.id,diff.ratio.toFixed(2)+'%');await page.close();
+   const referenceRects=await ref.evaluate(selectors=>selectors.map(selector=>{const el=document.querySelector(selector);const r=el?.getBoundingClientRect();return {selector,rect:r?.toJSON()};}),referenceSelectors);
+   const geometry=rects.flatMap((item,i)=>{const r=referenceRects[i]?.rect,p=item.rect;if(!r||!p||!r.width||!p.width)return [];const delta=Math.max(...['x','y','width','height'].map(key=>Math.abs(p[key]-r[key])));return [{selector:item.selector,delta,passed:delta<=4}];});
+   table.push({width,height,id:scene.id,label:scene.label,ratio:diff.ratio,rects,referenceRects,geometry});console.log(width,scene.id,diff.ratio.toFixed(2)+'%',geometry.filter(g=>!g.passed));await page.close();
   }await ref.close();
  }
  fs.writeFileSync(path.join(out,'量測.json'),JSON.stringify(table,null,2));

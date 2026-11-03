@@ -1,5 +1,7 @@
 /* 固定介面詞彙：中文原文為鍵，不翻譯 MES 主檔名稱或歷史訊息。 */
 export const translations: Record<string, [string, string]> = Object.fromEntries(`
+最後更新|Last updated|อัปเดตล่าสุด
+開始聊天後，紀錄會顯示在這裡。|Your conversations will appear here once you start chatting.|บทสนทนาจะปรากฏที่นี่เมื่อคุณเริ่มแชท
 可先使用作業單完成操作。|You can use the operation sheet first.|ใช้แบบฟอร์มงานก่อนได้
 我要報工|Report production|รายงานการผลิต
 無法複製，請選取文字手動複製。|Unable to copy. Select the text and copy it manually.|คัดลอกไม่ได้ โปรดเลือกข้อความแล้วคัดลอกเอง
