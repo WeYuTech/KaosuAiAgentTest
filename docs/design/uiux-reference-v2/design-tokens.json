@@ -1,0 +1,84 @@
+{
+  "scope": "UI／UX 呈現參數；業務資料與權限另由產品後端決定",
+  "spacing_px": [
+    4,
+    8,
+    12,
+    16,
+    20,
+    24,
+    32
+  ],
+  "typography_px": {
+    "body": 14,
+    "chat": 15,
+    "input": 15,
+    "coarse_pointer_input": 16,
+    "secondary": 12,
+    "section_heading": 18,
+    "dialog_heading": 18,
+    "home_heading": 27
+  },
+  "radius_px": {
+    "control": 8,
+    "button": 9,
+    "panel": 12,
+    "dialog": 16,
+    "composer": 18
+  },
+  "layout": {
+    "sidebar_default": 244,
+    "sidebar_min": 220,
+    "sidebar_max": 360,
+    "wizard_content_max": 650,
+    "modal_small_max": 480,
+    "modal_medium_max": 640,
+    "modal_wide_max": 890,
+    "compact_main_switch_at": 620,
+    "sidebar_drawer_at": 880,
+    "responsive_basis": "元件容器寬度",
+    "reference_frame_height_is_product_requirement": false
+  },
+  "motion": {
+    "spinner": {
+      "duration_ms": 850,
+      "easing": "linear",
+      "iterations": "infinite"
+    },
+    "content_enter": {
+      "duration_ms": 200,
+      "easing": "cubic-bezier(.22,.65,.26,1)",
+      "translate_y_px": 6
+    },
+    "dialog_enter": {
+      "duration_ms": 190
+    },
+    "backdrop_enter": {
+      "duration_ms": 140
+    },
+    "hover": {
+      "duration_ms": 140
+    },
+    "reduced_motion": "停旋轉與位移，保留文字狀態及結果回饋",
+    "drag": "pointermove 即時跟隨，不在拖曳中套 width transition"
+  },
+  "palette": {
+    "dark": {
+      "background": "#1d1e20",
+      "sidebar": "#161719",
+      "raised": "#252629",
+      "text": "#ececee",
+      "muted": "#aaaab1",
+      "border": "#3a3b40"
+    },
+    "light": {
+      "background": "#ffffff",
+      "sidebar": "#f6f7f8",
+      "raised": "#f3f4f6",
+      "text": "#24272b",
+      "muted": "#656b74",
+      "border": "#dfe2e7"
+    }
+  },
+  "product_existing_features": "既有三語、五外觀、浮窗、嵌入及版權資訊仍須保留與驗收；畫面以繁中、淺／深兩基準演示。"
+}

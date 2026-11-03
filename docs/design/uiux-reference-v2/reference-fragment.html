@@ -1,0 +1,656 @@
+<div id="weyu-ux-reference">
+  <div class="ux-gallery" aria-label="範例控制列，不屬於產品介面">
+    <div class="ux-gallery-brand">威友科技 <span>生產情報助理 UI／UX 範例 v2</span></div>
+    <label>情境 <select id="ux-scene"></select></label>
+    <label>外觀 <select id="ux-theme"><option value="dark">深色</option><option value="light">淺色</option></select></label>
+    <button type="button" id="ux-reset">重播</button>
+    <span class="ux-demo-label">示意資料・不連接 MES</span>
+  </div>
+  <div id="ux-app" class="ux-app" data-theme="dark"></div>
+  <div id="ux-announcement" class="ux-sr" aria-live="polite"></div>
+</div>
+<style>
+#weyu-ux-reference{font-family:Inter,"Noto Sans TC",system-ui,-apple-system,"Segoe UI",sans-serif;color-scheme:light dark;-webkit-font-smoothing:antialiased;line-height:1.55;font-size:14px;color:light-dark(#27292d,#e8e8eb)}
+#weyu-ux-reference *{box-sizing:border-box}
+#weyu-ux-reference button,#weyu-ux-reference input,#weyu-ux-reference select,#weyu-ux-reference textarea{font:inherit}
+#weyu-ux-reference button{cursor:pointer}
+#weyu-ux-reference button:disabled{cursor:not-allowed}
+#weyu-ux-reference [hidden]{display:none!important}
+#weyu-ux-reference .ux-sr{position:absolute;width:1px;height:1px;padding:0;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+#weyu-ux-reference .ux-gallery{display:flex;align-items:center;gap:12px;flex-wrap:wrap;padding:12px 0 16px;font-size:12px}
+#weyu-ux-reference .ux-gallery-brand{font-weight:650;font-size:15px;margin-right:auto}
+#weyu-ux-reference .ux-gallery-brand span{font-size:12px;font-weight:400;margin-left:8px}
+#weyu-ux-reference .ux-gallery label{display:flex;align-items:center;gap:7px;min-width:0}
+#weyu-ux-reference .ux-gallery select,#weyu-ux-reference .ux-gallery button{min-height:34px;border:1px solid light-dark(#d8dadd,#45464c);border-radius:7px;padding:5px 9px;background:light-dark(#fff,#222329);color:inherit;max-width:310px}
+#weyu-ux-reference .ux-demo-label{opacity:.7}
+#weyu-ux-reference .ux-app{--ux-bg:#1d1e20;--ux-panel:#161719;--ux-raised:#252629;--ux-hover:#303135;--ux-text:#ececee;--ux-muted:#aaaab1;--ux-border:#3a3b40;--ux-primary:#ececee;--ux-on-primary:#202124;--ux-accent:#92b7ff;--ux-accent-soft:#26344b;--ux-good:#90cbaa;--ux-good-bg:#21332a;--ux-danger:#f29c9c;--ux-danger-bg:#3e292c;--ux-warn:#e9c285;--ux-warn-bg:#393025;--ux-shadow:0 18px 65px #0006;--ux-side:244px;color-scheme:dark;container-type:inline-size;background:var(--ux-bg);color:var(--ux-text);height:744px;min-height:600px;display:flex;border:1px solid var(--ux-border);border-radius:12px;position:relative;isolation:isolate;overflow:hidden;font-size:14px;line-height:1.55}
+#weyu-ux-reference .ux-app[data-theme=light]{--ux-bg:#fff;--ux-panel:#f6f7f8;--ux-raised:#f3f4f6;--ux-hover:#e9ebef;--ux-text:#24272b;--ux-muted:#656b74;--ux-border:#dfe2e7;--ux-primary:#272c33;--ux-on-primary:#fff;--ux-accent:#275caf;--ux-accent-soft:#eaf1fd;--ux-good:#24744a;--ux-good-bg:#e9f5ed;--ux-danger:#b53737;--ux-danger-bg:#fceeed;--ux-warn:#805419;--ux-warn-bg:#fff4df;--ux-shadow:0 18px 65px #27334226;color-scheme:light}
+#weyu-ux-reference .ux-app :is(h1,h2,h3,h4,p){margin:0}
+#weyu-ux-reference .ux-app h1{font-size:27px;font-weight:550;line-height:1.4;letter-spacing:-.6px}
+#weyu-ux-reference .ux-app h2{font-size:20px;font-weight:600;line-height:1.4;letter-spacing:-.3px}
+#weyu-ux-reference .ux-app h3{font-size:16px;font-weight:600;line-height:1.5}
+#weyu-ux-reference .ux-app small{font-size:12px;color:var(--ux-muted)}
+#weyu-ux-reference .ux-app svg.lucide{width:18px;height:18px;display:block;flex:none;stroke-width:1.7}
+#weyu-ux-reference .ux-button{border:1px solid var(--ux-border);border-radius:9px;padding:9px 14px;min-height:40px;display:inline-flex;gap:8px;align-items:center;justify-content:center;white-space:nowrap;background:transparent;color:var(--ux-text);transition:background 140ms ease-out,border-color 140ms ease-out;flex-shrink:0}
+#weyu-ux-reference .ux-button:hover:not(:disabled){background:var(--ux-hover)}
+#weyu-ux-reference .ux-button.primary{background:var(--ux-primary);color:var(--ux-on-primary);border-color:var(--ux-primary);font-weight:550}
+#weyu-ux-reference .ux-button.primary:hover:not(:disabled){filter:brightness(.93)}
+#weyu-ux-reference .ux-button.danger{background:var(--ux-danger-bg);color:var(--ux-danger);border-color:transparent}
+#weyu-ux-reference .ux-button.ghost{border-color:transparent}
+#weyu-ux-reference .ux-button.icon{width:36px;min-height:36px;height:36px;padding:8px;border-color:transparent;border-radius:8px}
+#weyu-ux-reference .ux-button:disabled{opacity:.43}
+#weyu-ux-reference .ux-button.small{min-height:32px;padding:5px 10px;font-size:13px}
+#weyu-ux-reference .ux-link{background:none;border:0;color:var(--ux-accent);padding:5px 0;text-align:left;text-decoration:none;display:inline-flex;gap:6px;align-items:center}
+#weyu-ux-reference .ux-muted{color:var(--ux-muted)}
+#weyu-ux-reference .ux-row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+#weyu-ux-reference .ux-between{justify-content:space-between}
+#weyu-ux-reference .ux-stack{display:flex;flex-direction:column;gap:20px}
+#weyu-ux-reference .ux-rule{border:0;border-top:1px solid var(--ux-border);margin:2px 0}
+#weyu-ux-reference .ux-tag{display:inline-flex;align-items:center;gap:5px;font-size:12px;padding:3px 8px;border-radius:5px;color:var(--ux-muted);background:var(--ux-raised);white-space:nowrap}
+#weyu-ux-reference .ux-tag.good{background:var(--ux-good-bg);color:var(--ux-good)}
+#weyu-ux-reference .ux-tag.warn{background:var(--ux-warn-bg);color:var(--ux-warn)}
+#weyu-ux-reference .ux-side{width:var(--ux-side);min-width:var(--ux-side);background:var(--ux-panel);display:flex;flex-direction:column;padding:14px 12px 10px;overflow:hidden}
+#weyu-ux-reference .ux-brand{font-size:19px;font-weight:650;letter-spacing:-.4px}
+#weyu-ux-reference .ux-side-top{display:flex;align-items:center;justify-content:space-between;padding:0 4px 14px}
+#weyu-ux-reference .ux-new{width:100%;justify-content:flex-start;border:0;padding:10px}
+#weyu-ux-reference .ux-side-list{flex:1;overflow-y:auto;overflow-x:hidden;padding-top:18px;scrollbar-width:thin;scrollbar-color:var(--ux-border) transparent}
+#weyu-ux-reference .ux-side-label{font-size:12px;color:var(--ux-muted);padding:12px 10px 6px;display:flex;gap:6px;align-items:center}
+#weyu-ux-reference .ux-history-row{height:40px;display:flex;align-items:center;border-radius:8px;margin:2px 0;gap:2px}
+#weyu-ux-reference .ux-history-row.current{background:var(--ux-hover)}
+#weyu-ux-reference .ux-history-row>button:first-child{min-width:0;flex:1;border:0;background:transparent;color:var(--ux-text);text-align:left;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;padding:9px 10px}
+#weyu-ux-reference .ux-history-row .ux-button.icon{opacity:0;width:30px;height:30px;min-height:30px;flex:none;margin-right:4px}
+#weyu-ux-reference .ux-history-row:is(:hover,:focus-within) .ux-button.icon,#weyu-ux-reference .ux-history-row.current .ux-button.icon{opacity:1}
+#weyu-ux-reference .ux-side-bottom{border-top:1px solid var(--ux-border);padding:12px 4px 0;display:flex;align-items:center;gap:9px}
+#weyu-ux-reference .ux-avatar{width:31px;height:31px;display:grid;place-items:center;border-radius:50%;background:var(--ux-hover);font-size:12px;flex:none}
+#weyu-ux-reference .ux-side-bottom>div:nth-child(2){flex:1;min-width:0;font-size:13px}
+#weyu-ux-reference .ux-side-bottom small{display:block;font-size:11px}
+#weyu-ux-reference .ux-grip{width:6px;margin-left:-3px;margin-right:-3px;background:transparent;z-index:3;position:relative;cursor:col-resize;touch-action:none;border:0;padding:0;flex:none}
+#weyu-ux-reference .ux-grip:before{content:"";position:absolute;left:2px;top:0;bottom:0;width:1px;background:var(--ux-border);transition:background 140ms}
+#weyu-ux-reference .ux-grip:hover:before,#weyu-ux-reference .ux-grip:focus:before{background:var(--ux-accent);width:2px}
+#weyu-ux-reference .ux-main{min-width:0;flex:1;display:flex;flex-direction:column;position:relative;overflow:hidden}
+#weyu-ux-reference .ux-top{height:60px;min-height:60px;padding:0 24px;display:flex;align-items:center;justify-content:space-between;gap:12px}
+#weyu-ux-reference .ux-top-title{font-size:14px;font-weight:500;display:flex;align-items:center;gap:9px;min-width:0}
+#weyu-ux-reference .ux-top-title>span{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#weyu-ux-reference .ux-main-content{flex:1;min-height:0;display:flex;flex-direction:column;position:relative}
+#weyu-ux-reference .ux-home{width:min(100%,760px);margin:clamp(48px,10%,100px) auto 0;padding:0 40px}
+#weyu-ux-reference .ux-home h1{text-align:center;margin-bottom:28px}
+#weyu-ux-reference .ux-quick{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin-top:20px}
+#weyu-ux-reference .ux-quick .ux-button{border-radius:22px;font-size:13px;color:var(--ux-muted);min-height:40px;padding:8px 13px}
+#weyu-ux-reference .ux-compose{border:1px solid var(--ux-border);border-radius:18px;background:var(--ux-raised);padding:14px 14px 10px;transition:border-color 150ms ease-out;position:relative}
+#weyu-ux-reference .ux-compose:focus-within{border-color:var(--ux-muted)}
+#weyu-ux-reference .ux-compose textarea{resize:none;width:100%;min-height:48px;max-height:120px;background:transparent;border:0;color:var(--ux-text);font-size:15px;line-height:1.55;padding:0;box-shadow:none;outline-offset:4px}
+#weyu-ux-reference .ux-compose textarea::placeholder{color:var(--ux-muted)}
+#weyu-ux-reference .ux-compose-bottom{display:flex;justify-content:space-between;align-items:center;gap:12px}
+#weyu-ux-reference .ux-compose-bottom small{font-size:11px}
+#weyu-ux-reference .ux-send{width:34px!important;height:34px!important;min-height:34px!important;border-radius:50%!important;padding:8px!important;background:var(--ux-primary)!important;color:var(--ux-on-primary)!important;flex:none}
+#weyu-ux-reference .ux-compose.compact{padding:10px 12px;border-radius:14px}
+#weyu-ux-reference .ux-compose.compact textarea{min-height:25px}
+#weyu-ux-reference .ux-composer-wrap{padding:12px 28px 18px;width:min(100%,840px);margin:0 auto;flex:none}
+#weyu-ux-reference .ux-conversation{flex:1;min-height:0;overflow-y:auto;scrollbar-width:thin;scrollbar-color:var(--ux-border) transparent;overscroll-behavior:contain}
+#weyu-ux-reference .ux-messages{width:min(100%,790px);margin:0 auto;padding:24px 32px 38px;display:flex;flex-direction:column;gap:25px}
+#weyu-ux-reference .ux-message{max-width:100%;font-size:15px;line-height:1.8;overflow-wrap:anywhere}
+#weyu-ux-reference .ux-message.user{align-self:flex-end;background:var(--ux-hover);padding:10px 17px;border-radius:20px 20px 5px 20px;max-width:85%;font-size:14px}
+#weyu-ux-reference .ux-message.assistant{width:100%;align-self:flex-start}
+#weyu-ux-reference .ux-message p+p{margin-top:10px}
+#weyu-ux-reference .ux-message .ux-row{margin-top:15px}
+#weyu-ux-reference .ux-message-actions{display:flex;gap:4px;margin-top:12px}
+#weyu-ux-reference .ux-message-actions .ux-button{color:var(--ux-muted);min-height:28px;height:28px;width:28px;padding:6px}
+#weyu-ux-reference .ux-live{display:flex;gap:10px;align-items:center;color:var(--ux-muted);font-size:14px;min-height:32px}
+#weyu-ux-reference .ux-spinner{display:inline-flex;flex:none}
+#weyu-ux-reference .ux-spinner svg{animation:ux-spin 850ms linear infinite;transform-origin:center}
+@keyframes ux-spin{to{transform:rotate(360deg)}}
+#weyu-ux-reference .ux-enter{animation:ux-enter 200ms cubic-bezier(.22,.65,.26,1) both}
+@keyframes ux-enter{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+#weyu-ux-reference .ux-skeleton{height:13px;border-radius:5px;background:var(--ux-hover);margin:15px 0;animation:ux-pulse 1400ms ease-in-out infinite}
+#weyu-ux-reference .ux-skeleton:nth-child(2){width:86%}
+#weyu-ux-reference .ux-skeleton:nth-child(3){width:65%}
+@keyframes ux-pulse{50%{opacity:.45}}
+#weyu-ux-reference .ux-notice{display:flex;gap:10px;align-items:flex-start;padding:12px 14px;background:var(--ux-raised);border-radius:10px;font-size:13px}
+#weyu-ux-reference .ux-notice.warn{color:var(--ux-warn);background:var(--ux-warn-bg)}
+#weyu-ux-reference .ux-notice.error{color:var(--ux-danger);background:var(--ux-danger-bg)}
+#weyu-ux-reference .ux-notice.good{color:var(--ux-good);background:var(--ux-good-bg)}
+#weyu-ux-reference .ux-notice>div{flex:1}
+#weyu-ux-reference .ux-notice small{display:block;color:inherit;margin-top:3px}
+#weyu-ux-reference .ux-result{margin-top:18px;border:1px solid var(--ux-border);border-radius:12px;overflow:hidden;font-size:13px;line-height:1.5}
+#weyu-ux-reference .ux-result-top{padding:13px 16px;display:flex;align-items:center;justify-content:space-between;gap:12px}
+#weyu-ux-reference .ux-result small{font-size:11px}
+#weyu-ux-reference .ux-table{width:100%;border-collapse:collapse;table-layout:fixed;font-size:13px;line-height:1.5}
+#weyu-ux-reference .ux-table th{font-size:12px;font-weight:400;color:var(--ux-muted);text-align:left;background:var(--ux-panel);padding:10px 12px}
+#weyu-ux-reference .ux-table td{padding:12px;border-top:1px solid var(--ux-border);vertical-align:middle;overflow-wrap:anywhere}
+#weyu-ux-reference .ux-table .number{text-align:right;font-variant-numeric:tabular-nums}
+#weyu-ux-reference .ux-table td small{display:block;margin-top:3px}
+#weyu-ux-reference .ux-table .ux-button{min-height:30px}
+#weyu-ux-reference .ux-pagination{padding:11px 14px;border-top:1px solid var(--ux-border);display:flex;justify-content:space-between;align-items:center;font-size:12px;gap:10px;color:var(--ux-muted)}
+#weyu-ux-reference .ux-empty{padding:38px 20px;text-align:center;display:flex;align-items:center;flex-direction:column;gap:10px}
+#weyu-ux-reference .ux-empty>svg{width:25px;height:25px;color:var(--ux-muted);margin-bottom:3px}
+#weyu-ux-reference .ux-empty p{font-size:13px;color:var(--ux-muted);max-width:340px}
+#weyu-ux-reference .ux-work{display:grid;grid-template-columns:minmax(275px,.9fr) minmax(380px,1.1fr);flex:1;min-height:0;border-top:1px solid var(--ux-border)}
+#weyu-ux-reference .ux-work-chat{display:flex;flex-direction:column;min-height:0;min-width:0}
+#weyu-ux-reference .ux-work-chat .ux-messages{padding:24px 24px 32px;gap:22px}
+#weyu-ux-reference .ux-work-chat .ux-composer-wrap{padding:10px 20px 18px}
+#weyu-ux-reference .ux-sheet{border-left:1px solid var(--ux-border);display:flex;flex-direction:column;min-width:0;min-height:0;background:var(--ux-bg)}
+#weyu-ux-reference .ux-sheet-head{padding:20px 24px 14px;display:flex;justify-content:space-between;align-items:center;gap:8px}
+#weyu-ux-reference .ux-sheet-head h2{font-size:18px}
+#weyu-ux-reference .ux-sheet-scroll{padding:4px 24px 20px;overflow-y:auto;min-height:0;flex:1;scrollbar-width:thin}
+#weyu-ux-reference .ux-sheet-foot{border-top:1px solid var(--ux-border);padding:14px 24px;display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:12px;flex:none;background:var(--ux-bg)}
+#weyu-ux-reference .ux-sheet-foot small{font-size:11px}
+#weyu-ux-reference .ux-target{padding:13px 0 20px;border-bottom:1px solid var(--ux-border);margin-bottom:22px;display:flex;gap:12px;align-items:center}
+#weyu-ux-reference .ux-target-mark{width:37px;height:37px;border:1px solid var(--ux-border);border-radius:9px;display:grid;place-items:center;color:var(--ux-muted);flex:none}
+#weyu-ux-reference .ux-target>div:nth-child(2){min-width:0;flex:1}
+#weyu-ux-reference .ux-target strong{font-size:14px;font-weight:550;overflow-wrap:anywhere}
+#weyu-ux-reference .ux-target small{display:block;font-size:12px}
+#weyu-ux-reference .ux-form{display:flex;flex-direction:column;gap:18px}
+#weyu-ux-reference .ux-two{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:14px}
+#weyu-ux-reference .ux-field{display:flex;flex-direction:column;gap:7px;font-size:13px;min-width:0}
+#weyu-ux-reference .ux-field input,#weyu-ux-reference .ux-field select,#weyu-ux-reference .ux-field textarea,#weyu-ux-reference .ux-search-input{width:100%;height:40px;padding:9px 11px;background:var(--ux-bg);border:1px solid var(--ux-border);color:var(--ux-text);border-radius:8px;min-width:0;transition:border-color 120ms}
+#weyu-ux-reference .ux-field textarea{height:74px;resize:vertical}
+#weyu-ux-reference .ux-field input[aria-invalid=true]{border-color:var(--ux-danger)}
+#weyu-ux-reference .ux-field .ux-input-unit{display:flex;align-items:center;gap:9px}
+#weyu-ux-reference .ux-field .ux-input-unit span{color:var(--ux-muted);flex:none}
+#weyu-ux-reference .ux-error-text{font-size:12px;color:var(--ux-danger)}
+#weyu-ux-reference .ux-defects{display:flex;flex-direction:column;gap:9px}
+#weyu-ux-reference .ux-defect-row{display:grid;grid-template-columns:minmax(0,1fr) 92px 32px;gap:8px;align-items:end}
+#weyu-ux-reference .ux-defect-row .ux-button{margin-bottom:2px;width:32px}
+#weyu-ux-reference .ux-check{display:flex;align-items:flex-start;gap:9px;font-size:13px;line-height:1.6}
+#weyu-ux-reference .ux-check input{margin:4px 0 0;accent-color:var(--ux-primary);width:16px;height:16px;flex:none}
+#weyu-ux-reference details{font-size:13px}
+#weyu-ux-reference summary{cursor:pointer;color:var(--ux-muted);padding:6px 0}
+#weyu-ux-reference details[open]>div{margin-top:10px}
+#weyu-ux-reference .ux-review{display:flex;flex-direction:column;gap:0}
+#weyu-ux-reference .ux-review-row{display:flex;justify-content:space-between;gap:20px;padding:13px 0;border-bottom:1px solid var(--ux-border);font-size:14px}
+#weyu-ux-reference .ux-review-row>span:first-child{color:var(--ux-muted)}
+#weyu-ux-reference .ux-review-value{display:flex;gap:9px;align-items:center;font-variant-numeric:tabular-nums;flex-wrap:wrap;justify-content:flex-end;text-align:right}
+#weyu-ux-reference .ux-review-value del{color:var(--ux-muted);font-size:13px}
+#weyu-ux-reference .ux-review-value strong{font-weight:550}
+#weyu-ux-reference .ux-wizard{flex:1;min-height:0;display:flex;flex-direction:column;border-top:1px solid var(--ux-border)}
+#weyu-ux-reference .ux-steps{display:flex;justify-content:center;gap:32px;padding:18px 24px;border-bottom:1px solid var(--ux-border);flex:none}
+#weyu-ux-reference .ux-step{display:flex;align-items:center;gap:8px;color:var(--ux-muted);font-size:13px;white-space:nowrap}
+#weyu-ux-reference .ux-step b{width:23px;height:23px;border:1px solid var(--ux-border);border-radius:50%;display:grid;place-items:center;font-size:11px;font-weight:500}
+#weyu-ux-reference .ux-step.active{color:var(--ux-text)}
+#weyu-ux-reference .ux-step.active b{background:var(--ux-primary);border-color:var(--ux-primary);color:var(--ux-on-primary)}
+#weyu-ux-reference .ux-step.done b{background:var(--ux-hover);color:var(--ux-text)}
+#weyu-ux-reference .ux-step b svg{width:13px;height:13px}
+#weyu-ux-reference .ux-wizard-body{flex:1;min-height:0;overflow:auto}
+#weyu-ux-reference .ux-wizard-inner{max-width:650px;margin:auto;padding:22px 28px 24px}
+#weyu-ux-reference .ux-wizard-inner>h2{margin-bottom:8px}
+#weyu-ux-reference .ux-wizard .ux-sheet-foot{max-width:650px;width:100%;margin:0 auto;border-top:0;padding:12px 28px}
+#weyu-ux-reference .ux-wizard-talk{width:100%;border-top:1px solid var(--ux-border);flex:none}
+#weyu-ux-reference .ux-wizard-talk>div{max-width:650px;margin:auto;padding:10px 28px 12px}
+#weyu-ux-reference .ux-wizard-answer{font-size:12px;color:var(--ux-muted);margin-bottom:8px;overflow-wrap:anywhere;max-height:74px;overflow:auto}
+#weyu-ux-reference .ux-mobile-switch{display:none;padding:0 20px 10px;gap:4px}
+#weyu-ux-reference .ux-mobile-switch .ux-button{flex:1;min-height:34px}
+#weyu-ux-reference .ux-mobile-switch .selected{background:var(--ux-hover)}
+#weyu-ux-reference .ux-overlay{position:absolute;inset:0;z-index:8;background:#0007;display:flex;align-items:center;justify-content:center;padding:24px;animation:ux-backdrop 140ms ease-out}
+@keyframes ux-backdrop{from{opacity:0}to{opacity:1}}
+#weyu-ux-reference .ux-dialog{background:var(--ux-bg);border:1px solid var(--ux-border);border-radius:16px;box-shadow:var(--ux-shadow);width:min(100%,480px);max-height:100%;display:flex;flex-direction:column;min-width:0;animation:ux-enter 190ms cubic-bezier(.22,.65,.26,1)}
+#weyu-ux-reference .ux-dialog.wide{width:min(100%,890px)}
+#weyu-ux-reference .ux-dialog.medium{width:min(100%,640px)}
+#weyu-ux-reference .ux-dialog-head{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:20px 24px 14px;flex:none}
+#weyu-ux-reference .ux-dialog-head h2{font-size:18px}
+#weyu-ux-reference .ux-dialog-body{padding:4px 24px 24px;overflow:auto;min-height:0;overscroll-behavior:contain}
+#weyu-ux-reference .ux-dialog-body>p{font-size:14px;color:var(--ux-muted)}
+#weyu-ux-reference .ux-dialog-foot{display:flex;justify-content:flex-end;gap:10px;padding:16px 24px;border-top:1px solid var(--ux-border);flex:none;align-items:center;flex-wrap:wrap}
+#weyu-ux-reference .ux-dialog-foot .ux-spacer{margin-right:auto}
+#weyu-ux-reference .ux-modal-subtitle{margin:0 0 18px!important;color:var(--ux-muted);font-size:13px!important}
+#weyu-ux-reference .ux-filterbar{display:grid;grid-template-columns:minmax(160px,1fr) 125px 135px auto;gap:10px;align-items:end;margin:16px 0}
+#weyu-ux-reference .ux-filterbar .ux-field{font-size:12px}
+#weyu-ux-reference .ux-pick-table{border:1px solid var(--ux-border);border-radius:10px;overflow:hidden}
+#weyu-ux-reference .ux-pick-table input[type=radio]{accent-color:var(--ux-primary);width:17px;height:17px}
+#weyu-ux-reference .ux-pick-table tr.is-selected td{background:var(--ux-accent-soft)}
+#weyu-ux-reference .ux-pick-table .choice{width:43px;padding-right:0}
+#weyu-ux-reference .ux-pick-table .row-detail{background:var(--ux-panel);padding:14px 16px;font-size:12px;color:var(--ux-muted)}
+#weyu-ux-reference .ux-pick-table .row-detail strong{color:var(--ux-text);font-weight:500}
+#weyu-ux-reference .ux-selection-status{font-size:12px;color:var(--ux-muted);margin-right:auto;min-width:0}
+#weyu-ux-reference .ux-selection-status strong{color:var(--ux-text);display:block;font-weight:500;overflow-wrap:anywhere}
+#weyu-ux-reference .ux-ai-picker{border-top:1px solid var(--ux-border);padding:12px 24px;background:var(--ux-panel)}
+#weyu-ux-reference .ux-ai-picker .ux-wizard-answer{margin-bottom:10px}
+#weyu-ux-reference .ux-settings-row{display:flex;gap:20px;align-items:center;justify-content:space-between;padding:16px 0;border-bottom:1px solid var(--ux-border)}
+#weyu-ux-reference .ux-settings-row small{display:block;margin-top:4px;max-width:360px}
+#weyu-ux-reference .ux-radio-card{display:flex;gap:12px;align-items:flex-start;padding:15px;border:1px solid var(--ux-border);border-radius:10px;flex:1;cursor:pointer}
+#weyu-ux-reference .ux-radio-card:has(input:checked){border-color:var(--ux-text);background:var(--ux-raised)}
+#weyu-ux-reference .ux-radio-card input{margin-top:4px;accent-color:var(--ux-primary)}
+#weyu-ux-reference .ux-radio-card small{display:block;margin-top:4px;font-size:12px}
+#weyu-ux-reference .ux-settings-modes{display:flex;gap:12px;margin:12px 0 8px}
+#weyu-ux-reference .ux-item-list{margin-top:14px;display:flex;flex-direction:column}
+#weyu-ux-reference .ux-list-item{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:14px 0;border-bottom:1px solid var(--ux-border)}
+#weyu-ux-reference .ux-list-item>div:first-child{min-width:0;flex:1}
+#weyu-ux-reference .ux-list-item strong{font-weight:500;font-size:14px}
+#weyu-ux-reference .ux-list-item small{display:block;margin-top:3px}
+#weyu-ux-reference .ux-search{position:relative;margin:8px 0 18px}
+#weyu-ux-reference .ux-search>svg{position:absolute;top:12px;left:12px;color:var(--ux-muted)}
+#weyu-ux-reference .ux-search input{padding-left:39px}
+#weyu-ux-reference .ux-menu{position:absolute;top:51px;right:16px;z-index:7;min-width:200px;max-width:calc(100% - 32px);padding:6px;background:var(--ux-bg);border:1px solid var(--ux-border);border-radius:12px;box-shadow:var(--ux-shadow)}
+#weyu-ux-reference .ux-menu button{width:100%;text-align:left;border:0;background:transparent;color:var(--ux-text);padding:10px;border-radius:6px;display:flex;align-items:center;gap:9px;min-height:38px}
+#weyu-ux-reference .ux-menu button:hover{background:var(--ux-hover)}
+#weyu-ux-reference .ux-menu hr{border:0;border-top:1px solid var(--ux-border);margin:6px}
+#weyu-ux-reference .ux-page{max-width:850px;width:100%;padding:18px 28px 32px;margin:0 auto;overflow-y:auto;min-height:0}
+#weyu-ux-reference .ux-page-title{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:20px}
+#weyu-ux-reference .ux-tabs{display:flex;gap:16px;border-bottom:1px solid var(--ux-border);margin-bottom:20px}
+#weyu-ux-reference .ux-tabs button{padding:10px 1px;background:none;border:0;color:var(--ux-muted);border-bottom:2px solid transparent}
+#weyu-ux-reference .ux-tabs button.active{border-color:var(--ux-text);color:var(--ux-text)}
+#weyu-ux-reference .ux-metric-row{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px;padding:16px 0 24px}
+#weyu-ux-reference .ux-metric-row strong{display:block;font-size:23px;font-weight:550;font-variant-numeric:tabular-nums;margin-top:5px}
+#weyu-ux-reference .ux-progress{height:6px;background:var(--ux-hover);border-radius:6px;overflow:hidden;margin:16px 0}
+#weyu-ux-reference .ux-progress span{display:block;height:100%;background:var(--ux-muted);width:6.05%}
+#weyu-ux-reference .ux-toast{position:absolute;bottom:18px;left:50%;transform:translateX(-50%);z-index:11;background:var(--ux-primary);color:var(--ux-on-primary);padding:10px 16px;border-radius:9px;font-size:13px;box-shadow:var(--ux-shadow);max-width:calc(100% - 30px);display:flex;gap:9px;align-items:center;animation:ux-enter 180ms ease-out}
+#weyu-ux-reference .ux-phone-open{display:none}
+#weyu-ux-reference .ux-app.side-collapsed .ux-side,#weyu-ux-reference .ux-app.side-collapsed .ux-grip{display:none}
+#weyu-ux-reference .ux-app.side-collapsed .ux-phone-open{display:inline-flex}
+#weyu-ux-reference .ux-schedule-row{display:grid;grid-template-columns:1fr 1fr 76px;gap:8px;border-top:1px solid var(--ux-border);padding-top:13px;margin-top:10px}
+#weyu-ux-reference .ux-phase-list{display:flex;flex-direction:column;margin-top:18px}
+#weyu-ux-reference .ux-phase-item{display:flex;align-items:center;gap:12px;padding:14px 0;border-bottom:1px solid var(--ux-border)}
+#weyu-ux-reference .ux-phase-dot{width:25px;height:25px;border-radius:50%;background:var(--ux-hover);display:grid;place-items:center;color:var(--ux-muted);font-size:12px}
+#weyu-ux-reference .ux-phase-item.current .ux-phase-dot{background:var(--ux-primary);color:var(--ux-on-primary)}
+#weyu-ux-reference .ux-phase-item>div:nth-child(2){flex:1}
+#weyu-ux-reference .ux-phase-item small{display:block}
+#weyu-ux-reference .ux-session{margin:auto;max-width:450px;width:100%;padding:35px;text-align:center;display:flex;flex-direction:column;align-items:center;gap:15px}
+#weyu-ux-reference .ux-session>svg{width:30px;height:30px;color:var(--ux-muted)}
+#weyu-ux-reference .ux-session p{font-size:14px;color:var(--ux-muted)}
+@container (max-width:1050px){#weyu-ux-reference .ux-work{grid-template-columns:minmax(220px,.8fr) minmax(340px,1.2fr)}#weyu-ux-reference .ux-sheet-head,#weyu-ux-reference .ux-sheet-scroll,#weyu-ux-reference .ux-sheet-foot{padding-left:20px;padding-right:20px}#weyu-ux-reference .ux-work-chat .ux-messages{padding:20px}#weyu-ux-reference .ux-home{padding:0 28px}}
+@container (max-width:880px){#weyu-ux-reference .ux-side{display:none}#weyu-ux-reference .ux-grip{display:none}#weyu-ux-reference .ux-phone-open{display:inline-flex}#weyu-ux-reference .ux-app.side-open .ux-side{display:flex;position:absolute;inset:0 auto 0 0;width:260px;z-index:9;border-right:1px solid var(--ux-border);box-shadow:20px 0 90px #0005}#weyu-ux-reference .ux-top{padding:0 20px}}
+@container (max-width:620px){#weyu-ux-reference .ux-top{padding:0 12px;height:54px;min-height:54px}#weyu-ux-reference .ux-top-title{font-size:13px}#weyu-ux-reference .ux-home{padding:0 20px;margin-top:58px}#weyu-ux-reference .ux-home h1{font-size:24px;margin-bottom:24px}#weyu-ux-reference .ux-quick{gap:8px}#weyu-ux-reference .ux-quick .ux-button{font-size:12px;padding:8px 11px}#weyu-ux-reference .ux-messages{padding:20px 20px 28px}#weyu-ux-reference .ux-composer-wrap{padding:10px 16px 14px}#weyu-ux-reference .ux-mobile-switch{display:flex}#weyu-ux-reference .ux-work{display:flex;flex-direction:column}#weyu-ux-reference .ux-work-chat{flex:1}#weyu-ux-reference .ux-sheet{flex:1;border-left:0}#weyu-ux-reference .ux-work[data-pane=task] .ux-work-chat{display:none}#weyu-ux-reference .ux-work[data-pane=chat] .ux-sheet{display:none}#weyu-ux-reference .ux-steps{gap:16px;padding:14px 16px}#weyu-ux-reference .ux-step{font-size:12px;gap:5px}#weyu-ux-reference .ux-step b{width:21px;height:21px}#weyu-ux-reference .ux-wizard-inner{padding:20px}#weyu-ux-reference .ux-wizard .ux-sheet-foot{padding:12px 20px}#weyu-ux-reference .ux-wizard-talk>div{padding:10px 20px 12px}#weyu-ux-reference .ux-overlay{padding:12px}#weyu-ux-reference .ux-dialog{max-height:100%;border-radius:14px}#weyu-ux-reference .ux-dialog-head{padding:16px 18px 12px}#weyu-ux-reference .ux-dialog-body{padding:4px 18px 20px}#weyu-ux-reference .ux-dialog-foot{padding:14px 18px;gap:8px}#weyu-ux-reference .ux-filterbar{grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:10px}#weyu-ux-reference .ux-filterbar>.ux-field:first-child{grid-column:1/-1}#weyu-ux-reference .ux-filterbar>.ux-button{grid-column:1/-1}#weyu-ux-reference .ux-table .desktop{display:none}#weyu-ux-reference .ux-table td,#weyu-ux-reference .ux-table th{padding:11px 10px}#weyu-ux-reference .ux-pick-table .choice{width:35px;padding-left:10px;padding-right:0}#weyu-ux-reference .ux-dialog-foot .ux-selection-status{width:100%;margin-bottom:2px}#weyu-ux-reference .ux-settings-modes{flex-direction:column}#weyu-ux-reference .ux-settings-row{align-items:flex-start;gap:10px}#weyu-ux-reference .ux-settings-row .ux-field{max-width:130px}#weyu-ux-reference .ux-page{padding:14px 20px 24px}#weyu-ux-reference .ux-metric-row{gap:14px}#weyu-ux-reference .ux-metric-row strong{font-size:20px}#weyu-ux-reference .ux-list-item{gap:8px;align-items:flex-start}#weyu-ux-reference .ux-list-item .ux-row{gap:5px}#weyu-ux-reference .ux-ai-picker{padding:10px 18px}#weyu-ux-reference .ux-schedule-row{grid-template-columns:minmax(0,1fr) 76px}#weyu-ux-reference .ux-schedule-row>.ux-field:first-child{grid-column:1/-1}#weyu-ux-reference .ux-top .ux-tag{display:none}}
+@media(max-width:560px){#weyu-ux-reference .ux-gallery-brand{width:100%}#weyu-ux-reference .ux-gallery{gap:8px}#weyu-ux-reference .ux-gallery label:first-of-type{width:100%}#weyu-ux-reference .ux-gallery select{max-width:100%;min-width:0}#weyu-ux-reference #ux-scene{flex:1}#weyu-ux-reference .ux-demo-label{font-size:11px}#weyu-ux-reference .ux-app{height:810px}}
+@media(pointer:coarse){#weyu-ux-reference .ux-app .ux-button,#weyu-ux-reference .ux-app .ux-button.icon{min-height:44px}#weyu-ux-reference .ux-app .ux-button.icon{width:44px;height:44px}#weyu-ux-reference .ux-history-row{height:48px}#weyu-ux-reference .ux-history-row .ux-button{opacity:1}#weyu-ux-reference .ux-app input,#weyu-ux-reference .ux-app textarea,#weyu-ux-reference .ux-app select{font-size:16px}#weyu-ux-reference .ux-app .ux-send{min-height:44px!important;width:44px!important;height:44px!important}#weyu-ux-reference .ux-defect-row{grid-template-columns:minmax(0,1fr) 78px 44px}#weyu-ux-reference .ux-defect-row .ux-button{width:44px}}
+@container (max-width:620px){#weyu-ux-reference .ux-two{grid-template-columns:minmax(0,1fr)}#weyu-ux-reference .ux-compose-bottom small{max-width:calc(100% - 52px)}}
+@media(prefers-reduced-motion:reduce){#weyu-ux-reference .ux-app *,#weyu-ux-reference .ux-app *:before{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
+
+#weyu-ux-reference .ux-app{flex-direction:column;border-radius:0}
+#weyu-ux-reference .ux-appbar{height:56px;min-height:56px;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:0 10px 0 16px;border-bottom:1px solid var(--ux-border);background:var(--ux-bg)}
+#weyu-ux-reference .ux-appbrand{display:flex;align-items:center;gap:12px;min-width:0}
+#weyu-ux-reference .ux-appbrand img{height:26px;width:auto;filter:brightness(0) invert(1)}
+#weyu-ux-reference .ux-app[data-theme=light] .ux-appbrand img{filter:none}
+#weyu-ux-reference .ux-appbrand span{font-size:14px;font-weight:500;white-space:nowrap}
+#weyu-ux-reference .ux-body{flex:1;min-height:0;display:flex;position:relative}
+#weyu-ux-reference .ux-side-top{padding:0 0 10px;gap:4px}
+#weyu-ux-reference .ux-side-top .ux-new{width:auto;flex:1;min-width:0}
+#weyu-ux-reference .ux-side-list{padding-top:4px}
+#weyu-ux-reference .ux-usage{flex-direction:column;align-items:stretch;gap:8px;padding:12px 6px 4px}
+#weyu-ux-reference .ux-usage-row{display:flex;justify-content:space-between;font-size:12px;color:var(--ux-muted)}
+#weyu-ux-reference .ux-usage-row span:last-child{color:var(--ux-text);font-variant-numeric:tabular-nums}
+#weyu-ux-reference .ux-usage-bar{height:4px;flex:none;border-radius:2px;background:var(--ux-border);overflow:hidden}
+#weyu-ux-reference .ux-usage-bar span{display:block;height:100%;background:var(--ux-text)}
+#weyu-ux-reference .ux-side-bottom.ux-usage>.ux-usage-bar{flex:none;height:4px}
+#weyu-ux-reference .ux-history-row>button:first-child{justify-content:flex-start}
+#weyu-ux-reference .ux-side{padding-bottom:12px}
+#weyu-ux-reference .ux-copyright{flex:none;text-align:center;font-size:12px;color:var(--ux-muted);padding:4px 12px 8px}
+@container (max-width:620px){#weyu-ux-reference .ux-appbar{height:50px;min-height:50px;padding:0 6px 0 12px}#weyu-ux-reference .ux-appbrand img{height:22px}#weyu-ux-reference .ux-appbrand span{font-size:13px}}
+</style>
+<script>
+(()=>{
+  const root=document.getElementById('weyu-ux-reference');
+  if(!root)return;
+  const app=root.querySelector('#ux-app'), chooser=root.querySelector('#ux-scene');
+  const icon=n=>`<i data-lucide="${n}" aria-hidden="true"></i>`;
+  const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  const scenes=[
+    ['H01','首頁與聊天','空首頁','home'],['H02','首頁與聊天','能力問答','capabilities'],['H03','首頁與聊天','需求不明・自然追問','clarify'],['H04','首頁與聊天','超出範圍・友善引導','unsupported'],['H05','首頁與聊天','AI 未設定・人工入口','unconfigured'],
+    ['Q01','查詢與回饋','查詢中・連續旋轉','loading'],['Q02','查詢與回饋','等待較久・可以停止','slow'],['Q03','查詢與回饋','資料列表','results'],['Q04','查詢與回饋','查無資料','empty'],['Q05','查詢與回饋','連線失敗','query-error'],['Q06','查詢與回饋','資料不完整・縮小範圍','partial'],['Q07','查詢與回饋','已停止查詢','cancelled'],['Q08','查詢與回饋','資料詳細內容','result-detail'],
+    ['N01','聊天管理','平面清單與拖曳側欄','sidebar'],['N02','聊天管理','搜尋聊天','search'],['N03','聊天管理','封存聊天','archives'],['N04','聊天管理','已刪除聊天','deleted'],['N05','聊天管理','刪除聊天確認','delete-chat'],['N06','聊天管理','重新命名','rename'],
+    ['F01','兩種操作模式','聊天＋作業單・選擇對象','sheet-empty'],['F02','兩種操作模式','聊天＋作業單・填寫','sheet-edit'],['F03','兩種操作模式','聊天＋作業單・核對','sheet-review'],['F04','兩種操作模式','分步精靈・選擇對象','wizard-select'],['F05','兩種操作模式','分步精靈・填寫','wizard-edit'],['F06','兩種操作模式','分步精靈・核對','wizard-review'],
+    ['P01','大量資料選取','搜尋／篩選／分頁','picker'],['P02','大量資料選取','查看明細・不直接套用','picker-detail'],['P03','大量資料選取','暫選・等待帶入','picker-selected'],['P04','大量資料選取','選取中詢問 AI','picker-ai'],['P05','大量資料選取','單筆報工・返回工單','report-picker'],
+    ['B01','三模組作業','報工・多個不良原因','report-multiple'],['B02','三模組作業','報工・修改前後值','report-update'],['B03','三模組作業','報工・刪除單筆核對','report-delete'],['B04','三模組作業','整張排程完工・連動影響','complete'],['B05','三模組作業','模穴數調整','cavities'],['B06','三模組作業','排程新增・多工單','schedule-add'],['B07','三模組作業','排程修改・核對異動','schedule-edit'],['B08','三模組作業','模具・四階段操作','mold-phases'],['B09','三模組作業','下模完成・連動核對','mold-down'],['B10','三模組作業','清除模具時間・獨立確認','mold-clear'],
+    ['W01','儲存與送出狀態','欄位驗證','validation'],['W02','儲存與送出狀態','正在儲存草稿','saving'],['W03','儲存與送出狀態','草稿儲存失敗','save-error'],['W04','儲存與送出狀態','資料已變更','conflict'],['W05','儲存與送出狀態','核對已過期','expired'],['W06','儲存與送出狀態','正在送出・禁止重複','submitting'],['W07','儲存與送出狀態','完成回執','success'],['W08','儲存與送出狀態','提交被拒絕','rejected'],['W09','儲存與送出狀態','結果未知・僅查核','unknown'],['W10','儲存與送出狀態','寫入未啟用','write-disabled'],
+    ['U01','設定','介面設定・切換操作方式','preferences'],['U02','設定','忙碌時延後切換','mode-busy'],['U03','設定','API 設定・核對後儲存','api'],['U04','設定','Agent 設定','agent'],['U05','設定','用量額度','budget'],['U06','設定','API 設定・一般使用者唯讀','api-readonly'],
+    ['R01','定時報告','建立定時報告','schedule-report-create'],['R02','定時報告','我的定時報告','schedule-report-list'],['R03','定時報告','尚無定時報告','schedule-report-empty'],['R04','定時報告','執行歷史','schedule-report-history'],['R05','定時報告','報告詳細內容','schedule-report-detail'],['R06','定時報告','刪除定時報告','schedule-report-delete'],
+    ['A01','紀錄與統計','操作紀錄・前後差異','audit'],['A02','紀錄與統計','使用統計','usage'],
+    ['X01','系統狀態','登入已逾時','session'],['X02','系統狀態','權限不足','permission'],['X03','系統狀態','正在連線','connecting'],
+    ['N07','聊天管理','尚無聊天紀錄','sidebar-empty'],['N08','聊天管理','搜尋沒有結果','history-empty'],['N09','聊天管理','搜尋聊天中','history-loading'],['N10','聊天管理','搜尋失敗','history-error'],
+    ['P06','大量資料選取','候選讀取中','picker-loading'],['P07','大量資料選取','候選沒有結果','picker-empty'],['P08','大量資料選取','候選查詢失敗','picker-error'],
+    ['U07','設定','設定載入中','settings-loading'],['U08','設定','設定載入失敗','settings-error'],
+    ['C01','聊天生命週期','訊息送達未知','message-unknown'],['C02','聊天生命週期','長回覆與回到最新','long-reply'],['X04','系統狀態','附屬面板載入失敗','panel-error'],['X05','系統狀態','恢復原本待確認作業','recover-operation'],
+  ].map(([id,group,label,key])=>({id,group,label,key}));
+  const groups=[...new Set(scenes.map(s=>s.group))];
+  chooser.innerHTML=groups.map(g=>`<optgroup label="${g}">${scenes.filter(s=>s.group===g).map(s=>`<option value="${s.key}">${s.id} · ${s.label}</option>`).join('')}</optgroup>`).join('');
+  const rows=Array.from({length:24},(_,i)=>({id:'WO-261102-'+String(382+i).padStart(4,'0'),equipment:i<8?'MC37':i<16?'MC38':'MC39',product:['P-102 外殼','P-104 底座','P-108 上蓋'][i%3],status:i%7===6?'已完成':'生產中',good:[120,86,230,48,64,180][i%6],defect:i%4===0?3:0}));
+  const messages={
+    capabilities:['你能幫我做什麼？','我可以查詢生產資料，也能陪你完成排程、報工和模具作業。','例如「查 MC37 今天的工單」，或直接說「我要報工」。'],
+    clarify:['幫我處理 MC37','你想查 MC37 的生產狀況，還是進行一項作業？','我會沿用這台設備，不用再選一次。'],
+    unsupported:['測試','你好，我在。你可以直接問生產問題。','例如「MC37 今天做了多少？」'],
+    results:['查 MC37 今天的工單','找到 8 筆工單。你可以查看明細，或選一筆繼續作業。',''],
+    empty:['查 MC37 今天的工單','這個範圍沒有找到工單。','可以換日期，或查看其他設備。'],
+    'query-error':['查 MC37 今天的工單','目前連不上資料來源。','查詢條件已保留。'],
+    partial:['查全部工單','資料範圍太大，目前不能顯示完整結果。','請先指定設備或日期。'],
+    cancelled:['查 MC37 今天的工單','已停止這次查詢。','你可以修改條件後再查一次。']
+  };
+  let state={},timer=null,toastTimer=null,returnFocus=null,epoch=0,lastVisualKey='';
+  const businessLocked=()=>['unknown','submitting'].includes(state.substate);
+  const noFields=()=>state.module==='mold'||['delete','complete'].includes(state.action);
+  const btn=(text,action,cls='',extra='')=>`<button type="button" class="ux-button ${cls}" data-action="${action}" ${extra}>${text}</button>`;
+  const ibtn=(name,label,action,extra='')=>btn(icon(name),action,'icon',`aria-label="${label}" data-tooltip="${label}" ${extra}`);
+  const spin=()=>`<span class="ux-spinner">${icon('loader-circle')}</span>`;
+  const notice=(title,text='',type='')=>`<div class="ux-notice ${type}" ${type==='error'?'role="alert"':'role="status"'}>${icon(type==='error'?'circle-alert':type==='good'?'circle-check':'info')}<div>${title}${text?`<small>${text}</small>`:''}</div></div>`;
+  const announce=t=>root.querySelector('#ux-announcement').textContent=t;
+  function reset(key='home'){
+    clearTimeout(timer);timer=null;epoch++;
+    state={scene:key,screen:'home',mode:'sheet',theme:root.querySelector('#ux-theme').value,phase:'edit',module:'report',action:'add',dialog:'',draft:'',good:125,defects:[{reason:'刮傷',quantity:3}],note:'',target:rows[0],tentative:null,query:'',equipment:'MC37',page:1,detail:null,askAI:false,aiAnswer:'',pending:false,busy:false,validation:false,approved:false,mobilePane:'task',menu:false,sideOpen:false,collapsed:false,toast:'',substate:'',reportAction:'上模開始',scheduleRows:2,historyQuery:'',reportTitle:'每日生產摘要',reportFrequency:'daily',reportModule:'report',reportEquipment:'MC37',reportTime:'08:00',paused:false,preferenceChoice:'sheet',pendingMode:'',queryDone:false,customUser:'',customReply:'',savingText:'草稿已儲存',readonlySettings:false,reportRequest:'',filterUpdated:false};
+    state.reportRecord={id:'RPT-0382-01',good:120,defect:3,time:'11/02 09:10'};
+    if(key==='home'||key==='sidebar')state.screen='home';
+    else if(messages[key]||['loading','slow','result-detail','unconfigured'].includes(key)){state.screen='chat';state.busy=['loading','slow'].includes(key)}
+    else if(['search','archives','deleted','delete-chat','rename'].includes(key)){state.screen='chat';state.scene='capabilities';state.dialog=key}
+    else if(['preferences','mode-busy','api','agent','budget'].includes(key)){state.screen='work';state.dialog=key==='mode-busy'?'preferences':key;state.busy=key==='mode-busy';state.substate=key;state.pending=key==='mode-busy';state.phase=key==='mode-busy'?'review':'edit'}
+    else if(key.startsWith('schedule-report')){state.screen='reports';if(key==='schedule-report-create'||key==='schedule-report-delete')state.dialog=key;}
+    else if(['audit','usage','feedback','feedback-list','feedback-review'].includes(key)){state.screen=key}
+    else if(['session','permission','connecting'].includes(key)){state.screen='system'}
+    else{
+      state.screen='work';
+      if(key.startsWith('wizard'))state.mode='wizard';
+      if(key.endsWith('review')){state.phase='review';state.pending=true}
+      if(key==='sheet-empty'||key==='wizard-select'){state.target=null;state.phase='select'}
+      if(key.startsWith('picker')||key==='report-picker'){state.dialog='picker';state.tentative=key==='picker-selected'?rows[0]:null;state.detail=key==='picker-detail'?rows[0].id:null;state.askAI=key==='picker-ai';state.aiAnswer=state.askAI?'可用設備、工單或品號搜尋。先查看明細，再按「帶入作業」。':'';state.pickerLevel=key==='report-picker'?'report':'order';state.target=key==='report-picker'?rows[0]:null;state.action=key==='report-picker'?'update':'add';}
+      if(key==='report-multiple')state.defects.push({reason:'毛邊',quantity:2});
+      if(key==='report-update'){state.action='update';state.phase='review';state.pending=true;}
+      if(key==='report-delete'){state.action='delete';state.phase='review';state.pending=true;}
+      if(key==='complete'){state.action='complete';state.phase='review';state.pending=true;}
+      if(key==='cavities')state.action='cavities';
+      if(key.startsWith('schedule-')){state.module='schedule';state.action=key==='schedule-edit'?'update':'add';if(key==='schedule-edit'){state.phase='review';state.pending=true;}}
+      if(key.startsWith('mold-')){state.module='mold';state.action=key==='mold-clear'?'clear':key==='mold-down'?'down':'phases';if(key!=='mold-phases'){state.phase='review';state.pending=true;}}
+      if(['validation','saving','save-error','conflict','expired','submitting','success','rejected','unknown','write-disabled'].includes(key)){state.substate=key;state.validation=key==='validation';state.good=key==='validation'?'':125;if(['expired','submitting','success','rejected','unknown','write-disabled'].includes(key)){state.phase='review';state.pending=true;}state.busy=['saving','submitting'].includes(key);}
+    }
+    if(key==='api-readonly'){state.screen='work';state.dialog='api';state.readonlySettings=true;}
+    if(key==='sidebar-empty'){state.screen='home';state.emptyHistory=true;}
+    if(key.startsWith('history-')){state.screen='chat';state.dialog='search';state.historyStatus=key.replace('history-','');}
+    if(key==='picker-empty')state.query='找不到的工單';
+    if(key.startsWith('settings-')){state.screen='work';state.dialog='settings-state';state.sharedStatus=key.replace('settings-','');}
+    if(key==='panel-error'){state.screen='work';state.dialog='panel-error';}
+    if(key==='recover-operation'){state.screen='work';state.dialog='recover-operation';}
+    if(key==='message-unknown'||key==='long-reply'){state.screen='chat';state.busy=false;}
+    chooser.value=key;render();
+  }
+  function composer(where,compact=false){
+    const loading=state.busy&&state.screen==='chat';
+    const unavailable=state.scene==='unconfigured'||state.scene==='message-unknown'||businessLocked();
+    return `<form class="ux-compose ${compact?'compact':''}" data-compose="${where}"><label class="ux-sr" for="ux-composer">訊息</label><textarea id="ux-composer" data-input="draft" rows="${compact?1:2}" placeholder="${businessLocked()?'請先完成或查核目前操作':where==='picker'?'補充條件，或詢問這些資料…':where==='home'?'問資料，或說說你想完成的作業…':state.screen==='work'?'補充需求，或問我怎麼填…':'輸入訊息…'}" ${unavailable?'disabled':''}>${esc(state.draft)}</textarea><div class="ux-compose-bottom"><small>${where==='home'?'':where==='picker'?'對話與已選項目會保留':state.screen==='work'?'核對後才會送出':'Enter 送出 · Shift + Enter 換行'}</small>${loading?btn(icon('square'),'stop','icon ux-send','aria-label="停止查詢"'):btn(icon('arrow-up'),'send','icon ux-send',`aria-label="送出訊息" ${unavailable?'disabled':''}`)}</div></form>`;
+  }
+  function sidebar(){return `<aside class="ux-side" aria-label="聊天清單"><div class="ux-side-top">${btn(icon('square-pen')+'新聊天','new','ux-new')}<div class="ux-row" style="gap:0">${ibtn('search','搜尋聊天','search')}${ibtn('panel-left-close','收合側欄','collapse-side')}</div></div><div class="ux-side-list"><div class="ux-side-label">已釘選</div><div class="ux-history-row">${btn('每日生產追蹤','open-chat')}${ibtn('ellipsis','聊天選項','history-menu')}</div><div class="ux-history-row">${btn('本週排程調整','open-chat')}${ibtn('ellipsis','聊天選項','history-menu')}</div><div class="ux-side-label">最近聊天</div>${['MC37 今日生產','新增人工報工','模具上下模','查詢昨日產量','排程工單確認','生產異常追蹤','本週工單進度','修改報工數量','MC38 生產資料','模穴數調整'].map((t,i)=>`<div class="ux-history-row ${i===0&&state.screen!=='home'?'current':''}">${btn(t,'open-chat')}${ibtn('ellipsis','聊天選項','history-menu')}</div>`).join('')}</div><div class="ux-side-bottom ux-usage"><div class="ux-usage-row"><span>用量</span><span>US$2.21 / US$20.00</span></div><div class="ux-usage-bar" role="meter" aria-label="本次真實模型驗收用量" aria-valuemin="0" aria-valuemax="20" aria-valuenow="2.21"><span style="width:11%"></span></div></div></aside><button class="ux-grip" type="button" role="separator" aria-orientation="vertical" aria-label="調整側欄寬度" aria-valuemin="220" aria-valuemax="360" aria-valuenow="244" data-resize></button>`;}
+  function top(){const title=state.screen==='work'?(state.module==='report'?'生產報工':state.module==='schedule'?'生產排程':'模具上下模'):state.screen==='reports'?'定時報告':state.screen==='home'?'':'MC37 今日生產';return `<header class="ux-top"><div class="ux-top-title">${ibtn('panel-left','展開側欄','open-side','class="ux-phone-open"')}<span>${title}</span>${state.screen==='work'?`<span class="ux-tag">${state.mode==='sheet'?'聊天＋作業單':'分步精靈'}</span>`:''}</div></header>`;}
+  function home(){return `<main class="ux-main-content"><div class="ux-home ux-enter"><h1>今天想完成什麼？</h1>${state.dialog?'':composer('home')}<div class="ux-quick">${btn(icon('calendar-days')+'生產排程','start-schedule')}${btn(icon('clipboard-list')+'生產報工','start-report')}${btn(icon('wrench')+'模具上下模','start-mold')}</div></div></main>`;}
+  function chat(){
+    const key=state.scene==='result-detail'?'results':state.scene;
+    const m=messages[key]||['查 MC37 今天的工單','',''];
+    let reply='';
+    if(state.scene==='message-unknown'){reply=notice('訊息是否送達，尚未確認','原句已保留，先查核這次訊息。','warn')+`<div class="ux-row">${btn('查核訊息狀態','reconcile-message','small')}</div>`;}
+    else if(state.scene==='long-reply'){reply=`<p>以下是 MC37 的生產資料整理。</p>${Array.from({length:7},(_,i)=>`<section style="margin-top:22px"><h3>${i+1}. ${['目前生產','工單進度','人工報工','不良品紀錄','待完成工單','模具狀態','下一步'][i]}</h3><p>工單 ${rows[i].id} · ${rows[i].product}</p><p class="ux-muted">人工報工與設備資料分別顯示。尚無設備資料時，會標示未取得，不會當作產量為零。</p></section>`).join('')}`;}
+    else if(state.busy){reply=`<div class="ux-live" role="status">${spin()}<span>${state.scene==='slow'?'查詢時間較長，仍在處理…':'正在查詢 MC37 的工單…'}</span></div><div style="margin-top:20px"><div class="ux-skeleton"></div><div class="ux-skeleton"></div><div class="ux-skeleton"></div></div>${state.scene==='slow'?btn('停止查詢','stop','small'):''}`;}
+    else if(state.scene==='unconfigured'){reply=`${notice('AI 尚未設定','可先使用作業單完成操作。')}<div class="ux-row">${btn('生產排程','start-schedule','small')}${btn('生產報工','start-report','small')}${btn('模具上下模','start-mold','small')}</div>`;}
+    else{reply=`<p>${esc(state.customReply||m[1])}</p>${m[2]?`<p class="ux-muted">${m[2]}</p>`:''}`;
+      if(['capabilities','clarify'].includes(key))reply+=`<div class="ux-row">${btn(icon('search')+'查生產資料','query','small')}${btn('我要報工','start-report','small')}${key==='capabilities'?btn('其他作業','more-actions','small'):''}</div>`;
+      if(key==='results')reply+=resultTable(state.scene==='result-detail');
+      if(key==='empty')reply+=`<div class="ux-row">${btn('修改條件','query-filters','small')}${btn('查看全部設備','query','small ghost')}</div>`;
+      if(key==='query-error')reply+=`<div class="ux-row">${btn(icon('refresh-cw')+'重新查詢','query','small')}${btn('修改條件','query-filters','small ghost')}</div>`;
+      if(key==='partial')reply+=`<div class="ux-row">${btn('只查 MC37','query','small')}${btn('設定查詢範圍','query-filters','small ghost')}</div>`;
+      if(key==='cancelled')reply+=`<div class="ux-row">${btn('重新查詢','query','small')}</div>`;
+      reply+=`<div class="ux-message-actions">${ibtn('copy','複製回覆','copy')}${ibtn('thumbs-up','回覆有幫助','thanks')}</div>`;
+    }
+    return `<main class="ux-main-content"><div class="ux-conversation" aria-label="對話"><div class="ux-messages"><article class="ux-message user">${esc(state.customUser||m[0])}</article><article class="ux-message assistant ux-enter">${reply}</article></div></div>${state.scene==='long-reply'?`<div style="text-align:center">${btn(icon('arrow-down')+'查看最新內容','latest','small')}</div>`:''}${state.dialog?'':`<div class="ux-composer-wrap">${composer('chat')}</div>`}</main>`;
+  }
+  function resultTable(detail=false,snapshot=false){return `<section class="ux-result" aria-label="${snapshot?'唯讀快照':'查詢結果'}"><div class="ux-result-top"><span>MC37 · 11 月 ${snapshot?'1':'2'} 日${snapshot?' · 唯讀快照':''}</span><small>8 筆工單</small></div><table class="ux-table"><thead><tr><th style="width:45%">工單／品名</th><th class="number">良品</th><th class="desktop number">不良</th><th style="width:69px"><span class="ux-sr">操作</span></th></tr></thead><tbody>${rows.slice(0,4).map((r,i)=>`<tr><td>${snapshot?r.id.replace('261102','261101'):r.id}<small>${r.product}</small></td><td class="number">${r.good}</td><td class="desktop number">${r.defect}</td><td>${btn('明細','result-detail','small ghost',`data-row="${i}"`)}</td></tr>${detail&&i===(state.resultIndex??0)?`<tr><td colspan="4"><div class="ux-stack" style="gap:12px"><div class="ux-row ux-between"><span>生產中 · 模具 M-102</span>${snapshot?'':btn('帶入報工','apply-result','small')}</div><small>人工報工：${r.good} 良品／${r.defect} 不良<br>IoT 產量：尚無資料</small></div></td></tr>`:''}`).join('')}</tbody></table><div class="ux-pagination"><span>1–4／8 筆</span><div class="ux-row">${snapshot?btn('下一頁','snapshot-next','small ghost'):btn('查看全部','query-filters','small ghost')}</div></div></section>`;}
+  function target(){return state.target?`<div class="ux-target"><span class="ux-target-mark">${icon('factory')}</span><div><strong>${state.target.equipment} · ${state.target.id}</strong><small>${state.target.product}</small></div>${state.phase!=='review'?ibtn('repeat-2','更換作業對象','picker'):''}</div>`:'';}
+  const field=(label,input)=>`<label class="ux-field">${label}${input}</label>`;
+  const input=(name,value,type='text',attrs='')=>`<input type="${type}" value="${esc(value)}" data-input="${name}" ${attrs}>`;
+  function actionTitle(){if(state.module==='schedule')return state.action==='update'?'修改生產排程':'新增生產排程';if(state.module==='mold')return state.action==='clear'?'清除模具時間':state.action==='down'?'下模完成':'模具作業';return({add:'新增人工報工',update:'修改人工報工',delete:'刪除人工報工',complete:'整張排程完工',cavities:'調整模穴數'})[state.action]||'新增人工報工';}
+  function reportForm(){
+    if(state.action==='cavities')return `<div class="ux-form">${field('模穴數',`<div class="ux-input-unit">${input('cavities',state.cavities??4,'number','min="0"')}<span>穴</span></div>`)}<small>目前 2 穴</small></div>`;
+    return `<div class="ux-form">${field('良品數量',`<div class="ux-input-unit">${input('good',state.good,'number',`min="0" ${state.validation?'aria-invalid="true" aria-describedby="ux-good-error"':''}`)}<span>件</span></div>${state.validation?'<span class="ux-error-text" id="ux-good-error">請填寫良品數量，可填 0。</span>':''}`)}<div><div class="ux-row ux-between" style="margin-bottom:8px"><span style="font-size:13px">不良品</span><small>合計 ${state.defects.reduce((n,d)=>n+(Number(d.quantity)||0),0)} 件</small></div><div class="ux-defects">${state.defects.map((d,i)=>`<div class="ux-defect-row">${field(i===0?'原因':'<span class="ux-sr">原因</span>',`<select data-defect-reason="${i}" aria-label="第 ${i+1} 項不良原因">${['刮傷','毛邊','缺料'].map(x=>`<option ${x===d.reason?'selected':''}>${x}</option>`).join('')}</select>`)}${field(i===0?'數量':'<span class="ux-sr">數量</span>',`<input type="number" min="0" value="${d.quantity}" data-defect-quantity="${i}" aria-label="第 ${i+1} 項不良數量">`)}${ibtn('x','移除此原因','remove-defect',`data-index="${i}"`)}</div>`).join('')}</div><div class="ux-row ux-between" style="margin-top:8px">${btn(icon('plus')+'新增原因','add-defect','small ghost')}<label class="ux-check"><input type="checkbox" data-none ${state.defects.length===0?'checked':''}>沒有不良品</label></div></div><details><summary>備註（選填）</summary><div>${field('<span class="ux-sr">備註</span>',`<textarea data-input="note" placeholder="補充這筆報工…">${esc(state.note)}</textarea>`)}</div></details></div>`;
+  }
+  function scheduleDraft(){
+    const defaults={scheduleEquipment:'MC37',scheduleMold:'M-102',schedulePart:'P-102',scheduleStart:'2026-11-02T08:00',scheduleCycle:30,scheduleShots:500,scheduleStatus:'DO',schedulePriority:0};
+    Object.entries(defaults).forEach(([k,v])=>{if(state[k]===undefined)state[k]=v});
+    const allocationCatalog=[['D1','P-102'],['D2','P-104'],['D3','P-108']];
+    const allocations=Array.from({length:state.scheduleRows},(_,i)=>{const key='allocation'+i;if(state[key+'Detail']===undefined)state[key+'Detail']=allocationCatalog[i%3][0];if(state[key+'Order']===undefined)state[key+'Order']=i?'':'WO-261102-0382';if(state[key+'Cavities']===undefined)state[key+'Cavities']=i?0:2;const detail=allocationCatalog.find(d=>d[0]===state[key+'Detail'])||allocationCatalog[0];return {key,detail:detail[0],part:detail[1],order:state[key+'Order'],cavities:state[key+'Cavities']}});
+    return {allocations,allocationCatalog};
+  }
+  function scheduleForm(){
+    const {allocations,allocationCatalog}=scheduleDraft();
+    return `<div class="ux-form"><div class="ux-two">${field('設備',`<select data-input="scheduleEquipment">${['MC37','MC38'].map(v=>`<option ${v===state.scheduleEquipment?'selected':''}>${v}</option>`).join('')}</select>`)}${field('模具',`<select data-input="scheduleMold"><option>M-102</option></select>`)}</div>${field('品號／規格',`<select data-input="schedulePart">${['P-102','P-104','P-108'].map(v=>`<option ${v===state.schedulePart?'selected':''}>${v}</option>`).join('')}</select>`)}<div class="ux-two">${field('開始時間（MES）',input('scheduleStart',state.scheduleStart,'datetime-local'))}${field('週期',`<div class="ux-input-unit">${input('scheduleCycle',state.scheduleCycle,'number','min="1"')}<span>秒</span></div>`)}</div><div class="ux-two">${field('目標模次',input('scheduleShots',state.scheduleShots,'number','min="0"'))}${field('狀態',`<select data-input="scheduleStatus">${[['DO','量產'],['TRY','試模'],['RUN','執行中']].map(([v,l])=>`<option value="${v}" ${v===state.scheduleStatus?'selected':''}>${l}（${v}）</option>`).join('')}</select>`)}</div><div><div class="ux-row ux-between"><span>工單分配</span><small>${state.scheduleRows} 筆明細</small></div>${allocations.map((a,i)=>`<div class="ux-schedule-row">${field('模具明細／品號',`<select data-input="${a.key}Detail">${allocationCatalog.map(([id,part])=>`<option value="${id}" ${id===a.detail?'selected':''} ${allocations.some((other,j)=>j!==i&&other.detail===id)?'disabled':''}>${id} · ${part}</option>`).join('')}</select>`)}${field('工單',`<select data-input="${a.key}Order"><option value="" ${a.order===''?'selected':''}>未分配</option>${rows.filter(r=>r.product.startsWith(a.part)).slice(0,3).map(r=>`<option ${r.id===a.order?'selected':''}>${r.id}</option>`).join('')}</select>`)}${field('穴數',input(a.key+'Cavities',a.cavities,'number','min="0"'))}${state.scheduleRows>1?btn('移除此列','schedule-remove-row','small ghost',`data-index="${i}"`):''}</div>`).join('')}<div style="margin-top:10px">${btn(icon('plus')+'新增工單明細','schedule-row','small ghost',state.scheduleRows>=3?'disabled':'')}</div></div><details><summary>進階設定</summary><div class="ux-form">${field('優先序',input('schedulePriority',state.schedulePriority,'number','min="0"'))}${field('備註',`<textarea data-input="note" maxlength="1000">${esc(state.note)}</textarea>`)}</div></details></div>`;
+  }
+  function removeScheduleAllocation(index){for(let i=index;i<state.scheduleRows-1;i++)for(const suffix of ['Detail','Order','Cavities'])state['allocation'+i+suffix]=state['allocation'+(i+1)+suffix];for(const suffix of ['Detail','Order','Cavities'])delete state['allocation'+(state.scheduleRows-1)+suffix];state.scheduleRows=Math.max(1,state.scheduleRows-1)}
+  function syncScheduleInput(name,value){if(/^allocation\d+Detail$/.test(name)){const base=name.slice(0,-6);state[base+'Order']='';state[base+'Cavities']=0}if(/^allocation\d+Order$/.test(name)&&value==='')state[name.slice(0,-5)+'Cavities']=0;}
+  function scheduleDraftError(){const {allocations}=scheduleDraft();if(!state.scheduleStart||!state.scheduleEquipment||!state.schedulePart||!state.scheduleMold)return '請先補齊設備、品號、模具與開始時間。';if(!Number.isInteger(Number(state.scheduleCycle))||Number(state.scheduleCycle)<1)return '週期需為至少 1 秒的整數。';if(state.scheduleShots===''||!Number.isInteger(Number(state.scheduleShots))||Number(state.scheduleShots)<0)return '請填寫非負整數目標模次。';if(allocations.some(a=>a.cavities===''||!Number.isInteger(Number(a.cavities))||Number(a.cavities)<0))return '請填寫每列的非負整數穴數。';if(allocations.some(a=>!a.order&&Number(a.cavities)!==0))return '未分配工單的明細請設為 0 穴。';if(!allocations.some(a=>a.order))return '至少需要一筆有效工單。';return '';}
+  function moldForm(){return `<p class="ux-muted" style="font-size:13px">選擇本次要執行的階段。</p><div class="ux-phase-list">${['上模開始','上模完成','下模開始','下模完成'].map((name,i)=>`<div class="ux-phase-item ${name===state.reportAction?'current':''}"><span class="ux-phase-dot">${i+1}</span><div>${name}<small>${i===0?'尚未執行':i===1?'上模完成後可進入生產':i===3?'依預覽核對完工連動':'依目前模具狀態執行'}</small></div>${btn('選擇','mold-phase','small',`data-phase="${name}"`)}</div>`).join('')}</div><div style="margin-top:18px">${btn('清除模具時間…','mold-clear','small ghost')}</div>`;}
+  function reviewRow(label,value,before){return `<div class="ux-review-row"><span>${label}</span><span class="ux-review-value">${before!==undefined&&String(before)!==String(value)?`<del>${esc(before)}</del>${icon('arrow-right')}`:''}<strong>${esc(value)}</strong></span></div>`;}
+  function review(){
+    let body='';
+    if(state.module==='schedule'){
+      const {allocations}=scheduleDraft(),edit=state.action==='update',stamp=String(state.scheduleStart).replace('T',' '),finish=new Date(stamp.replace(' ','T')+'+07:00');finish.setSeconds(finish.getSeconds()+Number(state.scheduleCycle)*Number(state.scheduleShots));
+      const end=Number.isNaN(finish.valueOf())?'待核對':new Intl.DateTimeFormat('zh-TW',{timeZone:'Asia/Bangkok',month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit',hour12:false}).format(finish);
+      body=reviewRow('設備',state.scheduleEquipment)+reviewRow('模具',state.scheduleMold)+reviewRow('開始時間（MES）',stamp,edit?'2026-11-02 07:30':undefined)+reviewRow('預計結束（MES）',end)+reviewRow('週期',state.scheduleCycle+' 秒',edit?'28 秒':undefined)+reviewRow('目標模次',state.scheduleShots+' 模')+reviewRow('生產狀態',({DO:'量產（DO）',TRY:'試模（TRY）',RUN:'執行中（RUN）'})[state.scheduleStatus]);
+      body+=allocations.map((a,i)=>reviewRow(a.detail+' · '+a.part,a.order||'未分配工單')+reviewRow('模穴數',a.cavities+' 穴',edit&&i===0?'1 穴':undefined)+reviewRow('目標件數',Number(a.cavities)*Number(state.scheduleShots)+' 件')).join('');
+      if(Number(state.schedulePriority))body+=reviewRow('優先序',state.schedulePriority);if(state.note.trim())body+=reviewRow('備註',state.note);
+    }
+    else if(state.module==='mold'){
+      body=reviewRow('本次動作',state.action==='clear'?'清除換模紀錄':state.action==='down'?'下模完成':state.reportAction)+reviewRow('模具','M-102');
+      if(state.action==='clear')body+=reviewRow('開始上模','清除','11/02 07:50')+reviewRow('完成上模','清除','11/02 08:10')+reviewRow('開始下模','清除','11/02 09:40')+reviewRow('完成下模','清除','11/02 09:45')+reviewRow('進站時間','清除','11/02 07:50')+reviewRow('出站時間','清除','11/02 09:45')+reviewRow('完工時間','清除','11/02 09:45')+reviewRow('完工狀態','未完工','已完工');
+      else if(state.action==='down')body+=reviewRow('完成下模時間','11/02 09:45')+reviewRow('出站時間','11/02 09:45')+reviewRow('完工時間','11/02 09:45')+reviewRow('完工狀態','已完工','未完工');
+      else body+=reviewRow(state.reportAction+'時間','11/02 09:45');
+      body+=reviewRow('影響工單','WO-261102-0382、WO-261102-0383');
+    }
+    else if(state.action==='delete'){const record=state.reportRecord||{id:'RPT-0382-01',time:'11/02 09:10',good:120,defect:3};body=reviewRow('報工紀錄',record.id)+reviewRow('報工時間',record.time)+reviewRow('將刪除良品',record.good+' 件')+reviewRow('將刪除不良',record.defect+' 件');}
+    else if(state.action==='complete'){body=reviewRow('影響工單','WO-261102-0382、0383')+reviewRow('排程狀態','完工','生產中')+reviewRow('下一排程時間','依伺服器預覽確認');}
+    else if(state.action==='cavities'){body=reviewRow('模穴數',(state.cavities??4)+' 穴','2 穴');}
+    else{const record=state.reportRecord||{id:'RPT-0382-01',time:'11/02 09:10',good:120,defect:3};if(state.action==='update')body+=reviewRow('報工紀錄',record.id)+reviewRow('報工時間',record.time);body+=reviewRow('人工良品',state.good+' 件',state.action==='update'?record.good+' 件':undefined)+reviewRow('不良合計',state.defects.reduce((n,d)=>n+Number(d.quantity),0)+' 件',state.action==='update'?record.defect+' 件':undefined)+reviewRow('不良原因',state.defects.length?state.defects.map(d=>`${d.reason} ${d.quantity} 件`).join('、'):'無');if(state.note.trim())body+=reviewRow('備註',state.note);}
+    const independent=['delete','clear','complete'].includes(state.action);
+    return `<div class="ux-review">${body}</div>${independent?`<div style="margin-top:20px"><label class="ux-check"><input type="checkbox" data-approval ${state.approved?'checked':''}><span>我已核對對象與影響，確認執行這筆操作。</span></label></div>`:''}<details style="margin-top:16px"><summary>查看異動明細</summary><div class="ux-muted">示意預覽・實作須顯示伺服器回傳的欄位前後值。</div></details>`;
+  }
+  function workNotice(){
+    const sub=state.substate;
+    if(state.formError)return notice(state.formError,'','error');
+    if(sub==='save-error')return notice('草稿尚未儲存','輸入內容仍在，請重試後再核對。','error')+`<div style="margin:10px 0 18px">${btn(icon('refresh-cw')+'重試儲存','retry-save','small')}</div>`;
+    if(sub==='conflict')return notice('資料已變更','先取得最新資料，再核對你的修改。','warn')+`<div style="margin:10px 0 18px">${btn('查看最新資料','refresh-preview','small')}</div>`;
+    if(sub==='expired')return notice('核對已過期','草稿仍保留，請重新核對。','warn');
+    if(sub==='rejected')return notice('這筆操作未通過檢核','工單狀態已變更，請更新資料後重試。','error');
+    if(sub==='write-disabled')return notice('目前僅供查詢與預覽','尚未啟用正式寫入。','warn');
+    if(sub==='submitting')return `<div class="ux-live" role="status">${spin()}正在送出，請稍候…</div>`;
+    return '';
+  }
+  function receipt(){if(state.substate==='unknown')return `<div class="ux-empty" style="text-align:left;align-items:flex-start;padding:20px 0">${icon('circle-help')}<h3>執行結果待確認</h3><p>暫時沒收到結果，請先查核，避免重複送出。</p>${btn(icon('refresh-cw')+'查核執行結果','reconcile','primary')}<details><summary>操作資訊</summary><div class="ux-muted">OP-DEMO-1102-0382</div></details></div>`;
+    let title='',summary='';
+    if(state.module==='schedule'){scheduleDraft();title=state.action==='update'?'排程已更新':'排程已建立';summary=state.scheduleEquipment+' · '+state.scheduleRows+' 筆工單分配';}
+    else if(state.module==='mold'){title=state.action==='clear'?'換模紀錄已清除':state.action==='down'?'下模已完成':state.reportAction==='上模開始'?'已開始上模':state.reportAction==='上模完成'?'上模已完成':'已開始下模';summary=state.action==='clear'?'上下模、進出站及完工狀態已依核對內容更新。':'M-102 · 已記錄本次階段。';}
+    else if(state.action==='delete'){title='這筆報工已刪除';summary=state.reportRecord?.id||'RPT-0382-01';}
+    else if(state.action==='complete'){title='整張排程已完工';summary='2 筆工單已完成，下一排程時間依核對內容更新。';}
+    else if(state.action==='cavities'){title='報工模穴數已更新';summary='2 → '+(state.cavities??4)+' 穴';}
+    else{title=state.action==='update'?'報工已更新':'報工已完成';summary='人工良品 '+state.good+' 件・不良 '+state.defects.reduce((n,d)=>n+Number(d.quantity),0)+' 件';}
+    return `<div class="ux-empty" style="text-align:left;align-items:flex-start;padding:20px 0">${icon('circle-check')}<h3>${title}</h3><p>${esc(summary)}</p><small>示範回執 · 未寫入 MES</small><div class="ux-row">${btn('查看紀錄','audit','small')}${btn('下一筆作業','next-operation','small ghost')}</div></div>`;
+  }
+  function workContent(){if(['unknown','success'].includes(state.substate))return target()+receipt();if(!state.target)return `<div class="ux-empty">${icon('clipboard-list')}<h3>選擇要操作的工單</h3><p>搜尋設備或工單，確認後再帶入。</p>${btn(icon('search')+'選擇工單','picker','primary')}</div>`;return target()+`<div class="ux-stack" style="gap:16px">${workNotice()}${state.phase==='review'?review():state.module==='schedule'?scheduleForm():state.module==='mold'?moldForm():noFields()?'<p class="ux-muted">對象已選定，可以核對這次操作的影響。</p>':reportForm()}${state.phase==='review'?'<small>確認期限：11/02 10:00（MES）</small>':''}</div>`;}
+  function workFooter(){
+    if(['unknown','success'].includes(state.substate))return '';
+    if(!state.target)return `<small>先選擇作業對象</small>${btn('下一步','review','primary','disabled')}`;
+    const sub=state.substate;
+    if(state.phase==='review'){
+      const blocked=['submitting','write-disabled','conflict','rejected'].includes(sub)||(['delete','clear','complete'].includes(state.action)&&!state.approved);
+      return `${btn(noFields()?'返回選擇':'返回修改','back-edit','ghost',sub==='submitting'?'disabled':'')}<div class="ux-row">${btn('取消草稿','cancel-proposal','small ghost',sub==='submitting'?'disabled':'')}${sub==='expired'?btn('重新核對','refresh-preview','primary'):btn(sub==='submitting'?spin()+'送出中…':'確認送出','submit','primary',blocked?'disabled':'')}</div>`;
+    }
+    return `<small>${sub==='saving'?`${spin()} 儲存中…`:sub==='save-error'?'尚未儲存':state.savingText}</small>${btn(state.mode==='wizard'?'下一步':'核對內容','review','primary',state.busy||sub==='save-error'?'disabled':'')}`;
+  }
+  function work(){
+    const taskTitle=state.phase==='review'?'核對'+actionTitle().replace('新增','').replace('修改',''):actionTitle();
+    const user=state.module==='schedule'?'幫我安排 MC37 的生產排程':state.module==='mold'?'我要操作 MC37 的模具':'我要報工，MC37 良品 125，不良 3 個刮傷';
+    const reply=state.aiAnswer||(!state.target?'好，先選擇這次要操作的工單。':state.phase==='review'?'內容已整理好。請核對後再送出。':'已帶入 MC37 的工單。數量可以直接在作業單調整。');
+    if(state.mode==='wizard'){
+      const labels=noFields()?['選擇對象','核對送出']:['選擇對象','填寫內容','核對送出'];
+      const step=!state.target?0:state.phase==='review'?labels.length-1:Math.min(1,labels.length-2);
+      return `<main class="ux-wizard"><nav class="ux-steps" aria-label="作業進度">${labels.map((label,i)=>`<span class="ux-step ${i===step?'active':i<step?'done':''}" ${i===step?'aria-current="step"':''}><b>${i<step?icon('check'):i+1}</b>${label}</span>`).join('')}</nav><div class="ux-wizard-body"><div class="ux-wizard-inner ux-enter"><h2>${taskTitle}</h2>${workContent()}</div></div><div class="ux-sheet-foot">${workFooter()}</div>${state.dialog?'':`<div class="ux-wizard-talk"><div><div class="ux-wizard-answer">${esc(reply)}</div>${composer('wizard',true)}</div></div>`}</main>`;
+    }
+    return `<div class="ux-mobile-switch" aria-label="工作區">${btn('對話','pane-chat',state.mobilePane==='chat'?'selected':'')}${btn('作業單','pane-task',state.mobilePane==='task'?'selected':'')}</div><main class="ux-work" data-pane="${state.mobilePane}"><section class="ux-work-chat" aria-label="對話"><div class="ux-conversation"><div class="ux-messages"><article class="ux-message user">${user}</article><article class="ux-message assistant"><p>${esc(reply)}</p>${!state.target?`<div class="ux-row">${btn(icon('search')+'選擇工單','picker','small')}</div>`:''}</article></div></div>${state.dialog?'':`<div class="ux-composer-wrap">${composer('work',true)}</div>`}</section><section class="ux-sheet" aria-label="本次作業單"><div class="ux-sheet-head"><h2>${taskTitle}</h2>${state.pending?'<span class="ux-tag">尚未送出</span>':''}</div><div class="ux-sheet-scroll ux-enter">${workContent()}</div><div class="ux-sheet-foot">${workFooter()}</div></section></main>`;
+  }
+  function menu(){return `<div class="ux-menu" role="dialog" aria-label="更多功能">${[['settings-2','介面設定','preferences'],['archive','封存聊天','archives'],['trash-2','已刪除聊天','deleted'],['clock-3','定時報告','reports'],['chart-no-axes-combined','使用統計','usage']].map(([i,l,a])=>`<button type="button" data-action="${a}">${icon(i)}${l}</button>`).join('')}<hr>${[['key-round','API 設定','api'],['sliders-horizontal','Agent 設定','agent'],['gauge','用量額度','budget']].map(([i,l,a])=>`<button type="button" data-action="${a}">${icon(i)}${l}</button>`).join('')}</div>`;}
+  function historyMenu(){return `<div class="ux-menu" role="dialog" aria-label="聊天選項">${[['pin','釘選','pin'],['pencil','重新命名','rename'],['archive','封存','archive-chat'],['trash-2','刪除','delete-chat']].map(([i,l,a])=>`<button type="button" data-action="${a}">${icon(i)}${l}</button>`).join('')}</div>`;}
+  function modal(title,body,footer='',size=''){return `<div class="ux-overlay"><section class="ux-dialog ${size}" role="dialog" aria-modal="true" aria-labelledby="ux-dialog-title"><div class="ux-dialog-head"><h2 id="ux-dialog-title">${title}</h2>${ibtn('x','關閉','close-dialog')}</div><div class="ux-dialog-body">${body}</div>${footer?`<div class="ux-dialog-foot">${footer}</div>`:''}</section></div>`;}
+  function picker(){
+    if(['picker-loading','picker-error'].includes(state.scene)){const loading=state.scene==='picker-loading';return modal('選擇工單',loading?`<div class="ux-live" role="status" aria-busy="true">${spin()}正在查詢工單…</div><div style="padding:12px 0"><div class="ux-skeleton"></div><div class="ux-skeleton"></div><div class="ux-skeleton"></div></div>`:`${notice('工單暫時無法載入','設備與日期條件已保留。','error')}<div style="margin-top:16px">${btn('重新查詢','retry-picker')}</div>`,btn('取消選取','cancel-picker'),'wide');}
+    let candidates=rows.filter(r=>(!state.equipment||r.equipment===state.equipment)&&(!state.query||`${r.id} ${r.product}`.toLowerCase().includes(state.query.toLowerCase())));
+    const pageSize=4,start=(state.page-1)*pageSize, shown=candidates.slice(start,start+pageSize), level=state.pickerLevel==='report';
+    const body=`${level?`<div class="ux-row ux-between">${btn(icon('arrow-left')+'返回工單','parent-picker','small ghost')}<small>MC37 · WO-261102-0382</small></div>`:''}<div class="ux-filterbar">${field('搜尋',`<input type="search" data-input="query" value="${esc(state.query)}" placeholder="${level?'搜尋報工紀錄':'工單或品號'}">`)}${field('設備',`<select data-input="equipment"><option value="">全部設備</option>${['MC37','MC38','MC39'].map(e=>`<option ${state.equipment===e?'selected':''}>${e}</option>`).join('')}</select>`)}${field('日期',input('date','2026-11-02','date'))}${btn(icon('search')+'搜尋','picker-search')}</div>${state.filterUpdated?`<p class="ux-modal-subtitle" role="status">已更新條件，草稿與已選項目保留。</p>`:''}${shown.length?`<div class="ux-pick-table"><table class="ux-table"><thead><tr><th class="choice"><span class="ux-sr">選擇</span></th><th>${level?'報工紀錄':'工單／品名'}</th><th class="desktop" style="width:85px">${level?'良品':'設備'}</th><th class="desktop" style="width:90px">${level?'不良':'狀態'}</th><th style="width:64px"><span class="ux-sr">明細</span></th></tr></thead><tbody>${shown.map((r,i)=>`<tr class="${state.tentative?.id===r.id?'is-selected':''}"><td class="choice"><input type="radio" name="candidate" data-pick="${r.id}" aria-label="選擇 ${level?'RPT-'+(i+1):r.id}" ${state.tentative?.id===r.id?'checked':''} ${r.status==='已完成'&&!level?'disabled':''}></td><td>${level?'RPT-0382-0'+(i+1):r.id}<small>${level?'11/02 09:'+String(10+i*10):r.product}</small></td><td class="desktop">${level?r.good:r.equipment}</td><td class="desktop">${level?r.defect:`<span class="ux-tag ${r.status==='已完成'?'':'good'}">${r.status}</span>`}</td><td>${btn('明細','pick-detail','small ghost',`data-id="${r.id}"`)}</td></tr>${state.detail===r.id?`<tr><td colspan="5" class="row-detail"><strong>${r.product}</strong><br>模具 M-102 · 人工報工 ${r.good} 良品／${r.defect} 不良<br>IoT 產量：尚無資料</td></tr>`:''}`).join('')}</tbody></table><div class="ux-pagination"><span>${start+1}–${Math.min(start+pageSize,candidates.length)}／${candidates.length} 筆</span><div class="ux-row">${ibtn('chevron-left','上一頁','pick-prev',state.page===1?'disabled':'')}<span>${state.page}／${Math.max(1,Math.ceil(candidates.length/pageSize))}</span>${ibtn('chevron-right','下一頁','pick-next',start+pageSize>=candidates.length?'disabled':'')}</div></div></div>`:`<div class="ux-empty">${icon('search')}<h3>沒有符合的資料</h3><p>試試其他工單或放寬設備範圍。</p>${btn('清除篩選','clear-filter','small')}</div>`}`;
+    const outOfScope=state.tentative&&state.equipment&&state.tentative.equipment!==state.equipment;
+    const footer=`<div class="ux-selection-status">${state.tentative?`${outOfScope?'已選項目不在目前範圍，請重選':'已選擇'}<strong>${level?'RPT-0382-0'+(rows.findIndex(r=>r.id===state.tentative.id)+1):state.tentative.id}</strong>`:'尚未選擇資料'}</div>${btn(icon('sparkles')+'詢問 AI','picker-ai','small ghost')}${btn('取消選取','cancel-picker')}${btn(level?'帶入這筆報工':'帶入作業','apply-pick','primary',state.tentative&&!outOfScope?'':'disabled')}`;
+    let html=modal(level?'選擇一筆報工':'選擇工單',body,footer,'wide');
+    if(state.askAI)html=html.replace('<div class="ux-dialog-foot">',`<div class="ux-ai-picker"><div class="ux-wizard-answer" role="status">${esc(state.aiAnswer||'可以直接補充條件，已選項目會保留。')}</div>${composer('picker',true)}</div><div class="ux-dialog-foot">`);
+    return html;
+  }
+  function preferences(){return modal('介面設定',`<div class="ux-stack"><div><h3>操作方式</h3><div class="ux-settings-modes"><label class="ux-radio-card"><input type="radio" name="mode" value="sheet" data-mode ${state.preferenceChoice==='sheet'?'checked':''}><span>聊天＋作業單<small>對話與作業內容並排呈現</small></span></label><label class="ux-radio-card"><input type="radio" name="mode" value="wizard" data-mode ${state.preferenceChoice==='wizard'?'checked':''}><span>分步作業精靈<small>依序選擇、填寫、核對</small></span></label></div></div>${state.busy?notice('作業處理中','完成後套用新操作方式，草稿會保留。'):''}<div class="ux-settings-row"><div>外觀</div><label class="ux-field"><span class="ux-sr">外觀</span><select data-product-theme><option value="dark" ${state.theme==='dark'?'selected':''}>深色</option><option value="light" ${state.theme==='light'?'selected':''}>淺色</option></select></label></div><div class="ux-settings-row"><div>語言</div><span class="ux-muted">繁體中文</span></div></div>`,btn('完成','save-preferences','primary'),'medium');}
+  function settingsDraft(){const defaults={settingsModel:'部署可用模型',settingsReason:'low',settingsRounds:3,settingsLimit:20,settingsWarning:80};if(!state.settingsBase)state.settingsBase={...defaults};Object.entries(defaults).forEach(([k,v])=>{if(state[k]===undefined)state[k]=v});return state.settingsBase;}
+  function settingsChanges(kind){const before=settingsDraft(),keys=kind==='api'?['settingsModel','settingsReason']:kind==='agent'?['settingsRounds']:['settingsLimit','settingsWarning'];const names={settingsModel:'模型',settingsReason:'推理強度',settingsRounds:'每輪呼叫上限',settingsLimit:'額度上限',settingsWarning:'提醒門檻'};const format=(k,v)=>k==='settingsReason'?({low:'低',medium:'中',high:'高'})[v]:k==='settingsRounds'?v+' 次':k==='settingsLimit'?'US$'+Number(v).toFixed(2):k==='settingsWarning'?v+'%':v;return keys.filter(k=>String(state[k])!==String(before[k])).map(k=>({key:k,label:names[k],before:format(k,before[k]),after:format(k,state[k])}));}
+  function settingsInvalid(kind){settingsDraft();return kind==='budget'&&(state.settingsLimit===''||!Number.isFinite(Number(state.settingsLimit))||Number(state.settingsLimit)<0||Number(state.settingsLimit)>20||state.settingsWarning===''||!Number.isInteger(Number(state.settingsWarning))||Number(state.settingsWarning)<1||Number(state.settingsWarning)>100);}
+  function applySettingsDemo(){for(const change of settingsChanges(state.settingKind))state.settingsBase[change.key]=state[change.key];}
+  function settings(kind){
+    settingsDraft();const readOnly=state.readonlySettings||state.scene==='api-readonly';let title='',body='';
+    if(kind==='api'){title='API 設定';body=`<div class="ux-settings-row"><div>服務供應商<small>OpenAI Responses API</small></div><span class="ux-tag good">金鑰已設定</span></div><div class="ux-form" style="margin-top:20px">${field('模型',`<select data-input="settingsModel"><option>${esc(state.settingsModel)}</option></select>`)}${field('推理強度',`<select data-input="settingsReason">${[['low','低'],['medium','中'],['high','高']].map(([v,l])=>`<option value="${v}" ${state.settingsReason===v?'selected':''}>${l}</option>`).join('')}</select>`)}<small>金鑰由伺服器管理，僅顯示部署可用的模型。</small></div>`;}
+    if(kind==='agent'){title='Agent 設定';body=`<div class="ux-form">${field('每輪呼叫上限',`<select data-input="settingsRounds">${[1,2,3,4,5].map(n=>`<option value="${n}" ${Number(state.settingsRounds)===n?'selected':''}>${n} 次</option>`).join('')}</select>`)}<small>可查詢與準備草稿；寫入仍須人工確認。</small></div>`;}
+    if(kind==='budget'){title='用量額度';body=`<div class="ux-row ux-between"><span>累計模型費用</span><strong>US$1.21／${Number(state.settingsBase.settingsLimit).toFixed(2)}</strong></div><div class="ux-progress" role="progressbar" aria-label="累計模型費用已用額度" aria-valuenow="1.21" aria-valuemin="0" aria-valuemax="${state.settingsBase.settingsLimit}"><span></span></div><div class="ux-form"><small>共用累計帳本，調整上限不會重設用量。</small><div class="ux-two">${field('額度上限（USD）',input('settingsLimit',state.settingsLimit,'number','min="0" max="20" step="0.01"'))}${field('提醒門檻（%）',input('settingsWarning',state.settingsWarning,'number','min="1" max="100"'))}</div><small>本範例部署上限 US$20，實作以後端上限為準。</small>${notice('尚有 1 筆用量待確認','已保留預留金額，不重複加總。')}<details><summary>查看用量明細</summary><div>${reviewRow('已使用','US$1.21')}${reviewRow('預留','US$0.12')}${reviewRow('剩餘額度','US$'+Math.max(0,Number(state.settingsBase.settingsLimit)-1.21-.12).toFixed(2))}</div></details></div>`;}
+    return modal(title,`<p class="ux-modal-subtitle">${readOnly?'目前帳號僅供檢視，請由主管調整。':kind==='budget'?'核對後套用新的額度設定。':'設定於新聊天生效。'}</p><fieldset ${readOnly?'disabled':''} style="border:0;padding:0;margin:0;min-width:0">${body}</fieldset>${settingsInvalid(kind)?'<p class="ux-error-text" role="alert">請填寫有效的上限與提醒比例。</p>':''}`,`${btn('關閉','close-dialog')}${readOnly?'':btn('核對變更','setting-review','primary',!settingsChanges(kind).length||settingsInvalid(kind)?'disabled':'')}`,'medium');
+  }
+  function settingsReview(){const changes=settingsChanges(state.settingKind);return modal('核對設定變更',`<div class="ux-review">${changes.length?changes.map(c=>reviewRow(c.label,c.after,c.before)).join(''):'<p>沒有需要儲存的變更。</p>'}</div>`,btn('返回修改','back-setting')+btn('儲存','save-setting','primary',!changes.length||settingsInvalid(state.settingKind)?'disabled':''),'medium');}
+  function historyDialog(kind){
+    if(kind==='delete-chat')return modal('刪除這個聊天？',`<p>可在「已刪除聊天」還原。</p><div class="ux-target" style="margin:12px 0 0;border:0;padding-bottom:0"><div><strong>MC37 今日生產</strong></div></div>`,btn('取消','close-dialog')+btn('刪除聊天','confirm-delete','danger'));
+    if(kind==='rename')return modal('重新命名',field('聊天名稱',input('rename','MC37 今日生產')),btn('取消','close-dialog')+btn('儲存','rename-save','primary'));
+    const archived=kind==='archives',deleted=kind==='deleted';
+    const title=archived?'封存聊天':deleted?'已刪除聊天':'搜尋聊天';
+    if(state.historyStatus){const status=state.historyStatus;const content=status==='loading'?`<div class="ux-live" role="status" aria-busy="true">${spin()}正在搜尋聊天…</div>`:status==='error'?`${notice('搜尋暫時無法使用','搜尋文字已保留。','error')}<div style="margin-top:16px">${btn('重新搜尋','retry-history')}</div>`:`<div class="ux-empty">${icon('search')}<h3>沒有找到聊天</h3><p>試試設備名稱、工單或其他關鍵字。</p>${btn('清除搜尋','retry-history','small')}</div>`;return modal(title,`<div class="ux-search">${icon('search')}<input class="ux-search-input" data-input="historyQuery" placeholder="搜尋聊天" value="${esc(state.historyQuery||'MC99')}" aria-label="搜尋聊天"></div>${content}`,btn('關閉','close-dialog'),'medium');}
+    const names=state.historyQuery?['MC37 今日生產','MC37 本週工單']:['MC37 今日生產','每日生產追蹤','本週排程調整'];
+    return modal(title,`<div class="ux-search">${icon('search')}<input class="ux-search-input" data-input="historyQuery" placeholder="搜尋聊天" value="${esc(state.historyQuery)}" aria-label="搜尋聊天"></div>${deleted?'<p class="ux-modal-subtitle">聊天可還原，MES 業務紀錄不受影響。</p>':''}<div class="ux-item-list">${names.map(n=>`<div class="ux-list-item"><div><strong>${n}</strong><small>${archived?'11/01 封存':deleted?'11/01 刪除':'11/02 · 生產報工'}</small></div>${btn(archived||deleted?'還原':'開啟',archived||deleted?'restore-chat':'open-chat','small ghost')}</div>`).join('')}</div>`,btn('關閉','close-dialog'),'medium');
+  }
+  function reports(){
+    const key=state.scene;
+    if(key==='schedule-report-history')return `<main class="ux-page"><div class="ux-page-title"><h2>每日生產摘要</h2>${btn(icon('arrow-left')+'返回報告','reports','small ghost')}</div><div class="ux-tabs"><button type="button" class="active">執行歷史</button></div><div class="ux-item-list">${['11/02 08:00','11/01 08:00','10/31 08:00'].map((d,i)=>`<div class="ux-list-item"><div><strong>${d}</strong><small>MC37 · 前一排程日</small></div><span class="ux-tag ${i===2?'warn':'good'}">${i===2?'資料過多':'已完成'}</span>${btn(i===2?'查看原因':'查看報告',i===2?'report-limit':'report-detail','small')}</div>`).join('')}</div></main>`;
+    if(key==='schedule-report-detail')return `<main class="ux-page"><div class="ux-page-title"><h2>每日生產摘要</h2>${btn(icon('arrow-left')+'返回歷史','report-history','small ghost')}</div><p class="ux-muted" style="font-size:13px;margin-bottom:18px">11/02 08:00 · MES UTC+07:00 · 唯讀快照</p>${notice('前一排程日：11/01','這份報告不會自動報工。')}${resultTable(true,true)}</main>`;
+    const empty=key==='schedule-report-empty';
+    return `<main class="ux-page"><div class="ux-page-title"><h2>我的定時報告</h2>${btn(icon('plus')+'新增','report-create','primary')}</div>${empty?`<div class="ux-empty">${icon('clock-3')}<h3>還沒有定時報告</h3><p>建立後，每天自動整理前一排程日資料。</p>${btn('建立第一份報告','report-create')}</div>`:`<div class="ux-item-list"><div class="ux-list-item"><div><strong>每日生產摘要</strong><small>生產報工 · MC37 · 每天 08:00</small><small>MES UTC+07:00 · 前一排程日</small></div><span class="ux-tag ${state.paused?'':'good'}">${state.paused?'已暫停':'啟用中'}</span></div><div class="ux-row" style="margin-top:14px">${btn(icon('history')+'執行歷史','report-history','small')}${btn(state.paused?'恢復':'暫停','report-pause','small ghost')}${btn('刪除','report-delete','small ghost')}</div></div>`}</main>`;
+  }
+  function reportCreate(){return modal('新增定時報告',`<p class="ux-modal-subtitle">自動整理前一排程日資料，不會自動報工。</p><details><summary>用一句話快速填寫</summary><div class="ux-form">${field('<span class="ux-sr">描述定時報告</span>',`<textarea data-input="reportRequest" maxlength="500" placeholder="例如：每天 08:00 查看 MC37 的報工">${esc(state.reportRequest)}</textarea>`)}${btn('解析並填入','parse-report','small')}</div></details><div class="ux-form" style="margin-top:16px">${field('報告名稱',input('reportTitle',state.reportTitle,'text','maxlength="100" required'))}<div class="ux-two">${field('作業模組',`<select data-input="reportModule">${[['report','生產報工'],['schedule','生產排程'],['mold','模具上下模']].map(([v,l])=>`<option value="${v}" ${state.reportModule===v?'selected':''}>${l}</option>`).join('')}</select>`)}${field('設備',input('reportEquipment',state.reportEquipment,'text','placeholder="全部設備" maxlength="60"'))}</div><div class="ux-two">${field('頻率',`<select data-input="reportFrequency"><option value="daily" ${state.reportFrequency==='daily'?'selected':''}>每天</option><option value="weekdays" ${state.reportFrequency==='weekdays'?'selected':''}>週一至週五</option></select>`)}${field('執行時間',input('reportTime',state.reportTime,'time','required'))}</div><small>依 MES 時間（UTC+07:00）執行・不使用模型費用</small></div>`,btn('取消','close-dialog')+btn('核對並建立','report-review','primary',!state.reportTitle.trim()||!state.reportTime?'disabled':''),'medium');}
+  function information(){
+    if(state.screen==='usage')return `<main class="ux-page"><div class="ux-page-title"><h2>使用統計</h2>${btn(icon('refresh-cw')+'重新整理','refresh-stats','small')}</div><h3>我的聊天與作業</h3><p class="ux-muted" style="font-size:13px">僅包含目前登入者可存取的紀錄。</p><div class="ux-metric-row"><div><small>聊天</small><strong>18</strong></div><div><small>完成作業</small><strong>42</strong></div></div><h3 style="margin-top:28px">累計模型費用</h3><p class="ux-muted" style="font-size:13px">共用累計帳本，包含全部模型用量。</p>${reviewRow('已使用','US$1.21')}${reviewRow('已預留','US$0.12')}${reviewRow('累計上限','US$20.00')}${reviewRow('剩餘額度','US$18.67')}<details style="margin-top:18px"><summary>費用明細</summary><div>${reviewRow('待確認用量','1 筆')}<p class="ux-muted">未知用量保留預留金額，不重複加總。</p></div></details></main>`;
+    if(state.screen==='audit')return `<main class="ux-page"><div class="ux-page-title"><h2>操作紀錄</h2>${btn(icon('refresh-cw')+'重新整理','refresh-stats','small')}</div><div class="ux-list-item"><div><strong>修改人工報工</strong><small>11/02 09:42 · 陳先生 · MC37</small></div><span class="ux-tag good">已完成</span></div><div style="margin-top:12px">${reviewRow('工單','WO-261102-0382')}${reviewRow('良品','125 件','120 件')}${reviewRow('不良','刮傷 3 件')}<details style="margin-top:18px"><summary>操作識別與異動明細</summary><div class="ux-muted">OP-DEMO-1102-0382 · RPT-0382-01</div></details></div></main>`;
+    if(state.screen==='feedback')return `<main class="ux-page"><div class="ux-page-title"><h2>回報問題</h2><span class="ux-tag">備用樣例</span></div><div class="ux-form">${field('遇到什麼問題？','<textarea rows="4" placeholder="你預期的結果與實際情況…" data-input="feedback"></textarea>')}<div>${btn('送出回報','send-feedback','primary')}</div></div></main>`;
+    return `<main class="ux-page"><div class="ux-page-title"><h2>${state.screen==='feedback-review'?'問題審核':'我的回報'}</h2><span class="ux-tag">備用樣例</span></div><div class="ux-list-item"><div><strong>找不到 MC37 的工單</strong><small>11/02 09:20 · 生產報工</small></div><span class="ux-tag warn">待審核</span></div>${state.screen==='feedback-review'?`<div class="ux-form" style="margin-top:20px">${field('審核意見','<textarea placeholder="填寫處理建議…"></textarea>')}<div class="ux-row">${btn('退回補充','feedback-return')}${btn('核准為候選案例','feedback-approve','primary')}</div></div>`:''}</main>`;
+  }
+  function system(){const key=state.scene;return `<main class="ux-session">${key==='connecting'?spin():icon(key==='session'?'log-in':'lock-keyhole')}<h2>${key==='session'?'登入已逾時':key==='permission'?'目前無法執行這項操作':'正在連線…'}</h2><p>${key==='session'?'請重新登入，再繼續原本的作業。':key==='permission'?'你的帳號沒有這項操作權限。':'正在取得工作區與登入狀態。'}</p>${key==='session'?btn('重新登入','demo-login','primary'):key==='permission'?btn('返回聊天','new'):''}</main>`;}
+  function dialog(){const kind=state.dialog;if(kind==='picker')return picker();if(kind==='preferences')return preferences();if(['api','agent','budget'].includes(kind))return settings(kind);if(['search','archives','deleted','delete-chat','rename'].includes(kind))return historyDialog(kind);if(kind==='schedule-report-create')return reportCreate();if(kind==='schedule-report-delete')return modal('刪除這份定時報告？','<p>之後不再產生新報告，既有快照與紀錄保留。</p><div style="margin-top:16px">每日生產摘要</div>',btn('取消','close-dialog')+btn('刪除報告','confirm-report-delete','danger'));if(kind==='setting-review')return settingsReview();if(kind==='report-review')return modal('核對定時報告',reviewRow('名稱',state.reportTitle)+reviewRow('模組',({report:'生產報工',schedule:'生產排程',mold:'模具上下模'})[state.reportModule])+reviewRow('設備',state.reportEquipment||'全部設備')+reviewRow('頻率',(state.reportFrequency==='daily'?'每天':'週一至週五')+' '+state.reportTime)+reviewRow('時區','MES UTC+07:00'),btn('返回修改','report-create')+btn('建立報告','create-report','primary'));if(kind==='query-filters')return modal('查詢範圍',`<div class="ux-form">${field('設備',input('equipment',state.equipment))}${field('日期',input('date','2026-11-02','date'))}${field('工單',input('query',state.query))}</div>`,btn('取消','close-dialog')+btn('查詢','run-filter','primary'));if(kind==='more-actions')return modal('選擇作業',`<div class="ux-stack">${btn('生產排程','start-schedule')}${btn('生產報工','start-report')}${btn('模具上下模','start-mold')}</div>`);if(kind==='report-limit')return modal('這次報告未產生',notice('資料超過可處理範圍','請改用指定設備的報告，避免漏看資料。','warn'),btn('知道了','close-dialog','primary'));return '';}
+  function appbar(){return `<header class="ux-appbar"><div class="ux-appbrand"><img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjI0IDE4IDIwNSA0OCIgcm9sZT0iaW1nIiBhcmlhLWxhYmVsbGVkYnk9ImJyYW5kLXRpdGxlIj4NCiAgPHRpdGxlIGlkPSJicmFuZC10aXRsZSI+5aiB5Y+L56eR5oqA5ZOB54mM5qiZ6KqMPC90aXRsZT4NCiAgPGRlc2M+5L6d5pei5pyJ5aiB5Y+L56eR5oqA5qiZ6KqM6Lyq5buT57mq6KO977yM5L2/55So6YCP5piO6IOM5pmv6IiH5rex6JeN6Imy77ybbWFyayDmqqLoppblj6rpoa/npLrlk4HniYznrKbomZ/jgII8L2Rlc2M+DQogIDx2aWV3IGlkPSJtYXJrIiB2aWV3Qm94PSIyNCAxOCA1NCA0OCIvPg0KICA8cGF0aCBmaWxsPSIjMTcxZDYzIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiIGQ9Ik0yNyAyMyBMMjggMjMgTDI4IDIyIEwzNSAyMiBMMzUgMjMgTDM2IDIzIEwzNiAyNCBMMzcgMjQgTDM3IDI1IEwzOCAyNSBMMzggMjYgTDM5IDI2IEwzOSAyNyBMNDEgMjggTDQxIDMwIEw0MiAzMCBMNDIgMzEgTDQzIDMxIEw0MyAzMiBMNDUgMzMgTDQ1IDM1IEw0NiAzNSBMNDYgMzYgTDQ4IDM3IEw0NyA0MSBMNDYgNDEgTDQ2IDQyIEw0NCA0MyBMNDQgNDUgTDQzIDQ1IEw0MyA0NiBMNDEgNDcgTDQxIDQ5IEwzOSA1MCBMMzkgNTIgTDM4IDUyIEwzOCA1MyBMMzcgNTMgTDM2IDU1IEwzNCA1NSBMMzQgNTAgTDMzIDUwIEwzMyA0NiBMMzIgNDYgTDMyIDQyIEwzMSA0MiBMMzEgMzcgTDMwIDM3IEwzMCAzMyBMMjkgMzMgTDI5IDI5IEwyOCAyOSBMMjggMjQgTDI3IDI0IFogTTM4IDU4IEwzOSA1OCBMMzkgNTYgTDQwIDU2IEw0MCA1NSBMNDIgNTQgTDQyIDUyIEw0MyA1MiBMNDMgNTEgTDQ1IDUwIEw0NSA0OCBMNDYgNDggTDQ2IDQ3IEw0OCA0NiBMNDggNDQgTDQ5IDQ0IEw0OSA0MyBMNTEgNDIgTDUxIDQwIEw1MiA0MCBMNTIgMzkgTDU0IDM4IEw1NCAzNiBMNTUgMzYgTDU1IDM1IEw1NyAzNCBMNTcgMzIgTDU4IDMyIEw1OCAzMSBMNjAgMzAgTDYwIDI4IEw2MSAyOCBMNjEgMjcgTDYzIDI2IEw2MyAyNCBMNjQgMjQgTDY1IDIyIEw3MyAyMiBMNzMgMjMgTDc0IDIzIEw3NCAyNSBMNzMgMjUgTDczIDI5IEw3MiAyOSBMNzIgMzUgTDcxIDM1IEw3MSAzOSBMNzAgMzkgTDcwIDQ1IEw2OSA0NSBMNjkgNDkgTDY4IDQ5IEw2NyA2MCBMNjUgNjAgTDY1IDYxIEw2MSA2MCBMNjEgNTkgTDYwIDU5IEw2MCA1NyBMNTkgNTcgTDU5IDU2IEw1OCA1NiBMNTggNTUgTDU2IDU0IEw1NSA1MCBMNTYgNTAgTDU2IDQ4IEw1NyA0OCBMNTcgNDYgTDU4IDQ2IEw1OCA0NCBMNTcgNDQgTDU3IDQzIEw1NSA0MyBMNTUgNDQgTDU0IDQ0IEw1NCA0NSBMNTMgNDUgTDUzIDQ2IEw1MSA0NyBMNTEgNDkgTDUwIDQ5IEw1MCA1MCBMNDkgNTAgTDQ5IDUxIEw0NyA1MiBMNDcgNTQgTDQ2IDU0IEw0NiA1NSBMNDUgNTUgTDQ1IDU2IEw0NCA1NiBMNDQgNTcgTDQzIDU3IEw0MyA1OCBMNDIgNTggTDQyIDU5IEw0MSA1OSBMNDAgNjEgTDM4IDYwIFogTTgzIDU0IEw4NCA1NCBMODQgNTIgTDg1IDUyIEw4NSA0NyBMODYgNDcgTDg2IDMwIEwxMDMgMzAgTDEwMyAyNiBMMTA3IDI2IEwxMDcgMzAgTDExMSAzMCBMMTExIDI5IEwxMDkgMjggTDEwOSAyNiBMMTEyIDI2IEwxMTIgMjcgTDExNCAyOCBMMTEzIDMwIEwxMTUgMzAgTDExNSAzMyBMMTA4IDMzIEwxMDggMzQgTDEwNyAzNCBMMTA3IDQxIEwxMDggNDEgTDEwOCA0NCBMMTA5IDQ0IEwxMDkgNDEgTDExMCA0MSBMMTEwIDM3IEwxMTQgMzcgTDExNCAzOSBMMTEzIDM5IEwxMTMgNDMgTDExMiA0MyBMMTEyIDQ1IEwxMTEgNDUgTDExMSA0NyBMMTEwIDQ3IEwxMTAgNDkgTDEwOSA0OSBMMTEwIDUzIEwxMTIgNTMgTDExMiA1MiBMMTEzIDUyIEwxMTMgNDkgTDExNSA0OSBMMTE1IDUwIEwxMTYgNTAgTDExNiA1MSBMMTE1IDUxIEwxMTUgNTUgTDExNCA1NSBMMTEzIDU3IEwxMTAgNTcgTDExMCA1NiBMMTA4IDU2IEwxMDggNTQgTDEwNyA1NCBMMTA3IDUzIEwxMDYgNTMgTDEwNiA1NCBMMTA1IDU0IEwxMDQgNTYgTDEwMSA1NiBMMTAxIDU1IEwxMDAgNTUgTDEwMCA1NCBMOTggNTQgTDk4IDUzIEw5NyA1MyBMOTcgNTQgTDk1IDU0IEw5NSA1NSBMOTQgNTUgTDk0IDU2IEw5MiA1NiBMOTIgNTcgTDkxIDU3IEw5MSA1NSBMOTAgNTUgTDkwIDU0IEw5MiA1NCBMOTIgNTMgTDk0IDUzIEw5NCA1MiBMOTUgNTIgTDk0IDUwIEw5MSA1MCBMOTEgNDYgTDkyIDQ2IEw5MiA0NCBMOTAgNDMgTDkwIDQxIEw5MyA0MSBMOTMgNDAgTDk0IDQwIEw5NCAzOCBMOTEgMzggTDkxIDM2IEwxMDIgMzYgTDEwMiAzOCBMOTcgMzggTDk3IDQwIEw5NiA0MCBMOTYgNDEgTDEwMyA0MSBMMTAzIDQ0IEwxMDEgNDQgTDEwMSA0NyBMMTAwIDQ3IEwxMDAgNTEgTDEwMSA1MSBMMTAxIDUzIEwxMDUgNTEgTDEwNSA0NSBMMTA0IDQ1IEwxMDQgMzQgTDEwMyAzNCBMMTAzIDMzIEw5MCAzMyBMOTAgMzQgTDg5IDM0IEw4OSA0OCBMODggNDggTDg4IDUzIEw4NyA1MyBMODcgNTUgTDg2IDU1IEw4NiA1NiBMODUgNTYgTDg1IDU1IEw4MyA1NSBaIE05NCA0NSBMOTQgNDggTDk2IDQ4IEw5NiA0OSBMOTcgNDkgTDk3IDQ4IEw5OCA0OCBMOTggNDQgTDk1IDQ0IEw5NSA0NSBaIE0xMjAgNTIgTDEyMSA1MiBMMTIxIDUxIEwxMjIgNTEgTDEyMiA1MCBMMTI0IDQ5IEwxMjQgNDcgTDEyNSA0NyBMMTI1IDQ1IEwxMjYgNDUgTDEyNiA0MyBMMTI3IDQzIEwxMjcgNDAgTDEyOCA0MCBMMTI4IDM2IEwxMjkgMzYgTDEyOSAzNCBMMTIxIDM0IEwxMjEgMzEgTDEyOSAzMSBMMTI5IDI2IEwxMzMgMjYgTDEzMyAzMSBMMTUwIDMxIEwxNTAgMzQgTDEzMiAzNCBMMTMyIDM4IEwxNDYgMzggTDE0NiAzOSBMMTQ3IDM5IEwxNDcgNDIgTDE0NiA0MiBMMTQ1IDQ2IEwxNDQgNDYgTDE0NCA0NyBMMTQyIDQ4IEwxNDIgNTEgTDE0NCA1MSBMMTQ0IDUyIEwxNDcgNTIgTDE0NyA1MyBMMTUxIDUzIEwxNTEgNTQgTDE1MCA1NCBMMTUwIDU2IEwxNDUgNTYgTDE0NSA1NSBMMTQzIDU1IEwxNDMgNTQgTDE0MCA1NCBMMTQwIDUzIEwxMzcgNTMgTDEzNyA1NCBMMTM1IDU0IEwxMzUgNTUgTDEzMyA1NSBMMTMzIDU2IEwxMjkgNTYgTDEyOSA1NSBMMTI4IDU1IEwxMjggNTMgTDEzMSA1MyBMMTMxIDUyIEwxMzUgNTEgTDEzNSA0OSBMMTMzIDQ4IEwxMzMgNDYgTDEzMiA0NiBMMTMxIDQ0IEwxMjkgNDUgTDEyOSA0NyBMMTI4IDQ3IEwxMjggNDkgTDEyNyA0OSBMMTI3IDUxIEwxMjUgNTIgTDEyNSA1NCBMMTI0IDU0IEwxMjQgNTUgTDEyMCA1NCBaIE0xMzQgNDEgTDEzNCA0NCBMMTM1IDQ0IEwxMzUgNDUgTDEzNiA0NSBMMTM2IDQ2IEwxMzcgNDYgTDEzNyA0NyBMMTM5IDQ4IEwxMzkgNDcgTDE0MCA0NyBMMTQwIDQ1IEwxNDIgNDQgTDE0MiA0MSBaIE0xNTYgMzUgTDE2MSAzNSBMMTYxIDMxIEwxNTcgMzEgTDE1NyAyOSBMMTU4IDI5IEwxNTggMjggTDE2MiAyOCBMMTYyIDI3IEwxNjYgMjcgTDE2NiAyNiBMMTY3IDI2IEwxNjcgMjcgTDE2OSAyOCBMMTY5IDI5IEwxNjUgMzAgTDE2NSAzNSBMMTY5IDM1IEwxNjkgMzggTDE2NSAzOCBMMTY1IDQwIEwxNjYgNDAgTDE2NiA0MSBMMTY3IDQxIEwxNjcgNDIgTDE2OSA0MyBMMTY5IDQ1IEwxNjggNDUgTDE2OCA0NiBMMTY3IDQ2IEwxNjcgNDUgTDE2NSA0NCBMMTY1IDU3IEwxNjEgNTcgTDE2MSA0NSBMMTYwIDQ1IEwxNjAgNDcgTDE1OSA0NyBMMTU4IDUxIEwxNTcgNTEgTDE1NyA0OSBMMTU2IDQ5IEwxNTcgNDUgTDE1OCA0NSBMMTU4IDQ0IEwxNTkgNDQgTDE1OSA0MiBMMTYwIDQyIEwxNjAgMzggTDE1NiAzOCBaIE0xNzAgNDcgTDE3NSA0NyBMMTc1IDQ2IEwxODAgNDYgTDE4MCA0NSBMMTgxIDQ1IEwxODEgMjYgTDE4NCAyNiBMMTg0IDQ1IEwxODYgNDUgTDE4NiA0NCBMMTg4IDQ1IEwxODggNDggTDE4NCA0OCBMMTg0IDU3IEwxODEgNTcgTDE4MSA0OSBMMTc3IDQ5IEwxNzcgNTAgTDE3MCA1MCBaIE0xNzEgMzggTDE3MiAzOCBMMTcyIDM3IEwxNzQgMzcgTDE3NCAzOCBMMTc1IDM4IEwxNzUgMzkgTDE3NyA0MCBMMTc3IDQzIEwxNzUgNDMgTDE3NSA0MiBMMTc0IDQyIEwxNzQgNDEgTDE3MyA0MSBMMTczIDQwIEwxNzIgNDAgWiBNMTcyIDI5IEwxNzMgMjkgTDE3MyAyOCBMMTc1IDI4IEwxNzUgMjkgTDE3NiAyOSBMMTc2IDMwIEwxNzcgMzAgTDE3NyAzMSBMMTc4IDMxIEwxNzkgMzMgTDE3NyAzMyBMMTc3IDM0IEwxNzYgMzQgTDE3NiAzMyBMMTc1IDMzIEwxNzUgMzIgTDE3NCAzMiBMMTc0IDMxIEwxNzMgMzEgWiBNMTkyIDQzIEwxOTMgNDMgTDE5MyA0MiBMMTk3IDQyIEwxOTcgMzYgTDE5NiAzNiBMMTk2IDM1IEwxOTMgMzUgTDE5MyAzMiBMMTk3IDMyIEwxOTcgMjYgTDIwMCAyNiBMMjAwIDMyIEwyMDQgMzIgTDIwNCAzNSBMMjAxIDM1IEwyMDEgMzYgTDIwMCAzNiBMMjAwIDQxIEwyMDIgNDEgTDIwMiA0MCBMMjA0IDQxIEwyMDQgNDMgTDIwMyA0MyBMMjAzIDQ0IEwyMDAgNDQgTDIwMCA1NSBMMTk5IDU1IEwxOTkgNTYgTDE5NiA1NiBMMTk2IDU3IEwxOTQgNTcgTDE5NCA1NSBMMTkzIDU1IEwxOTMgNTQgTDE5NiA1NCBMMTk2IDUzIEwxOTcgNTMgTDE5NyA0NiBMMTk2IDQ2IEwxOTYgNDUgTDE5NSA0NSBMMTk1IDQ2IEwxOTMgNDYgTDE5MyA0NCBMMTkyIDQ0IFogTTIwMyA1MyBMMjA3IDUzIEwyMDcgNTIgTDIxMSA1MSBMMjExIDQ5IEwyMTAgNDkgTDIxMCA0OCBMMjA4IDQ3IEwyMDggNDUgTDIwNyA0NSBMMjA3IDQzIEwyMDYgNDMgTDIwNiA0MSBMMjA1IDQxIEwyMDUgMzggTDIxMiAzOCBMMjEyIDM0IEwyMDUgMzQgTDIwNSAzMSBMMjEyIDMxIEwyMTIgMjYgTDIxNiAyNiBMMjE2IDMxIEwyMjMgMzEgTDIyMyAzNCBMMjE2IDM0IEwyMTYgMzggTDIyMiAzOCBMMjIyIDM5IEwyMjMgMzkgTDIyMyA0MSBMMjIyIDQxIEwyMjIgNDMgTDIyMSA0MyBMMjIwIDQ3IEwyMTkgNDcgTDIxOSA0OCBMMjE3IDQ5IEwyMTcgNTEgTDIxOSA1MSBMMjIwIDUzIEwyMjMgNTMgTDIyNCA1NSBMMjIzIDU1IEwyMjMgNTYgTDIxOSA1NiBMMjE5IDU1IEwyMTcgNTUgTDIxNyA1NCBMMjE1IDU0IEwyMTUgNTMgTDIxMiA1MyBMMjEyIDU0IEwyMTAgNTQgTDIxMCA1NSBMMjA4IDU1IEwyMDggNTYgTDIwNCA1NiBMMjA0IDU1IEwyMDMgNTUgWiBNMjEwIDQxIEwyMTAgNDQgTDIxMiA0NSBMMjEyIDQ3IEwyMTMgNDcgTDIxMyA0OCBMMjE0IDQ4IEwyMTQgNDcgTDIxNSA0NyBMMjE1IDQ2IEwyMTYgNDYgTDIxNiA0NSBMMjE4IDQ0IEwyMTggNDEgWiIvPg0KPC9zdmc+DQo=" alt="威友科技" width="112" height="26"><span>生產情報助理</span></div><div class="ux-row" style="gap:2px">${ibtn('history','操作紀錄','audit')}${ibtn('minimize-2','縮小視窗','window-restore')}${ibtn('ellipsis','更多功能','menu')}${ibtn('x','關閉助理','window-close')}</div></header>`;}
+  function render(){
+    const active=root.contains(document.activeElement)?document.activeElement:null;
+    const key=active?.dataset?.input,selection=key==='draft'?[active.selectionStart,active.selectionEnd]:null;
+    const activePick=active?.dataset?.pick,activeMode=active?.matches?.('[data-mode]')?active.value:null,activeAction=active?.dataset?.action;
+    const positions=[...app.querySelectorAll('.ux-conversation,.ux-sheet-scroll,.ux-wizard-body,.ux-dialog-body')].map(el=>({className:el.className,top:el.scrollTop}));
+    const visualKey=[state.screen,state.phase,state.mode,state.module,state.action,state.dialog,state.scene].join('|');
+    app.dataset.theme=state.theme;app.classList.toggle('side-open',state.sideOpen);app.classList.toggle('side-collapsed',state.collapsed);
+    const content=state.screen==='home'?home():state.screen==='chat'?chat():state.screen==='work'?work():state.screen==='reports'?reports():state.screen==='system'?system():information();
+    app.innerHTML=`${appbar()}<div class="ux-body">${sidebar()}<div class="ux-main" ${state.dialog?'inert':''}>${top()}${content}<footer class="ux-copyright">Corp. 2026 WeYu Technology Co., Ltd. All Rights Reserved.</footer>${state.menu==='history'?historyMenu():state.menu?menu():''}</div></div>${state.dialog?dialog():''}${state.toast?`<div class="ux-toast" role="status">${icon('check')}${esc(state.toast)}</div>`:''}`;
+    if(state.emptyHistory){app.querySelector('.ux-side-list').innerHTML='<div class="ux-empty" style="padding:28px 10px"><p>開始聊天後，紀錄會顯示在這裡。</p></div>';}
+    if(state.dialog==='settings-state'||state.dialog==='panel-error'||state.dialog==='recover-operation'){
+      const content=state.dialog==='recover-operation'?modal('有一筆作業尚待確認',`<p>MC37 · WO-261102-0382</p><p style="margin-top:8px">原本的草稿與核對內容都還在。</p>`,btn('先留在這裡','close-dialog')+btn('返回原作業','restore-operation','primary')):modal(state.dialog==='settings-state'?'API 設定':'載入功能',state.sharedStatus==='loading'?`<div class="ux-live" role="status" aria-busy="true">${spin()}正在載入設定…</div>`:notice('暫時無法載入','關閉此視窗不會影響目前作業。','error'),btn('關閉','close-dialog')+(state.sharedStatus==='loading'?'':btn('重試','retry-panel','primary')),'medium');
+      app.insertAdjacentHTML('beforeend',content);
+    }
+    app.querySelector('.ux-side')?.toggleAttribute('inert',!!state.dialog);
+    app.querySelector('.ux-grip')?.toggleAttribute('inert',!!state.dialog);
+    app.querySelector('.ux-top-title .ux-button')?.classList.add('ux-phone-open');
+    if(globalThis.lucide)lucide.createIcons({attrs:{width:18,height:18}});
+    if(visualKey===lastVisualKey){app.querySelectorAll('.ux-enter,.ux-overlay,.ux-dialog').forEach(el=>el.style.animation='none');for(const p of positions){const next=[...app.querySelectorAll('.ux-conversation,.ux-sheet-scroll,.ux-wizard-body,.ux-dialog-body')].find(el=>el.className===p.className);if(next)next.scrollTop=p.top;}}
+    lastVisualKey=visualKey;
+    if(key){const next=app.querySelector(`[data-input="${key}"]`);if(next&&!next.closest('[inert]')){next.focus({preventScroll:true});if(selection&&next.setSelectionRange)next.setSelectionRange(...selection);}}
+    else if(activePick||activeMode||activeAction){const selector=activePick?`[data-pick="${activePick}"]`:activeMode?`[data-mode][value="${activeMode}"]`:`[data-action="${activeAction}"]`;const next=app.querySelector(selector);if(next&&!next.disabled&&!next.closest('[inert]'))next.focus({preventScroll:true});}
+  }
+  function focusWork(){const selector=state.lastWorkFocus?`[data-input="${state.lastWorkFocus}"]`:state.phase==='review'?'[data-action="back-edit"]':'[data-input="good"],.ux-sheet input,.ux-wizard-inner input,#ux-composer';app.querySelector(selector)?.focus({preventScroll:true});}
+  function toast(text){state.toast=text;render();announce(text);clearTimeout(toastTimer);toastTimer=setTimeout(()=>{state.toast='';render()},2600);}
+  function openDialog(kind){returnFocus=document.activeElement;state.menu=false;state.dialog=kind;if(kind==='preferences')state.preferenceChoice=state.mode;render();const focus=app.querySelector('.ux-dialog input:not([type=radio]):not([type=checkbox]),.ux-dialog textarea,.ux-dialog button');focus?.focus({preventScroll:true});}
+  function closeDialog(){const isPicker=state.dialog==='picker';state.dialog='';state.askAI=false;if(isPicker)state.tentative=null;render();const el=returnFocus?.dataset?.action?app.querySelector(`[data-action="${returnFocus.dataset.action}"]`):null;(el||app.querySelector('[data-action="menu"]'))?.focus({preventScroll:true});}
+  function query(){clearTimeout(timer);const current=++epoch;state.screen='chat';state.scene='loading';state.busy=true;state.dialog='';render();announce('正在查詢');timer=setTimeout(()=>{if(current!==epoch)return;state.scene='results';state.busy=false;state.customReply='';render();announce('查詢完成，找到 8 筆工單')},1700);}
+  function send(){
+    const text=state.draft.trim();if(!text||state.busy||businessLocked()||state.scene==='message-unknown')return;state.draft='';
+    if(state.dialog==='picker'){
+      state.aiAnswer=/MC38|38/.test(text)?'已改查 MC38。尚未帶入作業，原草稿保持不變。':/MC37|37/.test(text)?'已改查 MC37，已選項目會保留。':'不良原因是產品不合格的分類。先確認現場情況，再填原因與數量。';
+      if(/MC38|38/.test(text)){state.equipment='MC38';state.page=1;state.filterUpdated=true;}if(/MC37|37/.test(text)){state.equipment='MC37';state.page=1;state.filterUpdated=true;}render();announce(state.aiAnswer);return;
+    }
+    if(state.screen==='work'){
+      const qty=text.match(/良品.*?(\d+)/);
+      if(qty){state.good=Number(qty[1]);state.aiAnswer=`已將良品改為 ${state.good} 件，請重新核對。`;state.phase='edit';state.pending=false;state.substate='';}
+      else state.aiAnswer='不良原因用來記錄這次的不合格類型。你的作業內容與核對狀態已保留。';render();announce(state.aiAnswer);return;
+    }
+    state.customUser=text;state.screen='chat';
+    if(/報工/.test(text)&&!/能|什麼|如何/.test(text)){startModule('report');return;}
+    if(/排程/.test(text)&&/要|新增|安排|改/.test(text)){startModule('schedule');return;}
+    if(/上模|下模/.test(text)){startModule('mold');return;}
+    if(/查|MC\d|產量|多少/.test(text)){query();return;}
+    state.scene=/能|功能|幫.*什麼/.test(text)?'capabilities':/處理|幫我/.test(text)?'clarify':'unsupported';render();announce('收到回覆');
+  }
+  function startModule(module){clearTimeout(timer);epoch++;state.screen='work';state.module=module;state.phase='select';state.target=null;state.action='add';state.dialog='';state.busy=false;state.substate='';state.pending=false;state.mobilePane='task';render();}
+  const actions={
+    latest:()=>{const viewport=app.querySelector('.ux-conversation');viewport?.scrollTo({top:viewport.scrollHeight,behavior:matchMedia('(prefers-reduced-motion:reduce)').matches?'instant':'smooth'});},
+    'retry-picker':()=>{state.scene='picker';state.query='';render()},
+    'retry-history':()=>{state.historyStatus='';state.historyQuery='';render()},
+    'retry-panel':()=>{state.sharedStatus='';state.dialog='api';render()},
+    'restore-operation':()=>{state.dialog='';state.substate='';state.phase='review';state.pending=true;render();focusWork()},
+    'reconcile-message':()=>{state.scene='results';state.draft='';render();announce('訊息已送達，示範查詢結果已恢復')},
+    new:()=>reset('home'),'open-chat':()=>reset('results'),query,send,
+    stop:()=>{clearTimeout(timer);epoch++;state.busy=false;state.scene='cancelled';render();announce('已停止查詢')},
+    menu:()=>{state.menu=!state.menu;render()},'history-menu':()=>{state.menu=state.menu==='history'?false:'history';render()},
+    'collapse-side':()=>{state.collapsed=true;state.sideOpen=false;render()},'open-side':()=>{state.collapsed=false;state.sideOpen=!state.sideOpen;render()},
+    'start-report':()=>startModule('report'),'start-schedule':()=>startModule('schedule'),'start-mold':()=>startModule('mold'),
+    picker:()=>{state.tentative=null;state.pickerLevel='order';openDialog('picker')},'cancel-picker':closeDialog,'close-dialog':closeDialog,
+    'pick-detail':e=>{state.detail=state.detail===e.dataset.id?null:e.dataset.id;render()},
+    'pick-prev':()=>{state.page=Math.max(1,state.page-1);render()},'pick-next':()=>{state.page++;render()},
+    'picker-search':()=>{state.page=1;state.filterUpdated=true;render();announce('查詢條件已更新')},
+    'clear-filter':()=>{state.query='';state.equipment='';state.page=1;render()},
+    'picker-ai':()=>{state.askAI=!state.askAI;render();app.querySelector('#ux-composer')?.focus()},
+    'parent-picker':()=>{state.pickerLevel='order';state.tentative=null;state.detail=null;render()},
+    'apply-pick':()=>{if(!state.tentative)return;if(state.equipment&&state.tentative.equipment!==state.equipment){toast('已選項目不在目前範圍，請重新選擇');return;}if(state.pickerLevel==='report'){const index=rows.findIndex(r=>r.id===state.tentative.id);state.reportRecord={id:'RPT-0382-0'+(index+1),good:state.tentative.good,defect:state.tentative.defect,time:'11/02 09:'+String(10+index*10)};state.target=rows[0];}else state.target=state.tentative;state.dialog='';state.askAI=false;state.phase=noFields()?'review':'edit';state.tentative=null;state.substate='';state.pending=noFields();render();announce('已帶入作業');app.querySelector('[data-input="good"],.ux-field input')?.focus({preventScroll:true})},
+    'result-detail':e=>{const index=Number(e.dataset.row)||0;const same=state.resultIndex===index;state.resultIndex=index;if(state.screen!=='reports')state.scene=state.scene==='result-detail'&&same?'results':'result-detail';render()},
+    'apply-result':()=>{state.screen='work';state.target=rows[state.resultIndex??0];state.phase='edit';state.module='report';state.substate='';render()},
+    'snapshot-next':()=>toast('示範快照僅收錄本頁，產品須提供真實分頁'),
+    'pane-chat':()=>{state.mobilePane='chat';render()},'pane-task':()=>{state.mobilePane='task';render()},
+    'add-defect':()=>{state.defects.push({reason:'毛邊',quantity:0});render()},'remove-defect':e=>{state.defects.splice(Number(e.dataset.index),1);render()},
+    review:()=>{if(state.module==='schedule'){state.formError=scheduleDraftError();if(state.formError){render();return;}}if(state.good===''&&state.module==='report'&&!noFields()){state.validation=true;render();app.querySelector('[data-input="good"]')?.focus();return;}state.phase='review';state.pending=true;state.validation=false;state.substate='';state.formError='';render();announce('請核對內容')},
+    'back-edit':()=>{if(noFields()){state.pickerLevel=['delete'].includes(state.action)?'report':'order';state.tentative=null;openDialog('picker');}else{state.phase='edit';state.substate='';render()}},
+    'cancel-proposal':()=>{state.pending=false;state.phase='edit';state.substate='';state.approved=false;toast('已取消確認，填寫內容保留')},
+    submit:()=>{if(businessLocked()||['delete','complete','clear'].includes(state.action)&&!state.approved)return;state.substate='submitting';state.busy=true;render();announce('正在送出');clearTimeout(timer);const current=++epoch;timer=setTimeout(()=>{if(current!==epoch)return;timer=null;state.substate='success';state.busy=false;state.pending=false;if(state.pendingMode){state.mode=state.pendingMode;state.pendingMode='';}render();announce('示範作業已完成，未寫入 MES')},1800)},
+    reconcile:()=>{state.substate='unknown';state.toast='正在查核，沒有再次送出';render();const current=++epoch;clearTimeout(timer);timer=setTimeout(()=>{if(current!==epoch)return;state.substate='success';state.toast='';render();announce('示範查核已完成')},1500)},
+    'refresh-preview':()=>{state.substate='';state.phase='review';state.pending=true;render()},
+    'retry-save':()=>{state.substate='saving';state.busy=true;render();clearTimeout(timer);timer=setTimeout(()=>{state.substate='';state.busy=false;state.savingText='草稿已儲存';render()},900)},
+    'next-operation':()=>{state.target=null;state.phase='select';state.pending=false;state.substate='';render()},
+    'schedule-row':()=>{state.scheduleRows++;render()},
+    'schedule-remove-row':e=>{removeScheduleAllocation(Number(e.dataset.index));render()},
+    'mold-phase':e=>{state.reportAction=e.dataset.phase;state.action=e.dataset.phase==='下模完成'?'down':'phase';state.phase='review';state.pending=true;render()},
+    'mold-clear':()=>{state.action='clear';state.phase='review';state.pending=true;state.approved=false;render()},
+    'save-preferences':()=>{if(state.busy){state.pendingMode=state.preferenceChoice;state.dialog='';toast('處理完成後套用新操作方式');if(!timer){timer=setTimeout(()=>{timer=null;state.busy=false;state.mode=state.pendingMode;state.substate='';state.pendingMode='';render();focusWork();announce('操作方式已切換，草稿保留')},1600)}}else{state.mode=state.preferenceChoice;state.dialog='';render();focusWork();announce('操作方式已切換，草稿保留')}},
+    'readonly-settings':()=>{state.readonlySettings=!state.readonlySettings;render()},
+    'setting-review':()=>{state.settingKind=state.dialog;state.dialog='setting-review';render()},'back-setting':()=>{state.dialog=state.settingKind;render()},'save-setting':()=>{applySettingsDemo();state.dialog='';toast('示範設定已儲存')},
+    'confirm-delete':()=>{state.dialog='';toast('聊天已移至「已刪除聊天」')},'rename-save':()=>{state.dialog='';toast('聊天名稱已更新')},'restore-chat':()=>toast('聊天已還原'),pin:()=>{state.menu=false;toast('聊天已釘選')},'archive-chat':()=>{state.menu=false;toast('聊天已封存')},
+    reports:()=>{state.screen='reports';state.scene='schedule-report-list';state.menu=false;state.dialog='';render()},
+    'report-create':()=>openDialog('schedule-report-create'),'report-delete':()=>openDialog('schedule-report-delete'),
+    'report-pause':()=>{state.paused=!state.paused;render();announce(state.paused?'報告已暫停':'報告已恢復')},
+    'report-history':()=>{state.screen='reports';state.scene='schedule-report-history';state.dialog='';render()},'report-detail':()=>{state.scene='schedule-report-detail';render()},
+    'parse-report':()=>{state.reportEquipment='MC37';state.reportTime='08:00';render();toast('已填入欄位，請核對')},
+    'report-review':()=>{state.dialog='report-review';render()},'create-report':()=>{state.dialog='';state.screen='reports';state.scene='schedule-report-list';toast('定時報告已建立')},'confirm-report-delete':()=>{state.dialog='';state.scene='schedule-report-empty';toast('已刪除定時報告')},
+    audit:()=>{state.screen='audit';state.dialog='';render()},usage:()=>{state.screen='usage';state.menu=false;render()},
+    'run-filter':()=>query(),copy:()=>toast('回覆已複製（示範）'),thanks:()=>toast('謝謝你的回饋'),
+    'refresh-stats':()=>toast('示範資料已更新'),'demo-login':()=>reset('sheet-edit'),
+    'send-feedback':()=>{state.screen='feedback-list';toast('已收到回報')},'feedback-return':()=>toast('已退回補充（示範）'),'feedback-approve':()=>toast('已核准為候選案例（示範）')
+  };
+  root.addEventListener('click',e=>{const button=e.target.closest('[data-action]');if(!button||button.disabled)return;const action=button.dataset.action;if(businessLocked()&&['new','open-chat','start-report','start-schedule','start-mold','next-operation','reports','audit','usage','api','agent','budget','archives','deleted','search','picker','query','submit','send'].includes(action)){toast('請先完成或查核目前操作');return;}if(actions[action])actions[action](button);else if(['preferences','api','agent','budget','search','archives','deleted','delete-chat','rename','query-filters','more-actions','report-limit'].includes(action))openDialog(action);});
+  root.addEventListener('submit',e=>{if(e.target.matches('[data-compose]')){e.preventDefault();send()}});
+  root.addEventListener('focusin',e=>{if(e.target.dataset.input&&state.screen==='work'&&!state.dialog)state.lastWorkFocus=e.target.dataset.input;});
+  root.addEventListener('input',e=>{if(e.target.dataset.input){state[e.target.dataset.input]=e.target.value;if(e.target.dataset.input==='good')state.validation=false;}if(e.target.dataset.defectQuantity!==undefined){state.defects[Number(e.target.dataset.defectQuantity)].quantity=Number(e.target.value);const total=app.querySelector('.ux-defects')?.previousElementSibling?.querySelector('small');if(total)total.textContent='合計 '+state.defects.reduce((n,d)=>n+(Number(d.quantity)||0),0)+' 件';}});
+  root.addEventListener('change',e=>{
+    if(e.target.matches('select[data-input]')){const name=e.target.dataset.input;state[name]=e.target.value;if(name.startsWith('allocation')){syncScheduleInput(name,e.target.value);render();}else if(name.startsWith('settings'))render();}
+    else if(e.target.dataset.input?.startsWith('settings'))render();
+    if(e.target.matches('[data-pick]')){state.tentative=rows.find(r=>r.id===e.target.dataset.pick);render();announce('已暫選，尚未帶入作業')}
+    if(e.target.dataset.defectReason!==undefined)state.defects[Number(e.target.dataset.defectReason)].reason=e.target.value;
+    if(e.target.matches('[data-none]')){state.defects=e.target.checked?[]:[{reason:'刮傷',quantity:0}];render()}
+    if(e.target.matches('[data-approval]')){state.approved=e.target.checked;render()}
+    if(e.target.matches('[data-mode]')){state.preferenceChoice=e.target.value;render()}
+    if(e.target.matches('[data-product-theme]')){state.theme=e.target.value;root.querySelector('#ux-theme').value=state.theme;render()}
+  });
+  root.addEventListener('keydown',e=>{
+    if(e.target.matches('#ux-composer')&&e.key==='Enter'&&!e.shiftKey&&!e.isComposing){e.preventDefault();send()}
+    if(e.key==='Escape'&&state.dialog){e.preventDefault();closeDialog()}
+    if(e.key==='Tab'&&state.dialog){const controls=[...app.querySelectorAll('.ux-dialog button,.ux-dialog input,.ux-dialog select,.ux-dialog textarea,.ux-dialog summary')].filter(x=>!x.disabled&&x.offsetParent!==null);const first=controls[0],last=controls.at(-1);if(e.shiftKey&&document.activeElement===first){e.preventDefault();last.focus()}else if(!e.shiftKey&&document.activeElement===last){e.preventDefault();first.focus()}}
+    if(e.target.matches('[data-resize]')&&['ArrowLeft','ArrowRight','Home'].includes(e.key)){e.preventDefault();const width=e.key==='Home'?244:Math.min(360,Math.max(220,(parseInt(app.style.getPropertyValue('--ux-side'))||244)+(e.key==='ArrowRight'?8:-8)));app.style.setProperty('--ux-side',width+'px');e.target.setAttribute('aria-valuenow',width)}
+  });
+  root.addEventListener('pointerdown',e=>{const handle=e.target.closest('[data-resize]');if(!handle)return;e.preventDefault();handle.setPointerCapture(e.pointerId);const start=e.clientX,width=app.querySelector('.ux-side').getBoundingClientRect().width;const move=ev=>{const next=Math.min(360,Math.max(220,width+ev.clientX-start));app.style.setProperty('--ux-side',next+'px');handle.setAttribute('aria-valuenow',next)};const end=()=>{handle.removeEventListener('pointermove',move);handle.removeEventListener('pointerup',end);handle.removeEventListener('pointercancel',end)};handle.addEventListener('pointermove',move);handle.addEventListener('pointerup',end);handle.addEventListener('pointercancel',end)});
+  chooser.addEventListener('change',()=>reset(chooser.value));
+  root.querySelector('#ux-theme').addEventListener('change',e=>{state.theme=e.target.value;render()});
+  root.querySelector('#ux-reset').addEventListener('click',()=>reset(chooser.value));
+  globalThis.weyuUXReference={scenes,reset,getState:()=>structuredClone(state),setPreviewHeight:h=>app.style.height=h+'px'};
+  reset('home');
+})();
+</script>
