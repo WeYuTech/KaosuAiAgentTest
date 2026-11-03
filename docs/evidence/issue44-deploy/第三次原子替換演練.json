@@ -1,0 +1,7 @@
+{
+  "powershell": "5.1.26100.32684",
+  "replacement_passed": true,
+  "directory": "C:\\Users\\MES\\AppData\\Local\\Temp\\kaosu-atomic-test-0b8a84f8-34df-4745-96b7-404bb8e8ac1d",
+  "rollback_passed": true,
+  "production_files_touched": false
+}

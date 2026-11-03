@@ -1,0 +1,45 @@
+{
+  "checked_utc": "2026-11-03T02:32:15.1213659Z",
+  "retained_files": [
+    {
+      "path": "C:\\Services\\KaosuAiAgent\\deploy-issue47-fourth.ps1",
+      "sha256": "0639A3CFC623DFC6B0C661D808414C7FB5187F519107A59E713F4C25C1044F1E",
+      "bytes": 10618
+    },
+    {
+      "path": "C:\\Services\\KaosuAiAgent\\rollback-issue47-fourth.ps1",
+      "sha256": "1A75DC8854B9DBB831AA1C87FFB88A630387964A282A16C15F4FF58C2AC66E7F",
+      "bytes": 5495
+    },
+    {
+      "path": "C:\\Services\\KaosuAiAgent\\issue47-fourth-dryrun.log",
+      "sha256": "D92D1449D3A21C3C9E1E2D2DFD7AD955A74F8533F14805FF330AE373947D7B76",
+      "bytes": 1570
+    }
+  ],
+  "original_file_count": 127,
+  "new_stage_exists": false,
+  "service_process_started_utc": "2026-11-03T01:47:50.0353431Z",
+  "listen": "127.0.0.1",
+  "proxy_config_sha256": "936A1A26430AC96B1A14731E5EA7C94963718A76439623688300F1159616ED3E",
+  "health": {
+    "status": "ok",
+    "mode": "live",
+    "model_configured": true,
+    "model": "gpt-6.1-sol",
+    "business_timezone": "UTC+07:00",
+    "business_date": "2026-11-03",
+    "server_time": "2026-11-03T09:32:14.463570+07:00"
+  },
+  "new_backup_exists": false,
+  "task_state": "Running",
+  "all_original_files_match": true,
+  "proxy": {
+    "enabled": "True",
+    "responseBufferLimit": "4096",
+    "minResponseBuffer": "256",
+    "bufferChunkedResponses": "True",
+    "preserveHostHeader": "True",
+    "timeout": "00:05:00"
+  }
+}

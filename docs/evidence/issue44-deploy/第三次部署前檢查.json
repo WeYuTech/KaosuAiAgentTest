@@ -1,0 +1,28 @@
+{
+  "task_state": "Running",
+  "all_original_manifest_files_match": true,
+  "responseBufferLimit": 4096,
+  "proxy_config_sha256": "936A1A26430AC96B1A14731E5EA7C94963718A76439623688300F1159616ED3E",
+  "listen": "127.0.0.1",
+  "full_backup_created": false,
+  "rollback": "未更動正式檔案，不需回復；回復腳本遇到本紀錄會直接保留原服務。",
+  "service_stopped": false,
+  "requested_commit": "6ff9ec801dea4f08f79e835265e6a2e18dded560",
+  "release_sha256": "afe3964a0046599661d2f85e968602a2c10d55911d63712af5b279fdf2ec828f",
+  "health": {
+    "status": "ok",
+    "mode": "live",
+    "model_configured": true,
+    "model": "gpt-6.1-sol",
+    "business_timezone": "UTC+07:00",
+    "business_date": "2026-11-03",
+    "server_time": "2026-11-03T09:22:29.495536+07:00"
+  },
+  "service_process_started_utc": "2026-11-03T01:47:50.0353431Z",
+  "production_files_changed": false,
+  "paid_queries_sent": 0,
+  "checked_utc": "2026-11-03T02:22:30.9586585Z",
+  "failure": "Microsoft.Web.Administration.ConfigurationSection 不支援 GetRawXml",
+  "status": "preflight_failed",
+  "original_file_count": 127
+}

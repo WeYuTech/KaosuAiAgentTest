@@ -1,0 +1,25 @@
+{
+  "backup": "C:\\Services\\KaosuAiAgent\\backups\\code-before-kaosu-issue44-5fd733f-20261103",
+  "health": {
+    "status": "ok",
+    "mode": "live",
+    "model_configured": true,
+    "model": "gpt-6.1-sol",
+    "business_timezone": "UTC+07:00",
+    "business_date": "2026-11-03",
+    "server_time": "2026-11-03T08:39:47.452553+07:00"
+  },
+  "restored_file_count": 124,
+  "original_manifest_match": true,
+  "proxy_config_restored": true,
+  "listen": "127.0.0.1",
+  "task_state": "Running",
+  "private_preserved": {
+    ".local\\model-budget.db": true,
+    ".local\\operations.db": true,
+    ".env": true
+  },
+  "responseBufferLimit": 4096,
+  "all_restored_files_match": true,
+  "note": "本檔先驗證回復；隨後新增的27個非資產檔與暫存HTML已清理，3個雜湊資產保留。見回復清理紀錄。"
+}

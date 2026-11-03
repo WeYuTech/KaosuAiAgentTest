@@ -1,0 +1,159 @@
+{
+  "purpose": "第四次空跑失敗，原版本仍在線，非新版部署成功",
+  "assets": [
+    {
+      "path": "assets/ManagementPanel-kx1pB_9o.js",
+      "status": 200,
+      "sha256_match": true
+    },
+    {
+      "path": "assets/ibm-plex-mono-latin-400-normal-DMJ8VG8y.woff2",
+      "status": 200,
+      "sha256_match": true
+    },
+    {
+      "path": "assets/ibm-plex-mono-latin-500-normal-DSY6xOcd.woff2",
+      "status": 200,
+      "sha256_match": true
+    },
+    {
+      "path": "assets/ibm-plex-mono-latin-600-normal-BgSNZQsw.woff2",
+      "status": 200,
+      "sha256_match": true
+    },
+    {
+      "path": "assets/index-CC_m4ws0.js",
+      "status": 200,
+      "sha256_match": true
+    },
+    {
+      "path": "assets/index-D63gYsk3.css",
+      "status": 200,
+      "sha256_match": true
+    },
+    {
+      "path": "assets/inter-latin-wght-normal-Dx4kXJAl.woff2",
+      "status": 200,
+      "sha256_match": true
+    },
+    {
+      "path": "fonts/IBM-Plex-Mono-OFL.txt",
+      "status": 200,
+      "sha256_match": true
+    },
+    {
+      "path": "fonts/Inter-OFL.txt",
+      "status": 200,
+      "sha256_match": true
+    },
+    {
+      "path": "fonts/Noto-Sans-Thai-OFL.txt",
+      "status": 200,
+      "sha256_match": true
+    },
+    {
+      "path": "fonts/noto-sans-thai-thai-400-normal.woff2",
+      "status": 200,
+      "sha256_match": true
+    },
+    {
+      "path": "fonts/noto-sans-thai-thai-600-normal.woff2",
+      "status": 200,
+      "sha256_match": true
+    },
+    {
+      "path": "index.html",
+      "status": 200,
+      "sha256_match": true
+    },
+    {
+      "path": "motion-tokens.css",
+      "status": 200,
+      "sha256_match": true
+    },
+    {
+      "path": "weyu-brand.svg",
+      "status": 200,
+      "sha256_match": true
+    },
+    {
+      "path": "weyu-logo.png",
+      "status": 200,
+      "sha256_match": true
+    },
+    {
+      "path": "widget-loader.js",
+      "status": 200,
+      "sha256_match": true
+    }
+  ],
+  "pages": [
+    {
+      "path": "MES-WIP/WIP-menu.html",
+      "status": 200,
+      "loader_count": 1
+    },
+    {
+      "path": "MES-WIP/setup/wip-query_schedule_plan_new.html",
+      "status": 200,
+      "loader_count": 1
+    },
+    {
+      "path": "MES-WIP/setup/wip-query_schedule_detail_new.html",
+      "status": 200,
+      "loader_count": 1
+    },
+    {
+      "path": "MES-WIP/OPI/schedule_report/wip-opi_schedule_uping.html",
+      "status": 200,
+      "loader_count": 1
+    },
+    {
+      "path": "MES-WIP/OPI/schedule_report/wip-query_schedule.html",
+      "status": 200,
+      "loader_count": 1
+    },
+    {
+      "path": "MES-WIP/OPI/schedule_report/wo-schedule.html",
+      "status": 200,
+      "loader_count": 1
+    },
+    {
+      "path": "MES-WIP/OPI/mold/wip-opi_schedule_mold_eqp.html",
+      "status": 200,
+      "loader_count": 1
+    },
+    {
+      "path": "MES-WIP/OPI/mold/wip-query_schedule_clear.html",
+      "status": 200,
+      "loader_count": 1
+    },
+    {
+      "path": "index.html",
+      "status": 200,
+      "loader_count": 1
+    }
+  ],
+  "boundaries": [
+    {
+      "path": "api/session",
+      "status": 401
+    },
+    {
+      "path": ".env",
+      "status": 404
+    },
+    {
+      "path": ".local/operations.db",
+      "status": 404
+    },
+    {
+      "path": ".local/model-budget.db",
+      "status": 404
+    },
+    {
+      "path": "app/main.py",
+      "status": 404
+    }
+  ]
+}

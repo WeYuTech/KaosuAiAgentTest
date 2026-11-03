@@ -1,0 +1,73 @@
+{
+  "environment": "正式 IIS／真實模型，未建立確認卡或業務寫入",
+  "mode": "live",
+  "trusted_source": "mes_session",
+  "endpoint": "http://192.168.2.123/KSS_MES/ai-agent/api/entry/messages/stream",
+  "sent": 1,
+  "terminal": "done",
+  "hasProposal": false,
+  "delta_count": 260,
+  "delta_span_ms": 8.200000047683716,
+  "distinct_delta_arrival_times": 5,
+  "steps": [
+    {
+      "kind": "step",
+      "at": 2.299999952316284,
+      "id": 1,
+      "label": "辨識需求",
+      "status": "done"
+    },
+    {
+      "kind": "step",
+      "at": 2.299999952316284,
+      "id": 2,
+      "label": "已查詢已審核知識（命中 2 筆）",
+      "status": "done"
+    },
+    {
+      "kind": "step",
+      "at": 2.299999952316284,
+      "id": 3,
+      "label": "規劃下一步",
+      "status": "done"
+    },
+    {
+      "kind": "step",
+      "at": 2.299999952316284,
+      "id": 4,
+      "label": "已查詢 MC37（本頁 4 筆）",
+      "status": "done"
+    },
+    {
+      "kind": "step",
+      "at": 10.5,
+      "id": 5,
+      "label": "整理回覆",
+      "status": "done"
+    }
+  ],
+  "before": {
+    "limit_usd": 20,
+    "remaining_usd": 17.897096,
+    "warning_percent": 80,
+    "near_limit": false,
+    "reached": false,
+    "spent_usd": 2.102904,
+    "reserved_usd": 0,
+    "calls": 246,
+    "unknown_calls": 0
+  },
+  "after": {
+    "limit_usd": 20,
+    "remaining_usd": 17.877138,
+    "warning_percent": 80,
+    "near_limit": false,
+    "reached": false,
+    "spent_usd": 2.122862,
+    "reserved_usd": 0,
+    "calls": 249,
+    "unknown_calls": 0
+  },
+  "settled_difference_usd": 0.01995799999999992,
+  "unknown_difference": 0
+}

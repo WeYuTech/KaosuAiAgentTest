@@ -1,0 +1,21 @@
+{
+  "health": {
+    "status": "ok",
+    "mode": "live",
+    "model_configured": true,
+    "model": "gpt-6.1-sol",
+    "business_timezone": "UTC+07:00",
+    "business_date": "2026-11-03",
+    "server_time": "2026-11-03T08:45:32.063757+07:00"
+  },
+  "release": "kaosu-issue44-5fd733f-20261103-retry1",
+  "private_settings_and_databases_preserved": true,
+  "dynamic_compression": false,
+  "old_responseBufferLimit": 4096,
+  "new_responseBufferLimit": 0,
+  "commit": "5fd733f8691e203f49ba3eb580fe9acfbbc42a40",
+  "backup": "C:\\Services\\KaosuAiAgent\\backups\\code-before-kaosu-issue44-5fd733f-20261103-retry1",
+  "service_restarted": true,
+  "verified": 154,
+  "listen": "127.0.0.1"
+}

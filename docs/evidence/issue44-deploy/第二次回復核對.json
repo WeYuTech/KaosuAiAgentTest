@@ -1,0 +1,25 @@
+{
+  "backup": "C:\\Services\\KaosuAiAgent\\backups\\code-before-kaosu-issue44-5fd733f-20261103-retry1",
+  "health": {
+    "status": "ok",
+    "mode": "live",
+    "model_configured": true,
+    "model": "gpt-6.1-sol",
+    "business_timezone": "UTC+07:00",
+    "business_date": "2026-11-03",
+    "server_time": "2026-11-03T08:48:20.577832+07:00"
+  },
+  "restored_file_count": 127,
+  "original_manifest_match": true,
+  "proxy_config_restored": true,
+  "listen": "127.0.0.1",
+  "task_state": "Running",
+  "responseBufferLimit": 4096,
+  "all_restored_files_match": true,
+  "private_hash_matches_pre_query_backup": {
+    ".local\\model-budget.db": false,
+    ".local\\operations.db": false,
+    ".env": true
+  },
+  "note": "設定雜湊不變；資料庫保留本次正式唯讀查詢新增對話與模型費用，因此與部署前備份雜湊不同，未以舊庫覆蓋。新增27個非資產檔已清理。"
+}
