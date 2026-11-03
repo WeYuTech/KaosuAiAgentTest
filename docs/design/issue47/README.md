@@ -2,6 +2,20 @@
 
 日期：2026-11-03。所有業務資料均為全新隔離資料庫。沒有部署、沒有正式 MES 寫入。產品改動先以 `8cf7bdb`（後端）與 `a1fa62f`（前端）各自提交推送，再拍攝。
 
+## 第 1 輪審查修正：串流 Markdown
+
+`ProcessingSteps` 現在透過 `TextMessagePartProvider` 使用最終訊息相同的 `MarkdownText`，沿用 GFM、安全連結、表格捲動容器與程式區塊。移除串流區的 pre-wrap，避免 Markdown 元素之間的原始空白改變排版。表格的分隔列尚未收齊時暫緩顯示候選表頭，原始內容仍保留，不修改後端文字或存檔。
+
+新增兩項測試：串流標題、表格與 safe-link；半截表格、未閉合程式區塊不拋錯；完整串流與最終訊息的 Markdown 子樹完全一致。步驟完成自動收合及首頁交接作業畫面的既有行為未改動。
+
+下圖為原 `real-02` 顯示問題的**修正後對應畫面，來源是 fixture／模擬分類，不是真實模型**。原真實模型圖保留作為歷史證據，這次沒有追加模型呼叫或費用。另開乾淨 `.local/issue47-fixture-markdown-review1/business.db`，經同一緩衝代理重拍。
+
+![修正後串流 Markdown，fixture／模擬分類](fixture-markdown-02-分段文字.png)
+
+[完成後畫面](fixture-markdown-03-完成展開.png) · [批次時序](fixture-markdown-到達時序.json)。重現：設定 `ISSUE47_MARKDOWN=1`、新的 `FIXTURE_RUN`，執行既有 `tests/manual/issue47_capture.cjs`；不可設定 `ISSUE47_REAL`。
+
+本輪重跑：前端 **173 通過**，型別檢查及建置通過；後端 **277 通過／11 略過**。略過原因與既有警告同下文。未再驗證正式站或真實模型，沒有部署。下文為第一版傳輸與真實模型驗收紀錄。
+
 ## 改動與契約
 
 - 首頁與聊天使用 `/messages/start`，立即回 request_id／token；舊 `/messages` JSON API 不變，移除 `/messages/stream` 及前端 SSE 解析。

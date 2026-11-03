@@ -66,3 +66,17 @@ test('停止終態讀回原作業，不重送訊息',async()=>{
 test('事件缺號轉查核，不能冒充完整回覆',async()=>{
  transport([{seq:2,event:'delta',data:{text:'缺少第一筆'}}]);await assert.rejects(streamRequest('/api/conversations/test/messages',{},()=>{}),e=>e.code==='stream_unknown');
 });
+
+test('串流標題與表格使用安全 Markdown，半截表格與程式區塊不拋錯',async()=>{
+ const host=document.createElement('div');document.body.append(host);const root=createRoot(host);
+ const summary={request_id:'markdown',elapsed_seconds:2,steps:[]};
+ const render=async text=>{await act(async()=>root.render(h(ProcessingSteps,{summary,phase:'running',text})));};
+ await render('### MC37\n\n| 工單 | 數量 |\n| --- | --- |\n| WO-A | 100 |');
+ assert.equal(host.querySelector('h3').textContent,'MC37');assert.equal(host.querySelector('td').textContent,'WO-A');
+ assert.ok(!host.querySelector('.stream-reply').textContent.includes('###'));assert.ok(!host.querySelector('.stream-reply').textContent.includes('|'));
+ for(const text of ['### MC37\n\n| 工單 | 數','### MC37\n\n| 工單 | 數量 |\n| --','### MC37\n\n| 工單 | 數量 |\n| --- | --- |\n| WO','### MC37\n\n```text\n尚未完成'])await render(text);
+ assert.ok(host.querySelector('pre').textContent.includes('尚未完成'));
+ await render('[安全](https://example.com) [拒絕](javascript:alert%281%29)');
+ assert.equal(host.querySelector('a').getAttribute('rel'),'noopener noreferrer nofollow');assert.equal(host.querySelectorAll('a').length,1);
+ await act(async()=>root.unmount());host.remove();
+});

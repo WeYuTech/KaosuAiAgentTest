@@ -8,7 +8,26 @@ def create_preview():
     if os.getenv('ISSUE47_REAL')!='1':
         os.environ['ISSUE44_FIXTURE_DB']=os.environ['ISSUE47_DB']
         from issue44_ui_server import create_preview as fixture
-        return fixture()
+        app=fixture()
+        if os.getenv('ISSUE47_MARKDOWN')=='1':
+            import json
+            from types import SimpleNamespace
+            from app import model
+            from app.streaming import active
+            from issue44_ui_server import pause
+            def markdown_response(payload):
+                outputs=[x for x in payload['input'] if x.get('type')=='function_call_output']
+                pause(2.2)
+                if not outputs:
+                    data={'type':'function_call','name':'query_workspace','arguments':json.dumps({'equipment':'MC37'}),'call_id':'markdown-fixture'}
+                    return SimpleNamespace(output=[SimpleNamespace(**data,model_dump=lambda **_:data)])
+                parts=['### MC37 工單與人工報工數量\n\n','| 工單 | 人工良品 |','\n| --- | --- |\n| WO-A | 100 |\n','| WO-B | 120 |\n\n僅查詢，沒有變更作業。']
+                for part in parts:
+                    pause(.7);active.get().emit('delta',text=part)
+                pause(3)
+                return SimpleNamespace(output=[],output_text=''.join(parts))
+            model.invoke=markdown_response
+        return app
     from dotenv import load_dotenv
     load_dotenv(ROOT/'.env',override=True)
     os.environ.update(MES_MODE='simulation',AI_REPORT_WORKER='0',MES_SQL_ACCEPTANCE='0')

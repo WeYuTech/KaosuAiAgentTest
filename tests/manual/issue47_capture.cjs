@@ -1,7 +1,7 @@
 /** 分段輪詢經完整緩衝代理；只記錄時序、步驟與費用，不保存憑證。 */
 const fs=require('node:fs/promises'),path=require('node:path'),{spawn}=require('node:child_process');
 const {chromium}=require(process.env.PLAYWRIGHT_CORE_PATH||'C:/Users/rdpuser/Documents/ChatGPT/KaosuKssKpiDemo/web/node_modules/playwright-core');
-const root=process.cwd(),real=process.env.ISSUE47_REAL==='1',mode=real?'real':'fixture';
+const root=process.cwd(),real=process.env.ISSUE47_REAL==='1',mode=real?'real':process.env.ISSUE47_MARKDOWN==='1'?'fixture-markdown':'fixture';
 const dir=path.join(root,'.local/issue47-'+mode+(real?'':(process.env.FIXTURE_RUN||''))),out=path.join(root,'docs/design/issue47'),base='http://127.0.0.1:8071';
 const pause=ms=>new Promise(r=>setTimeout(r,ms));
 (async()=>{
@@ -35,13 +35,13 @@ const pause=ms=>new Promise(r=>setTimeout(r,ms));
   await p.goto(base);await p.locator('button.launcher').click();await p.getByRole('button',{name:'放大聊天室',exact:true}).click();
   await p.locator('#entry-input').fill('唯讀查詢 MC37 的工單與人工報工數量，僅查詢，不新增或修改資料。');await p.locator('#entry-input').press('Enter');
   await p.locator('.processing-steps li').first().waitFor();await p.screenshot({path:path.join(out,mode+'-01-處理中.png')});
-  await p.locator('.stream-reply').waitFor({timeout:180000});await p.screenshot({path:path.join(out,mode+'-02-分段文字.png')});
+  await p.locator('.stream-reply').waitFor({timeout:180000});if(process.env.ISSUE47_MARKDOWN==='1')await p.locator('.stream-reply td').filter({hasText:'120'}).waitFor();await p.screenshot({path:path.join(out,mode+'-02-分段文字.png')});
   await p.waitForFunction(()=>window.observation.terminal,null,{timeout:180000});await p.waitForTimeout(700);
   await p.locator('#chat-input').waitFor();const toggles=p.locator('.steps-toggle');if(await toggles.last().getAttribute('aria-expanded')==='false')await toggles.last().click();
   await p.screenshot({path:path.join(out,mode+'-03-完成展開.png')});
   const result=await p.evaluate(()=>window.observation);if(real)result.evidence=await (await c.request.get(base+'/test-evidence')).json();
   await fs.writeFile(path.join(out,mode+'-到達時序.json'),JSON.stringify(result,null,2));
-  if(!real){
+  if(!real&&process.env.ISSUE47_MARKDOWN!=='1'){
    // 第二則測試唯讀停止，僅模擬資料，正常速度等待真實伺服器片段。
    await p.locator('#chat-input').fill('唯讀查詢 MC37');await p.locator('#chat-input').press('Enter');await p.locator('.stream-reply').waitFor();
    await p.getByRole('button',{name:'停止等待',exact:true}).click();await p.waitForFunction(()=>window.observation.terminal==='stopped');await p.waitForTimeout(500);

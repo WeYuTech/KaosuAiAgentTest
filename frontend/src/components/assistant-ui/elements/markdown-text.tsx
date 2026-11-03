@@ -22,6 +22,7 @@ import {t} from "@/i18n";
 
 
 type MarkdownTextProps = Partial<TextMessagePartProps> & {
+  streaming?: boolean;
   components?: Parameters<typeof memoizeMarkdownComponents>[0];
 };
 
@@ -41,9 +42,30 @@ const useShallowStable = <T extends Record<string, unknown> | undefined>(
   return ref.current;
 };
 
-const MarkdownTextImpl: FC<MarkdownTextProps> = ({ components }) => {
+/** 尚未收到表格分隔列時先保留在來源文字，避免先顯示管線再變成表格。
+ * 已成立的表格及未閉合程式區塊交給同一個 Markdown parser，不產生假內容。
+ */
+export function streamingMarkdown(text: string): string {
+  const lines=text.split('\n');
+  let fence='';
+  for(let i=0;i<lines.length;i++){
+    const marker=lines[i].match(/^ {0,3}(`{3,}|~{3,})/);
+    if(marker){if(!fence)fence=marker[1];else if(marker[1][0]===fence[0]&&marker[1].length>=fence.length)fence='';continue;}
+    if(fence)continue;
+    if(/^\s*\|/.test(lines[i]) && (i===0||!lines[i-1].trim())){
+      const delimiter=lines[i+1]??'';
+      if(!/^\s*\|?\s*:?-{3,}:?\s*(?:\|\s*:?-{3,}:?\s*)+\|?\s*$/.test(delimiter)){
+        // 只有仍在尾端補齊的候選表格需要等待；普通含管線文字不永久隱藏。
+        if(i>=lines.length-2)return lines.slice(0,i).join('\n');
+      }
+    }
+  }
+  return text;
+}
+
+const MarkdownTextImpl: FC<MarkdownTextProps> = ({ components, streaming=false }) => {
   const displayedText = useMessagePartText().text;
-  const presentationText = useMemo(() => () => displayedText, [displayedText]);
+  const presentationText = useMemo(() => () => streaming ? streamingMarkdown(displayedText) : displayedText, [displayedText, streaming]);
   const stableComponents = useShallowStable(components);
   const markdownComponents = useMemo(() => {
     if (!stableComponents) return defaultComponents;

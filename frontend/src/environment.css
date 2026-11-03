@@ -93,7 +93,7 @@
 .processing-steps li {display:flex;align-items:flex-start;gap:6px;padding:5px 0;font-size:14px;}
 .processing-steps svg {flex-shrink:0;}
 .processing-steps li small {margin-inline-start:auto;white-space:nowrap;}
-.stream-reply {white-space:pre-wrap;overflow-wrap:anywhere;}
+.stream-reply {white-space:normal;overflow-wrap:anywhere;min-width:0;}
 @media(prefers-reduced-motion:reduce){.processing-steps .spin{animation:none;}}
 
 .entry-messages {display:flex;flex:none;flex-direction:column;gap:24px;min-width:0;}
