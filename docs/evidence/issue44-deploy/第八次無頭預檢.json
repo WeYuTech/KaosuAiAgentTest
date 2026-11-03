@@ -1,0 +1,15 @@
+{
+  "environment": "正式 MES 首頁",
+  "live": false,
+  "model_messages": 0,
+  "passed": false,
+  "trusted_source": "mes_session",
+  "homepage": true,
+  "screenshot": true,
+  "browser_closed": true,
+  "script_reported_passed": true,
+  "visual_review": "截圖仍顯示登入已逾時及尚未取得可信身分，預檢未達標準；不能判定是初始化未完成或登入狀態不同步。",
+  "validation_gap": "腳本僅核對 session HTTP 與輸入框存在，沒有等待助理登入完成及輸入框可操作。",
+  "production_changed": false,
+  "retry_count": 2
+}
