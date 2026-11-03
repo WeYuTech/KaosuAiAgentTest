@@ -141,6 +141,7 @@ export function App({ initialOpen = false }: { initialOpen?: boolean } = {}) {
       streamIntent.current=null;setStreamView({summary:{steps:[],elapsed_seconds:0,request_id:''},phase:'running',text:''});
       return requestInContext<T>(requestContext,path,body,async <V,>(target:string,value?:unknown)=>streamRequest<V>(target,value,event=>{
         if(epoch!==contextEpoch.current)return;
+        if(['done','failed','error'].includes(event.event))setNotice(value=>value===t('正在停止，完成後即可繼續輸入。')?'':value);
         if(event.event==='stopped')setNotice(t('已停止'));
         if(event.event==='intent')streamIntent.current=event.data as {readonly:boolean;request_id:string;token:string};
         setStreamView(previous=>{
