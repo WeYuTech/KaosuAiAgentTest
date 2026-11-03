@@ -1,0 +1,108 @@
+{
+  "proxy": {
+    "enabled": "True",
+    "bufferChunkedResponses": "True",
+    "preserveHostHeader": "True",
+    "responseBufferLimit": "4096",
+    "minResponseBuffer": "256",
+    "timeout": "00:05:00"
+  },
+  "scanned_config_count": 16,
+  "rewrite_rules": [
+    {
+      "target": "http://127.0.0.1:8765/{R:1}",
+      "name": "KaosuAiAgent",
+      "owner": "Default Web Site/KSS_MES/ai-agent",
+      "type": "1"
+    },
+    {
+      "target": "http://127.0.0.1:8765/{R:1}",
+      "name": "KaosuAiAgent",
+      "owner": "C:\\Services\\KaosuAiAgent\\proxy\\web.config",
+      "type": "Rewrite"
+    }
+  ],
+  "applications": [
+    {
+      "pool": "DefaultAppPool",
+      "site": "Default Web Site",
+      "application": "/"
+    },
+    {
+      "pool": "DefaultAppPool",
+      "site": "Default Web Site",
+      "application": "/Rpc"
+    },
+    {
+      "pool": "DefaultAppPool",
+      "site": "Default Web Site",
+      "application": "/RpcWithCert"
+    },
+    {
+      "pool": "RDWebAccess",
+      "site": "Default Web Site",
+      "application": "/RDWeb"
+    },
+    {
+      "pool": "RDWebAccess",
+      "site": "Default Web Site",
+      "application": "/RDWeb/Pages"
+    },
+    {
+      "pool": "RDWebAccess",
+      "site": "Default Web Site",
+      "application": "/RDWeb/Feed"
+    },
+    {
+      "pool": "RDWebAccess",
+      "site": "Default Web Site",
+      "application": "/RDWeb/FeedLogin"
+    },
+    {
+      "pool": "KSS_MES",
+      "site": "Default Web Site",
+      "application": "/KSS_MES"
+    },
+    {
+      "pool": "KSS_DCMATE",
+      "site": "Default Web Site",
+      "application": "/KSS_DCMATE"
+    },
+    {
+      "pool": "DcMateH5Api",
+      "site": "Default Web Site",
+      "application": "/DcMateH5Api"
+    },
+    {
+      "pool": "KSS_PDF",
+      "site": "Default Web Site",
+      "application": "/KSS_PDF"
+    },
+    {
+      "pool": "KaosuExcelImporterPool",
+      "site": "Default Web Site",
+      "application": "/KaosuExcelImporter"
+    },
+    {
+      "pool": "DCMATE-H5-WEB",
+      "site": "Default Web Site",
+      "application": "/DCMATE-H5-NEW"
+    },
+    {
+      "pool": "WeYuKaosuProdOrderAdminApiPool",
+      "site": "Default Web Site",
+      "application": "/WeYuKaosuProdOrderAdminApi"
+    },
+    {
+      "pool": "SAPAPI",
+      "site": "Default Web Site",
+      "application": "/SAP_API_KSS"
+    },
+    {
+      "pool": "KaosuAiAgentProxy",
+      "site": "Default Web Site",
+      "application": "/KSS_MES/ai-agent"
+    }
+  ],
+  "proxy_config_sha256": "936A1A26430AC96B1A14731E5EA7C94963718A76439623688300F1159616ED3E"
+}
