@@ -7,6 +7,12 @@ async function fixture(page,scene){
  const baseFixture=await base(page,context.baseScene,{args:['saving','save-error','conflict'].includes(scene)?{ok:124}:undefined,proposal:{writes_enabled:scene!=='write-disabled'},request:async({route,p,body,proposal,guide,work,setGuide})=>{
   context.calls.push({path:p,method:route.request().method(),body});
   const send=(json,status=200)=>route.fulfill({json,status});
+  if(scene==='recover-operation'){
+   const original={...proposal,id:'fixture-original-proposal',digest:'fixture-original-digest',status:'unknown'};
+   if(p==='/api/conversations/fixture-original'){await send({id:'fixture-original',module:'report',title:'原本待查核作業',messages:[{role:'user',content:'原本的 MC37 作業'}]});return true;}
+   if(p==='/api/conversations/fixture-original/guide'){await send({...guide,step:'review',proposal:original});return true;}
+   if(p.startsWith('/api/proposals/fixture-original-proposal')){await send({status:'unknown',proposal:original});return true;}
+  }
   if(scene==='connecting'&&(p==='/api/health'||p==='/api/session')){await new Promise(resolve=>context.release=resolve);return true;}
   if(['session','permission'].includes(scene)){
    if(p==='/api/health'){await send({mode:'live',status:'ok',model_configured:true,business_timezone:'UTC+07:00'});return true;}

@@ -1,5 +1,5 @@
 #mes-ai-chat-root{--status-warn:#e9c285;--status-warn-bg:#393025;--status-error:#f29c9c;--status-error-bg:#3e292c}
-#mes-ai-chat-root[data-theme=light] .assistant-panel{--status-warn:#805419;--status-warn-bg:#fff4df;--status-error:#b53737;--status-error-bg:#fceeed}
+#mes-ai-chat-root[data-theme=light]{--status-warn:#805419;--status-warn-bg:#fff4df;--status-error:#b53737;--status-error-bg:#fceeed}
 #mes-ai-chat-root .operation-status-notice{display:flex;align-items:flex-start;gap:10px;padding:12px 14px;border:0;border-radius:10px;font-size:13px;line-height:1.55;background:var(--status-warn-bg);color:var(--status-warn)}
 #mes-ai-chat-root .operation-status-notice.error{background:var(--status-error-bg);color:var(--status-error)}
 #mes-ai-chat-root .operation-status-notice>svg{width:18px;height:18px;flex:none}
@@ -55,3 +55,14 @@
 #mes-ai-chat-root .status-dialog .operation-dialog-footer button:not(.primary){background:transparent;color:var(--foreground);border:1px solid var(--border)}
 #mes-ai-chat-root .dual-flow .result-footer{margin:auto -24px 0;padding:14px 24px;border-top:1px solid var(--border);flex:none}
 @media(max-width:620px){#mes-ai-chat-root .dual-flow .result-footer{margin-inline:-20px;padding-inline:20px}}
+#mes-ai-chat-root .connection-state>svg{width:18px;height:18px}
+#mes-ai-chat-root .status-dialog .operation-dialog-header>button{font-weight:400;color:var(--foreground)}
+#mes-ai-chat-root .dual-flow .proposal-actions button:disabled,#mes-ai-chat-root .dual-flow .guide-navigation button:disabled{opacity:.43;cursor:not-allowed}
+#mes-ai-chat-root .operation-receipt>details{margin:0;padding:0;border:0}
+#mes-ai-chat-root .operation-receipt>details>summary{margin:0;padding:0;min-height:0}
+#mes-ai-chat-root .dual-flow .awaiting-review .operation-receipt>details>summary{padding:6px 0;min-height:0}
+#mes-ai-chat-root .status-dialog{max-width:calc(100vw - 26px)}
+#mes-ai-chat-root .status-dialog .operation-dialog-header>button{width:36px;height:36px;min-width:36px;min-height:36px;padding:8px}
+#mes-ai-chat-root .status-dialog .operation-dialog-body>p{line-height:1.55}
+#mes-ai-chat-root:has(.status-dialog[data-state=open]) .dual-flow .composer-area{display:none}
+#mes-ai-chat-root:has(.status-dialog[data-state=open]) [data-slot=dialog-overlay]{background:#0007}

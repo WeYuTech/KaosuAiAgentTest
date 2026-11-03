@@ -1,3 +1,4 @@
+import {reportReceiptQuantities} from './receipt-summary';
 import {CircleAlert,Info,CircleHelp,CircleCheck,LoaderCircle,LogIn,LockKeyhole,RefreshCw} from 'lucide-react';
 import type {ReactNode} from 'react';
 import {t} from './i18n';
@@ -8,8 +9,9 @@ export function StatusNotice({title,description,tone='warn',children}:{title:str
  return <div className={`operation-status-notice ${tone}`} role={tone==='error'?'alert':'status'}>{tone==='error'?<CircleAlert size={18}/>:<Info size={18}/>}<div>{title}{description&&<small>{description}</small>}{children}</div></div>;
 }
 export function SubmittingNotice(){return <div className="operation-status-live" role="status"><LoaderCircle className="spin" size={18}/>{t('正在送出，請稍候…')}</div>;}
-export function OperationReceipt({unknown,id,changes,simulation,onCheck,onAudit,onNext,busy}:{unknown:boolean;id:string;changes:Change[];simulation:boolean;onCheck:()=>void;onAudit:()=>void;onNext:()=>void;busy:boolean}){
- return <div className="operation-receipt">{unknown?<CircleHelp size={18}/>:<CircleCheck size={18}/>}<h3>{t(unknown?'執行結果待確認':'作業已完成')}</h3><p>{t(unknown?'暫時沒收到結果，請先查核，避免重複送出。':'已查核執行成功並記錄異動。')}</p>
+export function OperationReceipt({unknown,id,action,changes,simulation,onCheck,onAudit,onNext,busy}:{unknown:boolean;id:string;action:string;changes:Change[];simulation:boolean;onCheck:()=>void;onAudit:()=>void;onNext:()=>void;busy:boolean}){
+ const quantities=reportReceiptQuantities(action,changes);
+ return <div className="operation-receipt">{unknown?<CircleHelp size={18}/>:<CircleCheck size={18}/>}<h3>{t(unknown?'執行結果待確認':quantities?'報工已完成':'作業已完成')}</h3><p>{unknown?t('暫時沒收到結果，請先查核，避免重複送出。'):quantities?t('人工良品 {0} 件・不良 {1} 件',{0:quantities.good,1:quantities.defects}):t('已查核執行成功並記錄異動。')}</p>
  {unknown?<button className="primary" disabled={busy} onClick={onCheck}><RefreshCw size={18}/>{t('查核執行結果')}</button>:<>{simulation&&<small>{t('模擬環境：此結果未寫入正式 MES。')}</small>}<div className="receipt-actions"><button onClick={onAudit}>{t('查看紀錄')}</button><button onClick={onNext}>{t('下一筆作業')}</button></div></>}
  <details><summary>{t('操作資訊')}</summary><p>{t('操作識別碼：')}{id}</p>{!unknown&&<><p>{t('已證明的欄位異動')}：{changes.length}</p>{changes.map((c,i)=><p key={i}>{c.field}：{String(c.before??'—')} → {String(c.after??'—')}</p>)}</>}</details></div>;
 }

@@ -15,6 +15,7 @@ const fs=require('fs'),path=require('path'),assert=require('node:assert/strict')
  if(['expired','write-disabled'].includes(scene)){assert.equal(confirms().length,0);if(scene==='write-disabled'){const b=page.getByRole('button',{name:'確認送出',exact:true});assert.equal(await b.isDisabled(),true);await b.evaluate(e=>e.click());assert.equal(confirms().length,0);}else assert.equal(await page.getByRole('button',{name:'重新核對',exact:true}).count(),1);}
  if(scene==='submitting'){
  assert.equal(confirms().length,1);assert.doesNotMatch(await page.locator('.operation-primary').innerText(),/作業已完成|報工已完成/);
+ await page.emulateMedia({reducedMotion:'no-preference'});const spin=page.locator('.operation-status-live .spin');assert.deepEqual(await spin.evaluate(e=>[getComputedStyle(e).animationDuration,getComputedStyle(e).animationTimingFunction]),['0.85s','linear']);await page.emulateMedia({reducedMotion:'reduce'});assert.equal(await spin.evaluate(e=>getComputedStyle(e).animationName),'none');assert.match(await page.locator('.operation-status-live').innerText(),/正在送出/);await page.emulateMedia({reducedMotion:'no-preference'});
  const b=page.getByRole('button',{name:'送出中…',exact:true});assert.equal(await b.isDisabled(),true);await b.evaluate(e=>{e.click();e.click();});await page.keyboard.press('Enter');assert.equal(confirms().length,1);
  c.release();await page.locator('.operation-receipt').waitFor();assert.equal(confirms().length,1);
  }
@@ -28,7 +29,7 @@ const fs=require('fs'),path=require('path'),assert=require('node:assert/strict')
  }
  if(['session','permission','connecting'].includes(scene)){assert.equal(await page.locator('.history-select').count(),0);assert.equal(await page.locator('#entry-input').count(),0);assert.equal(confirms().length,0);}
  if(scene==='panel-error'){await page.getByRole('dialog',{name:'載入功能',exact:true}).getByRole('button',{name:'關閉',exact:true}).last().click();assert.equal(await page.locator('#guide-ok').inputValue(),'125');assert.equal(confirms().length,0);}
- if(scene==='recover-operation'){await page.getByRole('button',{name:'先留在這裡',exact:true}).click();assert.equal(await page.getByRole('dialog').count(),0);assert.equal(confirms().length,0);assert.ok(await page.evaluate(()=>Object.keys(localStorage).some(k=>k.includes(':submission:'))));}
+ if(scene==='recover-operation'){await page.getByRole('button',{name:'先留在這裡',exact:true}).click();await page.getByRole('dialog',{name:'有一筆作業尚待確認',exact:true}).waitFor({state:'hidden'});assert.equal(confirms().length,0);assert.ok(await page.evaluate(()=>Object.keys(localStorage).some(k=>k.includes(':submission:'))));await page.getByRole('button',{name:'返回原作業',exact:true}).click();await page.getByRole('dialog',{name:'有一筆作業尚待確認',exact:true}).getByRole('button',{name:'返回原作業',exact:true}).click();await page.locator('.operation-receipt').waitFor();assert.match(await page.locator('.operation-receipt').innerText(),/執行結果待確認/);assert.ok(c.calls.some(x=>x.path==='/api/conversations/fixture-original'));assert.equal(confirms().length,0);}
  }catch(e){error=String(e.stack||e);}
  rows.push({情境:scene,結果:error?'失敗':'通過',錯誤:error,送出請求次數:confirms().length,查核請求次數:c.calls.filter(x=>x.path.endsWith('/reconcile')).length,寫入路徑:mutations().map(x=>({路徑:x.path,版本:x.body?.version})),操作識別:[...new Set(confirms().map(x=>x.path))]});console.log(scene,error||'通過');await page.close();
  }
