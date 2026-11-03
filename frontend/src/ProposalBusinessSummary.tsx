@@ -1,3 +1,4 @@
+import type {ReactNode} from 'react';
 import {mesDate,productionStatus} from './presentation';
 import { t } from './i18n';
 import { ArrowRight, CalendarDays, Factory, ClipboardList } from 'lucide-react';
@@ -96,7 +97,7 @@ export function DetailedProposalBusinessSummary({ proposal, workspace }: { propo
 }
 
 /** 核對頁的業務投影；全部數值仍取自伺服器 proposal，完整資料保留在異動明細。 */
-export function ProposalBusinessSummary({proposal,workspace}:{proposal:Proposal;workspace:Workspace}) {
+export function ProposalBusinessSummary({proposal,workspace,notice,targetOnly=false}:{proposal:Proposal;workspace:Workspace;notice?:ReactNode;targetOnly?:boolean}) {
  const {action,args,target={},changes}=proposal;
  const record=workspace.records.find(r=>(args.execution_id&&String(r.WIP_OPI_WDOEACICO_HIST_SID)===String(args.execution_id))||(args.schedule_id&&String(r.ZZ_KAOSU_PROD_SCHEDULE_SID)===String(args.schedule_id))||(args.report_id&&Array.isArray(r.REPORTS)&&(r.REPORTS as Row[]).some(x=>String(x.WIP_OPI_WDOEACICOOUTPUT_HIST_SID)===String(args.report_id))));
  const report=target.report_before??(Array.isArray(record?.REPORTS)?(record.REPORTS as Row[]).find(r=>String(r.WIP_OPI_WDOEACICOOUTPUT_HIST_SID)===String(args.report_id)):undefined);
@@ -136,5 +137,5 @@ export function ProposalBusinessSummary({proposal,workspace}:{proposal:Proposal;
  if(String(args.comment??'').trim())add('備註',args.comment);
  const equipment=target.equipment??record?.EQP_NO??args.equipment,order=target.work_order??record?.WO;
  const part=[target.part_no??record?.PART_NO??args.part_no,target.part_spec??record?.PART_SPEC].filter(Boolean).join(' ');
- return <div className="reference-business-summary"><div className="sheet-target"><span className="sheet-target-mark"><Factory size={18}/></span><div><strong>{[equipment,order].filter(Boolean).join(' · ')}</strong><small>{part}</small></div></div><div className="reference-review">{rows.map((r,i)=><div className="reference-review-row" key={i}><span>{r.label}</span><span className="reference-review-value">{r.before!==undefined&&String(r.before)!==String(r.value)&&<><del>{display(r.before)}</del><ArrowRight size={18}/></>}<strong>{display(r.value)}</strong></span></div>)}</div></div>;
+ return <div className="reference-business-summary"><div className="sheet-target"><span className="sheet-target-mark"><Factory size={18}/></span><div><strong>{[equipment,order].filter(Boolean).join(' · ')}</strong><small>{part}</small></div></div>{notice}{!targetOnly&&<div className="reference-review">{rows.map((r,i)=><div className="reference-review-row" key={i}><span>{r.label}</span><span className="reference-review-value">{r.before!==undefined&&String(r.before)!==String(r.value)&&<><del>{display(r.before)}</del><ArrowRight size={18}/></>}<strong>{display(r.value)}</strong></span></div>)}</div>}</div>;
 }

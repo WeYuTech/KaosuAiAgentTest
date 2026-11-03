@@ -1,5 +1,28 @@
 ﻿/* 固定介面詞彙：中文原文為鍵，不翻譯 MES 主檔名稱或歷史訊息。 */
 export const translations: Record<string, [string, string]> = Object.fromEntries(`
+正在送出，請稍候…|Submitting, please wait…|กำลังส่ง กรุณารอสักครู่…
+執行結果待確認|Execution result unconfirmed|รอยืนยันผลการดำเนินงาน
+暫時沒收到結果，請先查核，避免重複送出。|No result received yet. Check before taking further action.|ยังไม่ได้รับผล โปรดตรวจสอบเพื่อหลีกเลี่ยงการส่งซ้ำ
+作業已完成|Operation completed|ดำเนินการเสร็จแล้ว
+下一筆作業|Next operation|งานถัดไป
+操作資訊|Operation information|ข้อมูลการดำเนินงาน
+正在連線…|Connecting…|กำลังเชื่อมต่อ…
+目前無法執行這項操作|This operation is unavailable|ไม่สามารถดำเนินการนี้ได้ในขณะนี้
+正在取得工作區與登入狀態。|Loading workspace and sign-in status.|กำลังโหลดพื้นที่ทำงานและสถานะเข้าสู่ระบบ
+請重新登入，再繼續原本的作業。|Sign in again to continue your operation.|โปรดเข้าสู่ระบบอีกครั้งเพื่อดำเนินงานเดิมต่อ
+你的帳號沒有這項操作權限。|Your account does not have permission for this operation.|บัญชีของคุณไม่มีสิทธิ์ดำเนินการนี้
+重新登入|Sign in again|เข้าสู่ระบบอีกครั้ง
+草稿仍保留，請重新核對。|Your draft is retained. Review it again.|เก็บฉบับร่างไว้แล้ว โปรดตรวจสอบอีกครั้ง
+這筆操作未通過檢核|This operation did not pass validation|การดำเนินการนี้ไม่ผ่านการตรวจสอบ
+目前僅供查詢與預覽|Queries and previews only|ใช้ค้นหาและดูตัวอย่างเท่านั้น
+尚未啟用正式寫入。|Production writes are not enabled.|ยังไม่เปิดใช้งานการบันทึกจริง
+送出中…|Submitting…|กำลังส่ง…
+有一筆作業尚待確認|An operation needs confirmation|มีงานที่ยังรอการยืนยัน
+原本的草稿與核對內容都還在。|Your original draft and review are retained.|ยังเก็บฉบับร่างและข้อมูลตรวจสอบเดิมไว้
+載入功能|Load feature|โหลดฟังก์ชัน
+暫時無法載入|Unable to load right now|ไม่สามารถโหลดได้ในขณะนี้
+關閉此視窗不會影響目前作業。|Closing this window will not affect your operation.|การปิดหน้าต่างนี้จะไม่กระทบงานปัจจุบัน
+查看紀錄|View records|ดูบันทึก
 查詢歷史|View history|ดูประวัติ
 尚未送出|Not submitted|ยังไม่ได้ส่ง
 我已核對對象與影響，確認執行這筆操作。|I have reviewed the target and impact and confirm this operation.|ฉันตรวจสอบเป้าหมายและผลกระทบแล้ว และยืนยันการดำเนินการนี้
