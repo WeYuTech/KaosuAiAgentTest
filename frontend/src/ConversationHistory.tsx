@@ -20,7 +20,7 @@ const emptyPage:Page={records:[],total:0,page:1,page_size:30};
 export type HistoryScope = 'active' | 'archived' | 'deleted';
 export interface HistoryController { showScope: (scope: HistoryScope) => void }
 export function ConversationHistory({ actor, current, overlay, locked, busy, refresh, request, close, select, create, beforeChange, changed, usage, onWorkChange, budget, onProjection, visible=true, ref }: {
-  ref?:Ref<HistoryController>;visible?:boolean;onProjection:(value:HistoryProjection)=>void;budget: Row | null; actor?: string; current: Conversation | null; overlay: boolean; locked: boolean; busy: boolean; refresh: number;
+  ref?:Ref<HistoryController>;visible?:boolean;onProjection:(value:HistoryProjection)=>void;budget: Row | null; actor?: string; current: Pick<Conversation,'id'> | null; overlay: boolean; locked: boolean; busy: boolean; refresh: number;
   request: <T>(path: string, body?: unknown) => Promise<T>; close: () => void; select: (entry: ChatEntry) => Promise<void>;
   create: () => Promise<void>; beforeChange: (id: string) => Promise<void>; changed: (entry: ChatEntry) => void; usage: () => void;
   onWorkChange: (value:boolean)=>void;

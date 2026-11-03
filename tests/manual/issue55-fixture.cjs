@@ -11,13 +11,14 @@ async function start(){
  const dist=path.join(root,'frontend/dist');
  const server=http.createServer((req,res)=>{const relative=decodeURIComponent(new URL(req.url,'http://localhost').pathname);const file=path.join(dist,relative==='/'?'index.html':relative);if(!file.startsWith(dist+path.sep)||!fs.existsSync(file)||!fs.statSync(file).isFile()){res.writeHead(404);res.end();return;}res.setHeader('Content-Type',({'.html':'text/html','.js':'text/javascript','.css':'text/css','.svg':'image/svg+xml','.woff2':'font/woff2'})[path.extname(file)]||'application/octet-stream');res.end(fs.readFileSync(file));});
  await new Promise(resolve=>server.listen(0,'127.0.0.1',resolve));
- const browser=await chromium.launch({headless:true,executablePath:'C:/Users/rdpuser/AppData/Local/ms-playwright/chromium-1228/chrome-win64/chrome.exe'});
+ // 兩邊統一灰階字型反鋸齒，避免 Windows LCD／合成圖層造成非樣式差異。
+ const browser=await chromium.launch({headless:true,args:['--disable-lcd-text'],executablePath:'C:/Users/rdpuser/AppData/Local/ms-playwright/chromium-1228/chrome-win64/chrome.exe'});
  return {browser,url:`http://127.0.0.1:${server.address().port}`,close:async()=>{await browser.close();await new Promise(r=>server.close(r));}};
 }
 async function fixture(page,scene='home'){
  let chats=structuredClone(records);
  let sent=null;
- await page.addInitScript(()=>localStorage.setItem('kaosu-assistant:theme','dark'));
+ await page.addInitScript(()=>{localStorage.setItem('kaosu-assistant:theme','dark');sessionStorage.setItem('mes-neutral-entry:v1:'+JSON.stringify(['fixture-operator','simulation']),JSON.stringify({entry_id:'fixture-2'}));});
  await page.route('**/api/**',async route=>{
   const url=new URL(route.request().url()),p=url.pathname,body=route.request().postDataJSON();
   const send=(data,status=200)=>route.fulfill({status,json:data});

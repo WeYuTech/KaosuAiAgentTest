@@ -1,5 +1,6 @@
 // 同資料、同尺寸的公開 HTTP fixture 驗收。像素差異由瀏覽器 Canvas 計算，未增加套件。
 const {start,fixture,root,messages}=require('./issue55-fixture.cjs');
+const {metrics}=require('./issue55-metrics.cjs');
 const fs=require('node:fs'),path=require('node:path');
 const out=path.join(root,'docs/design/issue55');fs.mkdirSync(out,{recursive:true});
 const scenes=JSON.parse(fs.readFileSync(path.join(root,'docs/design/uiux-reference-v2/scenarios.json'),'utf8')).filter(s=>/^[HNC]/.test(s.id));
@@ -36,7 +37,7 @@ async function compare(page,a,b,width,height){return page.evaluate(async({a,b,wi
  ctx.putImageData(y,0,0);const strip=document.createElement('canvas');strip.width=width*3;strip.height=height+30;const g=strip.getContext('2d');g.fillStyle='#101010';g.fillRect(0,0,strip.width,strip.height);g.fillStyle='#fff';g.font='14px sans-serif';['範例 v2','正式 React／HTTP fixture','差異疊圖：紅色超過 16 色階'].forEach((label,i)=>g.fillText(label,i*width+12,20));g.drawImage(left,0,30);g.drawImage(middle,width,30);g.drawImage(c,width*2,30);return {ratio:changed/(width*height)*100,png:strip.toDataURL('image/png').split(',')[1]};
 },{a:'data:image/png;base64,'+a.toString('base64'),b:'data:image/png;base64,'+b.toString('base64'),width,height});}
 module.exports={prepare,compare};
-if(require.main===module)(async()=>{const app=await start();const table=[];try{
+if(require.main===module)(async()=>{const app=await start();const table=[],styleTable=[];try{
  for(const width of [1366,390]){const height=width===1366?768:810;
   const ref=await app.browser.newPage({viewport:{width,height},colorScheme:'dark'});await ref.goto('file:///'+path.join(root,'docs/design/uiux-reference-v2/reference.html').replaceAll('\\','/'));
   // 只移除範例控制列與宿主留白；產品內所有排版保持原樣。
@@ -51,9 +52,13 @@ if(require.main===module)(async()=>{const app=await start();const table=[];try{
    fs.writeFileSync(path.join(out,`${width}-${scene.id}.png`),Buffer.from(diff.png,'base64'));
    const rects=await page.evaluate(selectors=>selectors.map(selector=>{const el=document.querySelector(selector);const r=el?.getBoundingClientRect();return {selector,rect:r?.toJSON()};}),selectors);
    const referenceRects=await ref.evaluate(selectors=>selectors.map(selector=>{const el=document.querySelector(selector);const r=el?.getBoundingClientRect();return {selector,rect:r?.toJSON()};}),referenceSelectors);
-   const geometry=rects.flatMap((item,i)=>{const r=referenceRects[i]?.rect,p=item.rect;if(!r||!p||!r.width||!p.width)return [];const delta=Math.max(...['x','y','width','height'].map(key=>Math.abs(p[key]-r[key])));return [{selector:item.selector,delta,passed:delta<=4}];});
+   const geometry=rects.flatMap((item,i)=>{const r=referenceRects[i]?.rect,p=item.rect;if(!r||!p||!r.width||!p.width)return [];const axes=Object.fromEntries(['x','y','width','height'].map(key=>[key,Math.abs(p[key]-r[key])]));const delta=Math.max(...Object.values(axes));return [{selector:item.selector,axes,delta,passed:delta<=4}];});
+   const computed=await metrics(page,ref);styleTable.push({width,height,id:scene.id,comparisons:computed});
+   for(const item of computed.filter(x=>['彈窗說明','彈窗列表列','彈窗列表動作','最新內容'].includes(x.component))){const delta=Math.max(...Object.values(item.delta));geometry.push({selector:`${item.component}[${item.index}]`,axes:item.delta,delta,passed:delta<=4});}
+   if(computed.some(x=>x.differences.length))console.log('樣式不一致',width,scene.id,computed.filter(x=>x.differences.length).map(x=>({component:x.component,differences:x.differences})));
    table.push({width,height,id:scene.id,label:scene.label,ratio:diff.ratio,rects,referenceRects,geometry});console.log(width,scene.id,diff.ratio.toFixed(2)+'%',geometry.filter(g=>!g.passed));await page.close();
   }await ref.close();
  }
  fs.writeFileSync(path.join(out,'量測.json'),JSON.stringify(table,null,2));
+ fs.writeFileSync(path.join(out,'計算樣式比對.json'),JSON.stringify(styleTable,null,2));
 }finally{await app.close();}})().catch(e=>{console.error(e);process.exitCode=1});
