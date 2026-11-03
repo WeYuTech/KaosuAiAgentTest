@@ -541,7 +541,7 @@ export function App({ initialOpen = false }: { initialOpen?: boolean } = {}) {
       if(restoredText)initialIntent.current=null;
       if(!conversation&&draftScope.current)saveTextDraft(sessionStorage,draftScope.current,'','unsent');
       setGuideSnapshot({...restoredGuide.args,action:restoredGuide.action});forceNew.current=false;rememberConversation(chat,current.actor.id);setHistoryRevision(v=>v+1);
-      setStreamView(null);setModule(currentModule); setWorkspace(work.data); setConversation(chat); setMessages(chat.messages ?? []);
+      setStreamView(previous=>previous?.phase==='done'&&chat.messages?.some(message=>message.processing_summary?.request_id===previous.summary.request_id)?previous:null);setModule(currentModule); setWorkspace(work.data); setConversation(chat); setMessages(chat.messages ?? []);
       setFilters(initialFilters); setContextFilter(initialContextFilter); setPageSize(20);
       try{acceptWorkspace(await restoreQueryWorkspace(request,chat,{...initialContextFilter,...initialFilters}));
       }catch(error){if(error instanceof ObsoleteContext||error instanceof ApiError&&[401,403].includes(error.status))throw error;setQueryError(error instanceof Error?error.message:String(error));}
