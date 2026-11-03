@@ -1,0 +1,31 @@
+{
+    "model_messages_sent":  0,
+    "rollback_executed":  false,
+    "proxy":  {
+                  "enabled":  "True",
+                  "responseBufferLimit":  "4096",
+                  "minResponseBuffer":  "256",
+                  "bufferChunkedResponses":  "True",
+                  "preserveHostHeader":  "True",
+                  "timeout":  "00:05:00"
+              },
+    "deployment_started":  false,
+    "all_original_files_match":  true,
+    "requested_commit":  "93ad0c28853f3b6b939ef2e52f46a600f0321dcd",
+    "original_manifest_files":  160,
+    "health":  {
+                   "status":  "ok",
+                   "mode":  "live",
+                   "model_configured":  true,
+                   "model":  "gpt-6.1-sol",
+                   "business_timezone":  "UTC+07:00",
+                   "business_date":  "2026-11-03",
+                   "server_time":  "2026-11-03T10:16:05.799957+07:00"
+               },
+    "service_started_utc":  "2026-11-03T02:36:43.3303455Z",
+    "listen":  "127.0.0.1",
+    "checked_utc":  "2026-11-03T03:16:06.3595876Z",
+    "task_state":  "Running",
+    "current_deployment_commit":  "6ff9ec801dea4f08f79e835265e6a2e18dded560"
+}
+{"conversations": 22, "active_messages": 0, "proposals": {"cancelled": 7}, "audit": 7, "budget": {"calls": 254, "spent_usd": 2.143728, "unsettled": 0}}
