@@ -572,7 +572,7 @@
 #mes-ai-chat-root .dual-flow .mold-stages strong{font-size:14px;font-weight:400;line-height:1.55}
 #mes-ai-chat-root .dual-flow .mold-stages small{display:block;font-size:12px;color:var(--muted-foreground);line-height:1.55}
 #mes-ai-chat-root .dual-flow .mold-stages button{font-size:13px;font-weight:400;line-height:1.55;min-height:32px;padding:5px 10px;opacity:1}
-#mes-ai-chat-root .dual-flow .mold-clear-action{margin-top:18px;padding:0;border:0;display:flex;flex-direction:column;align-items:flex-start}
+#mes-ai-chat-root .dual-flow .mold-clear-action{margin-top:34px;padding:0;border:0;display:flex;flex-direction:column;align-items:stretch;gap:0}
 #mes-ai-chat-root .dual-flow .mold-clear-action button{font-size:13px;min-height:32px;padding:5px 10px;border-color:transparent;background:transparent}
 @container mes-chat-shell (max-width:620px){#mes-ai-chat-root .dual-flow .schedule-allocation{grid-template-columns:minmax(0,1fr) 76px}#mes-ai-chat-root .dual-flow .schedule-allocation>.guide-field:first-of-type{grid-column:1/-1}}
 #mes-ai-chat-root .dual-flow.step-wizard .awaiting-review .proposal-heading>div{width:100%}
@@ -638,3 +638,11 @@
 #mes-ai-chat-root .dual-flow.step-wizard .sheet-target{margin-top:0}
 #mes-ai-chat-root .dual-flow .picker-underlay>svg{width:18px;height:18px;margin-bottom:3px;color:var(--muted-foreground)}
 #mes-ai-chat-root .dual-flow.chat-sheet .picker-underlay{margin-top:4px}
+
+/* 模具入口沿用範例文字按鈕；停用以相同透明度呈現，保留真實原因。 */
+#mes-ai-chat-root .dual-flow .mold-clear-action button{color:var(--foreground);font-weight:550;line-height:1.55;border:1px solid transparent;border-radius:9px;opacity:1}
+#mes-ai-chat-root .dual-flow .mold-clear-action>small{font-size:12px;line-height:1.55;color:var(--muted-foreground)}
+#mes-ai-chat-root .dual-flow .mold-history-action{margin-top:8px}
+#mes-ai-chat-root .dual-flow :is(.mold-stages,.mold-clear-action) button:disabled{opacity:.43;cursor:not-allowed}
+
+#mes-ai-chat-root .dual-flow .mold-clear-action>button{align-self:flex-start}

@@ -17,7 +17,10 @@ pairs.push(
  ['模具階段','.ux-phase-item','.mold-stages li'],
  ['模具階段編號','.ux-phase-dot','.mold-stages li>b'],
  ['模具階段說明','.ux-phase-item small','.mold-stages small'],
- ['模具階段按鈕','.ux-phase-item button','.mold-stages button'],
+ ['模具階段按鈕','.ux-phase-item button','.mold-stages button',true],
+ ['清除入口','.ux-mold-clear>button','.mold-clear-action>button',true],
+ ['清除停用原因','.ux-mold-clear>small','.mold-clear-action>small'],
+ ['查詢歷史入口','.ux-mold-clear>div>button','.mold-history-action>button',true],
  ['分配列','.ux-schedule-row','.schedule-allocation'],
  ['分配明細','.ux-schedule-row>.ux-field:first-child>select','.schedule-allocation>.guide-field:first-of-type>select'],
  ['分配工單','.ux-schedule-row>.ux-field:nth-child(2)>select','.schedule-allocation input[role=combobox]'],
@@ -28,10 +31,10 @@ pairs.push(
  ['作業對話輸入','.ux-work-chat textarea','.chat-sheet:not(.chat-only) #chat-input']
 );
 for(const [ref,product] of [['scheduleEquipment','guide-equipment'],['scheduleMold','guide-mold_no'],['schedulePart','guide-part_no'],['scheduleStart','guide-start_time'],['scheduleCycle','guide-cycle_seconds'],['scheduleShots','guide-target_shots'],['scheduleStatus','guide-status']])pairs.push(['排程欄位 '+ref,`[data-input=${ref}]`,`#${product}`]);
-const props=['font-family','font-size','font-weight','line-height','letter-spacing','color'];
+const props=['font-family','font-size','font-weight','line-height','letter-spacing','color','opacity','cursor'];
 pairs.push(['作業名稱','.ux-top-title>span:first-of-type','.workspace-bar h1'],['品牌名稱','.ux-appbrand span','.assistant-header h2'],['側欄項目','.ux-history-row>button:first-child','.history-select']);
 pairs.push(['用量標籤','.ux-usage-row>span:first-child','.sidebar-budget>span>strong'],['用量數字','.ux-usage-row>span:last-child','.sidebar-budget>span:first-child>span']);
-async function measure(page,selector){return page.locator(selector).evaluateAll((els,props)=>els.filter(el=>el.getBoundingClientRect().width&&el.getBoundingClientRect().height).map(el=>({rect:el.getBoundingClientRect().toJSON(),style:Object.fromEntries(props.map(p=>[p,getComputedStyle(el).getPropertyValue(p)]))})),props);}
+async function measure(page,selector,interaction=false){return page.locator(selector).evaluateAll((els,{props,interaction})=>els.filter(el=>el.getBoundingClientRect().width&&el.getBoundingClientRect().height).map(el=>({disabled:interaction&&el.matches('button')?el.disabled:null,rect:el.getBoundingClientRect().toJSON(),style:Object.fromEntries(props.filter(p=>interaction||!['opacity','cursor'].includes(p)).map(p=>[p,getComputedStyle(el).getPropertyValue(p)]))})),{props,interaction});}
 (async()=>{const app=await start(),rows=[];const out=path.join(root,'docs/design/issue57');fs.mkdirSync(out,{recursive:true});try{
  for(const width of process.env.WIDTH?[Number(process.env.WIDTH)]:[1366,390]){
  const height=width===1366?768:810;
@@ -42,7 +45,7 @@ async function measure(page,selector){return page.locator(selector).evaluateAll(
  await ref.locator('#ux-scene').selectOption(scene.key,{force:true});await ref.waitForTimeout(300);
  const page=await app.browser.newPage({viewport:{width,height},colorScheme:'dark'});await fixture(page,scene.key);await page.goto(app.url+'/?embed=1');await page.locator('#entry-input').waitFor();await prepare(page,scene.key);await page.waitForTimeout(800);await page.locator('.conversation-scroll').evaluate(el=>el.scrollTop=0);await page.mouse.move(0,0);await page.locator('input').evaluateAll(es=>es.forEach(e=>e.blur()));await page.evaluate(()=>document.fonts.ready);
  const a=await ref.locator('#ux-app').screenshot(),b=await page.screenshot();const diff=await compare(page,a,b,width,height);fs.writeFileSync(path.join(out,`${width}-${scene.id}.png`),Buffer.from(diff.png,'base64'));
- const metrics=[];for(const [name,r,p] of pairs){const [rs,ps]=await Promise.all([measure(ref,r),measure(page,p)]);for(let i=0;i<Math.max(rs.length,ps.length);i++){if(!rs[i]||!ps[i]){metrics.push({name,index:i,missing:!rs[i]?'reference':'product'});continue;}metrics.push({name,index:i,reference:rs[i],product:ps[i],delta:Object.fromEntries(['x','y','width','height','bottom'].map(k=>[k,Math.abs(rs[i].rect[k]-ps[i].rect[k])])),differences:props.filter(k=>rs[i].style[k]!==ps[i].style[k])});}}
+ const metrics=[];for(const [name,r,p,interaction] of pairs){const [rs,ps]=await Promise.all([measure(ref,r,interaction),measure(page,p,interaction)]);for(let i=0;i<Math.max(rs.length,ps.length);i++){if(!rs[i]||!ps[i]){metrics.push({name,index:i,missing:!rs[i]?'reference':'product'});continue;}if(rs[i].disabled===null||ps[i].disabled===null){for(const key of ['opacity','cursor']){delete rs[i].style[key];delete ps[i].style[key];}}metrics.push({name,index:i,reference:rs[i],product:ps[i],delta:Object.fromEntries(['x','y','width','height','bottom'].map(k=>[k,Math.abs(rs[i].rect[k]-ps[i].rect[k])])),differences:[...props.filter(k=>rs[i].style[k]!==ps[i].style[k]),...(rs[i].disabled!==null&&ps[i].disabled!==null&&rs[i].disabled!==ps[i].disabled?['disabled']:[])]});}}
  const groups=[['標題','.ux-sheet-head h2,.ux-wizard-inner>h2','.guide-phase h2,.awaiting-review .proposal-heading h2'],['狀態','.ux-sheet-head .ux-tag','.awaiting-review .proposal-heading small'],['內容','.ux-sheet-scroll,.ux-wizard-inner','.operation-primary'],['步驟','.ux-steps','.operation-steps'],['動作','.ux-sheet-foot','.guide-navigation,.awaiting-review .proposal-actions']]; const text={groups:await Promise.all(groups.map(async([name,r,p])=>({name,...compareText(await visibleText(ref,r,name==='內容'?'h2':''),await visibleText(page,p,name==='內容'?'.guide-phase,.proposal-heading,.operation-steps,.guide-navigation,.proposal-actions':''))})))}; text.consistent=text.groups.every(g=>g.consistent); rows.push({id:scene.id,width,height,ratio:diff.ratio,metrics,text}); if(!text.consistent)console.log('文字差異',scene.id,JSON.stringify(text));console.log(scene.id,width,diff.ratio.toFixed(2),metrics.filter(m=>m.missing||m.differences.length||Object.values(m.delta).some(d=>d>4)).map(m=>({name:m.name,index:m.index,delta:m.delta,differences:m.differences,missing:m.missing})));await page.close();
  }await ref.close();}
  fs.writeFileSync(path.join(out,process.env.SCENE?`量測-${process.env.SCENE}-${process.env.WIDTH||'all'}.json`:'量測.json'),JSON.stringify(rows,null,2));

@@ -1,5 +1,6 @@
 ﻿/* 固定介面詞彙：中文原文為鍵，不翻譯 MES 主檔名稱或歷史訊息。 */
 export const translations: Record<string, [string, string]> = Object.fromEntries(`
+查詢歷史|View history|ดูประวัติ
 尚未送出|Not submitted|ยังไม่ได้ส่ง
 我已核對對象與影響，確認執行這筆操作。|I have reviewed the target and impact and confirm this operation.|ฉันตรวจสอบเป้าหมายและผลกระทบแล้ว และยืนยันการดำเนินการนี้
 （MES）| (MES)| (MES)
@@ -26,7 +27,7 @@ AI 尚未設定，可使用作業單完成操作。|AI is not configured. Use th
 核對模穴數|Review cavity count|ตรวจสอบจำนวนโพรง
 核對生產排程|Review production schedule|ตรวจสอบแผนการผลิต
 核對下模完成|Review mold removal completion|ตรวจสอบการถอดแม่พิมพ์เสร็จ
-核對清除模具時間|Review clearing mold times|ตรวจสอบการล้างเวลาแม่พิมพ์
+核對清除換模紀錄|Review clearing mold times|ตรวจสอบการล้างเวลาแม่พิมพ์
 上模開始|Start mounting|เริ่มติดตั้งแม่พิมพ์
 上模完成|Finish mounting|ติดตั้งแม่พิมพ์เสร็จ
 下模開始|Start removal|เริ่มถอดแม่พิมพ์
