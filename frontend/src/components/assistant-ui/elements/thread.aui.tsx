@@ -1,3 +1,4 @@
+import {ProcessingSteps} from '@/ProcessingSteps';
 import { ActionBarPrimitive, MessagePrimitive, ThreadPrimitive, useAuiState } from '@assistant-ui/react';
 import { Check, Copy } from 'lucide-react';
 import { MarkdownText } from './markdown-text';
@@ -27,6 +28,7 @@ function ThreadMessage({onViewData,latestAssistantOnly,latestAssistantId}:{onVie
   if(!message || latestAssistantOnly&&id!==latestAssistantId)return null;
   return <MessagePrimitive.Root data-slot={role === 'user' ? 'aui_user-message-root' : 'aui_assistant-message-root'} data-role={role} ref={root} data-enter={enter||undefined} onAnimationEnd={event=>{if(event.target===event.currentTarget)setEnter(false);}}
     className={`${enter?'dual-enter ':''}${role === 'user' ? 'aui-user-message flex flex-col items-end gap-1' : 'aui-assistant-message relative'}`}>
+    {message.processing_summary&&<ProcessingSteps summary={message.processing_summary} phase={message.stopped?'stopped':'done'}/>}
     <div className={role === 'user' ? 'aui-user-message-content bg-muted max-w-[90%] rounded-3xl px-4 py-2.5 whitespace-pre-wrap wrap-break-word' : 'text-foreground px-2 leading-relaxed wrap-break-word'}>
       <MessagePrimitive.Parts components={{Text: role === 'user' ? ({text}) => <span>{text}</span> : MarkdownText}}/>
     </div>

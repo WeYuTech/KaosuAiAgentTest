@@ -1,3 +1,5 @@
+import {streamRequest,type ProcessingSummary} from './streaming';
+import {ProcessingSteps} from './ProcessingSteps';
 import {setBusinessTimezone as configureBusinessTimezone} from './presentation';
 import {createPortal} from 'react-dom';
 import {RequestProgress} from './RequestProgress';
@@ -120,6 +122,8 @@ export function App({ initialOpen = false }: { initialOpen?: boolean } = {}) {
   const [businessDate, setBusinessDate] = useState<string | null>(null);
   const [modelConfigured, setModelConfigured] = useState<boolean | null>(null);
   const [busy, setBusy] = useState(false);
+  const [streamView,setStreamView]=useState<{summary:ProcessingSummary;phase:string;text:string}|null>(null);
+  const streamIntent=useRef<{readonly:boolean;request_id:string;token:string}|null>(null);
   const [waitingStopped,setWaitingStopped]=useState(false);
   useEffect(()=>{if(!busy)setWaitingStopped(false);},[busy]);
   const working = useRef(false);
@@ -132,11 +136,36 @@ export function App({ initialOpen = false }: { initialOpen?: boolean } = {}) {
   const initialIntent = useRef<string | null>(null);
   const requestContext = { epoch: () => contextEpoch.current, actor: () => checkedActor.current || session?.actor.id, invalidate: clearSession };
   async function request<T>(path: string, body?: unknown): Promise<T> {
+    if(body!==undefined && /\/(?:entry\/messages|conversations\/[^/]+\/messages)$/.test(path)){
+      const epoch=contextEpoch.current;
+      streamIntent.current=null;setStreamView({summary:{steps:[],elapsed_seconds:0,request_id:''},phase:'running',text:''});
+      return requestInContext<T>(requestContext,path,body,async <V,>(target:string,value?:unknown)=>streamRequest<V>(target,value,event=>{
+        if(epoch!==contextEpoch.current)return;
+        if(event.event==='stopped')setNotice(t('已停止'));
+        if(event.event==='intent')streamIntent.current=event.data as {readonly:boolean;request_id:string;token:string};
+        setStreamView(previous=>{
+          if(!previous)return previous;
+          if(event.event==='step')return {...previous,summary:{...previous.summary,steps:[...previous.summary.steps.filter(s=>s.id!==event.data.id),event.data as any]}};
+          if(event.event==='delta')return {...previous,text:previous.text+String(event.data.text)};
+          if(['done','stopped','unknown','failed'].includes(event.event))return {...previous,phase:event.event,text:event.event==='stopped'?'':previous.text,summary:event.data.processing_summary??previous.summary};
+          return previous;
+        });
+      }));
+    }
     return requestInContext<T>(requestContext, path, body);
   }
   async function scopedRequest<T>(path: string, body?: unknown): Promise<T> {
     if (renderEpoch !== contextEpoch.current) throw new ObsoleteContext();
     return request<T>(path, body);
+  }
+  async function stopStream(){
+    const current=streamIntent.current;
+    if(!current){setNotice(t('正在辨識需求，請稍候再停止。'));return;}
+    try{
+      const result=await request<{status:string}>(`/api/streams/${current.request_id}/stop`,{token:current.token});
+      if(result.status==='waiting_stopped')setWaitingStopped(true);
+      else setNotice(t('正在停止，完成後即可繼續輸入。'));
+    }catch(error){setError(error instanceof Error?error.message:String(error));}
   }
   const entry=useEntry(session?.actor.id,mode,scopedRequest);
   const entryIdentity=useRef(false);
@@ -399,6 +428,7 @@ export function App({ initialOpen = false }: { initialOpen?: boolean } = {}) {
     else if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first?.focus(); }
   }
   function clearSession(reason?:ApiError) {
+    setStreamView(null);streamIntent.current=null;
     budgetGeneration.current++;setAccessProblem({denied:reason?.status===403,message:reason?.message??''});
     draftScope.current="";setDraftDelivery("unsent");
     setManagement(null);setManagementOpen(false);setPresentation(null);contextEpoch.current++; queryGeneration.current++;
@@ -506,7 +536,7 @@ export function App({ initialOpen = false }: { initialOpen?: boolean } = {}) {
       if(restoredText)initialIntent.current=null;
       if(!conversation&&draftScope.current)saveTextDraft(sessionStorage,draftScope.current,'','unsent');
       setGuideSnapshot({...restoredGuide.args,action:restoredGuide.action});forceNew.current=false;rememberConversation(chat,current.actor.id);setHistoryRevision(v=>v+1);
-      setModule(currentModule); setWorkspace(work.data); setConversation(chat); setMessages(chat.messages ?? []);
+      setStreamView(null);setModule(currentModule); setWorkspace(work.data); setConversation(chat); setMessages(chat.messages ?? []);
       setFilters(initialFilters); setContextFilter(initialContextFilter); setPageSize(20);
       try{acceptWorkspace(await restoreQueryWorkspace(request,chat,{...initialContextFilter,...initialFilters}));
       }catch(error){if(error instanceof ObsoleteContext||error instanceof ApiError&&[401,403].includes(error.status))throw error;setQueryError(error instanceof Error?error.message:String(error));}
@@ -620,7 +650,8 @@ export function App({ initialOpen = false }: { initialOpen?: boolean } = {}) {
     if(!conversation)return;
     await guarded(async()=>{
       const current=await request<Conversation>(`/api/conversations/${conversation.id}`);
-      setMessages(current.messages);setPresentation(null);
+      setMessages(current.messages);setPresentation(null);setStreamView(null);
+      if(current.messages.at(-1)?.role==='assistant'){setDraft('');setDraftDelivery('unsent');}
       setNotice(t('已讀取伺服器聊天紀錄；原訊息仍保留，未重新送出。若紀錄尚未更新，可稍後再查核。'));
     });
   }
@@ -680,7 +711,7 @@ export function App({ initialOpen = false }: { initialOpen?: boolean } = {}) {
   const [presentationBusy,setPresentationBusy]=useState(false);
   const interfaceFocus=useRef<OperationFocus|null>(null);
   const operationMode=useOperationMode(session?.actor.id,mode,conversation?.id??'entry',busy||presentationBusy||queryBusy||composingMode);
-  const chatComposer=<div className="composer-area">{selectionActive&&selectionAI&&<button type="button" className="text-button" onClick={closeSelectionAI}>{t('返回選取資料')}</button>}{draft && !messagePending && draftDelivery!=='unsent' && <p role="status">{t(draftDelivery==='unknown'?'送達結果未知，未重新送出。原訊息已保留，請查核聊天紀錄。':'原句已恢復，先前請求已拒絕；尚未再次送出。')}</p>}{draftDelivery==='unknown'&&!messagePending&&<button className="secondary" disabled={busy} onClick={()=>void checkMessage()}>{t('查核原訊息')}</button>}{modelConfigured === false && <div className="model-notice"><CircleHelp size={17}/><span>{t("AI 尚未設定，可用下方操作卡完成作業。")}</span></div>}{draft && draftDelivery!=='unknown' && modelConfigured === false && <button className="text-button" onClick={() => {setDraft('');initialIntent.current=null;inputRef.current?.focus();}}>{t('清除文字，繼續人工操作')}</button>}<ConversationComposer compact={selectionAI||operationMode.mode==='step-wizard'} id="chat-input" inputRef={inputRef} value={draft} onChange={editDraft} onSend={()=>void send()} busy={!!messagePending} onStop={()=>setWaitingStopped(true)} stopped={waitingStopped} disabled={chatReadOnly || unresolved || draftDelivery==='unknown' || busy || guideWorking || Boolean(recoveryTarget)} sendDisabled={!draft.trim() || modelConfigured !== true} placeholder={narrowChat ? t('補充需求或修改…') : selectionActive ? t('補充條件，或詢問這些資料…') : unresolved ? t('此操作結果待核對，請先按確認卡的「查核執行結果」') : pending ? module==='mold'?t('補充模具或階段需求，修改後請重新核對'):module==='schedule'?t('補充排程修改，例如：目標改為 150 模'):t('補充修改…') : t('描述需求…')} hint={t('確認後才會寫入')}/><div className="composer-footnote"><span>{t("Enter 送出 · Shift + Enter 換行")}</span></div></div>;
+  const chatComposer=<div className="composer-area">{selectionActive&&selectionAI&&<button type="button" className="text-button" onClick={closeSelectionAI}>{t('返回選取資料')}</button>}{draft && !messagePending && draftDelivery!=='unsent' && <p role="status">{t(draftDelivery==='unknown'?'送達結果未知，未重新送出。原訊息已保留，請查核聊天紀錄。':'原句已恢復，先前請求已拒絕；尚未再次送出。')}</p>}{draftDelivery==='unknown'&&!messagePending&&<button className="secondary" disabled={busy} onClick={()=>void checkMessage()}>{t('查核原訊息')}</button>}{modelConfigured === false && <div className="model-notice"><CircleHelp size={17}/><span>{t("AI 尚未設定，可用下方操作卡完成作業。")}</span></div>}{draft && draftDelivery!=='unknown' && modelConfigured === false && <button className="text-button" onClick={() => {setDraft('');initialIntent.current=null;inputRef.current?.focus();}}>{t('清除文字，繼續人工操作')}</button>}<ConversationComposer compact={selectionAI||operationMode.mode==='step-wizard'} id="chat-input" inputRef={inputRef} value={draft} onChange={editDraft} onSend={()=>void send()} busy={!!messagePending} onStop={()=>void stopStream()} stopped={waitingStopped} disabled={chatReadOnly || unresolved || draftDelivery==='unknown' || busy || guideWorking || Boolean(recoveryTarget)} sendDisabled={!draft.trim() || modelConfigured !== true} placeholder={narrowChat ? t('補充需求或修改…') : selectionActive ? t('補充條件，或詢問這些資料…') : unresolved ? t('此操作結果待核對，請先按確認卡的「查核執行結果」') : pending ? module==='mold'?t('補充模具或階段需求，修改後請重新核對'):module==='schedule'?t('補充排程修改，例如：目標改為 150 模'):t('補充修改…') : t('描述需求…')} hint={t('確認後才會寫入')}/><div className="composer-footnote"><span>{t("Enter 送出 · Shift + Enter 換行")}</span></div></div>;
   return <MesAssistantProvider state={{history:historyProjection?.actor===session?.actor.id?historyProjection:undefined,conversationId: conversation?.id ?? null, messages:projectedMessages, draft, busy:busy||entry.busy,
     disabled: stage === 'chat' ? chatReadOnly || busy || guideWorking || Boolean(recoveryTarget) : busy||entry.busy||entry.blocked,
     sendDisabled: !draft.trim() || (stage === 'chat' && modelConfigured !== true),
@@ -708,7 +739,7 @@ export function App({ initialOpen = false }: { initialOpen?: boolean } = {}) {
       {mode===null?<section className="connection-state" role="status" aria-live="polite"><LoaderCircle className="spin" size={32}/><h1>{t('正在連線至作業服務')}</h1><p>{t('正在確認連線與登入狀態，完成後才能開始操作。')}</p>{error&&<p className="error-banner" role="alert">{error}</p>}</section>:stage !== 'chat' ? <div className={`onboarding ${stage} ${stage==='modules'&&entry.messages.length?'entry-chat':''}`}><div className="onboarding-content">
         <div className="onboarding-top" hidden={!!accessProblem}><span className="step-label">{stage === 'modules' ? t("01 / 選擇作業") : t("02 / 確認身分")}</span>{stage === 'identity' && <button className="text-button" onClick={() => setStage('modules')} disabled={busy}><ArrowLeft size={16}/>{t("返回選擇")}</button>}</div>
         <div className={`welcome-card ${accessProblem?'access-problem':''}`} role={accessProblem?'alert':undefined}><h1 id="assistant-title">{accessProblem?t(accessProblem.denied?'沒有這項操作的權限':'登入已逾時'):stage === 'modules' ? t("今天想完成什麼？") : (entryIdentity.current ? (locale==='en'?'Choose your identity':locale==='th'?'เลือกบทบาทของคุณ':'選擇你的身分') : simulation ? t("開始{0}前，選擇你的身分", {0:t(active.short)}) : t("開始{0}前，確認登入身分", {0:t(active.short)}))}</h1><p className="welcome-description">{accessProblem?t(accessProblem.denied?'請聯絡主管確認權限，再重新登入 MES。原作業與未送文字仍保留。':'請重新登入 MES，再重新確認身分。原作業與未送文字仍保留。'):stage === 'modules' ? t("選擇一個入口，我會陪你確認資料，完成現場作業。") : t("身分決定可執行的功能；每次寫入都會留下操作紀錄。")}</p>{accessProblem?.message&&<p className="access-reason">{accessProblem.message}</p>}</div>
-        {stage === 'modules' && <><div className="entry-transcript" aria-live="polite">{entry.messages.map((message,index)=><article key={index} className={`entry-message dual-enter ${message.role}`}><p>{message.content}</p></article>)}{entry.busy&&<RequestProgress stopped={waitingStopped}/>}</div>{entry.blocked&&!entry.busy&&<button className="secondary" onClick={()=>void checkEntry()}>{locale==='en'?'Check original message':locale==='th'?'ตรวจสอบข้อความเดิม':'查核原訊息'}</button>}{entry.receipt?.recovery_conversation_id&&<button className="primary" onClick={()=>void resumeEntry()}>{locale==='en'?'Continue original operation':locale==='th'?'กลับไปทำงานเดิม':'繼續原作業'}</button>}{entry.receipt?.error&&<p role="alert">{entry.receipt.error}</p>}<div className="entry-composer"><ConversationComposer id="entry-input" busy={entry.busy} onStop={()=>setWaitingStopped(true)} stopped={waitingStopped} value={entry.busy?'':draft} onChange={editDraft} disabled={busy||entry.busy||entry.blocked} sendDisabled={!draft.trim()} placeholder={t('輸入生產問題…')} onSend={()=>void sendEntry()}/></div></>}
+        {stage === 'modules' && <><div className="entry-transcript">{entry.messages.map((message,index)=><article key={index} className={`entry-message dual-enter ${message.role}`}>{message.processing_summary&&<ProcessingSteps summary={message.processing_summary} phase={message.stopped?"stopped":"done"}/>}<p>{message.content}</p></article>)}{streamView&&["running","unknown","failed"].includes(streamView.phase)&&<ProcessingSteps summary={streamView.summary} phase={streamView.phase} text={streamView.text}/>} {entry.busy&&waitingStopped&&<RequestProgress stopped/>}</div>{entry.blocked&&!entry.busy&&<button className="secondary" onClick={()=>void checkEntry()}>{locale==='en'?'Check original message':locale==='th'?'ตรวจสอบข้อความเดิม':'查核原訊息'}</button>}{entry.receipt?.recovery_conversation_id&&<button className="primary" onClick={()=>void resumeEntry()}>{locale==='en'?'Continue original operation':locale==='th'?'กลับไปทำงานเดิม':'繼續原作業'}</button>}{entry.receipt?.error&&<p role="alert">{entry.receipt.error}</p>}<div className="entry-composer"><ConversationComposer id="entry-input" busy={entry.busy} onStop={()=>void stopStream()} stopped={waitingStopped} value={entry.busy?'':draft} onChange={editDraft} disabled={busy||entry.busy||entry.blocked} sendDisabled={!draft.trim()} placeholder={t('輸入生產問題…')} onSend={()=>void sendEntry()}/></div></>}
         {stage === 'modules' ? <div className="entry-grid" hidden={entry.messages.length>0&&!(['clarify','unsupported','model_unavailable'].includes(entry.receipt?.status??''))}>{Object.entries(modules).map(([key, item]) => <button className="entry-card" key={key} disabled={busy || entry.blocked || entry.receipt?.status==='recovery_required' || mode === null || (!simulation && !session?.actor.roles.includes(key))} title={!simulation && !session?.actor.roles.includes(key) ? t("目前登入身分無此模組權限") : undefined} onClick={() => { if(entry.receipt?.status==='clarify'&&!draft.trim()){void sendEntry(`${locale==='en'?'Choose':locale==='th'?'เลือก':'選擇'} ${t(item.title)}`,key as Module);return;}entryIdentity.current=false; initialIntent.current = !conversation && draft.trim() && draftDelivery === 'unsent' ? draft : null; if (session?.actor.roles.includes(key)) void start(undefined, key as Module); else { setModule(key as Module); setStage('identity'); setError(''); } }}><item.icon className="entry-icon" size={16} aria-hidden="true"/><strong>{t(item.title)}</strong><p>{t(item.description)}</p></button>)}</div> : <>
           <div className="identity-notice"><ShieldCheck size={18}/><span>{simulation ? t("此處可切換模擬身分；正式 MES 沿用登入權限。") : t("沿用 MES 登入權限，請確認本次作業人員。")}</span></div>
           {session && <button className="session-button" disabled={busy || !session.actor.roles.includes(module)} onClick={() => void start()}><UserRound size={18}/><span>{t("沿用目前身分：")}{session.actor.name}{!session.actor.roles.includes(module) ? t("（此入口無權限）") : ''}</span><ArrowRight size={18}/></button>}
@@ -732,7 +763,8 @@ export function App({ initialOpen = false }: { initialOpen?: boolean } = {}) {
           {archivedEmpty&&<p className="chat-welcome">{t('此聊天沒有訊息')}</p>}
           {!chatReadOnly && projectedMessages.length === 0 && operationMode.mode!=='step-wizard' && module!=='mold' && !guideSnapshot._started && <div className="chat-welcome"><h2>{t("說說你想完成的作業")}</h2><p>{t("直接描述需求，或使用下方操作卡；只需補齊缺少的資料。")}</p></div>}
           <ThreadMessages latestAssistantOnly={(operationMode.mode==='step-wizard'||narrowChat)&&!selectionAI&&Boolean(guideSnapshot.action||guideSnapshot._started||proposal)} onViewData={module==='report'?value=>void guarded(async()=>{if(value.query_context)await queryWorkspace(value.query_context.filters);setTab('data');}):undefined}/>
-          {messagePending&&<RequestProgress stopped={waitingStopped}/>}
+          {streamView&&["running","unknown","failed"].includes(streamView.phase)&&<ProcessingSteps summary={streamView.summary} phase={streamView.phase} text={streamView.text}/>}
+          {messagePending&&waitingStopped&&<RequestProgress stopped/>}
 
 
 {queryData !== null && !selectionActive && !(module==='report'&&messages.some(message=>Array.isArray((message.data as Workspace)?.records))) && <div className="query-candidates">{module==='report'&&(queryData as Workspace)?.records?<ChatQueryResults workspace={queryData as Workspace} onAll={()=>setTab('data')}/>:<><DataView data={queryData}/><button className="text-button" onClick={()=>setTab('data')}>{t('更多查詢條件')}</button></>}</div>}

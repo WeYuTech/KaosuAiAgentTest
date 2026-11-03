@@ -1,5 +1,14 @@
 /* 固定介面詞彙：中文原文為鍵，不翻譯 MES 主檔名稱或歷史訊息。 */
 export const translations: Record<string, [string, string]> = Object.fromEntries(`
+已處理 {0} 秒 · {1} 個步驟|Processed in {0}s · {1} steps|ประมวลผล {0} วินาที · {1} ขั้นตอน
+結果未知，請查核原訊息；不會自動重送。|Result unknown. Check the original message; it will not be resent.|ไม่ทราบผลลัพธ์ โปรดตรวจสอบข้อความเดิม ระบบจะไม่ส่งซ้ำ
+處理未完成，請查核原對話|Processing failed. Check the original conversation.|ประมวลผลไม่สำเร็จ โปรดตรวจสอบบทสนทนาเดิม
+正在辨識需求，請稍候再停止。|Identifying the request. Please wait before stopping.|กำลังระบุคำขอ โปรดรอสักครู่ก่อนหยุด
+正在停止，完成後即可繼續輸入。|Stopping. You can type again once stopped.|กำลังหยุด คุณจะพิมพ์ต่อได้เมื่อหยุดแล้ว
+已停止|Stopped|หยุดแล้ว
+未完成|Not completed|ไม่สำเร็จ
+處理中|Processing|กำลังประมวลผล
+本次模型測試預算不足，已停止呼叫；不會重設累計費用|The model budget is insufficient. Calls stopped; accumulated usage is retained.|งบประมาณโมเดลไม่เพียงพอ หยุดเรียกใช้และเก็บยอดสะสมไว้
 請向下捲動完成核對，並勾選獨立確認後送出。|Scroll down to review, then select the independent confirmation before submitting.|เลื่อนลงเพื่อตรวจสอบ แล้วทำเครื่องหมายยืนยันแยกก่อนส่ง
 整張排程完工|Complete schedule|จบแผนการผลิต
 取消|Cancel|ยกเลิก
