@@ -407,6 +407,9 @@
 #mes-ai-chat-root .request-step-list li small{margin-left:auto}
 #mes-ai-chat-root .target-picker-dialog .reference-pick-table .picker-pagination button{height:36px;min-height:36px;padding:8px;font-size:12px;line-height:1.55}
 /* 第三段：作業單與精靈共用欄位；保存與確認狀態仍由原 Guide 控制。 */
+#mes-ai-chat-root .assistant-panel:has(.dual-flow:not(.chat-only)) .conversation-history button:disabled{opacity:1}
+#mes-ai-chat-root .assistant-panel:has(.dual-flow:not(.chat-only)) #chat-lock-notice{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
+#mes-ai-chat-root .assistant-panel:has(.dual-flow:not(.chat-only)) .sidebar-budget>span:first-child>span{font-weight:400;color:var(--foreground)}
 #mes-ai-chat-root .dual-flow:not(.chat-only) {border-top:1px solid var(--border)}
 #mes-ai-chat-root .dual-flow.chat-sheet>.operation-primary{padding:0;overflow:hidden;display:flex;flex-direction:column}
 #mes-ai-chat-root .dual-flow .guided-flow{padding:0;border:0;border-radius:0;background:var(--background);gap:0;display:flex;flex-direction:column;min-height:0;flex:1}
@@ -619,10 +622,10 @@
 }
 @container mes-chat-shell (min-width:621px){#mes-ai-chat-root .dual-flow.chat-sheet .composer-area{padding-bottom:8px}}
 @container mes-chat-shell (max-width:620px){
- #mes-ai-chat-root .dual-flow :is(.schedule-basics,.schedule-timing){grid-template-columns:minmax(0,1fr);gap:18px}
+ #mes-ai-chat-root .dual-flow :is(.schedule-basics,.schedule-timing){grid-template-columns:minmax(0,1fr);gap:14px}
  #mes-ai-chat-root .dual-flow .schedule-allocation{grid-template-columns:minmax(0,1fr) 76px}
  #mes-ai-chat-root .dual-flow fieldset.schedule-allocation>.guide-field{grid-column:auto}
- #mes-ai-chat-root .dual-flow fieldset.schedule-allocation>.guide-field:first-of-type{grid-column:1/-1}
+ #mes-ai-chat-root .dual-flow fieldset.schedule-allocation>label.guide-field:nth-child(2){grid-column:1/-1}
 }
 #mes-ai-chat-root .dual-flow:not(.chat-only) .aui-composer-input{font-size:15px;line-height:1.55}
 @container mes-chat-shell (max-width:620px){

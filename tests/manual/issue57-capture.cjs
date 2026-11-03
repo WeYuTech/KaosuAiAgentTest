@@ -28,6 +28,8 @@ pairs.push(
 );
 for(const [ref,product] of [['scheduleEquipment','guide-equipment'],['scheduleMold','guide-mold_no'],['schedulePart','guide-part_no'],['scheduleStart','guide-start_time'],['scheduleCycle','guide-cycle_seconds'],['scheduleShots','guide-target_shots'],['scheduleStatus','guide-status']])pairs.push(['排程欄位 '+ref,`[data-input=${ref}]`,`#${product}`]);
 const props=['font-family','font-size','font-weight','line-height','letter-spacing','color'];
+pairs.push(['作業名稱','.ux-top-title>span:first-of-type','.workspace-bar h1'],['品牌名稱','.ux-appbrand span','.assistant-header h2'],['側欄項目','.ux-history-row>button:first-child','.history-select']);
+pairs.push(['用量標籤','.ux-usage-row>span:first-child','.sidebar-budget>span>strong'],['用量數字','.ux-usage-row>span:last-child','.sidebar-budget>span:first-child>span']);
 async function measure(page,selector){return page.locator(selector).evaluateAll((els,props)=>els.filter(el=>el.getBoundingClientRect().width&&el.getBoundingClientRect().height).map(el=>({rect:el.getBoundingClientRect().toJSON(),style:Object.fromEntries(props.map(p=>[p,getComputedStyle(el).getPropertyValue(p)]))})),props);}
 (async()=>{const app=await start(),rows=[];const out=path.join(root,'docs/design/issue57');fs.mkdirSync(out,{recursive:true});try{
  for(const width of process.env.WIDTH?[Number(process.env.WIDTH)]:[1366,390]){
