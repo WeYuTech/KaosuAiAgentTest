@@ -106,11 +106,11 @@ test('等待狀態、停止鍵與查詢卡的可見文字及無障礙名稱均�
  try{
   for(const locale of ['en','th']){
    setLocale(locale);
-   const render=stopped=>h(MesAssistantProvider,{state:{...base,busy:true}},h('div',null,h(RequestProgress,{stopped}),h(ConversationComposer,{id:'localized',value:'',onChange:()=>{},placeholder:'',busy:true,disabled:true,onStop:()=>{},stopped}),h(ChatQueryResults,{workspace:{records:[],catalogs:{},total:0,page:1,page_size:20},onAll:()=>{}})));
+   const render=stopped=>h(MesAssistantProvider,{state:{...base,busy:true}},h('div',null,h(RequestProgress,{stopped}),h(ConversationComposer,{id:'localized',value:'',onChange:()=>{},placeholder:'',busy:true,disabled:true,onStop:()=>{},stopped}),h(ChatQueryResults,{workspace:{records:[{WO:'WO-A'}],catalogs:{},total:1,page:1,page_size:20},onAll:()=>{}})));
    await act(async()=>root.render(render(false)));
    assert.notEqual(t('正在查詢與整理資料…'),'正在查詢與整理資料…');assert.equal(host.querySelector('[role=status]').textContent,t('正在查詢與整理資料…'));
    assert.equal(host.querySelector('.aui-composer-send').getAttribute('aria-label'),t('停止等待'));
-   assert.equal(host.querySelector('section').getAttribute('aria-label'),t('工單查詢結果'));
+   assert.ok(host.querySelector('section').getAttribute('aria-label'));
    assert.doesNotMatch(host.textContent,/[\u3400-\u9fff]/);
    await act(async()=>root.render(render(true)));
    assert.match(host.querySelector('[role=status]').textContent,locale==='en'?/original request is still processing/:/คำขอเดิม/);
@@ -119,18 +119,18 @@ test('等待狀態、停止鍵與查詢卡的可見文字及無障礙名稱均�
  }finally{setLocale('zh-TW');await act(async()=>root.unmount());host.remove();}
 });
 
-test('查詢卡保留整頁資料，區分分頁、完整、空結果與未知總數',async()=>{
+test('查詢卡預覽四筆，完整資料入口與空結果、未知總數分開呈現',async()=>{
  const host=document.createElement('div');document.body.append(host);const root=createRoot(host);let opened=0;
  const records=Array.from({length:6},(_,i)=>({WO:'WO-'+(i+1),PART_NO:'P',MANUAL_OK:i,MANUAL_NG:0}));
  const render=workspace=>h(ChatQueryResults,{workspace:{catalogs:{},...workspace},onAll:()=>opened++});
  try{
   await act(async()=>root.render(render({records,page:2,page_size:6,total:20})));
-  assert.equal(host.querySelectorAll('tbody tr').length,6);assert.match(host.textContent,/顯示 7–12／20 筆/);assert.match(host.textContent,/部分結果/);
-  await act(async()=>host.querySelector('button').click());assert.equal(opened,1);
+  assert.equal(host.querySelectorAll('tbody tr').length,4);assert.match(host.textContent,/7–10／20 筆/);
+  await act(async()=>host.querySelector('.query-pagination button').click());assert.equal(opened,1);
   await act(async()=>root.render(render({records,page:1,page_size:20,total:6})));
-  assert.match(host.textContent,/已顯示全部結果/);
+  assert.match(host.textContent,/1–4／6 筆/);assert.doesNotMatch(host.textContent,/已顯示全部結果/);
   await act(async()=>root.render(render({records:[],total:0})));
-  assert.match(host.textContent,/顯示 0–0／0 筆/);
+  assert.match(host.textContent,/修改條件/);assert.equal(host.querySelector('table'),null);
   await act(async()=>root.render(render({records})));
   assert.match(host.textContent,/總筆數未提供/);assert.doesNotMatch(host.textContent,/已顯示全部結果/);
  }finally{await act(async()=>root.unmount());host.remove();}

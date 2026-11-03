@@ -32,12 +32,12 @@ test('首次及同目標套用保留數量，換執行紀錄才清除；查看�
  const props={apiRequest:request,conversation:{id:'first',messages:[],module:'report'},module:'report',workspace,selected:null,signal:0,proposal:null,status:'',disabled:false,date:null,onReply:noop,onAudit:noop,onHome:noop};
  const click=async text=>act(async()=>[...host.querySelectorAll('button')].find(b=>b.textContent===text).click());
  await act(async()=>root.render(h(GuidedFlow,props)));
- await click('選擇／更換對象');await click('查看');assert.equal(calls.filter(c=>c.body).length,0);
+ await click('選擇／更換對象');await click('明細');assert.equal(calls.filter(c=>c.body).length,0);
  await act(async()=>host.querySelectorAll('input[type=radio]')[0].click());assert.equal(calls.filter(c=>c.body).length,0);
- await click('帶入作業單');assert.equal(guide.args.ok,120);assert.deepEqual(guide.args.defects,[{code:'NG01',quantity:3}]);
+ await click('帶入作業');assert.equal(guide.args.ok,120);assert.deepEqual(guide.args.defects,[{code:'NG01',quantity:3}]);
  const saved=calls.filter(c=>c.body).length;
- await click('選擇／更換對象');await act(async()=>host.querySelectorAll('input[type=radio]')[0].click());await click('帶入作業單');assert.equal(calls.filter(c=>c.body).length,saved);assert.equal(host.querySelector('#guide-ok').value,'120');
- await click('選擇／更換對象');await act(async()=>host.querySelectorAll('input[type=radio]')[1].click());await click('帶入作業單');assert.equal(guide.args.execution_id,'2002');assert.equal(guide.args.ok,undefined);assert.equal(guide.args.defects,undefined);
+ await click('選擇／更換對象');await act(async()=>host.querySelectorAll('input[type=radio]')[0].click());await click('帶入作業');assert.equal(calls.filter(c=>c.body).length,saved);assert.equal(host.querySelector('#guide-ok').value,'120');
+ await click('選擇／更換對象');await act(async()=>host.querySelectorAll('input[type=radio]')[1].click());await click('帶入作業');assert.equal(guide.args.execution_id,'2002');assert.equal(guide.args.ok,undefined);assert.equal(guide.args.defects,undefined);
  await act(async()=>root.unmount());host.remove();
 });
 
@@ -158,7 +158,7 @@ test('報工子選取返回與取消保留最新草稿；暫選和查看都不�
  await act(async()=>root.render(h(GuidedFlow,props)));
  const click=async text=>act(async()=>[...host.querySelectorAll('button')].find(b=>b.textContent===text).click());
  await click('選擇／更換對象');await act(async()=>host.querySelector('input[type=radio]').click());await click('選擇報工紀錄');
- await act(async()=>host.querySelectorAll('.report-record-picker input[type=radio]')[1].click());await click('查看');
+ await act(async()=>host.querySelectorAll('.report-record-picker input[type=radio]')[1].click());await click('明細');
  assert.equal(calls.filter(c=>c.body).length,0);await click('返回工單');await click('選擇報工紀錄');await click('取消選取');assert.equal(host.querySelector('#guide-ok').value,'125');assert.equal(guide.args.report_id,'3001');
  await act(async()=>root.unmount());host.remove();
 });
@@ -190,7 +190,7 @@ test('已驗證查詢更新選取條件但不改業務草稿，換模式保留�
  const workspace={records:[{WIP_OPI_WDOEACICO_HIST_SID:'2001',EQP_NO:'MC37',WO:'WO-A',ZZ_MODLE_UPLOAD_END:'now'}],catalogs:{},total:40,page:2,query_context:{version:2,filters:{equipment:'MC37',date:'2026-11-02',page:2,page_size:20}}};
  await act(async()=>root.render(h(GuidedFlow,{...props,workspace})));
  await act(async()=>[...host.querySelectorAll('button')].find(b=>b.textContent==='選擇／更換對象').click());assert.equal(host.querySelector('#guide-search-equipment').value,'MC37');
- await act(async()=>host.querySelector('input[type=radio]').click());assert.ok(host.textContent.includes('帶入作業單'));
+ await act(async()=>host.querySelector('input[type=radio]').click());assert.ok(host.textContent.includes('帶入作業'));
  await act(async()=>root.render(h(GuidedFlow,{...props,workspace,presentation:'step-wizard'})));assert.equal(host.querySelector('input[type=radio]').checked,true);assert.equal(host.querySelector('.picker-pagination').textContent.includes('2／2'),true);
  await act(async()=>root.render(h(GuidedFlow,{...props,presentation:'step-wizard',workspace:{...workspace,records:[],page:1,total:0,query_context:{version:3,filters:{equipment:'MC38',page:1,page_size:20}}}})));
  assert.equal(host.querySelector('#guide-search-equipment').value,'MC38');assert.equal(host.querySelector('.candidate-apply'),null);assert.ok(document.querySelector('.target-picker-dialog').textContent.includes('請重新選取'));assert.equal(mutations.length,0);
@@ -203,7 +203,7 @@ test('翻頁沿用後端每頁筆數及隱含品號條件，預設 all 不清除
  const props={presentation:'step-wizard',apiRequest:async()=>guide,conversation:{id:'paging',module:'report',messages:[]},module:'report',selected:null,signal:0,proposal:null,status:'',disabled:false,date:null,onReply:noop,onAudit:noop,onHome:noop};
  function Harness(){const [workspace,setWorkspace]=useState({records:[{WIP_OPI_WDOEACICO_HIST_SID:'2001',WO:'WO-A',EQP_NO:'MC37'}],catalogs:{},page:1,page_size:1,total:2,query_context:{version:1,filters:{equipment:'MC37',part_no:'EPS-A',page:1,page_size:1}}});return h(GuidedFlow,{...props,workspace,onQuery:async filters=>{queries.push(filters);const result={...workspace,records:[{WIP_OPI_WDOEACICO_HIST_SID:'2002',WO:'WO-B',EQP_NO:'MC37'}],page:2,query_context:{version:2,filters}};setWorkspace(result);return result;}});}
  await act(async()=>root.render(h(Harness)));await act(async()=>host.querySelector('input[type=radio]').click());
- await act(async()=>[...host.querySelectorAll('button')].find(b=>b.textContent==='下一頁').click());assert.equal(queries[0].page_size,'1');assert.equal(queries[0].page,'2');assert.equal(queries[0].part_no,'EPS-A');assert.ok(host.querySelector('.picker-selection').textContent.includes('WO-A'));assert.ok(host.textContent.includes('查看結果'));
+ await act(async()=>[...host.querySelectorAll('button')].find(b=>b.getAttribute('aria-label')==='下一頁').click());assert.equal(queries[0].page_size,'1');assert.equal(queries[0].page,'2');assert.equal(queries[0].part_no,'EPS-A');assert.ok(host.querySelector('.picker-selection').textContent.includes('WO-A'));assert.ok(host.textContent.includes('查看結果'));
  await act(async()=>root.unmount());host.remove();
 });
 
@@ -273,12 +273,12 @@ test('審查：主選取讀取與失敗不宣稱完整結果，重試後才呈�
  const dialog=()=>document.querySelector('.target-picker-dialog');
  assert.ok(!dialog().textContent.includes('請重新選取'));
  await act(async()=>dialog().querySelector('form').dispatchEvent(new Event('submit',{bubbles:true,cancelable:true})));
- assert.ok(dialog().textContent.includes('正在讀取候選資料'));assert.equal(dialog().querySelector('.picker-pagination'),null);
+ assert.ok(dialog().textContent.includes('正在查詢工單'));assert.equal(dialog().querySelector('.picker-pagination'),null);
  await act(async()=>reject(new Error('隔離查詢失敗')));
- assert.ok(dialog().textContent.includes('隔離查詢失敗'));assert.equal(dialog().querySelector('.picker-pagination'),null);assert.ok(!dialog().textContent.includes('沒有符合資料'));
+ assert.ok(dialog().textContent.includes('隔離查詢失敗'));assert.equal(dialog().querySelector('.picker-pagination'),null);assert.ok(!dialog().textContent.includes('沒有符合的資料'));
  await act(async()=>[...dialog().querySelectorAll('button')].find(b=>b.textContent==='重新查詢').click());
  await act(async()=>resolve({records:[],catalogs:{},total:0}));
- assert.ok(dialog().textContent.includes('沒有符合資料'));assert.equal(dialog().querySelector('.picker-pagination'),null);assert.ok(!dialog().textContent.includes('請重新選取'));
+ assert.ok(dialog().textContent.includes('沒有符合的資料'));assert.equal(dialog().querySelector('.picker-pagination'),null);assert.ok(!dialog().textContent.includes('請重新選取'));
  await act(async()=>dialog().querySelector('form').dispatchEvent(new Event('submit',{bubbles:true,cancelable:true})));
  await act(async()=>reject(new Error('隔離查詢失敗')));
  assert.equal(host.querySelector('.error-banner'),null);
@@ -347,7 +347,7 @@ for(const presentation of ['chat-sheet','step-wizard'])for(const action of ['rep
  await act(async()=>root.render(h(GuidedFlow,{presentation,apiRequest:request,onQuery:async()=>({records:[record],catalogs:{}}),conversation:{id:action+presentation,module:'report',messages:[]},module:'report',workspace:{records:[record],catalogs:{}},selected:null,signal:0,proposal:null,status:'',disabled:false,date:null,onReply:r=>replies.push(r),onAudit:noop,onHome:noop})));
  const dialog=()=>document.querySelector('.target-picker-dialog');const click=async text=>act(async()=>[...document.querySelectorAll('button')].find(b=>b.textContent===text).click());
  await act(async()=>dialog().querySelector('input[type=radio]').click());
- if(action==='report.delete'){await click('選擇報工紀錄');await act(async()=>dialog().querySelector('.report-record-picker input[type=radio]').click());await click('帶入這筆報工');}else await click('帶入作業單');
+ if(action==='report.delete'){await click('選擇報工紀錄');await act(async()=>dialog().querySelector('.report-record-picker input[type=radio]').click());await click('帶入這筆報工');}else await click('帶入作業');
  assert.ok(replies.length,host.textContent);assert.equal(replies.at(-1).proposal.action,action);assert.equal(dialog(),null);assert.equal(host.querySelector('.guide-operation-note'),null);assert.ok(!host.textContent.includes('填寫內容'));
  await act(async()=>root.unmount());host.remove();
 });
@@ -413,3 +413,5 @@ test('外層聊天室不攔截 Portal 與巢狀彈窗的 Tab／Esc',()=>{
  const menu=document.createElement('div');menu.setAttribute('role','menu');menu.append(nested);panel.append(menu);assert.equal(ownsPanelKeyboard(panel,nested),false);
  panel.remove();
 });
+
+
