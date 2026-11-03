@@ -4124,7 +4124,7 @@ const chosen={"Home":[["path",{"d":"M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8"}
     else if(state.action==='complete'){body=reviewRow('影響工單','WO-261102-0382、0383')+reviewRow('排程狀態','完工','生產中')+reviewRow('下一排程時間','依伺服器預覽確認');}
     else if(state.action==='cavities'){body=reviewRow('模穴數',(state.cavities??4)+' 穴','2 穴');}
     else{const record=state.reportRecord||{id:'RPT-0382-01',time:'11/02 09:10',good:120,defect:3};if(state.action==='update')body+=reviewRow('報工紀錄',record.id)+reviewRow('報工時間',record.time);body+=reviewRow('人工良品',state.good+' 件',state.action==='update'?record.good+' 件':undefined)+reviewRow('不良合計',state.defects.reduce((n,d)=>n+Number(d.quantity),0)+' 件',state.action==='update'?record.defect+' 件':undefined)+reviewRow('不良原因',state.defects.length?state.defects.map(d=>`${d.reason} ${d.quantity} 件`).join('、'):'無');if(state.note.trim())body+=reviewRow('備註',state.note);}
-    const independent=['delete','clear','complete'].includes(state.action);
+    const independent=['delete','clear','complete','down'].includes(state.action);
     return `<div class="ux-review">${body}</div>${independent?`<div style="margin-top:20px"><label class="ux-check"><input type="checkbox" data-approval ${state.approved?'checked':''}><span>我已核對對象與影響，確認執行這筆操作。</span></label></div>`:''}<details style="margin-top:16px"><summary>查看異動明細</summary><div class="ux-muted">示意預覽・實作須顯示伺服器回傳的欄位前後值。</div></details>`;
   }
   function workNotice(){
@@ -4154,7 +4154,7 @@ const chosen={"Home":[["path",{"d":"M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8"}
     if(!state.target)return `<small>先選擇作業對象</small>${btn('下一步','review','primary','disabled')}`;
     const sub=state.substate;
     if(state.phase==='review'){
-      const blocked=['submitting','write-disabled','conflict','rejected'].includes(sub)||(['delete','clear','complete'].includes(state.action)&&!state.approved);
+      const blocked=['submitting','write-disabled','conflict','rejected'].includes(sub)||(['delete','clear','complete','down'].includes(state.action)&&!state.approved);
       return `${btn(noFields()?'返回選擇':'返回修改','back-edit','ghost',sub==='submitting'?'disabled':'')}<div class="ux-row">${btn('取消草稿','cancel-proposal','small ghost',sub==='submitting'?'disabled':'')}${sub==='expired'?btn('重新核對','refresh-preview','primary'):btn(sub==='submitting'?spin()+'送出中…':'確認送出','submit','primary',blocked?'disabled':'')}</div>`;
     }
     return `<small>${sub==='saving'?`${spin()} 儲存中…`:sub==='save-error'?'尚未儲存':state.savingText}</small>${btn(state.mode==='wizard'?'下一步':'核對內容','review','primary',state.busy||sub==='save-error'?'disabled':'')}`;
