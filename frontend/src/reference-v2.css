@@ -572,3 +572,61 @@
 #mes-ai-chat-root .dual-flow .mold-clear-action{margin-top:18px;padding:0;border:0;display:flex;flex-direction:column;align-items:flex-start}
 #mes-ai-chat-root .dual-flow .mold-clear-action button{font-size:13px;min-height:32px;padding:5px 10px;border-color:transparent;background:transparent}
 @container mes-chat-shell (max-width:620px){#mes-ai-chat-root .dual-flow .schedule-allocation{grid-template-columns:minmax(0,1fr) 76px}#mes-ai-chat-root .dual-flow .schedule-allocation>.guide-field:first-of-type{grid-column:1/-1}}
+#mes-ai-chat-root .dual-flow.step-wizard .awaiting-review .proposal-heading>div{width:100%}
+#mes-ai-chat-root .dual-flow.step-wizard .awaiting-review .proposal-heading h2{font-size:20px;width:100%}
+#mes-ai-chat-root .dual-flow.step-wizard .operation-steps b:has(svg){background:var(--v2-hover);color:var(--foreground)}
+#mes-ai-chat-root .dual-flow:not(.chat-only) :is(.aui-user-message,.aui-assistant-message){position:relative}
+#mes-ai-chat-root .dual-flow:not(.chat-only) .message-actions{position:absolute;right:0;bottom:-28px;opacity:0;min-height:28px;margin:0}
+#mes-ai-chat-root .dual-flow:not(.chat-only) :is(.aui-user-message,.aui-assistant-message):is(:hover,:focus-within)>.message-actions{opacity:1;z-index:1}
+#mes-ai-chat-root .dual-flow.chat-sheet .aui-user-message{width:100%;max-width:none;align-self:stretch;padding:0;margin:0;background:none;gap:0}
+#mes-ai-chat-root .dual-flow.chat-sheet .conversation-content [data-slot=aui_message-group]{gap:22px}
+#mes-ai-chat-root .dual-flow .mold-stages{margin-top:18px}
+#mes-ai-chat-root .dual-flow .mold-stages li>b{width:25px;height:25px;background:var(--v2-hover);border:0;color:var(--muted-foreground)}
+#mes-ai-chat-root .dual-flow .mold-stages li.stage-current>b{background:var(--primary);color:var(--primary-foreground)}
+#mes-ai-chat-root .dual-flow .mold-stages button{background:transparent;color:var(--foreground);border:1px solid var(--border);border-radius:9px}
+#mes-ai-chat-root .dual-flow .awaiting-review .proposal-actions button{border-radius:9px}
+#mes-ai-chat-root .dual-flow .awaiting-review .proposal-heading small{font-size:12px;line-height:1.55;padding:3px 8px;border-radius:5px;background:var(--v2-raised);top:20px}
+#mes-ai-chat-root .dual-flow.step-wizard .awaiting-review .proposal-heading small{position:absolute;width:1px;height:1px;margin:-1px;padding:0;border:0;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
+#mes-ai-chat-root .dual-flow .awaiting-review .independent-confirm{display:flex;align-items:flex-start;gap:9px;font-size:13px;line-height:1.6;font-weight:400;margin:20px 0 0;padding:0;border:0;border-radius:0;background:none;color:var(--foreground)}
+#mes-ai-chat-root .dual-flow .awaiting-review .independent-confirm input{width:15px;height:15px;min-height:0;margin:3px 0 0;accent-color:var(--primary)}
+#mes-ai-chat-root .dual-flow .schedule-allocation{grid-template-columns:1fr 1fr 76px;gap:8px;border:0;border-top:1px solid var(--border);padding:13px 0 0;margin-top:10px}
+#mes-ai-chat-root .dual-flow .schedule-allocations>.defect-heading{font-size:15px;line-height:1.55;margin-bottom:0}
+#mes-ai-chat-root .dual-flow .schedule-allocations>.defect-heading>span{font-size:15px}
+#mes-ai-chat-root .dual-flow .awaiting-review>.proposal-details{margin-top:32px}
+#mes-ai-chat-root .dual-flow .awaiting-review>.proposal-details>summary{font-size:13px;line-height:1.55;padding:6px 0}
+#mes-ai-chat-root .dual-flow .awaiting-review .independent-confirm{margin-top:36px}
+#mes-ai-chat-root .dual-flow :is(.report-entry-fields,.schedule-entry-fields)>details>summary{padding:6px 0;font-size:13px;line-height:1.55}
+#mes-ai-chat-root .dual-flow .schedule-basics{gap:18px 14px}
+#mes-ai-chat-root .dual-flow .candidate-trigger{line-height:normal}
+#mes-ai-chat-root .dual-flow .schedule-allocations>.defect-heading,#mes-ai-chat-root .dual-flow .schedule-allocations>.defect-heading>span{font-size:14px;line-height:1.55}
+#mes-ai-chat-root .dual-flow fieldset.schedule-allocation>button{grid-column:auto;justify-self:stretch;font-size:13px;font-weight:400;line-height:1.55;min-height:32px;margin:0;padding:5px 10px}
+#mes-ai-chat-root .dual-flow .schedule-allocations>button{font-weight:400;display:inline-flex;gap:6px;align-items:center}
+#mes-ai-chat-root .dual-flow .mold-stages{margin-top:34px}
+#mes-ai-chat-root .dual-flow .mold-stages li{color:var(--foreground)}
+#mes-ai-chat-root .dual-flow .mold-stages li>div{display:block;gap:0;max-width:none}
+#mes-ai-chat-root .dual-flow .mold-stages li>button{margin-left:0}
+#mes-ai-chat-root .dual-flow .awaiting-review>.proposal-details>summary{min-height:0}
+#mes-ai-chat-root .dual-flow .guided-flow .guide-field button.candidate-trigger{line-height:normal}
+#mes-ai-chat-root .dual-flow .guided-flow .inline-candidate>input{line-height:normal}
+#mes-ai-chat-root .dual-flow .schedule-advanced>summary{min-height:0}
+#mes-ai-chat-root .dual-flow fieldset.schedule-allocation>button.secondary{grid-column:1;font-size:13px;line-height:1.55;font-weight:400;padding:5px 10px}
+#mes-ai-chat-root .dual-flow .picker-underlay>button{min-height:40px;line-height:1.55;font-size:14px;padding:9px 14px}
+@container mes-chat-shell (max-width:620px){
+ #mes-ai-chat-root .dual-flow .schedule-basics,#mes-ai-chat-root .dual-flow .schedule-timing{row-gap:14px}
+ #mes-ai-chat-root .dual-flow .schedule-basics>.guide-field:last-child,#mes-ai-chat-root .dual-flow .schedule-timing>.guide-field:nth-child(3){margin-top:4px}
+ #mes-ai-chat-root .dual-flow fieldset.schedule-allocation>.guide-field:first-of-type{grid-column:auto}
+ #mes-ai-chat-root .dual-flow fieldset.schedule-allocation>label.guide-field:nth-child(2){grid-column:1/-1}
+}
+@container mes-chat-shell (min-width:621px){#mes-ai-chat-root .dual-flow.chat-sheet .composer-area{padding-bottom:8px}}
+@container mes-chat-shell (max-width:620px){
+ #mes-ai-chat-root .dual-flow :is(.schedule-basics,.schedule-timing){grid-template-columns:minmax(0,1fr);gap:18px}
+ #mes-ai-chat-root .dual-flow .schedule-allocation{grid-template-columns:minmax(0,1fr) 76px}
+ #mes-ai-chat-root .dual-flow fieldset.schedule-allocation>.guide-field{grid-column:auto}
+ #mes-ai-chat-root .dual-flow fieldset.schedule-allocation>.guide-field:first-of-type{grid-column:1/-1}
+}
+#mes-ai-chat-root .dual-flow:not(.chat-only) .aui-composer-input{font-size:15px;line-height:1.55}
+@container mes-chat-shell (max-width:620px){
+ #mes-ai-chat-root .dual-flow.step-wizard .awaiting-review{padding-inline:20px}
+ #mes-ai-chat-root .dual-flow.step-wizard .awaiting-review .proposal-heading{padding-top:20px}
+ #mes-ai-chat-root .dual-flow.step-wizard .awaiting-review .proposal-actions{margin-inline:-20px;padding-inline:20px}
+}

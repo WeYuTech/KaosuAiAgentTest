@@ -5,9 +5,10 @@ import { renderToStaticMarkup } from 'react-dom/server';
 import { createServer } from 'vite';
 
 const server = await createServer({ server: { middlewareMode: true, hmr: false }, appType: 'custom' });
-let ProposalBusinessSummary, mesDate, setBusinessTimezone, productionStatus;
+let ProposalBusinessSummary, CompactSummary, mesDate, setBusinessTimezone, productionStatus;
 try {
-  ({ ProposalBusinessSummary } = await server.ssrLoadModule('/src/ProposalBusinessSummary.tsx'));
+  ({ DetailedProposalBusinessSummary: ProposalBusinessSummary } = await server.ssrLoadModule('/src/ProposalBusinessSummary.tsx'));
+  ({ ProposalBusinessSummary: CompactSummary } = await server.ssrLoadModule('/src/ProposalBusinessSummary.tsx'));
   ({mesDate,setBusinessTimezone,productionStatus}=await server.ssrLoadModule('/src/presentation.ts'));
 } finally {
   await server.close();
@@ -136,4 +137,23 @@ test('刪除不重複空的影響框，清除換模仍明示進出站與取消�
  const render=action=>renderToStaticMarkup(createElement(ProposalBusinessSummary,{proposal:{action,args:{},changes:[],target:{work_order:'WO-A'}},workspace:{records:[],catalogs:{}}}));
  assert.ok(!render('report.delete').includes('business-impact'));
  assert.match(render('mold.clear'),/進出站時間，並取消完工/);
+});
+
+test('精簡核對投影只顯示原因名稱，良品原值採確認卡快照',()=>{
+ const proposal={action:'report.update',args:{report_id:'r',ok:125,defects:[{code:'NG01',quantity:3}]},changes:[],target:{report_before:{OK_QTY:120,NG_QTY:3}}};
+ const html=renderToStaticMarkup(createElement(CompactSummary,{proposal,workspace:{records:[],catalogs:{defect_reasons:[{NG_CODE_NO:'NG01',NG_CODE_NAME:'刮傷'}]}}}));
+ assert.ok(html.includes('刮傷 3 件'));assert.ok(!html.includes('NG01'));assert.ok(html.includes('<del>120 件</del>'));assert.ok(html.includes('<strong>125 件</strong>'));
+ assert.ok(!html.includes('<del>3 件</del>'));
+});
+
+test('精簡核對不以未提供的下一排程與狀態假造已知結果',()=>{
+ const render=target=>renderToStaticMarkup(createElement(CompactSummary,{proposal:{action:'report.complete',args:{schedule_id:'s'},changes:[],target},workspace:{records:[],catalogs:{}}}));
+ assert.ok(!render({}).includes('無下一張排程'));assert.ok(render({}).includes('依伺服器預覽確認'));
+ assert.ok(!render({}).includes('<strong>未完工</strong>'));assert.ok(render({next_schedule:null}).includes('無下一張排程'));
+});
+
+test('精簡摘要不以缺漏識別誤配另一張工單，排程原值不受查詢離頁影響',()=>{
+ const proposal={action:'schedule.save',args:{schedule_id:'wanted',target_shots:500,details:[]},changes:[],target:{schedule_details:[{mold_detail_no:'D1',part_no:'P-102',wo:'WO-A',cavities:2,previous:{cavities:1}}]}};
+ const html=renderToStaticMarkup(createElement(CompactSummary,{proposal,workspace:{records:[{ZZ_KAOSU_PROD_SCHEDULE_SID:'other',EQP_NO:'WRONG'}],catalogs:{}}}));
+ assert.ok(!html.includes('WRONG'));assert.ok(html.includes('D1 · P-102'));assert.ok(html.includes('<del>1 穴</del>'));assert.ok(html.includes('1000 件'));
 });

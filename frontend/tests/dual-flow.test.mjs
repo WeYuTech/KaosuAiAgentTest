@@ -232,7 +232,8 @@ test('模具四階段只開放後端下一步，無歷程與已完成均有停�
   await act(async()=>root.render(h(MoldStages,{record,disabled:false,choose:noop,select:noop})));
   const buttons=[...host.querySelectorAll('.mold-stages button')];
   assert.deepEqual(buttons.map(b=>!b.disabled),actions.map((_,i)=>i===next));
-  assert.ok(host.textContent.includes('伺服器預覽'));assert.ok(!host.textContent.includes('數量可以'));
+  assert.deepEqual(buttons.map(b=>b.title),actions.map(a=>moldStageAvailability(record,a).reason));
+  assert.ok(host.textContent.includes('選擇本次要執行的階段'));assert.ok(!host.textContent.includes('數量可以'));
   assert.equal(moldStageAvailability(record,'mold.clear').allowed,next>0);
  }
  assert.equal(moldStageAvailability({EXECUTIONS:[],NEXT_ACTION:'mold.mount_start'},'mold.mount_start').allowed,false);

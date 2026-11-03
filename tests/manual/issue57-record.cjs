@@ -1,0 +1,14 @@
+// 正常速度操作正式 React；公開 HTTP 全為 fixture，無模型及 MES 寫入。
+const {start,fixture,prepare,root}=require('./issue57-fixture.cjs');
+const fs=require('node:fs'),path=require('node:path'),{spawnSync}=require('node:child_process');
+(async()=>{const app=await start(),dir=path.join(root,'.local/issue57-video');fs.mkdirSync(dir,{recursive:true});try{
+ const context=await app.browser.newContext({viewport:{width:1366,height:768},colorScheme:'dark',recordVideo:{dir,size:{width:1366,height:768}}});const p=await context.newPage();
+ async function load(scene){await fixture(p,scene);await p.goto(app.url+'/?embed=1');await p.locator('#entry-input').waitFor();await prepare(p,scene);await p.waitForTimeout(1400);}
+ await load('sheet-edit');await p.getByRole('button',{name:'新增原因',exact:true}).click();await p.waitForTimeout(1000);await p.locator('.guide-defect').last().getByRole('button',{name:'移除此原因',exact:true}).click();await p.locator('#guide-ok').fill('130');await p.waitForTimeout(1200);await p.getByRole('button',{name:'核對內容',exact:true}).click();await p.locator('.awaiting-review:visible').waitFor();await p.waitForTimeout(1800);await p.getByRole('button',{name:'返回修改',exact:true}).click();await p.locator('#guide-ok').fill('140');await p.waitForTimeout(1200);await p.getByRole('button',{name:'核對內容',exact:true}).click();await p.locator('.awaiting-review:visible').waitFor();await p.waitForTimeout(1800);
+ await load('wizard-edit');await p.locator('#guide-ok').fill('150');await p.waitForTimeout(1200);await p.getByRole('button',{name:'下一步',exact:true}).click();await p.locator('.awaiting-review:visible').waitFor();await p.waitForTimeout(1800);await p.getByRole('button',{name:'返回修改',exact:true}).click();await p.waitForTimeout(1200);
+ await load('schedule-add');await p.locator('.schedule-entry-fields').evaluate(e=>e.scrollTop=e.scrollHeight);await p.waitForTimeout(1600);
+ await load('mold-phases');await p.waitForTimeout(1800);
+ await load('mold-down');await p.locator('.independent-confirm').scrollIntoViewIfNeeded();await p.waitForTimeout(1600);await p.locator('.independent-confirm input').check();await p.waitForTimeout(1600);
+ const video=p.video();await context.close();const input=await video.path();fs.writeFileSync(path.join(dir,'標示.txt'),'fixture／模擬分類 · 非正式 MES · 正常速度 · 核對延遲 2.1 秒 · 未提交寫入');
+ const ff=path.join(root,'.local/video-tools/imageio_ffmpeg/binaries/ffmpeg-win-x86_64-v7.1.exe');const r=spawnSync(ff,['-y','-hide_banner','-loglevel','error','-i',input,'-vf',"pad=iw:ih+32:0:32:color=black,drawtext=fontfile='C\\:/Windows/Fonts/msjh.ttc':textfile='.local/issue57-video/標示.txt':fontcolor=white:fontsize=16:x=12:y=8",'-c:v','libx264','-crf','20','-pix_fmt','yuv420p','-movflags','+faststart','-an',path.join(root,'docs/design/issue57/正常速度-fixture.mp4')],{cwd:root,encoding:'utf8'});if(r.status)throw new Error(r.stderr);console.log('正常速度 H.264 MP4 完成');
+}finally{await app.close();}})().catch(e=>{console.error(e);process.exitCode=1});
