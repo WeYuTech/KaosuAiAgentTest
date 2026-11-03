@@ -5,9 +5,9 @@ import { renderToStaticMarkup } from 'react-dom/server';
 import { createServer } from 'vite';
 
 const server = await createServer({ server: { middlewareMode: true, hmr: false, ws: false }, appType: 'custom' });
-let MessageContent,ProcessingSteps;
+let MessageContent,ProcessingSteps,EntryMessageBody;
 try {
-  ({ MessageContent } = await server.ssrLoadModule('/src/MessageContent.tsx'));
+  ({ MessageContent, EntryMessageBody } = await server.ssrLoadModule('/src/MessageContent.tsx'));
   ({ ProcessingSteps } = await server.ssrLoadModule('/src/ProcessingSteps.tsx'));
 } finally {
   await server.close();
@@ -59,4 +59,14 @@ test('完整串流與最終訊息的 Markdown 標記一致，不因切換重新�
  const stream=renderToStaticMarkup(createElement(ProcessingSteps,{summary:{steps:[],request_id:'test',elapsed_seconds:1},phase:'running',text:content}));
  const final=render(content);const markdown=html=>html.slice(html.indexOf('<div class="aui-md">'),html.lastIndexOf('</div>'));
  assert.equal(markdown(stream),markdown(final));
+});
+
+test('首頁交接紀錄的助理回覆不露出原始 Markdown，使用者原句維持純文字', () => {
+  const entry = (content, role) => renderToStaticMarkup(createElement(EntryMessageBody, { role, content }));
+  const html = entry('### MC37｜2026-10-30 工單\n\n共查得 **4 筆工單**：\n\n| 工單 | 品號 |\n|---|---|\n| 30074933 | FGE-O013-06401 |', 'assistant');
+  assert.ok(!html.includes('###') && !html.includes('|---|') && !html.includes('**'));
+  assert.ok(html.includes('<h3') && html.includes('<table>') && html.includes('<strong'));
+  assert.ok(html.includes('markdown-message'));
+  const user = entry('查詢 **MC37** | 今天', 'user');
+  assert.equal(user, '<p>查詢 **MC37** | 今天</p>');
 });
