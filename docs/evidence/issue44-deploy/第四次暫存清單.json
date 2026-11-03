@@ -1,0 +1,35 @@
+{
+  "remote_retained_files": [
+    {
+      "path": "C:\\Services\\KaosuAiAgent\\deploy-issue47-fourth.ps1",
+      "sha256": "0639A3CFC623DFC6B0C661D808414C7FB5187F519107A59E713F4C25C1044F1E",
+      "bytes": 10618
+    },
+    {
+      "path": "C:\\Services\\KaosuAiAgent\\rollback-issue47-fourth.ps1",
+      "sha256": "1A75DC8854B9DBB831AA1C87FFB88A630387964A282A16C15F4FF58C2AC66E7F",
+      "bytes": 5495
+    },
+    {
+      "path": "C:\\Services\\KaosuAiAgent\\issue47-fourth-dryrun.log",
+      "sha256": "D92D1449D3A21C3C9E1E2D2DFD7AD955A74F8533F14805FF330AE373947D7B76",
+      "bytes": 1570
+    }
+  ],
+  "local_retained_files": [
+    ".local\\deploy-issue47-fourth.ps1",
+    ".local\\issue47-fourth-dryrun-output.txt",
+    ".local\\issue47-fourth-dryrun.log",
+    ".local\\issue47-fourth-dryrun.ps1",
+    ".local\\issue47-fourth-original-check.ps1",
+    ".local\\issue47-fourth-original-check.txt",
+    ".local\\rollback-issue47-fourth.ps1",
+    ".local\\verify-issue47-fourth-public.py"
+  ],
+  "new_stage_exists": false,
+  "new_backup_exists": false,
+  "servers_started_this_attempt": 0,
+  "browser_processes_started_this_attempt": 0,
+  "ssh_powershell_sessions": "同步執行已結束；沒有啟動背景工作",
+  "production_service": "原 KaosuAiAgent 持續運作，未停止"
+}

@@ -1,0 +1,32 @@
+{
+  "before": {
+    "conversations": 21,
+    "active_messages": 0,
+    "proposals": {
+      "cancelled": 7
+    },
+    "audit": 7,
+    "budget": {
+      "calls": 251,
+      "spent_usd": 2.12452,
+      "unsettled": 0
+    }
+  },
+  "after": {
+    "conversations": 21,
+    "active_messages": 0,
+    "proposals": {
+      "cancelled": 7
+    },
+    "audit": 7,
+    "budget": {
+      "calls": 251,
+      "spent_usd": 2.12452,
+      "unsettled": 0
+    }
+  },
+  "this_attempt_paid_queries": 0,
+  "this_attempt_cost_usd": 0,
+  "before_source": "空跑日誌第03階段後之原站計數",
+  "after_source": "空跑停止後唯讀核對"
+}

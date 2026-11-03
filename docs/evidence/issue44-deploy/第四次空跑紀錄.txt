@@ -1,0 +1,9 @@
+[空跑] 01 核對 ZIP；將解壓至新的 staging 目錄
+[空跑] 02 來源逐檔與依賴核對通過：160 檔
+[空跑] 03 核對工作身分及 loopback；將建立唯一備份並限制 ACL
+{"conversations": 21, "active_messages": 0, "proposals": {"cancelled": 7}, "audit": 7, "budget": {"calls": 251, "spent_usd": 2.12452, "unsettled": 0}}
+[空跑] 04 全域 proxy 逐項唯讀核對：{"enabled":"True","responseBufferLimit":"4096","minResponseBuffer":"256","bufferChunkedResponses":"True","preserveHostHeader":"True","timeout":"00:05:00"}
+[空跑] 05 將建立新的 IIS 備份及代理 web.config 備份
+[空跑] 06 將只停止助理工作並等待 loopback 監聽釋放
+[空跑] 07 將完整備份 current；逐檔讀取與校驗備份來源
+空跑失敗：部署未完成，已嘗試回復：The file 'C:\Services\KaosuAiAgent\current\.local\logs\service.log' cannot be read: The process cannot access the file 'C:\Services\KaosuAiAgent\current\.local\logs\service.log' because it is being used by another process.
