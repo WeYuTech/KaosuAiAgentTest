@@ -145,7 +145,6 @@ export function App({ initialOpen = false }: { initialOpen?: boolean } = {}) {
         if(event.event==='stopped')setNotice(t('已停止'));
         if(event.event==='intent')streamIntent.current=event.data as {readonly:boolean;request_id:string;token:string};
         setStreamView(previous=>{
-          if(event.event==='fallback')return null;
           if(!previous)return previous;
           if(event.event==='accepted')return {...previous,summary:{...previous.summary,request_id:String(event.data.request_id)}};
           if(event.event==='step')return {...previous,summary:{...previous.summary,steps:[...previous.summary.steps.filter(s=>s.id!==event.data.id),event.data as any]}};
