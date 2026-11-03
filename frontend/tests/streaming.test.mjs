@@ -1,4 +1,4 @@
-﻿import {test,after} from 'node:test';
+import {test,after} from 'node:test';
 import assert from 'node:assert/strict';
 import {Window} from 'happy-dom';
 import {createServer} from 'vite';
@@ -29,7 +29,7 @@ test('已受理但斷線只標未知，不重送 JSON',async()=>{
  assert.equal(calls,1);assert.equal(observed.at(-1).event,'unknown');
 });
 test('只有未受理 404 或 405 才能回退一次',async()=>{
- for(const status of [404,405]){let calls=0;globalThis.fetch=async()=>++calls===1?new Response('',{status}):new Response('{"messages":[]}');await streamRequest('/api/conversations/test/messages',{},()=>{});assert.equal(calls,2);}
+ for(const status of [404,405]){let calls=0;globalThis.fetch=async()=>++calls===1?new Response('',{status}):new Response('{"messages":[]}');const events=[];await streamRequest('/api/conversations/test/messages',{},e=>events.push(e));assert.equal(calls,2);assert.equal(events[0].event,'fallback');}
  let calls=0;globalThis.fetch=async()=>{calls++;return new Response('{"detail":"busy"}',{status:409});};await assert.rejects(streamRequest('/api/conversations/test/messages',{},()=>{}));assert.equal(calls,1);
 });
 test('步驟完成自動收合，可按原生按鈕展開，停止不顯示半成品',async()=>{

@@ -15,7 +15,7 @@ export async function streamRequest<T>(path:string,body:unknown,onEvent:(event:S
     const url=new URL((path+'/stream').replace(/^\/+/,''),new URL('./',location.href));
     const response=await fetch(url,{method:'POST',credentials:'same-origin',headers:{Accept:'text/event-stream','Content-Type':'application/json','X-AI-Locale':getLocale(),'Accept-Language':getLocale()},body:JSON.stringify(body)});
     // 只有明確未受理的舊服務路由才允許降級，串流中途沒有重送分支。
-    if([404,405].includes(response.status))return api<T>(path,body);
+    if([404,405].includes(response.status)){onEvent({event:'fallback',data:{}});return api<T>(path,body);}
     if(!response.ok){const error=await response.json();throw new ApiError(typeof error.detail==='string'?t(error.detail):t('請求未完成（{0}）',{0:response.status}),response.status);}
     accepted=true;
     if(!response.body)throw new Error('missing stream');
