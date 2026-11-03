@@ -56,7 +56,7 @@ def test_停止驗證身分及權杖且只中止唯讀(tmp_path,readonly):
             assert entered.wait(3)
             store=Store(path)
             with store.transaction() as db:
-                row=next(r for r in store.all(db,'STATE') if r.get('events'))
+                row=next(r for r in store.all(db,'STATE') if r.get('status')=='processing' and r.get('token'))
             url=f'/api/streams/{row["id"]}/stop'
             assert c.post(url,json={'token':'wrong'}).status_code==404
             stopped=c.post(url,json={'token':row['token']}).json()
@@ -191,6 +191,83 @@ def test_確認卡步驟不代表業務寫入(tmp_path,monkeypatch):
     with TestClient(create_app(tmp_path/'proposal.db',intent_classifier=lambda _: {'intent':'change'})) as c:
         cid=setup(c);r=c.post(f'/api/conversations/{cid}/messages/stream',json={'text':'人工良品100'})
         data=events(r);assert data[-1]['proposal']['status']=='pending'
-        assert any(d.get('label')=='建立確認卡（尚未送出）' and d['status']=='done' for d in data)
+        assert any(d.get('label')=='已建立新增報工確認卡（尚未送出）' and d['status']=='done' for d in data)
         assert all('已寫入' not in d.get('label','') for d in data)
         assert c.get('/api/audit').json()['records']==[]
+
+
+@pytest.mark.parametrize('locale,expected',[
+ ('zh-TW',('本頁 2 筆','命中 0 筆','人工良品數','新增報工','整理回覆','分析需求')),
+ ('en',('2 records','0 matches','Manual good quantity','Add production report','Compose reply','Analyze request')),
+ ('th',('2 รายการ','0 รายการ','จำนวนชิ้นงานดี','เพิ่มรายงานการผลิต','เรียบเรียงคำตอบ','วิเคราะห์คำขอ'))])
+def test_三語步驟取自結果且不洩露內部名稱(locale,expected):
+    from app.step_labels import result_label
+    values=[result_label('query',{'records':[{},{}]},({'equipment':'MC37','wo':'WO-A'},),locale),
+            result_label('knowledge',[],(),locale),
+            result_label('draft',{'missing':['execution_id']},({'args':{'ok':100}},),locale),
+            result_label('proposal',{'proposal':{'action':'report.add'}},(),locale),
+            result_label('model',SimpleNamespace(output=[]),(),locale),
+            result_label('model',SimpleNamespace(output=[SimpleNamespace(type='function_call')]),(),locale)]
+    for text,part in zip(values,expected):assert part in text
+    assert 'MC37 / WO-A' in values[0]
+    assert not any('execution_id' in text or 'report.add' in text for text in values)
+
+
+@pytest.mark.parametrize('prepare',[False,True])
+def test_中間文字重設且最後片段等於存檔(tmp_path,monkeypatch,prepare):
+    from app import model
+    from test_live_dialogue_validation import model_tool
+    monkeypatch.setenv('OPENAI_API_KEY','synthetic')
+    calls=[]
+    def invoke(_):
+        calls.append(1)
+        if len(calls)==1:
+            active.get().emit('delta',text='中間說明')
+            return model_tool('prepare_report_add' if prepare else 'query_workspace',{'execution_id':'2001','ok':100,'defects':[]} if prepare else {'equipment':'MC37'},1)
+        active.get().emit('delta',text='最終');active.get().emit('delta',text='回答')
+        return SimpleNamespace(output=[],output_text='最終回答')
+    monkeypatch.setattr(model,'invoke',invoke)
+    with TestClient(create_app(tmp_path/'rounds.db',intent_classifier=lambda _: {'intent':'change' if prepare else 'readonly'})) as c:
+        cid=setup(c);response=c.post(f'/api/conversations/{cid}/messages/stream',json={'text':'需求'})
+        text='';reset=False
+        for block in response.text.split('\n\n'):
+            lines=block.splitlines()
+            if not lines or not lines[0].startswith('event:'):continue
+            event=lines[0][7:];data=json.loads(lines[1][6:])
+            if event=='delta':text+=data['text']
+            if event=='reset':text='';reset=True
+        assert reset
+        saved=c.get(f'/api/conversations/{cid}').json()['messages'][-1]['content']
+        assert text==('' if prepare else saved)
+        assert '中間說明' not in saved
+
+
+def test_delta不寫入資料庫且終態移除權杖並到期清除(tmp_path):
+    from app.streaming import cleanup_streams,RETENTION_SECONDS
+    store=Store(tmp_path/'cleanup.db');work=Work(store,{'id':'operator'},'zh-TW')
+    with store.transaction() as db:before=store.get(db,'STATE',work.key)
+    for _ in range(1000):work.emit('delta',text='文字')
+    with store.transaction() as db:assert store.get(db,'STATE',work.key)==before
+    batch,_=work.take_events();assert len(batch)==1000
+    work.emit('done',processing_summary=work.snapshot())
+    with store.transaction() as db:
+        row=store.get(db,'STATE',work.key);assert 'token' not in row and 'events' not in row
+    assert work.token is None
+    cleanup_streams(store,row['delete_after']-1)
+    with store.transaction() as db:assert store.get(db,'STATE',work.key)
+    cleanup_streams(store,row['delete_after']+1)
+    with store.transaction() as db:assert store.get(db,'STATE',work.key) is None
+
+
+def test_預留前已停止不建立費用紀錄(tmp_path,monkeypatch):
+    from app import model
+    from app.streaming import Stopped
+    ledger=Store(tmp_path/'ledger.db');work=Work(Store(tmp_path/'work.db'),{'id':'operator'},'zh-TW');work.intent(True)
+    with work.store.transaction() as db:
+        row=work.store.get(db,'STATE',work.key);row['stop']=True;work.store.put(db,'STATE',work.key,row)
+    monkeypatch.setattr(model,'budget_store',lambda:ledger)
+    token=active.set(work)
+    try:
+        with pytest.raises(Stopped):model.invoke({'model':'gpt-6.1-sol'})
+    finally:active.reset(token)
+    with ledger.transaction() as db:assert ledger.all(db,'BUDGET')==[]

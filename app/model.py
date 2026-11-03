@@ -72,6 +72,7 @@ def budget_summary():
 
 
 def invoke(payload):
+    check()
     model = payload["model"]
     if model not in PRICES:
         raise HTTPException(503, "此模型尚未設定經核對的價格，已停止付費呼叫")
@@ -207,6 +208,8 @@ def respond(conversation, state, store, query_fn=None, prepare_fn=None, draft_fn
                            "input": inputs, "tools": tools, "parallel_tool_calls": False,
                            "max_output_tokens": MAX_OUTPUT, "reasoning": {"effort": config["reasoning_effort"]}, "store": False})
         calls = [item for item in response.output if item.type == "function_call"]
+        if calls and active.get():
+            active.get().emit("reset")
         if not calls:
             return {"content": response.output_text or empty_text, "data": data, "knowledge": knowledge}
         inputs.extend(item.model_dump(exclude_none=True) for item in response.output)

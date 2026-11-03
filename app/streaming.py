@@ -7,7 +7,15 @@ from contextlib import contextmanager
 
 from fastapi import HTTPException
 from fastapi.responses import StreamingResponse
-from app.store import dumps
+from app.store import dumps, PREFIX
+from app.step_labels import result_label
+
+RETENTION_SECONDS = 900
+
+def cleanup_streams(store, timestamp=None):
+    cutoff = time.time() if timestamp is None else timestamp
+    with store.transaction() as db:
+        db.execute(f"DELETE FROM {PREFIX}STATE WHERE id LIKE ? AND json_extract(data, '$.delete_after') <= ?", ("stream:v1:%", cutoff))
 
 active = contextvars.ContextVar('stream_work', default=None)
 
@@ -22,22 +30,56 @@ class Work:
         self.id, self.token = secrets.token_urlsafe(18), secrets.token_urlsafe(24)
         self.started = time.monotonic()
         self.steps = []
+        self.events = []
+        self.condition = threading.Condition()
+        self.connected = True
+        self.terminal = False
+        cleanup_streams(store)
         self.readonly = None
         with store.transaction() as db:
             store.put(db, 'STATE', self.key, {'id': self.id, 'actor': actor['id'], 'token': self.token,
-                      'events': [], 'status': 'processing', 'readonly': None})
+                      'steps': [], 'status': 'processing', 'readonly': None})
 
     @property
     def key(self):
         return 'stream:v1:' + self.id
 
     def emit(self, kind, **data):
-        with self.store.transaction() as db:
-            row = self.store.get(db, 'STATE', self.key)
-            row['events'].append({'event': kind, 'data': data})
-            if kind in ('done', 'error', 'stopped'):
-                row['status'] = kind
-            self.store.put(db, 'STATE', self.key, row)
+        terminal = kind in ('done', 'error', 'stopped')
+        # delta 與傳輸序列只存在記憶體；SQLite 僅保存步驟與控制／終態。
+        if kind == 'step' or terminal:
+            with self.store.transaction() as db:
+                row = self.store.get(db, 'STATE', self.key)
+                row['steps'] = self.steps
+                if terminal:
+                    row.update(status=kind, delete_after=time.time()+RETENTION_SECONDS)
+                    row.pop('token', None)
+                self.store.put(db, 'STATE', self.key, row)
+        with self.condition:
+            if self.connected:
+                self.events.append({'event':kind, 'data':data})
+            self.terminal = terminal
+            if terminal:
+                self.token = None
+                for event in self.events:
+                    if event['event']=='intent':event['data'].pop('token',None)
+            self.condition.notify_all()
+        if terminal:
+            timer=threading.Timer(RETENTION_SECONDS, cleanup_streams, args=(self.store,))
+            timer.daemon=True
+            timer.start()
+
+    def take_events(self):
+        with self.condition:
+            if not self.events and not self.terminal:
+                self.condition.wait(1)
+            events,self.events=self.events,[]
+            return events,self.terminal
+
+    def detach(self):
+        with self.condition:
+            self.connected=False
+            self.events.clear()
 
     def intent(self, readonly):
         self.readonly = readonly
@@ -51,16 +93,16 @@ class Work:
     def check(self):
         with self.store.transaction() as db:
             row = self.store.get(db, 'STATE', self.key)
-        if self.readonly and row.get('stop'):
+        if self.readonly and row and row.get('stop'):
             raise Stopped()
 
     def snapshot(self):
-        return {'steps': self.steps, 'elapsed_seconds': round(time.monotonic()-self.started, 2), 'request_id': self.id}
+        return {'steps': self.steps, 'elapsed_seconds': round(time.monotonic()-self.started, 1), 'request_id': self.id}
 
 
 LABELS = {
     'classify': ('辨識需求', 'Identify request', 'ระบุความต้องการ'),
-    'model': ('整理回覆', 'Compose reply', 'เรียบเรียงคำตอบ'),
+    'model': ('分析需求／規劃下一步', 'Analyze request / plan next step', 'วิเคราะห์คำขอ / วางแผนขั้นต่อไป'),
     'query': ('查詢作業資料', 'Query operation records', 'ค้นหาข้อมูลงาน'),
     'knowledge': ('查詢已審核知識', 'Search reviewed knowledge', 'ค้นหาความรู้ที่ตรวจสอบแล้ว'),
     'draft': ('更新作業草稿', 'Update operation draft', 'ปรับปรุงฉบับร่างงาน'),
@@ -97,6 +139,9 @@ def tracked(kind, fn, *args, **kwargs):
         result = fn(*args, **kwargs)
         if value is not None and isinstance(result, dict) and (result.get('saved') is False or result.get('error')):
             value['outcome'] = 'failed'
+        if value is not None and value.get('outcome') != 'failed':
+            label = result_label(kind, result, args, active.get().locale)
+            if label:value['label']=label
         return result
 
 
@@ -145,17 +190,16 @@ def install(app, store, actor_for, get_chat, process, message_type):
                 active.reset(binding)
         threading.Thread(target=run, daemon=True).start()
         def events():
-            cursor = 0
-            yield ': accepted\n\n'
-            while True:
-                with store.transaction() as db:
-                    row = store.get(db, 'STATE', work.key)
-                for event in row['events'][cursor:]:
-                    cursor += 1
-                    yield 'event: '+event['event']+'\ndata: '+dumps(event['data'])+'\n\n'
-                if row['status'] != 'processing':
-                    return
-                time.sleep(.04)
+            try:
+                yield ': accepted\n\n'
+                while True:
+                    batch, terminal = work.take_events()
+                    for event in batch:
+                        yield 'event: '+event['event']+'\ndata: '+dumps(event['data'])+'\n\n'
+                    if terminal:return
+                    if not batch:yield ': heartbeat\n\n'
+            finally:
+                work.detach()
         return StreamingResponse(events(), media_type='text/event-stream', headers={'Cache-Control': 'no-cache', 'X-Accel-Buffering': 'no'})
 
     from fastapi import Request
@@ -171,10 +215,12 @@ def install(app, store, actor_for, get_chat, process, message_type):
         actor = actor_for(request)
         with store.transaction() as db:
             row = store.get(db, 'STATE', 'stream:v1:'+rid)
-            if not row or row['actor'] != actor['id'] or not secrets.compare_digest(str(body.get('token', '')), row['token']):
+            if not row or row['actor'] != actor['id'] :
                 raise HTTPException(404, '找不到此請求')
             if row['status'] != 'processing':
                 return {'status': row['status']}
+            if not secrets.compare_digest(str(body.get('token', '')), row['token']):
+                raise HTTPException(404, '找不到此請求')
             if row['readonly'] is not True:
                 return {'status': 'waiting_stopped', 'cancelled': False}
             if row.get('conversation_id'):

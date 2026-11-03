@@ -48,7 +48,10 @@ if (!$existing) { New-WebApplication -Site $Site -Name 'KSS_MES/ai-agent' -Physi
 Set-WebConfigurationProperty -PSPath 'MACHINE/WEBROOT/APPHOST' -Filter 'system.webServer/proxy' -Name enabled -Value $true
 Set-WebConfigurationProperty -PSPath 'MACHINE/WEBROOT/APPHOST' -Filter 'system.webServer/proxy' -Name preserveHostHeader -Value $true
 Set-WebConfigurationProperty -PSPath 'MACHINE/WEBROOT/APPHOST' -Filter 'system.webServer/proxy' -Name timeout -Value '00:05:00'
-# ARR 伺服器層級緩衝必須關閉；代理應用停用動態壓縮以保持 SSE 即時傳送。
+# 注意：以下 responseBufferLimit 是整台 IIS 伺服器的全域設定，影響所有經 ARR 代理的站台。
+# 關閉緩衝會改變其他代理站台的回應傳送、吞吐與資源使用；不只本應用。
+# 尚未驗證可限定於單一應用的 ARR 等效設定。部署前必須取得主管及使用者核准。
+# 本應用的動態壓縮停用則只在專用代理 web.config 生效。
 Set-WebConfigurationProperty -PSPath 'MACHINE/WEBROOT/APPHOST' -Filter 'system.webServer/proxy' -Name responseBufferLimit -Value 0
 $action=New-ScheduledTaskAction -Execute "$Root\venv\Scripts\pythonw.exe" -Argument "`"$Root\current\scripts\run_service.py`"" -WorkingDirectory "$Root\current"
 $principal=New-ScheduledTaskPrincipal -UserId 'S-1-5-19' -LogonType ServiceAccount
