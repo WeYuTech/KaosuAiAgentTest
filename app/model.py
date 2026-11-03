@@ -11,7 +11,7 @@ from openai import OpenAI, OpenAIError
 from app.knowledge import retrieve
 from app.store import Store, dumps
 from app.management import effective_cap, budget_config
-from app.streaming import active, check, tracked
+from app.streaming import active, check, tracked, watch_stream
 
 ROOT = Path(__file__).resolve().parent.parent
 PRICES = {"gpt-6.1-sol": (2.0, 10.0)}
@@ -93,13 +93,14 @@ def invoke(payload):
         check()
         if active.get() and "tools" in payload:
             result = None
-            with client.responses.create(**payload, stream=True) as events:
+            with client.responses.create(**payload, stream=True) as events, watch_stream(events):
                 for event in events:
                     check()
                     if event.type == "response.output_text.delta":
                         active.get().emit('delta', text=event.delta)
                     elif event.type == "response.completed":
                         result = event.response
+            check()
             if result is None:
                 raise HTTPException(502, "模型串流中斷，費用待核對")
         else:
@@ -111,8 +112,12 @@ def invoke(payload):
             entry["status"] = "unknown"
         return result
     except (OpenAIError, KeyError) as exc:
+        check()
         entry["status"] = "unknown"
         raise HTTPException(502, "模型呼叫失敗，未執行任何業務寫入；費用預留保留待核對") from exc
+    except Exception:
+        check()
+        raise
     finally:
         if entry["status"] == "reserved":
             entry["status"] = "unknown"
@@ -198,7 +203,7 @@ def respond(conversation, state, store, query_fn=None, prepare_fn=None, draft_fn
     config = conversation.get("model_settings") or {"model": os.getenv("OPENAI_MODEL", "gpt-6.1-sol"), "reasoning_effort": "low", "max_tool_rounds": 5}
     for _ in range(config["max_tool_rounds"]):
         check()
-        response = invoke({"model": config["model"], "instructions": instructions,
+        response = tracked("model", invoke, {"model": config["model"], "instructions": instructions,
                            "input": inputs, "tools": tools, "parallel_tool_calls": False,
                            "max_output_tokens": MAX_OUTPUT, "reasoning": {"effort": config["reasoning_effort"]}, "store": False})
         calls = [item for item in response.output if item.type == "function_call"]

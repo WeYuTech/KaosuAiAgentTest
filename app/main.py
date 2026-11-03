@@ -711,6 +711,7 @@ def create_app(db_path=None, model=None, intent_classifier=None):
         if not convo or convo["actor_id"] != actor["id"] or convo.get("is_deleted"):
             raise HTTPException(404, "找不到此對話")
         allowed(actor, convo["module"])
+        convo["processing_active"] = bool(convo.get("processing"))
         convo.pop("processing", None)
         from app.conversations import metadata
         convo.update(metadata(convo))
@@ -850,6 +851,14 @@ def create_app(db_path=None, model=None, intent_classifier=None):
                 current = store.get(db, "CONVERSATION", cid)
                 current["messages"].append({"role": "assistant", "content": "", "stopped": True, "processing_summary": active.get().snapshot()})
                 store.put(db, "CONVERSATION", cid, current)
+            raise
+        except Exception:
+            if active.get():
+                with store.transaction() as db:
+                    current = store.get(db, "CONVERSATION", cid)
+                    if (current.get("processing") or {}).get("token") == intent_token:
+                        current["messages"].append({"role":"assistant", "content":"", "processing_failed":True, "processing_summary":active.get().snapshot()})
+                        store.put(db,"CONVERSATION",cid,current)
             raise
         finally:
             with store.transaction() as db:

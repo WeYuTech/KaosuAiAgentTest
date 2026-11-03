@@ -3,10 +3,10 @@ export type Module = 'schedule' | 'report' | 'mold';
 export type Identity = 'planner' | 'operator' | 'technician' | 'supervisor';
 export type Row = Record<string, unknown>;
 export interface Session { actor: { id: string; name: string; roles: string[] }; mode: string }
-export interface Message { processing_summary?: import("./streaming").ProcessingSummary; stopped?:boolean; data?:unknown; role: string; content: string; proposal?: Proposal | null }
+export interface Message { processing_summary?: import("./streaming").ProcessingSummary; stopped?:boolean; processing_failed?:boolean; data?:unknown; role: string; content: string; proposal?: Proposal | null }
 export interface Change { table: string; key: unknown; field: string; before: unknown; after: unknown }
 export interface Proposal { local_rejection?: boolean; id: string; digest: string; summary: string; changes: Change[]; expires_at: string; action: string; args: Row; status?: string; independent_confirmation?: boolean; writes_enabled?: boolean; business_timezone?: string; time_policy?: string; new_id_policy?: string; preview?: { time_policy?: string; new_id_policy?: string }; target?: { next_schedule?: {start_time?:string;orders:string[]}|null; cavities_before?:number; mold_detail_name?:string; mold_detail_no?:string; report_before?:Row; part_no?: string; part_spec?: string; execution_time?: string; equipment?: string; work_order?: string; schedule_id?: string; execution_id?: string; report_id?: string; affected_orders?: unknown[]; schedule_details?: Row[] } }
-export interface Conversation { query_context?:QueryContext; id: string; module: Module; messages: Message[]; locale?: string; actor_id?: string; title?: string; is_archived?: boolean; is_deleted?: boolean; metadata_version?: number }
+export interface Conversation { processing_active?:boolean; query_context?:QueryContext; id: string; module: Module; messages: Message[]; locale?: string; actor_id?: string; title?: string; is_archived?: boolean; is_deleted?: boolean; metadata_version?: number }
 export interface QueryContext {version:number;filters:Record<string,string|number>}
 export interface Reply { messages?: Message[]; proposal?: Proposal | null; data?: unknown; message?: string; query_context?:QueryContext }
 export interface Workspace { records: Row[]; catalogs: Record<string, unknown>; total?: number; page?: number; page_size?: number; query_context?:QueryContext }

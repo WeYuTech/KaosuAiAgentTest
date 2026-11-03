@@ -185,10 +185,15 @@ def install(app, store, actor_for, allowed, now, create_conversation, process_me
                 store.put(db,'STATE','entry:v1:'+body.entry_id,entry)
             return view(row)
         except Exception as exc:
+            from app.streaming import Stopped, active
+            stopped = isinstance(exc, Stopped)
             with store.transaction() as db:
                 row = receipt(db, body.request_id, actor)
                 if row['token'] == token:
-                    row.update(status='failed',result={'messages':entry['messages']+[{'role':'user','content':body.text}], 'error':str(exc.detail) if isinstance(exc,HTTPException) else '入口處理未完成；請查核原紀錄', 'conversation_id':conversation_id})
+                    row.update(status='stopped' if stopped else 'failed',result={'messages':entry['messages']+[{'role':'user','content':body.text}], 'error':str(exc.detail) if isinstance(exc,HTTPException) else '入口處理未完成；請查核原紀錄', 'conversation_id':conversation_id})
+                    if stopped:
+                        stopped_chat = store.get(db, 'CONVERSATION', conversation_id) if conversation_id else None
+                        row['result'] = {'messages': stopped_chat['messages'] if stopped_chat else entry['messages']+[{'role':'user','content':body.text},{'role':'assistant','content':'','stopped':True,'processing_summary':active.get().snapshot()}]}
                     store.put(db,'STATE','entry-request:v1:'+body.request_id,row)
                     entry['messages']=row['result']['messages']
                     entry.pop('processing',None)

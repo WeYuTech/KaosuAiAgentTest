@@ -82,8 +82,8 @@ def step(kind):
     try:
         yield value
         work.check()
-    except BaseException:
-        value['status'] = 'failed'
+    except BaseException as exc:
+        value['status'] = 'stopped' if isinstance(exc, Stopped) else 'failed'
         work.emit('step', **value)
         raise
     else:
@@ -105,10 +105,32 @@ def check():
         active.get().check()
 
 
+
+@contextmanager
+def watch_stream(events):
+    """唯讀停止可關閉上游串流；瀏覽器斷線不設定 stop，因此不會觸發。"""
+    work = active.get()
+    finished = threading.Event()
+    def watch():
+        while not finished.wait(.1):
+            try:
+                work.check()
+            except Stopped:
+                events.close()
+                return
+    if work and hasattr(events, 'close'):
+        threading.Thread(target=watch, daemon=True).start()
+    try:
+        yield
+    finally:
+        finished.set()
+
+
 def install(app, store, actor_for, get_chat, process, message_type):
     # 同步工作由獨立執行緒持有；StreamingResponse 取消只終止事件讀取。
     def launch(actor, locale, fn):
         work = Work(store, actor, locale)
+        work.emit("accepted", request_id=work.id)
         def run():
             binding = active.set(work)
             try:
@@ -117,7 +139,7 @@ def install(app, store, actor_for, get_chat, process, message_type):
             except Stopped:
                 work.emit('stopped', **work.snapshot())
             except Exception as exc:
-                work.emit('error', status=exc.status_code if isinstance(exc, HTTPException) else 502,
+                work.emit('error', status=exc.status_code if isinstance(exc, HTTPException) else {"unauthorized":401,"forbidden":403}.get(getattr(exc,"code",None),502),
                           message={'zh-TW':'處理未完成，請查核原對話','en':'Processing failed. Check the original conversation.','th':'ประมวลผลไม่สำเร็จ โปรดตรวจสอบบทสนทนาเดิม'}.get(locale,'Processing failed'), processing_summary=work.snapshot())
             finally:
                 active.reset(binding)

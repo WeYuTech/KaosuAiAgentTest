@@ -100,3 +100,97 @@ def test_入口串流與舊JSON相容(tmp_path):
         assert 'event: done' in r.text
         assert events(r)[-1]['messages'][-1]['processing_summary']['steps']
         assert c.get('/api/entry/requests/request1234').json()['status']=='answered'
+
+
+def test_真實HTTP斷線不取消處理也不重送(tmp_path):
+    import socket
+    import threading
+    import httpx
+    import uvicorn
+    entered,release=Event(),Event()
+    calls=[]
+    def model(*_):
+        calls.append(1);entered.set();release.wait(5)
+        tracked('query',lambda: {'records':[]})
+        return {'content':'原請求完成'}
+    app=create_app(tmp_path/'disconnect.db',model=model,intent_classifier=lambda _: {'intent':'readonly'})
+    sock=socket.socket();sock.bind(('127.0.0.1',0))
+    address='http://127.0.0.1:'+str(sock.getsockname()[1])
+    server=uvicorn.Server(uvicorn.Config(app,log_level='error'))
+    thread=threading.Thread(target=lambda:server.run(sockets=[sock]),daemon=True);thread.start()
+    try:
+        for _ in range(100):
+            if server.started:break
+            time.sleep(.01)
+        with httpx.Client(base_url=address) as c:
+            cid=setup(c)
+            with c.stream('POST',f'/api/conversations/{cid}/messages/stream',json={'text':'查詢'}) as response:
+                for line in response.iter_lines():
+                    if line=='event: intent':break
+                assert entered.wait(2)
+            # HTTP consumer 已關閉，模型仍由背景工作持有。
+            release.set()
+            for _ in range(100):
+                chat=c.get(f'/api/conversations/{cid}').json()
+                if chat['messages'][-1]['role']=='assistant':break
+                time.sleep(.02)
+            assert chat['messages'][-1]['content']=='原請求完成'
+            assert chat['processing_active'] is False and calls==[1]
+    finally:
+        release.set();server.should_exit=True;thread.join(5);sock.close()
+
+
+def test_唯讀停止關閉上游串流且費用未知(tmp_path,monkeypatch):
+    from app import model
+    from app.streaming import Stopped
+    import threading
+    ledger=Store(tmp_path/'ledger.db');work=Work(Store(tmp_path/'work.db'),{'id':'operator'},'zh-TW')
+    work.intent(True)
+    monkeypatch.setattr(model,'budget_store',lambda:ledger)
+    monkeypatch.setenv('AI_TEST_BUDGET_USD','20');monkeypatch.setenv('OPENAI_API_KEY','synthetic')
+    waiting,closed=Event(),Event()
+    class Stream:
+        def __enter__(self):return self
+        def __exit__(self,*_):self.close()
+        def close(self):closed.set()
+        def __iter__(self):
+            waiting.set();closed.wait(3)
+            return iter([])
+    monkeypatch.setattr(model,'OpenAI',lambda **_:SimpleNamespace(responses=SimpleNamespace(create=lambda **_:Stream())))
+    def call():
+        token=active.set(work)
+        try:
+            with pytest.raises(Stopped):model.invoke({'model':'gpt-6.1-sol','tools':[]})
+        finally:active.reset(token)
+    with ThreadPoolExecutor() as pool:
+        future=pool.submit(call);assert waiting.wait(2)
+        with work.store.transaction() as db:
+            row=work.store.get(db,'STATE',work.key);row['stop']=True;work.store.put(db,'STATE',work.key,row)
+        future.result(timeout=2)
+    assert closed.is_set()
+    with ledger.transaction() as db:assert ledger.all(db,'BUDGET')[0]['status']=='unknown'
+
+
+@pytest.mark.parametrize('status',[429,502])
+def test_預算與模型錯誤有終態且不冒充完成(tmp_path,status):
+    from fastapi import HTTPException
+    def model(*_):raise HTTPException(status,'隔離錯誤')
+    with TestClient(create_app(tmp_path/'error.db',model=model,intent_classifier=lambda _: {'intent':'readonly'})) as c:
+        cid=setup(c);r=c.post(f'/api/conversations/{cid}/messages/stream',json={'text':'查詢'})
+        assert 'event: done' not in r.text
+        assert events(r)[-1]['status']==status
+        chat=c.get(f'/api/conversations/{cid}').json()
+        assert not chat['processing_active'] and chat['messages'][-1]['processing_failed']
+
+
+def test_確認卡步驟不代表業務寫入(tmp_path,monkeypatch):
+    from app import model
+    from test_live_dialogue_validation import model_tool
+    monkeypatch.setenv('OPENAI_API_KEY','synthetic')
+    monkeypatch.setattr(model,'invoke',lambda _:model_tool('prepare_report_add',{'execution_id':'2001','ok':100,'defects':[]},1))
+    with TestClient(create_app(tmp_path/'proposal.db',intent_classifier=lambda _: {'intent':'change'})) as c:
+        cid=setup(c);r=c.post(f'/api/conversations/{cid}/messages/stream',json={'text':'人工良品100'})
+        data=events(r);assert data[-1]['proposal']['status']=='pending'
+        assert any(d.get('label')=='建立確認卡（尚未送出）' and d['status']=='done' for d in data)
+        assert all('已寫入' not in d.get('label','') for d in data)
+        assert c.get('/api/audit').json()['records']==[]

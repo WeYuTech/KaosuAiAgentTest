@@ -145,6 +145,7 @@ export function App({ initialOpen = false }: { initialOpen?: boolean } = {}) {
         if(event.event==='intent')streamIntent.current=event.data as {readonly:boolean;request_id:string;token:string};
         setStreamView(previous=>{
           if(!previous)return previous;
+          if(event.event==='accepted')return {...previous,summary:{...previous.summary,request_id:String(event.data.request_id)}};
           if(event.event==='step')return {...previous,summary:{...previous.summary,steps:[...previous.summary.steps.filter(s=>s.id!==event.data.id),event.data as any]}};
           if(event.event==='delta')return {...previous,text:previous.text+String(event.data.text)};
           if(['done','stopped','unknown','failed'].includes(event.event))return {...previous,phase:event.event,text:event.event==='stopped'?'':previous.text,summary:event.data.processing_summary??previous.summary};
@@ -177,9 +178,9 @@ export function App({ initialOpen = false }: { initialOpen?: boolean } = {}) {
   const [messages, setMessages] = useState<Message[]>([]);
   const [presentation,setPresentation]=useState<Presentation|null>(null);
   const attemptSequence=useRef(0);
-  function beginMessage(cid:string,text:string,index:number){const id=`${cid}:attempt:${++attemptSequence.current}`;setPresentation(previous=>beginAttempt(previous,cid,index,text,id));}
+  function beginMessage(cid:string,text:string,index:number){const id=`${cid}:attempt:${++attemptSequence.current}`;setPresentation(previous=>beginAttempt(previous,cid,index,text,id));requestAnimationFrame(()=>chatScroll.latest());}
   function acceptMessage(cid:string,reply:Reply){if(reply.messages)setPresentation(previous=>previous?.conversation===cid?acceptAttempt(previous,reply.messages!):previous);}
-  function failMessage(cid:string,error:unknown,sent=true){setPresentation(previous=>previous?.conversation===cid&&previous.attempt?{...previous,attempt:{...previous.attempt,delivery:!sent?'not_sent':error instanceof ApiError&&error.status>=400&&error.status<500?'rejected':'unknown'}}:previous);}
+  function failMessage(cid:string,error:unknown,sent=true){setPresentation(previous=>previous?.conversation===cid&&previous.attempt?{...previous,attempt:{...previous.attempt,delivery:!sent?'not_sent':error instanceof ApiError&&error.code!=='stream_error'&&error.status>=400&&error.status<500?'rejected':'unknown'}}:previous);}
   const projectedMessages=useMemo(()=>projectMessages(messages,conversation?.id??null,presentation),[messages,conversation?.id,presentation]);
   const messagePending=presentation?.conversation===conversation?.id&&presentation?.attempt?.delivery==='pending'&&presentation.attempt.accepted===undefined;
   const [draft, setDraft] = useState('');
@@ -556,7 +557,7 @@ export function App({ initialOpen = false }: { initialOpen?: boolean } = {}) {
         setDraft('');
           setDraftDelivery('unsent');saveTextDraft(sessionStorage,initialKey,'','unsent');
         }catch(error){
-          const delivery=error instanceof ApiError && error.status>=400 && error.status<500?'rejected':'unknown';
+          const delivery=error instanceof ApiError && error.code!=='stream_error' && error.status>=400 && error.status<500?'rejected':'unknown';
           if(startEpoch===contextEpoch.current){failMessage(chat.id,error);setDraftDelivery(delivery);saveTextDraft(sessionStorage,initialKey,text,delivery);}
           throw error;
         }
@@ -639,7 +640,7 @@ export function App({ initialOpen = false }: { initialOpen?: boolean } = {}) {
         acceptMessage(conversation.id,reply);receive(reply); setDraft('');setDraftDelivery('unsent');
         if (replacing && (!reply.proposal || reply.proposal.id!==proposal?.id)) setNotice(reply.proposal ? t("已依補充需求取代前一張草稿，請核對新的確認卡。") : t("前一張草稿已停止確認。補齊資料後會建立新的確認卡。"));
       } catch(error) {
-        if(renderEpoch===contextEpoch.current){failMessage(conversation.id,error);setDraftDelivery(error instanceof ApiError && error.status>=400 && error.status<500 ? 'rejected':'unknown');}
+        if(renderEpoch===contextEpoch.current){failMessage(conversation.id,error);setDraftDelivery(error instanceof ApiError && error.code!=='stream_error' && error.status>=400 && error.status<500 ? 'rejected':'unknown');}
         throw error;
       }
 
@@ -650,8 +651,8 @@ export function App({ initialOpen = false }: { initialOpen?: boolean } = {}) {
     if(!conversation)return;
     await guarded(async()=>{
       const current=await request<Conversation>(`/api/conversations/${conversation.id}`);
-      setMessages(current.messages);setPresentation(null);setStreamView(null);
-      if(current.messages.at(-1)?.role==='assistant'){setDraft('');setDraftDelivery('unsent');}
+      setMessages(current.messages);setPresentation(null);
+      if(!current.processing_active&&current.messages.at(-1)?.role==='assistant'&&(!streamView?.summary.request_id||current.messages.some(m=>m.processing_summary?.request_id===streamView.summary.request_id))){setStreamView(null);setDraft('');setDraftDelivery('unsent');}
       setNotice(t('已讀取伺服器聊天紀錄；原訊息仍保留，未重新送出。若紀錄尚未更新，可稍後再查核。'));
     });
   }

@@ -1,6 +1,6 @@
-﻿import {ApiError,api} from './api';
+import {ApiError,api} from './api';
 import {getLocale,t} from './i18n';
-export interface ProcessingStep {id:number;label:string;status:'running'|'done'|'failed'}
+export interface ProcessingStep {id:number;label:string;status:'running'|'done'|'failed'|'stopped'}
 export interface ProcessingSummary {steps:ProcessingStep[];elapsed_seconds:number;request_id:string}
 export interface StreamEvent {event:string;data:Record<string,any>}
 /** SSE 支援跨 chunk UTF-8、CRLF、多行 data；不以計時器拆字。 */

@@ -1,5 +1,6 @@
 /* 固定介面詞彙：中文原文為鍵，不翻譯 MES 主檔名稱或歷史訊息。 */
 export const translations: Record<string, [string, string]> = Object.fromEntries(`
+結果未知|Result unknown|ไม่ทราบผลลัพธ์
 已處理 {0} 秒 · {1} 個步驟|Processed in {0}s · {1} steps|ประมวลผล {0} วินาที · {1} ขั้นตอน
 結果未知，請查核原訊息；不會自動重送。|Result unknown. Check the original message; it will not be resent.|ไม่ทราบผลลัพธ์ โปรดตรวจสอบข้อความเดิม ระบบจะไม่ส่งซ้ำ
 處理未完成，請查核原對話|Processing failed. Check the original conversation.|ประมวลผลไม่สำเร็จ โปรดตรวจสอบบทสนทนาเดิม
