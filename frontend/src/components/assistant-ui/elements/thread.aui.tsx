@@ -11,13 +11,13 @@ import {ChatQueryResults} from '@/ChatQueryResults';
 import type {Workspace} from '@/api';
 
 /** 294bc02d Thread 的訊息呈現；Guide 與唯一確認卡由外層原位置承載。 */
-export function ThreadMessages({onViewData,latestAssistantOnly=false}:{onViewData?:(workspace:Workspace)=>void;latestAssistantOnly?:boolean}) {
+export function ThreadMessages({onViewData,latestAssistantOnly=false,hideDelivery=false}:{onViewData?:(workspace:Workspace)=>void;latestAssistantOnly?:boolean;hideDelivery?:boolean}) {
   const latestAssistantId=useAuiState(s=>s.thread.messages.filter(message=>message.role==='assistant').at(-1)?.id);
   return <div data-slot="aui_message-group" className="flex flex-col gap-y-6 empty:hidden">
-    <ThreadPrimitive.Messages>{() => <ThreadMessage onViewData={latestAssistantOnly?undefined:onViewData} latestAssistantOnly={latestAssistantOnly} latestAssistantId={latestAssistantId}/>}</ThreadPrimitive.Messages>
+    <ThreadPrimitive.Messages>{() => <ThreadMessage hideDelivery={hideDelivery} onViewData={latestAssistantOnly?undefined:onViewData} latestAssistantOnly={latestAssistantOnly} latestAssistantId={latestAssistantId}/>}</ThreadPrimitive.Messages>
   </div>;
 }
-function ThreadMessage({onViewData,latestAssistantOnly,latestAssistantId}:{onViewData?:(workspace:Workspace)=>void;latestAssistantOnly:boolean;latestAssistantId?:string}) {
+function ThreadMessage({onViewData,latestAssistantOnly,latestAssistantId,hideDelivery}:{onViewData?:(workspace:Workspace)=>void;latestAssistantOnly:boolean;latestAssistantId?:string;hideDelivery:boolean}) {
   const role = useAuiState(s => s.message.role);
   const id = useAuiState(s => s.message.id);
   const message=useAuiState(s=>s.message.metadata.custom.mesMessage as PresentedMessage|undefined);
@@ -33,7 +33,7 @@ function ThreadMessage({onViewData,latestAssistantOnly,latestAssistantId}:{onVie
       <MessagePrimitive.Parts components={{Text: role === 'user' ? ({text}) => <span>{text}</span> : MarkdownText}}/>
     </div>
     {onViewData && role==='assistant' && Array.isArray((message.data as Workspace)?.records) && <ChatQueryResults workspace={message.data as Workspace} onAll={()=>onViewData(message.data as Workspace)}/>}
-    {message?.delivery&&<span className="message-delivery">{t(message.delivery==='pending'?'待處理 · 尚未取得回覆':message.delivery==='rejected'?'請求已拒絕，未重新送出':message.delivery==='not_sent'?'訊息尚未送出，請先處理資料保存錯誤。':'送達結果未知，未重新送出')}</span>}
+    {message?.delivery&&!hideDelivery&&<span className="message-delivery">{t(message.delivery==='pending'?'待處理 · 尚未取得回覆':message.delivery==='rejected'?'請求已拒絕，未重新送出':message.delivery==='not_sent'?'訊息尚未送出，請先處理資料保存錯誤。':'送達結果未知，未重新送出')}</span>}
     {!latestAssistantOnly&&<ActionBarPrimitive.Root hideWhenRunning autohide="not-last" className="text-muted-foreground flex gap-1 min-h-9 ms-2">
       <ActionBarPrimitive.Copy asChild><TooltipIconButton tooltip={t(role==='user'?'複製訊息':'複製回答')} aria-label={t(role==='user'?'複製訊息':'複製回答')} onClick={event=>{event.preventDefault();if(message)copyToClipboard(message.content);}}>
         {copied ? <Check/> : <Copy/>}

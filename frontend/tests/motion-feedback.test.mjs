@@ -247,3 +247,15 @@ test('同一身分還原聊天並返回清單：延遲讀取期間不出現假�
   assert.equal(host.querySelectorAll('.history-row').length,2);assert.equal(host.querySelector('.history-empty'),null);
  }finally{await act(async()=>root.unmount());host.remove();}
 });
+
+test('完成定位回覆開頭，使用者已接管則不移動',async()=>{
+ const {host,root}=mount();let api,resize;const calls=[];const original=globalThis.ResizeObserver,raf=globalThis.requestAnimationFrame;
+ Object.defineProperty(globalThis,'ResizeObserver',{configurable:true,value:class {constructor(fn){resize=fn;}observe(){}disconnect(){}}});Object.defineProperty(globalThis,'requestAnimationFrame',{configurable:true,value:fn=>{fn();return 1;}});
+ function Harness({done}){api=useChatScroll('a',true,done);return h('div',{ref:api.viewport},h('div',{ref:api.content},h('article',{className:'aui-assistant-message'},'回覆開頭')));}
+ try{
+ await act(async()=>root.render(h(Harness,{done:false})));const view=host.firstChild;view.scrollTo=options=>calls.push(options);view.getBoundingClientRect=()=>({top:10});view.querySelector('article').getBoundingClientRect=()=>({top:80});
+ await act(async()=>root.render(h(Harness,{done:true})));await act(async()=>resize());assert.equal(calls.at(-1).top,70);
+ await act(async()=>view.dispatchEvent(new window.WheelEvent('wheel',{deltaY:-10})));const count=calls.length;
+ await act(async()=>resize());assert.equal(calls.length,count);
+ }finally{await act(async()=>root.unmount());host.remove();Object.defineProperty(globalThis,'ResizeObserver',{configurable:true,value:original});Object.defineProperty(globalThis,'requestAnimationFrame',{configurable:true,value:raf});}
+});

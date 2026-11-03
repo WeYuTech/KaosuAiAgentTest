@@ -41,3 +41,18 @@ test('步驟完成自動收合，可按原生按鈕展開，停止不顯示半�
  await act(async()=>root.render(h(ProcessingSteps,{summary,phase:'stopped',text:'半成品'})));assert.ok(!host.textContent.includes('半成品'));assert.ok(host.textContent.includes('已停止'));
  await act(async()=>root.unmount());host.remove();
 });
+
+test('工具輪次重設會先清除片段，最終回覆只保留最後輪次',async()=>{
+ let text='';globalThis.fetch=async()=>response(['event: delta\ndata: {"text":"中間文字"}\n\nevent: reset\ndata: {}\n\nevent: delta\ndata: {"text":"最終回答"}\n\nevent: done\ndata: {"content":"最終回答"}\n\n']);
+ const value=await streamRequest('/api/conversations/test/messages',{},e=>{if(e.event==='reset')text='';if(e.event==='delta')text+=e.data.text;});
+ assert.equal(text,value.content);
+});
+test('未知步驟使用問號、完成不重複文字、串流文字在框外且秒數一位',async()=>{
+ const host=document.createElement('div');document.body.append(host);const root=createRoot(host);
+ const summary={request_id:'one',elapsed_seconds:4,steps:[{id:1,label:'已查詢 MC37（1 筆）',status:'done'},{id:2,label:'分析需求',status:'running'}]};
+ await act(async()=>root.render(h(ProcessingSteps,{summary,phase:'unknown',text:'回覆片段'})));
+ assert.ok(host.querySelector('.lucide-circle-help'));assert.equal(host.querySelector('.lucide-loader-circle'),null);
+ assert.equal(host.querySelectorAll('li small').length,1);assert.equal(host.querySelector('.processing-steps .stream-reply'),null);assert.equal(host.querySelector('.stream-reply').textContent,'回覆片段');
+ await act(async()=>root.render(h(ProcessingSteps,{summary,phase:'done'})));assert.ok(host.querySelector('button').textContent.includes('4.0'));
+ await act(async()=>root.unmount());host.remove();
+});
