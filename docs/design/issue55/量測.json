@@ -4,7 +4,7 @@
     "height": 768,
     "id": "H01",
     "label": "空首頁",
-    "ratio": 0.6454177342606149,
+    "ratio": 0.6075753416300634,
     "rects": [
       {
         "selector": ".assistant-header",
@@ -270,46 +270,100 @@
     "geometry": [
       {
         "selector": ".assistant-header",
+        "axes": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
         "delta": 0,
         "passed": true
       },
       {
         "selector": ".conversation-history",
+        "axes": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
         "delta": 0,
         "passed": true
       },
       {
         "selector": ".reference-title-row",
+        "axes": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
         "delta": 0,
         "passed": true
       },
       {
         "selector": "[data-slot=aui_composer-shell]",
+        "axes": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 1.6875
+        },
         "delta": 1.6875,
         "passed": true
       },
       {
         "selector": ".entry-grid",
+        "axes": {
+          "x": 0,
+          "y": 1.6875,
+          "width": 0,
+          "height": 0
+        },
         "delta": 1.6875,
         "passed": true
       },
       {
         "selector": ".assistant-copyright",
+        "axes": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
         "delta": 0,
         "passed": true
       },
       {
         "selector": ".header-tools button",
+        "axes": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
         "delta": 0,
         "passed": true
       },
       {
         "selector": ".aui-composer-send",
+        "axes": {
+          "x": 0,
+          "y": 1.6875,
+          "width": 0,
+          "height": 0
+        },
         "delta": 1.6875,
         "passed": true
       },
       {
         "selector": ".history-top",
+        "axes": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
         "delta": 0,
         "passed": true
       }
@@ -320,7 +374,7 @@
     "height": 768,
     "id": "H02",
     "label": "能力問答",
-    "ratio": 1.8112875183016106,
+    "ratio": 0.4220808931185945,
     "rects": [
       {
         "selector": ".assistant-header",
@@ -616,51 +670,111 @@
     "geometry": [
       {
         "selector": ".assistant-header",
+        "axes": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
         "delta": 0,
         "passed": true
       },
       {
         "selector": ".conversation-history",
+        "axes": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
         "delta": 0,
         "passed": true
       },
       {
         "selector": ".reference-title-row",
+        "axes": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
         "delta": 0,
         "passed": true
       },
       {
         "selector": "[data-slot=aui_composer-shell]",
+        "axes": {
+          "x": 0,
+          "y": 1.6875,
+          "width": 0,
+          "height": 1.6875
+        },
         "delta": 1.6875,
         "passed": true
       },
       {
         "selector": ".assistant-copyright",
+        "axes": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
         "delta": 0,
         "passed": true
       },
       {
         "selector": ".header-tools button",
+        "axes": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
         "delta": 0,
         "passed": true
       },
       {
         "selector": ".aui-composer-send",
+        "axes": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
         "delta": 0,
         "passed": true
       },
       {
         "selector": ".entry-message.user",
+        "axes": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
         "delta": 0,
         "passed": true
       },
       {
         "selector": ".entry-message.assistant",
+        "axes": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
         "delta": 0,
         "passed": true
       },
       {
         "selector": ".history-top",
+        "axes": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
         "delta": 0,
         "passed": true
       }
@@ -671,7 +785,7 @@
     "height": 768,
     "id": "H03",
     "label": "需求不明・自然追問",
-    "ratio": 1.6707845290385555,
+    "ratio": 0.4220808931185945,
     "rects": [
       {
         "selector": ".assistant-header",
@@ -967,51 +1081,111 @@
     "geometry": [
       {
         "selector": ".assistant-header",
+        "axes": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
         "delta": 0,
         "passed": true
       },
       {
         "selector": ".conversation-history",
+        "axes": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
         "delta": 0,
         "passed": true
       },
       {
         "selector": ".reference-title-row",
+        "axes": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
         "delta": 0,
         "passed": true
       },
       {
         "selector": "[data-slot=aui_composer-shell]",
+        "axes": {
+          "x": 0,
+          "y": 1.6875,
+          "width": 0,
+          "height": 1.6875
+        },
         "delta": 1.6875,
         "passed": true
       },
       {
         "selector": ".assistant-copyright",
+        "axes": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
         "delta": 0,
         "passed": true
       },
       {
         "selector": ".header-tools button",
+        "axes": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
         "delta": 0,
         "passed": true
       },
       {
         "selector": ".aui-composer-send",
+        "axes": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
         "delta": 0,
         "passed": true
       },
       {
         "selector": ".entry-message.user",
+        "axes": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
         "delta": 0,
         "passed": true
       },
       {
         "selector": ".entry-message.assistant",
+        "axes": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
         "delta": 0,
         "passed": true
       },
       {
         "selector": ".history-top",
+        "axes": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
         "delta": 0,
         "passed": true
       }
@@ -1022,7 +1196,7 @@
     "height": 768,
     "id": "H04",
     "label": "超出範圍・友善引導",
-    "ratio": 1.5400042703757932,
+    "ratio": 0.41493182650073207,
     "rects": [
       {
         "selector": ".assistant-header",
@@ -1318,51 +1492,111 @@
     "geometry": [
       {
         "selector": ".assistant-header",
+        "axes": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
         "delta": 0,
         "passed": true
       },
       {
         "selector": ".conversation-history",
+        "axes": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
         "delta": 0,
         "passed": true
       },
       {
         "selector": ".reference-title-row",
+        "axes": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
         "delta": 0,
         "passed": true
       },
       {
         "selector": "[data-slot=aui_composer-shell]",
+        "axes": {
+          "x": 0,
+          "y": 1.6875,
+          "width": 0,
+          "height": 1.6875
+        },
         "delta": 1.6875,
         "passed": true
       },
       {
         "selector": ".assistant-copyright",
+        "axes": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
         "delta": 0,
         "passed": true
       },
       {
         "selector": ".header-tools button",
+        "axes": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
         "delta": 0,
         "passed": true
       },
       {
         "selector": ".aui-composer-send",
+        "axes": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
         "delta": 0,
         "passed": true
       },
       {
         "selector": ".entry-message.user",
+        "axes": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
         "delta": 0,
         "passed": true
       },
       {
         "selector": ".entry-message.assistant",
+        "axes": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
         "delta": 0,
         "passed": true
       },
       {
         "selector": ".history-top",
+        "axes": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
         "delta": 0,
         "passed": true
       }
@@ -1373,7 +1607,7 @@
     "height": 768,
     "id": "H05",
     "label": "AI 未設定・人工入口",
-    "ratio": 1.78326317715959,
+    "ratio": 0.8293870485602733,
     "rects": [
       {
         "selector": ".assistant-header",
@@ -1669,51 +1903,111 @@
     "geometry": [
       {
         "selector": ".assistant-header",
+        "axes": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
         "delta": 0,
         "passed": true
       },
       {
         "selector": ".conversation-history",
+        "axes": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
         "delta": 0,
         "passed": true
       },
       {
         "selector": ".reference-title-row",
+        "axes": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
         "delta": 0,
         "passed": true
       },
       {
         "selector": "[data-slot=aui_composer-shell]",
+        "axes": {
+          "x": 0,
+          "y": 1.6875,
+          "width": 0,
+          "height": 1.6875
+        },
         "delta": 1.6875,
         "passed": true
       },
       {
         "selector": ".assistant-copyright",
+        "axes": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
         "delta": 0,
         "passed": true
       },
       {
         "selector": ".header-tools button",
+        "axes": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
         "delta": 0,
         "passed": true
       },
       {
         "selector": ".aui-composer-send",
+        "axes": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
         "delta": 0,
         "passed": true
       },
       {
         "selector": ".entry-message.user",
+        "axes": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
         "delta": 0,
         "passed": true
       },
       {
         "selector": ".entry-message.assistant",
+        "axes": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 1.796875
+        },
         "delta": 1.796875,
         "passed": true
       },
       {
         "selector": ".history-top",
+        "axes": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
         "delta": 0,
         "passed": true
       }
@@ -1724,7 +2018,7 @@
     "height": 768,
     "id": "N01",
     "label": "平面清單與拖曳側欄",
-    "ratio": 0.9400545998047828,
+    "ratio": 0.6077659834065398,
     "rects": [
       {
         "selector": ".assistant-header",
@@ -1990,46 +2284,100 @@
     "geometry": [
       {
         "selector": ".assistant-header",
+        "axes": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
         "delta": 0,
         "passed": true
       },
       {
         "selector": ".conversation-history",
+        "axes": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
         "delta": 0,
         "passed": true
       },
       {
         "selector": ".reference-title-row",
+        "axes": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
         "delta": 0,
         "passed": true
       },
       {
         "selector": "[data-slot=aui_composer-shell]",
+        "axes": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 1.6875
+        },
         "delta": 1.6875,
         "passed": true
       },
       {
         "selector": ".entry-grid",
+        "axes": {
+          "x": 0,
+          "y": 1.6875,
+          "width": 0,
+          "height": 0
+        },
         "delta": 1.6875,
         "passed": true
       },
       {
         "selector": ".assistant-copyright",
+        "axes": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
         "delta": 0,
         "passed": true
       },
       {
         "selector": ".header-tools button",
+        "axes": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
         "delta": 0,
         "passed": true
       },
       {
         "selector": ".aui-composer-send",
+        "axes": {
+          "x": 0,
+          "y": 1.6875,
+          "width": 0,
+          "height": 0
+        },
         "delta": 1.6875,
         "passed": true
       },
       {
         "selector": ".history-top",
+        "axes": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
         "delta": 0,
         "passed": true
       }
@@ -2040,7 +2388,7 @@
     "height": 768,
     "id": "N02",
     "label": "搜尋聊天",
-    "ratio": 1.2964594009272816,
+    "ratio": 0.8555049719375305,
     "rects": [
       {
         "selector": ".assistant-header",
@@ -2356,51 +2704,177 @@
     "geometry": [
       {
         "selector": ".assistant-header",
+        "axes": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
         "delta": 0,
         "passed": true
       },
       {
         "selector": ".conversation-history",
+        "axes": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
         "delta": 0,
         "passed": true
       },
       {
         "selector": ".reference-title-row",
+        "axes": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
         "delta": 0,
         "passed": true
       },
       {
         "selector": ".assistant-copyright",
+        "axes": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
         "delta": 0,
         "passed": true
       },
       {
         "selector": ".history-search-dialog,.history-dialog",
+        "axes": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
         "delta": 0,
         "passed": true
       },
       {
         "selector": ".header-tools button",
+        "axes": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
         "delta": 0,
         "passed": true
       },
       {
         "selector": ".entry-message.user",
+        "axes": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
         "delta": 0,
         "passed": true
       },
       {
         "selector": ".entry-message.assistant",
+        "axes": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
         "delta": 0,
         "passed": true
       },
       {
         "selector": ".history-top",
+        "axes": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
         "delta": 0,
         "passed": true
       },
       {
         "selector": ".history-search-dialog input,.history-dialog input",
+        "axes": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
+        "delta": 0,
+        "passed": true
+      },
+      {
+        "selector": "彈窗列表列[0]",
+        "axes": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
+        "delta": 0,
+        "passed": true
+      },
+      {
+        "selector": "彈窗列表列[1]",
+        "axes": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
+        "delta": 0,
+        "passed": true
+      },
+      {
+        "selector": "彈窗列表列[2]",
+        "axes": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
+        "delta": 0,
+        "passed": true
+      },
+      {
+        "selector": "彈窗列表動作[0]",
+        "axes": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
+        "delta": 0,
+        "passed": true
+      },
+      {
+        "selector": "彈窗列表動作[1]",
+        "axes": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
+        "delta": 0,
+        "passed": true
+      },
+      {
+        "selector": "彈窗列表動作[2]",
+        "axes": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
         "delta": 0,
         "passed": true
       }
@@ -2411,7 +2885,7 @@
     "height": 768,
     "id": "N03",
     "label": "封存聊天",
-    "ratio": 1.2657660749145925,
+    "ratio": 0.8474980173255247,
     "rects": [
       {
         "selector": ".assistant-header",
@@ -2727,51 +3201,177 @@
     "geometry": [
       {
         "selector": ".assistant-header",
+        "axes": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
         "delta": 0,
         "passed": true
       },
       {
         "selector": ".conversation-history",
+        "axes": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
         "delta": 0,
         "passed": true
       },
       {
         "selector": ".reference-title-row",
+        "axes": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
         "delta": 0,
         "passed": true
       },
       {
         "selector": ".assistant-copyright",
+        "axes": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
         "delta": 0,
         "passed": true
       },
       {
         "selector": ".history-search-dialog,.history-dialog",
+        "axes": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
         "delta": 0,
         "passed": true
       },
       {
         "selector": ".header-tools button",
+        "axes": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
         "delta": 0,
         "passed": true
       },
       {
         "selector": ".entry-message.user",
+        "axes": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
         "delta": 0,
         "passed": true
       },
       {
         "selector": ".entry-message.assistant",
+        "axes": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
         "delta": 0,
         "passed": true
       },
       {
         "selector": ".history-top",
+        "axes": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
         "delta": 0,
         "passed": true
       },
       {
         "selector": ".history-search-dialog input,.history-dialog input",
+        "axes": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
+        "delta": 0,
+        "passed": true
+      },
+      {
+        "selector": "彈窗列表列[0]",
+        "axes": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
+        "delta": 0,
+        "passed": true
+      },
+      {
+        "selector": "彈窗列表列[1]",
+        "axes": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
+        "delta": 0,
+        "passed": true
+      },
+      {
+        "selector": "彈窗列表列[2]",
+        "axes": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
+        "delta": 0,
+        "passed": true
+      },
+      {
+        "selector": "彈窗列表動作[0]",
+        "axes": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
+        "delta": 0,
+        "passed": true
+      },
+      {
+        "selector": "彈窗列表動作[1]",
+        "axes": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
+        "delta": 0,
+        "passed": true
+      },
+      {
+        "selector": "彈窗列表動作[2]",
+        "axes": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
         "delta": 0,
         "passed": true
       }
@@ -2782,7 +3382,7 @@
     "height": 768,
     "id": "N04",
     "label": "已刪除聊天",
-    "ratio": 2.4857781234748657,
+    "ratio": 0.8796211566617862,
     "rects": [
       {
         "selector": ".assistant-header",
@@ -2866,12 +3466,12 @@
         "selector": ".history-search-dialog,.history-dialog",
         "rect": {
           "x": 363,
-          "y": 136.984375,
+          "y": 136.1640625,
           "width": 640,
-          "height": 494.03125,
-          "top": 136.984375,
+          "height": 495.671875,
+          "top": 136.1640625,
           "right": 1003,
-          "bottom": 631.015625,
+          "bottom": 631.8359375,
           "left": 363
         }
       },
@@ -2944,12 +3544,12 @@
         "selector": ".history-search-dialog input,.history-dialog input",
         "rect": {
           "x": 388,
-          "y": 219.984375,
+          "y": 219.1640625,
           "width": 590,
           "height": 40,
-          "top": 219.984375,
+          "top": 219.1640625,
           "right": 978,
-          "bottom": 259.984375,
+          "bottom": 259.1640625,
           "left": 388
         }
       }
@@ -3098,52 +3698,189 @@
     "geometry": [
       {
         "selector": ".assistant-header",
+        "axes": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
         "delta": 0,
         "passed": true
       },
       {
         "selector": ".conversation-history",
+        "axes": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
         "delta": 0,
         "passed": true
       },
       {
         "selector": ".reference-title-row",
+        "axes": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
         "delta": 0,
         "passed": true
       },
       {
         "selector": ".assistant-copyright",
+        "axes": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
         "delta": 0,
         "passed": true
       },
       {
         "selector": ".history-search-dialog,.history-dialog",
-        "delta": 1.640625,
+        "axes": {
+          "x": 0,
+          "y": 0.0078125,
+          "width": 0,
+          "height": 0
+        },
+        "delta": 0.0078125,
         "passed": true
       },
       {
         "selector": ".header-tools button",
+        "axes": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
         "delta": 0,
         "passed": true
       },
       {
         "selector": ".entry-message.user",
+        "axes": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
         "delta": 0,
         "passed": true
       },
       {
         "selector": ".entry-message.assistant",
+        "axes": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
         "delta": 0,
         "passed": true
       },
       {
         "selector": ".history-top",
+        "axes": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
         "delta": 0,
         "passed": true
       },
       {
         "selector": ".history-search-dialog input,.history-dialog input",
-        "delta": 0.828125,
+        "axes": {
+          "x": 0,
+          "y": 0.0078125,
+          "width": 0,
+          "height": 0
+        },
+        "delta": 0.0078125,
+        "passed": true
+      },
+      {
+        "selector": "彈窗說明[0]",
+        "axes": {
+          "x": 0,
+          "y": 0.0078125,
+          "width": 0,
+          "height": 0
+        },
+        "delta": 0.0078125,
+        "passed": true
+      },
+      {
+        "selector": "彈窗列表列[0]",
+        "axes": {
+          "x": 0,
+          "y": 0.0078125,
+          "width": 0,
+          "height": 0
+        },
+        "delta": 0.0078125,
+        "passed": true
+      },
+      {
+        "selector": "彈窗列表列[1]",
+        "axes": {
+          "x": 0,
+          "y": 0.0078125,
+          "width": 0,
+          "height": 0
+        },
+        "delta": 0.0078125,
+        "passed": true
+      },
+      {
+        "selector": "彈窗列表列[2]",
+        "axes": {
+          "x": 0,
+          "y": 0.0078125,
+          "width": 0,
+          "height": 0
+        },
+        "delta": 0.0078125,
+        "passed": true
+      },
+      {
+        "selector": "彈窗列表動作[0]",
+        "axes": {
+          "x": 0,
+          "y": 0.0078125,
+          "width": 0,
+          "height": 0
+        },
+        "delta": 0.0078125,
+        "passed": true
+      },
+      {
+        "selector": "彈窗列表動作[1]",
+        "axes": {
+          "x": 0,
+          "y": 0.0078125,
+          "width": 0,
+          "height": 0
+        },
+        "delta": 0.0078125,
+        "passed": true
+      },
+      {
+        "selector": "彈窗列表動作[2]",
+        "axes": {
+          "x": 0,
+          "y": 0.0078125,
+          "width": 0,
+          "height": 0
+        },
+        "delta": 0.0078125,
         "passed": true
       }
     ]
@@ -3153,7 +3890,7 @@
     "height": 768,
     "id": "N05",
     "label": "刪除聊天確認",
-    "ratio": 1.6803166178623719,
+    "ratio": 0.9877150439238653,
     "rects": [
       {
         "selector": ".assistant-header",
@@ -3237,12 +3974,12 @@
         "selector": ".history-search-dialog,.history-dialog",
         "rect": {
           "x": 443,
-          "y": 261.0625,
+          "y": 262.46875,
           "width": 480,
-          "height": 245.875,
-          "top": 261.0625,
+          "height": 243.0625,
+          "top": 262.46875,
           "right": 923,
-          "bottom": 506.9375,
+          "bottom": 505.53125,
           "left": 443
         }
       },
@@ -3449,46 +4186,111 @@
     "geometry": [
       {
         "selector": ".assistant-header",
+        "axes": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
         "delta": 0,
         "passed": true
       },
       {
         "selector": ".conversation-history",
+        "axes": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
         "delta": 0,
         "passed": true
       },
       {
         "selector": ".reference-title-row",
+        "axes": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
         "delta": 0,
         "passed": true
       },
       {
         "selector": ".assistant-copyright",
+        "axes": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
         "delta": 0,
         "passed": true
       },
       {
         "selector": ".history-search-dialog,.history-dialog",
-        "delta": 2.8125,
+        "axes": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
+        "delta": 0,
         "passed": true
       },
       {
         "selector": ".header-tools button",
+        "axes": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
         "delta": 0,
         "passed": true
       },
       {
         "selector": ".entry-message.user",
+        "axes": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
         "delta": 0,
         "passed": true
       },
       {
         "selector": ".entry-message.assistant",
+        "axes": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
         "delta": 0,
         "passed": true
       },
       {
         "selector": ".history-top",
+        "axes": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
+        "delta": 0,
+        "passed": true
+      },
+      {
+        "selector": "彈窗說明[0]",
+        "axes": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
         "delta": 0,
         "passed": true
       }
@@ -3499,7 +4301,7 @@
     "height": 768,
     "id": "N06",
     "label": "重新命名",
-    "ratio": 1.0980013116154221,
+    "ratio": 0.571448724987799,
     "rects": [
       {
         "selector": ".assistant-header",
@@ -3815,51 +4617,111 @@
     "geometry": [
       {
         "selector": ".assistant-header",
+        "axes": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
         "delta": 0,
         "passed": true
       },
       {
         "selector": ".conversation-history",
+        "axes": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
         "delta": 0,
         "passed": true
       },
       {
         "selector": ".reference-title-row",
+        "axes": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
         "delta": 0,
         "passed": true
       },
       {
         "selector": ".assistant-copyright",
+        "axes": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
         "delta": 0,
         "passed": true
       },
       {
         "selector": ".history-search-dialog,.history-dialog",
+        "axes": {
+          "x": 0,
+          "y": 0.0078125,
+          "width": 0,
+          "height": 0
+        },
         "delta": 0.0078125,
         "passed": true
       },
       {
         "selector": ".header-tools button",
+        "axes": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
         "delta": 0,
         "passed": true
       },
       {
         "selector": ".entry-message.user",
+        "axes": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
         "delta": 0,
         "passed": true
       },
       {
         "selector": ".entry-message.assistant",
+        "axes": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
         "delta": 0,
         "passed": true
       },
       {
         "selector": ".history-top",
+        "axes": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
         "delta": 0,
         "passed": true
       },
       {
         "selector": ".history-search-dialog input,.history-dialog input",
+        "axes": {
+          "x": 0,
+          "y": 0.0078125,
+          "width": 0,
+          "height": 0
+        },
         "delta": 0.0078125,
         "passed": true
       }
@@ -3870,7 +4732,7 @@
     "height": 768,
     "id": "N07",
     "label": "尚無聊天紀錄",
-    "ratio": 1.04929233772572,
+    "ratio": 0.7137628111273793,
     "rects": [
       {
         "selector": ".assistant-header",
@@ -4136,46 +4998,100 @@
     "geometry": [
       {
         "selector": ".assistant-header",
+        "axes": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
         "delta": 0,
         "passed": true
       },
       {
         "selector": ".conversation-history",
+        "axes": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
         "delta": 0,
         "passed": true
       },
       {
         "selector": ".reference-title-row",
+        "axes": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
         "delta": 0,
         "passed": true
       },
       {
         "selector": "[data-slot=aui_composer-shell]",
+        "axes": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 1.6875
+        },
         "delta": 1.6875,
         "passed": true
       },
       {
         "selector": ".entry-grid",
+        "axes": {
+          "x": 0,
+          "y": 1.6875,
+          "width": 0,
+          "height": 0
+        },
         "delta": 1.6875,
         "passed": true
       },
       {
         "selector": ".assistant-copyright",
+        "axes": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
         "delta": 0,
         "passed": true
       },
       {
         "selector": ".header-tools button",
+        "axes": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
         "delta": 0,
         "passed": true
       },
       {
         "selector": ".aui-composer-send",
+        "axes": {
+          "x": 0,
+          "y": 1.6875,
+          "width": 0,
+          "height": 0
+        },
         "delta": 1.6875,
         "passed": true
       },
       {
         "selector": ".history-top",
+        "axes": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
         "delta": 0,
         "passed": true
       }
@@ -4186,7 +5102,7 @@
     "height": 768,
     "id": "N08",
     "label": "搜尋沒有結果",
-    "ratio": 1.0023944607125426,
+    "ratio": 0.5540050024402148,
     "rects": [
       {
         "selector": ".assistant-header",
@@ -4502,51 +5418,111 @@
     "geometry": [
       {
         "selector": ".assistant-header",
+        "axes": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
         "delta": 0,
         "passed": true
       },
       {
         "selector": ".conversation-history",
+        "axes": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
         "delta": 0,
         "passed": true
       },
       {
         "selector": ".reference-title-row",
+        "axes": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
         "delta": 0,
         "passed": true
       },
       {
         "selector": ".assistant-copyright",
+        "axes": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
         "delta": 0,
         "passed": true
       },
       {
         "selector": ".history-search-dialog,.history-dialog",
+        "axes": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
         "delta": 0,
         "passed": true
       },
       {
         "selector": ".header-tools button",
+        "axes": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
         "delta": 0,
         "passed": true
       },
       {
         "selector": ".entry-message.user",
+        "axes": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
         "delta": 0,
         "passed": true
       },
       {
         "selector": ".entry-message.assistant",
+        "axes": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
         "delta": 0,
         "passed": true
       },
       {
         "selector": ".history-top",
+        "axes": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
         "delta": 0,
         "passed": true
       },
       {
         "selector": ".history-search-dialog input,.history-dialog input",
+        "axes": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
         "delta": 0,
         "passed": true
       }
@@ -4557,7 +5533,7 @@
     "height": 768,
     "id": "N09",
     "label": "搜尋聊天中",
-    "ratio": 1.0868487676915568,
+    "ratio": 0.834439055636896,
     "rects": [
       {
         "selector": ".assistant-header",
@@ -4873,51 +5849,111 @@
     "geometry": [
       {
         "selector": ".assistant-header",
+        "axes": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
         "delta": 0,
         "passed": true
       },
       {
         "selector": ".conversation-history",
+        "axes": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
         "delta": 0,
         "passed": true
       },
       {
         "selector": ".reference-title-row",
+        "axes": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
         "delta": 0,
         "passed": true
       },
       {
         "selector": ".assistant-copyright",
+        "axes": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
         "delta": 0,
         "passed": true
       },
       {
         "selector": ".history-search-dialog,.history-dialog",
+        "axes": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
         "delta": 0,
         "passed": true
       },
       {
         "selector": ".header-tools button",
+        "axes": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
         "delta": 0,
         "passed": true
       },
       {
         "selector": ".entry-message.user",
+        "axes": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
         "delta": 0,
         "passed": true
       },
       {
         "selector": ".entry-message.assistant",
+        "axes": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
         "delta": 0,
         "passed": true
       },
       {
         "selector": ".history-top",
+        "axes": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
         "delta": 0,
         "passed": true
       },
       {
         "selector": ".history-search-dialog input,.history-dialog input",
+        "axes": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
         "delta": 0,
         "passed": true
       }
@@ -4928,7 +5964,7 @@
     "height": 768,
     "id": "N10",
     "label": "搜尋失敗",
-    "ratio": 0.9381481820400195,
+    "ratio": 0.55476756954612,
     "rects": [
       {
         "selector": ".assistant-header",
@@ -5244,51 +6280,111 @@
     "geometry": [
       {
         "selector": ".assistant-header",
+        "axes": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
         "delta": 0,
         "passed": true
       },
       {
         "selector": ".conversation-history",
+        "axes": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
         "delta": 0,
         "passed": true
       },
       {
         "selector": ".reference-title-row",
+        "axes": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
         "delta": 0,
         "passed": true
       },
       {
         "selector": ".assistant-copyright",
+        "axes": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
         "delta": 0,
         "passed": true
       },
       {
         "selector": ".history-search-dialog,.history-dialog",
+        "axes": {
+          "x": 0,
+          "y": 0.0078125,
+          "width": 0,
+          "height": 0
+        },
         "delta": 0.0078125,
         "passed": true
       },
       {
         "selector": ".header-tools button",
+        "axes": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
         "delta": 0,
         "passed": true
       },
       {
         "selector": ".entry-message.user",
+        "axes": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
         "delta": 0,
         "passed": true
       },
       {
         "selector": ".entry-message.assistant",
+        "axes": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
         "delta": 0,
         "passed": true
       },
       {
         "selector": ".history-top",
+        "axes": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
         "delta": 0,
         "passed": true
       },
       {
         "selector": ".history-search-dialog input,.history-dialog input",
+        "axes": {
+          "x": 0,
+          "y": 0.0078125,
+          "width": 0,
+          "height": 0
+        },
         "delta": 0.0078125,
         "passed": true
       }
@@ -5299,7 +6395,7 @@
     "height": 768,
     "id": "C01",
     "label": "訊息送達未知",
-    "ratio": 2.051972761102977,
+    "ratio": 1.085228312591508,
     "rects": [
       {
         "selector": ".assistant-header",
@@ -5585,46 +6681,100 @@
     "geometry": [
       {
         "selector": ".assistant-header",
+        "axes": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
         "delta": 0,
         "passed": true
       },
       {
         "selector": ".conversation-history",
+        "axes": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
         "delta": 0,
         "passed": true
       },
       {
         "selector": ".reference-title-row",
+        "axes": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
         "delta": 0,
         "passed": true
       },
       {
         "selector": "[data-slot=aui_composer-shell]",
+        "axes": {
+          "x": 0,
+          "y": 1.6875,
+          "width": 0,
+          "height": 1.6875
+        },
         "delta": 1.6875,
         "passed": true
       },
       {
         "selector": ".assistant-copyright",
+        "axes": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
         "delta": 0,
         "passed": true
       },
       {
         "selector": ".header-tools button",
+        "axes": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
         "delta": 0,
         "passed": true
       },
       {
         "selector": ".aui-composer-send",
+        "axes": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
         "delta": 0,
         "passed": true
       },
       {
         "selector": ".entry-message.user",
+        "axes": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
         "delta": 0,
         "passed": true
       },
       {
         "selector": ".history-top",
+        "axes": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
         "delta": 0,
         "passed": true
       }
@@ -5635,7 +6785,7 @@
     "height": 768,
     "id": "C02",
     "label": "長回覆與回到最新",
-    "ratio": 2.6778497132747683,
+    "ratio": 0.5107293191800879,
     "rects": [
       {
         "selector": ".assistant-header",
@@ -5763,10 +6913,10 @@
           "x": 442,
           "y": 211.1875,
           "width": 726,
-          "height": 887.390625,
+          "height": 797,
           "top": 211.1875,
           "right": 1168,
-          "bottom": 1098.578125,
+          "bottom": 1008.1875,
           "left": 442
         }
       },
@@ -5931,52 +7081,123 @@
     "geometry": [
       {
         "selector": ".assistant-header",
+        "axes": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
         "delta": 0,
         "passed": true
       },
       {
         "selector": ".conversation-history",
+        "axes": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
         "delta": 0,
         "passed": true
       },
       {
         "selector": ".reference-title-row",
+        "axes": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
         "delta": 0,
         "passed": true
       },
       {
         "selector": "[data-slot=aui_composer-shell]",
+        "axes": {
+          "x": 0,
+          "y": 1.6875,
+          "width": 0,
+          "height": 1.6875
+        },
         "delta": 1.6875,
         "passed": true
       },
       {
         "selector": ".assistant-copyright",
+        "axes": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
         "delta": 0,
         "passed": true
       },
       {
         "selector": ".header-tools button",
+        "axes": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
         "delta": 0,
         "passed": true
       },
       {
         "selector": ".aui-composer-send",
+        "axes": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
         "delta": 0,
         "passed": true
       },
       {
         "selector": ".entry-message.user",
+        "axes": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
         "delta": 0,
         "passed": true
       },
       {
         "selector": ".entry-message.assistant",
-        "delta": 90.390625,
-        "passed": false
+        "axes": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
+        "delta": 0,
+        "passed": true
       },
       {
         "selector": ".history-top",
+        "axes": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
         "delta": 0,
+        "passed": true
+      },
+      {
+        "selector": "最新內容[0]",
+        "axes": {
+          "x": 0,
+          "y": 1.6875,
+          "width": 0,
+          "height": 0
+        },
+        "delta": 1.6875,
         "passed": true
       }
     ]
@@ -5986,7 +7207,7 @@
     "height": 810,
     "id": "H01",
     "label": "空首頁",
-    "ratio": 1.4694523583412473,
+    "ratio": 1.3874643874643875,
     "rects": [
       {
         "selector": ".assistant-header",
@@ -6252,36 +7473,78 @@
     "geometry": [
       {
         "selector": ".assistant-header",
+        "axes": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
         "delta": 0,
         "passed": true
       },
       {
         "selector": ".reference-title-row",
+        "axes": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
         "delta": 0,
         "passed": true
       },
       {
         "selector": "[data-slot=aui_composer-shell]",
+        "axes": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 1.6875
+        },
         "delta": 1.6875,
         "passed": true
       },
       {
         "selector": ".entry-grid",
+        "axes": {
+          "x": 0,
+          "y": 1.6875,
+          "width": 0,
+          "height": 0
+        },
         "delta": 1.6875,
         "passed": true
       },
       {
         "selector": ".assistant-copyright",
+        "axes": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
         "delta": 0,
         "passed": true
       },
       {
         "selector": ".header-tools button",
+        "axes": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
         "delta": 0,
         "passed": true
       },
       {
         "selector": ".aui-composer-send",
+        "axes": {
+          "x": 0,
+          "y": 1.6875,
+          "width": 0,
+          "height": 0
+        },
         "delta": 1.6875,
         "passed": true
       }
@@ -6292,7 +7555,7 @@
     "height": 810,
     "id": "H02",
     "label": "能力問答",
-    "ratio": 2.6505223171889836,
+    "ratio": 0.7378917378917379,
     "rects": [
       {
         "selector": ".assistant-header",
@@ -6588,41 +7851,89 @@
     "geometry": [
       {
         "selector": ".assistant-header",
+        "axes": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
         "delta": 0,
         "passed": true
       },
       {
         "selector": ".reference-title-row",
+        "axes": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
         "delta": 0,
         "passed": true
       },
       {
         "selector": "[data-slot=aui_composer-shell]",
+        "axes": {
+          "x": 0,
+          "y": 1.6875,
+          "width": 0,
+          "height": 1.6875
+        },
         "delta": 1.6875,
         "passed": true
       },
       {
         "selector": ".assistant-copyright",
+        "axes": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
         "delta": 0,
         "passed": true
       },
       {
         "selector": ".header-tools button",
+        "axes": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
         "delta": 0,
         "passed": true
       },
       {
         "selector": ".aui-composer-send",
+        "axes": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
         "delta": 0,
         "passed": true
       },
       {
         "selector": ".entry-message.user",
+        "axes": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
         "delta": 0,
         "passed": true
       },
       {
         "selector": ".entry-message.assistant",
+        "axes": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
         "delta": 0,
         "passed": true
       }
@@ -6633,7 +7944,7 @@
     "height": 810,
     "id": "H03",
     "label": "需求不明・自然追問",
-    "ratio": 2.1801202912314026,
+    "ratio": 0.7378917378917379,
     "rects": [
       {
         "selector": ".assistant-header",
@@ -6929,41 +8240,89 @@
     "geometry": [
       {
         "selector": ".assistant-header",
+        "axes": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
         "delta": 0,
         "passed": true
       },
       {
         "selector": ".reference-title-row",
+        "axes": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
         "delta": 0,
         "passed": true
       },
       {
         "selector": "[data-slot=aui_composer-shell]",
+        "axes": {
+          "x": 0,
+          "y": 1.6875,
+          "width": 0,
+          "height": 1.6875
+        },
         "delta": 1.6875,
         "passed": true
       },
       {
         "selector": ".assistant-copyright",
+        "axes": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
         "delta": 0,
         "passed": true
       },
       {
         "selector": ".header-tools button",
+        "axes": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
         "delta": 0,
         "passed": true
       },
       {
         "selector": ".aui-composer-send",
+        "axes": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
         "delta": 0,
         "passed": true
       },
       {
         "selector": ".entry-message.user",
+        "axes": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
         "delta": 0,
         "passed": true
       },
       {
         "selector": ".entry-message.assistant",
+        "axes": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
         "delta": 0,
         "passed": true
       }
@@ -6974,7 +8333,7 @@
     "height": 810,
     "id": "H04",
     "label": "超出範圍・友善引導",
-    "ratio": 1.7458056346945237,
+    "ratio": 0.7141500474833808,
     "rects": [
       {
         "selector": ".assistant-header",
@@ -7270,41 +8629,89 @@
     "geometry": [
       {
         "selector": ".assistant-header",
+        "axes": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
         "delta": 0,
         "passed": true
       },
       {
         "selector": ".reference-title-row",
+        "axes": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
         "delta": 0,
         "passed": true
       },
       {
         "selector": "[data-slot=aui_composer-shell]",
+        "axes": {
+          "x": 0,
+          "y": 1.6875,
+          "width": 0,
+          "height": 1.6875
+        },
         "delta": 1.6875,
         "passed": true
       },
       {
         "selector": ".assistant-copyright",
+        "axes": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
         "delta": 0,
         "passed": true
       },
       {
         "selector": ".header-tools button",
+        "axes": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
         "delta": 0,
         "passed": true
       },
       {
         "selector": ".aui-composer-send",
+        "axes": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
         "delta": 0,
         "passed": true
       },
       {
         "selector": ".entry-message.user",
+        "axes": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
         "delta": 0,
         "passed": true
       },
       {
         "selector": ".entry-message.assistant",
+        "axes": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
         "delta": 0,
         "passed": true
       }
@@ -7315,7 +8722,7 @@
     "height": 810,
     "id": "H05",
     "label": "AI 未設定・人工入口",
-    "ratio": 2.553656220322887,
+    "ratio": 2.090534979423868,
     "rects": [
       {
         "selector": ".assistant-header",
@@ -7611,41 +9018,89 @@
     "geometry": [
       {
         "selector": ".assistant-header",
+        "axes": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
         "delta": 0,
         "passed": true
       },
       {
         "selector": ".reference-title-row",
+        "axes": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
         "delta": 0,
         "passed": true
       },
       {
         "selector": "[data-slot=aui_composer-shell]",
+        "axes": {
+          "x": 0,
+          "y": 1.6875,
+          "width": 0,
+          "height": 1.6875
+        },
         "delta": 1.6875,
         "passed": true
       },
       {
         "selector": ".assistant-copyright",
+        "axes": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
         "delta": 0,
         "passed": true
       },
       {
         "selector": ".header-tools button",
+        "axes": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
         "delta": 0,
         "passed": true
       },
       {
         "selector": ".aui-composer-send",
+        "axes": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
         "delta": 0,
         "passed": true
       },
       {
         "selector": ".entry-message.user",
+        "axes": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
         "delta": 0,
         "passed": true
       },
       {
         "selector": ".entry-message.assistant",
+        "axes": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 1.796875
+        },
         "delta": 1.796875,
         "passed": true
       }
@@ -7656,7 +9111,7 @@
     "height": 810,
     "id": "N01",
     "label": "平面清單與拖曳側欄",
-    "ratio": 2.3567584678695788,
+    "ratio": 1.3880974992086104,
     "rects": [
       {
         "selector": ".assistant-header",
@@ -7922,36 +9377,78 @@
     "geometry": [
       {
         "selector": ".assistant-header",
+        "axes": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
         "delta": 0,
         "passed": true
       },
       {
         "selector": ".reference-title-row",
+        "axes": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
         "delta": 0,
         "passed": true
       },
       {
         "selector": "[data-slot=aui_composer-shell]",
+        "axes": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 1.6875
+        },
         "delta": 1.6875,
         "passed": true
       },
       {
         "selector": ".entry-grid",
+        "axes": {
+          "x": 0,
+          "y": 1.6875,
+          "width": 0,
+          "height": 0
+        },
         "delta": 1.6875,
         "passed": true
       },
       {
         "selector": ".assistant-copyright",
+        "axes": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
         "delta": 0,
         "passed": true
       },
       {
         "selector": ".header-tools button",
+        "axes": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
         "delta": 0,
         "passed": true
       },
       {
         "selector": ".aui-composer-send",
+        "axes": {
+          "x": 0,
+          "y": 1.6875,
+          "width": 0,
+          "height": 0
+        },
         "delta": 1.6875,
         "passed": true
       }
@@ -7962,7 +9459,7 @@
     "height": 810,
     "id": "N02",
     "label": "搜尋聊天",
-    "ratio": 4.341880341880342,
+    "ratio": 3.668566001899335,
     "rects": [
       {
         "selector": ".assistant-header",
@@ -8278,42 +9775,156 @@
     "geometry": [
       {
         "selector": ".assistant-header",
+        "axes": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
         "delta": 0,
         "passed": true
       },
       {
         "selector": ".reference-title-row",
+        "axes": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
         "delta": 0,
         "passed": true
       },
       {
         "selector": ".assistant-copyright",
+        "axes": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
         "delta": 0,
         "passed": true
       },
       {
         "selector": ".history-search-dialog,.history-dialog",
+        "axes": {
+          "x": 1,
+          "y": 0,
+          "width": 2,
+          "height": 0
+        },
         "delta": 2,
         "passed": true
       },
       {
         "selector": ".header-tools button",
+        "axes": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
         "delta": 0,
         "passed": true
       },
       {
         "selector": ".entry-message.user",
+        "axes": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
         "delta": 0,
         "passed": true
       },
       {
         "selector": ".entry-message.assistant",
+        "axes": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
         "delta": 0,
         "passed": true
       },
       {
         "selector": ".history-search-dialog input,.history-dialog input",
+        "axes": {
+          "x": 1,
+          "y": 0,
+          "width": 2,
+          "height": 0
+        },
         "delta": 2,
+        "passed": true
+      },
+      {
+        "selector": "彈窗列表列[0]",
+        "axes": {
+          "x": 1,
+          "y": 0,
+          "width": 2,
+          "height": 0
+        },
+        "delta": 2,
+        "passed": true
+      },
+      {
+        "selector": "彈窗列表列[1]",
+        "axes": {
+          "x": 1,
+          "y": 0,
+          "width": 2,
+          "height": 0
+        },
+        "delta": 2,
+        "passed": true
+      },
+      {
+        "selector": "彈窗列表列[2]",
+        "axes": {
+          "x": 1,
+          "y": 0,
+          "width": 2,
+          "height": 0
+        },
+        "delta": 2,
+        "passed": true
+      },
+      {
+        "selector": "彈窗列表動作[0]",
+        "axes": {
+          "x": 1,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
+        "delta": 1,
+        "passed": true
+      },
+      {
+        "selector": "彈窗列表動作[1]",
+        "axes": {
+          "x": 1,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
+        "delta": 1,
+        "passed": true
+      },
+      {
+        "selector": "彈窗列表動作[2]",
+        "axes": {
+          "x": 1,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
+        "delta": 1,
         "passed": true
       }
     ]
@@ -8323,7 +9934,7 @@
     "height": 810,
     "id": "N03",
     "label": "封存聊天",
-    "ratio": 4.212092434314656,
+    "ratio": 3.5561886672997782,
     "rects": [
       {
         "selector": ".assistant-header",
@@ -8639,42 +10250,156 @@
     "geometry": [
       {
         "selector": ".assistant-header",
+        "axes": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
         "delta": 0,
         "passed": true
       },
       {
         "selector": ".reference-title-row",
+        "axes": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
         "delta": 0,
         "passed": true
       },
       {
         "selector": ".assistant-copyright",
+        "axes": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
         "delta": 0,
         "passed": true
       },
       {
         "selector": ".history-search-dialog,.history-dialog",
+        "axes": {
+          "x": 1,
+          "y": 0,
+          "width": 2,
+          "height": 0
+        },
         "delta": 2,
         "passed": true
       },
       {
         "selector": ".header-tools button",
+        "axes": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
         "delta": 0,
         "passed": true
       },
       {
         "selector": ".entry-message.user",
+        "axes": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
         "delta": 0,
         "passed": true
       },
       {
         "selector": ".entry-message.assistant",
+        "axes": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
         "delta": 0,
         "passed": true
       },
       {
         "selector": ".history-search-dialog input,.history-dialog input",
+        "axes": {
+          "x": 1,
+          "y": 0,
+          "width": 2,
+          "height": 0
+        },
         "delta": 2,
+        "passed": true
+      },
+      {
+        "selector": "彈窗列表列[0]",
+        "axes": {
+          "x": 1,
+          "y": 0,
+          "width": 2,
+          "height": 0
+        },
+        "delta": 2,
+        "passed": true
+      },
+      {
+        "selector": "彈窗列表列[1]",
+        "axes": {
+          "x": 1,
+          "y": 0,
+          "width": 2,
+          "height": 0
+        },
+        "delta": 2,
+        "passed": true
+      },
+      {
+        "selector": "彈窗列表列[2]",
+        "axes": {
+          "x": 1,
+          "y": 0,
+          "width": 2,
+          "height": 0
+        },
+        "delta": 2,
+        "passed": true
+      },
+      {
+        "selector": "彈窗列表動作[0]",
+        "axes": {
+          "x": 1,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
+        "delta": 1,
+        "passed": true
+      },
+      {
+        "selector": "彈窗列表動作[1]",
+        "axes": {
+          "x": 1,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
+        "delta": 1,
+        "passed": true
+      },
+      {
+        "selector": "彈窗列表動作[2]",
+        "axes": {
+          "x": 1,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
+        "delta": 1,
         "passed": true
       }
     ]
@@ -8684,7 +10409,7 @@
     "height": 810,
     "id": "N04",
     "label": "已刪除聊天",
-    "ratio": 6.841088952200064,
+    "ratio": 4.156062044950934,
     "rects": [
       {
         "selector": ".assistant-header",
@@ -8768,12 +10493,12 @@
         "selector": ".history-search-dialog,.history-dialog",
         "rect": {
           "x": 12,
-          "y": 164.984375,
+          "y": 164.1640625,
           "width": 366,
-          "height": 480.03125,
-          "top": 164.984375,
+          "height": 481.671875,
+          "top": 164.1640625,
           "right": 378,
-          "bottom": 645.015625,
+          "bottom": 645.8359375,
           "left": 12
         }
       },
@@ -8846,12 +10571,12 @@
         "selector": ".history-search-dialog input,.history-dialog input",
         "rect": {
           "x": 31,
-          "y": 241.984375,
+          "y": 241.1640625,
           "width": 328,
           "height": 40,
-          "top": 241.984375,
+          "top": 241.1640625,
           "right": 359,
-          "bottom": 281.984375,
+          "bottom": 281.1640625,
           "left": 31
         }
       }
@@ -9000,42 +10725,167 @@
     "geometry": [
       {
         "selector": ".assistant-header",
+        "axes": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
         "delta": 0,
         "passed": true
       },
       {
         "selector": ".reference-title-row",
+        "axes": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
         "delta": 0,
         "passed": true
       },
       {
         "selector": ".assistant-copyright",
+        "axes": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
         "delta": 0,
         "passed": true
       },
       {
         "selector": ".history-search-dialog,.history-dialog",
+        "axes": {
+          "x": 1,
+          "y": 0.0078125,
+          "width": 2,
+          "height": 0
+        },
         "delta": 2,
         "passed": true
       },
       {
         "selector": ".header-tools button",
+        "axes": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
         "delta": 0,
         "passed": true
       },
       {
         "selector": ".entry-message.user",
+        "axes": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
         "delta": 0,
         "passed": true
       },
       {
         "selector": ".entry-message.assistant",
+        "axes": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
         "delta": 0,
         "passed": true
       },
       {
         "selector": ".history-search-dialog input,.history-dialog input",
+        "axes": {
+          "x": 1,
+          "y": 0.0078125,
+          "width": 2,
+          "height": 0
+        },
         "delta": 2,
+        "passed": true
+      },
+      {
+        "selector": "彈窗說明[0]",
+        "axes": {
+          "x": 1,
+          "y": 0.0078125,
+          "width": 2,
+          "height": 0
+        },
+        "delta": 2,
+        "passed": true
+      },
+      {
+        "selector": "彈窗列表列[0]",
+        "axes": {
+          "x": 1,
+          "y": 0.0078125,
+          "width": 2,
+          "height": 0
+        },
+        "delta": 2,
+        "passed": true
+      },
+      {
+        "selector": "彈窗列表列[1]",
+        "axes": {
+          "x": 1,
+          "y": 0.0078125,
+          "width": 2,
+          "height": 0
+        },
+        "delta": 2,
+        "passed": true
+      },
+      {
+        "selector": "彈窗列表列[2]",
+        "axes": {
+          "x": 1,
+          "y": 0.0078125,
+          "width": 2,
+          "height": 0
+        },
+        "delta": 2,
+        "passed": true
+      },
+      {
+        "selector": "彈窗列表動作[0]",
+        "axes": {
+          "x": 1,
+          "y": 0.0078125,
+          "width": 0,
+          "height": 0
+        },
+        "delta": 1,
+        "passed": true
+      },
+      {
+        "selector": "彈窗列表動作[1]",
+        "axes": {
+          "x": 1,
+          "y": 0.0078125,
+          "width": 0,
+          "height": 0
+        },
+        "delta": 1,
+        "passed": true
+      },
+      {
+        "selector": "彈窗列表動作[2]",
+        "axes": {
+          "x": 1,
+          "y": 0.0078125,
+          "width": 0,
+          "height": 0
+        },
+        "delta": 1,
         "passed": true
       }
     ]
@@ -9045,7 +10895,7 @@
     "height": 810,
     "id": "N05",
     "label": "刪除聊天確認",
-    "ratio": 4.842988287432732,
+    "ratio": 3.1462488129154793,
     "rects": [
       {
         "selector": ".assistant-header",
@@ -9129,12 +10979,12 @@
         "selector": ".history-search-dialog,.history-dialog",
         "rect": {
           "x": 12,
-          "y": 289.0625,
+          "y": 290.46875,
           "width": 366,
-          "height": 231.875,
-          "top": 289.0625,
+          "height": 229.0625,
+          "top": 290.46875,
           "right": 378,
-          "bottom": 520.9375,
+          "bottom": 519.53125,
           "left": 12
         }
       },
@@ -9341,37 +11191,90 @@
     "geometry": [
       {
         "selector": ".assistant-header",
+        "axes": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
         "delta": 0,
         "passed": true
       },
       {
         "selector": ".reference-title-row",
+        "axes": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
         "delta": 0,
         "passed": true
       },
       {
         "selector": ".assistant-copyright",
+        "axes": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
         "delta": 0,
         "passed": true
       },
       {
         "selector": ".history-search-dialog,.history-dialog",
-        "delta": 2.8125,
+        "axes": {
+          "x": 1,
+          "y": 0,
+          "width": 2,
+          "height": 0
+        },
+        "delta": 2,
         "passed": true
       },
       {
         "selector": ".header-tools button",
+        "axes": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
         "delta": 0,
         "passed": true
       },
       {
         "selector": ".entry-message.user",
+        "axes": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
         "delta": 0,
         "passed": true
       },
       {
         "selector": ".entry-message.assistant",
+        "axes": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
         "delta": 0,
+        "passed": true
+      },
+      {
+        "selector": "彈窗說明[0]",
+        "axes": {
+          "x": 1,
+          "y": 0,
+          "width": 2,
+          "height": 0
+        },
+        "delta": 2,
         "passed": true
       }
     ]
@@ -9381,7 +11284,7 @@
     "height": 810,
     "id": "N06",
     "label": "重新命名",
-    "ratio": 3.2491294713516936,
+    "ratio": 1.9753086419753085,
     "rects": [
       {
         "selector": ".assistant-header",
@@ -9697,41 +11600,89 @@
     "geometry": [
       {
         "selector": ".assistant-header",
+        "axes": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
         "delta": 0,
         "passed": true
       },
       {
         "selector": ".reference-title-row",
+        "axes": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
         "delta": 0,
         "passed": true
       },
       {
         "selector": ".assistant-copyright",
+        "axes": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
         "delta": 0,
         "passed": true
       },
       {
         "selector": ".history-search-dialog,.history-dialog",
+        "axes": {
+          "x": 1,
+          "y": 0.0078125,
+          "width": 2,
+          "height": 0
+        },
         "delta": 2,
         "passed": true
       },
       {
         "selector": ".header-tools button",
+        "axes": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
         "delta": 0,
         "passed": true
       },
       {
         "selector": ".entry-message.user",
+        "axes": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
         "delta": 0,
         "passed": true
       },
       {
         "selector": ".entry-message.assistant",
+        "axes": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
         "delta": 0,
         "passed": true
       },
       {
         "selector": ".history-search-dialog input,.history-dialog input",
+        "axes": {
+          "x": 1,
+          "y": 0.0078125,
+          "width": 2,
+          "height": 0
+        },
         "delta": 2,
         "passed": true
       }
@@ -9742,7 +11693,7 @@
     "height": 810,
     "id": "N07",
     "label": "尚無聊天紀錄",
-    "ratio": 2.3567584678695788,
+    "ratio": 1.3880974992086104,
     "rects": [
       {
         "selector": ".assistant-header",
@@ -10008,36 +11959,78 @@
     "geometry": [
       {
         "selector": ".assistant-header",
+        "axes": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
         "delta": 0,
         "passed": true
       },
       {
         "selector": ".reference-title-row",
+        "axes": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
         "delta": 0,
         "passed": true
       },
       {
         "selector": "[data-slot=aui_composer-shell]",
+        "axes": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 1.6875
+        },
         "delta": 1.6875,
         "passed": true
       },
       {
         "selector": ".entry-grid",
+        "axes": {
+          "x": 0,
+          "y": 1.6875,
+          "width": 0,
+          "height": 0
+        },
         "delta": 1.6875,
         "passed": true
       },
       {
         "selector": ".assistant-copyright",
+        "axes": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
         "delta": 0,
         "passed": true
       },
       {
         "selector": ".header-tools button",
+        "axes": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
         "delta": 0,
         "passed": true
       },
       {
         "selector": ".aui-composer-send",
+        "axes": {
+          "x": 0,
+          "y": 1.6875,
+          "width": 0,
+          "height": 0
+        },
         "delta": 1.6875,
         "passed": true
       }
@@ -10048,7 +12041,7 @@
     "height": 810,
     "id": "N08",
     "label": "搜尋沒有結果",
-    "ratio": 3.0750237416904085,
+    "ratio": 1.95346628679962,
     "rects": [
       {
         "selector": ".assistant-header",
@@ -10364,41 +12357,89 @@
     "geometry": [
       {
         "selector": ".assistant-header",
+        "axes": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
         "delta": 0,
         "passed": true
       },
       {
         "selector": ".reference-title-row",
+        "axes": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
         "delta": 0,
         "passed": true
       },
       {
         "selector": ".assistant-copyright",
+        "axes": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
         "delta": 0,
         "passed": true
       },
       {
         "selector": ".history-search-dialog,.history-dialog",
+        "axes": {
+          "x": 1,
+          "y": 0,
+          "width": 2,
+          "height": 0
+        },
         "delta": 2,
         "passed": true
       },
       {
         "selector": ".header-tools button",
+        "axes": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
         "delta": 0,
         "passed": true
       },
       {
         "selector": ".entry-message.user",
+        "axes": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
         "delta": 0,
         "passed": true
       },
       {
         "selector": ".entry-message.assistant",
+        "axes": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
         "delta": 0,
         "passed": true
       },
       {
         "selector": ".history-search-dialog input,.history-dialog input",
+        "axes": {
+          "x": 1,
+          "y": 0,
+          "width": 2,
+          "height": 0
+        },
         "delta": 2,
         "passed": true
       }
@@ -10409,7 +12450,7 @@
     "height": 810,
     "id": "N09",
     "label": "搜尋聊天中",
-    "ratio": 2.888888888888889,
+    "ratio": 2.463121240899019,
     "rects": [
       {
         "selector": ".assistant-header",
@@ -10725,41 +12766,89 @@
     "geometry": [
       {
         "selector": ".assistant-header",
+        "axes": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
         "delta": 0,
         "passed": true
       },
       {
         "selector": ".reference-title-row",
+        "axes": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
         "delta": 0,
         "passed": true
       },
       {
         "selector": ".assistant-copyright",
+        "axes": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
         "delta": 0,
         "passed": true
       },
       {
         "selector": ".history-search-dialog,.history-dialog",
+        "axes": {
+          "x": 1,
+          "y": 0,
+          "width": 2,
+          "height": 0
+        },
         "delta": 2,
         "passed": true
       },
       {
         "selector": ".header-tools button",
+        "axes": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
         "delta": 0,
         "passed": true
       },
       {
         "selector": ".entry-message.user",
+        "axes": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
         "delta": 0,
         "passed": true
       },
       {
         "selector": ".entry-message.assistant",
+        "axes": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
         "delta": 0,
         "passed": true
       },
       {
         "selector": ".history-search-dialog input,.history-dialog input",
+        "axes": {
+          "x": 1,
+          "y": 0,
+          "width": 2,
+          "height": 0
+        },
         "delta": 2,
         "passed": true
       }
@@ -10770,7 +12859,7 @@
     "height": 810,
     "id": "N10",
     "label": "搜尋失敗",
-    "ratio": 3.1560620449509336,
+    "ratio": 2.6210826210826212,
     "rects": [
       {
         "selector": ".assistant-header",
@@ -11086,41 +13175,89 @@
     "geometry": [
       {
         "selector": ".assistant-header",
+        "axes": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
         "delta": 0,
         "passed": true
       },
       {
         "selector": ".reference-title-row",
+        "axes": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
         "delta": 0,
         "passed": true
       },
       {
         "selector": ".assistant-copyright",
+        "axes": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
         "delta": 0,
         "passed": true
       },
       {
         "selector": ".history-search-dialog,.history-dialog",
+        "axes": {
+          "x": 1,
+          "y": 0.0078125,
+          "width": 2,
+          "height": 0
+        },
         "delta": 2,
         "passed": true
       },
       {
         "selector": ".header-tools button",
+        "axes": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
         "delta": 0,
         "passed": true
       },
       {
         "selector": ".entry-message.user",
+        "axes": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
         "delta": 0,
         "passed": true
       },
       {
         "selector": ".entry-message.assistant",
+        "axes": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
         "delta": 0,
         "passed": true
       },
       {
         "selector": ".history-search-dialog input,.history-dialog input",
+        "axes": {
+          "x": 1,
+          "y": 0.0078125,
+          "width": 2,
+          "height": 0
+        },
         "delta": 2,
         "passed": true
       }
@@ -11131,7 +13268,7 @@
     "height": 810,
     "id": "C01",
     "label": "訊息送達未知",
-    "ratio": 2.967394745172523,
+    "ratio": 2.4615384615384617,
     "rects": [
       {
         "selector": ".assistant-header",
@@ -11417,36 +13554,78 @@
     "geometry": [
       {
         "selector": ".assistant-header",
+        "axes": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
         "delta": 0,
         "passed": true
       },
       {
         "selector": ".reference-title-row",
+        "axes": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
         "delta": 0,
         "passed": true
       },
       {
         "selector": "[data-slot=aui_composer-shell]",
+        "axes": {
+          "x": 0,
+          "y": 1.6875,
+          "width": 0,
+          "height": 1.6875
+        },
         "delta": 1.6875,
         "passed": true
       },
       {
         "selector": ".assistant-copyright",
+        "axes": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
         "delta": 0,
         "passed": true
       },
       {
         "selector": ".header-tools button",
+        "axes": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
         "delta": 0,
         "passed": true
       },
       {
         "selector": ".aui-composer-send",
+        "axes": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
         "delta": 0,
         "passed": true
       },
       {
         "selector": ".entry-message.user",
+        "axes": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
         "delta": 0,
         "passed": true
       }
@@ -11457,7 +13636,7 @@
     "height": 810,
     "id": "C02",
     "label": "長回覆與回到最新",
-    "ratio": 5.211775878442545,
+    "ratio": 0.9683444127888572,
     "rects": [
       {
         "selector": ".assistant-header",
@@ -11585,10 +13764,10 @@
           "x": 21,
           "y": 195.1875,
           "width": 348,
-          "height": 1076.390625,
+          "height": 986,
           "top": 195.1875,
           "right": 369,
-          "bottom": 1271.578125,
+          "bottom": 1181.1875,
           "left": 21
         }
       },
@@ -11753,43 +13932,102 @@
     "geometry": [
       {
         "selector": ".assistant-header",
+        "axes": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
         "delta": 0,
         "passed": true
       },
       {
         "selector": ".reference-title-row",
+        "axes": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
         "delta": 0,
         "passed": true
       },
       {
         "selector": "[data-slot=aui_composer-shell]",
+        "axes": {
+          "x": 0,
+          "y": 1.6875,
+          "width": 0,
+          "height": 1.6875
+        },
         "delta": 1.6875,
         "passed": true
       },
       {
         "selector": ".assistant-copyright",
+        "axes": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
         "delta": 0,
         "passed": true
       },
       {
         "selector": ".header-tools button",
+        "axes": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
         "delta": 0,
         "passed": true
       },
       {
         "selector": ".aui-composer-send",
+        "axes": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
         "delta": 0,
         "passed": true
       },
       {
         "selector": ".entry-message.user",
+        "axes": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
         "delta": 0,
         "passed": true
       },
       {
         "selector": ".entry-message.assistant",
-        "delta": 90.390625,
-        "passed": false
+        "axes": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
+        "delta": 0,
+        "passed": true
+      },
+      {
+        "selector": "最新內容[0]",
+        "axes": {
+          "x": 0,
+          "y": 1.6875,
+          "width": 0,
+          "height": 0
+        },
+        "delta": 1.6875,
+        "passed": true
       }
     ]
   }
