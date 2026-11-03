@@ -16,7 +16,7 @@ async function fixture(page,scene){
   const send=data=>route.fulfill({json:data});
   if(p.endsWith('/messages/start')){sent=body;return send({request_id:body.request_id??'fixture-request',token:'fixture-only'});}
   if(p.startsWith('/api/streams/')&&p.endsWith('/stop')){stopped=true;return send({status:'stopping'});}
-  if(p.startsWith('/api/streams/')){await new Promise(r=>setTimeout(r,700));if(stopped){messages.push({role:'user',content:sent.text},{role:'assistant',content:'已停止這次查詢。\n\n你可以修改條件後再查一次。',stopped:true});return send({events:[{seq:++pollSeq,event:'stopped',data:{}}],terminal:true});}if(!pollSeq)return send({events:[{seq:++pollSeq,event:'intent',data:{readonly:true,request_id:'fixture-request',token:'fixture-only'}}],terminal:false});return send({events:[],terminal:false});}
+  if(p.startsWith('/api/streams/')){await new Promise(r=>setTimeout(r,700));if(stopped){messages.push({role:'user',content:sent.text},{role:'assistant',content:'已停止這次查詢。\n\n你可以修改條件後再查一次。',stopped:true});return send({events:[{seq:++pollSeq,event:'stopped',data:{}}],terminal:true});}if(!pollSeq)return send({events:[{seq:++pollSeq,event:'intent',data:{readonly:true,request_id:'fixture-request',token:'fixture-only'}},{seq:++pollSeq,event:'step',data:{id:1,label:'查詢作業資料',status:'running'}}],terminal:false});return send({events:[],terminal:false});}
   if(p==='/api/workspace')return send(scene.startsWith('picker')||scene==='report-picker'?workspace:result);
   if(p.endsWith('/guide')){if(body)guide={...guide,...body,version:guide.version+1,missing:['ok'],ready:false};return send(guide);}
   if(p==='/api/conversations/fixture-2')return send({...chats[2],messages,...(!scene.startsWith('picker')&&scene!=='report-picker'?{query_context:result.query_context}:{})});

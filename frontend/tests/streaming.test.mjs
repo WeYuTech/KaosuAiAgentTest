@@ -37,8 +37,10 @@ test('登入失效立即交還權限處理，不輪詢重試',async()=>{
 test('步驟完成自動收合，可按原生按鈕展開，停止不顯示半成品',async()=>{
  const host=document.createElement('div');document.body.append(host);const root=createRoot(host);
  const summary={request_id:'one',elapsed_seconds:4.2,steps:[{id:1,label:'查詢作業資料',status:'done'}]};
- await act(async()=>root.render(h(ProcessingSteps,{summary,phase:'running',text:'片段'})));assert.equal(host.querySelector('button').getAttribute('aria-expanded'),'true');
- await act(async()=>root.render(h(ProcessingSteps,{summary,phase:'done'})));assert.equal(host.querySelector('button').getAttribute('aria-expanded'),'false');
+ await act(async()=>root.render(h(ProcessingSteps,{summary,phase:'running',text:'片段'})));assert.equal(host.querySelector('button').getAttribute('aria-expanded'),'false');
+ assert.equal(host.querySelectorAll('.request-progress').length,1);assert.equal(host.querySelector('.processing-steps'),null);assert.equal(host.querySelector('ol'),null);
+ await act(async()=>host.querySelector('.request-steps-toggle').click());assert.equal(host.querySelector('li span').textContent,'查詢作業資料');assert.equal(host.querySelector('.stream-reply').textContent,'片段');
+ await act(async()=>root.render(h(ProcessingSteps,{summary,phase:'done'})));assert.equal(host.querySelector('button').getAttribute('aria-expanded'),'false');assert.equal(host.querySelector('button').textContent,'已處理 4.2 秒 · 1 個步驟');assert.equal(host.querySelector('.request-progress'),null);
  await act(async()=>host.querySelector('button').click());assert.equal(host.querySelector('button').getAttribute('aria-expanded'),'true');
  await act(async()=>root.render(h(ProcessingSteps,{summary,phase:'stopped',text:'半成品'})));assert.ok(!host.textContent.includes('半成品'));assert.ok(host.textContent.includes('已停止'));
  await act(async()=>root.unmount());host.remove();

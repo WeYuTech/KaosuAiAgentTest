@@ -257,7 +257,7 @@
 #mes-ai-chat-root .target-picker-dialog .reference-pick-table button{min-height:30px;padding:5px 10px;font-size:13px;line-height:1.5;border-color:transparent}
 #mes-ai-chat-root .target-picker-dialog .reference-pick-table .record-choice-detail td{width:auto;background:var(--v2-panel);padding:14px 16px;font-size:12px;color:var(--muted-foreground)}
 #mes-ai-chat-root .target-picker-dialog .reference-pick-table .record-choice-detail strong{font-size:12px;font-weight:500}
-#mes-ai-chat-root .picker-pagination{padding:11px 14px;border:1px solid var(--border);border-top:0;display:flex;justify-content:space-between;align-items:center;font-size:12px;line-height:1.55;gap:10px;color:var(--muted-foreground);margin:0;border-radius:0 0 10px 10px}
+#mes-ai-chat-root .picker-pagination{padding:11px 14px;border:0;border-top:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;font-size:12px;line-height:1.55;gap:10px;color:var(--muted-foreground);margin:0;border-radius:0}
 #mes-ai-chat-root .picker-pagination>div{display:flex;align-items:center;gap:10px}
 #mes-ai-chat-root .picker-pagination button{width:36px;height:36px;min-width:36px;min-height:36px;padding:8px;border-color:transparent;border-radius:8px}
 #mes-ai-chat-root .picker-selection{font-size:12px;line-height:1.55;color:var(--muted-foreground);margin-right:auto;min-width:0;padding:0;border:0;background:transparent;flex:0 1 auto}
@@ -397,3 +397,12 @@
 #mes-ai-chat-root .dual-flow.chat-only .composer-footnote{display:none}
 #mes-ai-chat-root .history-select{font-weight:400;color:var(--foreground)}
 #mes-ai-chat-root .target-picker-dialog .picker-ai .aui-composer-send:disabled{opacity:1}
+
+/* 等待標題同時作為真實處理步驟的展開入口，收合時不產生第二組狀態框。 */
+#mes-ai-chat-root .request-progress .request-steps-toggle{display:inline;padding:0;margin:0;min-height:0;min-width:0;border:0;border-radius:0;background:transparent;box-shadow:none;color:inherit;font:inherit;letter-spacing:inherit;text-align:start}
+#mes-ai-chat-root .request-step-list{font-size:13px;color:var(--muted-foreground);margin:12px 0}
+#mes-ai-chat-root .request-step-list ol{list-style:none;margin:0;padding:0}
+#mes-ai-chat-root .request-step-list li{display:flex;align-items:center;gap:8px;padding:5px 0}
+#mes-ai-chat-root .request-step-list li svg{flex:none}
+#mes-ai-chat-root .request-step-list li small{margin-left:auto}
+#mes-ai-chat-root .target-picker-dialog .reference-pick-table .picker-pagination button{height:36px;min-height:36px;padding:8px;font-size:12px;line-height:1.55}
