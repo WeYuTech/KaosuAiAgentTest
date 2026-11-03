@@ -1,0 +1,34 @@
+{
+    "old_hashed_asset_count":  62,
+    "env_hash_unchanged":  true,
+    "rollback_script_present":  true,
+    "proxy":  {
+                  "enabled":  "True",
+                  "responseBufferLimit":  "4096",
+                  "minResponseBuffer":  "256",
+                  "bufferChunkedResponses":  "True",
+                  "preserveHostHeader":  "True",
+                  "timeout":  "00:05:00"
+              },
+    "verified":  170,
+    "log_restoration_allowed":  false,
+    "log_snapshots_match":  true,
+    "old_hashed_assets_retained":  true,
+    "health":  {
+                   "status":  "ok",
+                   "mode":  "live",
+                   "model_configured":  true,
+                   "model":  "gpt-6.1-sol",
+                   "business_timezone":  "UTC+07:00",
+                   "business_date":  "2026-11-03",
+                   "server_time":  "2026-11-03T13:39:31.381445+07:00"
+               },
+    "full_backup_count":  237,
+    "task_state":  "Running",
+    "log_snapshot_count":  1,
+    "all_release_files_match":  true,
+    "commit":  "2dafe9e3caf92e105c0806adf8dc3922f07c03f7",
+    "dynamic_compression":  "false",
+    "checked_utc":  "2026-11-03T06:39:31.9273917Z"
+}
+{"conversations": 24, "active_messages": 0, "proposals": {"cancelled": 7}, "audit": 7, "budget": {"calls": 261, "spent_usd": 2.226394, "unsettled": 0}}
