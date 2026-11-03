@@ -11,7 +11,7 @@ const {CandidateCombobox}=await server.ssrLoadModule('/src/CandidateCombobox.tsx
 const {RecordChoices}=await server.ssrLoadModule('/src/RecordChoices.tsx');
 const {CandidateSelect}=await server.ssrLoadModule('/src/CandidateSelect.tsx');
 const {MoldStages,moldStageAvailability}=await server.ssrLoadModule('/src/MoldStages.tsx');
-const {ProposalBusinessSummary}=await server.ssrLoadModule('/src/ProposalBusinessSummary.tsx');
+const {DetailedProposalBusinessSummary:ProposalBusinessSummary}=await server.ssrLoadModule('/src/ProposalBusinessSummary.tsx');
 const {useOperationMode,readOperationMode,operationModeKey}=await server.ssrLoadModule('/src/operation-mode.ts');
 const {ApiError}=await server.ssrLoadModule('/src/api.ts');
 const {useEntry}=await server.ssrLoadModule('/src/use-entry.ts');
@@ -30,7 +30,7 @@ test('首次及同目標套用保留數量，換執行紀錄才清除；查看�
  const workspace={records:['2001','2002'].map((id,i)=>({WIP_OPI_WDOEACICO_HIST_SID:id,EQP_NO:'MC37',WO:'WO-'+i,ZZ_MODLE_UPLOAD_END:'2026-11-02'})),catalogs:{defect_reasons:[{NG_CODE_NO:'NG01',NG_CODE_NAME:'刮傷'}]}};
  const request=async(path,body)=>{calls.push({path,body});if(path.includes('/workspace'))return workspace;if(body)guide={...guide,...body,version:guide.version+1,missing:[],ready:true};return structuredClone(guide);};
  const props={apiRequest:request,conversation:{id:'first',messages:[],module:'report'},module:'report',workspace,selected:null,signal:0,proposal:null,status:'',disabled:false,date:null,onReply:noop,onAudit:noop,onHome:noop};
- const click=async text=>act(async()=>[...host.querySelectorAll('button')].find(b=>b.textContent===text).click());
+ const click=async text=>act(async()=>[...host.querySelectorAll('button')].find(b=>b.textContent===text||(text==='選擇／更換對象'&&(b.getAttribute('aria-label')==='更換作業對象'||b.textContent==='選擇工單'))||(text==='上一步'&&b.textContent.includes('選擇對象'))).click());
  await act(async()=>root.render(h(GuidedFlow,props)));
  await click('選擇／更換對象');await click('明細');assert.equal(calls.filter(c=>c.body).length,0);
  await act(async()=>host.querySelectorAll('input[type=radio]')[0].click());assert.equal(calls.filter(c=>c.body).length,0);
@@ -143,7 +143,7 @@ test('R01 新增排程 pending 返回目標未改值再核對不發 mutation 或
  const guide={version:7,action:'schedule.save',intent:'create',args,step:'review',missing:[],ready:true,proposal};
  const props={apiRequest:async(path,body)=>{calls.push({path,body});return structuredClone(guide);},conversation:{id:'schedule',messages:[],module:'schedule'},module:'schedule',workspace:{records:[],catalogs:{molds:[{TOL_NO:'MOLD-A',DETAILS:[{TOL_DETALS_SID:'m1',PART_NO:'EPS-A'}]}]}},selected:null,signal:0,proposal,status:'',disabled:false,date:null,onReply:noop,onAudit:noop,onHome:noop,presentation:'step-wizard'};
  await act(async()=>root.render(h(GuidedFlow,props)));
- const click=async text=>act(async()=>[...host.querySelectorAll('button')].find(b=>b.textContent===text).click());
+ const click=async text=>act(async()=>[...host.querySelectorAll('button')].find(b=>b.textContent===text||(text==='選擇／更換對象'&&(b.getAttribute('aria-label')==='更換作業對象'||b.textContent==='選擇工單'))||(text==='上一步'&&b.textContent.includes('選擇對象'))).click());
  await click('上一步：修改資料');await click('上一步');await click('下一步');
  await act(async()=>host.querySelector('form').dispatchEvent(new Event('submit',{bubbles:true,cancelable:true})));
  assert.equal(calls.filter(c=>c.body).length,0);assert.ok(host.textContent.includes('上一步：修改資料'));assert.equal(proposal.id,'schedule-original');
@@ -156,7 +156,7 @@ test('報工子選取返回與取消保留最新草稿；暫選和查看都不�
  const request=async(path,body)=>{calls.push({path,body});if(path.includes('/workspace'))return {records:[record],catalogs:{}};if(body)guide={...guide,...body,version:guide.version+1};return structuredClone(guide);};
  const props={apiRequest:request,conversation:{id:'child',messages:[],module:'report'},module:'report',workspace:{records:[record],catalogs:{}},selected:null,signal:0,proposal:null,status:'',disabled:false,date:null,onReply:noop,onAudit:noop,onHome:noop};
  await act(async()=>root.render(h(GuidedFlow,props)));
- const click=async text=>act(async()=>[...host.querySelectorAll('button')].find(b=>b.textContent===text).click());
+ const click=async text=>act(async()=>[...host.querySelectorAll('button')].find(b=>b.textContent===text||(text==='選擇／更換對象'&&(b.getAttribute('aria-label')==='更換作業對象'||b.textContent==='選擇工單'))||(text==='上一步'&&b.textContent.includes('選擇對象'))).click());
  await click('選擇／更換對象');await act(async()=>host.querySelector('input[type=radio]').click());await click('選擇報工紀錄');
  await act(async()=>host.querySelectorAll('.report-record-picker input[type=radio]')[1].click());await click('明細');
  assert.equal(calls.filter(c=>c.body).length,0);await click('返回工單');await click('選擇報工紀錄');await click('取消選取');assert.equal(host.querySelector('#guide-ok').value,'125');assert.equal(guide.args.report_id,'3001');
@@ -168,10 +168,10 @@ test('主檔暫選跨頁保留，改查詢需重選，確認帶入才更新值',
  const request=async path=>{const q=new URL(path,'http://localhost').searchParams;return {records:[{PART_NO:q.get('page')==='2'?'B':'A',PART_SPEC:'測試'}],page:Number(q.get('page')),has_more:q.get('page')==='1',filters:{search:q.get('search'),part_no:''}};};
  await act(async()=>root.render(h(CandidateSelect,{kind:'parts',value:'',title:'品號',id:'part',choose:r=>chosen.push(r),request})));
  await act(async()=>host.querySelector('button').click());
- const dialog=()=>document.querySelector('.candidate-dialog');const click=async text=>act(async()=>[...dialog().querySelectorAll('button')].find(b=>b.textContent===text).click());
- await click('查看');await act(async()=>dialog().querySelector('input[type=radio]').click());assert.equal(chosen.length,0);await click('下一頁');assert.ok(dialog().querySelector('.candidate-apply').textContent.includes('A'));
+ const dialog=()=>document.querySelector('.candidate-dialog');const click=async text=>act(async()=>[...dialog().querySelectorAll('button')].find(b=>b.textContent===text||(text==='選擇／更換對象'&&(b.getAttribute('aria-label')==='更換作業對象'||b.textContent==='選擇工單'))||(text==='上一步'&&b.textContent.includes('選擇對象'))).click());
+ await click('查看');if(!dialog())await click('選擇工單');await act(async()=>dialog().querySelector('input[type=radio]').click());assert.equal(chosen.length,0);await click('下一頁');assert.ok(dialog().querySelector('.candidate-apply').textContent.includes('A'));
  await act(async()=>inputValue(dialog().querySelector('.candidate-search input'),'B'));await click('搜尋');assert.equal(dialog().querySelector('.candidate-apply .primary').disabled,true);
- await act(async()=>dialog().querySelector('input[type=radio]').click());await click('帶入作業單');assert.equal(chosen.length,1);
+ if(!dialog())await click('選擇工單');await act(async()=>dialog().querySelector('input[type=radio]').click());await click('帶入作業單');assert.equal(chosen.length,1);
  await act(async()=>root.unmount());host.remove();
 });
 
@@ -189,7 +189,7 @@ test('已驗證查詢更新選取條件但不改業務草稿，換模式保留�
  const props={apiRequest:async(path,body)=>{if(body)mutations.push(body);return structuredClone(guide);},conversation:{id:'query',messages:[],module:'report'},module:'report',selected:null,signal:0,proposal:null,status:'',disabled:false,date:null,onReply:noop,onAudit:noop,onHome:noop};
  const workspace={records:[{WIP_OPI_WDOEACICO_HIST_SID:'2001',EQP_NO:'MC37',WO:'WO-A',ZZ_MODLE_UPLOAD_END:'now'}],catalogs:{},total:40,page:2,query_context:{version:2,filters:{equipment:'MC37',date:'2026-11-02',page:2,page_size:20}}};
  await act(async()=>root.render(h(GuidedFlow,{...props,workspace})));
- await act(async()=>[...host.querySelectorAll('button')].find(b=>b.textContent==='選擇／更換對象').click());assert.equal(host.querySelector('#guide-search-equipment').value,'MC37');
+ await act(async()=>[...host.querySelectorAll('button')].find(b=>b.getAttribute('aria-label')==='更換作業對象'||b.textContent==='選擇工單').click());assert.equal(host.querySelector('#guide-search-equipment').value,'MC37');
  await act(async()=>host.querySelector('input[type=radio]').click());assert.ok(host.textContent.includes('帶入作業'));
  await act(async()=>root.render(h(GuidedFlow,{...props,workspace,presentation:'step-wizard'})));assert.equal(host.querySelector('input[type=radio]').checked,true);assert.equal(host.querySelector('.picker-pagination').textContent.includes('2／2'),true);
  await act(async()=>root.render(h(GuidedFlow,{...props,presentation:'step-wizard',workspace:{...workspace,records:[],page:1,total:0,query_context:{version:3,filters:{equipment:'MC38',page:1,page_size:20}}}})));
@@ -294,7 +294,7 @@ test('審查：開啟選取預帶設備日期但不修改 Guide，子層有工�
  const guide={version:1,action:'report.update',args:{report_id:'3001',ok:125,defects:[]},step:'details',missing:[],ready:true};
  const workspace={records:[record],catalogs:{},total:1};
  await act(async()=>root.render(h(GuidedFlow,{apiRequest:async(path,body)=>{if(body)writes.push(body);return guide;},onQuery:async f=>{queries.push(f);return workspace;},conversation:{id:'context',module:'report',messages:[]},module:'report',workspace,selected:record,signal:0,proposal:null,status:'',disabled:false,date:null,onReply:noop,onAudit:noop,onHome:noop})));
- const click=async text=>act(async()=>[...document.querySelectorAll('button')].find(b=>b.textContent===text).click());
+ const click=async text=>act(async()=>[...document.querySelectorAll('button')].find(b=>b.textContent===text||(text==='選擇／更換對象'&&(b.getAttribute('aria-label')==='更換作業對象'||b.textContent==='選擇工單'))||(text==='上一步'&&b.textContent.includes('選擇對象'))).click());
  await click('選擇／更換對象');assert.equal(queries[0].equipment,'MC37');assert.equal(queries[0].date,'2026-11-02');
  assert.equal(document.querySelector('#guide-search-equipment').value,'MC37');assert.equal(writes.length,0);
  await act(async()=>document.querySelector('.target-picker-dialog input[type=radio]').click());await click('選擇報工紀錄');
@@ -345,8 +345,8 @@ for(const presentation of ['chat-sheet','step-wizard'])for(const action of ['rep
  const record={WIP_OPI_WDOEACICO_HIST_SID:'e',ZZ_KAOSU_PROD_SCHEDULE_SID:'s',WO:'WO-A',EQP_NO:'MC37',COMPLETED:'N',REPORTS:[report]};
  const request=async(path,body)=>{if(path.endsWith('/proposals'))return {proposal:{id:'p',action,args:body.args,status:'pending',changes:[]}};if(body)guide={...guide,...body,version:guide.version+1,missing:[],ready:true};return structuredClone(guide);};
  await act(async()=>root.render(h(GuidedFlow,{presentation,apiRequest:request,onQuery:async()=>({records:[record],catalogs:{}}),conversation:{id:action+presentation,module:'report',messages:[]},module:'report',workspace:{records:[record],catalogs:{}},selected:null,signal:0,proposal:null,status:'',disabled:false,date:null,onReply:r=>replies.push(r),onAudit:noop,onHome:noop})));
- const dialog=()=>document.querySelector('.target-picker-dialog');const click=async text=>act(async()=>[...document.querySelectorAll('button')].find(b=>b.textContent===text).click());
- await act(async()=>dialog().querySelector('input[type=radio]').click());
+ const dialog=()=>document.querySelector('.target-picker-dialog');const click=async text=>act(async()=>[...document.querySelectorAll('button')].find(b=>b.textContent===text||(text==='選擇／更換對象'&&(b.getAttribute('aria-label')==='更換作業對象'||b.textContent==='選擇工單'))||(text==='上一步'&&b.textContent.includes('選擇對象'))).click());
+ if(!dialog())await click('選擇工單');await act(async()=>dialog().querySelector('input[type=radio]').click());
  if(action==='report.delete'){await click('選擇報工紀錄');await act(async()=>dialog().querySelector('.report-record-picker input[type=radio]').click());await click('帶入這筆報工');}else await click('帶入作業');
  assert.ok(replies.length,host.textContent);assert.equal(replies.at(-1).proposal.action,action);assert.equal(dialog(),null);assert.equal(host.querySelector('.guide-operation-note'),null);assert.ok(!host.textContent.includes('填寫內容'));
  await act(async()=>root.unmount());host.remove();
