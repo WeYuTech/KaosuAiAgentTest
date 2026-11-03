@@ -1,0 +1,1483 @@
+{
+  "posts": 1,
+  "batches": [
+    {
+      "at_ms": 84.89999997615814,
+      "after": 0,
+      "events": [
+        {
+          "seq": 1,
+          "event": "accepted"
+        },
+        {
+          "seq": 2,
+          "event": "step",
+          "id": 1,
+          "label": "辨識需求",
+          "status": "running"
+        }
+      ],
+      "terminal": false
+    },
+    {
+      "at_ms": 1221.5,
+      "after": 2,
+      "events": [],
+      "terminal": false
+    },
+    {
+      "at_ms": 2359.7000000476837,
+      "after": 2,
+      "events": [],
+      "terminal": false
+    },
+    {
+      "at_ms": 3482.600000023842,
+      "after": 2,
+      "events": [],
+      "terminal": false
+    },
+    {
+      "at_ms": 4603.5,
+      "after": 2,
+      "events": [],
+      "terminal": false
+    },
+    {
+      "at_ms": 5261.700000047684,
+      "after": 2,
+      "events": [
+        {
+          "seq": 3,
+          "event": "step",
+          "id": 1,
+          "label": "辨識需求",
+          "status": "done"
+        }
+      ],
+      "terminal": false
+    },
+    {
+      "at_ms": 5380.300000071526,
+      "after": 3,
+      "events": [
+        {
+          "seq": 4,
+          "event": "intent"
+        },
+        {
+          "seq": 5,
+          "event": "intent"
+        },
+        {
+          "seq": 6,
+          "event": "step",
+          "id": 2,
+          "label": "查詢已審核知識",
+          "status": "running"
+        },
+        {
+          "seq": 7,
+          "event": "step",
+          "id": 2,
+          "label": "已查詢已審核知識（命中 2 筆）",
+          "status": "done"
+        },
+        {
+          "seq": 8,
+          "event": "step",
+          "id": 3,
+          "label": "分析需求",
+          "status": "running"
+        }
+      ],
+      "terminal": false
+    },
+    {
+      "at_ms": 6500.399999976158,
+      "after": 8,
+      "events": [],
+      "terminal": false
+    },
+    {
+      "at_ms": 7624.399999976158,
+      "after": 8,
+      "events": [],
+      "terminal": false
+    },
+    {
+      "at_ms": 8608.700000047684,
+      "after": 8,
+      "events": [
+        {
+          "seq": 9,
+          "event": "step",
+          "id": 3,
+          "label": "規劃下一步",
+          "status": "done"
+        },
+        {
+          "seq": 10,
+          "event": "reset"
+        }
+      ],
+      "terminal": false
+    },
+    {
+      "at_ms": 8716.899999976158,
+      "after": 10,
+      "events": [
+        {
+          "seq": 11,
+          "event": "step",
+          "id": 4,
+          "label": "查詢作業資料",
+          "status": "running"
+        },
+        {
+          "seq": 12,
+          "event": "step",
+          "id": 4,
+          "label": "已查詢 MC37（本頁 3 筆）",
+          "status": "done"
+        },
+        {
+          "seq": 13,
+          "event": "step",
+          "id": 5,
+          "label": "分析需求",
+          "status": "running"
+        }
+      ],
+      "terminal": false
+    },
+    {
+      "at_ms": 9848.5,
+      "after": 13,
+      "events": [],
+      "terminal": false
+    },
+    {
+      "at_ms": 10992.300000071526,
+      "after": 13,
+      "events": [],
+      "terminal": false
+    },
+    {
+      "at_ms": 11630.300000071526,
+      "after": 13,
+      "events": [
+        {
+          "seq": 14,
+          "event": "delta",
+          "text": "###"
+        }
+      ],
+      "terminal": false
+    },
+    {
+      "at_ms": 11741.100000023842,
+      "after": 14,
+      "events": [
+        {
+          "seq": 15,
+          "event": "delta",
+          "text": " MC"
+        }
+      ],
+      "terminal": false
+    },
+    {
+      "at_ms": 11866.800000071526,
+      "after": 15,
+      "events": [
+        {
+          "seq": 16,
+          "event": "delta",
+          "text": "37"
+        },
+        {
+          "seq": 17,
+          "event": "delta",
+          "text": " 工"
+        },
+        {
+          "seq": 18,
+          "event": "delta",
+          "text": "單"
+        },
+        {
+          "seq": 19,
+          "event": "delta",
+          "text": "與"
+        },
+        {
+          "seq": 20,
+          "event": "delta",
+          "text": "人工"
+        },
+        {
+          "seq": 21,
+          "event": "delta",
+          "text": "報"
+        },
+        {
+          "seq": 22,
+          "event": "delta",
+          "text": "工"
+        },
+        {
+          "seq": 23,
+          "event": "delta",
+          "text": "數"
+        },
+        {
+          "seq": 24,
+          "event": "delta",
+          "text": "量"
+        },
+        {
+          "seq": 25,
+          "event": "delta",
+          "text": "\n"
+        },
+        {
+          "seq": 26,
+          "event": "delta",
+          "text": "查"
+        },
+        {
+          "seq": 27,
+          "event": "delta",
+          "text": "得"
+        }
+      ],
+      "terminal": false
+    },
+    {
+      "at_ms": 11977.899999976158,
+      "after": 27,
+      "events": [
+        {
+          "seq": 28,
+          "event": "delta",
+          "text": " "
+        },
+        {
+          "seq": 29,
+          "event": "delta",
+          "text": "3"
+        },
+        {
+          "seq": 30,
+          "event": "delta",
+          "text": " 筆"
+        }
+      ],
+      "terminal": false
+    },
+    {
+      "at_ms": 12104.200000047684,
+      "after": 30,
+      "events": [
+        {
+          "seq": 31,
+          "event": "delta",
+          "text": "資料"
+        },
+        {
+          "seq": 32,
+          "event": "delta",
+          "text": "（"
+        },
+        {
+          "seq": 33,
+          "event": "delta",
+          "text": "隔"
+        },
+        {
+          "seq": 34,
+          "event": "delta",
+          "text": "離"
+        }
+      ],
+      "terminal": false
+    },
+    {
+      "at_ms": 12256.800000071526,
+      "after": 34,
+      "events": [
+        {
+          "seq": 35,
+          "event": "delta",
+          "text": "模"
+        },
+        {
+          "seq": 36,
+          "event": "delta",
+          "text": "擬"
+        },
+        {
+          "seq": 37,
+          "event": "delta",
+          "text": "資料"
+        },
+        {
+          "seq": 38,
+          "event": "delta",
+          "text": "，"
+        },
+        {
+          "seq": 39,
+          "event": "delta",
+          "text": "非"
+        },
+        {
+          "seq": 40,
+          "event": "delta",
+          "text": "正式"
+        },
+        {
+          "seq": 41,
+          "event": "delta",
+          "text": " MES"
+        },
+        {
+          "seq": 42,
+          "event": "delta",
+          "text": "）"
+        },
+        {
+          "seq": 43,
+          "event": "delta",
+          "text": "：\n\n"
+        },
+        {
+          "seq": 44,
+          "event": "delta",
+          "text": "|"
+        },
+        {
+          "seq": 45,
+          "event": "delta",
+          "text": " 工"
+        },
+        {
+          "seq": 46,
+          "event": "delta",
+          "text": "單"
+        },
+        {
+          "seq": 47,
+          "event": "delta",
+          "text": " |"
+        },
+        {
+          "seq": 48,
+          "event": "delta",
+          "text": " 品"
+        },
+        {
+          "seq": 49,
+          "event": "delta",
+          "text": "號"
+        },
+        {
+          "seq": 50,
+          "event": "delta",
+          "text": " |"
+        },
+        {
+          "seq": 51,
+          "event": "delta",
+          "text": " 排"
+        },
+        {
+          "seq": 52,
+          "event": "delta",
+          "text": "程"
+        },
+        {
+          "seq": 53,
+          "event": "delta",
+          "text": "時間"
+        },
+        {
+          "seq": 54,
+          "event": "delta",
+          "text": " |"
+        },
+        {
+          "seq": 55,
+          "event": "delta",
+          "text": " 實"
+        },
+        {
+          "seq": 56,
+          "event": "delta",
+          "text": "際"
+        },
+        {
+          "seq": 57,
+          "event": "delta",
+          "text": "開始"
+        },
+        {
+          "seq": 58,
+          "event": "delta",
+          "text": "時間"
+        },
+        {
+          "seq": 59,
+          "event": "delta",
+          "text": " |"
+        },
+        {
+          "seq": 60,
+          "event": "delta",
+          "text": " 人"
+        },
+        {
+          "seq": 61,
+          "event": "delta",
+          "text": "工"
+        },
+        {
+          "seq": 62,
+          "event": "delta",
+          "text": "良"
+        }
+      ],
+      "terminal": false
+    },
+    {
+      "at_ms": 12381.200000047684,
+      "after": 62,
+      "events": [
+        {
+          "seq": 63,
+          "event": "delta",
+          "text": "品"
+        },
+        {
+          "seq": 64,
+          "event": "delta",
+          "text": "數"
+        },
+        {
+          "seq": 65,
+          "event": "delta",
+          "text": " |"
+        },
+        {
+          "seq": 66,
+          "event": "delta",
+          "text": " 人"
+        },
+        {
+          "seq": 67,
+          "event": "delta",
+          "text": "工"
+        },
+        {
+          "seq": 68,
+          "event": "delta",
+          "text": "不"
+        },
+        {
+          "seq": 69,
+          "event": "delta",
+          "text": "良"
+        },
+        {
+          "seq": 70,
+          "event": "delta",
+          "text": "數"
+        },
+        {
+          "seq": 71,
+          "event": "delta",
+          "text": " |\n"
+        },
+        {
+          "seq": 72,
+          "event": "delta",
+          "text": "|"
+        },
+        {
+          "seq": 73,
+          "event": "delta",
+          "text": "---"
+        },
+        {
+          "seq": 74,
+          "event": "delta",
+          "text": "|"
+        },
+        {
+          "seq": 75,
+          "event": "delta",
+          "text": "---"
+        },
+        {
+          "seq": 76,
+          "event": "delta",
+          "text": "|"
+        },
+        {
+          "seq": 77,
+          "event": "delta",
+          "text": "---"
+        },
+        {
+          "seq": 78,
+          "event": "delta",
+          "text": "|"
+        },
+        {
+          "seq": 79,
+          "event": "delta",
+          "text": "---"
+        },
+        {
+          "seq": 80,
+          "event": "delta",
+          "text": "|"
+        },
+        {
+          "seq": 81,
+          "event": "delta",
+          "text": "---"
+        },
+        {
+          "seq": 82,
+          "event": "delta",
+          "text": ":"
+        },
+        {
+          "seq": 83,
+          "event": "delta",
+          "text": "|"
+        },
+        {
+          "seq": 84,
+          "event": "delta",
+          "text": "---"
+        }
+      ],
+      "terminal": false
+    },
+    {
+      "at_ms": 12492.100000023842,
+      "after": 84,
+      "events": [
+        {
+          "seq": 85,
+          "event": "delta",
+          "text": ":"
+        },
+        {
+          "seq": 86,
+          "event": "delta",
+          "text": "|\n"
+        },
+        {
+          "seq": 87,
+          "event": "delta",
+          "text": "|"
+        },
+        {
+          "seq": 88,
+          "event": "delta",
+          "text": " WO"
+        },
+        {
+          "seq": 89,
+          "event": "delta",
+          "text": "-A"
+        },
+        {
+          "seq": 90,
+          "event": "delta",
+          "text": " |"
+        },
+        {
+          "seq": 91,
+          "event": "delta",
+          "text": " EPS"
+        },
+        {
+          "seq": 92,
+          "event": "delta",
+          "text": "-A"
+        },
+        {
+          "seq": 93,
+          "event": "delta",
+          "text": " |"
+        },
+        {
+          "seq": 94,
+          "event": "delta",
+          "text": " "
+        },
+        {
+          "seq": 95,
+          "event": "delta",
+          "text": "202"
+        },
+        {
+          "seq": 96,
+          "event": "delta",
+          "text": "6"
+        },
+        {
+          "seq": 97,
+          "event": "delta",
+          "text": "-"
+        },
+        {
+          "seq": 98,
+          "event": "delta",
+          "text": "10"
+        },
+        {
+          "seq": 99,
+          "event": "delta",
+          "text": "-"
+        }
+      ],
+      "terminal": false
+    },
+    {
+      "at_ms": 12601.899999976158,
+      "after": 99,
+      "events": [
+        {
+          "seq": 100,
+          "event": "delta",
+          "text": "30"
+        },
+        {
+          "seq": 101,
+          "event": "delta",
+          "text": " "
+        },
+        {
+          "seq": 102,
+          "event": "delta",
+          "text": "08"
+        },
+        {
+          "seq": 103,
+          "event": "delta",
+          "text": ":"
+        },
+        {
+          "seq": 104,
+          "event": "delta",
+          "text": "00"
+        },
+        {
+          "seq": 105,
+          "event": "delta",
+          "text": " |"
+        },
+        {
+          "seq": 106,
+          "event": "delta",
+          "text": " "
+        },
+        {
+          "seq": 107,
+          "event": "delta",
+          "text": "202"
+        },
+        {
+          "seq": 108,
+          "event": "delta",
+          "text": "6"
+        },
+        {
+          "seq": 109,
+          "event": "delta",
+          "text": "-"
+        },
+        {
+          "seq": 110,
+          "event": "delta",
+          "text": "10"
+        },
+        {
+          "seq": 111,
+          "event": "delta",
+          "text": "-"
+        },
+        {
+          "seq": 112,
+          "event": "delta",
+          "text": "30"
+        },
+        {
+          "seq": 113,
+          "event": "delta",
+          "text": " "
+        },
+        {
+          "seq": 114,
+          "event": "delta",
+          "text": "08"
+        }
+      ],
+      "terminal": false
+    },
+    {
+      "at_ms": 12724.899999976158,
+      "after": 114,
+      "events": [
+        {
+          "seq": 115,
+          "event": "delta",
+          "text": ":"
+        },
+        {
+          "seq": 116,
+          "event": "delta",
+          "text": "10"
+        },
+        {
+          "seq": 117,
+          "event": "delta",
+          "text": " |"
+        },
+        {
+          "seq": 118,
+          "event": "delta",
+          "text": " "
+        },
+        {
+          "seq": 119,
+          "event": "delta",
+          "text": "0"
+        },
+        {
+          "seq": 120,
+          "event": "delta",
+          "text": " |"
+        },
+        {
+          "seq": 121,
+          "event": "delta",
+          "text": " "
+        },
+        {
+          "seq": 122,
+          "event": "delta",
+          "text": "0"
+        },
+        {
+          "seq": 123,
+          "event": "delta",
+          "text": " |\n"
+        },
+        {
+          "seq": 124,
+          "event": "delta",
+          "text": "|"
+        },
+        {
+          "seq": 125,
+          "event": "delta",
+          "text": " WO"
+        },
+        {
+          "seq": 126,
+          "event": "delta",
+          "text": "-B"
+        },
+        {
+          "seq": 127,
+          "event": "delta",
+          "text": " |"
+        },
+        {
+          "seq": 128,
+          "event": "delta",
+          "text": " EPS"
+        },
+        {
+          "seq": 129,
+          "event": "delta",
+          "text": "-B"
+        },
+        {
+          "seq": 130,
+          "event": "delta",
+          "text": " |"
+        },
+        {
+          "seq": 131,
+          "event": "delta",
+          "text": " "
+        },
+        {
+          "seq": 132,
+          "event": "delta",
+          "text": "202"
+        },
+        {
+          "seq": 133,
+          "event": "delta",
+          "text": "6"
+        },
+        {
+          "seq": 134,
+          "event": "delta",
+          "text": "-"
+        },
+        {
+          "seq": 135,
+          "event": "delta",
+          "text": "10"
+        },
+        {
+          "seq": 136,
+          "event": "delta",
+          "text": "-"
+        }
+      ],
+      "terminal": false
+    },
+    {
+      "at_ms": 12831.300000071526,
+      "after": 136,
+      "events": [
+        {
+          "seq": 137,
+          "event": "delta",
+          "text": "30"
+        },
+        {
+          "seq": 138,
+          "event": "delta",
+          "text": " "
+        },
+        {
+          "seq": 139,
+          "event": "delta",
+          "text": "08"
+        },
+        {
+          "seq": 140,
+          "event": "delta",
+          "text": ":"
+        },
+        {
+          "seq": 141,
+          "event": "delta",
+          "text": "00"
+        },
+        {
+          "seq": 142,
+          "event": "delta",
+          "text": " |"
+        },
+        {
+          "seq": 143,
+          "event": "delta",
+          "text": " "
+        },
+        {
+          "seq": 144,
+          "event": "delta",
+          "text": "202"
+        },
+        {
+          "seq": 145,
+          "event": "delta",
+          "text": "6"
+        },
+        {
+          "seq": 146,
+          "event": "delta",
+          "text": "-"
+        },
+        {
+          "seq": 147,
+          "event": "delta",
+          "text": "10"
+        },
+        {
+          "seq": 148,
+          "event": "delta",
+          "text": "-"
+        },
+        {
+          "seq": 149,
+          "event": "delta",
+          "text": "30"
+        },
+        {
+          "seq": 150,
+          "event": "delta",
+          "text": " "
+        },
+        {
+          "seq": 151,
+          "event": "delta",
+          "text": "08"
+        },
+        {
+          "seq": 152,
+          "event": "delta",
+          "text": ":"
+        }
+      ],
+      "terminal": false
+    },
+    {
+      "at_ms": 12942.300000071526,
+      "after": 152,
+      "events": [
+        {
+          "seq": 153,
+          "event": "delta",
+          "text": "10"
+        },
+        {
+          "seq": 154,
+          "event": "delta",
+          "text": " |"
+        },
+        {
+          "seq": 155,
+          "event": "delta",
+          "text": " "
+        },
+        {
+          "seq": 156,
+          "event": "delta",
+          "text": "0"
+        },
+        {
+          "seq": 157,
+          "event": "delta",
+          "text": " |"
+        },
+        {
+          "seq": 158,
+          "event": "delta",
+          "text": " "
+        },
+        {
+          "seq": 159,
+          "event": "delta",
+          "text": "0"
+        },
+        {
+          "seq": 160,
+          "event": "delta",
+          "text": " |\n"
+        },
+        {
+          "seq": 161,
+          "event": "delta",
+          "text": "|"
+        },
+        {
+          "seq": 162,
+          "event": "delta",
+          "text": " WO"
+        },
+        {
+          "seq": 163,
+          "event": "delta",
+          "text": "-A"
+        },
+        {
+          "seq": 164,
+          "event": "delta",
+          "text": " |"
+        },
+        {
+          "seq": 165,
+          "event": "delta",
+          "text": " EPS"
+        },
+        {
+          "seq": 166,
+          "event": "delta",
+          "text": "-A"
+        },
+        {
+          "seq": 167,
+          "event": "delta",
+          "text": " |"
+        },
+        {
+          "seq": 168,
+          "event": "delta",
+          "text": " "
+        },
+        {
+          "seq": 169,
+          "event": "delta",
+          "text": "202"
+        },
+        {
+          "seq": 170,
+          "event": "delta",
+          "text": "6"
+        },
+        {
+          "seq": 171,
+          "event": "delta",
+          "text": "-"
+        }
+      ],
+      "terminal": false
+    },
+    {
+      "at_ms": 13051.800000071526,
+      "after": 171,
+      "events": [
+        {
+          "seq": 172,
+          "event": "delta",
+          "text": "10"
+        },
+        {
+          "seq": 173,
+          "event": "delta",
+          "text": "-"
+        },
+        {
+          "seq": 174,
+          "event": "delta",
+          "text": "30"
+        },
+        {
+          "seq": 175,
+          "event": "delta",
+          "text": " "
+        },
+        {
+          "seq": 176,
+          "event": "delta",
+          "text": "14"
+        },
+        {
+          "seq": 177,
+          "event": "delta",
+          "text": ":"
+        },
+        {
+          "seq": 178,
+          "event": "delta",
+          "text": "00"
+        },
+        {
+          "seq": 179,
+          "event": "delta",
+          "text": " |"
+        },
+        {
+          "seq": 180,
+          "event": "delta",
+          "text": " 尚"
+        },
+        {
+          "seq": 181,
+          "event": "delta",
+          "text": "無"
+        },
+        {
+          "seq": 182,
+          "event": "delta",
+          "text": "時間"
+        },
+        {
+          "seq": 183,
+          "event": "delta",
+          "text": " |"
+        },
+        {
+          "seq": 184,
+          "event": "delta",
+          "text": " "
+        }
+      ],
+      "terminal": false
+    },
+    {
+      "at_ms": 13162.300000071526,
+      "after": 184,
+      "events": [
+        {
+          "seq": 185,
+          "event": "delta",
+          "text": "0"
+        },
+        {
+          "seq": 186,
+          "event": "delta",
+          "text": " |"
+        },
+        {
+          "seq": 187,
+          "event": "delta",
+          "text": " "
+        },
+        {
+          "seq": 188,
+          "event": "delta",
+          "text": "0"
+        },
+        {
+          "seq": 189,
+          "event": "delta",
+          "text": " |\n"
+        },
+        {
+          "seq": 190,
+          "event": "delta",
+          "text": "|"
+        },
+        {
+          "seq": 191,
+          "event": "delta",
+          "text": " **"
+        },
+        {
+          "seq": 192,
+          "event": "delta",
+          "text": "合"
+        },
+        {
+          "seq": 193,
+          "event": "delta",
+          "text": "計"
+        },
+        {
+          "seq": 194,
+          "event": "delta",
+          "text": "**"
+        },
+        {
+          "seq": 195,
+          "event": "delta",
+          "text": " |"
+        }
+      ],
+      "terminal": false
+    },
+    {
+      "at_ms": 13286.5,
+      "after": 195,
+      "events": [
+        {
+          "seq": 196,
+          "event": "delta",
+          "text": " |"
+        },
+        {
+          "seq": 197,
+          "event": "delta",
+          "text": " |"
+        },
+        {
+          "seq": 198,
+          "event": "delta",
+          "text": " |"
+        },
+        {
+          "seq": 199,
+          "event": "delta",
+          "text": " **"
+        },
+        {
+          "seq": 200,
+          "event": "delta",
+          "text": "0"
+        },
+        {
+          "seq": 201,
+          "event": "delta",
+          "text": "**"
+        },
+        {
+          "seq": 202,
+          "event": "delta",
+          "text": " |"
+        }
+      ],
+      "terminal": false
+    },
+    {
+      "at_ms": 13391.700000047684,
+      "after": 202,
+      "events": [
+        {
+          "seq": 203,
+          "event": "delta",
+          "text": " **"
+        },
+        {
+          "seq": 204,
+          "event": "delta",
+          "text": "0"
+        },
+        {
+          "seq": 205,
+          "event": "delta",
+          "text": "**"
+        },
+        {
+          "seq": 206,
+          "event": "delta",
+          "text": " |\n\n"
+        },
+        {
+          "seq": 207,
+          "event": "delta",
+          "text": "以上"
+        },
+        {
+          "seq": 208,
+          "event": "delta",
+          "text": "為"
+        },
+        {
+          "seq": 209,
+          "event": "delta",
+          "text": "**"
+        },
+        {
+          "seq": 210,
+          "event": "delta",
+          "text": "人工"
+        },
+        {
+          "seq": 211,
+          "event": "delta",
+          "text": "報"
+        },
+        {
+          "seq": 212,
+          "event": "delta",
+          "text": "工"
+        },
+        {
+          "seq": 213,
+          "event": "delta",
+          "text": "數"
+        },
+        {
+          "seq": 214,
+          "event": "delta",
+          "text": "量"
+        },
+        {
+          "seq": 215,
+          "event": "delta",
+          "text": "**"
+        }
+      ],
+      "terminal": false
+    },
+    {
+      "at_ms": 13520.800000071526,
+      "after": 215,
+      "events": [
+        {
+          "seq": 216,
+          "event": "delta",
+          "text": "，"
+        },
+        {
+          "seq": 217,
+          "event": "delta",
+          "text": "不"
+        },
+        {
+          "seq": 218,
+          "event": "delta",
+          "text": "包含"
+        },
+        {
+          "seq": 219,
+          "event": "delta",
+          "text": " Io"
+        },
+        {
+          "seq": 220,
+          "event": "delta",
+          "text": "T"
+        },
+        {
+          "seq": 221,
+          "event": "delta",
+          "text": " 推"
+        },
+        {
+          "seq": 222,
+          "event": "delta",
+          "text": "算"
+        },
+        {
+          "seq": 223,
+          "event": "delta",
+          "text": "數"
+        },
+        {
+          "seq": 224,
+          "event": "delta",
+          "text": "量"
+        },
+        {
+          "seq": 225,
+          "event": "delta",
+          "text": "。本"
+        },
+        {
+          "seq": 226,
+          "event": "delta",
+          "text": "次"
+        },
+        {
+          "seq": 227,
+          "event": "delta",
+          "text": "僅"
+        },
+        {
+          "seq": 228,
+          "event": "delta",
+          "text": "查"
+        },
+        {
+          "seq": 229,
+          "event": "delta",
+          "text": "詢"
+        },
+        {
+          "seq": 230,
+          "event": "delta",
+          "text": "，"
+        }
+      ],
+      "terminal": false
+    },
+    {
+      "at_ms": 13631.600000023842,
+      "after": 230,
+      "events": [
+        {
+          "seq": 231,
+          "event": "delta",
+          "text": "未"
+        },
+        {
+          "seq": 232,
+          "event": "delta",
+          "text": "新增"
+        },
+        {
+          "seq": 233,
+          "event": "delta",
+          "text": "或"
+        },
+        {
+          "seq": 234,
+          "event": "delta",
+          "text": "修改"
+        },
+        {
+          "seq": 235,
+          "event": "delta",
+          "text": "資料"
+        },
+        {
+          "seq": 236,
+          "event": "delta",
+          "text": "。"
+        }
+      ],
+      "terminal": false
+    },
+    {
+      "at_ms": 13772.899999976158,
+      "after": 236,
+      "events": [
+        {
+          "seq": 237,
+          "event": "step",
+          "id": 5,
+          "label": "整理回覆",
+          "status": "done"
+        }
+      ],
+      "terminal": false
+    },
+    {
+      "at_ms": 13894.200000047684,
+      "after": 237,
+      "events": [
+        {
+          "seq": 238,
+          "event": "done"
+        }
+      ],
+      "terminal": true
+    }
+  ],
+  "terminal": "done",
+  "started": 632.1999999284744,
+  "start_ms": 54.300000071525574,
+  "evidence": {
+    "baseline": {
+      "limit_usd": 20,
+      "remaining_usd": 18.50501,
+      "warning_percent": 80,
+      "near_limit": false,
+      "reached": false,
+      "spent_usd": 1.431096,
+      "reserved_usd": 0.063894,
+      "calls": 239,
+      "unknown_calls": 1
+    },
+    "budget": {
+      "limit_usd": 1.5949900000000001,
+      "remaining_usd": 0.0861940000000001,
+      "warning_percent": 80,
+      "near_limit": true,
+      "reached": false,
+      "spent_usd": 1.444902,
+      "reserved_usd": 0.063894,
+      "calls": 242,
+      "unknown_calls": 1
+    },
+    "messages": 1,
+    "business_unchanged": true,
+    "proposals": 0,
+    "calls": [
+      {
+        "model": "gpt-6.1-sol",
+        "status": "settled",
+        "reserved_usd": 0.063912,
+        "actual_usd": 0.008884
+      },
+      {
+        "model": "gpt-6.1-sol",
+        "status": "settled",
+        "reserved_usd": 0.052664,
+        "actual_usd": 0.003976
+      },
+      {
+        "model": "gpt-6.1-sol",
+        "status": "settled",
+        "reserved_usd": 0.043698,
+        "actual_usd": 0.000946
+      }
+    ]
+  }
+}
