@@ -102,7 +102,7 @@ class Work:
 
 LABELS = {
     'classify': ('辨識需求', 'Identify request', 'ระบุความต้องการ'),
-    'model': ('分析需求／規劃下一步', 'Analyze request / plan next step', 'วิเคราะห์คำขอ / วางแผนขั้นต่อไป'),
+    'model': ('分析需求', 'Analyze request', 'วิเคราะห์คำขอ'),
     'query': ('查詢作業資料', 'Query operation records', 'ค้นหาข้อมูลงาน'),
     'knowledge': ('查詢已審核知識', 'Search reviewed knowledge', 'ค้นหาความรู้ที่ตรวจสอบแล้ว'),
     'draft': ('更新作業草稿', 'Update operation draft', 'ปรับปรุงฉบับร่างงาน'),

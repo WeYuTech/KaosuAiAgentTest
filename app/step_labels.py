@@ -16,7 +16,7 @@ def result_label(kind, result, args, locale):
     def L(*labels):return labels[index]
     if kind=='model':
         tools=any(item.type=='function_call' for item in result.output)
-        return L('分析需求／規劃下一步','Analyze request / plan next step','วิเคราะห์คำขอ / วางแผนขั้นต่อไป') if tools else L('整理回覆','Compose reply','เรียบเรียงคำตอบ')
+        return L('規劃下一步','Plan next step','วางแผนขั้นต่อไป') if tools else L('整理回覆','Compose reply','เรียบเรียงคำตอบ')
     if kind=='query' and isinstance(result,dict):
         filters=(result.get('query_context') or {}).get('filters') or (args[-1] if args and isinstance(args[-1],dict) else {})
         target=' / '.join(str(filters[k])[:80] for k in ('equipment','wo') if filters.get(k)) or L('作業資料','operation records','ข้อมูลงาน')

@@ -197,9 +197,9 @@ def test_確認卡步驟不代表業務寫入(tmp_path,monkeypatch):
 
 
 @pytest.mark.parametrize('locale,expected',[
- ('zh-TW',('本頁 2 筆','命中 0 筆','人工良品數','新增報工','整理回覆','分析需求')),
- ('en',('2 records','0 matches','Manual good quantity','Add production report','Compose reply','Analyze request')),
- ('th',('2 รายการ','0 รายการ','จำนวนชิ้นงานดี','เพิ่มรายงานการผลิต','เรียบเรียงคำตอบ','วิเคราะห์คำขอ'))])
+ ('zh-TW',('本頁 2 筆','命中 0 筆','人工良品數','新增報工','整理回覆','規劃下一步')),
+ ('en',('2 records','0 matches','Manual good quantity','Add production report','Compose reply','Plan next step')),
+ ('th',('2 รายการ','0 รายการ','จำนวนชิ้นงานดี','เพิ่มรายงานการผลิต','เรียบเรียงคำตอบ','วางแผนขั้นต่อไป'))])
 def test_三語步驟取自結果且不洩露內部名稱(locale,expected):
     from app.step_labels import result_label
     values=[result_label('query',{'records':[{},{}]},({'equipment':'MC37','wo':'WO-A'},),locale),
@@ -271,3 +271,8 @@ def test_預留前已停止不建立費用紀錄(tmp_path,monkeypatch):
         with pytest.raises(Stopped):model.invoke({'model':'gpt-6.1-sol'})
     finally:active.reset(token)
     with ledger.transaction() as db:assert ledger.all(db,'BUDGET')==[]
+
+@pytest.mark.parametrize('locale,expected',[('zh-TW','分析需求'),('en','Analyze request'),('th','วิเคราะห์คำขอ')])
+def test_處理中的模型使用單一分析用語(locale,expected):
+    from app.streaming import LABELS
+    assert LABELS['model'][{'zh-TW':0,'en':1,'th':2}[locale]] == expected
