@@ -1,4 +1,4 @@
-﻿import {ProcessingSteps} from '@/ProcessingSteps';
+import {ProcessingSteps} from '@/ProcessingSteps';
 import { ActionBarPrimitive, MessagePrimitive, ThreadPrimitive, useAuiState } from '@assistant-ui/react';
 import { Check, Copy, RefreshCw, Search } from 'lucide-react';
 import { MarkdownText } from './markdown-text';
@@ -32,7 +32,7 @@ function ThreadMessage({onViewData,onApplyQueryRecord,onRetryQuery,onChooseTarge
     <div className={role === 'user' ? 'aui-user-message-content bg-muted max-w-[90%] rounded-3xl px-4 py-2.5 whitespace-pre-wrap wrap-break-word' : 'text-foreground px-2 leading-relaxed wrap-break-word'}>
       <MessagePrimitive.Parts components={{Text: role === 'user' ? ({text}) => <span>{text}</span> : MarkdownText}}/>
     </div>
-    {onViewData && role==='assistant' && Array.isArray((message.data as Workspace)?.records) && <ChatQueryResults onApply={onApplyQueryRecord} workspace={message.data as Workspace} onAll={equipment=>{const value=message.data as Workspace;onViewData(equipment?{...value,query_context:{version:value.query_context?.version??0,filters:{...value.query_context?.filters,equipment}}}:value);}}/>}
+    {onViewData && role==='assistant' && Array.isArray((message.data as Workspace)?.records) && <ChatQueryResults onApply={onApplyQueryRecord} workspace={message.data as Workspace} onAll={equipment=>{const value=message.data as Workspace;onViewData(equipment!==undefined?{...value,query_context:{version:value.query_context?.version??0,filters:{...value.query_context?.filters,equipment}}}:value);}}/>}
     {role==='assistant'&&id===latestAssistantId&&(message.stopped||message.processing_failed)&&onRetryQuery&&<div className="query-outcome-actions"><button type="button" className="query-small" onClick={onRetryQuery}>{message.processing_failed&&<RefreshCw size={18}/>} {t('重新查詢')}</button>{message.processing_failed&&onViewData&&<button type="button" className="query-small ghost" onClick={()=>onViewData({records:[],catalogs:{}})}>{t('修改條件')}</button>}</div>}
     {role==='assistant'&&id===latestAssistantId&&onChooseTarget&&<div className="query-outcome-actions"><button type="button" className="query-small" onClick={onChooseTarget}><Search size={18}/>{t('選擇工單')}</button></div>}
     {message?.delivery&&!hideDelivery&&<span className="message-delivery">{t(message.delivery==='pending'?'待處理 · 尚未取得回覆':message.delivery==='rejected'?'請求已拒絕，未重新送出':message.delivery==='not_sent'?'訊息尚未送出，請先處理資料保存錯誤。':'送達結果未知，未重新送出')}</span>}
@@ -44,4 +44,3 @@ function ThreadMessage({onViewData,onApplyQueryRecord,onRetryQuery,onChooseTarge
     {failed&&<span role="status" className="text-muted-foreground text-xs">{t('複製未完成，請選取文字後手動複製。')}</span>}
   </MessagePrimitive.Root>;
 }
-

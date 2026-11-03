@@ -1,4 +1,4 @@
-﻿// 第二段公開 HTTP fixture；僅測試程式使用，資料不進正式應用。
+// 第二段公開 HTTP fixture；僅測試程式使用，資料不進正式應用。
 const {start,fixture:base,root,records:chats}=require('./issue55-fixture.cjs');
 const records=Array.from({length:24},(_,i)=>({WIP_OPI_WDOEACICO_HIST_SID:'e'+i,WO:'WO-261102-'+String(382+i).padStart(4,'0'),EQP_NO:i<8?'MC37':i<16?'MC38':'MC39',PART_NO:['P-102','P-104','P-108'][i%3],PART_SPEC:['外殼','底座','上蓋'][i%3],TOL_NO:'M-102',COMPLETED:i%7===6?'Y':'N',PRODUCTION_STATUS:i%7===6?'DONE':'RUN',MANUAL_OK:[120,86,230,48,64,180][i%6],MANUAL_NG:i%4===0?3:0,SHIFT_DAY:'2026-11-02',REPORTS:Array.from({length:24},(_,n)=>({WIP_OPI_WDOEACICOOUTPUT_HIST_SID:`r${i}-${n}`,REPORT_NO:`RPT-0382-0${n+1}`,CREATE_TIME:`2026-11-02 ${String(9+Math.floor((10+n*10)/60)).padStart(2,'0')}:${String((10+n*10)%60).padStart(2,'0')}:00`,OK_QTY:[120,86,230,48][n%4],NG_QTY:n===0?3:0}))}));
 async function fixture(page,scene){
@@ -50,9 +50,3 @@ async function prepare(page,scene){
 }
 module.exports={start,root,records,fixture,prepare};
 if(require.main===module)(async()=>{const app=await start();try{const page=await app.browser.newPage({viewport:{width:1366,height:768}});await fixture(page,process.env.SCENE||'results');await page.goto(app.url+'/?embed=1');await page.locator('#entry-input').waitFor();await prepare(page,process.env.SCENE||'results');await page.screenshot({path:root+'/.local/issue56-smoke.png'});console.log((await page.locator('body').innerText()).slice(-5000));}finally{await app.close();}})().catch(e=>{console.error(e);process.exitCode=1});
-
-
-
-
-
-

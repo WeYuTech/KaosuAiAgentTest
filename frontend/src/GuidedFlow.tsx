@@ -6,7 +6,7 @@ import {RecordChoices} from './RecordChoices';
 import {queryCriteria} from './query-context';
 import {CandidateCombobox as CandidateSelect} from './CandidateCombobox';
 import React, { useEffect, useImperativeHandle, useRef, useState } from 'react';
-import { ArrowLeft, ArrowRight, Check, ClipboardList, RefreshCw, Search, ChevronLeft, ChevronRight, Sparkles } from 'lucide-react';
+import { ArrowLeft, ArrowRight, Check, ClipboardList, RefreshCw,LoaderCircle, Search, ChevronLeft, ChevronRight, Sparkles } from 'lucide-react';
 import { api, ApiError, display, label, type Conversation, type Module, type Proposal, type Reply, type Row, type Workspace } from './api';
 import { Fields } from './DataView';
 import { useLocale } from './i18n';
@@ -488,7 +488,7 @@ export function GuidedFlow({ presentation='chat-sheet', reviewActionsExternal=fa
         {module !== 'schedule' && <label className="guide-field">{L('範圍','Records','ขอบเขต')}<select value={filters.history} onChange={e => changeFilters(v => ({ ...v, history: e.target.value }))}><option value="all">{L('全部','All','ทั้งหมด')}</option><option value="pending">{L('待開始','Pending','รอเริ่ม')}</option><option value="running">{L('進行中','Running','กำลังดำเนินการ')}</option><option value="history">{L('歷史','History','ประวัติ')}</option></select></label>}
         </details></form>
       <div className="picker-results" ref={pickerTable} hidden={!!pendingTarget}>
-        {lookupBusy&&<div className="request-progress"><p role="status"><RefreshCw className="spin" size={18}/>{L('正在查詢工單…','Loading orders…','กำลังค้นหาใบสั่งผลิต…')}</p><div className="request-skeleton" aria-hidden="true"><span/><span/><span/></div></div>}
+        {lookupBusy&&<div className="request-progress"><p role="status"><LoaderCircle className="spin" size={18}/>{L('正在查詢工單…','Loading orders…','กำลังค้นหาใบสั่งผลิต…')}</p><div className="request-skeleton" aria-hidden="true"><span/><span/><span/></div></div>}
         {lookupError&&<div role="alert" className="picker-status picker-failure"><div className="picker-failure-notice"><strong>{L('工單暫時無法載入','Unable to load orders','ไม่สามารถโหลดใบสั่งผลิต')}</strong><small>{lookupError}</small></div><button type="button" className="secondary" disabled={locked||lookupBusy} onClick={()=>void load().catch(()=>{})}>{L('重新查詢','Retry search','ค้นหาอีกครั้ง')}</button></div>}
         {choices.length>0&&!lookupBusy&&!lookupError&&<div className={lookupBusy||lookupError?'picker-stale':''} aria-busy={lookupBusy}><RecordChoices compact records={choices} value={candidate} onSelect={row=>{setCandidate(row);setSelectionNotice('');}} identify={row=>String(row[EID]??row[SID])} disabled={locked||lookupBusy||!!lookupError} eligible={row=>!action||query||(module==='mold'?moldStageAvailability(row,action).allowed:canChooseRecord(module,action,query,row))} describe={row=>({primary:string(row.WO??row.WO_NO??row.EQP_NO),secondary:[row.PART_NO,row.PART_SPEC].filter(Boolean).join(' ')||string(row.TOL_NO),context:string(row.EQP_NO)})}/></div>}
         {!choices.length&&!lookupBusy&&!lookupError&&<div className="picker-status picker-empty"><Search size={25}/><h3>{L('沒有符合的資料','No matching records','ไม่พบข้อมูลที่ตรงกัน')}</h3><p>{L('試試其他工單或放寬設備範圍。','Try another order or broaden the machine range.','ลองใบสั่งผลิตอื่นหรือเพิ่มขอบเขตเครื่องจักร')}</p><button type="button" onClick={()=>{const next={...filters,equipment:'',date:'',wo:'',search:''};changeFilters(()=>next);setEndDate('');void load(1,next).catch(()=>{});}}>{L('清除篩選','Clear filters','ล้างตัวกรอง')}</button></div>}

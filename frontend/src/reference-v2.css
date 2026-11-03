@@ -1,4 +1,4 @@
-﻿/* 範例 v2 的共用外框、首頁與聊天；業務作業單仍由既有 Guide 控制。 */
+/* 範例 v2 的共用外框、首頁與聊天；業務作業單仍由既有 Guide 控制。 */
 #mes-ai-chat-root {
  --v2-panel:#f6f7f8;--v2-raised:#f3f4f6;--v2-hover:#e9ebef;
  --background:#fff;--foreground:#24272b;--muted-foreground:#656b74;--border:#dfe2e7;
@@ -393,3 +393,7 @@
 
 #mes-ai-chat-root .target-picker-dialog .picker-ai{margin:0}
 @media(max-width:620px){#mes-ai-chat-root .dual-flow.selection-open.selection-ai-open>.chat-layout{display:none}}
+#mes-ai-chat-root .target-picker-dialog .picker-pagination button{font-size:12px;line-height:1.55}
+#mes-ai-chat-root .dual-flow.chat-only .composer-footnote{display:none}
+#mes-ai-chat-root .history-select{font-weight:400;color:var(--foreground)}
+#mes-ai-chat-root .target-picker-dialog .picker-ai .aui-composer-send:disabled{opacity:1}

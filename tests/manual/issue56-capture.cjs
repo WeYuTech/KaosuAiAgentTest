@@ -1,4 +1,4 @@
-﻿const {start,root,fixture,prepare}=require('./issue56-fixture.cjs');
+const {start,root,fixture,prepare}=require('./issue56-fixture.cjs');
 const {compare}=require('./issue55-capture.cjs');
 const fs=require('node:fs'),path=require('node:path');
 const scenes=JSON.parse(fs.readFileSync(path.join(root,'docs/design/uiux-reference-v2/scenarios.json'),'utf8')).filter(s=>/^[QP]/.test(s.id));
@@ -6,6 +6,7 @@ const pairs=[['標題','.ux-top-title>span:first-of-type','.workspace-bar h1'],[
 pairs.push(['查詢動作','.ux-message.assistant>.ux-row>.ux-button','.query-outcome-actions>button'],['查詢狀態','.ux-message.assistant .ux-live','.conversation-content>.request-progress>p'],['骨架','.ux-message.assistant .ux-skeleton','.conversation-content>.request-progress .request-skeleton span'],['停止查詢','.ux-message.assistant>.ux-button','.conversation-content>.request-progress>button']);
 pairs.push(['空結果區','.ux-dialog .ux-empty','.target-picker-dialog .picker-empty'],['空結果標題','.ux-dialog .ux-empty h3','.picker-empty h3'],['空結果提示','.ux-dialog .ux-empty p','.picker-empty p'],['清除篩選','.ux-dialog .ux-empty button','.picker-empty button']);
 const props=['font-family','font-size','font-weight','line-height','letter-spacing','color'];
+pairs.push(['品牌名稱','.ux-appbrand span','.assistant-header h2'],['側欄項目','.ux-history-row>button:first-child','.history-select'],['查詢輸入','.ux-main-content>.ux-composer-wrap textarea','.dual-flow.chat-only #chat-input'],['結果表格標題','.ux-result-top>span','.query-result-top>span'],['結果分頁','.ux-result>.ux-pagination','.query-pagination'],['候選頁次按鈕','.ux-pick-table .ux-pagination button','.picker-pagination button'],['搜尋按鈕','.ux-filterbar>button','.reference-picker-filters>button']);
 pairs.push(['候選表頭','.ux-pick-table th','.reference-pick-table th'],['明細按鈕','.ux-pick-table tbody button','.reference-pick-table tbody button'],['明細標題','.row-detail strong','.record-choice-detail strong'],['候選等待','.ux-dialog .ux-live','.target-picker-dialog .request-progress>p'],['候選骨架','.ux-dialog .ux-skeleton','.target-picker-dialog .request-skeleton span'],['候選失敗','.ux-dialog .ux-notice.error','.picker-failure-notice'],['候選失敗重查','.ux-dialog .ux-notice.error+div>button','.picker-failure>button'],['詢問AI區','.ux-ai-picker','.picker-ai'],['詢問AI回覆','.ux-ai-picker .ux-wizard-answer','.picker-ai>p'],['詢問AI輸入','.ux-ai-picker textarea','.picker-ai textarea'],['結果明細動作','.ux-result tbody .ux-stack button','.query-detail button']);
 async function measure(page,selector){return page.locator(selector).evaluateAll((els,props)=>els.filter(el=>el.getBoundingClientRect().width&&el.getBoundingClientRect().height).map(el=>({rect:el.getBoundingClientRect().toJSON(),style:Object.fromEntries(props.map(p=>[p,getComputedStyle(el).getPropertyValue(p)]))})),props);}
 (async()=>{const app=await start(),rows=[];const out=path.join(root,'docs/design/issue56');fs.mkdirSync(out,{recursive:true});try{
@@ -23,5 +24,3 @@ async function measure(page,selector){return page.locator(selector).evaluateAll(
  }await ref.close();}
  fs.writeFileSync(path.join(out,process.env.SCENE?`量測-${process.env.SCENE}-${process.env.WIDTH||'all'}.json`:'量測.json'),JSON.stringify(rows,null,2));
  }finally{await app.close();}})().catch(e=>{console.error(e);process.exitCode=1});
-
-
