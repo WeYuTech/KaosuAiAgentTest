@@ -5,9 +5,10 @@ import { renderToStaticMarkup } from 'react-dom/server';
 import { createServer } from 'vite';
 
 const server = await createServer({ server: { middlewareMode: true, hmr: false, ws: false }, appType: 'custom' });
-let MessageContent;
+let MessageContent,ProcessingSteps;
 try {
   ({ MessageContent } = await server.ssrLoadModule('/src/MessageContent.tsx'));
+  ({ ProcessingSteps } = await server.ssrLoadModule('/src/ProcessingSteps.tsx'));
 } finally {
   await server.close();
 }
@@ -51,4 +52,11 @@ test('人員訊息維持純文字及原始換行，不把Markdown或HTML變成�
   assert.ok(html.includes('**工單**\n&lt;img'));
   assert.ok(!/<strong|<img|<table|<br/.test(html));
   assert.ok(!html.includes('markdown-message'));
+});
+
+test('完整串流與最終訊息的 Markdown 標記一致，不因切換重新排版',()=>{
+ const content='### MC37\n\n| 工單 | 數量 |\n| --- | --- |\n| WO-A | 100 |\n\n```text\n數量\n```';
+ const stream=renderToStaticMarkup(createElement(ProcessingSteps,{summary:{steps:[],request_id:'test',elapsed_seconds:1},phase:'running',text:content}));
+ const final=render(content);const markdown=html=>html.slice(html.indexOf('<div class="aui-md">'),html.lastIndexOf('</div>'));
+ assert.equal(markdown(stream),markdown(final));
 });

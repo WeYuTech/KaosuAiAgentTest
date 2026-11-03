@@ -65,7 +65,7 @@ def install(app, store, actor_for, allowed, now, create_conversation, process_me
         return {'id': eid, 'messages': row['messages']}
 
     if launch_stream:
-        @app.post('/api/entry/messages/stream')
+        @app.post('/api/entry/messages/start')
         def stream_entry(body: EntryMessage, request: Request):
             actor = actor_for(request)
             return launch_stream(actor, body.locale, lambda: entry_message(body, request))

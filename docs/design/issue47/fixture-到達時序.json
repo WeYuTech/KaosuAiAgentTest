@@ -1,0 +1,194 @@
+{
+  "posts": 1,
+  "batches": [
+    {
+      "at_ms": 87.80000007152557,
+      "after": 0,
+      "events": [
+        {
+          "seq": 1,
+          "event": "accepted"
+        },
+        {
+          "seq": 2,
+          "event": "step",
+          "id": 1,
+          "label": "辨識需求",
+          "status": "running"
+        }
+      ],
+      "terminal": false
+    },
+    {
+      "at_ms": 688.7000000476837,
+      "after": 2,
+      "events": [
+        {
+          "seq": 3,
+          "event": "step",
+          "id": 1,
+          "label": "辨識需求",
+          "status": "done"
+        }
+      ],
+      "terminal": false
+    },
+    {
+      "at_ms": 809.1000000238419,
+      "after": 3,
+      "events": [
+        {
+          "seq": 4,
+          "event": "intent"
+        },
+        {
+          "seq": 5,
+          "event": "intent"
+        },
+        {
+          "seq": 6,
+          "event": "step",
+          "id": 2,
+          "label": "查詢已審核知識",
+          "status": "running"
+        },
+        {
+          "seq": 7,
+          "event": "step",
+          "id": 2,
+          "label": "已查詢已審核知識（命中 2 筆）",
+          "status": "done"
+        },
+        {
+          "seq": 8,
+          "event": "step",
+          "id": 3,
+          "label": "分析需求",
+          "status": "running"
+        }
+      ],
+      "terminal": false
+    },
+    {
+      "at_ms": 1916.8000000715256,
+      "after": 8,
+      "events": [],
+      "terminal": false
+    },
+    {
+      "at_ms": 2975.3000000715256,
+      "after": 8,
+      "events": [
+        {
+          "seq": 9,
+          "event": "step",
+          "id": 3,
+          "label": "規劃下一步",
+          "status": "done"
+        },
+        {
+          "seq": 10,
+          "event": "reset"
+        }
+      ],
+      "terminal": false
+    },
+    {
+      "at_ms": 3081.100000023842,
+      "after": 10,
+      "events": [
+        {
+          "seq": 11,
+          "event": "step",
+          "id": 4,
+          "label": "查詢作業資料",
+          "status": "running"
+        },
+        {
+          "seq": 12,
+          "event": "step",
+          "id": 4,
+          "label": "已查詢 MC37 / WO-A（本頁 2 筆）",
+          "status": "done"
+        },
+        {
+          "seq": 13,
+          "event": "step",
+          "id": 5,
+          "label": "分析需求",
+          "status": "running"
+        }
+      ],
+      "terminal": false
+    },
+    {
+      "at_ms": 4218.100000023842,
+      "after": 13,
+      "events": [],
+      "terminal": false
+    },
+    {
+      "at_ms": 5360.100000023842,
+      "after": 13,
+      "events": [],
+      "terminal": false
+    },
+    {
+      "at_ms": 5930.900000095367,
+      "after": 13,
+      "events": [
+        {
+          "seq": 14,
+          "event": "delta",
+          "text": "已查詢 MC37。"
+        }
+      ],
+      "terminal": false
+    },
+    {
+      "at_ms": 6647,
+      "after": 14,
+      "events": [
+        {
+          "seq": 15,
+          "event": "delta",
+          "text": "\n工單 WO-A，品號 EPS-A。"
+        }
+      ],
+      "terminal": false
+    },
+    {
+      "at_ms": 7353.300000071526,
+      "after": 15,
+      "events": [
+        {
+          "seq": 16,
+          "event": "delta",
+          "text": "\n這是資料查詢，沒有變更作業。"
+        }
+      ],
+      "terminal": false
+    },
+    {
+      "at_ms": 7462.900000095367,
+      "after": 16,
+      "events": [
+        {
+          "seq": 17,
+          "event": "step",
+          "id": 5,
+          "label": "整理回覆",
+          "status": "done"
+        },
+        {
+          "seq": 18,
+          "event": "done"
+        }
+      ],
+      "terminal": true
+    }
+  ],
+  "terminal": "done",
+  "started": 633.0999999046326,
+  "start_ms": 59
+}
