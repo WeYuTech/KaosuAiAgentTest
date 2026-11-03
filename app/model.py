@@ -11,6 +11,7 @@ from openai import OpenAI, OpenAIError
 from app.knowledge import retrieve
 from app.store import Store, dumps
 from app.management import effective_cap, budget_config
+from app.streaming import active, check, tracked
 
 ROOT = Path(__file__).resolve().parent.parent
 PRICES = {"gpt-6.1-sol": (2.0, 10.0)}
@@ -89,7 +90,20 @@ def invoke(payload):
         store.put(db, "BUDGET", call_id, entry)
     try:
         client = OpenAI(api_key=os.environ["OPENAI_API_KEY"], timeout=50, max_retries=0)
-        result = client.responses.create(**payload)
+        check()
+        if active.get() and "tools" in payload:
+            result = None
+            with client.responses.create(**payload, stream=True) as events:
+                for event in events:
+                    check()
+                    if event.type == "response.output_text.delta":
+                        active.get().emit('delta', text=event.delta)
+                    elif event.type == "response.completed":
+                        result = event.response
+            if result is None:
+                raise HTTPException(502, "模型串流中斷，費用待核對")
+        else:
+            result = client.responses.create(**payload)
         if result.usage:
             entry.update(status="settled", input_tokens=result.usage.input_tokens, output_tokens=result.usage.output_tokens,
                          actual_usd=(result.usage.input_tokens * rates[0] + result.usage.output_tokens * rates[1]) / 1_000_000)
@@ -100,6 +114,8 @@ def invoke(payload):
         entry["status"] = "unknown"
         raise HTTPException(502, "模型呼叫失敗，未執行任何業務寫入；費用預留保留待核對") from exc
     finally:
+        if entry["status"] == "reserved":
+            entry["status"] = "unknown"
         with store.transaction() as db:
             store.put(db, "BUDGET", call_id, entry)
 
@@ -139,7 +155,7 @@ def respond(conversation, state, store, query_fn=None, prepare_fn=None, draft_fn
             "clear_fields": {"type": "array", "items": {"type": "string", "enum": list(properties)}},
             "step": {"type": "string", "enum": ["action", "target", "details", "review"]}}, "required": ["version"]}
         tools.append({"type": "function", "name": "update_operation_draft", "description": "保存使用者已提供的部分需求，回傳缺少欄位，不準備確認卡或寫入。null 表示未提供；明確清除欄位請用 clear_fields。版本取最新 guide.version。", "parameters": strict_schema(draft_schema), "strict": True})
-    knowledge = retrieve(store, module, conversation["messages"][-1]["content"])
+    knowledge = tracked("knowledge", retrieve, store, module, conversation["messages"][-1]["content"])
     instructions = """你是繁體中文 MES 操作助理。你只有查詢與草稿工具，沒有執行寫入或批准工具。
 先理解意圖並補問必要資料。使用者提及設備或工單可能有多筆；必須列出可選目標，不能猜第一筆SID。不填虛構值、不把未知IoT變成零。
 選項若標示truncated，先用search、part_no或mold_no縮小查詢，不能把截斷清單當成全部；宿主上下文的execution_id/schedule_id可用來精確查回，仍需核對設備工單。
@@ -181,6 +197,7 @@ def respond(conversation, state, store, query_fn=None, prepare_fn=None, draft_fn
     # 舊版對話沒有設定快照，保留升級前的預設；不能被管理視窗的新設定追溯改寫。
     config = conversation.get("model_settings") or {"model": os.getenv("OPENAI_MODEL", "gpt-6.1-sol"), "reasoning_effort": "low", "max_tool_rounds": 5}
     for _ in range(config["max_tool_rounds"]):
+        check()
         response = invoke({"model": config["model"], "instructions": instructions,
                            "input": inputs, "tools": tools, "parallel_tool_calls": False,
                            "max_output_tokens": MAX_OUTPUT, "reasoning": {"effort": config["reasoning_effort"]}, "store": False})
@@ -199,7 +216,7 @@ def respond(conversation, state, store, query_fn=None, prepare_fn=None, draft_fn
                 raise HTTPException(502, "模型提出未允許的工具，已阻擋")
             if call.name == "query_workspace":
                 try:
-                    data = query_fn(args) if query_fn else query(state, module, args)
+                    data = tracked("query", query_fn, args) if query_fn else tracked("query", query, state, module, args)
                     output = dumps(data)
                 except BusinessError as exc:
                     output = dumps({"error": str(exc)})
@@ -213,7 +230,7 @@ def respond(conversation, state, store, query_fn=None, prepare_fn=None, draft_fn
                 query_text = args.get("query")
                 if not isinstance(query_text, str) or not 1 <= len(query_text) <= 2000 or set(args) != {"query"}:
                     raise HTTPException(502, "知識查詢參數格式不符，未執行寫入")
-                found = retrieve(store, module, query_text)
+                found = tracked("knowledge", retrieve, store, module, query_text)
                 knowledge = list({row["id"]: row for row in knowledge + found}.values())
                 inputs.append({"type": "function_call_output", "call_id": call.call_id, "output": dumps({"records": found})})
                 continue
@@ -224,7 +241,7 @@ def respond(conversation, state, store, query_fn=None, prepare_fn=None, draft_fn
                         patch.setdefault("args", {})[field] = None
                     if "version" not in args:
                         raise HTTPException(422, {"code": "guide_invalid", "message": "請提供草稿版本。"})
-                    output = draft_fn(patch, args["version"])
+                    output = tracked("draft", draft_fn, patch, args["version"])
                 except HTTPException as exc:
                     if exc.status_code not in (409, 422):
                         raise
@@ -236,7 +253,7 @@ def respond(conversation, state, store, query_fn=None, prepare_fn=None, draft_fn
                 if call.name == "prepare_" + action.replace(".", "_"):
                     if prepare_fn:
                         try:
-                            proposal = prepare_fn(action, args)["proposal"]
+                            proposal = tracked("proposal", prepare_fn, action, args)["proposal"]
                             return {"content": prepared_text, "proposal": proposal, "data": data, "knowledge": knowledge}
                         except (HTTPException, MesError) as exc:
                             if isinstance(exc, MesError):

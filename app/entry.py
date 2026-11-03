@@ -18,7 +18,7 @@ class EntryMessage(BaseModel):
     module_choice: Literal['schedule','report','mold'] | None = None
 
 
-def install(app, store, actor_for, allowed, now, create_conversation, process_message, classifier=None):
+def install(app, store, actor_for, allowed, now, create_conversation, process_message, classifier=None, launch_stream=None):
     from app.main import Conversation, Message
     from app.intents import classify
     from app.domain import actions
@@ -64,6 +64,12 @@ def install(app, store, actor_for, allowed, now, create_conversation, process_me
             raise HTTPException(404, '找不到入口對話')
         return {'id': eid, 'messages': row['messages']}
 
+    if launch_stream:
+        @app.post('/api/entry/messages/stream')
+        def stream_entry(body: EntryMessage, request: Request):
+            actor = actor_for(request)
+            return launch_stream(actor, body.locale, lambda: entry_message(body, request))
+
     @app.post('/api/entry/messages')
     def entry_message(body: EntryMessage, request: Request):
         actor = actor_for(request)
@@ -107,7 +113,8 @@ def install(app, store, actor_for, allowed, now, create_conversation, process_me
                 decision = {'intent':'capabilities','module':'none'}
                 status = 'model_unavailable'
             else:
-                decision = classifier(context) if classifier else classify(context, actor['roles'])
+                from app.streaming import tracked
+                decision = tracked("classify", lambda: classifier(context) if classifier else classify(context, actor['roles']))
                 status = 'answered'
             fresh=actor_for(request)
             if fresh['id']!=actor['id']:
@@ -117,6 +124,9 @@ def install(app, store, actor_for, allowed, now, create_conversation, process_me
                 active=receipt(db,body.request_id,actor)
                 if active['token']!=token or active['expires_at'] < now().isoformat():
                     raise HTTPException(409,'入口訊息已過期，請查核原訊息')
+            from app.streaming import active
+            if active.get():
+                active.get().intent(decision.get("intent") != "change")
             intent, module = decision.get('intent'), body.module_choice or decision.get('module', 'none')
             permitted = {name: schema for name,schema in actions().items() if name.split('.')[0] in actor['roles']}
             choices = [m for m in ('schedule','report','mold') if m in actor['roles']]
@@ -162,7 +172,7 @@ def install(app, store, actor_for, allowed, now, create_conversation, process_me
             else:
                 raise HTTPException(502, '無法確認入口意圖，原文保留')
             if content is not None:
-                messages.append({'role':'assistant','content':content})
+                messages.append({'role':'assistant','content':content, **({'processing_summary':active.get().snapshot()} if active.get() else {})})
             result['messages'] = messages
             with store.transaction() as db:
                 row = receipt(db, body.request_id, actor)

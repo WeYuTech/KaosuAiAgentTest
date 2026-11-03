@@ -32,6 +32,7 @@ $config=@'
     <httpErrors existingResponse="PassThrough"/>
     <directoryBrowse enabled="false"/>
     <caching enabled="false" enableKernelCache="false"/>
+    <urlCompression doDynamicCompression="false"/>
   </system.webServer>
 </configuration>
 '@
@@ -47,6 +48,8 @@ if (!$existing) { New-WebApplication -Site $Site -Name 'KSS_MES/ai-agent' -Physi
 Set-WebConfigurationProperty -PSPath 'MACHINE/WEBROOT/APPHOST' -Filter 'system.webServer/proxy' -Name enabled -Value $true
 Set-WebConfigurationProperty -PSPath 'MACHINE/WEBROOT/APPHOST' -Filter 'system.webServer/proxy' -Name preserveHostHeader -Value $true
 Set-WebConfigurationProperty -PSPath 'MACHINE/WEBROOT/APPHOST' -Filter 'system.webServer/proxy' -Name timeout -Value '00:05:00'
+# ARR 伺服器層級緩衝必須關閉；代理應用停用動態壓縮以保持 SSE 即時傳送。
+Set-WebConfigurationProperty -PSPath 'MACHINE/WEBROOT/APPHOST' -Filter 'system.webServer/proxy' -Name responseBufferLimit -Value 0
 $action=New-ScheduledTaskAction -Execute "$Root\venv\Scripts\pythonw.exe" -Argument "`"$Root\current\scripts\run_service.py`"" -WorkingDirectory "$Root\current"
 $principal=New-ScheduledTaskPrincipal -UserId 'S-1-5-19' -LogonType ServiceAccount
 $settings=New-ScheduledTaskSettingsSet -RestartCount 999 -RestartInterval (New-TimeSpan -Minutes 1) -ExecutionTimeLimit ([TimeSpan]::Zero) -MultipleInstances IgnoreNew -StartWhenAvailable -AllowStartIfOnBatteries -DontStopIfGoingOnBatteries
