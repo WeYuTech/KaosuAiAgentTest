@@ -1,17 +1,22 @@
-import {type Workspace, display} from './api';
-import {t} from './i18n';
+import {Fragment,useState} from 'react';
+import {type Workspace,type Row,display} from './api';
+import {useLocale} from './i18n';
 
-/** 唯讀投影；完整資料仍由原查詢面板提供，不另建選取或確認狀態。 */
-export function ChatQueryResults({workspace,onAll}:{workspace:Workspace;onAll:()=>void}) {
-  const count=workspace.records.length;
-  const start=count?((workspace.page??1)-1)*(workspace.page_size??count)+1:0;
-  const end=count?start+count-1:0;
-  const total=workspace.total;
-  const complete=total!==undefined&&start<=1&&count===total;
-  return <section className="chat-query-results" aria-label={t('工單查詢結果')}>
-    <p>{workspace.query_context?.filters.equipment && <span>{display(workspace.query_context.filters.equipment)} · </span>}{total===undefined?t('顯示 {0}–{1} 筆；總筆數未提供',{0:start,1:end}):t('顯示 {0}–{1}／{2} 筆',{0:start,1:end,2:total})}<small>{t(complete?'已顯示全部結果':'目前為部分結果，請查看全部資料')}</small></p>
-    <div className="chat-query-scroll"><table><thead><tr><th>{t('工單／品號')}</th><th>{t('人工良品')}</th><th>{t('人工不良')}</th></tr></thead>
-      <tbody>{workspace.records.map((row,index)=><tr key={index}><td>{display(row.WO??row.WO_NO)}<small>{[row.PART_NO,row.PART_SPEC].filter(Boolean).join(' · ')}</small></td><td>{display(row.MANUAL_OK)}</td><td>{display(row.MANUAL_NG)}</td></tr>)}</tbody></table></div>
-    <button className="text-button" onClick={onAll}>{t('查看全部')}</button>
+/** 展開明細僅改呈現；帶入由既有 Guide 驗證，不建立第二份草稿。 */
+export function ChatQueryResults({workspace,onAll,onApply}:{workspace:Workspace;onAll:()=>void;onApply?:(row:Row)=>void}) {
+  const {locale}=useLocale();
+  const L=(zh:string,en:string,th:string)=>locale==='en'?en:locale==='th'?th:zh;
+  const [expanded,setExpanded]=useState<Row|null>(null);
+  const visible=workspace.records.slice(0,4);
+  const start=visible.length?((workspace.page??1)-1)*(workspace.page_size??workspace.records.length)+1:0;
+  const filters=workspace.query_context?.filters;
+  const date=String(filters?.date??'');
+  const day=/^\d{4}-\d{2}-\d{2}$/.test(date)?new Intl.DateTimeFormat(locale,{month:'long',day:'numeric',timeZone:'UTC'}).format(new Date(date+'T00:00:00Z')).replace(/(\d+)月(\d+)日/,'$1 月 $2 日'):date;
+  return <section className="chat-query-results" aria-label={L('工單查詢結果','Order query results','ผลการค้นหาใบสั่งผลิต')}>
+    <div className="query-result-top"><span>{[filters?.equipment,day].filter(Boolean).join(' · ')}</span><small>{workspace.total===undefined?L('總筆數未提供','Total unavailable','ไม่ระบุจำนวนทั้งหมด'):`${workspace.total} ${L('筆工單','orders','ใบสั่งผลิต')}`}</small></div>
+    <table className="query-result-table"><thead><tr><th>{L('工單／品名','Order / product','ใบสั่งผลิต / ชิ้นงาน')}</th><th className="number">{L('良品','Good','ชิ้นงานดี')}</th><th className="number desktop">{L('不良','Defects','ของเสีย')}</th><th><span className="sr-only">{L('操作','Actions','การดำเนินการ')}</span></th></tr></thead>
+      <tbody>{visible.map((row,index)=><Fragment key={String(row.WIP_OPI_WDOEACICO_HIST_SID??row.WO??index)}><tr><td>{display(row.WO??row.WO_NO)}<small>{[row.PART_NO,row.PART_SPEC].filter(Boolean).join(' ')}</small></td><td className="number">{display(row.MANUAL_OK)}</td><td className="number desktop">{display(row.MANUAL_NG)}</td><td><button type="button" className="query-small ghost" aria-expanded={expanded===row} onClick={()=>setExpanded(expanded===row?null:row)}>{L('明細','Details','รายละเอียด')}</button></td></tr>{expanded===row&&<tr><td colSpan={4}><div className="query-detail"><div className="query-detail-heading"><span>{[row.COMPLETED==='Y'?L('已完工','Completed','เสร็จแล้ว'):row.COMPLETED==='N'?L('未完工','Not completed','ยังไม่เสร็จ'):null,row.TOL_NO?`${L('模具','Mold','แม่พิมพ์')} ${row.TOL_NO}`:null].filter(Boolean).join(' · ')}</span>{onApply&&<button type="button" className="query-small" onClick={()=>onApply(row)}>{L('帶入報工','Use for reporting','ใช้รายงานผลผลิต')}</button>}</div><small>{L('人工報工','Manual report','รายงานด้วยตนเอง')}：{display(row.MANUAL_OK)} {L('良品','good','ชิ้นงานดี')}／{display(row.MANUAL_NG)} {L('不良','defects','ของเสีย')}<br/>{L('IoT 產量','IoT output','ผลผลิต IoT')}：{row.IOT_QUANTITY==null?L('尚無資料','No data yet','ยังไม่มีข้อมูล'):display(row.IOT_QUANTITY)}</small></div></td></tr>}</Fragment>)}</tbody>
+    </table>
+    <div className="query-pagination"><span>{start}–{visible.length?start+visible.length-1:0}／{workspace.total??'—'} {L('筆','records','รายการ')}</span><div className="query-pagination-actions"><button type="button" className="query-small ghost" onClick={onAll}>{L('查看全部','View all','ดูทั้งหมด')}</button></div></div>
   </section>;
 }

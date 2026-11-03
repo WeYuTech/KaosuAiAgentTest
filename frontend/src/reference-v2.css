@@ -195,3 +195,123 @@
 }
 #mes-ai-chat-root .history-search-empty button.secondary {min-height:32px;padding:5px 10px;font-size:13px;}
 #mes-ai-chat-root:lang(th) {font-family:Inter,"Noto Sans TC","Noto Sans Thai",system-ui,-apple-system,"Segoe UI",sans-serif;}
+
+/* 第二段：查詢投影沿用範例 v2 的表格與狀態節奏。 */
+#mes-ai-chat-root .request-progress>p{display:flex;gap:10px;align-items:center;color:var(--muted-foreground);font-size:14px;min-height:32px}
+#mes-ai-chat-root .request-skeleton span{height:13px;border-radius:5px;background:var(--v2-hover);margin:15px 0;animation:ux-pulse 1400ms ease-in-out infinite}
+#mes-ai-chat-root .chat-query-results{margin-top:18px;border:1px solid var(--border);border-radius:12px;overflow:hidden;font-size:13px;line-height:1.5}
+#mes-ai-chat-root .query-result-top{padding:13px 16px;display:flex;align-items:center;justify-content:space-between;gap:12px}
+#mes-ai-chat-root .chat-query-results small{font-size:11px}
+#mes-ai-chat-root .query-result-table{width:100%;border-collapse:collapse;table-layout:fixed;font-size:13px;line-height:1.5}
+#mes-ai-chat-root .query-result-table th{font-size:12px;font-weight:400;color:var(--muted-foreground);text-align:left;background:var(--v2-panel);padding:10px 12px}
+#mes-ai-chat-root .query-result-table td{padding:12px;border-top:1px solid var(--border);vertical-align:middle;overflow-wrap:anywhere}
+#mes-ai-chat-root .query-result-table .number{text-align:right;font-variant-numeric:tabular-nums}
+#mes-ai-chat-root .query-result-table td small{display:block;margin-top:3px}
+#mes-ai-chat-root .query-result-table .query-small{min-height:30px}
+#mes-ai-chat-root .query-pagination{padding:11px 14px;border-top:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;font-size:12px;gap:10px;color:var(--muted-foreground)}
+#mes-ai-chat-root .chat-query-results{padding:0;background:transparent;color:var(--foreground)}
+#mes-ai-chat-root .query-result-table th:first-child{width:45%}
+#mes-ai-chat-root .query-result-table th:last-child{width:69px}
+#mes-ai-chat-root .query-small{min-height:32px;padding:5px 10px;font-size:13px;font-weight:400;line-height:1.5;border:1px solid var(--border);border-radius:9px;display:inline-flex;gap:8px;align-items:center;justify-content:center;white-space:nowrap;background:transparent;color:var(--foreground)}
+#mes-ai-chat-root .query-small.ghost{border-color:transparent}
+#mes-ai-chat-root .query-detail{display:flex;flex-direction:column;gap:12px}
+#mes-ai-chat-root .query-detail-heading{display:flex;gap:10px;align-items:center;justify-content:space-between;flex-wrap:wrap;margin-top:15px}
+#mes-ai-chat-root .request-progress{margin:0;padding:0;background:transparent;border:0}
+#mes-ai-chat-root .request-progress>p{margin:0}
+#mes-ai-chat-root .request-skeleton{display:block;margin:0;padding:0}
+#mes-ai-chat-root .request-skeleton span{display:block}
+#mes-ai-chat-root .spin{animation:v2-query-spin 850ms linear infinite;transform-origin:center}
+@keyframes v2-query-spin{to{transform:rotate(360deg)}}
+@keyframes ux-pulse{50%{opacity:.45}}
+@media(prefers-reduced-motion:reduce){#mes-ai-chat-root .spin,#mes-ai-chat-root .request-skeleton span{animation:none!important}}
+@container mes-chat-shell (max-width:620px){
+ #mes-ai-chat-root .query-result-table .desktop{display:none}
+ #mes-ai-chat-root .query-result-table td,#mes-ai-chat-root .query-result-table th{padding:11px 10px}
+}
+#mes-ai-chat-root .target-picker-dialog{width:min(calc(100% - 48px),890px);max-width:890px;height:auto;min-height:0;max-height:calc(100dvh - 48px);border:1px solid var(--border);border-radius:16px;background:var(--background);color:var(--foreground);gap:0;padding:0;font-size:14px;line-height:1.55}
+#mes-ai-chat-root .target-picker-dialog .operation-dialog-header{padding:20px 24px 14px;gap:12px;min-height:0}
+#mes-ai-chat-root .target-picker-dialog .operation-dialog-header h2{font-size:18px;font-weight:600;line-height:1.4;letter-spacing:-.3px;color:var(--foreground)}
+#mes-ai-chat-root .target-picker-dialog .operation-dialog-body{padding:4px 24px 24px;overflow:auto;display:block;flex:0 1 auto}
+#mes-ai-chat-root .target-picker-dialog .operation-dialog-footer{display:flex;justify-content:flex-end;gap:10px;padding:16px 24px;border-top:1px solid var(--border);align-items:center;flex-wrap:wrap;background:var(--background)}
+#mes-ai-chat-root .target-picker-dialog button{font-family:inherit;font-size:14px;font-weight:400;line-height:1.55;min-height:40px;padding:9px 14px;display:inline-flex;align-items:center;justify-content:center;gap:8px;border:1px solid var(--border);border-radius:9px;background:transparent;color:var(--foreground);white-space:nowrap}
+#mes-ai-chat-root .target-picker-dialog button.primary{background:var(--primary);color:var(--primary-foreground);border-color:var(--primary);font-weight:550}
+#mes-ai-chat-root .target-picker-dialog button:disabled{opacity:.43}
+#mes-ai-chat-root .target-picker-dialog .icon-button{width:36px;min-width:36px;min-height:36px;height:36px;padding:8px;border-color:transparent;border-radius:8px}
+#mes-ai-chat-root .target-picker-dialog .reference-picker-filters{display:grid;grid-template-columns:minmax(160px,1fr) 125px 135px auto;gap:10px;align-items:end;margin:16px 0;padding:0}
+#mes-ai-chat-root .target-picker-dialog .reference-picker-filters .guide-field{display:flex;flex-direction:column;gap:7px;font-size:12px;font-weight:400;line-height:1.55;color:var(--foreground)}
+#mes-ai-chat-root .target-picker-dialog .reference-picker-filters input,#mes-ai-chat-root .target-picker-dialog .reference-picker-filters select{width:100%;height:40px;min-height:40px;padding:9px 11px;background:var(--background);border:1px solid var(--border);color:var(--foreground);border-radius:8px;min-width:0;font-family:inherit;font-size:14px;line-height:1.55;box-shadow:none}
+#mes-ai-chat-root .target-picker-dialog .reference-picker-filters .guide-search-options{grid-column:1/-1;font-size:13px;margin:0}
+#mes-ai-chat-root .picker-results{min-height:0;padding:0;max-height:none;overflow:visible}
+#mes-ai-chat-root .target-picker-dialog .reference-pick-table{border:1px solid var(--border);border-radius:10px;overflow:hidden}
+#mes-ai-chat-root .target-picker-dialog .reference-pick-table table{width:100%;min-width:0;border-collapse:collapse;table-layout:fixed;font-size:13px;line-height:1.5}
+#mes-ai-chat-root .target-picker-dialog .reference-pick-table th{font-size:12px;font-weight:400;color:var(--muted-foreground);text-align:left;background:var(--v2-panel);padding:10px 12px;border:0;line-height:1.5}
+#mes-ai-chat-root .target-picker-dialog .reference-pick-table td{padding:12px;border:0;border-top:1px solid var(--border);vertical-align:middle;overflow-wrap:anywhere;font-size:13px;line-height:1.5;background:transparent}
+#mes-ai-chat-root .target-picker-dialog .reference-pick-table :is(th,td):first-child{width:43px;padding-right:0}
+#mes-ai-chat-root .target-picker-dialog .reference-pick-table th:nth-child(3){width:85px}
+#mes-ai-chat-root .target-picker-dialog .reference-pick-table th:nth-child(4){width:90px}
+#mes-ai-chat-root .target-picker-dialog .reference-pick-table th:last-child{width:64px}
+#mes-ai-chat-root .target-picker-dialog .reference-pick-table strong{font-size:13px;font-weight:400;line-height:1.5;color:var(--foreground);white-space:normal}
+#mes-ai-chat-root .target-picker-dialog .reference-pick-table small{display:block;margin-top:3px;font-size:12px;line-height:1.5;color:var(--muted-foreground)}
+#mes-ai-chat-root .target-picker-dialog .reference-pick-table input[type=radio]{accent-color:var(--primary);width:17px;height:17px;margin:0}
+#mes-ai-chat-root .target-picker-dialog .reference-pick-table tr.is-selected td{background:var(--accent-soft,#26344b)}
+#mes-ai-chat-root .target-picker-dialog .reference-pick-table button{min-height:30px;padding:5px 10px;font-size:13px;line-height:1.5;border-color:transparent}
+#mes-ai-chat-root .target-picker-dialog .reference-pick-table .record-choice-detail td{width:auto;background:var(--v2-panel);padding:14px 16px;font-size:12px;color:var(--muted-foreground)}
+#mes-ai-chat-root .target-picker-dialog .reference-pick-table .record-choice-detail strong{font-size:12px;font-weight:500}
+#mes-ai-chat-root .picker-pagination{padding:11px 14px;border:1px solid var(--border);border-top:0;display:flex;justify-content:space-between;align-items:center;font-size:12px;line-height:1.55;gap:10px;color:var(--muted-foreground);margin:0;border-radius:0 0 10px 10px}
+#mes-ai-chat-root .picker-pagination>div{display:flex;align-items:center;gap:10px}
+#mes-ai-chat-root .picker-pagination button{width:36px;height:36px;min-width:36px;min-height:36px;padding:8px;border-color:transparent;border-radius:8px}
+#mes-ai-chat-root .picker-selection{font-size:12px;line-height:1.55;color:var(--muted-foreground);margin-right:auto;min-width:0;padding:0;border:0;background:transparent;flex:0 1 auto}
+#mes-ai-chat-root .picker-actions{display:contents}
+#mes-ai-chat-root .picker-ai{width:100%;padding:12px 0;background:var(--v2-panel);border:0}
+#mes-ai-chat-root .picker-ai p{font-size:12px;color:var(--muted-foreground);margin:0 0 10px}
+#mes-ai-chat-root .picker-empty{padding:38px 20px;display:flex;flex-direction:column;align-items:center;text-align:center;gap:10px;border:0;background:transparent;min-height:0}
+#mes-ai-chat-root .picker-empty h3{font-size:16px;font-weight:600;line-height:1.5;margin:0}
+#mes-ai-chat-root .picker-empty p{font-size:13px;color:var(--muted-foreground);max-width:340px;margin:0}
+#mes-ai-chat-root .picker-empty button{min-height:32px;padding:5px 10px;font-size:13px}
+#mes-ai-chat-root .picker-failure{display:block;padding:0;background:transparent;border:0}
+#mes-ai-chat-root .picker-failure-notice{padding:12px 14px;background:var(--error-bg,#3e292c);color:var(--error,#f29c9c);border-radius:10px;font-size:13px}
+#mes-ai-chat-root .picker-failure-notice small{display:block;font-size:12px;margin-top:3px}
+#mes-ai-chat-root .picker-failure button{margin-top:16px}
+#mes-ai-chat-root .target-picker-dialog .request-skeleton{padding:12px 0}
+@media(max-width:620px){
+ #mes-ai-chat-root .target-picker-dialog{width:calc(100% - 24px);max-height:calc(100dvh - 24px);border-radius:14px}
+ #mes-ai-chat-root .target-picker-dialog .operation-dialog-header{padding:16px 18px 12px}
+ #mes-ai-chat-root .target-picker-dialog .operation-dialog-body{padding:4px 18px 20px}
+ #mes-ai-chat-root .target-picker-dialog .operation-dialog-footer{padding:14px 18px;gap:8px}
+ #mes-ai-chat-root .target-picker-dialog .reference-picker-filters{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}
+ #mes-ai-chat-root .target-picker-dialog .reference-picker-filters>.guide-field:first-child,#mes-ai-chat-root .target-picker-dialog .reference-picker-filters>button{grid-column:1/-1}
+ #mes-ai-chat-root .target-picker-dialog .reference-pick-table :is(th,td):nth-child(3),#mes-ai-chat-root .target-picker-dialog .reference-pick-table :is(th,td):nth-child(4){display:none}
+ #mes-ai-chat-root .target-picker-dialog .reference-pick-table :is(th,td){padding:11px 10px}
+ #mes-ai-chat-root .target-picker-dialog .reference-pick-table :is(th,td):first-child{width:35px;padding-left:10px;padding-right:0}
+ #mes-ai-chat-root .target-picker-dialog .reference-pick-table .record-choice-detail td{display:table-cell}
+ #mes-ai-chat-root .picker-selection{width:100%;flex:auto;margin-bottom:2px}
+}
+/* 純查詢聊天取消舊版內外層雙重限寬，沿用第一段 790px 訊息欄。 */
+#mes-ai-chat-root .workspace-bar h1{color:var(--foreground)}
+#mes-ai-chat-root .dual-flow.chat-only .conversation-scroll{width:100%;max-width:none;margin:0;padding:0}
+#mes-ai-chat-root .dual-flow.chat-only .conversation-content{width:min(100%,790px);max-width:790px;margin:0 auto;padding:24px 32px 38px}
+#mes-ai-chat-root .dual-flow.chat-only [data-slot=aui_message-group]{gap:25px}
+#mes-ai-chat-root .dual-flow.chat-only .aui-assistant-message{font-size:15px;line-height:1.8}
+#mes-ai-chat-root .dual-flow.chat-only .aui-assistant-message>.text-foreground{padding:0;line-height:inherit;font-size:inherit}
+#mes-ai-chat-root .dual-flow.chat-only .aui-md,#mes-ai-chat-root .dual-flow.chat-only .aui-md p{font-size:inherit;line-height:inherit}
+#mes-ai-chat-root .dual-flow.chat-only .aui-user-message-content{font-size:14px;line-height:1.8;padding:10px 17px;border-radius:20px 20px 5px 20px;background:var(--v2-hover);max-width:85%}
+#mes-ai-chat-root .dual-flow.chat-only .composer-area{width:min(100%,840px);max-width:840px;margin:0 auto;padding:12px 28px 18px}
+#mes-ai-chat-root .query-result-top small{line-height:1.5}
+@container mes-chat-shell (max-width:620px){
+ #mes-ai-chat-root .dual-flow.chat-only .conversation-content{padding:20px 20px 28px}
+ #mes-ai-chat-root .dual-flow.chat-only .composer-area{padding:10px 16px 14px}
+}
+#mes-ai-chat-root .query-pagination-actions{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-top:15px}
+#mes-ai-chat-root .target-picker-dialog #guide-selection-ai{font-size:13px;min-height:32px;padding:5px 10px;border-color:transparent}
+#mes-ai-chat-root .target-picker-dialog .reference-picker-filters{margin:16px 0;grid-template-columns:minmax(160px,1fr) 125px 135px auto}
+#mes-ai-chat-root .target-picker-dialog .reference-pick-table strong{line-height:1.5}
+#mes-ai-chat-root .target-picker-dialog .reference-pick-table small{line-height:1.5;margin-top:3px}
+#mes-ai-chat-root .target-picker-dialog .reference-pick-table td{padding:12px}
+#mes-ai-chat-root .target-picker-dialog .reference-pick-table :is(th,td):first-child{padding-right:0}
+#mes-ai-chat-root .picker-extra-options{font-size:12px;margin:0 0 10px}
+@media(max-width:620px){
+ #mes-ai-chat-root .target-picker-dialog .reference-picker-filters{display:grid;max-height:none;overflow:visible;grid-template-columns:minmax(0,1fr) minmax(0,1fr)}
+ #mes-ai-chat-root .target-picker-dialog .reference-pick-table tr{display:table-row;padding:0}
+ #mes-ai-chat-root .target-picker-dialog .reference-pick-table td{padding:11px 10px}
+ #mes-ai-chat-root .target-picker-dialog .reference-pick-table :is(th,td):first-child{padding-right:0}
+}
