@@ -6,14 +6,23 @@ import time
 from contextlib import contextmanager
 
 from fastapi import HTTPException
-from fastapi.responses import StreamingResponse
-from app.store import dumps, PREFIX
+from fastapi.responses import JSONResponse
+from app.store import PREFIX
+from copy import deepcopy
 from app.step_labels import result_label
 
-RETENTION_SECONDS = 900
+RETENTION_SECONDS = 300
+# 事件接續依賴單一程序（workers=1）；不可部署多 worker 或跨程序負載平衡。
+WORKS = {}
+WORKS_LOCK = threading.Lock()
 
 def cleanup_streams(store, timestamp=None):
     cutoff = time.time() if timestamp is None else timestamp
+    with WORKS_LOCK:
+        expired = [rid for rid, work in WORKS.items()
+                   if work.store is store and work.delete_after is not None and work.delete_after <= cutoff]
+        for rid in expired:
+            del WORKS[rid]
     with store.transaction() as db:
         db.execute(f"DELETE FROM {PREFIX}STATE WHERE id LIKE ? AND json_extract(data, '$.delete_after') <= ?", ("stream:v1:%", cutoff))
 
@@ -32,13 +41,16 @@ class Work:
         self.steps = []
         self.events = []
         self.condition = threading.Condition()
-        self.connected = True
+        self.access_token = self.token
+        self.delete_after = None
         self.terminal = False
         cleanup_streams(store)
         self.readonly = None
         with store.transaction() as db:
             store.put(db, 'STATE', self.key, {'id': self.id, 'actor': actor['id'], 'token': self.token,
                       'steps': [], 'status': 'processing', 'readonly': None})
+        with WORKS_LOCK:
+            WORKS[self.id] = self
 
     @property
     def key(self):
@@ -56,30 +68,22 @@ class Work:
                     row.pop('token', None)
                 self.store.put(db, 'STATE', self.key, row)
         with self.condition:
-            if self.connected:
-                self.events.append({'event':kind, 'data':data})
+            self.events.append({'seq': len(self.events)+1, 'event': kind, 'data': deepcopy(data)})
             self.terminal = terminal
             if terminal:
                 self.token = None
-                for event in self.events:
-                    if event['event']=='intent':event['data'].pop('token',None)
+                self.delete_after = time.time()+RETENTION_SECONDS
             self.condition.notify_all()
         if terminal:
             timer=threading.Timer(RETENTION_SECONDS, cleanup_streams, args=(self.store,))
             timer.daemon=True
             timer.start()
 
-    def take_events(self):
+    def take_events(self, after=0, timeout=1):
+        """非破壞性讀取；GET 斷線不清空事件，也不取消背景工作。"""
         with self.condition:
-            if not self.events and not self.terminal:
-                self.condition.wait(1)
-            events,self.events=self.events,[]
-            return events,self.terminal
-
-    def detach(self):
-        with self.condition:
-            self.connected=False
-            self.events.clear()
+            self.condition.wait_for(lambda: len(self.events)>after or self.terminal, timeout=timeout)
+            return deepcopy(self.events[after:]), self.terminal
 
     def intent(self, readonly):
         self.readonly = readonly
@@ -172,7 +176,7 @@ def watch_stream(events):
 
 
 def install(app, store, actor_for, get_chat, process, message_type):
-    # 同步工作由獨立執行緒持有；StreamingResponse 取消只終止事件讀取。
+    # 同步工作由獨立執行緒持有；開始與輪詢 HTTP 的中斷不影響工作。
     def launch(actor, locale, fn):
         work = Work(store, actor, locale)
         work.emit("accepted", request_id=work.id)
@@ -189,18 +193,8 @@ def install(app, store, actor_for, get_chat, process, message_type):
             finally:
                 active.reset(binding)
         threading.Thread(target=run, daemon=True).start()
-        def events():
-            try:
-                yield ': accepted\n\n'
-                while True:
-                    batch, terminal = work.take_events()
-                    for event in batch:
-                        yield 'event: '+event['event']+'\ndata: '+dumps(event['data'])+'\n\n'
-                    if terminal:return
-                    if not batch:yield ': heartbeat\n\n'
-            finally:
-                work.detach()
-        return StreamingResponse(events(), media_type='text/event-stream', headers={'Cache-Control': 'no-cache', 'X-Accel-Buffering': 'no'})
+        return JSONResponse({'request_id': work.id, 'token': work.access_token},
+                            headers={'Cache-Control': 'no-store'})
 
     from fastapi import Request
     # 使用既有 Pydantic 型別，避免動態閉包註記無法解析。
@@ -208,7 +202,22 @@ def install(app, store, actor_for, get_chat, process, message_type):
         actor = actor_for(request)
         convo = get_chat(cid, actor)
         return launch(actor, convo.get('locale', 'zh-TW'), lambda: process(cid, body, request))
-    app.post('/api/conversations/{cid}/messages/stream')(stream)
+    app.post('/api/conversations/{cid}/messages/start')(stream)
+
+    @app.get('/api/streams/{rid}/events')
+    def events(rid: str, request: Request, after: int = 0):
+        actor = actor_for(request)
+        cleanup_streams(store)
+        with WORKS_LOCK:
+            work = WORKS.get(rid)
+        if (not work or work.store is not store or work.actor['id'] != actor['id']
+                or not secrets.compare_digest(request.headers.get('X-Stream-Token', ''), work.access_token)):
+            raise HTTPException(404, '找不到此請求')
+        with work.condition:
+            if after < 0 or after > len(work.events):
+                raise HTTPException(422, '事件序號無效')
+        batch, terminal = work.take_events(after)
+        return JSONResponse({'events': batch, 'terminal': terminal}, headers={'Cache-Control': 'no-store'})
 
     @app.post('/api/streams/{rid}/stop')
     def stop(rid: str, body: dict, request: Request):

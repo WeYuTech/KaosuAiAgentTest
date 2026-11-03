@@ -17,8 +17,23 @@ def setup(client):
     return client.post('/api/conversations', json={'module':'report'}).json()['id']
 
 
+def collect(client, response):
+    assert response.status_code == 200
+    handle = response.json()
+    batch = []
+    for _ in range(100):
+        result = client.get(f"/api/streams/{handle['request_id']}/events", params={'after': batch[-1]['seq'] if batch else 0},
+                            headers={'X-Stream-Token': handle['token']})
+        assert result.status_code == 200
+        value = result.json()
+        batch.extend(value['events'])
+        if value['terminal']:
+            return batch
+    raise AssertionError('未取得終態')
+
+
 def events(response):
-    return [json.loads(line[6:]) for line in response.text.splitlines() if line.startswith('data: ')]
+    return [event['data'] for event in response]
 
 
 def test_事件依真實工具時序且摘要可還原(tmp_path):
@@ -32,9 +47,9 @@ def test_事件依真實工具時序且摘要可還原(tmp_path):
         return {'content':'查得一筆'}
     with TestClient(create_app(tmp_path/'a.db',model=model,intent_classifier=lambda _: {'intent':'readonly'})) as c:
         cid=setup(c)
-        r=c.post(f'/api/conversations/{cid}/messages/stream',json={'text':'查詢'})
-        assert r.status_code==200 and r.headers['x-accel-buffering']=='no'
-        data=events(r)
+        r=c.post(f'/api/conversations/{cid}/messages/start',json={'text':'查詢'})
+        assert r.headers['cache-control']=='no-store'
+        data=events(collect(c,r))
         assert any(d.get('text')=='查得一筆' for d in data)
         saved=c.get(f'/api/conversations/{cid}').json()['messages'][-1]
         assert len(saved['processing_summary']['steps'])==2
@@ -52,7 +67,7 @@ def test_停止驗證身分及權杖且只中止唯讀(tmp_path,readonly):
     with TestClient(create_app(path,model=model,intent_classifier=lambda _: {'intent':'readonly' if readonly else 'change'})) as c:
         cid=setup(c)
         with ThreadPoolExecutor() as pool:
-            job=pool.submit(c.post,f'/api/conversations/{cid}/messages/stream',json={'text':'操作'})
+            job=pool.submit(c.post,f'/api/conversations/{cid}/messages/start',json={'text':'操作'})
             assert entered.wait(3)
             store=Store(path)
             with store.transaction() as db:
@@ -62,7 +77,7 @@ def test_停止驗證身分及權杖且只中止唯讀(tmp_path,readonly):
             stopped=c.post(url,json={'token':row['token']}).json()
             assert stopped['status']==('stopping' if readonly else 'waiting_stopped')
             release.set();response=job.result()
-        assert ('event: stopped' in response.text)==readonly
+        assert any(e['event']=='stopped' for e in collect(c,response))==readonly
         with store.transaction() as db:
             convo=store.get(db,'CONVERSATION',cid)
         assert 'processing' not in convo
@@ -96,9 +111,10 @@ def test_入口串流與舊JSON相容(tmp_path):
     with TestClient(create_app(tmp_path/'entry.db',intent_classifier=lambda _: {'intent':'greeting','module':'none'})) as c:
         setup(c)
         body={'entry_id':'entry1234','request_id':'request1234','text':'你好'}
-        r=c.post('/api/entry/messages/stream',json=body)
-        assert 'event: done' in r.text
-        assert events(r)[-1]['messages'][-1]['processing_summary']['steps']
+        r=c.post('/api/entry/messages/start',json=body)
+        data=collect(c,r)
+        assert data[-1]['event']=='done'
+        assert events(data)[-1]['messages'][-1]['processing_summary']['steps']
         assert c.get('/api/entry/requests/request1234').json()['status']=='answered'
 
 
@@ -124,11 +140,9 @@ def test_真實HTTP斷線不取消處理也不重送(tmp_path):
             time.sleep(.01)
         with httpx.Client(base_url=address) as c:
             cid=setup(c)
-            with c.stream('POST',f'/api/conversations/{cid}/messages/stream',json={'text':'查詢'}) as response:
-                for line in response.iter_lines():
-                    if line=='event: intent':break
-                assert entered.wait(2)
-            # HTTP consumer 已關閉，模型仍由背景工作持有。
+            response=c.post(f'/api/conversations/{cid}/messages/start',json={'text':'查詢'})
+            assert response.status_code==200 and entered.wait(2)
+            # 開始請求已結束且沒有輪詢，模型仍由背景工作持有。
             release.set()
             for _ in range(100):
                 chat=c.get(f'/api/conversations/{cid}').json()
@@ -176,9 +190,10 @@ def test_預算與模型錯誤有終態且不冒充完成(tmp_path,status):
     from fastapi import HTTPException
     def model(*_):raise HTTPException(status,'隔離錯誤')
     with TestClient(create_app(tmp_path/'error.db',model=model,intent_classifier=lambda _: {'intent':'readonly'})) as c:
-        cid=setup(c);r=c.post(f'/api/conversations/{cid}/messages/stream',json={'text':'查詢'})
-        assert 'event: done' not in r.text
-        assert events(r)[-1]['status']==status
+        cid=setup(c);r=c.post(f'/api/conversations/{cid}/messages/start',json={'text':'查詢'})
+        data=collect(c,r)
+        assert data[-1]['event']=='error'
+        assert events(data)[-1]['status']==status
         chat=c.get(f'/api/conversations/{cid}').json()
         assert not chat['processing_active'] and chat['messages'][-1]['processing_failed']
 
@@ -189,8 +204,8 @@ def test_確認卡步驟不代表業務寫入(tmp_path,monkeypatch):
     monkeypatch.setenv('OPENAI_API_KEY','synthetic')
     monkeypatch.setattr(model,'invoke',lambda _:model_tool('prepare_report_add',{'execution_id':'2001','ok':100,'defects':[]},1))
     with TestClient(create_app(tmp_path/'proposal.db',intent_classifier=lambda _: {'intent':'change'})) as c:
-        cid=setup(c);r=c.post(f'/api/conversations/{cid}/messages/stream',json={'text':'人工良品100'})
-        data=events(r);assert data[-1]['proposal']['status']=='pending'
+        cid=setup(c);r=c.post(f'/api/conversations/{cid}/messages/start',json={'text':'人工良品100'})
+        data=events(collect(c,r));assert data[-1]['proposal']['status']=='pending'
         assert any(d.get('label')=='已建立新增報工確認卡（尚未送出）' and d['status']=='done' for d in data)
         assert all('已寫入' not in d.get('label','') for d in data)
         assert c.get('/api/audit').json()['records']==[]
@@ -228,12 +243,10 @@ def test_中間文字重設且最後片段等於存檔(tmp_path,monkeypatch,prep
         return SimpleNamespace(output=[],output_text='最終回答')
     monkeypatch.setattr(model,'invoke',invoke)
     with TestClient(create_app(tmp_path/'rounds.db',intent_classifier=lambda _: {'intent':'change' if prepare else 'readonly'})) as c:
-        cid=setup(c);response=c.post(f'/api/conversations/{cid}/messages/stream',json={'text':'需求'})
+        cid=setup(c);response=c.post(f'/api/conversations/{cid}/messages/start',json={'text':'需求'})
         text='';reset=False
-        for block in response.text.split('\n\n'):
-            lines=block.splitlines()
-            if not lines or not lines[0].startswith('event:'):continue
-            event=lines[0][7:];data=json.loads(lines[1][6:])
+        for item in collect(c,response):
+            event,data=item['event'],item['data']
             if event=='delta':text+=data['text']
             if event=='reset':text='';reset=True
         assert reset
@@ -276,3 +289,41 @@ def test_預留前已停止不建立費用紀錄(tmp_path,monkeypatch):
 def test_處理中的模型使用單一分析用語(locale,expected):
     from app.streaming import LABELS
     assert LABELS['model'][{'zh-TW':0,'en':1,'th':2}[locale]] == expected
+
+
+def test_輪詢接續不重複且其他操作者不可讀(tmp_path):
+    from app.streaming import WORKS
+    entered, release = Event(), Event()
+    def model(*_):
+        active.get().emit('delta', text='第一批')
+        entered.set(); release.wait(5)
+        active.get().emit('delta', text='第二批')
+        return {'content':'第一批第二批'}
+    app=create_app(tmp_path/'poll.db', model=model, intent_classifier=lambda _: {'intent':'readonly'})
+    with TestClient(app) as c:
+        cid=setup(c)
+        response=c.post(f'/api/conversations/{cid}/messages/start',json={'text':'查詢'})
+        handle=response.json(); assert entered.wait(2)
+        url=f"/api/streams/{handle['request_id']}/events"
+        headers={'X-Stream-Token':handle['token']}
+        first=c.get(url,headers=headers).json()
+        seq=first['events'][-1]['seq']
+        start=time.monotonic()
+        assert c.get(url,params={'after':seq},headers=headers).json()=={'events':[],'terminal':False}
+        assert .9 <= time.monotonic()-start < 2
+        assert c.get(url,headers={'X-Stream-Token':'wrong'}).status_code==404
+        with TestClient(app) as other:
+            other.post('/api/session/demo',json={'identity':'planner'})
+            assert other.get(url,headers=headers).status_code==404
+        release.set()
+        all_events=collect(c,response)
+        assert [e['seq'] for e in all_events]==list(range(1,len(all_events)+1))
+        tail=c.get(url,params={'after':seq},headers=headers).json()
+        assert tail['events']==all_events[seq:] and tail['terminal']
+        assert c.get(url,headers=headers).json()['events']==all_events
+        work=WORKS[handle['request_id']]
+        from app.streaming import cleanup_streams
+        cleanup_streams(work.store,work.delete_after+1)
+        assert handle['request_id'] not in WORKS
+        assert c.get(url,headers=headers).status_code==404
+        assert c.post(f'/api/conversations/{cid}/messages/stream',json={'text':'舊端點'}).status_code==404
