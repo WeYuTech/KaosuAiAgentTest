@@ -36,7 +36,7 @@ function ThreadMessage({onViewData,onApplyQueryRecord,onRetryQuery,onChooseTarge
     {role==='assistant'&&id===latestAssistantId&&(message.stopped||message.processing_failed)&&onRetryQuery&&<div className="query-outcome-actions"><button type="button" className="query-small" onClick={onRetryQuery}>{message.processing_failed&&<RefreshCw size={18}/>} {t('重新查詢')}</button>{message.processing_failed&&onViewData&&<button type="button" className="query-small ghost" onClick={()=>onViewData({records:[],catalogs:{}})}>{t('修改條件')}</button>}</div>}
     {role==='assistant'&&id===latestAssistantId&&onChooseTarget&&<div className="query-outcome-actions"><button type="button" className="query-small" onClick={onChooseTarget}><Search size={18}/>{t('選擇工單')}</button></div>}
     {message?.delivery&&!hideDelivery&&<span className="message-delivery">{t(message.delivery==='pending'?'待處理 · 尚未取得回覆':message.delivery==='rejected'?'請求已拒絕，未重新送出':message.delivery==='not_sent'?'訊息尚未送出，請先處理資料保存錯誤。':'送達結果未知，未重新送出')}</span>}
-    {!latestAssistantOnly&&<ActionBarPrimitive.Root hideWhenRunning autohide="not-last" className="text-muted-foreground flex gap-1 min-h-9 ms-2">
+    {!latestAssistantOnly&&<ActionBarPrimitive.Root hideWhenRunning autohide="not-last" className="message-actions text-muted-foreground flex gap-1 min-h-9 ms-2">
       <ActionBarPrimitive.Copy asChild><TooltipIconButton tooltip={t(role==='user'?'複製訊息':'複製回答')} aria-label={t(role==='user'?'複製訊息':'複製回答')} onClick={event=>{event.preventDefault();if(message)copyToClipboard(message.content);}}>
         {copied ? <Check/> : <Copy/>}
       </TooltipIconButton></ActionBarPrimitive.Copy>

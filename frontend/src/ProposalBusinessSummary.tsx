@@ -3,7 +3,7 @@ import { t } from './i18n';
 import { ArrowRight, CalendarDays, Factory, ClipboardList } from 'lucide-react';
 import { display, type Proposal, type Row, type Workspace } from './api';
 
-export function ProposalBusinessSummary({ proposal, workspace }: { proposal: Proposal; workspace: Workspace }) {
+export function DetailedProposalBusinessSummary({ proposal, workspace }: { proposal: Proposal; workspace: Workspace }) {
   const { args, changes, target = {}, action } = proposal;
   const date = (value:unknown) => mesDate(value, proposal.business_timezone);
   const record = workspace.records.find(row =>
@@ -56,7 +56,7 @@ export function ProposalBusinessSummary({ proposal, workspace }: { proposal: Pro
       <div className="business-quantities">{businessRow(t("人工良品"), args.ok, action === 'report.update' ? findChange('OK_QTY')?.before ?? report?.OK_QTY : undefined, t("件"))}{businessRow(t("不良合計"), defects.reduce((sum, item) => sum + Number(item.quantity), 0), action === 'report.update' ? findChange('NG_QTY')?.before ?? report?.NG_QTY : undefined, t("件"))}</div>
       {visibleDefects.length > 0 && <div className="business-defects"><span className="business-caption">{t("不良原因")}</span>{visibleDefects.map((defect, index) => {
         const reason = reasons.find(reason => reason.NG_CODE_NO === defect.code);
-        const name = reason?.NG_CODE_NAME ?? reason?.NAME ?? defect.code;
+        const name = reason?.NG_CODE_NAME ?? reason?.NAME ?? t('原因名稱未提供');
         const previous = Array.isArray(report?.DEFECTS) ? (report.DEFECTS as Row[]).find(item => item.NG_CODE === defect.code)?.NG_CODE_QTY : undefined;
         return <div key={`${defect.code}-${index}`}>{businessRow(display(name), defect.quantity, action === 'report.update' ? previous : undefined, t("件"))}</div>;
       })}</div>}
@@ -93,4 +93,48 @@ export function ProposalBusinessSummary({ proposal, workspace }: { proposal: Pro
 
     {args.comment !== undefined && (String(args.comment).trim() || action==='schedule.save'&&findChange('COMMENT')) && businessRow(t("備註"), args.comment || t("未填寫"),action==='schedule.save'?findChange('COMMENT')?.before:undefined)}
   </div>;
+}
+
+/** 核對頁的業務投影；全部數值仍取自伺服器 proposal，完整資料保留在異動明細。 */
+export function ProposalBusinessSummary({proposal,workspace}:{proposal:Proposal;workspace:Workspace}) {
+ const {action,args,target={},changes}=proposal;
+ const record=workspace.records.find(r=>(args.execution_id&&String(r.WIP_OPI_WDOEACICO_HIST_SID)===String(args.execution_id))||(args.schedule_id&&String(r.ZZ_KAOSU_PROD_SCHEDULE_SID)===String(args.schedule_id))||(args.report_id&&Array.isArray(r.REPORTS)&&(r.REPORTS as Row[]).some(x=>String(x.WIP_OPI_WDOEACICOOUTPUT_HIST_SID)===String(args.report_id))));
+ const report=target.report_before??(Array.isArray(record?.REPORTS)?(record.REPORTS as Row[]).find(r=>String(r.WIP_OPI_WDOEACICOOUTPUT_HIST_SID)===String(args.report_id)):undefined);
+ const before=(field:string)=>changes.find(c=>c.field===field)?.before;
+ const after=(field:string)=>changes.find(c=>c.field===field)?.after;
+ const reasons=Array.isArray(workspace.catalogs.defect_reasons)?workspace.catalogs.defect_reasons as Row[]:[];
+ const defects=Array.isArray(args.defects)?args.defects as Row[]:[];
+ const unit=(value:unknown,name='件')=>`${display(value)} ${t(name)}`;
+ const rows:{label:string;value:unknown;before?:unknown}[]=[];
+ const add=(label:string,value:unknown,previous?:unknown)=>rows.push({label:t(label),value,before:previous});
+ const date=(v:unknown)=>mesDate(v,proposal.business_timezone);
+ const compactDate=(v:unknown)=>date(v).replace(/^\d{4}-(\d{2})-(\d{2}) (\d{2}:\d{2})(?::\d{2})?$/, '$1/$2 $3');
+ if(['report.update','report.delete'].includes(action)){add('報工紀錄',report?.REPORT_NO??t('單筆人工報工'));add('報工時間',compactDate(report?.CREATE_TIME));}
+ if(['report.add','report.update'].includes(action)){
+  add('人工良品',unit(args.ok),action==='report.update'?unit(before('OK_QTY')??report?.OK_QTY):undefined);
+  add('不良合計',unit(defects.reduce((n,d)=>n+Number(d.quantity),0)),action==='report.update'?unit(before('NG_QTY')??report?.NG_QTY):undefined);
+  const defectText=(items:Row[])=>items.length?items.map(d=>`${display(reasons.find(r=>r.NG_CODE_NO===(d.code??d.NG_CODE))?.NG_CODE_NAME??t('原因名稱未提供'))} ${unit(d.quantity??d.NG_CODE_QTY)}`).join('、'):t('無');
+  add('不良原因',defectText(defects),action==='report.update'&&Array.isArray(report?.DEFECTS)?defectText(report.DEFECTS as Row[]):undefined);
+ }else if(action==='report.delete'){add('將刪除良品',unit(before('OK_QTY')??report?.OK_QTY));add('將刪除不良',unit(before('NG_QTY')??report?.NG_QTY));}
+ else if(action==='report.cavities')add('模穴數',unit(args.cavities,'穴'),unit(target.cavities_before??before('OPI_CAV')??record?.OPI_CAV,'穴'));
+ else if(action==='report.complete'){
+  add('影響工單',(target.affected_orders??[]).map(o=>typeof o==='string'?o:display((o as Row).WO??(o as Row).wo)).join('、'));
+  add('排程狀態',after('COMPLETED')==='Y'?t('完工'):after('COMPLETED')==='N'?t('未完工'):t('依伺服器預覽確認'),before('COMPLETED')==='Y'?t('完工'):record?.PRODUCTION_STATUS==='RUN'?t('生產中'):before('COMPLETED')==='N'?t('未完工'):undefined);add('下一排程時間',target.next_schedule?date(target.next_schedule.start_time):target.next_schedule===null?t('無下一張排程'):t('依伺服器預覽確認'));
+ }else if(action==='schedule.save'){
+  add('設備',args.equipment);add('模具',args.mold_no);add('開始時間（MES）',date(after('SCHEDULE_START_TIME')??args.start_time).replace(/:00$/,''),args.schedule_id?date(before('SCHEDULE_START_TIME')).replace(/:00$/,''):undefined);
+  add('預計結束（MES）',compactDate(after('SCHEDULE_END_TIME')??record?.SCHEDULE_END_TIME));add('週期',unit(args.cycle_seconds,'秒'),args.schedule_id?unit(before('SCHEDULE_CYCLE_TIME'),'秒'):undefined);add('目標模次',unit(args.target_shots,'模'));add('生產狀態',['DO','TRY','RUN'].includes(String(args.status))?`${productionStatus(args.status)}（${args.status}）`:productionStatus(args.status));
+  const details=target.schedule_details??(Array.isArray(args.details)?args.details as Row[]:[]);
+  const molds=Array.isArray(workspace.catalogs.molds)?workspace.catalogs.molds as Row[]:[];const mold=molds.find(m=>m.TOL_NO===args.mold_no);const catalog=Array.isArray(mold?.DETAILS)?mold.DETAILS as Row[]:[];
+  details.forEach(d=>{const detail=catalog.find(m=>String(m.TOL_DETALS_SID)===String(d.mold_detail_id));add([d.mold_detail_no??detail?.TOL_DETALS_NO,d.part_no].filter(Boolean).join(' · '),d.wo||t('未分配工單'));add('模穴數',unit(d.cavities,'穴'),d.previous?unit((d.previous as Row).cavities,'穴'):undefined);add('目標件數',unit(Number(d.cavities)*Number(args.target_shots)));});
+  if(Number(args.priority))add('優先序',args.priority);
+ }else if(action.startsWith('mold.')){
+  add('本次動作',t(({'mold.mount_start':'上模開始','mold.mount_finish':'上模完成','mold.unmount_start':'下模開始','mold.unmount_finish':'下模完成','mold.clear':'清除換模紀錄'} as Record<string,string>)[action]));add('模具',record?.TOL_NO);
+  const names:Record<string,string>={ZZ_MODLE_UPLOAD_START:'開始上模',ZZ_MODLE_UPLOAD_END:'完成上模',ZZ_MODLE_REMOVE_START:'開始下模',ZZ_MODLE_REMOVE_END:'完成下模時間',CHECK_IN_TIME:'進站時間',CHECK_OUT_TIME:'出站時間',COMPLETED_TIME:'完工時間',COMPLETED:'完工狀態'};
+  for(const [field,name] of Object.entries(names)){const c=changes.find(c=>c.field===field);if(c)add(action==='mold.clear'&&field==='ZZ_MODLE_REMOVE_END'?'完成下模':name,field==='COMPLETED'?t(c.after==='Y'?'已完工':'未完工'):c.after===null?t('清除'):compactDate(c.after),c.before==null?undefined:field==='COMPLETED'?t(c.before==='Y'?'已完工':'未完工'):compactDate(c.before));}
+  add('影響工單',(target.affected_orders??[]).map(o=>typeof o==='string'?o:display((o as Row).WO??(o as Row).wo)).join('、'));
+ }
+ if(String(args.comment??'').trim())add('備註',args.comment);
+ const equipment=target.equipment??record?.EQP_NO??args.equipment,order=target.work_order??record?.WO;
+ const part=[target.part_no??record?.PART_NO??args.part_no,target.part_spec??record?.PART_SPEC].filter(Boolean).join(' ');
+ return <div className="reference-business-summary"><div className="sheet-target"><span className="sheet-target-mark"><Factory size={18}/></span><div><strong>{[equipment,order].filter(Boolean).join(' · ')}</strong><small>{part}</small></div></div><div className="reference-review">{rows.map((r,i)=><div className="reference-review-row" key={i}><span>{r.label}</span><span className="reference-review-value">{r.before!==undefined&&String(r.before)!==String(r.value)&&<><del>{display(r.before)}</del><ArrowRight size={18}/></>}<strong>{display(r.value)}</strong></span></div>)}</div></div>;
 }

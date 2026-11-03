@@ -1,5 +1,43 @@
-/* 固定介面詞彙：中文原文為鍵，不翻譯 MES 主檔名稱或歷史訊息。 */
+﻿/* 固定介面詞彙：中文原文為鍵，不翻譯 MES 主檔名稱或歷史訊息。 */
 export const translations: Record<string, [string, string]> = Object.fromEntries(`
+查詢歷史|View history|ดูประวัติ
+尚未送出|Not submitted|ยังไม่ได้ส่ง
+我已核對對象與影響，確認執行這筆操作。|I have reviewed the target and impact and confirm this operation.|ฉันตรวจสอบเป้าหมายและผลกระทบแล้ว และยืนยันการดำเนินการนี้
+（MES）| (MES)| (MES)
+補充需求，或問我怎麼填…|Add details, or ask how to fill this in…|เพิ่มรายละเอียด หรือถามวิธีกรอก…
+核對後才會送出|Review before submitting|ตรวจสอบก่อนส่ง
+AI 尚未設定，可使用作業單完成操作。|AI is not configured. Use the task form to continue.|ยังไม่ได้ตั้งค่า AI ใช้แบบฟอร์มงานเพื่อดำเนินการต่อ
+查看異動明細|View change details|ดูรายละเอียดการเปลี่ยนแปลง
+工作區|Workspace|พื้นที่ทำงาน
+對話|Conversation|การสนทนา
+確認送出|Confirm submission|ยืนยันส่ง
+更換作業對象|Change target|เปลี่ยนเป้าหมาย
+選擇本次要執行的階段。|Choose the stage to perform.|เลือกขั้นตอนที่จะดำเนินการ
+選擇|Select|เลือก
+原因名稱未提供|Reason name unavailable|ไม่มีชื่อสาเหตุ
+單筆人工報工|Manual production record|รายการรายงานผลด้วยตนเอง
+無|None|ไม่มี
+完工|Completed|เสร็จงาน
+生產中|In production|กำลังผลิต
+清除|Clear|ล้าง
+依伺服器預覽確認|Verify the server preview|ตรวจสอบจากตัวอย่างเซิร์ฟเวอร์
+核對人工報工|Review manual production report|ตรวจสอบรายงานผลด้วยตนเอง
+核對刪除人工報工|Review report deletion|ตรวจสอบการลบรายงานผล
+核對整張排程完工|Review schedule completion|ตรวจสอบการจบงานทั้งแผน
+核對模穴數|Review cavity count|ตรวจสอบจำนวนโพรง
+核對生產排程|Review production schedule|ตรวจสอบแผนการผลิต
+核對下模完成|Review mold removal completion|ตรวจสอบการถอดแม่พิมพ์เสร็จ
+核對清除換模紀錄|Review clearing mold times|ตรวจสอบการล้างเวลาแม่พิมพ์
+上模開始|Start mounting|เริ่มติดตั้งแม่พิมพ์
+上模完成|Finish mounting|ติดตั้งแม่พิมพ์เสร็จ
+下模開始|Start removal|เริ่มถอดแม่พิมพ์
+下模完成|Finish removal|ถอดแม่พิมพ์เสร็จ
+開始時間（MES）|Start time (MES)|เวลาเริ่ม (MES)
+預計結束（MES）|Expected end (MES)|เวลาสิ้นสุดคาดการณ์ (MES)
+將刪除良品|Good quantity to delete|จำนวนชิ้นดีที่จะลบ
+將刪除不良|Defect quantity to delete|จำนวนชิ้นเสียที่จะลบ
+排程狀態|Schedule status|สถานะแผนการผลิต
+下一排程時間|Next schedule time|เวลาแผนถัดไป
 重新查詢|Retry search|ค้นหาอีกครั้ง
 修改條件|Change filters|แก้ไขเงื่อนไข
 選擇工單|Choose order|เลือกใบสั่งผลิต
@@ -740,6 +778,7 @@ MES 登入無法驗證；請重新登入或洽管理員。|MES sign-in could not
 高|High|สูง
 處理中|Processing|กำลังดำเนินการ
 返回修改|Back to edit|กลับไปแก้ไข
+返回選擇|Back to selection|กลับไปเลือก
 刪除定時報告|Delete scheduled report|ลบรายงานตามเวลา
 刪除|Delete|ลบ
 今天想查什麼？|What would you like to know today?|วันนี้อยากทราบอะไร?
@@ -833,4 +872,5 @@ MES 受限工具助理|MES constrained-tool agent|ผู้ช่วย MES ท�
 已顯示全部結果|All results shown|แสดงผลลัพธ์ทั้งหมดแล้ว
 目前為部分結果，請查看全部資料|Partial results; view all data for more|ผลลัพธ์บางส่วน โปรดดูข้อมูลทั้งหมด
 返回修改|Back to edit|กลับไปแก้ไข
+
 ` .trim().split('\n').map(line => { const [key, en, th] = line.split('|'); return [key, [en, th]]; }));
