@@ -1,0 +1,831 @@
+{
+  "release": "kaosu-issue47-6ff9ec8-20261103-fifth",
+  "old_responseBufferLimit": 4096,
+  "log_policy": "日誌另存複製當下快照，不在回復清單，不以舊日誌覆蓋新日誌",
+  "global_proxy_values": {
+    "enabled": "True",
+    "responseBufferLimit": "4096",
+    "minResponseBuffer": "256",
+    "bufferChunkedResponses": "True",
+    "preserveHostHeader": "True",
+    "timeout": "00:05:00"
+  },
+  "iis_backup": "KaosuAiAgent-issue47-20261103-fifth",
+  "full_backup": "full-current",
+  "log_snapshots": [
+    {
+      "path": ".local\\logs\\service.log",
+      "sha256": "C496357A65635B2CB014FFD79C8866CA8266CC4FDB4891DFD7060A147ACF4AEA",
+      "snapshot_utc": "2026-11-03T02:36:37.5666562Z",
+      "bytes": 5677,
+      "restore": false
+    }
+  ],
+  "created_utc": "2026-11-03T02:36:42.2404909Z",
+  "full_backup_count": 197,
+  "commit": "6ff9ec801dea4f08f79e835265e6a2e18dded560",
+  "rollback": "停止專屬助理，還原程式與清單；保留目前.env與.local，不以舊資料庫覆蓋新紀錄。",
+  "changes": [
+    {
+      "existed": true,
+      "path": "AGENTS.md",
+      "hash": "b42da050908498b0f553d2906cd6ab9aa819cca6f67e2b62fd350dd3df95a31b"
+    },
+    {
+      "existed": true,
+      "path": "CONTEXT.md",
+      "hash": "b119903806c6a881f33db1134f434f089204e616d8d20715ac33d647a7a7d6c1"
+    },
+    {
+      "existed": true,
+      "path": "README.md",
+      "hash": "493138e136e1b3cfa7ed317917729cc1e1cf04ed6cdfc9c9c1e975ade2ad85ea"
+    },
+    {
+      "existed": true,
+      "path": "app/__init__.py",
+      "hash": "767ff01eaa2cd8e5995821551ebbda3e4fdec656681a82084d943f23ac75583f"
+    },
+    {
+      "existed": true,
+      "path": "app/candidates.py",
+      "hash": "232b90836fa149553e6951f9176350cdf0514c247619376134cc94d645e05b3e"
+    },
+    {
+      "existed": true,
+      "path": "app/conversations.py",
+      "hash": "4fb2b38a0f7ea7cb6f569002e42601537d4553c57748a4c533f2e230033cb88f"
+    },
+    {
+      "existed": true,
+      "path": "app/domain.py",
+      "hash": "fd59676d274f9cb897fb67f991e04d63ea3fd6dbf95d95ba461696d702f37578"
+    },
+    {
+      "existed": true,
+      "path": "app/entry.py",
+      "hash": "8fd7c8e7a639f6f92293777bd382834ac16e588ae10119358d78326909bc4fe6"
+    },
+    {
+      "existed": true,
+      "path": "app/guide.py",
+      "hash": "1bdfee5fafd5d4397f8aa31dff4e027bd34a53849be9032e8fb77358b54054e9"
+    },
+    {
+      "existed": true,
+      "path": "app/intents.py",
+      "hash": "ab4626063e7394726f70cb0194fbf5bbe45b5c51f8f90854adf304415c232ef5"
+    },
+    {
+      "existed": true,
+      "path": "app/knowledge.py",
+      "hash": "9e245ce5f8495c4ffa3b8c11fa5c9198777d13cbdb6c6fe2b36934b2d7b6c020"
+    },
+    {
+      "existed": true,
+      "path": "app/knowledge_release.py",
+      "hash": "8bc662c96a21b05a738aca3cf9ddaf8744ea92ef7ae13a3b86793d7937c64708"
+    },
+    {
+      "existed": true,
+      "path": "app/main.py",
+      "hash": "a0edc6a6ae3c1db3807c0f8f4157c0c45b5967505bacfae10f09ef28c3bfa94b"
+    },
+    {
+      "existed": true,
+      "path": "app/management.py",
+      "hash": "4aab5db5eff1b7794495d9d1ac75699317fb452b6418405b5646bac721451c98"
+    },
+    {
+      "existed": true,
+      "path": "app/mes.py",
+      "hash": "d62f269745f26d1dec9b0889fee7a5458a3237e4be997f63a8210f4f0a7f9f5a"
+    },
+    {
+      "existed": true,
+      "path": "app/mes_schedule.py",
+      "hash": "9082ce309e2938529361079173c6125590751e6ec6852fc636232ba03c8a0358"
+    },
+    {
+      "existed": true,
+      "path": "app/model.py",
+      "hash": "2fa5a2539154136d3d1d82be03a7703f3c66aa29fa4d8e9664c0536b97eb963a"
+    },
+    {
+      "existed": true,
+      "path": "app/presentation.py",
+      "hash": "0d8d0be0e2bac4fed92dc3569165634d4e146f38a837e30f4b019442709142df"
+    },
+    {
+      "existed": true,
+      "path": "app/query_context.py",
+      "hash": "f065b320818995c5aa424d30b782fff4fd683f48ccf32b6f1ef3ef2e9fe965dd"
+    },
+    {
+      "existed": true,
+      "path": "app/reports.py",
+      "hash": "0d6ab4e0513a6839bc99adfe39d9960fc3f9c477d267b01a2d015c1c047bc09c"
+    },
+    {
+      "existed": false,
+      "path": "app/step_labels.py",
+      "hash": "22ec688a929eaff5929f19b16c9a199f7f0ab5e98002f157c32e5e1949f04ec6"
+    },
+    {
+      "existed": true,
+      "path": "app/store.py",
+      "hash": "b4ffce0809ead219dd0172c734af6280466f8e2a19e20d43ab4802fca535a9a3"
+    },
+    {
+      "existed": false,
+      "path": "app/streaming.py",
+      "hash": "7c7f6063a4e0cec2814aafaa5d8e83cccc3bab2fc580310850aed8198136573f"
+    },
+    {
+      "existed": true,
+      "path": "docs/4173介面對齊與驗收-20261101.md",
+      "hash": "e80f7a6cf5c98326df43ff522d748b18657f677758a1dcdacb1eb1fd8adc50aa"
+    },
+    {
+      "existed": true,
+      "path": "docs/4173瀏覽器驗收補充-20261101.md",
+      "hash": "041d0f5a18ba53aa055bb6eba57debeb55d746e128739265a32797010fb78b14"
+    },
+    {
+      "existed": true,
+      "path": "docs/IIS部署.md",
+      "hash": "4b435b57cba180df3d3ac72a09898be336ce90b0c548a0c11c8af6d6400ceac9"
+    },
+    {
+      "existed": true,
+      "path": "docs/Issue19-元件移植與驗收.md",
+      "hash": "dd7384ca29dd3abefb9c0ffb00f0935160cbad3bdba414b6021ebe9c8269a9cc"
+    },
+    {
+      "existed": true,
+      "path": "docs/Issue19-前端依賴與授權.md",
+      "hash": "2d6ca6044e58119745551ca49c114b332ef228f73bcd00bb1fc2b55848d18da6"
+    },
+    {
+      "existed": true,
+      "path": "docs/Issue21-轉場與回饋實作驗收.md",
+      "hash": "c4afe348790863d13e4282b92373a5d38593e189d4585470de7a361ef5b7fa40"
+    },
+    {
+      "existed": true,
+      "path": "docs/Issue23-側欄彈窗與容器排版驗收.md",
+      "hash": "c374a6438f1a453f8140cbf1f825677def1c3f5d350a9f17ced3866e9df81ee6"
+    },
+    {
+      "existed": true,
+      "path": "docs/Issue25-平面聊天清單實作與驗收.md",
+      "hash": "888dc15833f8f9105334c6f30c4e393fc9e5b43e76c0357af5f3477df188a0d1"
+    },
+    {
+      "existed": true,
+      "path": "docs/MES整合.md",
+      "hash": "1b56e851f605a59d73fab5dc66203ed5a8ff276f8d800701619325d57d779ddd"
+    },
+    {
+      "existed": true,
+      "path": "docs/MES藍色主題.md",
+      "hash": "6da73f54a3bb7477cad845fb32a0722cdd0b40ccd6522645267fdc5b89a0e7d4"
+    },
+    {
+      "existed": true,
+      "path": "docs/SQL驗收.md",
+      "hash": "2e51b0c660f14a639cb2db0767438b68a47704aee0e9bd93968418b0004cd18b"
+    },
+    {
+      "existed": true,
+      "path": "docs/WeYu介面實作與驗收-20261031.md",
+      "hash": "f179c6294f25c37653e17e3e8ea35102be00779a3b2ee16574bd4c805b349617"
+    },
+    {
+      "existed": true,
+      "path": "docs/adr/0001-沿用業務來源並補交易閘道.md",
+      "hash": "09ada310061f02db131a1a84df901bb51e5d5fce4d181e8944e120c752b8edeb"
+    },
+    {
+      "existed": true,
+      "path": "docs/adr/003_可信MES工作階段橋接.md",
+      "hash": "393abfd5458595e90c071cb8c010430962285e793853c8315276a9b232cdb1a3"
+    },
+    {
+      "existed": true,
+      "path": "docs/adr/004_管理設定與定時唯讀報告.md",
+      "hash": "a25fab1439d9a647736cb176e0cb7eb3a471973723b262434a2781374555ddc9"
+    },
+    {
+      "existed": true,
+      "path": "docs/adr/005_雙流程與唯讀意圖版本.md",
+      "hash": "0c27f37a8b2270e9f3f937dcf24948b022d86ffa44a77d1ff11b8499b0bac8eb"
+    },
+    {
+      "existed": false,
+      "path": "docs/adr/006_真實步驟串流與停止.md",
+      "hash": "f681f27bbf2d806e6c4bc353d98e1a89bcd84ed2c356d4078a5d87f726c712e0"
+    },
+    {
+      "existed": false,
+      "path": "docs/adr/007_分段輪詢傳輸.md",
+      "hash": "fcd32c5f1063afd4ecd951b9459e85f6946015bd358c92fd57faa2083c56f88f"
+    },
+    {
+      "existed": true,
+      "path": "docs/agents/domain.md",
+      "hash": "527c86b18c270a688aa3aeaf9b61d2942cc00a24dda28daf60bca916b6425b1c"
+    },
+    {
+      "existed": true,
+      "path": "docs/agents/issue-tracker.md",
+      "hash": "b2a3a53df95cc2c058ef525e0f8bb912d8d819f1d0747fc716b59895cee45eca"
+    },
+    {
+      "existed": false,
+      "path": "docs/design/issue34/驗收紀錄.md",
+      "hash": "a3b19fb1b0ad8f8efe92cf40ba96df89f7037c02bb7bbc2a481460de32ccfe85"
+    },
+    {
+      "existed": false,
+      "path": "docs/design/issue40/驗收紀錄.md",
+      "hash": "9a3a812dfb47cb2991f839f1f36b1742f8f465e51e70d308ae819132290fbcc7"
+    },
+    {
+      "existed": false,
+      "path": "docs/design/issue44/真實模型煙霧驗收.md",
+      "hash": "862e623be5571316b9aaf61dc125fb7e8423dcaa8464a9c8a4a6908b533b21a6"
+    },
+    {
+      "existed": false,
+      "path": "docs/design/issue44/驗收說明.md",
+      "hash": "8bb7e0e627efab94003305f03f752594bf77463206055b30dc1be5c7b4744522"
+    },
+    {
+      "existed": false,
+      "path": "docs/design/issue47/README.md",
+      "hash": "b8a757a38723fdc17196c117b0a353c859f459e5a7f77f46c6e0aa7136fe36dd"
+    },
+    {
+      "existed": true,
+      "path": "docs/evidence/issue27-deploy/README.md",
+      "hash": "f39cf9a1f6463bbe874a7e400d55da45106a332df0cf4787178bb92f3e3c85ec"
+    },
+    {
+      "existed": true,
+      "path": "docs/evidence/issue27/README.md",
+      "hash": "e5e0c56cd53db5ac8ff159d66674682457135934b96877a7dc00eeaf2a78b7bc"
+    },
+    {
+      "existed": false,
+      "path": "docs/evidence/issue29-deploy/README.md",
+      "hash": "4bb34bfc1ffdc88cbfd6f4a4b5901f5f7971b2d99bd441726550bce5df9213ff"
+    },
+    {
+      "existed": true,
+      "path": "docs/evidence/issue29/G2-驗收.md",
+      "hash": "da3ec4bb22495303773cef896af252da05ab5cb8d2888c9c262d2b3ae681ea7c"
+    },
+    {
+      "existed": true,
+      "path": "docs/evidence/issue29/G3-部分驗收.md",
+      "hash": "02a9005646b8a067d8e757772bbbbeb28c3a58d4736a696163ee0517313e6a7b"
+    },
+    {
+      "existed": true,
+      "path": "docs/evidence/issue29/README.md",
+      "hash": "4058d2626567ff1612ca63a6b88fda8a2c2c6ae7221a70df12efca5b9a0bb5bb"
+    },
+    {
+      "existed": true,
+      "path": "docs/inventory/mold.md",
+      "hash": "89c56da4c87107dd2a1099c572df8017681768b1926adc31f4623962f31c9ee4"
+    },
+    {
+      "existed": true,
+      "path": "docs/inventory/report.md",
+      "hash": "9b35255fc857912c2005d45b12bde2bd69ffaaf017ac9c1b286561cb98fdb4fb"
+    },
+    {
+      "existed": true,
+      "path": "docs/inventory/schedule.md",
+      "hash": "4eefd27b103903716366f334da4eb2d8eb250a5e09d82784f824ac3becd93bc3"
+    },
+    {
+      "existed": true,
+      "path": "docs/三語改版驗收.md",
+      "hash": "812556e033caf569e6d951c6ee9a975ffde6ecd015fa28c310bf19ab0fc90d12"
+    },
+    {
+      "existed": true,
+      "path": "docs/三語步驟引導規格.md",
+      "hash": "d30cb8e80d9e84c16bc113b334da1e94d0d4f04898127ea9ece5642957286f0d"
+    },
+    {
+      "existed": true,
+      "path": "docs/前端操作.md",
+      "hash": "2162dad3d028d8b4c9ddaa0a99d57598aaf32ee437e2076265f60ccadca0be79"
+    },
+    {
+      "existed": true,
+      "path": "docs/完成核對.md",
+      "hash": "23539c6e21bb39a5f216698fc21831b6acc8e1383ff6a3c7477617f3521795c0"
+    },
+    {
+      "existed": true,
+      "path": "docs/實作規格.md",
+      "hash": "04c7383d41a50e8e3a6494c0082542ffefc781e5bbf4f64efb19a0ccb6a7a230"
+    },
+    {
+      "existed": true,
+      "path": "docs/對話優先本輪驗收矩陣.md",
+      "hash": "bb87e4cb2e9d1c36d5dbb652eb000ef37abdabeebd14bc2ae68111b609b78ca8"
+    },
+    {
+      "existed": true,
+      "path": "docs/對話優先產品實作紀錄.md",
+      "hash": "4704ccf44d95672412fed4aaced3403993c8b99666c26a1282ade1efb52a7809"
+    },
+    {
+      "existed": true,
+      "path": "docs/截圖原版逐項對齊與驗收-20261101.md",
+      "hash": "5a390336b6286a9faca9cb51ed048eb649f5c1b62d25f01f3187bbb4b98ad47d"
+    },
+    {
+      "existed": true,
+      "path": "docs/桌面作業單驗收.md",
+      "hash": "d78dc4b1f495026716f6e5b34ac847896e7444d9dc627c2a55bfd4745c7389ef"
+    },
+    {
+      "existed": true,
+      "path": "docs/桌面對話作業單規格.md",
+      "hash": "c774f025c7f8061682274153ee3fb1bfaf98862518a57fc24b208b9c6ca1839f"
+    },
+    {
+      "existed": true,
+      "path": "docs/模型選型與知識修正.md",
+      "hash": "fa6bf56cadc91f88e56465123f11ce709566b895ce11a2653360d17ffa141ec3"
+    },
+    {
+      "existed": true,
+      "path": "docs/模擬情境.md",
+      "hash": "eef85a206a168b9cdc180fba0a80921a458d12ab6a78e971014f919276020d89"
+    },
+    {
+      "existed": true,
+      "path": "docs/程式審查.md",
+      "hash": "147e71b7848ebcd8faf11a004cca8941f5d0a2f8f160ff8cd139396afc5074ac"
+    },
+    {
+      "existed": true,
+      "path": "docs/管理設定定時報告與版權驗收-20261101.md",
+      "hash": "93119d8c6766865edf5576f7464f27f64e2d96fa4f8867a83af75709f7e3ffad"
+    },
+    {
+      "existed": true,
+      "path": "docs/聊天功能還原與驗收-20261101.md",
+      "hash": "d5ee7c646a8bf020d39c86f55cf746d6882daf0aebf4600bf420fbf7d2cc0558"
+    },
+    {
+      "existed": true,
+      "path": "docs/驗收報告.md",
+      "hash": "a2cabd5ade3cb5f4be75395c3ab33abcb66c49c65864ddf58d5a460031ca76dc"
+    },
+    {
+      "existed": false,
+      "path": "frontend/dist/assets/ManagementPanel-CVK_cGY7.js",
+      "hash": "34d9d4ce325ccc401db35d3ff6dff7bc344c13b4396387172411c5e19adc2264"
+    },
+    {
+      "existed": true,
+      "path": "frontend/dist/assets/ibm-plex-mono-latin-400-normal-DMJ8VG8y.woff2",
+      "hash": "08949f728dc52d528e69b1667d15c89a5686a4ee9a296ff90983985f99c380f7"
+    },
+    {
+      "existed": true,
+      "path": "frontend/dist/assets/ibm-plex-mono-latin-500-normal-DSY6xOcd.woff2",
+      "hash": "01d285447409c8a588692162439a038b8cbd7871309ee20267b0d2d91c6e8e22"
+    },
+    {
+      "existed": true,
+      "path": "frontend/dist/assets/ibm-plex-mono-latin-600-normal-BgSNZQsw.woff2",
+      "hash": "0d1f0b8d0722224e32e9f28261bdc86c79115be73444ae5eceb73976a1bcdf83"
+    },
+    {
+      "existed": false,
+      "path": "frontend/dist/assets/index-CGq28cL1.js",
+      "hash": "f7d54e1fa92b4b9527faac96dd49383bd3d9e4720a29eefee7960b83e81f50e4"
+    },
+    {
+      "existed": false,
+      "path": "frontend/dist/assets/index-tJ1nZSW8.css",
+      "hash": "82e17cf98c03ceb128e272d78f3b4dd08a9e36a980db9e9dabb8117d3eed153e"
+    },
+    {
+      "existed": true,
+      "path": "frontend/dist/assets/inter-latin-wght-normal-Dx4kXJAl.woff2",
+      "hash": "3100e775e8616cd2611beecfa23a4263d7037586789b43f035236a2e6fbd4c62"
+    },
+    {
+      "existed": true,
+      "path": "frontend/dist/fonts/IBM-Plex-Mono-OFL.txt",
+      "hash": "23b0a9d0c6d3f140a0b77e483c5cfa6bba574325ef5cb189ed9f2fec4884533f"
+    },
+    {
+      "existed": true,
+      "path": "frontend/dist/fonts/Inter-OFL.txt",
+      "hash": "3b0a5fca3d17942cde889069889dedbbbd075e9b599968c82a95f4d944e9b345"
+    },
+    {
+      "existed": true,
+      "path": "frontend/dist/fonts/Noto-Sans-Thai-OFL.txt",
+      "hash": "bd85ada3eef71267263e0fd24a40ae20380015c7cf1afa0c27a4340b03431320"
+    },
+    {
+      "existed": true,
+      "path": "frontend/dist/fonts/noto-sans-thai-thai-400-normal.woff2",
+      "hash": "57776453076ebf0fa935080e63c0ae656f1f1ecd5172112d59d3b259e0dd8796"
+    },
+    {
+      "existed": true,
+      "path": "frontend/dist/fonts/noto-sans-thai-thai-600-normal.woff2",
+      "hash": "8690b63cc8c7090492cce68f57a421be92fee4f682dff7ee06912132ebd2a8fc"
+    },
+    {
+      "existed": true,
+      "path": "frontend/dist/index.html",
+      "hash": "8279e868838a3d05742b3b8176bae15c63c03298efc918d3b581994244bd33ed"
+    },
+    {
+      "existed": true,
+      "path": "frontend/dist/motion-tokens.css",
+      "hash": "70445385dc0f79f0e0bfc41f3f9d29a7156df672b6e31bf1bda39b3d33d08daf"
+    },
+    {
+      "existed": true,
+      "path": "frontend/dist/weyu-brand.svg",
+      "hash": "9d1f3d89f58f5f78afab0128669b79f01416d95e24edf391ffbfe86c0becfa8c"
+    },
+    {
+      "existed": true,
+      "path": "frontend/dist/weyu-logo.png",
+      "hash": "e49779a956aebfffbfce4a792c596b3b52c2088efc9dc252d776fd8803fc8573"
+    },
+    {
+      "existed": true,
+      "path": "frontend/dist/widget-loader.js",
+      "hash": "3b7a0a2c3043398a60893ff783b395400bfe4d200f28dbe1bb70a8293f3b9640"
+    },
+    {
+      "existed": true,
+      "path": "migrations/001_AI操作紀錄.sql",
+      "hash": "eae8b5fe4da46e4e189dc49ade6ab0ff7b1bbe5ef7bfcd644ea9cc6391ed4eae"
+    },
+    {
+      "existed": true,
+      "path": "pyproject.toml",
+      "hash": "3a93b3d535a6648f7c81ac54451888806ee1d8d0a392cb168d37f6787ca4550a"
+    },
+    {
+      "existed": true,
+      "path": "requirements.lock.txt",
+      "hash": "59c6cbf0817ffc66f81dba1740c531eeb2bd0cf542c852a8fd908843e4216919"
+    },
+    {
+      "existed": true,
+      "path": "scripts/configure_iis.ps1",
+      "hash": "bf549c97508c3f9d2e5a0fad12c2411a7ec6d0b67affb2815c905a807a1a484a"
+    },
+    {
+      "existed": true,
+      "path": "scripts/evaluate_dialogue.py",
+      "hash": "4d28edb853c7a05c62d116f10220819825337dc1ec0e0882ba8fc2d271e7c35b"
+    },
+    {
+      "existed": true,
+      "path": "scripts/evaluate_dual_flow.py",
+      "hash": "3e45db2523c1c9839621821d979442f1616257a2b1237954c22476c03c4cd532"
+    },
+    {
+      "existed": true,
+      "path": "scripts/evaluate_lifecycle.py",
+      "hash": "8991f424276233d8380e1764b9c656b236ae6c5792f149953063fe92710aed67"
+    },
+    {
+      "existed": true,
+      "path": "scripts/evaluate_multiturn.py",
+      "hash": "1498960fc75c333b3833208ee345e8fe573192ea6f4199bc223d72faacee9c4b"
+    },
+    {
+      "existed": true,
+      "path": "scripts/evaluate_trilingual.py",
+      "hash": "026f7337014e9d051e3d73c19141c9b73b430616bb533e7b25ea969f3e07f7eb"
+    },
+    {
+      "existed": true,
+      "path": "scripts/install_widget.py",
+      "hash": "9870c8ed5257260c8a12a0f2178c53a740903ed74735d1453026bd666f7576ac"
+    },
+    {
+      "existed": true,
+      "path": "scripts/mes_session_bridge.ashx",
+      "hash": "1bbb29ec9429c8752c24aad1557d81f39f106a4adcb01a6522bfc85755686ddd"
+    },
+    {
+      "existed": true,
+      "path": "scripts/package_release.py",
+      "hash": "4e9b97d30183aa326309235cef741c4515a2f64727f2df5351554f1c60bc30a3"
+    },
+    {
+      "existed": true,
+      "path": "scripts/publish_knowledge.py",
+      "hash": "362db40be10093979b592f7915bc257d1afb6a53336d04062fbd2c17561c5def"
+    },
+    {
+      "existed": true,
+      "path": "scripts/run_service.py",
+      "hash": "c5d9732004f699ac68426dbf4fbbda58d49cdb343d3d55201603b25cae2621d3"
+    },
+    {
+      "existed": true,
+      "path": "scripts/sql_acceptance.py",
+      "hash": "8ff2816b445bb38ee020bf73ee4e5a0f2f4b1d03a06898806beb8ebad1fa47ae"
+    },
+    {
+      "existed": true,
+      "path": "tests/manual/conversation_fault_server.py",
+      "hash": "9a416582dfb7871f6a1fc625a80ca67e64cbddfd33078876bd491cb2649b5c9f"
+    },
+    {
+      "existed": true,
+      "path": "tests/manual/issue19_ui_server.py",
+      "hash": "52902b1dfccb9d38d7cbeb92855406fedf0445f89e77aaf4f922efb95134983e"
+    },
+    {
+      "existed": true,
+      "path": "tests/manual/issue29_case.py",
+      "hash": "0c055a429f6aee1ae3eea4964c4cf43b3c507cb119383b3ac710e7eefc674a90"
+    },
+    {
+      "existed": true,
+      "path": "tests/manual/issue29_export.py",
+      "hash": "e3bd56659108467bf52d069a05d948497305831aa4c4e8853ef062ea1769a869"
+    },
+    {
+      "existed": true,
+      "path": "tests/manual/issue29_r01.py",
+      "hash": "81705ea23db9032c42b9d9d285f25126f2920a2e1a6327cd814c22eb86a0fae2"
+    },
+    {
+      "existed": true,
+      "path": "tests/manual/issue29_seed.py",
+      "hash": "f3e5a5f317ac92c9cbf78971f2267a8f672b5104e82f984ced5639918ea47504"
+    },
+    {
+      "existed": true,
+      "path": "tests/manual/issue29_ui_server.py",
+      "hash": "d6f913a0cfde8ded30752f66c9d92afd2800ba6553c525f917703e92c0feec1f"
+    },
+    {
+      "existed": false,
+      "path": "tests/manual/issue32_ui_server.py",
+      "hash": "78a50853aba069f88178c61360a81ccf898c1314e34dc265f13dddecca4f6604"
+    },
+    {
+      "existed": false,
+      "path": "tests/manual/issue33_review_encode.py",
+      "hash": "6f2aeab0a7d83d2f295db0e37fd64cbfe88d1ff6351c9bfe52c6449508f53909"
+    },
+    {
+      "existed": false,
+      "path": "tests/manual/issue33_ui_server.py",
+      "hash": "4f80b0f1f9e1ac4fe44244903fdfd8b863d1ada4cb00d316dded92d4ac98dd0d"
+    },
+    {
+      "existed": false,
+      "path": "tests/manual/issue34_encode.py",
+      "hash": "4430211da0f8c6ebd82c8d2cfe889246bf3e9d74eb6366d841f61c74eaf9cd8a"
+    },
+    {
+      "existed": false,
+      "path": "tests/manual/issue34_ui_server.py",
+      "hash": "8eeec63d0b1d92dc4c87fc23078b81c175489836887514ffa2eff30ff6614df1"
+    },
+    {
+      "existed": false,
+      "path": "tests/manual/issue35_encode.py",
+      "hash": "3ab6f04f870d9c3e3430ecd0123953f6ae1932a68c521e88a9facf37d3baa236"
+    },
+    {
+      "existed": false,
+      "path": "tests/manual/issue35_ui_server.py",
+      "hash": "b90d4380f30131c115eb8edd917f20471373740be157e7f385f4ec3f8f8a74b2"
+    },
+    {
+      "existed": false,
+      "path": "tests/manual/issue37_encode.py",
+      "hash": "6ffc5e037b643c99725bcb02da06a59682be1b852b3cee6da99e3c6330a01757"
+    },
+    {
+      "existed": false,
+      "path": "tests/manual/issue37_ui_server.py",
+      "hash": "1fcbdbd2bd93caaaa82df61eba2b40f386f8e2f2738e2114736e1e08e7bf987a"
+    },
+    {
+      "existed": false,
+      "path": "tests/manual/issue40_encode.py",
+      "hash": "162ce0f0f65fbb5581b8f75e6a5a150790bf8a4f5d35a0f1abab1fe1740b7bd2"
+    },
+    {
+      "existed": false,
+      "path": "tests/manual/issue40_ui_server.py",
+      "hash": "b999df4690197d1844ff324eaace4fb8fb6bbaf249a03aefa80a74a42467a8d0"
+    },
+    {
+      "existed": false,
+      "path": "tests/manual/issue44_encode.py",
+      "hash": "243870225288f5ab9924797f6352b3ffa8fd13e082aaa0df3b50373dda9622ff"
+    },
+    {
+      "existed": false,
+      "path": "tests/manual/issue44_real_encode.py",
+      "hash": "c128b1c5512ce10f99897bd4a95d5d5b7b4f0f3bb2fcf95a64563495e9adb5b1"
+    },
+    {
+      "existed": false,
+      "path": "tests/manual/issue44_real_server.py",
+      "hash": "6d0914dba29829d0053ab534129f55161bb0f1de952b5cbd088ace35d976dd62"
+    },
+    {
+      "existed": false,
+      "path": "tests/manual/issue44_stop_server.py",
+      "hash": "e34ce93af32eaa0b55257eb150f01942c8561f6cf146fbd19cc1eec036b94f20"
+    },
+    {
+      "existed": false,
+      "path": "tests/manual/issue44_ui_server.py",
+      "hash": "c84775080ef31dd89e1bb31383f3a8acbeb47f4e2fa5afd3d9b99c4406d76f23"
+    },
+    {
+      "existed": false,
+      "path": "tests/manual/issue47_buffer_proxy.py",
+      "hash": "d0bf1afc886a39a6e0bc916ff13c4e9ed80d91e1cf32a49d73c28bb64b5fbc86"
+    },
+    {
+      "existed": false,
+      "path": "tests/manual/issue47_encode.py",
+      "hash": "0044d4946b55d0b0c453c5cd0046564a7369427b2a89708a57791eb29ec5dd55"
+    },
+    {
+      "existed": false,
+      "path": "tests/manual/issue47_server.py",
+      "hash": "379db14cc97eda3db67e2ee0ecbb226f5d436621ec34f385dc9d3b0fe1e2f0ba"
+    },
+    {
+      "existed": true,
+      "path": "tests/test_chat_http.py",
+      "hash": "c13fcc3374704854c5f0dfb08f3247b02dacb91ec38f236b9dc49bc427a5cc0c"
+    },
+    {
+      "existed": true,
+      "path": "tests/test_confirmation_http.py",
+      "hash": "8fe7ca763200d318eaa81495eaf1cb399fd641faa30c40affeb2567b7e7f6905"
+    },
+    {
+      "existed": true,
+      "path": "tests/test_conversation_first_http.py",
+      "hash": "68092822bc9abecce7768fc39ddc3b2b4c5787d1e72f2bbd5a9ff64230f078dc"
+    },
+    {
+      "existed": true,
+      "path": "tests/test_conversation_history_http.py",
+      "hash": "96eda6693bd6e78cd66bcac0c905bb7f6165d769090efbaed5ea6ef6a6b536af"
+    },
+    {
+      "existed": true,
+      "path": "tests/test_deployment_http.py",
+      "hash": "afe69249a5a24bc3c86102ea5d9f10f9e2d7d764bc87f39843c51a7f67b864a9"
+    },
+    {
+      "existed": true,
+      "path": "tests/test_domain_http.py",
+      "hash": "263da71e1d6bc88d88893b159fcb8a9709f5345636f32c86324d5bb01f53ccc8"
+    },
+    {
+      "existed": true,
+      "path": "tests/test_dual_flow_http.py",
+      "hash": "889f229fe7264655392456c26066862f0a9b9db7c1001c3dccb38fdb7bd9ec26"
+    },
+    {
+      "existed": true,
+      "path": "tests/test_empty_order_lifecycle.py",
+      "hash": "0dbd12b200fd761e3451bd0d25b6dbcfdb5ff86657d78f1c57b957a36434aef7"
+    },
+    {
+      "existed": true,
+      "path": "tests/test_entry_candidates_http.py",
+      "hash": "856ed07fa8d9a901156d0560f8e2876f0dde65c7e3ad17f5149fb3809beb1616"
+    },
+    {
+      "existed": true,
+      "path": "tests/test_execution_context_http.py",
+      "hash": "847025186d34568b0c96af663b84346b619032349065ef3e0ca29245f79cbbd7"
+    },
+    {
+      "existed": true,
+      "path": "tests/test_feedback_http.py",
+      "hash": "107d5b50af34a1edfce394d7c2fd8cffed120e12d87752cba002d92968365585"
+    },
+    {
+      "existed": true,
+      "path": "tests/test_guide_http.py",
+      "hash": "ba5f54aa684f9b741cd73e055b5f8860eed5c570e38ff1eb1de84bf0d90cea80"
+    },
+    {
+      "existed": true,
+      "path": "tests/test_install_widget.py",
+      "hash": "67c38348df903934c6fb901975a1c27ba1d7db5621a77d270b17dfb6f73c5cd1"
+    },
+    {
+      "existed": false,
+      "path": "tests/test_issue37_http.py",
+      "hash": "71e54833ef9308e3a0ebd1133083350e779e9e087e973880eb7514b40cccdc3d"
+    },
+    {
+      "existed": false,
+      "path": "tests/test_issue39_mes_reads.py",
+      "hash": "a60dfd0ef0ae95f024da9925d60db406ed55662a3f6f06bee972b1177930b61c"
+    },
+    {
+      "existed": true,
+      "path": "tests/test_knowledge_release.py",
+      "hash": "7474f0241e77821be9c6f5e9fdc486f140a4eb1898de4e5312198fcdb3640696"
+    },
+    {
+      "existed": true,
+      "path": "tests/test_live_dialogue_validation.py",
+      "hash": "5e6d0d54afec7f4fd361b43df488f3ebbfe8c7ea4056bb6658dce4cee68248ee"
+    },
+    {
+      "existed": true,
+      "path": "tests/test_management_reports_http.py",
+      "hash": "ed8bbf9129c6b9607887ab4eb9aa48d3bda1e2eebbca83955185343b6f88e0c9"
+    },
+    {
+      "existed": true,
+      "path": "tests/test_mes_http.py",
+      "hash": "217bdecab5b565d21cd68eeb716a7b9a2328c92386257172eb4f5e2e4e384425"
+    },
+    {
+      "existed": true,
+      "path": "tests/test_mes_schedule_http.py",
+      "hash": "d98054b0c10eadc6341f23f6b1fd3cf675c1c8844a7e32a561e6323d2190c370"
+    },
+    {
+      "existed": true,
+      "path": "tests/test_operation_reconciliation.py",
+      "hash": "19b046c337370dac38a7f3342f2f3cd0ff4ab509ed2bce57ce4425b8831aa061"
+    },
+    {
+      "existed": true,
+      "path": "tests/test_package_release.py",
+      "hash": "4ab6b53c59f51d919caa157378e5e08e24a3579d012c452315e7101ffe5b23fc"
+    },
+    {
+      "existed": false,
+      "path": "tests/test_polling_proxy.py",
+      "hash": "8ae37de2099a101c9f1aae374f999207f9e5e1216e70c666660d7930a87ef5fe"
+    },
+    {
+      "existed": true,
+      "path": "tests/test_proposal_lifecycle.py",
+      "hash": "3f21e90b30c50fe4b6223a28e06591e36a2eff713d65c9e0a090feed40717351"
+    },
+    {
+      "existed": true,
+      "path": "tests/test_query_context.py",
+      "hash": "9b37365505b2345bd51445e86c91ccdcde45624f390b7e5400301e776a357e20"
+    },
+    {
+      "existed": true,
+      "path": "tests/test_review_identity_http.py",
+      "hash": "c607b3996b09708f33848178a7d6a1d90375358ddfbfdaf59963d33225634d52"
+    },
+    {
+      "existed": true,
+      "path": "tests/test_session.py",
+      "hash": "aded6742b0a183aa85870ab88e85bbffe4ee43f152672eb0b22113edba1d8b61"
+    },
+    {
+      "existed": true,
+      "path": "tests/test_session_registry_http.py",
+      "hash": "d5590b360cc64598ec6677f0ec6162444311e825bda8dcd0148427b3952d08c1"
+    },
+    {
+      "existed": false,
+      "path": "tests/test_streaming.py",
+      "hash": "09b85604368228a40733161aec35180becacb1d60617230a56d6caecc5f6abce"
+    }
+  ],
+  "公開副本說明": "私密檔雜湊僅留正式備份，此副本省略。"
+}

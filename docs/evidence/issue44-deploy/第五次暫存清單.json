@@ -1,0 +1,84 @@
+{
+  "local_files": [
+    {
+      "path": ".local\\deploy-issue47-fifth.ps1",
+      "bytes": 12111
+    },
+    {
+      "path": ".local\\issue47-fifth-deploy-output.txt",
+      "bytes": 1744
+    },
+    {
+      "path": ".local\\issue47-fifth-deployment.json",
+      "bytes": 43498
+    },
+    {
+      "path": ".local\\issue47-fifth-dryrun-output.txt",
+      "bytes": 22079
+    },
+    {
+      "path": ".local\\issue47-fifth-dryrun-result.json",
+      "bytes": 508
+    },
+    {
+      "path": ".local\\issue47-fifth-dryrun.log",
+      "bytes": 30350
+    },
+    {
+      "path": ".local\\issue47-fifth-dryrun.ps1",
+      "bytes": 1369
+    },
+    {
+      "path": ".local\\issue47-fifth-final.ps1",
+      "bytes": 2271
+    },
+    {
+      "path": ".local\\issue47-fifth-final.txt",
+      "bytes": 1391
+    },
+    {
+      "path": ".local\\issue47-fifth-live-sent.lock",
+      "bytes": 0
+    },
+    {
+      "path": ".local\\issue47-fifth-live.cjs",
+      "bytes": 5699
+    },
+    {
+      "path": ".local\\issue47-fifth-result-screen.cjs",
+      "bytes": 2170
+    },
+    {
+      "path": ".local\\issue47-fifth-result.json",
+      "bytes": 928
+    },
+    {
+      "path": ".local\\issue47-fifth-run.ps1",
+      "bytes": 158
+    },
+    {
+      "path": ".local\\rollback-issue47-fifth.ps1",
+      "bytes": 5666
+    },
+    {
+      "path": ".local\\verify-issue47-fifth-public.py",
+      "bytes": 1687
+    }
+  ],
+  "remote_root": "C:/Services/KaosuAiAgent",
+  "remote_paths": [
+    "deploy-issue47-fifth.ps1",
+    "rollback-issue47-fifth.ps1",
+    "issue47-fifth-dryrun.log",
+    "issue47-fifth-dryrun-result.json",
+    "issue47-fifth-deploy.log",
+    "deployment-kaosu-issue47-6ff9ec8-20261103-fifth.json",
+    "staging/kaosu-issue47-6ff9ec8-20261103-fifth",
+    "backups/code-before-kaosu-issue47-6ff9ec8-20261103-fifth"
+  ],
+  "retention_reason": "保留發行、完整備份、日誌快照與證據；不覆蓋前四次紀錄",
+  "temporary_servers_started": 0,
+  "browser_contexts_closed": true,
+  "node_and_ssh_processes": "同步程序已結束；無新增背景測試程序",
+  "production_task": "KaosuAiAgent 是正式服務，保持 Running"
+}

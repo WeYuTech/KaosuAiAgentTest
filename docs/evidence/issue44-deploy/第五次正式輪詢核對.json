@@ -1,0 +1,202 @@
+{
+  "environment": "正式 IIS／真實模型／唯讀",
+  "queries": [
+    {
+      "module": "schedule",
+      "status": 200,
+      "record_count": 3,
+      "total": 3,
+      "model_used": false
+    },
+    {
+      "module": "report",
+      "status": 200,
+      "record_count": 4,
+      "total": 4,
+      "model_used": false
+    },
+    {
+      "module": "mold",
+      "status": 200,
+      "record_count": 3,
+      "total": 3,
+      "model_used": false
+    }
+  ],
+  "sent": 1,
+  "mode": "live",
+  "trusted_source": "mes_session",
+  "before": {
+    "limit_usd": 20,
+    "remaining_usd": 17.87548,
+    "warning_percent": 80,
+    "near_limit": false,
+    "reached": false,
+    "spent_usd": 2.12452,
+    "reserved_usd": 0,
+    "calls": 251,
+    "unknown_calls": 0
+  },
+  "new_interface_opened": true,
+  "batches": [
+    {
+      "at_ms": 956.3000000715256,
+      "events": 2,
+      "delta_count": 0,
+      "first_seq": 1,
+      "last_seq": 2,
+      "terminal": false
+    },
+    {
+      "at_ms": 2462.7000000476837,
+      "events": 0,
+      "delta_count": 0,
+      "first_seq": null,
+      "last_seq": null,
+      "terminal": false
+    },
+    {
+      "at_ms": 4068.7000000476837,
+      "events": 0,
+      "delta_count": 0,
+      "first_seq": null,
+      "last_seq": null,
+      "terminal": false
+    },
+    {
+      "at_ms": 6118.5,
+      "events": 0,
+      "delta_count": 0,
+      "first_seq": null,
+      "last_seq": null,
+      "terminal": false
+    },
+    {
+      "at_ms": 6686.300000071526,
+      "events": 6,
+      "delta_count": 0,
+      "first_seq": 3,
+      "last_seq": 8,
+      "terminal": false
+    },
+    {
+      "at_ms": 8138.899999976158,
+      "events": 0,
+      "delta_count": 0,
+      "first_seq": null,
+      "last_seq": null,
+      "terminal": false
+    },
+    {
+      "at_ms": 9272.100000023842,
+      "events": 2,
+      "delta_count": 0,
+      "first_seq": 9,
+      "last_seq": 10,
+      "terminal": false
+    },
+    {
+      "at_ms": 9822.600000023842,
+      "events": 3,
+      "delta_count": 0,
+      "first_seq": 11,
+      "last_seq": 13,
+      "terminal": false
+    },
+    {
+      "at_ms": 11350.600000023842,
+      "events": 0,
+      "delta_count": 0,
+      "first_seq": null,
+      "last_seq": null,
+      "terminal": false
+    },
+    {
+      "at_ms": 11786.800000071526,
+      "events": 29,
+      "delta_count": 29,
+      "first_seq": 14,
+      "last_seq": 42,
+      "terminal": false
+    },
+    {
+      "at_ms": 12350.300000071526,
+      "events": 92,
+      "delta_count": 92,
+      "first_seq": 43,
+      "last_seq": 134,
+      "terminal": false
+    },
+    {
+      "at_ms": 12987.200000047684,
+      "events": 48,
+      "delta_count": 48,
+      "first_seq": 135,
+      "last_seq": 182,
+      "terminal": false
+    },
+    {
+      "at_ms": 13583.800000071526,
+      "events": 36,
+      "delta_count": 35,
+      "first_seq": 183,
+      "last_seq": 218,
+      "terminal": false
+    },
+    {
+      "at_ms": 14133.899999976158,
+      "events": 1,
+      "delta_count": 0,
+      "first_seq": 219,
+      "last_seq": 219,
+      "terminal": true
+    }
+  ],
+  "steps": [
+    {
+      "id": 1,
+      "label": "辨識需求",
+      "status": "done"
+    },
+    {
+      "id": 2,
+      "label": "已查詢已審核知識（命中 2 筆）",
+      "status": "done"
+    },
+    {
+      "id": 3,
+      "label": "規劃下一步",
+      "status": "done"
+    },
+    {
+      "id": 4,
+      "label": "已查詢 MC37（本頁 4 筆）",
+      "status": "done"
+    },
+    {
+      "id": 5,
+      "label": "整理回覆",
+      "status": "done"
+    }
+  ],
+  "terminal": "done",
+  "start_ms": 559.6000000238419,
+  "hasProposal": false,
+  "after": {
+    "limit_usd": 20,
+    "remaining_usd": 17.856272,
+    "warning_percent": 80,
+    "near_limit": false,
+    "reached": false,
+    "spent_usd": 2.143728,
+    "reserved_usd": 0,
+    "calls": 254,
+    "unknown_calls": 0
+  },
+  "delta_batches": 4,
+  "delta_count": 204,
+  "delta_span_ms": 1797,
+  "cost_usd": 0.019207999999999892,
+  "unknown_difference": 0,
+  "passed": true
+}
