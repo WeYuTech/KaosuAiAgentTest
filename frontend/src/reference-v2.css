@@ -1,0 +1,197 @@
+/* 範例 v2 的共用外框、首頁與聊天；業務作業單仍由既有 Guide 控制。 */
+#mes-ai-chat-root {
+ --v2-panel:#f6f7f8;--v2-raised:#f3f4f6;--v2-hover:#e9ebef;
+ --background:#fff;--foreground:#24272b;--muted-foreground:#656b74;--border:#dfe2e7;
+ --primary:#272c33;--primary-foreground:#fff;
+ /* 與範例使用完全相同的堆疊；套件的 Inter Variable 不冒名覆蓋 Inter。 */
+ font-family:Inter,"Noto Sans TC",system-ui,-apple-system,"Segoe UI",sans-serif;
+ font-size:14px;line-height:1.55;-webkit-font-smoothing:antialiased;
+}
+#mes-ai-chat-root[data-theme=dark] {
+ --background:#1d1e20;--foreground:#ececee;--muted-foreground:#aaaab1;--border:#3a3b40;
+ --v2-panel:#161719;--v2-raised:#252629;--v2-hover:#303135;--primary:#ececee;--primary-foreground:#202124;
+}
+#mes-ai-chat-root[data-theme=navy] {--v2-panel:#10182b;--v2-raised:#182238;--v2-hover:#24324b;--background:#10182b;--foreground:#ececee;--muted-foreground:#aab6cd;--border:#33425e;--primary:#c5d5ff;--primary-foreground:#14213b;}
+#mes-ai-chat-root[data-theme=mes] {--v2-panel:#192d56;--v2-raised:#203c6d;--v2-hover:#2e5084;--background:#203e73;--foreground:#f5f7ff;--muted-foreground:#c0cee3;--border:#536e98;--primary:#dcecff;--primary-foreground:#192d56;}
+#mes-ai-chat-root .assistant-panel {font-size:14px;line-height:1.55;background:var(--background);border:1px solid var(--border);box-sizing:border-box;}
+#mes-ai-chat-root .assistant-header {display:flex;flex-wrap:nowrap;height:56px;min-height:56px;padding:0 10px 0 16px;gap:12px;background:var(--background);}
+#mes-ai-chat-root .assistant-header .aui-modal-brand {height:26px;width:auto;max-width:none;}
+#mes-ai-chat-root .assistant-header h2 {font-size:14px;font-weight:500;line-height:1.55;color:var(--foreground);padding:0;flex:0 1 auto;width:max-content;min-width:0;}
+#mes-ai-chat-root .header-tools {gap:2px;margin-left:auto;flex:none;}
+#mes-ai-chat-root .header-tools button {width:36px;height:36px;min-width:36px;min-height:36px;padding:8px;border:0;border-radius:8px;color:var(--foreground);background:transparent;}
+#mes-ai-chat-root .header-tools svg {width:18px;height:18px;stroke-width:1.7;}
+#mes-ai-chat-root .header-tools button:hover {background:var(--v2-hover);}
+#mes-ai-chat-root .assistant-body {position:relative;}
+#mes-ai-chat-root .conversation-history {width:var(--sidebar-width,244px);min-width:var(--sidebar-width,244px);flex:0 0 var(--sidebar-width,244px);padding:14px 12px 12px;background:var(--v2-panel);border:0;gap:0;}
+#mes-ai-chat-root .history-top {padding:0 0 10px;gap:0;margin:0;min-height:0;display:flex;align-items:center;}
+#mes-ai-chat-root .history-create {flex:1;min-width:0;margin-right:4px;}
+#mes-ai-chat-root [data-slot=aui_thread-list-new] {height:auto;min-height:40px;padding:10px;gap:8px;font-size:14px;font-weight:400;line-height:1.55;border:0;border-radius:9px;background:transparent;color:var(--foreground);}
+#mes-ai-chat-root .history-top .icon-button {width:36px;height:36px;min-width:36px;min-height:36px;padding:8px;border:0;border-radius:8px;}
+#mes-ai-chat-root .history-list {padding:4px 0 0;margin:0;flex:1;min-height:0;overflow-y:auto;scrollbar-width:thin;scrollbar-color:var(--border) transparent;}
+#mes-ai-chat-root .history-group {margin:0;padding:0;}
+#mes-ai-chat-root .history-group h3 {font-size:12px;font-weight:400;line-height:1.55;color:var(--muted-foreground);padding:12px 10px 6px;margin:0;}
+#mes-ai-chat-root .history-rows {display:block;gap:0;margin:0;padding:0;}
+#mes-ai-chat-root .history-row {height:40px;min-height:40px;display:flex;align-items:center;gap:2px;margin:2px 0;padding:0;border:0;border-radius:8px;}
+#mes-ai-chat-root .history-row.selected {background:var(--v2-hover);}
+#mes-ai-chat-root .history-select {flex:1;padding:9px 10px;min-width:0;min-height:0;height:40px;display:flex;align-items:center;justify-content:flex-start;font-size:14px;line-height:1.55;text-align:left;}
+#mes-ai-chat-root .history-select strong {font-size:14px;font-weight:400;line-height:1.55;color:var(--foreground);}
+#mes-ai-chat-root .history-row>.icon-button {width:30px;height:30px;min-height:30px;min-width:30px;margin-right:4px;padding:6px;}
+#mes-ai-chat-root .history-footer {padding:12px 6px 4px;border-top:1px solid var(--border);margin:0;}
+#mes-ai-chat-root .sidebar-budget {display:flex;flex-direction:column;padding:0;min-height:0;gap:8px;border:0;}
+#mes-ai-chat-root .sidebar-budget>span:first-child {font-size:12px;line-height:1.55;}
+#mes-ai-chat-root .sidebar-budget strong {font-weight:400;color:var(--muted-foreground);}
+#mes-ai-chat-root .budget-track {height:4px;margin:0;background:var(--border);border-radius:2px;}
+#mes-ai-chat-root .budget-track>span {background:var(--foreground);}
+#mes-ai-chat-root .sidebar-splitter {width:6px;min-width:6px;flex:0 0 6px;margin:0 -3px;padding:0;position:relative;background:transparent;border:0;z-index:3;}
+#mes-ai-chat-root .sidebar-splitter:before {content:"";position:absolute;inset:0 auto 0 2px;width:1px;background:var(--border);}
+#mes-ai-chat-root .reference-title-row,#mes-ai-chat-root .workspace-bar {height:60px;min-height:60px;padding:0 24px;display:flex;align-items:center;gap:9px;border:0;background:transparent;margin:0;}
+#mes-ai-chat-root .workspace-bar h1 {font-size:14px;font-weight:500;line-height:1.55;margin:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+#mes-ai-chat-root .reference-mode-tag {font-size:12px;padding:3px 8px;border-radius:5px;background:var(--v2-raised);color:var(--muted-foreground);white-space:nowrap;}
+#mes-ai-chat-root .workspace-return {margin-left:auto;}
+#mes-ai-chat-root .reference-title-row>span {font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+#mes-ai-chat-root .assistant-copyright {font-size:12px;line-height:1.55;margin:0;padding:4px 12px 8px;text-align:center;flex:none;color:var(--muted-foreground);}
+#mes-ai-chat-root .onboarding.modules {padding:0;display:flex;flex:1;min-height:0;overflow:auto;scrollbar-gutter:auto;}
+#mes-ai-chat-root .reference-title-row .icon-button {display:inline-flex;align-items:center;justify-content:center;color:var(--foreground);background:transparent;width:36px;min-width:36px;flex:none;height:36px;min-height:36px;padding:8px;}
+#mes-ai-chat-root .onboarding.modules .onboarding-content {width:min(100%,760px);max-width:none;margin:clamp(48px,10%,100px) auto 0;padding:0 40px;display:flex;flex-direction:column;gap:0;}
+#mes-ai-chat-root .onboarding.modules .welcome-card {margin:0 0 28px;padding:0;text-align:center;}
+#mes-ai-chat-root .onboarding.modules .welcome-card h1 {font-size:27px;line-height:1.4;font-weight:550;letter-spacing:-.6px;margin:0;color:var(--foreground);}
+#mes-ai-chat-root .onboarding.modules :is(.onboarding-top,.welcome-description,.onboarding-footer) {display:none;}
+#mes-ai-chat-root .onboarding.modules:not(.entry-chat) .entry-transcript {display:none;}
+#mes-ai-chat-root .entry-composer {width:100%;margin:0;padding:0;}
+#mes-ai-chat-root [data-slot=aui_composer-shell] {padding:14px 14px 10px;gap:0;border:1px solid var(--border);border-radius:18px;background:var(--v2-raised);box-shadow:none;}
+#mes-ai-chat-root [data-slot=aui_composer-shell]:focus-within {border-color:var(--muted-foreground);}
+#mes-ai-chat-root .aui-composer-input {padding:0;min-height:48px;max-height:120px;font-size:15px;line-height:1.55;border:0;border-radius:0;background:transparent;box-shadow:none;color:var(--foreground);margin:0 0 4px;}
+#mes-ai-chat-root .aui-composer-input::placeholder {color:var(--muted-foreground);opacity:1;}
+#mes-ai-chat-root .aui-composer-action-wrapper {height:34px;gap:12px;}
+#mes-ai-chat-root .composer-hint {font-size:11px;line-height:1.55;color:var(--muted-foreground);}
+#mes-ai-chat-root .aui-composer-send {width:34px;height:34px;min-height:34px;min-width:34px;border-radius:50%;padding:8px;background:var(--primary);color:var(--primary-foreground);}
+#mes-ai-chat-root .aui-composer-send svg {width:18px;height:18px;stroke-width:1.7;}
+#mes-ai-chat-root .aui-composer-send:disabled {opacity:1;}
+#mes-ai-chat-root .entry-grid {display:flex;flex-wrap:wrap;justify-content:center;gap:10px;margin:20px 0 0;padding:0;}
+#mes-ai-chat-root .entry-card {width:auto;min-height:40px;padding:8px 13px;border:1px solid var(--border);border-radius:22px;gap:8px;display:flex;align-items:center;justify-content:center;background:transparent;color:var(--muted-foreground);}
+#mes-ai-chat-root .entry-card:before,#mes-ai-chat-root .entry-card p {display:none;}
+#mes-ai-chat-root .entry-card strong {font-size:13px;line-height:1.55;font-weight:400;}
+#mes-ai-chat-root .entry-card .entry-icon {display:block;width:18px;height:18px;stroke-width:1.7;}
+#mes-ai-chat-root .onboarding.modules.entry-chat {overflow:hidden;}
+#mes-ai-chat-root .onboarding.modules.entry-chat .onboarding-content {width:100%;height:100%;min-height:0;margin:0;padding:0;}
+#mes-ai-chat-root .entry-chat .welcome-card {display:none;}
+#mes-ai-chat-root .entry-chat .entry-transcript {flex:1;min-height:0;overflow:auto;padding:0;gap:0;}
+#mes-ai-chat-root .entry-chat .entry-messages {width:min(100%,790px);padding:24px 32px 38px;margin:0 auto;display:flex;flex-direction:column;gap:25px;}
+#mes-ai-chat-root .entry-message {font-size:15px;line-height:1.8;margin:0;padding:0;max-width:100%;}
+#mes-ai-chat-root .entry-message.user {align-self:flex-end;background:var(--v2-hover);padding:10px 17px;border-radius:20px 20px 5px 20px;max-width:85%;font-size:14px;}
+#mes-ai-chat-root .entry-message.assistant {width:100%;background:transparent;border:0;box-shadow:none;}
+#mes-ai-chat-root .entry-message p {margin:0;line-height:inherit;}
+#mes-ai-chat-root .entry-message p+p {margin-top:10px;color:var(--muted-foreground);}
+#mes-ai-chat-root .entry-message .message-body,#mes-ai-chat-root .entry-message .aui-md {font-size:inherit;line-height:inherit;}
+#mes-ai-chat-root .entry-message .aui-md h3 {font-size:16px;font-weight:600;line-height:1.5;margin:22px 0 0;color:var(--foreground);}
+#mes-ai-chat-root .history-search-empty button.secondary {min-height:32px;padding:5px 10px;font-size:13px;}
+#mes-ai-chat-root .history-search-empty>svg {width:18px;height:18px;margin-bottom:3px;color:var(--muted-foreground);}
+#mes-ai-chat-root .history-search-empty h3 {line-height:1.5;}
+#mes-ai-chat-root .history-search-empty p {line-height:1.55;}
+#mes-ai-chat-root .entry-reply-choices {display:flex;gap:10px;flex-wrap:wrap;margin-top:15px;}
+#mes-ai-chat-root :is(.entry-reply-choices,.entry-latest) button {display:inline-flex;align-items:center;gap:8px;min-height:32px;padding:5px 10px;font-size:13px;font-weight:400;border:1px solid var(--border);border-radius:9px;background:transparent;}
+#mes-ai-chat-root .entry-reply-actions {display:flex;gap:4px;margin-top:12px;}
+#mes-ai-chat-root .entry-reply-actions button {min-height:28px;width:28px;height:28px;padding:6px;border:0;background:transparent;color:var(--muted-foreground);}
+#mes-ai-chat-root .entry-reply-actions svg {width:18px;height:18px;stroke-width:1.7;}
+#mes-ai-chat-root .entry-latest {text-align:center;}
+#mes-ai-chat-root .entry-task-choices {display:flex;flex-direction:column;gap:20px;}
+#mes-ai-chat-root .entry-unknown {width:100%;padding:0;margin:0;}
+#mes-ai-chat-root .entry-unknown>div {display:flex;align-items:flex-start;gap:10px;background:#393025;color:#e9c285;padding:12px 14px;font-size:13px;line-height:1.55;border-radius:10px;margin-bottom:15px;}
+#mes-ai-chat-root .entry-unknown>div>svg {flex:none;}
+#mes-ai-chat-root .entry-unknown strong {font-weight:400;}
+#mes-ai-chat-root .entry-unknown p {font-size:12px;margin:6px 0 0;line-height:1.6;}
+#mes-ai-chat-root .entry-unknown .secondary {font-size:13px;min-height:36px;padding:6px 10px;}
+#mes-ai-chat-root .entry-composer:has(textarea:disabled) .aui-composer-send:disabled {opacity:.45;}
+#mes-ai-chat-root .entry-chat .entry-composer {flex:none;width:min(100%,840px);margin:0 auto;padding:12px 28px 18px;}
+#mes-ai-chat-root .conversation-content {width:min(100%,790px);margin:0 auto;padding:24px 32px 38px;}
+#mes-ai-chat-root .processing-steps {font-size:13px;color:var(--muted-foreground);background:var(--v2-raised);border-color:var(--border);}
+/* 聊天管理沿用同一索引與版本；搜尋、封存和刪除共用一種彈窗。 */
+#mes-ai-chat-root .history-search-dialog,#mes-ai-chat-root .history-dialog {width:min(640px,calc(100% - 48px));height:auto;max-width:none;max-height:calc(100dvh - 48px);padding:0;gap:0;display:flex;flex-direction:column;border:1px solid var(--border);border-radius:16px;background:var(--background);box-shadow:0 18px 65px #0006;overflow:hidden;font-size:14px;line-height:1.55;}
+#mes-ai-chat-root .history-dialog {width:min(480px,calc(100% - 48px));}
+#mes-ai-chat-root :is(.history-search-dialog,.history-dialog) .operation-dialog-header {padding:20px 24px 14px;gap:12px;display:flex;align-items:center;justify-content:space-between;border:0;}
+#mes-ai-chat-root :is(.history-search-dialog,.history-dialog) .operation-dialog-header h2 {font-size:18px;font-weight:600;line-height:1.4;letter-spacing:-.3px;margin:0;color:var(--foreground);}
+#mes-ai-chat-root :is(.history-search-dialog,.history-dialog) .icon-button {width:36px;height:36px;min-height:36px;padding:8px;border:0;background:transparent;}
+#mes-ai-chat-root .history-search-header {padding:4px 24px 0;border:0;display:block;}
+#mes-ai-chat-root .history-search-field {display:block;margin:8px 0 18px;position:relative;padding:0;border:0;background:transparent;}
+#mes-ai-chat-root .history-search-field:focus-within {outline:none;}
+#mes-ai-chat-root .history-search-field svg {position:absolute;left:12px;top:12px;color:var(--muted-foreground);}
+#mes-ai-chat-root .history-search-field input {width:100%;height:40px;min-height:40px;padding:9px 11px 9px 39px;border:1px solid var(--border);border-radius:8px;background:var(--background);font-size:14px;line-height:1.55;box-shadow:none;}
+#mes-ai-chat-root .history-search-results {padding:0 24px 24px;flex:1;overflow:auto;min-height:0;}
+#mes-ai-chat-root .history-search-results .history-scope-note {margin:0 0 18px;font-size:13px;line-height:1.55;}
+#mes-ai-chat-root .history-search-result {padding:14px 0;margin:0;display:flex;align-items:center;justify-content:space-between;gap:12px;border:0;border-bottom:1px solid var(--border);border-radius:0;background:transparent;}
+#mes-ai-chat-root .history-search-result>div {flex:1;min-width:0;}
+#mes-ai-chat-root .history-search-result strong {font-size:14px;font-weight:500;}
+#mes-ai-chat-root .history-search-result small {display:block;font-size:12px;line-height:1.55;color:var(--muted-foreground);margin-top:3px;}
+#mes-ai-chat-root .history-search-result button {min-height:32px;padding:5px 10px;font-size:13px;font-weight:400;border-radius:9px;}
+#mes-ai-chat-root :is(.history-search-dialog,.history-dialog) .operation-dialog-footer {padding:16px 24px;display:flex;justify-content:flex-end;gap:10px;border-top:1px solid var(--border);}
+#mes-ai-chat-root :is(.history-search-dialog,.history-dialog) button.secondary {min-height:40px;padding:9px 14px;font-size:14px;font-weight:400;line-height:1.55;border:1px solid var(--border);border-radius:9px;background:transparent;}
+#mes-ai-chat-root .history-search-empty {padding:38px 20px;text-align:center;display:flex;flex-direction:column;align-items:center;gap:10px;}
+#mes-ai-chat-root .history-search-empty h3 {margin:0;font-size:16px;font-weight:600;}
+#mes-ai-chat-root .history-search-empty p {margin:0;color:var(--muted-foreground);font-size:13px;}
+#mes-ai-chat-root .history-search-loading {display:flex;align-items:center;gap:10px;min-height:32px;color:var(--muted-foreground);margin:0;}
+#mes-ai-chat-root .history-search-error {padding:12px 14px;background:#3e292c;color:#f29c9c;border-radius:10px;font-size:13px;margin-bottom:16px;}
+#mes-ai-chat-root .history-search-error p {font-size:12px;line-height:1.55;color:inherit;margin:3px 0 0;}
+#mes-ai-chat-root .history-search-error strong {font-weight:400;}
+#mes-ai-chat-root .history-search-error {display:flex;gap:10px;align-items:flex-start;}
+#mes-ai-chat-root .history-search-error>svg {flex:none;width:18px;height:18px;stroke-width:1.7;}
+#mes-ai-chat-root .history-dialog .operation-dialog-body {padding:4px 24px 0;}
+#mes-ai-chat-root .history-dialog .operation-dialog-body p {line-height:1.55;color:var(--muted-foreground);}
+#mes-ai-chat-root .history-dialog label {display:flex;flex-direction:column;font-size:13px;gap:7px;}
+#mes-ai-chat-root .history-dialog input {height:40px;min-height:40px;font-size:13px;line-height:1.55;padding:9px 11px;border-radius:8px;background:var(--background);border:1px solid var(--border);}
+#mes-ai-chat-root .history-dialog .operation-dialog-actions {margin:24px -24px 0;padding:16px 24px;gap:10px;border-top:1px solid var(--border);display:flex;justify-content:flex-end;}
+#mes-ai-chat-root .history-dialog .operation-dialog-actions button {font-size:14px;font-weight:400;line-height:1.55;min-height:40px;padding:9px 14px;border-radius:9px;border:1px solid var(--border);}
+#mes-ai-chat-root .history-dialog .operation-dialog-actions .primary {background:var(--primary);color:var(--primary-foreground);font-weight:550;}
+#mes-ai-chat-root .history-dialog .operation-dialog-actions .danger-action {background:#3e292c;color:#f29c9c;border-color:transparent;}
+#mes-ai-chat-root .history-dialog form>strong {display:block;margin-top:25px;font-size:14px;font-weight:550;}
+#mes-ai-chat-root:has(.history-search-dialog[data-state=open],.history-dialog[data-state=open]) .entry-composer {visibility:hidden;}
+#mes-ai-chat-root:has(.history-search-dialog[data-state=open],.history-dialog[data-state=open]) [data-slot=dialog-overlay] {background:#0007;}
+#mes-ai-chat-root .history-list:has(.history-empty):not([aria-busy=true]) .history-group {display:none;}
+#mes-ai-chat-root .history-empty {padding:28px 10px;margin:0;text-align:center;color:var(--muted-foreground);font-size:13px;}
+#mes-ai-chat-root .entry-model-notice>strong,#mes-ai-chat-root .entry-model-notice>p {display:block;background:var(--v2-raised);padding:12px 14px 0;font-size:13px;margin:0;}
+#mes-ai-chat-root .entry-model-notice>p {padding:3px 14px 12px;border-radius:0 0 10px 10px;}
+#mes-ai-chat-root .entry-model-notice>strong {border-radius:10px 10px 0 0;}
+@container mes-chat-shell (max-width:880px) {
+ #mes-ai-chat-root .conversation-history.history-overlay {position:absolute;inset:0 auto 0 0;width:260px;min-width:260px;z-index:50;box-shadow:20px 0 90px #0005;}
+}
+@container mes-chat-shell (max-width:620px) {
+ #mes-ai-chat-root .reference-title-row>span {font-size:13px;}
+ #mes-ai-chat-root .history-search-result {gap:8px;align-items:flex-start;}
+ #mes-ai-chat-root .assistant-header {height:50px;min-height:50px;padding:0 6px 0 12px;}
+ #mes-ai-chat-root .assistant-header .aui-modal-brand {height:22px;}
+ #mes-ai-chat-root .assistant-header h2 {font-size:13px;}
+ #mes-ai-chat-root :is(.reference-title-row,.workspace-bar) {height:54px;min-height:54px;padding:0 12px;}
+ #mes-ai-chat-root .reference-mode-tag {display:none;}
+ #mes-ai-chat-root .onboarding.modules .onboarding-content {margin-top:58px;padding:0 20px;max-width:none;}
+ #mes-ai-chat-root .onboarding.modules.entry-chat .onboarding-content {margin:0;padding:0;max-width:none;width:100%;}
+ #mes-ai-chat-root .onboarding.modules .welcome-card {margin-bottom:24px;}
+ #mes-ai-chat-root .onboarding.modules .welcome-card h1 {font-size:24px;}
+ #mes-ai-chat-root .entry-grid {gap:8px;}
+ #mes-ai-chat-root .entry-card {padding:8px 11px;}
+ #mes-ai-chat-root .entry-card strong {font-size:12px;}
+ #mes-ai-chat-root .entry-chat .entry-messages,#mes-ai-chat-root .conversation-content {padding:20px 20px 28px;}
+ #mes-ai-chat-root .entry-chat .entry-composer {padding:10px 16px 14px;}
+ #mes-ai-chat-root :is(.history-search-dialog,.history-dialog) {width:calc(100% - 24px);max-height:calc(100dvh - 24px);border-radius:14px;}
+ #mes-ai-chat-root :is(.history-search-dialog,.history-dialog) .operation-dialog-header {padding:16px 18px 12px;}
+ #mes-ai-chat-root .history-search-header {padding:4px 18px 0;}
+ #mes-ai-chat-root .history-search-results {padding:0 18px 20px;}
+ #mes-ai-chat-root :is(.history-search-dialog,.history-dialog) .operation-dialog-footer {padding:14px 18px;gap:8px;}
+ #mes-ai-chat-root .history-dialog .operation-dialog-body {padding:4px 18px 0;}
+ #mes-ai-chat-root .history-dialog .operation-dialog-actions {margin:20px -18px 0;padding:14px 18px;}
+}
+@media(pointer:coarse) {
+ #mes-ai-chat-root .aui-composer-input {font-size:16px;}
+ #mes-ai-chat-root :is(.aui-composer-send,.header-tools button,.history-top .icon-button) {width:44px;height:44px;min-height:44px;}
+}
+/* 彈窗 Portal 位於助理根節點；用視窗規則補足 iframe 內窄版定位。 */
+@media(max-width:620px) {
+ #mes-ai-chat-root .history-search-result {gap:8px;align-items:flex-start;}
+ #mes-ai-chat-root :is(.history-search-dialog,.history-dialog) {width:calc(100% - 24px);max-height:calc(100dvh - 24px);border-radius:14px;}
+ #mes-ai-chat-root :is(.history-search-dialog,.history-dialog) .operation-dialog-header {padding:16px 18px 12px;}
+ #mes-ai-chat-root .history-search-header {padding:4px 18px 0;}
+ #mes-ai-chat-root .history-search-results {padding:0 18px 20px;}
+ #mes-ai-chat-root :is(.history-search-dialog,.history-dialog) .operation-dialog-footer {padding:14px 18px;gap:8px;}
+ #mes-ai-chat-root .history-dialog .operation-dialog-body {padding:4px 18px 0;}
+ #mes-ai-chat-root .history-dialog .operation-dialog-actions {margin:20px -18px 0;padding:14px 18px;}
+}
+#mes-ai-chat-root .history-search-empty button.secondary {min-height:32px;padding:5px 10px;font-size:13px;}
+#mes-ai-chat-root:lang(th) {font-family:Inter,"Noto Sans TC","Noto Sans Thai",system-ui,-apple-system,"Segoe UI",sans-serif;}

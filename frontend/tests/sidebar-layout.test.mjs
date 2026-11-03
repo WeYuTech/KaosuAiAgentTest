@@ -12,23 +12,23 @@ const key=(node,key,shiftKey=false)=>node.dispatchEvent(new KeyboardEvent('keydo
 function capture(node){let id=null;node.setPointerCapture=v=>id=v;node.hasPointerCapture=v=>id===v;node.releasePointerCapture=v=>{id=null;node.dispatchEvent(new PointerEvent('lostpointercapture',{pointerId:v,bubbles:true}));};return()=>id;}
 const pointer=(node,type,x=0)=>node.dispatchEvent(new PointerEvent(type,{pointerId:1,button:0,clientX:x,bubbles:true,cancelable:true}));
 
-test('分隔線動態上限保留主區480與命中區24，偏好只接受合理數值',()=>{
- assert.equal(sidebarLimit(900),396);assert.equal(sidebarLimit(1100),420);assert.equal(sidebarLimit(720),216);
- assert.equal(clampSidebar(900,396),396);assert.equal(clampSidebar(-1,420),240);assert.equal(clampSidebar(NaN,420),288);
+test('分隔線動態上限保留主區480與分隔線6，偏好只接受合理數值',()=>{
+ assert.equal(sidebarLimit(900),360);assert.equal(sidebarLimit(1100),360);assert.equal(sidebarLimit(720),234);
+ assert.equal(clampSidebar(900,396),396);assert.equal(clampSidebar(-1,420),220);assert.equal(clampSidebar(NaN,420),244);
 });
 test('鍵盤調整、收合ARIA與同一輸入/子樹保持；內外偏好隔離',async()=>{
  const {host,root}=mount();let mounts=0,api;localStorage.setItem(SIDEBAR_KEY,'bad');localStorage.setItem('kaosu-assistant:size','外框原值');
  function Child(){useEffect(()=>{mounts++;},[]);return h('input',{defaultValue:'良品120，缺料2'});}
- function Harness(){const body=useRef(null);api=useSidebarLayout(body,true);return h('div',{ref:body},h(SidebarSplitter,{...api,max:420,visible:!api.collapsed,commit:api.commit,preview:api.preview,collapse:()=>api.collapse(true),onDragging:()=>{}}),h(Child));}
+ function Harness(){const body=useRef(null);api=useSidebarLayout(body,true);return h('div',{ref:body},h(SidebarSplitter,{...api,max:360,visible:!api.collapsed,commit:api.commit,preview:api.preview,collapse:()=>api.collapse(true),onDragging:()=>{}}),h(Child));}
  // 使用元件實際容器量測入口，避免直接修改 hook 內部狀態。
  const old=HTMLElement.prototype.getBoundingClientRect;HTMLElement.prototype.getBoundingClientRect=()=>({width:1200});
  await act(async()=>root.render(h(Harness)));const handle=host.querySelector('[role=separator]'),input=host.querySelector('input');
- await act(async()=>key(handle,'ArrowRight'));assert.equal(handle.getAttribute('aria-valuenow'),'296');
- await act(async()=>key(handle,'ArrowRight',true));assert.equal(localStorage.getItem(SIDEBAR_KEY),'328');
- await act(async()=>key(handle,'Home'));assert.equal(handle.getAttribute('aria-valuenow'),'240');
- await act(async()=>key(handle,'End'));assert.equal(handle.getAttribute('aria-valuenow'),'420');
+ await act(async()=>key(handle,'ArrowRight'));assert.equal(handle.getAttribute('aria-valuenow'),'252');
+ await act(async()=>key(handle,'ArrowRight',true));assert.equal(localStorage.getItem(SIDEBAR_KEY),'284');
+ await act(async()=>key(handle,'Home'));assert.equal(handle.getAttribute('aria-valuenow'),'220');
+ await act(async()=>key(handle,'End'));assert.equal(handle.getAttribute('aria-valuenow'),'360');
  await act(async()=>key(handle,'Enter'));assert.ok(handle.hidden);assert.equal(handle.getAttribute('aria-valuenow'),null);
- await act(async()=>api.collapse(false));assert.equal(handle.getAttribute('aria-valuenow'),'420');assert.equal(host.querySelector('input'),input);assert.equal(input.value,'良品120，缺料2');assert.equal(mounts,1);assert.equal(localStorage.getItem('kaosu-assistant:size'),'外框原值');
+ await act(async()=>api.collapse(false));assert.equal(handle.getAttribute('aria-valuenow'),'360');assert.equal(host.querySelector('input'),input);assert.equal(input.value,'良品120，缺料2');assert.equal(mounts,1);assert.equal(localStorage.getItem('kaosu-assistant:size'),'外框原值');
  await act(async()=>root.unmount());host.remove();HTMLElement.prototype.getBoundingClientRect=old;
 });
 test('拖曳單一RAF，放開後lostcapture不回滾；取消、Escape、blur與卸載清理',async()=>{

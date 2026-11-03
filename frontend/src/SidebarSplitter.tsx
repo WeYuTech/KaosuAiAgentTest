@@ -1,7 +1,7 @@
 import {useEffect,useRef,useState,type RefObject,type PointerEvent as ReactPointerEvent} from 'react';
 import {t} from './i18n';
 export const SIDEBAR_KEY='kaosu-assistant:sidebar-width';
-export const SIDEBAR_DEFAULT=288, SIDEBAR_MIN=240, SIDEBAR_MAX=420, SPLITTER_SIZE=24;
+export const SIDEBAR_DEFAULT=244, SIDEBAR_MIN=220, SIDEBAR_MAX=360, SPLITTER_SIZE=6;
 export function sidebarLimit(container:number){return Math.min(SIDEBAR_MAX,Math.floor(container-SPLITTER_SIZE-480));}
 export function clampSidebar(value:number,max:number){return Math.max(SIDEBAR_MIN,Math.min(Number.isFinite(value)?value:SIDEBAR_DEFAULT,max));}
 function storedWidth(){try{const value=Number(localStorage.getItem(SIDEBAR_KEY));return value>=SIDEBAR_MIN&&value<=SIDEBAR_MAX?value:SIDEBAR_DEFAULT;}catch{return SIDEBAR_DEFAULT;}}
@@ -10,7 +10,7 @@ export function useSidebarLayout(body:RefObject<HTMLDivElement|null>,open:boolea
  const [container,setContainer]=useState(0),[preferred,setPreferred]=useState(storedWidth),[preview,setPreview]=useState<number|null>(null);
  const [collapsed,setCollapsed]=useState(()=>{try{return localStorage.getItem('kaosu-assistant:sidebar-collapsed')==='true';}catch{return false;}});
  useEffect(()=>{if(!open||!body.current)return;const node=body.current;setContainer(node.getBoundingClientRect().width);const observer=new ResizeObserver(entries=>setContainer(entries[0].contentRect.width));observer.observe(node);return()=>observer.disconnect();},[open,body]);
- const max=sidebarLimit(container),wide=container>=900&&max>=SIDEBAR_MIN;
+ const max=sidebarLimit(container),wide=container>880&&max>=SIDEBAR_MIN;
  const width=clampSidebar(preview??preferred,Math.max(SIDEBAR_MIN,max));
  function commit(value:number){const next=clampSidebar(value,Math.max(SIDEBAR_MIN,max));setPreview(null);setPreferred(next);try{localStorage.setItem(SIDEBAR_KEY,String(next));}catch{/* 本次畫面仍可操作。 */}}
  function collapse(value:boolean){setCollapsed(value);try{localStorage.setItem('kaosu-assistant:sidebar-collapsed',String(value));}catch{/* 本次畫面仍可操作。 */}}

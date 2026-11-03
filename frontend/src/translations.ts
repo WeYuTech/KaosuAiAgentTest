@@ -1,5 +1,35 @@
 /* 固定介面詞彙：中文原文為鍵，不翻譯 MES 主檔名稱或歷史訊息。 */
 export const translations: Record<string, [string, string]> = Object.fromEntries(`
+最後更新|Last updated|อัปเดตล่าสุด
+開始聊天後，紀錄會顯示在這裡。|Your conversations will appear here once you start chatting.|บทสนทนาจะปรากฏที่นี่เมื่อคุณเริ่มแชท
+可先使用作業單完成操作。|You can use the operation sheet first.|ใช้แบบฟอร์มงานก่อนได้
+我要報工|Report production|รายงานการผลิต
+無法複製，請選取文字手動複製。|Unable to copy. Select the text and copy it manually.|คัดลอกไม่ได้ โปรดเลือกข้อความแล้วคัดลอกเอง
+展開側欄|Expand sidebar|เปิดแถบด้านข้าง
+查詢生產資料|Query production data|ค้นหาข้อมูลการผลิต
+選擇作業|Choose an operation|เลือกงาน
+可在「已刪除聊天」還原。|You can restore it from Deleted chats.|กู้คืนได้จากแชทที่ลบแล้ว
+刪除這個聊天？|Delete this chat?|ลบแชทนี้หรือไม่?
+聊天名稱|Chat name|ชื่อแชท
+還原|Restore|กู้คืน
+開啟|Open|เปิด
+聊天可還原，MES 業務紀錄不受影響。|Chats can be restored; MES business records are unaffected.|กู้คืนแชทได้ โดยไม่กระทบข้อมูล MES
+試試設備名稱、工單或其他關鍵字。|Try an equipment name, work order or another keyword.|ลองชื่อเครื่องจักร ใบสั่งผลิต หรือคำค้นอื่น
+沒有找到聊天|No chats found|ไม่พบแชท
+重新搜尋|Search again|ค้นหาอีกครั้ง
+搜尋文字已保留。|Your search text is retained.|เก็บข้อความค้นหาไว้แล้ว
+搜尋暫時無法使用|Search is temporarily unavailable|ไม่สามารถค้นหาได้ชั่วคราว
+正在搜尋聊天…|Searching chats…|กำลังค้นหาแชท…
+回覆有幫助|Helpful response|คำตอบมีประโยชน์
+查核訊息狀態|Check message status|ตรวจสอบสถานะข้อความ
+原句已保留，先查核這次訊息。|Your message is retained. Check its status first.|เก็บข้อความเดิมไว้แล้ว โปรดตรวจสอบสถานะก่อน
+訊息是否送達，尚未確認|Message delivery is not yet confirmed|ยังไม่ยืนยันว่าข้อความส่งถึงแล้ว
+其他作業|Other operations|งานอื่น ๆ
+查生產資料|Query production data|ค้นหาข้อมูลการผลิต
+輸入訊息…|Type a message…|พิมพ์ข้อความ…
+問資料，或說說你想完成的作業…|Ask about data or describe your task…|ถามข้อมูลหรือบอกงานที่ต้องการ…
+目前對話|Current conversation|บทสนทนาปัจจุบัน
+最近聊天|Recent chats|แชทล่าสุด
 結果未知|Result unknown|ไม่ทราบผลลัพธ์
 已處理 {0} 秒 · {1} 個步驟|Processed in {0}s · {1} steps|ประมวลผล {0} วินาที · {1} ขั้นตอน
 結果未知，請查核原訊息；不會自動重送。|Result unknown. Check the original message; it will not be resent.|ไม่ทราบผลลัพธ์ โปรดตรวจสอบข้อความเดิม ระบบจะไม่ส่งซ้ำ

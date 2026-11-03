@@ -1,0 +1,27 @@
+// 真正 Chromium 操作：三語、五外觀、鍵盤、IME、縮放與 iframe。只使用 HTTP fixture。
+const {start,fixture,root}=require('./issue55-fixture.cjs');const fs=require('node:fs'),path=require('node:path'),assert=require('node:assert/strict');
+(async()=>{const app=await start(),results=[];try{
+ const page=await app.browser.newPage({viewport:{width:1366,height:768},colorScheme:'dark'});await fixture(page);await page.goto(app.url+'/?embed=1');const input=page.locator('#entry-input');await input.waitFor();await input.fill('MC37 人工良品 120，尚未送出');
+ for(let locale=0;locale<3;locale++){
+  await page.locator('.header-tools button').nth(2).click();await page.getByRole('menuitemradio').nth(5+locale).click();await page.waitForTimeout(250);
+  for(let theme=0;theme<5;theme++){
+   await page.locator('.header-tools button').nth(2).click();await page.getByRole('menuitemradio').nth(theme).click();await page.waitForTimeout(250);assert.equal(await input.inputValue(),'MC37 人工良品 120，尚未送出');
+   const overflow=await page.locator('.assistant-panel').evaluate(el=>el.scrollWidth>el.clientWidth+1);assert.equal(overflow,false);results.push({項目:`${['繁中','英文','泰文'][locale]}／${['淺色','深色','深藍','MES','系統'][theme]}`,結果:'通過',檢查:'切換後草稿保留、外框無橫向溢出'});
+  }
+ }
+ // 回繁中，確認搜尋彈窗的焦點與 Esc 返回。
+ await page.locator('.header-tools button').nth(2).click();await page.getByRole('menuitemradio').nth(5).click();await page.waitForTimeout(300);await page.getByRole('button',{name:'搜尋聊天',exact:true}).click();await page.locator('.history-search-dialog input').waitFor();assert.equal(await page.locator('.history-search-dialog input').evaluate(el=>el===document.activeElement),true);await page.keyboard.press('Shift+Tab');assert.equal(await page.locator('.history-search-dialog').evaluate(el=>el.contains(document.activeElement)),true);await page.keyboard.press('Escape');assert.equal(await input.inputValue(),'MC37 人工良品 120，尚未送出');results.push({項目:'鍵盤與搜尋焦點',結果:'通過'});
+ let starts=0;page.on('request',req=>{if(req.url().endsWith('/api/entry/messages/start'))starts++;});await input.focus();await input.dispatchEvent('compositionstart');await input.dispatchEvent('keydown',{key:'Enter',code:'Enter',keyCode:229,isComposing:true,bubbles:true});await input.dispatchEvent('compositionend');assert.equal(starts,0);results.push({項目:'中文 IME Enter',結果:'通過',檢查:'組字未送出模型請求'});
+ await page.waitForTimeout(300);await page.emulateMedia({reducedMotion:'reduce'});assert.equal(await page.evaluate(()=>matchMedia('(prefers-reduced-motion: reduce)').matches),true);await page.getByRole('button',{name:'搜尋聊天',exact:true}).click();assert.equal(await page.locator('.history-search-dialog').evaluate(el=>getComputedStyle(el).animationName),'none');await page.keyboard.press('Escape');results.push({項目:'reduced-motion',結果:'通過'});
+ const zoom=await app.browser.newPage({viewport:{width:683,height:384},deviceScaleFactor:2});await fixture(zoom);await zoom.goto(app.url+'/?embed=1');await zoom.locator('#entry-input').waitFor();assert.equal(await zoom.locator('.assistant-panel').evaluate(el=>el.scrollWidth>el.clientWidth+1),false);await zoom.screenshot({path:path.join(root,'docs/design/issue55/200百分比等效縮放.png')});results.push({項目:'200% 等效縮放',結果:'通過',檢查:'CSS viewport 683×384、deviceScaleFactor 2；無橫向溢出'});await zoom.close();
+ await page.route('**/fixture-host',route=>route.fulfill({contentType:'text/html',body:`<!doctype html><html><body style="margin:0"><iframe title="MES 助理隔離宿主" src="/?embed=1" style="border:0;width:100vw;height:100vh"></iframe></body></html>`}));await page.goto(app.url+'/fixture-host');const frame=page.frameLocator('iframe');await frame.locator('#entry-input').fill('iframe 原句保留');await frame.locator('.header-tools button').nth(1).click();assert.equal(await frame.locator('#entry-input').inputValue(),'iframe 原句保留');results.push({項目:'iframe 尺寸按鈕',結果:'通過',檢查:'同一 iframe 輸入保留；正式 MES 宿主未連線'});
+ for(const [name,listed,text] of [['列表真實標題',true,'你能幫我做什麼？'],['未列入的中立聊天',false,'你能幫我做什麼？'],['第一句超長截斷',false,'設備與工單資料'.repeat(15)]]){
+  const check=await app.browser.newPage({viewport:{width:1366,height:768},colorScheme:'dark'});await fixture(check,'capabilities');
+  if(!listed)await check.addInitScript(()=>sessionStorage.setItem('mes-neutral-entry:v1:'+JSON.stringify(['fixture-operator','simulation']),JSON.stringify({entry_id:'unlisted-entry'})));
+  await check.goto(app.url+'/?embed=1');await check.locator('#entry-input').fill(text);await check.locator('#entry-input').press('Enter');await check.locator('.entry-message.assistant').waitFor();
+  assert.equal(await check.locator('.reference-title-row>span').innerText(),listed?'MC37 今日生產':Array.from(text).slice(0,60).join(''));
+  assert.equal(await check.locator('.history-row.selected').count(),listed?1:0);assert.equal(await check.locator('.history-row').count(),12);
+  results.push({項目:name,結果:'通過',檢查:'公開 HTTP fixture 與實際 React 操作；不假造列表列'});await check.close();
+ }
+ fs.writeFileSync(path.join(root,'docs/design/issue55/環境驗收.json'),JSON.stringify(results,null,2));console.log('環境驗收通過 '+results.length+' 項');
+}finally{await app.close();}})().catch(e=>{console.error(e);process.exitCode=1});
