@@ -72,6 +72,7 @@ export function GuidedFlow({ presentation='chat-sheet', reviewActionsExternal=fa
   const [action, setAction] = useState('');
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState('');
+  const guideLoadError=useRef('');
   const [validationAttempted,setValidationAttempted]=useState(false);
   const [reload, setReload] = useState(0);
   const [saveState, setSaveStateValue] = useState<'saved'|'saving'|'failed'|'conflict'|'invalid'>('saved');
@@ -192,14 +193,14 @@ export function GuidedFlow({ presentation='chat-sheet', reviewActionsExternal=fa
   useEffect(() => {
     if (((disabled || busy || dirty || saveState === 'saving') && guide) || saveState === 'failed' || saveState === 'conflict') return;
     let live = true;
-    request<Guide>(`/api/conversations/${conversation.id}/guide`).then(value => { if (live && (!guide || value.version !== versionRef.current)) {
+    request<Guide>(`/api/conversations/${conversation.id}/guide`).then(value => { if(live&&guideLoadError.current){const previous=guideLoadError.current;guideLoadError.current='';setError(error=>error===previous?'':error);} if (live && (!guide || value.version !== versionRef.current)) {
       adopt(value);
       if(!recoveryRead.current){recoveryRead.current=true;try{const raw=sessionStorage.getItem(recoveryKey);const saved=raw?JSON.parse(raw):null;
         if(saved&&Date.now()-saved.at<86400000&&saved.action===value.action&&saved.args&&typeof saved.args==='object'&&comparable(saved.args)!==comparable(value.args)&&value.proposal?.status!=='unknown'){
           setArgs(saved.args);serverArgs.current=saved.base??value.args;setConflict(value);setSaveState('conflict');setStep('details');setError(L('已保留上次未儲存的輸入，請與最新內容核對。','Unsaved input retained. Compare it with the latest values.','เก็บข้อมูลที่ยังไม่บันทึกไว้ โปรดเทียบกับข้อมูลล่าสุด'));
         }
       }catch{/* 無效的本機副本不取代可信草稿。 */}}
-    } }).catch(e => { if (live) { if(e instanceof ApiError && [401,403].includes(e.status)) onAccessDenied?.(); else setError(String(e.message)); } });
+    } }).catch(e => { if (live) { if(e instanceof ApiError && [401,403].includes(e.status)) onAccessDenied?.(); else {guideLoadError.current=String(e.message);setError(guideLoadError.current);} } });
     return () => { live = false; };
   }, [conversation.id, signal, status, disabled, busy, dirty, saveState, reload]);
   useEffect(() => {

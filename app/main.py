@@ -711,6 +711,7 @@ def create_app(db_path=None, model=None, intent_classifier=None):
         if not convo or convo["actor_id"] != actor["id"] or convo.get("is_deleted"):
             raise HTTPException(404, "找不到此對話")
         allowed(actor, convo["module"])
+        convo["processing_active"] = bool(convo.get("processing"))
         convo.pop("processing", None)
         from app.conversations import metadata
         convo.update(metadata(convo))
@@ -755,14 +756,19 @@ def create_app(db_path=None, model=None, intent_classifier=None):
         return process_message(cid, body, request)
 
     def process_message(cid, body, request, decision_override=None):
+        from app.streaming import active, tracked, check, Stopped
         actor = actor_for(request)
         get_conversation(cid, actor)
-        intent_token = secrets.token_urlsafe(24)
+        intent_token = active.get().token if active.get() else secrets.token_urlsafe(24)
         with store.transaction() as db:
             convo = store.get(db, "CONVERSATION", cid)
             check_conversation_edit(db, convo, allow_unknown=True)
             if (convo.get("processing") or {}).get("expires_at", "") > now().isoformat():
                 raise HTTPException(409, "上一則訊息仍在處理")
+            if active.get():
+                row = store.get(db, "STATE", active.get().key)
+                row["conversation_id"] = cid
+                store.put(db, "STATE", active.get().key, row)
             convo["processing"] = {"token": intent_token, "expires_at": (now() + timedelta(minutes=10)).isoformat()}
             convo["messages"].append({"role": "user", "content": body.text})
             convo["updated_at"] = now().isoformat()
@@ -787,12 +793,14 @@ def create_app(db_path=None, model=None, intent_classifier=None):
             from app.intents import classify
             convo = {**convo, "interaction_scope": body.scope}
             # 注入 model 是離線 HTTP 測試替身；正式請求一律使用受限分類器。
-            decision = decision_override or (intent_classifier(convo) if intent_classifier else {"intent": "change"} if model else classify(convo, actor["roles"]))
+            decision = decision_override or tracked("classify", lambda: intent_classifier(convo) if intent_classifier else {"intent": "change"} if model else classify(convo, actor["roles"]))
             if decision.get("intent") not in {"greeting", "readonly", "change", "clarify", "unsupported", "capabilities"}:
                 raise HTTPException(502, "無法確認訊息意圖，原操作未變更")
             other_module = decision.get("module") in {"schedule","report","mold"} and decision["module"] != convo["module"]
             selection = body.scope == "selection"
             read_only = selection or other_module or decision["intent"] != "change"
+            if active.get():
+                active.get().intent(read_only)
             with store.transaction() as db:
                 current = store.get(db, "CONVERSATION", cid)
                 check_conversation_edit(db, current, intent_token, allow_unknown=read_only)
@@ -816,6 +824,7 @@ def create_app(db_path=None, model=None, intent_classifier=None):
                 result = respond(convo, state, store, query_fn=query_fn,
                                  draft_fn=None if read_only else lambda patch, version: save_guide(cid, tool_actor(), patch, version, intent_token),
                                  prepare_fn=None if read_only else lambda action, args: make_proposal(Proposal(module=convo["module"], action=action, args=args, conversation_id=cid), tool_actor(), intent_token), read_only=read_only, authorize_fn=tool_actor)
+            check()
             tool_actor()
             if read_only and (result.get("action") or result.get("proposal")):
                 raise HTTPException(502, "唯讀回覆包含未允許的操作，已阻擋")
@@ -831,12 +840,26 @@ def create_app(db_path=None, model=None, intent_classifier=None):
                 convo = store.get(db, "CONVERSATION", cid)
                 if (convo.get("processing") or {}).get("token") != intent_token:
                     raise HTTPException(409, "這輪對話已被新的需求取代")
-                convo["messages"].append({"role": "assistant", "content": result["content"], "proposal": proposal, "data": result.get("data"), "knowledge": result.get("knowledge", [])})
+                convo["messages"].append({"role": "assistant", "content": result["content"], "proposal": proposal, "data": result.get("data"), "knowledge": result.get("knowledge", []), **({"processing_summary": active.get().snapshot()} if active.get() else {})})
                 convo["updated_at"] = now().isoformat()
                 convo.pop("processing", None)
                 store.put(db, "CONVERSATION", cid, convo)
                 guide = guide_view(db, convo)
             return {"messages": convo["messages"], "proposal": guide.get("proposal") if read_only else proposal, "data": result.get("data"), "guide": guide, "query_context": convo.get("query_context")}
+        except Stopped:
+            with store.transaction() as db:
+                current = store.get(db, "CONVERSATION", cid)
+                current["messages"].append({"role": "assistant", "content": "", "stopped": True, "processing_summary": active.get().snapshot()})
+                store.put(db, "CONVERSATION", cid, current)
+            raise
+        except Exception:
+            if active.get():
+                with store.transaction() as db:
+                    current = store.get(db, "CONVERSATION", cid)
+                    if (current.get("processing") or {}).get("token") == intent_token:
+                        current["messages"].append({"role":"assistant", "content":"", "processing_failed":True, "processing_summary":active.get().snapshot()})
+                        store.put(db,"CONVERSATION",cid,current)
+            raise
         finally:
             with store.transaction() as db:
                 current = store.get(db, "CONVERSATION", cid)
@@ -844,8 +867,11 @@ def create_app(db_path=None, model=None, intent_classifier=None):
                     current.pop("processing", None)
                     store.put(db, "CONVERSATION", cid, current)
 
+    from app.streaming import install as install_streaming
+    launch_stream = install_streaming(app, store, actor_for, get_conversation, process_message, Message)
+
     from app.entry import install as install_entry
-    install_entry(app, store, actor_for, allowed, now, conversation_value, process_message, intent_classifier)
+    install_entry(app, store, actor_for, allowed, now, conversation_value, process_message, intent_classifier, launch_stream)
     return app
 
 

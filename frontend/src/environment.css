@@ -84,3 +84,24 @@
 @media(max-height:520px){
  #mes-ai-chat-root .dual-flow .aui-composer-send {width:32px;height:32px;min-width:32px;min-height:32px;}
 }
+
+/* 真實串流步驟沿用各外觀色票；文字更新沒有打字機動畫。 */
+.processing-steps {margin:8px 0;min-width:0;border:1px solid var(--color-border);border-radius:12px;padding:8px;color:var(--color-foreground);}
+.steps-toggle {display:flex;align-items:center;gap:6px;max-width:100%;text-align:start;background:transparent;color:inherit;min-height:36px;border:0;}
+.steps-toggle span {overflow-wrap:anywhere;}
+.processing-steps ol {padding:0;margin:8px 0;list-style:none;}
+.processing-steps li {display:flex;align-items:flex-start;gap:6px;padding:5px 0;font-size:14px;}
+.processing-steps svg {flex-shrink:0;}
+.processing-steps li small {margin-inline-start:auto;white-space:nowrap;}
+.stream-reply {white-space:pre-wrap;overflow-wrap:anywhere;}
+@media(prefers-reduced-motion:reduce){.processing-steps .spin{animation:none;}}
+
+.entry-messages {display:flex;flex:none;flex-direction:column;gap:24px;min-width:0;}
+@media(max-height:520px){
+ .entry-chat .entry-transcript {padding:8px 4px 12px;}
+ .entry-chat .entry-messages {gap:12px;}
+ .entry-chat.modules .onboarding-content {padding-bottom:6px;}
+ .entry-chat .entry-composer [data-slot="aui_composer-shell"] {flex-direction:row;align-items:center;min-height:38px;padding:3px;}
+ .entry-chat .entry-composer .aui-composer-input {height:30px;min-height:30px;max-height:60px;padding-block:3px;}
+ .entry-chat .entry-composer .aui-composer-send {width:32px;height:32px;min-width:32px;min-height:32px;}
+}
