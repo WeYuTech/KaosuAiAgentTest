@@ -1,400 +1,400 @@
-[空跑] 01 核對 ZIP；將解壓至新的 staging 目錄
-[空跑] 02 來源逐檔與依賴核對通過：170 檔
-[空跑] 03 核對工作身分及 loopback；將建立唯一備份並限制 ACL
-{"conversations": 24, "active_messages": 0, "proposals": {"cancelled": 7}, "audit": 7, "budget": {"calls": 261, "spent_usd": 2.226394, "unsettled": 0}}
-[空跑] 04 全域 proxy 逐項唯讀核對：{"enabled":"True","responseBufferLimit":"4096","minResponseBuffer":"256","bufferChunkedResponses":"True","preserveHostHeader":"True","timeout":"00:05:00"}
-[空跑] 05 將建立新的 IIS 備份及代理 web.config 備份
-[空跑] 06 將只停止助理工作並等待 loopback 監聽釋放
-[空跑] 07 完整備份非日誌檔；日誌另存快照且回復時不覆蓋
-[空跑] 非日誌完整備份來源：237 檔；日誌快照：1 檔
-[空跑] 08 將備份私密設定、資料庫、sidecar、舊檔與清單；不還原或重設資料
-[空跑] 09 將寫入 deployment.json 與部署／回復腳本
-[空跑] 10 將逐檔部署，保留舊雜湊資產，最後原子替換 HTML
-[空跑] 將複製：scripts/run_service.py
-[空跑] 將複製：scripts/publish_knowledge.py
-[空跑] 將複製：scripts/sql_acceptance.py
-[空跑] 將複製：tests/manual/issue19_ui_server.py
-[空跑] 將複製：tests/manual/conversation_fault_server.py
-[空跑] 將複製：scripts/evaluate_trilingual.py
-[空跑] 將複製：scripts/evaluate_multiturn.py
-[空跑] 將複製：scripts/install_widget.py
-[空跑] 將複製：scripts/package_release.py
-[空跑] 將複製：scripts/mes_session_bridge.ashx
-[空跑] 將複製：tests/manual/issue29_case.py
-[空跑] 將複製：tests/manual/issue33_ui_server.py
-[空跑] 將複製：tests/manual/issue33_review_encode.py
-[空跑] 將複製：tests/manual/issue34_encode.py
-[空跑] 將複製：tests/manual/issue35_encode.py
-[空跑] 將複製：tests/manual/issue34_ui_server.py
-[空跑] 將複製：tests/manual/issue29_r01.py
-[空跑] 將複製：tests/manual/issue29_export.py
-[空跑] 將複製：tests/manual/issue29_seed.py
-[空跑] 將複製：tests/manual/issue32_ui_server.py
-[空跑] 將複製：tests/manual/issue29_ui_server.py
-[空跑] 將複製：frontend/dist/fonts/IBM-Plex-Mono-OFL.txt
-[空跑] 將複製：frontend/dist/assets/inter-latin-wght-normal-Dx4kXJAl.woff2
-[空跑] 將複製：frontend/dist/fonts/Inter-OFL.txt
-[空跑] 將複製：frontend/dist/fonts/noto-sans-thai-thai-400-normal.woff2
-[空跑] 將複製：frontend/dist/fonts/Noto-Sans-Thai-OFL.txt
-[空跑] 將複製：frontend/dist/assets/ibm-plex-mono-latin-500-normal-DSY6xOcd.woff2
-[空跑] 將複製：frontend/dist/assets/ibm-plex-mono-latin-400-normal-DMJ8VG8y.woff2
-[空跑] 將複製：frontend/dist/assets/ibm-plex-mono-latin-600-normal-BgSNZQsw.woff2
-[空跑] 將複製：frontend/dist/assets/index-CkZ0HfWO.js
-[空跑] 將複製：frontend/dist/assets/index-BZst5zpd.css
-[空跑] 將複製：frontend/dist/fonts/noto-sans-thai-thai-600-normal.woff2
-[空跑] 將複製：scripts/configure_iis.ps1
-[空跑] 將複製：requirements.lock.txt
-[空跑] 將複製：scripts/evaluate_dialogue.py
-[空跑] 將複製：scripts/evaluate_lifecycle.py
-[空跑] 將複製：scripts/evaluate_dual_flow.py
-[空跑] 將複製：frontend/dist/weyu-brand.svg
-[空跑] 將複製：frontend/dist/motion-tokens.css
-[空跑] 將複製：frontend/dist/weyu-logo.png
-[空跑] 將複製：pyproject.toml
-[空跑] 將複製：migrations/001_AI操作紀錄.sql
-[空跑] 將複製：tests/test_issue39_mes_reads.py
-[空跑] 將複製：tests/test_issue37_http.py
-[空跑] 將複製：tests/test_knowledge_release.py
-[空跑] 將複製：tests/test_management_reports_http.py
-[空跑] 將複製：tests/test_live_dialogue_validation.py
-[空跑] 將複製：tests/test_execution_context_http.py
-[空跑] 將複製：tests/test_entry_candidates_http.py
-[空跑] 將複製：tests/test_feedback_http.py
-[空跑] 將複製：tests/test_install_widget.py
-[空跑] 將複製：tests/test_guide_http.py
-[空跑] 將複製：tests/test_mes_http.py
-[空跑] 將複製：tests/test_review_identity_http.py
-[空跑] 將複製：tests/test_query_context.py
-[空跑] 將複製：tests/test_session.py
-[空跑] 將複製：tests/test_streaming.py
-[空跑] 將複製：tests/test_session_registry_http.py
-[空跑] 將複製：tests/test_operation_reconciliation.py
-[空跑] 將複製：tests/test_mes_schedule_http.py
-[空跑] 將複製：tests/test_package_release.py
-[空跑] 將複製：tests/test_proposal_lifecycle.py
-[空跑] 將複製：tests/test_polling_proxy.py
-[空跑] 將複製：tests/manual/issue44_real_encode.py
-[空跑] 將複製：tests/manual/issue44_encode.py
-[空跑] 將複製：tests/manual/issue44_real_server.py
-[空跑] 將複製：tests/manual/issue44_ui_server.py
-[空跑] 將複製：tests/manual/issue44_stop_server.py
-[空跑] 將複製：tests/manual/issue37_encode.py
-[空跑] 將複製：tests/manual/issue35_ui_server.py
-[空跑] 將複製：tests/manual/issue37_ui_server.py
-[空跑] 將複製：tests/manual/issue40_ui_server.py
-[空跑] 將複製：tests/manual/issue40_encode.py
-[空跑] 將複製：tests/manual/issue47_buffer_proxy.py
-[空跑] 將複製：tests/test_deployment_http.py
-[空跑] 將複製：tests/test_conversation_history_http.py
-[空跑] 將複製：tests/test_domain_http.py
-[空跑] 將複製：tests/test_empty_order_lifecycle.py
-[空跑] 將複製：tests/test_dual_flow_http.py
-[空跑] 將複製：tests/manual/issue47_server.py
-[空跑] 將複製：tests/manual/issue47_encode.py
-[空跑] 將複製：tests/test_chat_http.py
-[空跑] 將複製：tests/test_conversation_first_http.py
-[空跑] 將複製：tests/test_confirmation_http.py
-[空跑] 將複製：docs/Issue19-前端依賴與授權.md
-[空跑] 將複製：docs/Issue19-元件移植與驗收.md
-[空跑] 將複製：docs/Issue21-轉場與回饋實作驗收.md
-[空跑] 將複製：docs/Issue25-平面聊天清單實作與驗收.md
-[空跑] 將複製：docs/Issue23-側欄彈窗與容器排版驗收.md
-[空跑] 將複製：docs/20261031正式部署紀錄.md
-[空跑] 將複製：app/streaming.py
-[空跑] 將複製：docs/4173介面對齊與驗收-20261101.md
-[空跑] 將複製：docs/IIS部署.md
-[空跑] 將複製：docs/4173瀏覽器驗收補充-20261101.md
-[空跑] 將複製：docs/MES整合.md
-[空跑] 將複製：docs/adr/005_雙流程與唯讀意圖版本.md
-[空跑] 將複製：docs/adr/004_管理設定與定時唯讀報告.md
-[空跑] 將複製：docs/adr/006_真實步驟串流與停止.md
-[空跑] 將複製：docs/agents/domain.md
-[空跑] 將複製：docs/adr/007_分段輪詢傳輸.md
-[空跑] 將複製：docs/SQL驗收.md
-[空跑] 將複製：docs/MES藍色主題.md
-[空跑] 將複製：docs/WeYu介面實作與驗收-20261031.md
-[空跑] 將複製：docs/adr/003_可信MES工作階段橋接.md
-[空跑] 將複製：docs/adr/0001-沿用業務來源並補交易閘道.md
-[空跑] 將複製：app/store.py
-[空跑] 將複製：app/domain.py
-[空跑] 將複製：app/conversations.py
-[空跑] 將複製：app/entry.py
-[空跑] 將複製：app/intents.py
-[空跑] 將複製：app/guide.py
-[空跑] 將複製：CONTEXT.md
-[空跑] 將複製：AGENTS.md
-[空跑] 將複製：README.md
-[空跑] 將複製：app/candidates.py
-[空跑] 將複製：app/__init__.py
-[空跑] 將複製：app/knowledge.py
-[空跑] 將複製：app/presentation.py
-[空跑] 將複製：app/model.py
-[空跑] 將複製：app/query_context.py
-[空跑] 將複製：app/step_labels.py
-[空跑] 將複製：app/reports.py
-[空跑] 將複製：app/main.py
-[空跑] 將複製：app/knowledge_release.py
-[空跑] 將複製：app/management.py
-[空跑] 將複製：app/mes_schedule.py
-[空跑] 將複製：app/mes.py
-[空跑] 將複製：docs/完成核對.md
-[空跑] 將複製：docs/前端操作.md
-[空跑] 將複製：docs/實作規格.md
-[空跑] 將複製：docs/對話優先產品實作紀錄.md
-[空跑] 將複製：docs/對話優先本輪驗收矩陣.md
-[空跑] 將複製：docs/inventory/report.md
-[空跑] 將複製：docs/inventory/mold.md
-[空跑] 將複製：docs/inventory/schedule.md
-[空跑] 將複製：docs/三語步驟引導規格.md
-[空跑] 將複製：docs/三語改版驗收.md
-[空跑] 將複製：docs/管理設定定時報告與版權驗收-20261101.md
-[空跑] 將複製：docs/程式審查.md
-[空跑] 將複製：docs/聊天功能還原與驗收-20261101.md
-[空跑] 將複製：frontend/dist/assets/ManagementPanel-C0bKN3MW.js
-[空跑] 將複製：docs/驗收報告.md
-[空跑] 將複製：docs/桌面作業單驗收.md
-[空跑] 將複製：docs/截圖原版逐項對齊與驗收-20261101.md
-[空跑] 將複製：docs/桌面對話作業單規格.md
-[空跑] 將複製：docs/模擬情境.md
-[空跑] 將複製：docs/模型選型與知識修正.md
-[空跑] 將複製：docs/evidence/issue44-deploy/README.md
-[空跑] 將複製：docs/design/issue55/計算樣式比對.md
-[空跑] 將複製：docs/design/issue55/README.md
-[空跑] 將複製：docs/design/issue56/README.md
-[空跑] 將複製：docs/design/issue56/比對總覽.md
-[空跑] 將複製：docs/design/issue56/外框底邊.md
-[空跑] 將複製：docs/design/issue40/驗收紀錄.md
-[空跑] 將複製：docs/design/issue34/驗收紀錄.md
-[空跑] 將複製：docs/design/issue44/真實模型煙霧驗收.md
-[空跑] 將複製：docs/design/issue47/README.md
-[空跑] 將複製：docs/design/issue44/驗收說明.md
-[空跑] 將複製：docs/agents/issue-tracker.md
-[空跑] 將複製：docs/evidence/issue29-deploy/README.md
-[空跑] 將複製：docs/evidence/issue27/README.md
-[空跑] 將複製：docs/evidence/issue29/G2-驗收.md
-[空跑] 將複製：docs/evidence/issue29/README.md
-[空跑] 將複製：docs/evidence/issue29/G3-部分驗收.md
-[空跑] 將複製：docs/design/issue56/計算樣式比對.md
-[空跑] 將複製：docs/design/issue56/盤點.md
-[空跑] 將複製：docs/design/uiux-reference-v2/README.md
-[空跑] 將複製：docs/evidence/issue27-deploy/README.md
-[空跑] 將複製：frontend/dist/widget-loader.js
-[空跑] 將複製：frontend/dist/index.html
-[空跑] 11 將更新清單並校驗部署檔；空跑校驗發行來源
-[空跑] 12 代理 XML 於記憶體設定動態壓縮 false；將原子替換專用 web.config
-[空跑] 13 將啟動助理；核對健康與全域 proxy 未變更
-{
-    "release":  "kaosu-uiux-v2-2dafe9e-20261103-tenth",
-    "old_responseBufferLimit":  4096,
-    "private_settings_and_databases_preserved":  true,
-    "service_restarted":  false,
-    "verified":  170,
-    "backup":  "C:\\Services\\KaosuAiAgent\\backups\\code-before-kaosu-uiux-v2-2dafe9e-20261103-tenth",
-    "health":  {
-                   "status":  "ok",
-                   "mode":  "live",
-                   "model_configured":  true,
-                   "model":  "gpt-6.1-sol",
-                   "business_timezone":  "UTC+07:00",
-                   "business_date":  "2026-11-03",
-                   "server_time":  "2026-11-03T13:38:31.961701+07:00"
-               },
-    "new_responseBufferLimit":  4096,
-    "dry_run":  true,
-    "listen":  "127.0.0.1",
-    "commit":  "2dafe9e3caf92e105c0806adf8dc3922f07c03f7",
-    "dynamic_compression":  false,
-    "global_proxy_unchanged":  true
-}
-[空跑] 14 全部階段完成
-[回復空跑] 01 逐項讀取全域 proxy，不寫入：{"enabled":"True","responseBufferLimit":"4096","minResponseBuffer":"256","bufferChunkedResponses":"True","preserveHostHeader":"True","timeout":"00:05:00"}
-[回復空跑] 02 空跑以目前原版本作為將備份來源；完整讀取待還原檔案
-[回復空跑] 03 將只停止助理，等待監聽釋放；不停止 MES 或 IIS
-[回復空跑] 04 將回復舊程式；HTML 最後原子替換，備份路徑使用 GUID
-[回復空跑] 將還原：scripts/run_service.py
-[回復空跑] 將還原：scripts/publish_knowledge.py
-[回復空跑] 將還原：scripts/sql_acceptance.py
-[回復空跑] 將還原：tests/manual/issue19_ui_server.py
-[回復空跑] 將還原：tests/manual/conversation_fault_server.py
-[回復空跑] 將還原：scripts/evaluate_trilingual.py
-[回復空跑] 將還原：scripts/evaluate_multiturn.py
-[回復空跑] 將還原：scripts/install_widget.py
-[回復空跑] 將還原：scripts/package_release.py
-[回復空跑] 將還原：scripts/mes_session_bridge.ashx
-[回復空跑] 將還原：tests/manual/issue29_case.py
-[回復空跑] 將還原：tests/manual/issue33_ui_server.py
-[回復空跑] 將還原：tests/manual/issue33_review_encode.py
-[回復空跑] 將還原：tests/manual/issue34_encode.py
-[回復空跑] 將還原：tests/manual/issue35_encode.py
-[回復空跑] 將還原：tests/manual/issue34_ui_server.py
-[回復空跑] 將還原：tests/manual/issue29_r01.py
-[回復空跑] 將還原：tests/manual/issue29_export.py
-[回復空跑] 將還原：tests/manual/issue29_seed.py
-[回復空跑] 將還原：tests/manual/issue32_ui_server.py
-[回復空跑] 將還原：tests/manual/issue29_ui_server.py
-[回復空跑] 將還原：frontend/dist/fonts/Inter-OFL.txt
-[回復空跑] 將還原：frontend/dist/fonts/IBM-Plex-Mono-OFL.txt
-[回復空跑] 將還原：frontend/dist/fonts/Noto-Sans-Thai-OFL.txt
-[回復空跑] 將還原：frontend/dist/fonts/noto-sans-thai-thai-600-normal.woff2
-[回復空跑] 將還原：frontend/dist/fonts/noto-sans-thai-thai-400-normal.woff2
-[回復空跑] 將還原：frontend/dist/assets/ibm-plex-mono-latin-600-normal-BgSNZQsw.woff2
-[回復空跑] 將還原：frontend/dist/assets/ibm-plex-mono-latin-500-normal-DSY6xOcd.woff2
-[回復空跑] 將還原：frontend/dist/assets/inter-latin-wght-normal-Dx4kXJAl.woff2
-[回復空跑] 將還原：frontend/dist/motion-tokens.css
-[回復空跑] 將還原：scripts/configure_iis.ps1
-[回復空跑] 將還原：requirements.lock.txt
-[回復空跑] 將還原：scripts/evaluate_dialogue.py
-[回復空跑] 將還原：scripts/evaluate_lifecycle.py
-[回復空跑] 將還原：scripts/evaluate_dual_flow.py
-[回復空跑] 將還原：frontend/dist/weyu-logo.png
-[回復空跑] 將還原：frontend/dist/weyu-brand.svg
-[回復空跑] 將還原：frontend/dist/widget-loader.js
-[回復空跑] 將還原：pyproject.toml
-[回復空跑] 將還原：migrations/001_AI操作紀錄.sql
-[回復空跑] 將還原：tests/test_issue39_mes_reads.py
-[回復空跑] 將還原：tests/test_issue37_http.py
-[回復空跑] 將還原：tests/test_knowledge_release.py
-[回復空跑] 將還原：tests/test_management_reports_http.py
-[回復空跑] 將還原：tests/test_live_dialogue_validation.py
-[回復空跑] 將還原：tests/test_execution_context_http.py
-[回復空跑] 將還原：tests/test_entry_candidates_http.py
-[回復空跑] 將還原：tests/test_feedback_http.py
-[回復空跑] 將還原：tests/test_install_widget.py
-[回復空跑] 將還原：tests/test_guide_http.py
-[回復空跑] 將還原：tests/test_mes_http.py
-[回復空跑] 將還原：tests/test_review_identity_http.py
-[回復空跑] 將還原：tests/test_query_context.py
-[回復空跑] 將還原：tests/test_session.py
-[回復空跑] 將還原：tests/test_streaming.py
-[回復空跑] 將還原：tests/test_session_registry_http.py
-[回復空跑] 將還原：tests/test_operation_reconciliation.py
-[回復空跑] 將還原：tests/test_mes_schedule_http.py
-[回復空跑] 將還原：tests/test_package_release.py
-[回復空跑] 將還原：tests/test_proposal_lifecycle.py
-[回復空跑] 將還原：tests/test_polling_proxy.py
-[回復空跑] 將還原：tests/manual/issue44_real_encode.py
-[回復空跑] 將還原：tests/manual/issue44_encode.py
-[回復空跑] 將還原：tests/manual/issue44_real_server.py
-[回復空跑] 將還原：tests/manual/issue44_ui_server.py
-[回復空跑] 將還原：tests/manual/issue44_stop_server.py
-[回復空跑] 將還原：tests/manual/issue37_encode.py
-[回復空跑] 將還原：tests/manual/issue35_ui_server.py
-[回復空跑] 將還原：tests/manual/issue37_ui_server.py
-[回復空跑] 將還原：tests/manual/issue40_ui_server.py
-[回復空跑] 將還原：tests/manual/issue40_encode.py
-[回復空跑] 將還原：tests/manual/issue47_buffer_proxy.py
-[回復空跑] 將還原：tests/test_deployment_http.py
-[回復空跑] 將還原：tests/test_conversation_history_http.py
-[回復空跑] 將還原：tests/test_domain_http.py
-[回復空跑] 將還原：tests/test_empty_order_lifecycle.py
-[回復空跑] 將還原：tests/test_dual_flow_http.py
-[回復空跑] 將還原：tests/manual/issue47_server.py
-[回復空跑] 將還原：tests/manual/issue47_encode.py
-[回復空跑] 將還原：tests/test_chat_http.py
-[回復空跑] 將還原：tests/test_conversation_first_http.py
-[回復空跑] 將還原：tests/test_confirmation_http.py
-[回復空跑] 將還原：frontend/dist/assets/ibm-plex-mono-latin-400-normal-DMJ8VG8y.woff2
-[回復空跑] 將還原：docs/Issue19-元件移植與驗收.md
-[回復空跑] 將還原：docs/IIS部署.md
-[回復空跑] 將還原：docs/Issue19-前端依賴與授權.md
-[回復空跑] 將還原：docs/Issue23-側欄彈窗與容器排版驗收.md
-[回復空跑] 將還原：docs/Issue21-轉場與回饋實作驗收.md
-[回復空跑] 將還原：app/streaming.py
-[回復空跑] 將還原：app/store.py
-[回復空跑] 將還原：docs/20261031正式部署紀錄.md
-[回復空跑] 將還原：docs/4173瀏覽器驗收補充-20261101.md
-[回復空跑] 將還原：docs/4173介面對齊與驗收-20261101.md
-[回復空跑] 將還原：docs/Issue25-平面聊天清單實作與驗收.md
-[回復空跑] 將還原：docs/adr/004_管理設定與定時唯讀報告.md
-[回復空跑] 將還原：docs/adr/003_可信MES工作階段橋接.md
-[回復空跑] 將還原：docs/adr/005_雙流程與唯讀意圖版本.md
-[回復空跑] 將還原：docs/adr/007_分段輪詢傳輸.md
-[回復空跑] 將還原：docs/adr/006_真實步驟串流與停止.md
-[回復空跑] 將還原：docs/MES藍色主題.md
-[回復空跑] 將還原：docs/MES整合.md
-[回復空跑] 將還原：docs/SQL驗收.md
-[回復空跑] 將還原：docs/adr/0001-沿用業務來源並補交易閘道.md
-[回復空跑] 將還原：docs/WeYu介面實作與驗收-20261031.md
-[回復空跑] 將還原：app/domain.py
-[回復空跑] 將還原：app/conversations.py
-[回復空跑] 將還原：app/entry.py
-[回復空跑] 將還原：app/intents.py
-[回復空跑] 將還原：app/guide.py
-[回復空跑] 將還原：CONTEXT.md
-[回復空跑] 將還原：AGENTS.md
-[回復空跑] 將還原：README.md
-[回復空跑] 將還原：app/candidates.py
-[回復空跑] 將還原：app/__init__.py
-[回復空跑] 將還原：app/knowledge.py
-[回復空跑] 將還原：app/presentation.py
-[回復空跑] 將還原：app/model.py
-[回復空跑] 將還原：app/query_context.py
-[回復空跑] 將還原：app/step_labels.py
-[回復空跑] 將還原：app/reports.py
-[回復空跑] 將還原：app/main.py
-[回復空跑] 將還原：app/knowledge_release.py
-[回復空跑] 將還原：app/management.py
-[回復空跑] 將還原：app/mes_schedule.py
-[回復空跑] 將還原：app/mes.py
-[回復空跑] 將還原：docs/agents/domain.md
-[回復空跑] 將還原：docs/完成核對.md
-[回復空跑] 將還原：docs/前端操作.md
-[回復空跑] 將還原：docs/實作規格.md
-[回復空跑] 將還原：docs/對話優先產品實作紀錄.md
-[回復空跑] 將還原：docs/對話優先本輪驗收矩陣.md
-[回復空跑] 將還原：docs/inventory/report.md
-[回復空跑] 將還原：docs/inventory/mold.md
-[回復空跑] 將還原：docs/inventory/schedule.md
-[回復空跑] 將還原：docs/三語步驟引導規格.md
-[回復空跑] 將還原：docs/三語改版驗收.md
-[回復空跑] 將還原：docs/管理設定定時報告與版權驗收-20261101.md
-[回復空跑] 將還原：docs/程式審查.md
-[回復空跑] 將還原：docs/聊天功能還原與驗收-20261101.md
-[回復空跑] 將還原：docs/驗收報告.md
-[回復空跑] 將還原：docs/桌面作業單驗收.md
-[回復空跑] 將還原：docs/截圖原版逐項對齊與驗收-20261101.md
-[回復空跑] 將還原：docs/桌面對話作業單規格.md
-[回復空跑] 將還原：docs/模擬情境.md
-[回復空跑] 將還原：docs/模型選型與知識修正.md
-[回復空跑] 將還原：docs/evidence/issue44-deploy/README.md
-[回復空跑] 將還原：docs/agents/issue-tracker.md
-[回復空跑] 將還原：docs/design/issue40/驗收紀錄.md
-[回復空跑] 將還原：docs/design/issue34/驗收紀錄.md
-[回復空跑] 將還原：docs/design/issue44/真實模型煙霧驗收.md
-[回復空跑] 將還原：docs/design/issue47/README.md
-[回復空跑] 將還原：docs/design/issue44/驗收說明.md
-[回復空跑] 將還原：docs/evidence/issue29-deploy/README.md
-[回復空跑] 將還原：docs/evidence/issue27/README.md
-[回復空跑] 將還原：docs/evidence/issue29/G2-驗收.md
-[回復空跑] 將還原：docs/evidence/issue29/README.md
-[回復空跑] 將還原：docs/evidence/issue29/G3-部分驗收.md
-[回復空跑] 將還原：docs/evidence/issue27-deploy/README.md
-[回復空跑] 將還原：frontend/dist/index.html
-[回復空跑] 05 將移除新增非雜湊資產檔；保留舊／新雜湊資產
-[回復空跑] 將清理新增檔：docs/design/issue55/README.md
-[回復空跑] 將清理新增檔：docs/design/issue55/計算樣式比對.md
-[回復空跑] 將清理新增檔：docs/design/issue56/README.md
-[回復空跑] 將清理新增檔：docs/design/issue56/外框底邊.md
-[回復空跑] 將清理新增檔：docs/design/issue56/比對總覽.md
-[回復空跑] 將清理新增檔：docs/design/issue56/盤點.md
-[回復空跑] 將清理新增檔：docs/design/issue56/計算樣式比對.md
-[回復空跑] 將清理新增檔：docs/design/uiux-reference-v2/README.md
-[回復空跑] 06 將回復原清單及代理檔；全域 proxy 完全不動
-[回復空跑] 07 核對原檔、清單、代理、私密資料未遭回復覆蓋
-[回復空跑] 08 將啟動助理並核對健康
-{
-    "global_proxy_unchanged":  true,
-    "verified_original_files":  159,
-    "private_preserved":  true,
-    "health":  {
-                   "status":  "ok",
-                   "mode":  "live",
-                   "model_configured":  true,
-                   "model":  "gpt-6.1-sol",
-                   "business_timezone":  "UTC+07:00",
-                   "business_date":  "2026-11-03",
-                   "server_time":  "2026-11-03T13:38:33.046050+07:00"
-               },
-    "dry_run":  true
-}
-[回復空跑] 09 全部回復階段完成
+[空跑] 01 核對 ZIP；將解壓至新的 staging 目錄
+[空跑] 02 來源逐檔與依賴核對通過：170 檔
+[空跑] 03 核對工作身分及 loopback；將建立唯一備份並限制 ACL
+{"conversations": 24, "active_messages": 0, "proposals": {"cancelled": 7}, "audit": 7, "budget": {"calls": 261, "spent_usd": 2.226394, "unsettled": 0}}
+[空跑] 04 全域 proxy 逐項唯讀核對：{"enabled":"True","responseBufferLimit":"4096","minResponseBuffer":"256","bufferChunkedResponses":"True","preserveHostHeader":"True","timeout":"00:05:00"}
+[空跑] 05 將建立新的 IIS 備份及代理 web.config 備份
+[空跑] 06 將只停止助理工作並等待 loopback 監聽釋放
+[空跑] 07 完整備份非日誌檔；日誌另存快照且回復時不覆蓋
+[空跑] 非日誌完整備份來源：237 檔；日誌快照：1 檔
+[空跑] 08 將備份私密設定、資料庫、sidecar、舊檔與清單；不還原或重設資料
+[空跑] 09 將寫入 deployment.json 與部署／回復腳本
+[空跑] 10 將逐檔部署，保留舊雜湊資產，最後原子替換 HTML
+[空跑] 將複製：scripts/run_service.py
+[空跑] 將複製：scripts/publish_knowledge.py
+[空跑] 將複製：scripts/sql_acceptance.py
+[空跑] 將複製：tests/manual/issue19_ui_server.py
+[空跑] 將複製：tests/manual/conversation_fault_server.py
+[空跑] 將複製：scripts/evaluate_trilingual.py
+[空跑] 將複製：scripts/evaluate_multiturn.py
+[空跑] 將複製：scripts/install_widget.py
+[空跑] 將複製：scripts/package_release.py
+[空跑] 將複製：scripts/mes_session_bridge.ashx
+[空跑] 將複製：tests/manual/issue29_case.py
+[空跑] 將複製：tests/manual/issue33_ui_server.py
+[空跑] 將複製：tests/manual/issue33_review_encode.py
+[空跑] 將複製：tests/manual/issue34_encode.py
+[空跑] 將複製：tests/manual/issue35_encode.py
+[空跑] 將複製：tests/manual/issue34_ui_server.py
+[空跑] 將複製：tests/manual/issue29_r01.py
+[空跑] 將複製：tests/manual/issue29_export.py
+[空跑] 將複製：tests/manual/issue29_seed.py
+[空跑] 將複製：tests/manual/issue32_ui_server.py
+[空跑] 將複製：tests/manual/issue29_ui_server.py
+[空跑] 將複製：frontend/dist/fonts/IBM-Plex-Mono-OFL.txt
+[空跑] 將複製：frontend/dist/assets/inter-latin-wght-normal-Dx4kXJAl.woff2
+[空跑] 將複製：frontend/dist/fonts/Inter-OFL.txt
+[空跑] 將複製：frontend/dist/fonts/noto-sans-thai-thai-400-normal.woff2
+[空跑] 將複製：frontend/dist/fonts/Noto-Sans-Thai-OFL.txt
+[空跑] 將複製：frontend/dist/assets/ibm-plex-mono-latin-500-normal-DSY6xOcd.woff2
+[空跑] 將複製：frontend/dist/assets/ibm-plex-mono-latin-400-normal-DMJ8VG8y.woff2
+[空跑] 將複製：frontend/dist/assets/ibm-plex-mono-latin-600-normal-BgSNZQsw.woff2
+[空跑] 將複製：frontend/dist/assets/index-CkZ0HfWO.js
+[空跑] 將複製：frontend/dist/assets/index-BZst5zpd.css
+[空跑] 將複製：frontend/dist/fonts/noto-sans-thai-thai-600-normal.woff2
+[空跑] 將複製：scripts/configure_iis.ps1
+[空跑] 將複製：requirements.lock.txt
+[空跑] 將複製：scripts/evaluate_dialogue.py
+[空跑] 將複製：scripts/evaluate_lifecycle.py
+[空跑] 將複製：scripts/evaluate_dual_flow.py
+[空跑] 將複製：frontend/dist/weyu-brand.svg
+[空跑] 將複製：frontend/dist/motion-tokens.css
+[空跑] 將複製：frontend/dist/weyu-logo.png
+[空跑] 將複製：pyproject.toml
+[空跑] 將複製：migrations/001_AI操作紀錄.sql
+[空跑] 將複製：tests/test_issue39_mes_reads.py
+[空跑] 將複製：tests/test_issue37_http.py
+[空跑] 將複製：tests/test_knowledge_release.py
+[空跑] 將複製：tests/test_management_reports_http.py
+[空跑] 將複製：tests/test_live_dialogue_validation.py
+[空跑] 將複製：tests/test_execution_context_http.py
+[空跑] 將複製：tests/test_entry_candidates_http.py
+[空跑] 將複製：tests/test_feedback_http.py
+[空跑] 將複製：tests/test_install_widget.py
+[空跑] 將複製：tests/test_guide_http.py
+[空跑] 將複製：tests/test_mes_http.py
+[空跑] 將複製：tests/test_review_identity_http.py
+[空跑] 將複製：tests/test_query_context.py
+[空跑] 將複製：tests/test_session.py
+[空跑] 將複製：tests/test_streaming.py
+[空跑] 將複製：tests/test_session_registry_http.py
+[空跑] 將複製：tests/test_operation_reconciliation.py
+[空跑] 將複製：tests/test_mes_schedule_http.py
+[空跑] 將複製：tests/test_package_release.py
+[空跑] 將複製：tests/test_proposal_lifecycle.py
+[空跑] 將複製：tests/test_polling_proxy.py
+[空跑] 將複製：tests/manual/issue44_real_encode.py
+[空跑] 將複製：tests/manual/issue44_encode.py
+[空跑] 將複製：tests/manual/issue44_real_server.py
+[空跑] 將複製：tests/manual/issue44_ui_server.py
+[空跑] 將複製：tests/manual/issue44_stop_server.py
+[空跑] 將複製：tests/manual/issue37_encode.py
+[空跑] 將複製：tests/manual/issue35_ui_server.py
+[空跑] 將複製：tests/manual/issue37_ui_server.py
+[空跑] 將複製：tests/manual/issue40_ui_server.py
+[空跑] 將複製：tests/manual/issue40_encode.py
+[空跑] 將複製：tests/manual/issue47_buffer_proxy.py
+[空跑] 將複製：tests/test_deployment_http.py
+[空跑] 將複製：tests/test_conversation_history_http.py
+[空跑] 將複製：tests/test_domain_http.py
+[空跑] 將複製：tests/test_empty_order_lifecycle.py
+[空跑] 將複製：tests/test_dual_flow_http.py
+[空跑] 將複製：tests/manual/issue47_server.py
+[空跑] 將複製：tests/manual/issue47_encode.py
+[空跑] 將複製：tests/test_chat_http.py
+[空跑] 將複製：tests/test_conversation_first_http.py
+[空跑] 將複製：tests/test_confirmation_http.py
+[空跑] 將複製：docs/Issue19-前端依賴與授權.md
+[空跑] 將複製：docs/Issue19-元件移植與驗收.md
+[空跑] 將複製：docs/Issue21-轉場與回饋實作驗收.md
+[空跑] 將複製：docs/Issue25-平面聊天清單實作與驗收.md
+[空跑] 將複製：docs/Issue23-側欄彈窗與容器排版驗收.md
+[空跑] 將複製：docs/20261031正式部署紀錄.md
+[空跑] 將複製：app/streaming.py
+[空跑] 將複製：docs/4173介面對齊與驗收-20261101.md
+[空跑] 將複製：docs/IIS部署.md
+[空跑] 將複製：docs/4173瀏覽器驗收補充-20261101.md
+[空跑] 將複製：docs/MES整合.md
+[空跑] 將複製：docs/adr/005_雙流程與唯讀意圖版本.md
+[空跑] 將複製：docs/adr/004_管理設定與定時唯讀報告.md
+[空跑] 將複製：docs/adr/006_真實步驟串流與停止.md
+[空跑] 將複製：docs/agents/domain.md
+[空跑] 將複製：docs/adr/007_分段輪詢傳輸.md
+[空跑] 將複製：docs/SQL驗收.md
+[空跑] 將複製：docs/MES藍色主題.md
+[空跑] 將複製：docs/WeYu介面實作與驗收-20261031.md
+[空跑] 將複製：docs/adr/003_可信MES工作階段橋接.md
+[空跑] 將複製：docs/adr/0001-沿用業務來源並補交易閘道.md
+[空跑] 將複製：app/store.py
+[空跑] 將複製：app/domain.py
+[空跑] 將複製：app/conversations.py
+[空跑] 將複製：app/entry.py
+[空跑] 將複製：app/intents.py
+[空跑] 將複製：app/guide.py
+[空跑] 將複製：CONTEXT.md
+[空跑] 將複製：AGENTS.md
+[空跑] 將複製：README.md
+[空跑] 將複製：app/candidates.py
+[空跑] 將複製：app/__init__.py
+[空跑] 將複製：app/knowledge.py
+[空跑] 將複製：app/presentation.py
+[空跑] 將複製：app/model.py
+[空跑] 將複製：app/query_context.py
+[空跑] 將複製：app/step_labels.py
+[空跑] 將複製：app/reports.py
+[空跑] 將複製：app/main.py
+[空跑] 將複製：app/knowledge_release.py
+[空跑] 將複製：app/management.py
+[空跑] 將複製：app/mes_schedule.py
+[空跑] 將複製：app/mes.py
+[空跑] 將複製：docs/完成核對.md
+[空跑] 將複製：docs/前端操作.md
+[空跑] 將複製：docs/實作規格.md
+[空跑] 將複製：docs/對話優先產品實作紀錄.md
+[空跑] 將複製：docs/對話優先本輪驗收矩陣.md
+[空跑] 將複製：docs/inventory/report.md
+[空跑] 將複製：docs/inventory/mold.md
+[空跑] 將複製：docs/inventory/schedule.md
+[空跑] 將複製：docs/三語步驟引導規格.md
+[空跑] 將複製：docs/三語改版驗收.md
+[空跑] 將複製：docs/管理設定定時報告與版權驗收-20261101.md
+[空跑] 將複製：docs/程式審查.md
+[空跑] 將複製：docs/聊天功能還原與驗收-20261101.md
+[空跑] 將複製：frontend/dist/assets/ManagementPanel-C0bKN3MW.js
+[空跑] 將複製：docs/驗收報告.md
+[空跑] 將複製：docs/桌面作業單驗收.md
+[空跑] 將複製：docs/截圖原版逐項對齊與驗收-20261101.md
+[空跑] 將複製：docs/桌面對話作業單規格.md
+[空跑] 將複製：docs/模擬情境.md
+[空跑] 將複製：docs/模型選型與知識修正.md
+[空跑] 將複製：docs/evidence/issue44-deploy/README.md
+[空跑] 將複製：docs/design/issue55/計算樣式比對.md
+[空跑] 將複製：docs/design/issue55/README.md
+[空跑] 將複製：docs/design/issue56/README.md
+[空跑] 將複製：docs/design/issue56/比對總覽.md
+[空跑] 將複製：docs/design/issue56/外框底邊.md
+[空跑] 將複製：docs/design/issue40/驗收紀錄.md
+[空跑] 將複製：docs/design/issue34/驗收紀錄.md
+[空跑] 將複製：docs/design/issue44/真實模型煙霧驗收.md
+[空跑] 將複製：docs/design/issue47/README.md
+[空跑] 將複製：docs/design/issue44/驗收說明.md
+[空跑] 將複製：docs/agents/issue-tracker.md
+[空跑] 將複製：docs/evidence/issue29-deploy/README.md
+[空跑] 將複製：docs/evidence/issue27/README.md
+[空跑] 將複製：docs/evidence/issue29/G2-驗收.md
+[空跑] 將複製：docs/evidence/issue29/README.md
+[空跑] 將複製：docs/evidence/issue29/G3-部分驗收.md
+[空跑] 將複製：docs/design/issue56/計算樣式比對.md
+[空跑] 將複製：docs/design/issue56/盤點.md
+[空跑] 將複製：docs/design/uiux-reference-v2/README.md
+[空跑] 將複製：docs/evidence/issue27-deploy/README.md
+[空跑] 將複製：frontend/dist/widget-loader.js
+[空跑] 將複製：frontend/dist/index.html
+[空跑] 11 將更新清單並校驗部署檔；空跑校驗發行來源
+[空跑] 12 代理 XML 於記憶體設定動態壓縮 false；將原子替換專用 web.config
+[空跑] 13 將啟動助理；核對健康與全域 proxy 未變更
+{
+    "release":  "kaosu-uiux-v2-2dafe9e-20261103-tenth",
+    "old_responseBufferLimit":  4096,
+    "private_settings_and_databases_preserved":  true,
+    "service_restarted":  false,
+    "verified":  170,
+    "backup":  "C:\\Services\\KaosuAiAgent\\backups\\code-before-kaosu-uiux-v2-2dafe9e-20261103-tenth",
+    "health":  {
+                   "status":  "ok",
+                   "mode":  "live",
+                   "model_configured":  true,
+                   "model":  "gpt-6.1-sol",
+                   "business_timezone":  "UTC+07:00",
+                   "business_date":  "2026-11-03",
+                   "server_time":  "2026-11-03T13:38:31.961701+07:00"
+               },
+    "new_responseBufferLimit":  4096,
+    "dry_run":  true,
+    "listen":  "127.0.0.1",
+    "commit":  "2dafe9e3caf92e105c0806adf8dc3922f07c03f7",
+    "dynamic_compression":  false,
+    "global_proxy_unchanged":  true
+}
+[空跑] 14 全部階段完成
+[回復空跑] 01 逐項讀取全域 proxy，不寫入：{"enabled":"True","responseBufferLimit":"4096","minResponseBuffer":"256","bufferChunkedResponses":"True","preserveHostHeader":"True","timeout":"00:05:00"}
+[回復空跑] 02 空跑以目前原版本作為將備份來源；完整讀取待還原檔案
+[回復空跑] 03 將只停止助理，等待監聽釋放；不停止 MES 或 IIS
+[回復空跑] 04 將回復舊程式；HTML 最後原子替換，備份路徑使用 GUID
+[回復空跑] 將還原：scripts/run_service.py
+[回復空跑] 將還原：scripts/publish_knowledge.py
+[回復空跑] 將還原：scripts/sql_acceptance.py
+[回復空跑] 將還原：tests/manual/issue19_ui_server.py
+[回復空跑] 將還原：tests/manual/conversation_fault_server.py
+[回復空跑] 將還原：scripts/evaluate_trilingual.py
+[回復空跑] 將還原：scripts/evaluate_multiturn.py
+[回復空跑] 將還原：scripts/install_widget.py
+[回復空跑] 將還原：scripts/package_release.py
+[回復空跑] 將還原：scripts/mes_session_bridge.ashx
+[回復空跑] 將還原：tests/manual/issue29_case.py
+[回復空跑] 將還原：tests/manual/issue33_ui_server.py
+[回復空跑] 將還原：tests/manual/issue33_review_encode.py
+[回復空跑] 將還原：tests/manual/issue34_encode.py
+[回復空跑] 將還原：tests/manual/issue35_encode.py
+[回復空跑] 將還原：tests/manual/issue34_ui_server.py
+[回復空跑] 將還原：tests/manual/issue29_r01.py
+[回復空跑] 將還原：tests/manual/issue29_export.py
+[回復空跑] 將還原：tests/manual/issue29_seed.py
+[回復空跑] 將還原：tests/manual/issue32_ui_server.py
+[回復空跑] 將還原：tests/manual/issue29_ui_server.py
+[回復空跑] 將還原：frontend/dist/fonts/Inter-OFL.txt
+[回復空跑] 將還原：frontend/dist/fonts/IBM-Plex-Mono-OFL.txt
+[回復空跑] 將還原：frontend/dist/fonts/Noto-Sans-Thai-OFL.txt
+[回復空跑] 將還原：frontend/dist/fonts/noto-sans-thai-thai-600-normal.woff2
+[回復空跑] 將還原：frontend/dist/fonts/noto-sans-thai-thai-400-normal.woff2
+[回復空跑] 將還原：frontend/dist/assets/ibm-plex-mono-latin-600-normal-BgSNZQsw.woff2
+[回復空跑] 將還原：frontend/dist/assets/ibm-plex-mono-latin-500-normal-DSY6xOcd.woff2
+[回復空跑] 將還原：frontend/dist/assets/inter-latin-wght-normal-Dx4kXJAl.woff2
+[回復空跑] 將還原：frontend/dist/motion-tokens.css
+[回復空跑] 將還原：scripts/configure_iis.ps1
+[回復空跑] 將還原：requirements.lock.txt
+[回復空跑] 將還原：scripts/evaluate_dialogue.py
+[回復空跑] 將還原：scripts/evaluate_lifecycle.py
+[回復空跑] 將還原：scripts/evaluate_dual_flow.py
+[回復空跑] 將還原：frontend/dist/weyu-logo.png
+[回復空跑] 將還原：frontend/dist/weyu-brand.svg
+[回復空跑] 將還原：frontend/dist/widget-loader.js
+[回復空跑] 將還原：pyproject.toml
+[回復空跑] 將還原：migrations/001_AI操作紀錄.sql
+[回復空跑] 將還原：tests/test_issue39_mes_reads.py
+[回復空跑] 將還原：tests/test_issue37_http.py
+[回復空跑] 將還原：tests/test_knowledge_release.py
+[回復空跑] 將還原：tests/test_management_reports_http.py
+[回復空跑] 將還原：tests/test_live_dialogue_validation.py
+[回復空跑] 將還原：tests/test_execution_context_http.py
+[回復空跑] 將還原：tests/test_entry_candidates_http.py
+[回復空跑] 將還原：tests/test_feedback_http.py
+[回復空跑] 將還原：tests/test_install_widget.py
+[回復空跑] 將還原：tests/test_guide_http.py
+[回復空跑] 將還原：tests/test_mes_http.py
+[回復空跑] 將還原：tests/test_review_identity_http.py
+[回復空跑] 將還原：tests/test_query_context.py
+[回復空跑] 將還原：tests/test_session.py
+[回復空跑] 將還原：tests/test_streaming.py
+[回復空跑] 將還原：tests/test_session_registry_http.py
+[回復空跑] 將還原：tests/test_operation_reconciliation.py
+[回復空跑] 將還原：tests/test_mes_schedule_http.py
+[回復空跑] 將還原：tests/test_package_release.py
+[回復空跑] 將還原：tests/test_proposal_lifecycle.py
+[回復空跑] 將還原：tests/test_polling_proxy.py
+[回復空跑] 將還原：tests/manual/issue44_real_encode.py
+[回復空跑] 將還原：tests/manual/issue44_encode.py
+[回復空跑] 將還原：tests/manual/issue44_real_server.py
+[回復空跑] 將還原：tests/manual/issue44_ui_server.py
+[回復空跑] 將還原：tests/manual/issue44_stop_server.py
+[回復空跑] 將還原：tests/manual/issue37_encode.py
+[回復空跑] 將還原：tests/manual/issue35_ui_server.py
+[回復空跑] 將還原：tests/manual/issue37_ui_server.py
+[回復空跑] 將還原：tests/manual/issue40_ui_server.py
+[回復空跑] 將還原：tests/manual/issue40_encode.py
+[回復空跑] 將還原：tests/manual/issue47_buffer_proxy.py
+[回復空跑] 將還原：tests/test_deployment_http.py
+[回復空跑] 將還原：tests/test_conversation_history_http.py
+[回復空跑] 將還原：tests/test_domain_http.py
+[回復空跑] 將還原：tests/test_empty_order_lifecycle.py
+[回復空跑] 將還原：tests/test_dual_flow_http.py
+[回復空跑] 將還原：tests/manual/issue47_server.py
+[回復空跑] 將還原：tests/manual/issue47_encode.py
+[回復空跑] 將還原：tests/test_chat_http.py
+[回復空跑] 將還原：tests/test_conversation_first_http.py
+[回復空跑] 將還原：tests/test_confirmation_http.py
+[回復空跑] 將還原：frontend/dist/assets/ibm-plex-mono-latin-400-normal-DMJ8VG8y.woff2
+[回復空跑] 將還原：docs/Issue19-元件移植與驗收.md
+[回復空跑] 將還原：docs/IIS部署.md
+[回復空跑] 將還原：docs/Issue19-前端依賴與授權.md
+[回復空跑] 將還原：docs/Issue23-側欄彈窗與容器排版驗收.md
+[回復空跑] 將還原：docs/Issue21-轉場與回饋實作驗收.md
+[回復空跑] 將還原：app/streaming.py
+[回復空跑] 將還原：app/store.py
+[回復空跑] 將還原：docs/20261031正式部署紀錄.md
+[回復空跑] 將還原：docs/4173瀏覽器驗收補充-20261101.md
+[回復空跑] 將還原：docs/4173介面對齊與驗收-20261101.md
+[回復空跑] 將還原：docs/Issue25-平面聊天清單實作與驗收.md
+[回復空跑] 將還原：docs/adr/004_管理設定與定時唯讀報告.md
+[回復空跑] 將還原：docs/adr/003_可信MES工作階段橋接.md
+[回復空跑] 將還原：docs/adr/005_雙流程與唯讀意圖版本.md
+[回復空跑] 將還原：docs/adr/007_分段輪詢傳輸.md
+[回復空跑] 將還原：docs/adr/006_真實步驟串流與停止.md
+[回復空跑] 將還原：docs/MES藍色主題.md
+[回復空跑] 將還原：docs/MES整合.md
+[回復空跑] 將還原：docs/SQL驗收.md
+[回復空跑] 將還原：docs/adr/0001-沿用業務來源並補交易閘道.md
+[回復空跑] 將還原：docs/WeYu介面實作與驗收-20261031.md
+[回復空跑] 將還原：app/domain.py
+[回復空跑] 將還原：app/conversations.py
+[回復空跑] 將還原：app/entry.py
+[回復空跑] 將還原：app/intents.py
+[回復空跑] 將還原：app/guide.py
+[回復空跑] 將還原：CONTEXT.md
+[回復空跑] 將還原：AGENTS.md
+[回復空跑] 將還原：README.md
+[回復空跑] 將還原：app/candidates.py
+[回復空跑] 將還原：app/__init__.py
+[回復空跑] 將還原：app/knowledge.py
+[回復空跑] 將還原：app/presentation.py
+[回復空跑] 將還原：app/model.py
+[回復空跑] 將還原：app/query_context.py
+[回復空跑] 將還原：app/step_labels.py
+[回復空跑] 將還原：app/reports.py
+[回復空跑] 將還原：app/main.py
+[回復空跑] 將還原：app/knowledge_release.py
+[回復空跑] 將還原：app/management.py
+[回復空跑] 將還原：app/mes_schedule.py
+[回復空跑] 將還原：app/mes.py
+[回復空跑] 將還原：docs/agents/domain.md
+[回復空跑] 將還原：docs/完成核對.md
+[回復空跑] 將還原：docs/前端操作.md
+[回復空跑] 將還原：docs/實作規格.md
+[回復空跑] 將還原：docs/對話優先產品實作紀錄.md
+[回復空跑] 將還原：docs/對話優先本輪驗收矩陣.md
+[回復空跑] 將還原：docs/inventory/report.md
+[回復空跑] 將還原：docs/inventory/mold.md
+[回復空跑] 將還原：docs/inventory/schedule.md
+[回復空跑] 將還原：docs/三語步驟引導規格.md
+[回復空跑] 將還原：docs/三語改版驗收.md
+[回復空跑] 將還原：docs/管理設定定時報告與版權驗收-20261101.md
+[回復空跑] 將還原：docs/程式審查.md
+[回復空跑] 將還原：docs/聊天功能還原與驗收-20261101.md
+[回復空跑] 將還原：docs/驗收報告.md
+[回復空跑] 將還原：docs/桌面作業單驗收.md
+[回復空跑] 將還原：docs/截圖原版逐項對齊與驗收-20261101.md
+[回復空跑] 將還原：docs/桌面對話作業單規格.md
+[回復空跑] 將還原：docs/模擬情境.md
+[回復空跑] 將還原：docs/模型選型與知識修正.md
+[回復空跑] 將還原：docs/evidence/issue44-deploy/README.md
+[回復空跑] 將還原：docs/agents/issue-tracker.md
+[回復空跑] 將還原：docs/design/issue40/驗收紀錄.md
+[回復空跑] 將還原：docs/design/issue34/驗收紀錄.md
+[回復空跑] 將還原：docs/design/issue44/真實模型煙霧驗收.md
+[回復空跑] 將還原：docs/design/issue47/README.md
+[回復空跑] 將還原：docs/design/issue44/驗收說明.md
+[回復空跑] 將還原：docs/evidence/issue29-deploy/README.md
+[回復空跑] 將還原：docs/evidence/issue27/README.md
+[回復空跑] 將還原：docs/evidence/issue29/G2-驗收.md
+[回復空跑] 將還原：docs/evidence/issue29/README.md
+[回復空跑] 將還原：docs/evidence/issue29/G3-部分驗收.md
+[回復空跑] 將還原：docs/evidence/issue27-deploy/README.md
+[回復空跑] 將還原：frontend/dist/index.html
+[回復空跑] 05 將移除新增非雜湊資產檔；保留舊／新雜湊資產
+[回復空跑] 將清理新增檔：docs/design/issue55/README.md
+[回復空跑] 將清理新增檔：docs/design/issue55/計算樣式比對.md
+[回復空跑] 將清理新增檔：docs/design/issue56/README.md
+[回復空跑] 將清理新增檔：docs/design/issue56/外框底邊.md
+[回復空跑] 將清理新增檔：docs/design/issue56/比對總覽.md
+[回復空跑] 將清理新增檔：docs/design/issue56/盤點.md
+[回復空跑] 將清理新增檔：docs/design/issue56/計算樣式比對.md
+[回復空跑] 將清理新增檔：docs/design/uiux-reference-v2/README.md
+[回復空跑] 06 將回復原清單及代理檔；全域 proxy 完全不動
+[回復空跑] 07 核對原檔、清單、代理、私密資料未遭回復覆蓋
+[回復空跑] 08 將啟動助理並核對健康
+{
+    "global_proxy_unchanged":  true,
+    "verified_original_files":  159,
+    "private_preserved":  true,
+    "health":  {
+                   "status":  "ok",
+                   "mode":  "live",
+                   "model_configured":  true,
+                   "model":  "gpt-6.1-sol",
+                   "business_timezone":  "UTC+07:00",
+                   "business_date":  "2026-11-03",
+                   "server_time":  "2026-11-03T13:38:33.046050+07:00"
+               },
+    "dry_run":  true
+}
+[回復空跑] 09 全部回復階段完成

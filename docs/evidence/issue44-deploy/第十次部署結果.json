@@ -1,23 +1,23 @@
-{
-    "release":  "kaosu-uiux-v2-2dafe9e-20261103-tenth",
-    "old_responseBufferLimit":  4096,
-    "private_settings_and_databases_preserved":  true,
-    "service_restarted":  true,
-    "verified":  170,
-    "backup":  "C:\\Services\\KaosuAiAgent\\backups\\code-before-kaosu-uiux-v2-2dafe9e-20261103-tenth",
-    "health":  {
-                   "status":  "ok",
-                   "mode":  "live",
-                   "model_configured":  true,
-                   "model":  "gpt-6.1-sol",
-                   "business_timezone":  "UTC+07:00",
-                   "business_date":  "2026-11-03",
-                   "server_time":  "2026-11-03T13:39:11.485060+07:00"
-               },
-    "new_responseBufferLimit":  4096,
-    "dry_run":  false,
-    "listen":  "127.0.0.1",
-    "commit":  "2dafe9e3caf92e105c0806adf8dc3922f07c03f7",
-    "dynamic_compression":  false,
-    "global_proxy_unchanged":  true
-}
+{
+    "release":  "kaosu-uiux-v2-2dafe9e-20261103-tenth",
+    "old_responseBufferLimit":  4096,
+    "private_settings_and_databases_preserved":  true,
+    "service_restarted":  true,
+    "verified":  170,
+    "backup":  "C:\\Services\\KaosuAiAgent\\backups\\code-before-kaosu-uiux-v2-2dafe9e-20261103-tenth",
+    "health":  {
+                   "status":  "ok",
+                   "mode":  "live",
+                   "model_configured":  true,
+                   "model":  "gpt-6.1-sol",
+                   "business_timezone":  "UTC+07:00",
+                   "business_date":  "2026-11-03",
+                   "server_time":  "2026-11-03T13:39:11.485060+07:00"
+               },
+    "new_responseBufferLimit":  4096,
+    "dry_run":  false,
+    "listen":  "127.0.0.1",
+    "commit":  "2dafe9e3caf92e105c0806adf8dc3922f07c03f7",
+    "dynamic_compression":  false,
+    "global_proxy_unchanged":  true
+}

@@ -1,39 +1,39 @@
-[執行] 01 核對 ZIP；將解壓至新的 staging 目錄
-[執行] 02 來源逐檔與依賴核對通過：170 檔
-[執行] 03 核對工作身分及 loopback；將建立唯一備份並限制 ACL
-{"conversations": 24, "active_messages": 0, "proposals": {"cancelled": 7}, "audit": 7, "budget": {"calls": 261, "spent_usd": 2.226394, "unsettled": 0}}
-[執行] 04 全域 proxy 逐項唯讀核對：{"enabled":"True","responseBufferLimit":"4096","minResponseBuffer":"256","bufferChunkedResponses":"True","preserveHostHeader":"True","timeout":"00:05:00"}
-[執行] 05 將建立新的 IIS 備份及代理 web.config 備份
-[執行] 06 將只停止助理工作並等待 loopback 監聽釋放
-[執行] 07 完整備份非日誌檔；日誌另存快照且回復時不覆蓋
-[執行] 非日誌完整備份來源：237 檔；日誌快照：1 檔
-[執行] 08 將備份私密設定、資料庫、sidecar、舊檔與清單；不還原或重設資料
-[執行] 09 將寫入 deployment.json 與部署／回復腳本
-[執行] 10 將逐檔部署，保留舊雜湊資產，最後原子替換 HTML
-[執行] 11 將更新清單並校驗部署檔；空跑校驗發行來源
-[執行] 12 代理 XML 於記憶體設定動態壓縮 false；將原子替換專用 web.config
-[執行] 13 將啟動助理；核對健康與全域 proxy 未變更
-{
-    "release":  "kaosu-uiux-v2-2dafe9e-20261103-tenth",
-    "old_responseBufferLimit":  4096,
-    "private_settings_and_databases_preserved":  true,
-    "service_restarted":  true,
-    "verified":  170,
-    "backup":  "C:\\Services\\KaosuAiAgent\\backups\\code-before-kaosu-uiux-v2-2dafe9e-20261103-tenth",
-    "health":  {
-                   "status":  "ok",
-                   "mode":  "live",
-                   "model_configured":  true,
-                   "model":  "gpt-6.1-sol",
-                   "business_timezone":  "UTC+07:00",
-                   "business_date":  "2026-11-03",
-                   "server_time":  "2026-11-03T13:39:11.485060+07:00"
-               },
-    "new_responseBufferLimit":  4096,
-    "dry_run":  false,
-    "listen":  "127.0.0.1",
-    "commit":  "2dafe9e3caf92e105c0806adf8dc3922f07c03f7",
-    "dynamic_compression":  false,
-    "global_proxy_unchanged":  true
-}
-[執行] 14 全部階段完成
+[執行] 01 核對 ZIP；將解壓至新的 staging 目錄
+[執行] 02 來源逐檔與依賴核對通過：170 檔
+[執行] 03 核對工作身分及 loopback；將建立唯一備份並限制 ACL
+{"conversations": 24, "active_messages": 0, "proposals": {"cancelled": 7}, "audit": 7, "budget": {"calls": 261, "spent_usd": 2.226394, "unsettled": 0}}
+[執行] 04 全域 proxy 逐項唯讀核對：{"enabled":"True","responseBufferLimit":"4096","minResponseBuffer":"256","bufferChunkedResponses":"True","preserveHostHeader":"True","timeout":"00:05:00"}
+[執行] 05 將建立新的 IIS 備份及代理 web.config 備份
+[執行] 06 將只停止助理工作並等待 loopback 監聽釋放
+[執行] 07 完整備份非日誌檔；日誌另存快照且回復時不覆蓋
+[執行] 非日誌完整備份來源：237 檔；日誌快照：1 檔
+[執行] 08 將備份私密設定、資料庫、sidecar、舊檔與清單；不還原或重設資料
+[執行] 09 將寫入 deployment.json 與部署／回復腳本
+[執行] 10 將逐檔部署，保留舊雜湊資產，最後原子替換 HTML
+[執行] 11 將更新清單並校驗部署檔；空跑校驗發行來源
+[執行] 12 代理 XML 於記憶體設定動態壓縮 false；將原子替換專用 web.config
+[執行] 13 將啟動助理；核對健康與全域 proxy 未變更
+{
+    "release":  "kaosu-uiux-v2-2dafe9e-20261103-tenth",
+    "old_responseBufferLimit":  4096,
+    "private_settings_and_databases_preserved":  true,
+    "service_restarted":  true,
+    "verified":  170,
+    "backup":  "C:\\Services\\KaosuAiAgent\\backups\\code-before-kaosu-uiux-v2-2dafe9e-20261103-tenth",
+    "health":  {
+                   "status":  "ok",
+                   "mode":  "live",
+                   "model_configured":  true,
+                   "model":  "gpt-6.1-sol",
+                   "business_timezone":  "UTC+07:00",
+                   "business_date":  "2026-11-03",
+                   "server_time":  "2026-11-03T13:39:11.485060+07:00"
+               },
+    "new_responseBufferLimit":  4096,
+    "dry_run":  false,
+    "listen":  "127.0.0.1",
+    "commit":  "2dafe9e3caf92e105c0806adf8dc3922f07c03f7",
+    "dynamic_compression":  false,
+    "global_proxy_unchanged":  true
+}
+[執行] 14 全部階段完成
