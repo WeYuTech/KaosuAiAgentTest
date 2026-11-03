@@ -13,7 +13,7 @@ import type {Workspace} from '@/api';
 /** 294bc02d Thread 的訊息呈現；Guide 與唯一確認卡由外層原位置承載。 */
 export function ThreadMessages({onViewData,latestAssistantOnly=false}:{onViewData?:(workspace:Workspace)=>void;latestAssistantOnly?:boolean}) {
   const latestAssistantId=useAuiState(s=>s.thread.messages.filter(message=>message.role==='assistant').at(-1)?.id);
-  return <div data-slot="aui_message-group" className="flex flex-col gap-y-6 empty:hidden" aria-live="polite" aria-relevant="additions text">
+  return <div data-slot="aui_message-group" className="flex flex-col gap-y-6 empty:hidden">
     <ThreadPrimitive.Messages>{() => <ThreadMessage onViewData={latestAssistantOnly?undefined:onViewData} latestAssistantOnly={latestAssistantOnly} latestAssistantId={latestAssistantId}/>}</ThreadPrimitive.Messages>
   </div>;
 }
