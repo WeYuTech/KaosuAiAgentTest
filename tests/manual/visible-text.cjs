@@ -7,6 +7,9 @@ async function visibleText(page,selector,exclude=''){
    if(node.nodeType!==1)return;
    const style=getComputedStyle(node);
    if(style.display==='none'||style.visibility==='hidden'||style.clipPath==='inset(50%)'||(style.clip!=='auto'&&style.clip!=='')||node.matches('svg,.sr-only,.ux-sr,[hidden]')||(exclude&&node.matches(exclude)))return;
+   // 負座標放在捲動區上方、且無法再向上捲動的內容實際被裁切；下方可捲到的內容仍保留。
+   const rect=node.getBoundingClientRect();
+   if(rect.height)for(let parent=node.parentElement;parent;parent=parent.parentElement){const s=getComputedStyle(parent);if(['auto','scroll','hidden','clip'].includes(s.overflowY)&&parent.scrollTop===0&&rect.bottom<=parent.getBoundingClientRect().top)return;}
    if(node.matches('input,textarea,select')){
     if(node.matches('input[type=checkbox],input[type=radio]'))return;
     const value=node.tagName==='SELECT'?node.selectedOptions[0]?.textContent:node.value||node.getAttribute('placeholder');

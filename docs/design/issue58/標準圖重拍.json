@@ -1,0 +1,17 @@
+{
+  "工具": "capture-reference.cjs",
+  "情境總數": 80,
+  "總截圖數": 160,
+  "結果": [
+    {
+      "width": 1366,
+      "count": 80,
+      "problems": []
+    },
+    {
+      "width": 390,
+      "count": 80,
+      "problems": []
+    }
+  ]
+}

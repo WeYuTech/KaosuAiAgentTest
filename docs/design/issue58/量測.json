@@ -3,7 +3,7 @@
     "id": "W01",
     "width": 1366,
     "height": 768,
-    "ratio": 1.0900896778916545,
+    "ratio": 1.087516013909224,
     "metrics": [
       {
         "name": "作業標題",
@@ -4551,7 +4551,7 @@
             "bottom": 707.40625,
             "left": 682
           },
-          "disabled": false,
+          "disabled": true,
           "style": {
             "font-family": "Inter, \"Noto Sans TC\", system-ui, -apple-system, \"Segoe UI\", sans-serif",
             "font-size": "14px",
@@ -4560,8 +4560,8 @@
             "letter-spacing": "normal",
             "color": "rgb(32, 33, 36)",
             "background-color": "rgb(236, 236, 238)",
-            "opacity": "1",
-            "cursor": "pointer",
+            "opacity": "0.43",
+            "cursor": "not-allowed",
             "border-radius": "50%"
           }
         },
@@ -4585,7 +4585,7 @@
             "letter-spacing": "normal",
             "color": "rgb(32, 33, 36)",
             "background-color": "rgb(236, 236, 238)",
-            "opacity": "1",
+            "opacity": "0.43",
             "cursor": "not-allowed",
             "border-radius": "50%"
           }
@@ -4597,10 +4597,7 @@
           "height": 0,
           "bottom": 2
         },
-        "differences": [
-          "cursor",
-          "disabled"
-        ]
+        "differences": []
       },
       {
         "name": "送出／停止圖示",
@@ -4627,7 +4624,7 @@
             "color": "rgb(32, 33, 36)",
             "background-color": "rgba(0, 0, 0, 0)",
             "opacity": "1",
-            "cursor": "pointer",
+            "cursor": "not-allowed",
             "border-radius": "0px"
           }
         },
@@ -4663,9 +4660,7 @@
           "height": 0,
           "bottom": 2
         },
-        "differences": [
-          "cursor"
-        ]
+        "differences": []
       },
       {
         "name": "聊天輸入框",
@@ -4873,7 +4868,7 @@
             "bottom": 707.40625,
             "left": 682
           },
-          "disabled": false,
+          "disabled": true,
           "style": {
             "font-family": "Inter, \"Noto Sans TC\", system-ui, -apple-system, \"Segoe UI\", sans-serif",
             "font-size": "14px",
@@ -4882,8 +4877,8 @@
             "letter-spacing": "normal",
             "color": "rgb(32, 33, 36)",
             "background-color": "rgb(236, 236, 238)",
-            "opacity": "1",
-            "cursor": "pointer",
+            "opacity": "0.43",
+            "cursor": "not-allowed",
             "border-radius": "50%"
           }
         },
@@ -4907,7 +4902,7 @@
             "letter-spacing": "normal",
             "color": "rgb(32, 33, 36)",
             "background-color": "rgb(236, 236, 238)",
-            "opacity": "1",
+            "opacity": "0.43",
             "cursor": "not-allowed",
             "border-radius": "50%"
           }
@@ -4919,10 +4914,7 @@
           "height": 0,
           "bottom": 2
         },
-        "differences": [
-          "cursor",
-          "disabled"
-        ]
+        "differences": []
       },
       {
         "name": "送出／停止圖示",
@@ -4949,7 +4941,7 @@
             "color": "rgb(32, 33, 36)",
             "background-color": "rgba(0, 0, 0, 0)",
             "opacity": "1",
-            "cursor": "pointer",
+            "cursor": "not-allowed",
             "border-radius": "0px"
           }
         },
@@ -4985,9 +4977,7 @@
           "height": 0,
           "bottom": 2
         },
-        "differences": [
-          "cursor"
-        ]
+        "differences": []
       }
     ],
     "text": {
@@ -5195,7 +5185,7 @@
     "id": "W02",
     "width": 1366,
     "height": 768,
-    "ratio": 1.013070400195217,
+    "ratio": 1.0104967362127868,
     "metrics": [
       {
         "name": "作業標題",
@@ -9629,7 +9619,7 @@
             "bottom": 707.40625,
             "left": 682
           },
-          "disabled": false,
+          "disabled": true,
           "style": {
             "font-family": "Inter, \"Noto Sans TC\", system-ui, -apple-system, \"Segoe UI\", sans-serif",
             "font-size": "14px",
@@ -9638,8 +9628,8 @@
             "letter-spacing": "normal",
             "color": "rgb(32, 33, 36)",
             "background-color": "rgb(236, 236, 238)",
-            "opacity": "1",
-            "cursor": "pointer",
+            "opacity": "0.43",
+            "cursor": "not-allowed",
             "border-radius": "50%"
           }
         },
@@ -9663,7 +9653,7 @@
             "letter-spacing": "normal",
             "color": "rgb(32, 33, 36)",
             "background-color": "rgb(236, 236, 238)",
-            "opacity": "1",
+            "opacity": "0.43",
             "cursor": "not-allowed",
             "border-radius": "50%"
           }
@@ -9675,10 +9665,7 @@
           "height": 0,
           "bottom": 2
         },
-        "differences": [
-          "cursor",
-          "disabled"
-        ]
+        "differences": []
       },
       {
         "name": "送出／停止圖示",
@@ -9705,7 +9692,7 @@
             "color": "rgb(32, 33, 36)",
             "background-color": "rgba(0, 0, 0, 0)",
             "opacity": "1",
-            "cursor": "pointer",
+            "cursor": "not-allowed",
             "border-radius": "0px"
           }
         },
@@ -9741,9 +9728,7 @@
           "height": 0,
           "bottom": 2
         },
-        "differences": [
-          "cursor"
-        ]
+        "differences": []
       },
       {
         "name": "聊天輸入框",
@@ -9951,7 +9936,7 @@
             "bottom": 707.40625,
             "left": 682
           },
-          "disabled": false,
+          "disabled": true,
           "style": {
             "font-family": "Inter, \"Noto Sans TC\", system-ui, -apple-system, \"Segoe UI\", sans-serif",
             "font-size": "14px",
@@ -9960,8 +9945,8 @@
             "letter-spacing": "normal",
             "color": "rgb(32, 33, 36)",
             "background-color": "rgb(236, 236, 238)",
-            "opacity": "1",
-            "cursor": "pointer",
+            "opacity": "0.43",
+            "cursor": "not-allowed",
             "border-radius": "50%"
           }
         },
@@ -9985,7 +9970,7 @@
             "letter-spacing": "normal",
             "color": "rgb(32, 33, 36)",
             "background-color": "rgb(236, 236, 238)",
-            "opacity": "1",
+            "opacity": "0.43",
             "cursor": "not-allowed",
             "border-radius": "50%"
           }
@@ -9997,10 +9982,7 @@
           "height": 0,
           "bottom": 2
         },
-        "differences": [
-          "cursor",
-          "disabled"
-        ]
+        "differences": []
       },
       {
         "name": "送出／停止圖示",
@@ -10027,7 +10009,7 @@
             "color": "rgb(32, 33, 36)",
             "background-color": "rgba(0, 0, 0, 0)",
             "opacity": "1",
-            "cursor": "pointer",
+            "cursor": "not-allowed",
             "border-radius": "0px"
           }
         },
@@ -10063,9 +10045,7 @@
           "height": 0,
           "bottom": 2
         },
-        "differences": [
-          "cursor"
-        ]
+        "differences": []
       }
     ],
     "text": {
@@ -10268,7 +10248,7 @@
     "id": "W03",
     "width": 1366,
     "height": 768,
-    "ratio": 1.0036336322596389,
+    "ratio": 1.0010599682772083,
     "metrics": [
       {
         "name": "作業標題",
@@ -15632,7 +15612,7 @@
             "bottom": 707.40625,
             "left": 682
           },
-          "disabled": false,
+          "disabled": true,
           "style": {
             "font-family": "Inter, \"Noto Sans TC\", system-ui, -apple-system, \"Segoe UI\", sans-serif",
             "font-size": "14px",
@@ -15641,8 +15621,8 @@
             "letter-spacing": "normal",
             "color": "rgb(32, 33, 36)",
             "background-color": "rgb(236, 236, 238)",
-            "opacity": "1",
-            "cursor": "pointer",
+            "opacity": "0.43",
+            "cursor": "not-allowed",
             "border-radius": "50%"
           }
         },
@@ -15666,7 +15646,7 @@
             "letter-spacing": "normal",
             "color": "rgb(32, 33, 36)",
             "background-color": "rgb(236, 236, 238)",
-            "opacity": "1",
+            "opacity": "0.43",
             "cursor": "not-allowed",
             "border-radius": "50%"
           }
@@ -15678,10 +15658,7 @@
           "height": 0,
           "bottom": 2
         },
-        "differences": [
-          "cursor",
-          "disabled"
-        ]
+        "differences": []
       },
       {
         "name": "送出／停止圖示",
@@ -15708,7 +15685,7 @@
             "color": "rgb(32, 33, 36)",
             "background-color": "rgba(0, 0, 0, 0)",
             "opacity": "1",
-            "cursor": "pointer",
+            "cursor": "not-allowed",
             "border-radius": "0px"
           }
         },
@@ -15744,9 +15721,7 @@
           "height": 0,
           "bottom": 2
         },
-        "differences": [
-          "cursor"
-        ]
+        "differences": []
       },
       {
         "name": "聊天輸入框",
@@ -15954,7 +15929,7 @@
             "bottom": 707.40625,
             "left": 682
           },
-          "disabled": false,
+          "disabled": true,
           "style": {
             "font-family": "Inter, \"Noto Sans TC\", system-ui, -apple-system, \"Segoe UI\", sans-serif",
             "font-size": "14px",
@@ -15963,8 +15938,8 @@
             "letter-spacing": "normal",
             "color": "rgb(32, 33, 36)",
             "background-color": "rgb(236, 236, 238)",
-            "opacity": "1",
-            "cursor": "pointer",
+            "opacity": "0.43",
+            "cursor": "not-allowed",
             "border-radius": "50%"
           }
         },
@@ -15988,7 +15963,7 @@
             "letter-spacing": "normal",
             "color": "rgb(32, 33, 36)",
             "background-color": "rgb(236, 236, 238)",
-            "opacity": "1",
+            "opacity": "0.43",
             "cursor": "not-allowed",
             "border-radius": "50%"
           }
@@ -16000,10 +15975,7 @@
           "height": 0,
           "bottom": 2
         },
-        "differences": [
-          "cursor",
-          "disabled"
-        ]
+        "differences": []
       },
       {
         "name": "送出／停止圖示",
@@ -16030,7 +16002,7 @@
             "color": "rgb(32, 33, 36)",
             "background-color": "rgba(0, 0, 0, 0)",
             "opacity": "1",
-            "cursor": "pointer",
+            "cursor": "not-allowed",
             "border-radius": "0px"
           }
         },
@@ -16066,9 +16038,7 @@
           "height": 0,
           "bottom": 2
         },
-        "differences": [
-          "cursor"
-        ]
+        "differences": []
       }
     ],
     "text": {
@@ -16277,7 +16247,7 @@
     "id": "W04",
     "width": 1366,
     "height": 768,
-    "ratio": 0.9961032820888237,
+    "ratio": 0.9935296181063934,
     "metrics": [
       {
         "name": "作業標題",
@@ -21641,7 +21611,7 @@
             "bottom": 707.40625,
             "left": 682
           },
-          "disabled": false,
+          "disabled": true,
           "style": {
             "font-family": "Inter, \"Noto Sans TC\", system-ui, -apple-system, \"Segoe UI\", sans-serif",
             "font-size": "14px",
@@ -21650,8 +21620,8 @@
             "letter-spacing": "normal",
             "color": "rgb(32, 33, 36)",
             "background-color": "rgb(236, 236, 238)",
-            "opacity": "1",
-            "cursor": "pointer",
+            "opacity": "0.43",
+            "cursor": "not-allowed",
             "border-radius": "50%"
           }
         },
@@ -21675,7 +21645,7 @@
             "letter-spacing": "normal",
             "color": "rgb(32, 33, 36)",
             "background-color": "rgb(236, 236, 238)",
-            "opacity": "1",
+            "opacity": "0.43",
             "cursor": "not-allowed",
             "border-radius": "50%"
           }
@@ -21687,10 +21657,7 @@
           "height": 0,
           "bottom": 2
         },
-        "differences": [
-          "cursor",
-          "disabled"
-        ]
+        "differences": []
       },
       {
         "name": "送出／停止圖示",
@@ -21717,7 +21684,7 @@
             "color": "rgb(32, 33, 36)",
             "background-color": "rgba(0, 0, 0, 0)",
             "opacity": "1",
-            "cursor": "pointer",
+            "cursor": "not-allowed",
             "border-radius": "0px"
           }
         },
@@ -21753,9 +21720,7 @@
           "height": 0,
           "bottom": 2
         },
-        "differences": [
-          "cursor"
-        ]
+        "differences": []
       },
       {
         "name": "聊天輸入框",
@@ -21963,7 +21928,7 @@
             "bottom": 707.40625,
             "left": 682
           },
-          "disabled": false,
+          "disabled": true,
           "style": {
             "font-family": "Inter, \"Noto Sans TC\", system-ui, -apple-system, \"Segoe UI\", sans-serif",
             "font-size": "14px",
@@ -21972,8 +21937,8 @@
             "letter-spacing": "normal",
             "color": "rgb(32, 33, 36)",
             "background-color": "rgb(236, 236, 238)",
-            "opacity": "1",
-            "cursor": "pointer",
+            "opacity": "0.43",
+            "cursor": "not-allowed",
             "border-radius": "50%"
           }
         },
@@ -21997,7 +21962,7 @@
             "letter-spacing": "normal",
             "color": "rgb(32, 33, 36)",
             "background-color": "rgb(236, 236, 238)",
-            "opacity": "1",
+            "opacity": "0.43",
             "cursor": "not-allowed",
             "border-radius": "50%"
           }
@@ -22009,10 +21974,7 @@
           "height": 0,
           "bottom": 2
         },
-        "differences": [
-          "cursor",
-          "disabled"
-        ]
+        "differences": []
       },
       {
         "name": "送出／停止圖示",
@@ -22039,7 +22001,7 @@
             "color": "rgb(32, 33, 36)",
             "background-color": "rgba(0, 0, 0, 0)",
             "opacity": "1",
-            "cursor": "pointer",
+            "cursor": "not-allowed",
             "border-radius": "0px"
           }
         },
@@ -22075,9 +22037,7 @@
           "height": 0,
           "bottom": 2
         },
-        "differences": [
-          "cursor"
-        ]
+        "differences": []
       }
     ],
     "text": {
@@ -22286,7 +22246,7 @@
     "id": "W05",
     "width": 1366,
     "height": 768,
-    "ratio": 0.7977405136652025,
+    "ratio": 0.7951668496827722,
     "metrics": [
       {
         "name": "作業標題",
@@ -27534,7 +27494,7 @@
             "bottom": 707.40625,
             "left": 682
           },
-          "disabled": false,
+          "disabled": true,
           "style": {
             "font-family": "Inter, \"Noto Sans TC\", system-ui, -apple-system, \"Segoe UI\", sans-serif",
             "font-size": "14px",
@@ -27543,8 +27503,8 @@
             "letter-spacing": "normal",
             "color": "rgb(32, 33, 36)",
             "background-color": "rgb(236, 236, 238)",
-            "opacity": "1",
-            "cursor": "pointer",
+            "opacity": "0.43",
+            "cursor": "not-allowed",
             "border-radius": "50%"
           }
         },
@@ -27568,7 +27528,7 @@
             "letter-spacing": "normal",
             "color": "rgb(32, 33, 36)",
             "background-color": "rgb(236, 236, 238)",
-            "opacity": "1",
+            "opacity": "0.43",
             "cursor": "not-allowed",
             "border-radius": "50%"
           }
@@ -27580,10 +27540,7 @@
           "height": 0,
           "bottom": 2
         },
-        "differences": [
-          "cursor",
-          "disabled"
-        ]
+        "differences": []
       },
       {
         "name": "送出／停止圖示",
@@ -27610,7 +27567,7 @@
             "color": "rgb(32, 33, 36)",
             "background-color": "rgba(0, 0, 0, 0)",
             "opacity": "1",
-            "cursor": "pointer",
+            "cursor": "not-allowed",
             "border-radius": "0px"
           }
         },
@@ -27646,9 +27603,7 @@
           "height": 0,
           "bottom": 2
         },
-        "differences": [
-          "cursor"
-        ]
+        "differences": []
       },
       {
         "name": "聊天輸入框",
@@ -27856,7 +27811,7 @@
             "bottom": 707.40625,
             "left": 682
           },
-          "disabled": false,
+          "disabled": true,
           "style": {
             "font-family": "Inter, \"Noto Sans TC\", system-ui, -apple-system, \"Segoe UI\", sans-serif",
             "font-size": "14px",
@@ -27865,8 +27820,8 @@
             "letter-spacing": "normal",
             "color": "rgb(32, 33, 36)",
             "background-color": "rgb(236, 236, 238)",
-            "opacity": "1",
-            "cursor": "pointer",
+            "opacity": "0.43",
+            "cursor": "not-allowed",
             "border-radius": "50%"
           }
         },
@@ -27890,7 +27845,7 @@
             "letter-spacing": "normal",
             "color": "rgb(32, 33, 36)",
             "background-color": "rgb(236, 236, 238)",
-            "opacity": "1",
+            "opacity": "0.43",
             "cursor": "not-allowed",
             "border-radius": "50%"
           }
@@ -27902,10 +27857,7 @@
           "height": 0,
           "bottom": 2
         },
-        "differences": [
-          "cursor",
-          "disabled"
-        ]
+        "differences": []
       },
       {
         "name": "送出／停止圖示",
@@ -27932,7 +27884,7 @@
             "color": "rgb(32, 33, 36)",
             "background-color": "rgba(0, 0, 0, 0)",
             "opacity": "1",
-            "cursor": "pointer",
+            "cursor": "not-allowed",
             "border-radius": "0px"
           }
         },
@@ -27968,9 +27920,7 @@
           "height": 0,
           "bottom": 2
         },
-        "differences": [
-          "cursor"
-        ]
+        "differences": []
       }
     ],
     "text": {
@@ -33788,7 +33738,7 @@
     "id": "W07",
     "width": 1366,
     "height": 768,
-    "ratio": 0.7482689726695949,
+    "ratio": 0.7456953086871645,
     "metrics": [
       {
         "name": "作業標題",
@@ -37774,7 +37724,7 @@
             "bottom": 707.40625,
             "left": 682
           },
-          "disabled": false,
+          "disabled": true,
           "style": {
             "font-family": "Inter, \"Noto Sans TC\", system-ui, -apple-system, \"Segoe UI\", sans-serif",
             "font-size": "14px",
@@ -37783,8 +37733,8 @@
             "letter-spacing": "normal",
             "color": "rgb(32, 33, 36)",
             "background-color": "rgb(236, 236, 238)",
-            "opacity": "1",
-            "cursor": "pointer",
+            "opacity": "0.43",
+            "cursor": "not-allowed",
             "border-radius": "50%"
           }
         },
@@ -37808,7 +37758,7 @@
             "letter-spacing": "normal",
             "color": "rgb(32, 33, 36)",
             "background-color": "rgb(236, 236, 238)",
-            "opacity": "1",
+            "opacity": "0.43",
             "cursor": "not-allowed",
             "border-radius": "50%"
           }
@@ -37820,10 +37770,7 @@
           "height": 0,
           "bottom": 2
         },
-        "differences": [
-          "cursor",
-          "disabled"
-        ]
+        "differences": []
       },
       {
         "name": "送出／停止圖示",
@@ -37850,7 +37797,7 @@
             "color": "rgb(32, 33, 36)",
             "background-color": "rgba(0, 0, 0, 0)",
             "opacity": "1",
-            "cursor": "pointer",
+            "cursor": "not-allowed",
             "border-radius": "0px"
           }
         },
@@ -37886,9 +37833,7 @@
           "height": 0,
           "bottom": 2
         },
-        "differences": [
-          "cursor"
-        ]
+        "differences": []
       },
       {
         "name": "聊天輸入框",
@@ -38096,7 +38041,7 @@
             "bottom": 707.40625,
             "left": 682
           },
-          "disabled": false,
+          "disabled": true,
           "style": {
             "font-family": "Inter, \"Noto Sans TC\", system-ui, -apple-system, \"Segoe UI\", sans-serif",
             "font-size": "14px",
@@ -38105,8 +38050,8 @@
             "letter-spacing": "normal",
             "color": "rgb(32, 33, 36)",
             "background-color": "rgb(236, 236, 238)",
-            "opacity": "1",
-            "cursor": "pointer",
+            "opacity": "0.43",
+            "cursor": "not-allowed",
             "border-radius": "50%"
           }
         },
@@ -38130,7 +38075,7 @@
             "letter-spacing": "normal",
             "color": "rgb(32, 33, 36)",
             "background-color": "rgb(236, 236, 238)",
-            "opacity": "1",
+            "opacity": "0.43",
             "cursor": "not-allowed",
             "border-radius": "50%"
           }
@@ -38142,10 +38087,7 @@
           "height": 0,
           "bottom": 2
         },
-        "differences": [
-          "cursor",
-          "disabled"
-        ]
+        "differences": []
       },
       {
         "name": "送出／停止圖示",
@@ -38172,7 +38114,7 @@
             "color": "rgb(32, 33, 36)",
             "background-color": "rgba(0, 0, 0, 0)",
             "opacity": "1",
-            "cursor": "pointer",
+            "cursor": "not-allowed",
             "border-radius": "0px"
           }
         },
@@ -38208,9 +38150,7 @@
           "height": 0,
           "bottom": 2
         },
-        "differences": [
-          "cursor"
-        ]
+        "differences": []
       }
     ],
     "text": {
@@ -38390,7 +38330,7 @@
     "id": "W08",
     "width": 1366,
     "height": 768,
-    "ratio": 0.7977405136652025,
+    "ratio": 0.7951668496827722,
     "metrics": [
       {
         "name": "作業標題",
@@ -43638,7 +43578,7 @@
             "bottom": 707.40625,
             "left": 682
           },
-          "disabled": false,
+          "disabled": true,
           "style": {
             "font-family": "Inter, \"Noto Sans TC\", system-ui, -apple-system, \"Segoe UI\", sans-serif",
             "font-size": "14px",
@@ -43647,8 +43587,8 @@
             "letter-spacing": "normal",
             "color": "rgb(32, 33, 36)",
             "background-color": "rgb(236, 236, 238)",
-            "opacity": "1",
-            "cursor": "pointer",
+            "opacity": "0.43",
+            "cursor": "not-allowed",
             "border-radius": "50%"
           }
         },
@@ -43672,7 +43612,7 @@
             "letter-spacing": "normal",
             "color": "rgb(32, 33, 36)",
             "background-color": "rgb(236, 236, 238)",
-            "opacity": "1",
+            "opacity": "0.43",
             "cursor": "not-allowed",
             "border-radius": "50%"
           }
@@ -43684,10 +43624,7 @@
           "height": 0,
           "bottom": 2
         },
-        "differences": [
-          "cursor",
-          "disabled"
-        ]
+        "differences": []
       },
       {
         "name": "送出／停止圖示",
@@ -43714,7 +43651,7 @@
             "color": "rgb(32, 33, 36)",
             "background-color": "rgba(0, 0, 0, 0)",
             "opacity": "1",
-            "cursor": "pointer",
+            "cursor": "not-allowed",
             "border-radius": "0px"
           }
         },
@@ -43750,9 +43687,7 @@
           "height": 0,
           "bottom": 2
         },
-        "differences": [
-          "cursor"
-        ]
+        "differences": []
       },
       {
         "name": "聊天輸入框",
@@ -43960,7 +43895,7 @@
             "bottom": 707.40625,
             "left": 682
           },
-          "disabled": false,
+          "disabled": true,
           "style": {
             "font-family": "Inter, \"Noto Sans TC\", system-ui, -apple-system, \"Segoe UI\", sans-serif",
             "font-size": "14px",
@@ -43969,8 +43904,8 @@
             "letter-spacing": "normal",
             "color": "rgb(32, 33, 36)",
             "background-color": "rgb(236, 236, 238)",
-            "opacity": "1",
-            "cursor": "pointer",
+            "opacity": "0.43",
+            "cursor": "not-allowed",
             "border-radius": "50%"
           }
         },
@@ -43994,7 +43929,7 @@
             "letter-spacing": "normal",
             "color": "rgb(32, 33, 36)",
             "background-color": "rgb(236, 236, 238)",
-            "opacity": "1",
+            "opacity": "0.43",
             "cursor": "not-allowed",
             "border-radius": "50%"
           }
@@ -44006,10 +43941,7 @@
           "height": 0,
           "bottom": 2
         },
-        "differences": [
-          "cursor",
-          "disabled"
-        ]
+        "differences": []
       },
       {
         "name": "送出／停止圖示",
@@ -44036,7 +43968,7 @@
             "color": "rgb(32, 33, 36)",
             "background-color": "rgba(0, 0, 0, 0)",
             "opacity": "1",
-            "cursor": "pointer",
+            "cursor": "not-allowed",
             "border-radius": "0px"
           }
         },
@@ -44072,9 +44004,7 @@
           "height": 0,
           "bottom": 2
         },
-        "differences": [
-          "cursor"
-        ]
+        "differences": []
       }
     ],
     "text": {
@@ -48503,7 +48433,7 @@
     "id": "W10",
     "width": 1366,
     "height": 768,
-    "ratio": 0.7977405136652025,
+    "ratio": 0.7951668496827722,
     "metrics": [
       {
         "name": "作業標題",
@@ -53751,7 +53681,7 @@
             "bottom": 707.40625,
             "left": 682
           },
-          "disabled": false,
+          "disabled": true,
           "style": {
             "font-family": "Inter, \"Noto Sans TC\", system-ui, -apple-system, \"Segoe UI\", sans-serif",
             "font-size": "14px",
@@ -53760,8 +53690,8 @@
             "letter-spacing": "normal",
             "color": "rgb(32, 33, 36)",
             "background-color": "rgb(236, 236, 238)",
-            "opacity": "1",
-            "cursor": "pointer",
+            "opacity": "0.43",
+            "cursor": "not-allowed",
             "border-radius": "50%"
           }
         },
@@ -53785,7 +53715,7 @@
             "letter-spacing": "normal",
             "color": "rgb(32, 33, 36)",
             "background-color": "rgb(236, 236, 238)",
-            "opacity": "1",
+            "opacity": "0.43",
             "cursor": "not-allowed",
             "border-radius": "50%"
           }
@@ -53797,10 +53727,7 @@
           "height": 0,
           "bottom": 2
         },
-        "differences": [
-          "cursor",
-          "disabled"
-        ]
+        "differences": []
       },
       {
         "name": "送出／停止圖示",
@@ -53827,7 +53754,7 @@
             "color": "rgb(32, 33, 36)",
             "background-color": "rgba(0, 0, 0, 0)",
             "opacity": "1",
-            "cursor": "pointer",
+            "cursor": "not-allowed",
             "border-radius": "0px"
           }
         },
@@ -53863,9 +53790,7 @@
           "height": 0,
           "bottom": 2
         },
-        "differences": [
-          "cursor"
-        ]
+        "differences": []
       },
       {
         "name": "聊天輸入框",
@@ -54073,7 +53998,7 @@
             "bottom": 707.40625,
             "left": 682
           },
-          "disabled": false,
+          "disabled": true,
           "style": {
             "font-family": "Inter, \"Noto Sans TC\", system-ui, -apple-system, \"Segoe UI\", sans-serif",
             "font-size": "14px",
@@ -54082,8 +54007,8 @@
             "letter-spacing": "normal",
             "color": "rgb(32, 33, 36)",
             "background-color": "rgb(236, 236, 238)",
-            "opacity": "1",
-            "cursor": "pointer",
+            "opacity": "0.43",
+            "cursor": "not-allowed",
             "border-radius": "50%"
           }
         },
@@ -54107,7 +54032,7 @@
             "letter-spacing": "normal",
             "color": "rgb(32, 33, 36)",
             "background-color": "rgb(236, 236, 238)",
-            "opacity": "1",
+            "opacity": "0.43",
             "cursor": "not-allowed",
             "border-radius": "50%"
           }
@@ -54119,10 +54044,7 @@
           "height": 0,
           "bottom": 2
         },
-        "differences": [
-          "cursor",
-          "disabled"
-        ]
+        "differences": []
       },
       {
         "name": "送出／停止圖示",
@@ -54149,7 +54071,7 @@
             "color": "rgb(32, 33, 36)",
             "background-color": "rgba(0, 0, 0, 0)",
             "opacity": "1",
-            "cursor": "pointer",
+            "cursor": "not-allowed",
             "border-radius": "0px"
           }
         },
@@ -54185,9 +54107,7 @@
           "height": 0,
           "bottom": 2
         },
-        "differences": [
-          "cursor"
-        ]
+        "differences": []
       }
     ],
     "text": {
@@ -70802,7 +70722,7 @@
             "bottom": 749.40625,
             "left": 322
           },
-          "disabled": false,
+          "disabled": true,
           "style": {
             "font-family": "Inter, \"Noto Sans TC\", system-ui, -apple-system, \"Segoe UI\", sans-serif",
             "font-size": "14px",
@@ -70811,8 +70731,8 @@
             "letter-spacing": "normal",
             "color": "rgb(32, 33, 36)",
             "background-color": "rgb(236, 236, 238)",
-            "opacity": "1",
-            "cursor": "pointer",
+            "opacity": "0.43",
+            "cursor": "not-allowed",
             "border-radius": "50%"
           }
         },
@@ -70836,7 +70756,7 @@
             "letter-spacing": "normal",
             "color": "rgb(32, 33, 36)",
             "background-color": "rgb(236, 236, 238)",
-            "opacity": "1",
+            "opacity": "0.43",
             "cursor": "not-allowed",
             "border-radius": "50%"
           }
@@ -70848,10 +70768,7 @@
           "height": 0,
           "bottom": 0
         },
-        "differences": [
-          "cursor",
-          "disabled"
-        ]
+        "differences": []
       },
       {
         "name": "送出／停止圖示",
@@ -70878,7 +70795,7 @@
             "color": "rgb(32, 33, 36)",
             "background-color": "rgba(0, 0, 0, 0)",
             "opacity": "1",
-            "cursor": "pointer",
+            "cursor": "not-allowed",
             "border-radius": "0px"
           }
         },
@@ -70914,9 +70831,7 @@
           "height": 0,
           "bottom": 0
         },
-        "differences": [
-          "cursor"
-        ]
+        "differences": []
       },
       {
         "name": "聊天輸入框",
@@ -71124,7 +71039,7 @@
             "bottom": 749.40625,
             "left": 322
           },
-          "disabled": false,
+          "disabled": true,
           "style": {
             "font-family": "Inter, \"Noto Sans TC\", system-ui, -apple-system, \"Segoe UI\", sans-serif",
             "font-size": "14px",
@@ -71133,8 +71048,8 @@
             "letter-spacing": "normal",
             "color": "rgb(32, 33, 36)",
             "background-color": "rgb(236, 236, 238)",
-            "opacity": "1",
-            "cursor": "pointer",
+            "opacity": "0.43",
+            "cursor": "not-allowed",
             "border-radius": "50%"
           }
         },
@@ -71158,7 +71073,7 @@
             "letter-spacing": "normal",
             "color": "rgb(32, 33, 36)",
             "background-color": "rgb(236, 236, 238)",
-            "opacity": "1",
+            "opacity": "0.43",
             "cursor": "not-allowed",
             "border-radius": "50%"
           }
@@ -71170,10 +71085,7 @@
           "height": 0,
           "bottom": 0
         },
-        "differences": [
-          "cursor",
-          "disabled"
-        ]
+        "differences": []
       },
       {
         "name": "送出／停止圖示",
@@ -71200,7 +71112,7 @@
             "color": "rgb(32, 33, 36)",
             "background-color": "rgba(0, 0, 0, 0)",
             "opacity": "1",
-            "cursor": "pointer",
+            "cursor": "not-allowed",
             "border-radius": "0px"
           }
         },
@@ -71236,9 +71148,7 @@
           "height": 0,
           "bottom": 0
         },
-        "differences": [
-          "cursor"
-        ]
+        "differences": []
       }
     ],
     "text": {
@@ -74138,7 +74048,7 @@
             "bottom": 749.40625,
             "left": 322
           },
-          "disabled": false,
+          "disabled": true,
           "style": {
             "font-family": "Inter, \"Noto Sans TC\", system-ui, -apple-system, \"Segoe UI\", sans-serif",
             "font-size": "14px",
@@ -74147,8 +74057,8 @@
             "letter-spacing": "normal",
             "color": "rgb(32, 33, 36)",
             "background-color": "rgb(236, 236, 238)",
-            "opacity": "1",
-            "cursor": "pointer",
+            "opacity": "0.43",
+            "cursor": "not-allowed",
             "border-radius": "50%"
           }
         },
@@ -74172,7 +74082,7 @@
             "letter-spacing": "normal",
             "color": "rgb(32, 33, 36)",
             "background-color": "rgb(236, 236, 238)",
-            "opacity": "1",
+            "opacity": "0.43",
             "cursor": "not-allowed",
             "border-radius": "50%"
           }
@@ -74184,10 +74094,7 @@
           "height": 0,
           "bottom": 0
         },
-        "differences": [
-          "cursor",
-          "disabled"
-        ]
+        "differences": []
       },
       {
         "name": "送出／停止圖示",
@@ -74214,7 +74121,7 @@
             "color": "rgb(32, 33, 36)",
             "background-color": "rgba(0, 0, 0, 0)",
             "opacity": "1",
-            "cursor": "pointer",
+            "cursor": "not-allowed",
             "border-radius": "0px"
           }
         },
@@ -74250,9 +74157,7 @@
           "height": 0,
           "bottom": 0
         },
-        "differences": [
-          "cursor"
-        ]
+        "differences": []
       },
       {
         "name": "聊天輸入框",
@@ -74460,7 +74365,7 @@
             "bottom": 749.40625,
             "left": 322
           },
-          "disabled": false,
+          "disabled": true,
           "style": {
             "font-family": "Inter, \"Noto Sans TC\", system-ui, -apple-system, \"Segoe UI\", sans-serif",
             "font-size": "14px",
@@ -74469,8 +74374,8 @@
             "letter-spacing": "normal",
             "color": "rgb(32, 33, 36)",
             "background-color": "rgb(236, 236, 238)",
-            "opacity": "1",
-            "cursor": "pointer",
+            "opacity": "0.43",
+            "cursor": "not-allowed",
             "border-radius": "50%"
           }
         },
@@ -74494,7 +74399,7 @@
             "letter-spacing": "normal",
             "color": "rgb(32, 33, 36)",
             "background-color": "rgb(236, 236, 238)",
-            "opacity": "1",
+            "opacity": "0.43",
             "cursor": "not-allowed",
             "border-radius": "50%"
           }
@@ -74506,10 +74411,7 @@
           "height": 0,
           "bottom": 0
         },
-        "differences": [
-          "cursor",
-          "disabled"
-        ]
+        "differences": []
       },
       {
         "name": "送出／停止圖示",
@@ -74536,7 +74438,7 @@
             "color": "rgb(32, 33, 36)",
             "background-color": "rgba(0, 0, 0, 0)",
             "opacity": "1",
-            "cursor": "pointer",
+            "cursor": "not-allowed",
             "border-radius": "0px"
           }
         },
@@ -74572,9 +74474,7 @@
           "height": 0,
           "bottom": 0
         },
-        "differences": [
-          "cursor"
-        ]
+        "differences": []
       }
     ],
     "text": {
@@ -78399,7 +78299,7 @@
             "bottom": 749.40625,
             "left": 322
           },
-          "disabled": false,
+          "disabled": true,
           "style": {
             "font-family": "Inter, \"Noto Sans TC\", system-ui, -apple-system, \"Segoe UI\", sans-serif",
             "font-size": "14px",
@@ -78408,8 +78308,8 @@
             "letter-spacing": "normal",
             "color": "rgb(32, 33, 36)",
             "background-color": "rgb(236, 236, 238)",
-            "opacity": "1",
-            "cursor": "pointer",
+            "opacity": "0.43",
+            "cursor": "not-allowed",
             "border-radius": "50%"
           }
         },
@@ -78433,7 +78333,7 @@
             "letter-spacing": "normal",
             "color": "rgb(32, 33, 36)",
             "background-color": "rgb(236, 236, 238)",
-            "opacity": "1",
+            "opacity": "0.43",
             "cursor": "not-allowed",
             "border-radius": "50%"
           }
@@ -78445,10 +78345,7 @@
           "height": 0,
           "bottom": 0
         },
-        "differences": [
-          "cursor",
-          "disabled"
-        ]
+        "differences": []
       },
       {
         "name": "送出／停止圖示",
@@ -78475,7 +78372,7 @@
             "color": "rgb(32, 33, 36)",
             "background-color": "rgba(0, 0, 0, 0)",
             "opacity": "1",
-            "cursor": "pointer",
+            "cursor": "not-allowed",
             "border-radius": "0px"
           }
         },
@@ -78511,9 +78408,7 @@
           "height": 0,
           "bottom": 0
         },
-        "differences": [
-          "cursor"
-        ]
+        "differences": []
       },
       {
         "name": "聊天輸入框",
@@ -78721,7 +78616,7 @@
             "bottom": 749.40625,
             "left": 322
           },
-          "disabled": false,
+          "disabled": true,
           "style": {
             "font-family": "Inter, \"Noto Sans TC\", system-ui, -apple-system, \"Segoe UI\", sans-serif",
             "font-size": "14px",
@@ -78730,8 +78625,8 @@
             "letter-spacing": "normal",
             "color": "rgb(32, 33, 36)",
             "background-color": "rgb(236, 236, 238)",
-            "opacity": "1",
-            "cursor": "pointer",
+            "opacity": "0.43",
+            "cursor": "not-allowed",
             "border-radius": "50%"
           }
         },
@@ -78755,7 +78650,7 @@
             "letter-spacing": "normal",
             "color": "rgb(32, 33, 36)",
             "background-color": "rgb(236, 236, 238)",
-            "opacity": "1",
+            "opacity": "0.43",
             "cursor": "not-allowed",
             "border-radius": "50%"
           }
@@ -78767,10 +78662,7 @@
           "height": 0,
           "bottom": 0
         },
-        "differences": [
-          "cursor",
-          "disabled"
-        ]
+        "differences": []
       },
       {
         "name": "送出／停止圖示",
@@ -78797,7 +78689,7 @@
             "color": "rgb(32, 33, 36)",
             "background-color": "rgba(0, 0, 0, 0)",
             "opacity": "1",
-            "cursor": "pointer",
+            "cursor": "not-allowed",
             "border-radius": "0px"
           }
         },
@@ -78833,9 +78725,7 @@
           "height": 0,
           "bottom": 0
         },
-        "differences": [
-          "cursor"
-        ]
+        "differences": []
       }
     ],
     "text": {
@@ -82666,7 +82556,7 @@
             "bottom": 749.40625,
             "left": 322
           },
-          "disabled": false,
+          "disabled": true,
           "style": {
             "font-family": "Inter, \"Noto Sans TC\", system-ui, -apple-system, \"Segoe UI\", sans-serif",
             "font-size": "14px",
@@ -82675,8 +82565,8 @@
             "letter-spacing": "normal",
             "color": "rgb(32, 33, 36)",
             "background-color": "rgb(236, 236, 238)",
-            "opacity": "1",
-            "cursor": "pointer",
+            "opacity": "0.43",
+            "cursor": "not-allowed",
             "border-radius": "50%"
           }
         },
@@ -82700,7 +82590,7 @@
             "letter-spacing": "normal",
             "color": "rgb(32, 33, 36)",
             "background-color": "rgb(236, 236, 238)",
-            "opacity": "1",
+            "opacity": "0.43",
             "cursor": "not-allowed",
             "border-radius": "50%"
           }
@@ -82712,10 +82602,7 @@
           "height": 0,
           "bottom": 0
         },
-        "differences": [
-          "cursor",
-          "disabled"
-        ]
+        "differences": []
       },
       {
         "name": "送出／停止圖示",
@@ -82742,7 +82629,7 @@
             "color": "rgb(32, 33, 36)",
             "background-color": "rgba(0, 0, 0, 0)",
             "opacity": "1",
-            "cursor": "pointer",
+            "cursor": "not-allowed",
             "border-radius": "0px"
           }
         },
@@ -82778,9 +82665,7 @@
           "height": 0,
           "bottom": 0
         },
-        "differences": [
-          "cursor"
-        ]
+        "differences": []
       },
       {
         "name": "聊天輸入框",
@@ -82988,7 +82873,7 @@
             "bottom": 749.40625,
             "left": 322
           },
-          "disabled": false,
+          "disabled": true,
           "style": {
             "font-family": "Inter, \"Noto Sans TC\", system-ui, -apple-system, \"Segoe UI\", sans-serif",
             "font-size": "14px",
@@ -82997,8 +82882,8 @@
             "letter-spacing": "normal",
             "color": "rgb(32, 33, 36)",
             "background-color": "rgb(236, 236, 238)",
-            "opacity": "1",
-            "cursor": "pointer",
+            "opacity": "0.43",
+            "cursor": "not-allowed",
             "border-radius": "50%"
           }
         },
@@ -83022,7 +82907,7 @@
             "letter-spacing": "normal",
             "color": "rgb(32, 33, 36)",
             "background-color": "rgb(236, 236, 238)",
-            "opacity": "1",
+            "opacity": "0.43",
             "cursor": "not-allowed",
             "border-radius": "50%"
           }
@@ -83034,10 +82919,7 @@
           "height": 0,
           "bottom": 0
         },
-        "differences": [
-          "cursor",
-          "disabled"
-        ]
+        "differences": []
       },
       {
         "name": "送出／停止圖示",
@@ -83064,7 +82946,7 @@
             "color": "rgb(32, 33, 36)",
             "background-color": "rgba(0, 0, 0, 0)",
             "opacity": "1",
-            "cursor": "pointer",
+            "cursor": "not-allowed",
             "border-radius": "0px"
           }
         },
@@ -83100,9 +82982,7 @@
           "height": 0,
           "bottom": 0
         },
-        "differences": [
-          "cursor"
-        ]
+        "differences": []
       }
     ],
     "text": {
@@ -86817,7 +86697,7 @@
             "bottom": 749.40625,
             "left": 322
           },
-          "disabled": false,
+          "disabled": true,
           "style": {
             "font-family": "Inter, \"Noto Sans TC\", system-ui, -apple-system, \"Segoe UI\", sans-serif",
             "font-size": "14px",
@@ -86826,8 +86706,8 @@
             "letter-spacing": "normal",
             "color": "rgb(32, 33, 36)",
             "background-color": "rgb(236, 236, 238)",
-            "opacity": "1",
-            "cursor": "pointer",
+            "opacity": "0.43",
+            "cursor": "not-allowed",
             "border-radius": "50%"
           }
         },
@@ -86851,7 +86731,7 @@
             "letter-spacing": "normal",
             "color": "rgb(32, 33, 36)",
             "background-color": "rgb(236, 236, 238)",
-            "opacity": "1",
+            "opacity": "0.43",
             "cursor": "not-allowed",
             "border-radius": "50%"
           }
@@ -86863,10 +86743,7 @@
           "height": 0,
           "bottom": 0
         },
-        "differences": [
-          "cursor",
-          "disabled"
-        ]
+        "differences": []
       },
       {
         "name": "送出／停止圖示",
@@ -86893,7 +86770,7 @@
             "color": "rgb(32, 33, 36)",
             "background-color": "rgba(0, 0, 0, 0)",
             "opacity": "1",
-            "cursor": "pointer",
+            "cursor": "not-allowed",
             "border-radius": "0px"
           }
         },
@@ -86929,9 +86806,7 @@
           "height": 0,
           "bottom": 0
         },
-        "differences": [
-          "cursor"
-        ]
+        "differences": []
       },
       {
         "name": "聊天輸入框",
@@ -87139,7 +87014,7 @@
             "bottom": 749.40625,
             "left": 322
           },
-          "disabled": false,
+          "disabled": true,
           "style": {
             "font-family": "Inter, \"Noto Sans TC\", system-ui, -apple-system, \"Segoe UI\", sans-serif",
             "font-size": "14px",
@@ -87148,8 +87023,8 @@
             "letter-spacing": "normal",
             "color": "rgb(32, 33, 36)",
             "background-color": "rgb(236, 236, 238)",
-            "opacity": "1",
-            "cursor": "pointer",
+            "opacity": "0.43",
+            "cursor": "not-allowed",
             "border-radius": "50%"
           }
         },
@@ -87173,7 +87048,7 @@
             "letter-spacing": "normal",
             "color": "rgb(32, 33, 36)",
             "background-color": "rgb(236, 236, 238)",
-            "opacity": "1",
+            "opacity": "0.43",
             "cursor": "not-allowed",
             "border-radius": "50%"
           }
@@ -87185,10 +87060,7 @@
           "height": 0,
           "bottom": 0
         },
-        "differences": [
-          "cursor",
-          "disabled"
-        ]
+        "differences": []
       },
       {
         "name": "送出／停止圖示",
@@ -87215,7 +87087,7 @@
             "color": "rgb(32, 33, 36)",
             "background-color": "rgba(0, 0, 0, 0)",
             "opacity": "1",
-            "cursor": "pointer",
+            "cursor": "not-allowed",
             "border-radius": "0px"
           }
         },
@@ -87251,9 +87123,7 @@
           "height": 0,
           "bottom": 0
         },
-        "differences": [
-          "cursor"
-        ]
+        "differences": []
       }
     ],
     "text": {
@@ -93573,7 +93443,7 @@
             "bottom": 749.40625,
             "left": 322
           },
-          "disabled": false,
+          "disabled": true,
           "style": {
             "font-family": "Inter, \"Noto Sans TC\", system-ui, -apple-system, \"Segoe UI\", sans-serif",
             "font-size": "14px",
@@ -93582,8 +93452,8 @@
             "letter-spacing": "normal",
             "color": "rgb(32, 33, 36)",
             "background-color": "rgb(236, 236, 238)",
-            "opacity": "1",
-            "cursor": "pointer",
+            "opacity": "0.43",
+            "cursor": "not-allowed",
             "border-radius": "50%"
           }
         },
@@ -93607,7 +93477,7 @@
             "letter-spacing": "normal",
             "color": "rgb(32, 33, 36)",
             "background-color": "rgb(236, 236, 238)",
-            "opacity": "1",
+            "opacity": "0.43",
             "cursor": "not-allowed",
             "border-radius": "50%"
           }
@@ -93619,10 +93489,7 @@
           "height": 0,
           "bottom": 0
         },
-        "differences": [
-          "cursor",
-          "disabled"
-        ]
+        "differences": []
       },
       {
         "name": "送出／停止圖示",
@@ -93649,7 +93516,7 @@
             "color": "rgb(32, 33, 36)",
             "background-color": "rgba(0, 0, 0, 0)",
             "opacity": "1",
-            "cursor": "pointer",
+            "cursor": "not-allowed",
             "border-radius": "0px"
           }
         },
@@ -93685,9 +93552,7 @@
           "height": 0,
           "bottom": 0
         },
-        "differences": [
-          "cursor"
-        ]
+        "differences": []
       },
       {
         "name": "聊天輸入框",
@@ -93895,7 +93760,7 @@
             "bottom": 749.40625,
             "left": 322
           },
-          "disabled": false,
+          "disabled": true,
           "style": {
             "font-family": "Inter, \"Noto Sans TC\", system-ui, -apple-system, \"Segoe UI\", sans-serif",
             "font-size": "14px",
@@ -93904,8 +93769,8 @@
             "letter-spacing": "normal",
             "color": "rgb(32, 33, 36)",
             "background-color": "rgb(236, 236, 238)",
-            "opacity": "1",
-            "cursor": "pointer",
+            "opacity": "0.43",
+            "cursor": "not-allowed",
             "border-radius": "50%"
           }
         },
@@ -93929,7 +93794,7 @@
             "letter-spacing": "normal",
             "color": "rgb(32, 33, 36)",
             "background-color": "rgb(236, 236, 238)",
-            "opacity": "1",
+            "opacity": "0.43",
             "cursor": "not-allowed",
             "border-radius": "50%"
           }
@@ -93941,10 +93806,7 @@
           "height": 0,
           "bottom": 0
         },
-        "differences": [
-          "cursor",
-          "disabled"
-        ]
+        "differences": []
       },
       {
         "name": "送出／停止圖示",
@@ -93971,7 +93833,7 @@
             "color": "rgb(32, 33, 36)",
             "background-color": "rgba(0, 0, 0, 0)",
             "opacity": "1",
-            "cursor": "pointer",
+            "cursor": "not-allowed",
             "border-radius": "0px"
           }
         },
@@ -94007,9 +93869,7 @@
           "height": 0,
           "bottom": 0
         },
-        "differences": [
-          "cursor"
-        ]
+        "differences": []
       }
     ],
     "text": {
@@ -97695,7 +97555,7 @@
             "bottom": 749.40625,
             "left": 322
           },
-          "disabled": false,
+          "disabled": true,
           "style": {
             "font-family": "Inter, \"Noto Sans TC\", system-ui, -apple-system, \"Segoe UI\", sans-serif",
             "font-size": "14px",
@@ -97704,8 +97564,8 @@
             "letter-spacing": "normal",
             "color": "rgb(32, 33, 36)",
             "background-color": "rgb(236, 236, 238)",
-            "opacity": "1",
-            "cursor": "pointer",
+            "opacity": "0.43",
+            "cursor": "not-allowed",
             "border-radius": "50%"
           }
         },
@@ -97729,7 +97589,7 @@
             "letter-spacing": "normal",
             "color": "rgb(32, 33, 36)",
             "background-color": "rgb(236, 236, 238)",
-            "opacity": "1",
+            "opacity": "0.43",
             "cursor": "not-allowed",
             "border-radius": "50%"
           }
@@ -97741,10 +97601,7 @@
           "height": 0,
           "bottom": 0
         },
-        "differences": [
-          "cursor",
-          "disabled"
-        ]
+        "differences": []
       },
       {
         "name": "送出／停止圖示",
@@ -97771,7 +97628,7 @@
             "color": "rgb(32, 33, 36)",
             "background-color": "rgba(0, 0, 0, 0)",
             "opacity": "1",
-            "cursor": "pointer",
+            "cursor": "not-allowed",
             "border-radius": "0px"
           }
         },
@@ -97807,9 +97664,7 @@
           "height": 0,
           "bottom": 0
         },
-        "differences": [
-          "cursor"
-        ]
+        "differences": []
       },
       {
         "name": "聊天輸入框",
@@ -98017,7 +97872,7 @@
             "bottom": 749.40625,
             "left": 322
           },
-          "disabled": false,
+          "disabled": true,
           "style": {
             "font-family": "Inter, \"Noto Sans TC\", system-ui, -apple-system, \"Segoe UI\", sans-serif",
             "font-size": "14px",
@@ -98026,8 +97881,8 @@
             "letter-spacing": "normal",
             "color": "rgb(32, 33, 36)",
             "background-color": "rgb(236, 236, 238)",
-            "opacity": "1",
-            "cursor": "pointer",
+            "opacity": "0.43",
+            "cursor": "not-allowed",
             "border-radius": "50%"
           }
         },
@@ -98051,7 +97906,7 @@
             "letter-spacing": "normal",
             "color": "rgb(32, 33, 36)",
             "background-color": "rgb(236, 236, 238)",
-            "opacity": "1",
+            "opacity": "0.43",
             "cursor": "not-allowed",
             "border-radius": "50%"
           }
@@ -98063,10 +97918,7 @@
           "height": 0,
           "bottom": 0
         },
-        "differences": [
-          "cursor",
-          "disabled"
-        ]
+        "differences": []
       },
       {
         "name": "送出／停止圖示",
@@ -98093,7 +97945,7 @@
             "color": "rgb(32, 33, 36)",
             "background-color": "rgba(0, 0, 0, 0)",
             "opacity": "1",
-            "cursor": "pointer",
+            "cursor": "not-allowed",
             "border-radius": "0px"
           }
         },
@@ -98129,9 +97981,7 @@
           "height": 0,
           "bottom": 0
         },
-        "differences": [
-          "cursor"
-        ]
+        "differences": []
       }
     ],
     "text": {
@@ -104324,7 +104174,7 @@
             "bottom": 749.40625,
             "left": 322
           },
-          "disabled": false,
+          "disabled": true,
           "style": {
             "font-family": "Inter, \"Noto Sans TC\", system-ui, -apple-system, \"Segoe UI\", sans-serif",
             "font-size": "14px",
@@ -104333,8 +104183,8 @@
             "letter-spacing": "normal",
             "color": "rgb(32, 33, 36)",
             "background-color": "rgb(236, 236, 238)",
-            "opacity": "1",
-            "cursor": "pointer",
+            "opacity": "0.43",
+            "cursor": "not-allowed",
             "border-radius": "50%"
           }
         },
@@ -104358,7 +104208,7 @@
             "letter-spacing": "normal",
             "color": "rgb(32, 33, 36)",
             "background-color": "rgb(236, 236, 238)",
-            "opacity": "1",
+            "opacity": "0.43",
             "cursor": "not-allowed",
             "border-radius": "50%"
           }
@@ -104370,10 +104220,7 @@
           "height": 0,
           "bottom": 0
         },
-        "differences": [
-          "cursor",
-          "disabled"
-        ]
+        "differences": []
       },
       {
         "name": "送出／停止圖示",
@@ -104400,7 +104247,7 @@
             "color": "rgb(32, 33, 36)",
             "background-color": "rgba(0, 0, 0, 0)",
             "opacity": "1",
-            "cursor": "pointer",
+            "cursor": "not-allowed",
             "border-radius": "0px"
           }
         },
@@ -104436,9 +104283,7 @@
           "height": 0,
           "bottom": 0
         },
-        "differences": [
-          "cursor"
-        ]
+        "differences": []
       },
       {
         "name": "聊天輸入框",
@@ -104646,7 +104491,7 @@
             "bottom": 749.40625,
             "left": 322
           },
-          "disabled": false,
+          "disabled": true,
           "style": {
             "font-family": "Inter, \"Noto Sans TC\", system-ui, -apple-system, \"Segoe UI\", sans-serif",
             "font-size": "14px",
@@ -104655,8 +104500,8 @@
             "letter-spacing": "normal",
             "color": "rgb(32, 33, 36)",
             "background-color": "rgb(236, 236, 238)",
-            "opacity": "1",
-            "cursor": "pointer",
+            "opacity": "0.43",
+            "cursor": "not-allowed",
             "border-radius": "50%"
           }
         },
@@ -104680,7 +104525,7 @@
             "letter-spacing": "normal",
             "color": "rgb(32, 33, 36)",
             "background-color": "rgb(236, 236, 238)",
-            "opacity": "1",
+            "opacity": "0.43",
             "cursor": "not-allowed",
             "border-radius": "50%"
           }
@@ -104692,10 +104537,7 @@
           "height": 0,
           "bottom": 0
         },
-        "differences": [
-          "cursor",
-          "disabled"
-        ]
+        "differences": []
       },
       {
         "name": "送出／停止圖示",
@@ -104722,7 +104564,7 @@
             "color": "rgb(32, 33, 36)",
             "background-color": "rgba(0, 0, 0, 0)",
             "opacity": "1",
-            "cursor": "pointer",
+            "cursor": "not-allowed",
             "border-radius": "0px"
           }
         },
@@ -104758,9 +104600,7 @@
           "height": 0,
           "bottom": 0
         },
-        "differences": [
-          "cursor"
-        ]
+        "differences": []
       }
     ],
     "text": {

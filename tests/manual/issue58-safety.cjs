@@ -29,10 +29,17 @@ const fs=require('fs'),path=require('path'),assert=require('node:assert/strict')
  c.release();await page.locator('.operation-receipt').waitFor();assert.equal(confirms().length,1);
  }
  if(scene==='success'){
+ const input=page.locator('#chat-input'),send=page.locator('.composer-area .aui-composer-send');
+ assert.equal(await send.isDisabled(),true);assert.equal(await send.evaluate(e=>getComputedStyle(e).opacity),'0.43');
+ await input.fill('查看這張工單');assert.equal(await send.isDisabled(),false);assert.equal(await send.evaluate(e=>getComputedStyle(e).opacity),'1');
+ await input.fill('   ');assert.equal(await send.isDisabled(),true);await input.fill('');
  assert.equal(confirms().length,1);await page.locator('.operation-receipt summary').click();const text=await page.locator('.operation-receipt').innerText();assert.match(text,/OK_QTY/);assert.match(text,/125/);assert.match(text,/NG_QTY/);assert.match(text,/3/);assert.equal(c.changes.length,2);
  }
  if(scene==='rejected'){assert.equal(confirms().length,1);assert.equal(await page.getByRole('button',{name:'確認送出',exact:true}).isDisabled(),true);assert.equal(await page.getByRole('button',{name:'查核執行結果',exact:true}).count(),0);await page.getByRole('button',{name:'返回修改',exact:true}).click();await page.locator('#guide-ok').waitFor();assert.equal(confirms().length,1);}
  if(scene==='unknown'){
+ await page.setViewportSize({width:390,height:810});await page.locator('.mobile-work-tabs').getByRole('button',{name:'對話',exact:true}).click();
+ assert.equal(await page.locator('.aui-user-message-content').isVisible(),true);assert.match(await page.locator('.aui-user-message-content').innerText(),/MC37/);
+ assert.ok(await page.locator('[data-slot=aui_assistant-message-root]:visible').count()>0);await page.setViewportSize({width:1366,height:768});
  assert.equal(confirms().length,1);assert.equal(await page.getByRole('button',{name:'確認送出',exact:true}).count(),0);assert.equal(await page.locator('#guide-ok:visible').count(),0);assert.equal(await page.getByRole('button',{name:'返回修改',exact:true}).count(),0);
  await page.getByRole('button',{name:'查核執行結果',exact:true}).click();await page.waitForTimeout(450);assert.equal(confirms().length,1);assert.ok(c.calls.some(x=>x.path.endsWith('/reconcile')));assert.equal(await page.locator('#guide-ok:visible').count(),0);assert.match(await page.locator('.operation-receipt').innerText(),/執行結果待確認/);
  }

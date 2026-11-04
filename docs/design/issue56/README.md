@@ -1,6 +1,6 @@
 # 第二段：查詢與大量資料選取驗收
 
-> 2026-11-04 PR #65 第二輪已用共用輸入框設定重跑本段；下方原驗收為歷史範圍，新增量測與未通過清單請見 [第四段輸入框回歸](../issue58/輸入框回歸.md)。本段量測.json 與截圖已更新為本輪結果。
+> 2026-11-04 PR #65 第三輪已重跑本段：32／32 張幾何、樣式、可見文字全部通過，包含共用輸入框。最新結果見 [三段總表](../issue58/三段總表.md)；原始量測、截圖與樣式表已同步更新。
 
 對應 [#56](https://github.com/WeYuTech/KaosuAiAgentTest/issues/56)，遵守 [#54](https://github.com/WeYuTech/KaosuAiAgentTest/issues/54)；由 main `36add62` 建立 `codex/uiux-v2-s2`，交付 Draft PR #61。沒有合併、部署、正式 MES 寫入或付費模型呼叫。
 
