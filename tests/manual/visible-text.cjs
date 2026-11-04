@@ -14,7 +14,7 @@ async function visibleText(page,selector,exclude=''){
    }
    for(const child of node.childNodes){if(node.tagName==='DETAILS'&&!node.open&&child.nodeName!=='SUMMARY')continue;walk(child);}
   }
-  roots.forEach(walk);return items;
+  roots.filter(root=>root.checkVisibility()&&root.getBoundingClientRect().width&&root.getBoundingClientRect().height).forEach(walk);return items;
  },exclude);
 }
 function compareText(reference,product){

@@ -1,5 +1,6 @@
 ﻿/* 固定介面詞彙：中文原文為鍵，不翻譯 MES 主檔名稱或歷史訊息。 */
 export const translations: Record<string, [string, string]> = Object.fromEntries(`
+請先完成或查核目前操作|Complete or reconcile the current operation first|โปรดดำเนินการให้เสร็จหรือตรวจสอบงานปัจจุบันก่อน
 報工已完成|Production report completed|รายงานการผลิตเสร็จแล้ว
 人工良品 {0} 件・不良 {1} 件|Manually reported good: {0} pcs · Defects: {1} pcs|ชิ้นงานดีที่รายงาน {0} ชิ้น・ของเสีย {1} ชิ้น
 正在送出，請稍候…|Submitting, please wait…|กำลังส่ง กรุณารอสักครู่…

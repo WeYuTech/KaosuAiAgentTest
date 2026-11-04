@@ -71,3 +71,11 @@
 #mes-ai-chat-root .sidebar-budget:disabled>span>strong{font-weight:400;color:var(--muted-foreground)}
 #mes-ai-chat-root .sidebar-budget:disabled>span:first-child>span{font-weight:400;color:var(--foreground)}
 #mes-ai-chat-root .history-empty{line-height:1.55}
+#mes-ai-chat-root .composer-area:has(textarea:disabled) .aui-composer-send:disabled{opacity:.43;cursor:not-allowed}
+#mes-ai-chat-root .composer-area [data-slot=aui_composer-shell]{cursor:auto}
+#mes-ai-chat-root .composer-area .aui-composer-send{font-size:14px;font-weight:400;line-height:1.55;cursor:pointer}
+#mes-ai-chat-root .composer-area .aui-composer-send:disabled{cursor:not-allowed}
+@container mes-chat-shell (max-width:620px){
+ #mes-ai-chat-root .dual-flow.chat-sheet[data-pane=chat]:not(.chat-only)>.chat-layout{flex:1;height:100%;max-height:none;min-height:0;border-top:0}
+ #mes-ai-chat-root .dual-flow.chat-sheet[data-pane=chat]:not(.chat-only) .conversation-scroll{flex:1;max-height:none;min-height:0;padding:0}
+}

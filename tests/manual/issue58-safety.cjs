@@ -6,6 +6,15 @@ const fs=require('fs'),path=require('path'),assert=require('node:assert/strict')
  const page=await app.browser.newPage({viewport:{width:1366,height:768},colorScheme:'dark'});const c=await fixture(page,scene);let error;
  const confirms=()=>c.calls.filter(x=>x.path.endsWith('/confirm'));const mutations=()=>c.calls.filter(x=>x.body&&(/guide|proposals|confirm/.test(x.path)));
  try{await page.goto(app.url+'/?embed=1');await prepare(page,c);
+ if(['submitting','unknown'].includes(scene)){
+  assert.equal(await page.locator('#chat-input').getAttribute('placeholder'),'請先完成或查核目前操作');
+  assert.equal(await page.locator('#chat-input').isDisabled(),true);
+  const send=page.locator('.composer-area .aui-composer-send');
+  assert.equal(await send.isDisabled(),true);
+  assert.deepEqual(await send.evaluate(e=>[getComputedStyle(e).opacity,getComputedStyle(e).cursor]),['0.43','not-allowed']);
+  const before=c.calls.length;await send.evaluate(e=>{e.click();e.click();});await page.keyboard.press('Enter');
+  assert.equal(c.calls.slice(before).filter(x=>/messages|confirm/.test(x.path)&&x.body).length,0);
+ }
  if(['validation','saving','save-error','conflict'].includes(scene)){
  assert.equal(confirms().length,0);assert.doesNotMatch(await page.locator('.operation-primary').innerText(),/作業已完成|報工已完成/);
  if(scene==='saving'){assert.equal(await page.locator('.guide-navigation>.primary').isDisabled(),true);assert.ok(c.release);assert.equal(await page.locator('#guide-ok').inputValue(),'125');c.release();await page.waitForTimeout(400);}
