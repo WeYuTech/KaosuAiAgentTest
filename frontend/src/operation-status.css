@@ -66,3 +66,8 @@
 #mes-ai-chat-root .status-dialog .operation-dialog-body>p{line-height:1.55}
 #mes-ai-chat-root:has(.status-dialog[data-state=open]) .dual-flow .composer-area{display:none}
 #mes-ai-chat-root:has(.status-dialog[data-state=open]) [data-slot=dialog-overlay]{background:#0007}
+#mes-ai-chat-root .result-state .proposal-heading>.proposal-state{font-size:12px;font-weight:400;line-height:1.55;padding:3px 8px;border-radius:5px;background:var(--v2-raised);color:var(--muted-foreground)}
+#mes-ai-chat-root .sidebar-budget:has(.budget-track[hidden])::after{content:'';height:4px;flex:none}
+#mes-ai-chat-root .sidebar-budget:disabled>span>strong{font-weight:400;color:var(--muted-foreground)}
+#mes-ai-chat-root .sidebar-budget:disabled>span:first-child>span{font-weight:400;color:var(--foreground)}
+#mes-ai-chat-root .history-empty{line-height:1.55}

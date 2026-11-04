@@ -8,7 +8,7 @@ const fs=require('fs'),path=require('path'),assert=require('node:assert/strict')
  try{await page.goto(app.url+'/?embed=1');await prepare(page,c);
  if(['validation','saving','save-error','conflict'].includes(scene)){
  assert.equal(confirms().length,0);assert.doesNotMatch(await page.locator('.operation-primary').innerText(),/作業已完成|報工已完成/);
- if(scene==='saving'){assert.ok(c.release);assert.equal(await page.locator('#guide-ok').inputValue(),'125');c.release();await page.waitForTimeout(400);}
+ if(scene==='saving'){assert.equal(await page.locator('.guide-navigation>.primary').isDisabled(),true);assert.ok(c.release);assert.equal(await page.locator('#guide-ok').inputValue(),'125');c.release();await page.waitForTimeout(400);}
  if(scene==='save-error'){assert.equal(await page.locator('#guide-ok').inputValue(),'125');c.fail=false;await page.getByRole('button',{name:'重試儲存',exact:true}).click();await page.waitForTimeout(800);assert.equal(await page.locator('#guide-ok').inputValue(),'125');}
  if(scene==='conflict'){await page.getByRole('button',{name:'查看最新資料',exact:true}).click();await page.locator('.draft-comparison').waitFor();assert.equal(await page.locator('#guide-ok').inputValue(),'125');assert.equal(confirms().length,0);}
  }
