@@ -1,3 +1,5 @@
+const {visibleText,compareText}=require('./visible-text.cjs');
+const {compareComposer}=require('./composer-comparison.cjs');
 const {start,root,fixture,prepare}=require('./issue56-fixture.cjs');
 const {compare}=require('./issue55-capture.cjs');
 const fs=require('node:fs'),path=require('node:path');
@@ -21,7 +23,7 @@ async function measure(page,selector){return page.locator(selector).evaluateAll(
  const page=await app.browser.newPage({viewport:{width,height},colorScheme:'dark'});await fixture(page,scene.key);await page.goto(app.url+'/?embed=1');await page.locator('#entry-input').waitFor();await prepare(page,scene.key);await page.waitForTimeout(400);await page.locator('.conversation-scroll').evaluate(el=>el.scrollTop=0);await page.mouse.move(0,0);await page.evaluate(()=>document.fonts.ready);
  const a=await ref.locator('#ux-app').screenshot(),b=await page.screenshot();const diff=await compare(page,a,b,width,height);fs.writeFileSync(path.join(out,`${width}-${scene.id}.png`),Buffer.from(diff.png,'base64'));
  const metrics=[];for(const [name,r,p] of pairs){const [rs,ps]=await Promise.all([measure(ref,r),measure(page,p)]);for(let i=0;i<Math.max(rs.length,ps.length);i++){if(!rs[i]||!ps[i]){metrics.push({name,index:i,missing:!rs[i]?'reference':'product'});continue;}metrics.push({name,index:i,reference:rs[i],product:ps[i],delta:Object.fromEntries(['x','y','width','height','bottom'].map(k=>[k,Math.abs(rs[i].rect[k]-ps[i].rect[k])])),differences:props.filter(k=>rs[i].style[k]!==ps[i].style[k])});}}
- rows.push({id:scene.id,width,height,ratio:diff.ratio,metrics});console.log(scene.id,width,diff.ratio.toFixed(2),metrics.filter(m=>m.missing||m.differences.length||Object.values(m.delta).some(d=>d>4)).map(m=>({name:m.name,index:m.index,delta:m.delta,differences:m.differences,missing:m.missing})));await page.close();
+ const composer=await compareComposer(ref,page,path.join(out,`${width}-${scene.id}-輸入框.png`));metrics.push(...composer.metrics);const groups=await Promise.all(pairs.map(async([name,r,p])=>({name,...compareText(await visibleText(ref,r),await visibleText(page,p))})));groups.push(...composer.text.groups);const text={groups,consistent:groups.every(g=>g.consistent)}; rows.push({id:scene.id,width,height,ratio:diff.ratio,metrics,text});console.log(scene.id,width,diff.ratio.toFixed(2),metrics.filter(m=>m.missing||m.differences.length||Object.values(m.delta).some(d=>d>4)).map(m=>({name:m.name,index:m.index,delta:m.delta,differences:m.differences,missing:m.missing})));await page.close();
  }await ref.close();}
  fs.writeFileSync(path.join(out,process.env.SCENE?`量測-${process.env.SCENE}-${process.env.WIDTH||'all'}.json`:'量測.json'),JSON.stringify(rows,null,2));
  }finally{await app.close();}})().catch(e=>{console.error(e);process.exitCode=1});

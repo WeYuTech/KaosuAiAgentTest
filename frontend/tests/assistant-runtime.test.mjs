@@ -64,11 +64,11 @@ test('管理區塊載入失敗只隔離面板，原作業仍可見且不刷新',
   const host=document.createElement('div');host.id='mes-ai-chat-root';document.body.append(host);let caught=0,closed=0;
   const root=createRoot(host,{onCaughtError:()=>caught++});
   function Unavailable(){throw Error('隔離延遲載入失敗');}
-  await act(async()=>root.render(h('div',null,h('input',{'aria-label':'原作業',defaultValue:'MC37 良品 120'}),h(PanelLoadBoundary,{close:()=>closed++},h(Unavailable)))));
+  try {await act(async()=>root.render(h('div',null,h('input',{'aria-label':'原作業',defaultValue:'MC37 良品 120'}),h(PanelLoadBoundary,{close:()=>closed++},h(Unavailable)))));
   assert.equal(caught,1);assert.equal(host.querySelector('[aria-label="原作業"]').value,'MC37 良品 120');
-  assert.match(host.querySelector('[role="alert"]').textContent,/原作業已保留/);
+  assert.match(host.querySelector('[role="alert"]').textContent,/關閉此視窗不會影響目前作業/);
   await act(async()=>host.querySelector('[role="dialog"] button').click());assert.equal(closed,1);
-  await act(async()=>root.unmount());host.remove();
+  }finally{await act(async()=>root.unmount());host.remove();}
 });
 test('HTTP 或剪貼簿權限拒絕時採來源相容複製；失敗不回報成功',async()=>{
   let fallback=0;

@@ -370,7 +370,7 @@ test('W04 比較本機與最新版本，只重套改過欄位且使用最新版�
  const request=async(path,body)=>{if(body){writes.push(body);if(conflict){guide={...guide,version:2,args:{...guide.args,comment:'同事新備註'}};throw new ApiError('版本已更新',409);}assert.equal(body.version,2);guide={...guide,...body,version:3};}return structuredClone(guide);};
  const props={apiRequest:request,conversation:{id:'w04',actor_id:'operator',module:'report'},module:'report',workspace:{records:[],catalogs:{}},selected:null,signal:0,proposal:null,status:'',disabled:false,date:null,onReply:noop,onAudit:noop,onHome:noop};
  await act(async()=>root.render(h(GuidedFlow,props)));await act(async()=>inputValue(host.querySelector('#guide-ok'),'120'));await act(tick);
- await act(async()=>[...host.querySelectorAll('button')].find(b=>b.textContent==='讀取伺服器版本核對').click());assert.equal(host.querySelectorAll('.draft-comparison section').length,2);assert.match(host.textContent,/同事新備註/);conflict=false;
+ await act(async()=>[...host.querySelectorAll('button')].find(b=>b.textContent.trim()==='查看最新資料').click());assert.equal(host.querySelectorAll('.draft-comparison section').length,2);assert.match(host.textContent,/同事新備註/);conflict=false;
  await act(async()=>[...host.querySelectorAll('button')].find(b=>b.textContent==='在最新內容重套我的修改，再核對').click());await act(tick);
  assert.equal(guide.args.ok,120);assert.equal(guide.args.comment,'同事新備註');assert.equal(writes.length,2);
  await act(async()=>root.unmount());host.remove();

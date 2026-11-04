@@ -1,3 +1,4 @@
+import {StatusNotice} from './OperationStatus';
 import {Component,type ReactNode} from 'react';
 import {OperationDialog} from './OperationDialog';
 import {Button} from './components/ui/button';
@@ -9,8 +10,8 @@ export class PanelLoadBoundary extends Component<{open?:boolean;children:ReactNo
   static getDerivedStateFromError(){return {failed:true};}
   render(){
     if(!this.state.failed)return this.props.children;
-    return <OperationDialog open={this.props.open} title={t('管理介面載入失敗')} close={this.props.close}>
-      <p role="alert">{t('原作業已保留，請重試載入此面板。')}</p><Button onClick={this.props.retry}>{t("重試載入")}</Button>
+    return <OperationDialog className="status-dialog" open={this.props.open} title={t('載入功能')} close={this.props.close} footer={<><Button onClick={this.props.close}>{t('關閉')}</Button><Button className="primary" onClick={this.props.retry}>{t('重試')}</Button></>}>
+      <StatusNotice tone="error" title={t('暫時無法載入')} description={t('關閉此視窗不會影響目前作業。')}/>
     </OperationDialog>;
   }
 }

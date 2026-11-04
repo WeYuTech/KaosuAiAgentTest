@@ -1,6 +1,6 @@
 // 第二段公開 HTTP fixture；僅測試程式使用，資料不進正式應用。
 const {start,fixture:base,root,records:chats}=require('./issue55-fixture.cjs');
-const records=Array.from({length:24},(_,i)=>({WIP_OPI_WDOEACICO_HIST_SID:'e'+i,WO:'WO-261102-'+String(382+i).padStart(4,'0'),EQP_NO:i<8?'MC37':i<16?'MC38':'MC39',PART_NO:['P-102','P-104','P-108'][i%3],PART_SPEC:['外殼','底座','上蓋'][i%3],TOL_NO:'M-102',COMPLETED:i%7===6?'Y':'N',PRODUCTION_STATUS:i%7===6?'DONE':'RUN',MANUAL_OK:[120,86,230,48,64,180][i%6],MANUAL_NG:i%4===0?3:0,SHIFT_DAY:'2026-11-02',REPORTS:Array.from({length:24},(_,n)=>({WIP_OPI_WDOEACICOOUTPUT_HIST_SID:`r${i}-${n}`,REPORT_NO:`RPT-0382-0${n+1}`,CREATE_TIME:`2026-11-02 ${String(9+Math.floor((10+n*10)/60)).padStart(2,'0')}:${String((10+n*10)%60).padStart(2,'0')}:00`,OK_QTY:[120,86,230,48][n%4],NG_QTY:n===0?3:0}))}));
+const records=Array.from({length:24},(_,i)=>({WIP_OPI_WDOEACICO_HIST_SID:'e'+i,WO:'WO-261102-'+String(382+i).padStart(4,'0'),EQP_NO:i<8?'MC37':i<16?'MC38':'MC39',PART_NO:['P-102','P-104','P-108'][i%3],PART_SPEC:['外殼','底座','上蓋'][i%3],TOL_NO:'M-102',COMPLETED:i%7===6?'Y':'N',PRODUCTION_STATUS:i%7===6?'DONE':'RUN',MANUAL_OK:[120,86,230,48,64,180][i%6],MANUAL_NG:i%4===0?3:0,SHIFT_DAY:'2026-11-02',REPORTS:Array.from({length:8},(_,n)=>({WIP_OPI_WDOEACICOOUTPUT_HIST_SID:`r${i}-${n}`,REPORT_NO:`RPT-0382-0${n+1}`,CREATE_TIME:`2026-11-02 ${String(9+Math.floor((10+n*10)/60)).padStart(2,'0')}:${String((10+n*10)%60).padStart(2,'0')}:00`,OK_QTY:[120,86,230,48][n%4],NG_QTY:n===0?3:0}))}));
 async function fixture(page,scene){
  await base(page);
  let guide={version:1,action:'',args:{},step:'action',missing:[],ready:false};
@@ -10,7 +10,7 @@ async function fixture(page,scene){
  const pairs={empty:['查 MC37 今天的工單','這個範圍沒有找到工單。\n\n可以換日期，或查看其他設備。'],'query-error':['查 MC37 今天的工單','目前連不上資料來源。\n\n查詢條件已保留。'],partial:['查全部工單','資料範圍太大，目前不能顯示完整結果。\n\n請先指定設備或日期。'],cancelled:['查 MC37 今天的工單','已停止這次查詢。\n\n你可以修改條件後再查一次。']};
  const pair=pairs[scene]||['查 MC37 今天的工單','找到 8 筆工單。你可以查看明細，或選一筆繼續作業。'];
  const data=scene==='empty'?{...result,records:[],total:0}:scene==='partial'?{...result,records:[],total:undefined}:result;
- const messages=scene.startsWith('picker')||scene==='report-picker'?[{role:'user',content:'我要報工，MC37 良品 125，不良 3 個刮傷'},{role:'assistant',content:'好，先選擇這次要操作的工單。'}]:['loading','slow'].includes(scene)?[]:[{role:'user',content:pair[0]},{role:'assistant',content:pair[1],...(!['query-error','cancelled'].includes(scene)?{data}:{}),...(scene==='cancelled'?{stopped:true}:{}),...(scene==='query-error'?{processing_failed:true}:{})}];
+ const messages=scene.startsWith('picker')||scene==='report-picker'?[{role:'user',content:'我要報工，MC37 良品 125，不良 3 個刮傷'},{role:'assistant',content:scene==='picker-ai'?'可用設備、工單或品號搜尋。先查看明細，再按「帶入作業」。':scene==='report-picker'?'已帶入 MC37 的工單。數量可以直接在作業單調整。':'好，先選擇這次要操作的工單。'}]:['loading','slow'].includes(scene)?[]:[{role:'user',content:pair[0]},{role:'assistant',content:pair[1],...(!['query-error','cancelled'].includes(scene)?{data}:{}),...(scene==='cancelled'?{stopped:true}:{}),...(scene==='query-error'?{processing_failed:true}:{})}];
  await page.route('**/api/**',async route=>{
   const req=route.request(),url=new URL(req.url()),p=url.pathname,body=req.postDataJSON();calls.push({path:p,method:req.method(),body});
   const send=data=>route.fulfill({json:data});
@@ -41,6 +41,7 @@ async function prepare(page,scene){
   if(scene==='report-picker'){await page.getByRole('button',{name:'新增報工',exact:true}).click({trial:true});await page.waitForTimeout(300);await page.locator('.guide-body summary').focus();await page.locator('.guide-body summary').press('Enter');await page.locator('.guide-body button').filter({hasText:'修改報工'}).click();}
   else await page.getByRole('button',{name:'新增報工',exact:true}).click();
   await page.locator('.target-picker-dialog').waitFor();
+  if(scene==='picker-empty')await page.locator('.reference-picker-filters input').first().fill('找不到的工單');
   if(!['picker-loading','picker-error','picker-empty'].includes(scene))await page.locator('.record-choices tbody tr').first().waitFor();
   if(scene==='picker-detail')await page.locator('.record-choices button').first().click();
   if(['picker-selected','report-picker'].includes(scene))await page.locator('.record-choices input[type=radio]').first().check();
