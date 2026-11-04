@@ -186,8 +186,6 @@ export function App({ initialOpen = false }: { initialOpen?: boolean } = {}) {
   const [error, setError] = useState('');
   const [notice, setNotice] = useState('');
   const [mobilePane,setMobilePane]=useState<'chat'|'task'>('task');
-  const [narrowChat,setNarrowChat]=useState(()=>typeof window!=='undefined'&&window.matchMedia('(max-width:600px)').matches);
-  useEffect(()=>{const media=window.matchMedia('(max-width:600px)');const update=()=>setNarrowChat(media.matches);media.addEventListener('change',update);return()=>media.removeEventListener('change',update);},[]);
   const [conversation, setConversation] = useState<Conversation | null>(null);
   const [messages, setMessages] = useState<Message[]>([]);
   const [presentation,setPresentation]=useState<Presentation|null>(null);
@@ -799,7 +797,7 @@ export function App({ initialOpen = false }: { initialOpen?: boolean } = {}) {
 
           {archivedEmpty&&<p className="chat-welcome">{t('此聊天沒有訊息')}</p>}
           {!chatReadOnly && projectedMessages.length === 0 && operationMode.mode!=='step-wizard' && module!=='mold' && !guideSnapshot._started && <div className="chat-welcome"><h2>{t("說說你想完成的作業")}</h2><p>{t("直接描述需求，或使用下方操作卡；只需補齊缺少的資料。")}</p></div>}
-          <ThreadMessages onChooseTarget={selectionActive?()=>guideRef.current?.openTarget():undefined} onRetryQuery={!busy&&!unresolved&&draftDelivery!=='unknown'&&conversation?.query_context&&!guideSnapshot.action?()=>void send([...messages].reverse().find(m=>m.role==='user')?.content):undefined} onApplyQueryRecord={module==='report'?record=>void beginQueryReport(record):undefined} hideDelivery={Boolean(streamView)} latestAssistantOnly={(operationMode.mode==='step-wizard'||narrowChat)&&!selectionAI&&Boolean(guideSnapshot.action||guideSnapshot._started||proposal)} onViewData={module==='report'?value=>void guarded(async()=>{if(value.query_context)await queryWorkspace(value.query_context.filters);setTab('data');}):undefined}/>
+          <ThreadMessages onChooseTarget={selectionActive?()=>guideRef.current?.openTarget():undefined} onRetryQuery={!busy&&!unresolved&&draftDelivery!=='unknown'&&conversation?.query_context&&!guideSnapshot.action?()=>void send([...messages].reverse().find(m=>m.role==='user')?.content):undefined} onApplyQueryRecord={module==='report'?record=>void beginQueryReport(record):undefined} hideDelivery={Boolean(streamView)} latestAssistantOnly={(operationMode.mode==='step-wizard')&&!selectionAI&&Boolean(guideSnapshot.action||guideSnapshot._started||proposal)} onViewData={module==='report'?value=>void guarded(async()=>{if(value.query_context)await queryWorkspace(value.query_context.filters);setTab('data');}):undefined}/>
           {streamView&&["running","unknown","failed"].includes(streamView.phase)&&<ProcessingSteps equipment={workspace.query_context?.filters.equipment?String(workspace.query_context.filters.equipment):undefined} onStop={()=>void stopStream()} summary={streamView.summary} phase={streamView.phase} text={streamView.text}/>}
           {messagePending&&(!streamView||waitingStopped)&&<RequestProgress stopped={waitingStopped}/>}
 
