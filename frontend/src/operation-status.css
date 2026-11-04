@@ -76,6 +76,9 @@
 #mes-ai-chat-root .composer-area .aui-composer-send{font-size:14px;font-weight:400;line-height:1.55;cursor:pointer}
 #mes-ai-chat-root .composer-area .aui-composer-send:disabled{cursor:not-allowed}
 @container mes-chat-shell (max-width:620px){
+ #mes-ai-chat-root .dual-flow.chat-sheet[data-pane=chat]:not(.chat-only){display:flex!important}
  #mes-ai-chat-root .dual-flow.chat-sheet[data-pane=chat]:not(.chat-only)>.chat-layout{flex:1;height:100%;max-height:none;min-height:0;border-top:0}
  #mes-ai-chat-root .dual-flow.chat-sheet[data-pane=chat]:not(.chat-only) .conversation-scroll{flex:1;max-height:none;min-height:0;padding:0}
+ #mes-ai-chat-root .dual-flow.chat-sheet[data-pane=chat]:not(.chat-only) .conversation-content{padding:20px}
+ #mes-ai-chat-root .dual-flow.chat-sheet[data-pane=chat]:not(.chat-only) [data-slot=aui_message-group]{gap:22px}
 }

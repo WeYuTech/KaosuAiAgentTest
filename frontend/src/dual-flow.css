@@ -1,7 +1,7 @@
 @layer components {
 .assistant-main {container:dual-workspace / inline-size;}
 /* 兩種呈現共用控制器；寬度與垂直節奏集中於此，不固定產品高度。 */
-.dual-flow {display:grid!important;grid-template-columns:minmax(275px,.9fr) minmax(380px,1.1fr);position:relative;min-height:0;overflow:hidden;gap:0;}
+.dual-flow {display:grid;grid-template-columns:minmax(275px,.9fr) minmax(380px,1.1fr);position:relative;min-height:0;overflow:hidden;gap:0;}
 .dual-flow>.chat-layout {min-width:0;min-height:0;}
 .dual-flow>.operation-primary {min-width:0;min-height:0;overflow:auto;border-left:1px solid var(--border);padding:20px;background:var(--background);font-size:14px;}
 .dual-flow .guided-flow {padding:0;border:0;background:transparent;box-shadow:none;font-size:14px;margin:0;}
